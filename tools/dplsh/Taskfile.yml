@@ -7,10 +7,13 @@ vars:
 
 tasks:
   build:
+    desc: Build an image for the shell.
+    summary: Tag can  be specified via the tag environment variable. If omitted the build will assume "latest".
     cmds:
       - docker build --no-cache -t {{.image}} --build-arg DPLSH_BUILD_VERSION="{{.tag}}" .
 
   push:
+    desc: Push a build of the shell to {{.repository}}
     vars:
       latest: "{{.repository}}:latest"
     cmds:
@@ -19,6 +22,7 @@ tasks:
       - docker push {{.latest}}
 
   test:
+    desc: Run a smoke-test against {{.image}}
     env:
       DPLSH_IMAGE: "{{.image}}"
       DPLSH_NON_INTERACTIVE: "true"
