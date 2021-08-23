@@ -1,0 +1,35 @@
+# DPL Shell Taskfile (task.dev)
+#
+# Builds, tests and pushes builds of container-images for the DPL Shell.
+
+version: '2'
+
+vars:
+  repository: '{{.IMAGE_URL | default "ghcr.io/danskernesdigitalebibliotek/dpl-platform/dplsh"}}'
+  tag: '{{.IMAGE_TAG | default "latest"}}'
+  image: "{{.repository}}:{{.tag}}"
+
+tasks:
+  build:
+    desc: Build an image for the shell.
+    summary: Tag can  be specified via the tag environment variable. If omitted the build will assume "latest".
+    cmds:
+      - docker build --no-cache -t {{.image}} --build-arg DPLSH_BUILD_VERSION="{{.tag}}" .
+
+  push:
+    desc: Push a build of the shell to {{.repository}}
+    vars:
+      latest: "{{.repository}}:latest"
+    cmds:
+      - docker tag {{.image}} {{.latest}}
+      - docker push {{.image}}
+      - docker push {{.latest}}
+
+  test:
+    desc: Run a smoke-test against {{.image}}
+    env:
+      DPLSH_IMAGE: "{{.image}}"
+      DPLSH_NON_INTERACTIVE: "true"
+    cmds:
+      - ./dplsh.sh terraform -version
+      - ./dplsh.sh helm version
