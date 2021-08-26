@@ -24,4 +24,5 @@ tf --> rgmain: 3: Provisions resources and reconciles state
 
 ops -> tf: Uses
 ci -> tf: Uses
+
 @enduml
