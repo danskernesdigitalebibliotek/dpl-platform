@@ -11,7 +11,7 @@ and the resource-group that contains these resources are the only resources
 that are not provisioned via Terraform.
 
 
-## Initialization
+## Initial setup of Terraform
 Prerequisites:
 
 * A Azure subscription
@@ -21,6 +21,9 @@ Prerequisites:
 Use the `scripts/bootstrap-tf.sh` for bootstrapping. After the script has been
 run successfully it outputs instructions for how to set up a terraform module
 that uses the newly created storage-account for state-tracking.
+
+As a final step you must grant any administrative users that are to use the setup
+permission to read from the created keyvault.
 
 ## Setting up an environments
 The easies way to set up a new environment is to create a new `terraform/environments/<name>`
