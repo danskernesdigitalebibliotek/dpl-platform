@@ -1,0 +1,21 @@
+version: 2
+updates:
+  # Keep track of all github actions.
+  - package-ecosystem: github-actions
+    directory: "/"
+    schedule:
+      interval: daily
+      time: "04:00"
+    open-pull-requests-limit: 10
+  - package-ecosystem: docker
+    directory: "/tools/dplsh"
+    schedule:
+      interval: daily
+      time: "04:00"
+    open-pull-requests-limit: 10
+  - package-ecosystem: docker
+    directory: "/tools/plantuml"
+    schedule:
+      interval: daily
+      time: "04:00"
+    open-pull-requests-limit: 10
