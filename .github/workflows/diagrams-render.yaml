@@ -1,3 +1,7 @@
+# Render all plantuml and drawio diagrams. If the rendered result produces
+# a diff, the result is committed.
+# This process relies on unmodified diagrams being rendered by the same version
+# of the tools to produce identical results.
 on:
   push:
     paths:

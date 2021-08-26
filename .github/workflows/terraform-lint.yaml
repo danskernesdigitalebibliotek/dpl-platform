@@ -1,3 +1,5 @@
+# Run terraform fmt on all terraform files found in the infrastructure/terraform
+# folder.
 on:
   push:
     paths:
