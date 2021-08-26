@@ -9,25 +9,41 @@ A small docker-based shell that eases the use of terraform and other ops tools.
 * [jq](https://stedolan.github.io/jq/download/)
 * Bash 4 or newer
 
-## Installation
+## Build and release
+The shell is based on a docker image. To produce a build and release it you
+simply build the docker image, and push it to the correct registry.
+
+This is done by the `dplsh-build-release.yaml` GitHub Action, but can
+also be done manually for testing purposes or in an emergency:
+
 ```shell
-# Make sure the image is built:
-task build
+$ task build IMAGE_TAG=<some tag>
+$ task push
+```
 
-# OR pull the image from the registry (requires auth with a PAT, see Prerequisites):
-docker pull docker.pkg.github.com/danskernesdigitalebibliotek/dpl-platform/dplsh:latest
-
-# Optional, this step is assumed in the remaining examples though.
+## Launching the shell
+The shell is launched via the `dplsh.sh` shell-script found in the same
+directory as this document. It is advicable to place a symlink to this file
+ on your path to make launching the shell easier
+```shell
 ln -s /path/to/checkout/tools/dplsh/dplsh.sh /usr/local/bin/dplsh
 ```
 
-## Bootstrap without installation
+Should you need to launch the shell without having access to the shell-script
+it can be done by streaming it from the image like this:
 ```shell
-# You could also launch dplsh like this (requires image to be built or pulled first)
+# You need to do a one-time pull of the image:
+docker run docker.pkg.github.com/danskernesdigitalebibliotek/dpl-platform/dplsh:lates
+
+# Then launch the shell
 bash -c "$(docker run docker.pkg.github.com/danskernesdigitalebibliotek/dpl-platform/dplsh:latest bootstrap)"
 ```
 
-## Usage
+## Shell profiles
+The following demonstrates a number of ways to use the profile feature of the
+shell. The shell will set its file-system root after the first profile it
+findes by traversing up towards the root of the host file-system. It then
+sources the file before starting the actual shell.
 
 ### Example 1
 ```shell
