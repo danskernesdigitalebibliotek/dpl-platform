@@ -1,0 +1,38 @@
+on:
+  push:
+    paths:
+      - "documentation/Taskfile.yml"
+      - ".github/workflows/diagrams-render.yaml"
+      - "documentation/diagrams/*.puml"
+      - "documentation/diagrams/*.drawio"
+      - "tools/plantuml/*"
+
+name: Render diagrams
+jobs:
+  render_diagrams:
+    name: Render Drawio diagrams
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2.3.4
+      - name: Install Task
+        uses: Arduino/actions/setup-taskfile@master
+      - name: Clean render
+        working-directory: documentation
+        run: task clean render
+
+      - name: Get author and committer info from HEAD commit
+        run: |
+          set -o xtrace
+          {
+            echo "GIT_COMMIT_AUTHOR="$(git log -1 --pretty=format:"%an <%ae>" HEAD)""
+            echo "GIT_COMMIT_COMMITTER_NAME="$(git log -1 --pretty=format:"%cn" HEAD)""
+            echo "GIT_COMMIT_COMMITTER_EMAIL="$(git log -1 --pretty=format:"%ce" HEAD)""
+          } >>"$GITHUB_ENV"
+
+      - name: Commit changed files
+        uses: stefanzweifel/git-auto-commit-action@v4.11.0
+        with:
+          commit_message: "diagrams: re-render of updated diagrams"
+          commit_user_name: "${{ env.GIT_COMMIT_COMMITTER_NAME }}"
+          commit_user_email: "${{ env.GIT_COMMIT_COMMITTER_EMAIL }}"
+          commit_author: "${{ env.GIT_COMMIT_AUTHOR }}"
