@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentScriptType="application/ecmascript" contentStyleType="text/css" height="454px" preserveAspectRatio="none" style="width:803px;height:454px;background:#FFFFFF;" version="1.1" viewBox="0 0 803 454" width="803px" zoomAndPan="magnify"><defs><filter height="300%" id="f1n92hlv9dkj5j" width="300%" x="-1" y="-1"><feGaussianBlur result="blurOut" stdDeviation="2.0"/><feColorMatrix in="blurOut" result="blurOut2" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 .4 0"/><feOffset dx="4.0" dy="4.0" in="blurOut2" result="blurOut3"/><feBlend in="SourceGraphic" in2="blurOut3" mode="normal"/></filter></defs><g><!--MD5=[9892c6f77c442752088fcf6c309c0000]
+cluster sub--><polygon fill="#FFFFFF" filter="url(#f1n92hlv9dkj5j)" points="101.5,207.5659,111.5,197.5659,761.5,197.5659,761.5,437.5659,751.5,447.5659,101.5,447.5659,101.5,207.5659" style="stroke:#000000;stroke-width:1.5;"/><line style="stroke:#000000;stroke-width:1.5;" x1="751.5" x2="761.5" y1="207.5659" y2="197.5659"/><line style="stroke:#000000;stroke-width:1.5;" x1="101.5" x2="751.5" y1="207.5659" y2="207.5659"/><line style="stroke:#000000;stroke-width:1.5;" x1="751.5" x2="751.5" y1="207.5659" y2="447.5659"/><text fill="#000000" font-family="sans-serif" font-size="14" font-weight="bold" lengthAdjust="spacing" textLength="87" x="384" y="223.561">Subscription</text><!--MD5=[9d1bc840e8c08a47989ba18e3476bb03]
+cluster rgterra--><polygon fill="#FFFFFF" filter="url(#f1n92hlv9dkj5j)" points="125.5,250.5659,319.5,250.5659,326.5,272.8628,529.5,272.8628,529.5,423.5659,125.5,423.5659,125.5,250.5659" style="stroke:#000000;stroke-width:1.5;"/><line style="stroke:#000000;stroke-width:1.5;" x1="125.5" x2="326.5" y1="272.8628" y2="272.8628"/><text fill="#000000" font-family="sans-serif" font-size="14" font-weight="bold" lengthAdjust="spacing" textLength="188" x="129.5" y="265.561">Resource Group: Terraform</text><!--MD5=[55966dd18d1cda8b63162171a8d043e2]
+cluster Storage account--><polygon fill="#FFFFFF" filter="url(#f1n92hlv9dkj5j)" points="149.5,293.5659,268.5,293.5659,275.5,315.8628,299.5,315.8628,299.5,399.5659,149.5,399.5659,149.5,293.5659" style="stroke:#000000;stroke-width:1.5;"/><line style="stroke:#000000;stroke-width:1.5;" x1="149.5" x2="275.5" y1="315.8628" y2="315.8628"/><text fill="#000000" font-family="sans-serif" font-size="14" font-weight="bold" lengthAdjust="spacing" textLength="113" x="153.5" y="308.561">Storage account</text><!--MD5=[d51ed98cc5c14ac4d5a04de60f3d663e]
+cluster Key Vault--><polygon fill="#FFFFFF" filter="url(#f1n92hlv9dkj5j)" points="323.5,293.5659,395.5,293.5659,402.5,315.8628,505.5,315.8628,505.5,399.5659,323.5,399.5659,323.5,293.5659" style="stroke:#000000;stroke-width:1.5;"/><line style="stroke:#000000;stroke-width:1.5;" x1="323.5" x2="402.5" y1="315.8628" y2="315.8628"/><text fill="#000000" font-family="sans-serif" font-size="14" font-weight="bold" lengthAdjust="spacing" textLength="66" x="327.5" y="308.561">Key Vault</text><!--MD5=[3fbca4dee9755ebb21727493d8d02eef]
+cluster rgmain--><polygon fill="#FFFFFF" filter="url(#f1n92hlv9dkj5j)" points="561.5,292.5659,719.5,292.5659,726.5,314.8628,729.5,314.8628,729.5,400.5659,561.5,400.5659,561.5,292.5659" style="stroke:#000000;stroke-width:1.5;"/><line style="stroke:#000000;stroke-width:1.5;" x1="561.5" x2="726.5" y1="314.8628" y2="314.8628"/><text fill="#000000" font-family="sans-serif" font-size="14" font-weight="bold" lengthAdjust="spacing" textLength="152" x="565.5" y="307.561">Resource Group: Main</text><!--MD5=[80ed8d81e4a492e35ffd11898e1ee476]
+entity tfstate--><rect fill="#FEFECE" filter="url(#f1n92hlv9dkj5j)" height="36.2969" rx="35" ry="35" style="stroke:#000000;stroke-width:1.5;" width="118" x="165.5" y="347.5659"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="98" x="175.5" y="370.561">Terraform state</text><!--MD5=[453192295ea561804c15db7bbafa0c9c]
+entity storagekey--><rect fill="#FEFECE" filter="url(#f1n92hlv9dkj5j)" height="36.2969" rx="35" ry="35" style="stroke:#000000;stroke-width:1.5;" width="150" x="339.5" y="347.5659"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="130" x="349.5" y="370.561">Storage Account Key</text><!--MD5=[e543621a03986fb5e735a7f1f8539359]
+entity Resources...--><rect fill="#FEFECE" filter="url(#f1n92hlv9dkj5j)" height="22.2969" style="stroke:#000000;stroke-width:1.5;" width="98" x="606.5" y="354.5659"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="78" x="616.5" y="370.561">Resources...</text><!--MD5=[25f719494bd62b57f2de0576f80f7d6b]
+entity ci--><ellipse cx="171.5" cy="63.0659" fill="#FEFECE" filter="url(#f1n92hlv9dkj5j)" rx="8" ry="8" style="stroke:#A80036;stroke-width:1.5;"/><path d="M171.5,71.0659 L171.5,98.0659 M158.5,79.0659 L184.5,79.0659 M171.5,98.0659 L158.5,113.0659 M171.5,98.0659 L184.5,113.0659 " fill="none" filter="url(#f1n92hlv9dkj5j)" style="stroke:#A80036;stroke-width:1.5;"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="146" x="98.5" y="131.561">Continuous Integration</text><!--MD5=[5a9f12e3433feb7a47fb7cbcc8ee5d5d]
+entity ops--><ellipse cx="34.5" cy="63.0659" fill="#FEFECE" filter="url(#f1n92hlv9dkj5j)" rx="8" ry="8" style="stroke:#A80036;stroke-width:1.5;"/><path d="M34.5,71.0659 L34.5,98.0659 M21.5,79.0659 L47.5,79.0659 M34.5,98.0659 L21.5,113.0659 M34.5,98.0659 L47.5,113.0659 " fill="none" filter="url(#f1n92hlv9dkj5j)" style="stroke:#A80036;stroke-width:1.5;"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="57" x="6" y="131.561">Operator</text><!--MD5=[00f9e30d6ead67871b5f4dcdb52564e0]
+entity tf--><rect fill="#FEFECE" filter="url(#f1n92hlv9dkj5j)" height="36.2969" style="stroke:#A80036;stroke-width:1.5;" width="82" x="309.5" y="76.0659"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="62" x="319.5" y="99.061">Terraform</text><!--MD5=[3bbb443542bc08089f78df0512fd6139]
+link tf to storagekey--><path d="M347.19,117.3259 C345.18,134.8959 343.67,159.9759 347.5,181.5659 C358.25,242.2159 387.59,309.1459 403.65,342.7559 " fill="none" id="tf-storagekey" style="stroke:#A80036;stroke-width:1.0;"/><polygon fill="#A80036" points="405.92,347.4659,405.6234,337.6215,403.7526,342.9601,398.4141,341.0893,405.92,347.4659" style="stroke:#A80036;stroke-width:1.0;"/><polygon fill="#A80036" points="347.82,112.1159,342.7704,120.5718,347.2209,117.0799,350.7128,121.5304,347.82,112.1159" style="stroke:#A80036;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="178" x="348.5" y="177.6328">1: Unlocks storage account key</text><!--MD5=[04e7a4956a3138196fdbe6fd7e2bbb4e]
+link tf to tfstate--><path d="M311.12,114.6659 C291.58,126.4359 269.44,143.2859 256.5,164.5659 C222.11,221.1259 220.99,302.6459 222.81,341.8359 " fill="none" id="tf-tfstate" style="stroke:#A80036;stroke-width:1.0;"/><polygon fill="#A80036" points="223.1,347.3059,226.6048,338.1018,222.8282,342.3133,218.6167,338.5367,223.1,347.3059" style="stroke:#A80036;stroke-width:1.0;"/><polygon fill="#A80036" points="315.5,112.0759,305.7155,113.1999,311.1925,114.6148,309.7776,120.0918,315.5,112.0759" style="stroke:#A80036;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="80" x="257.5" y="177.6328">2: Reads state</text><!--MD5=[8d81fa061af599664bd901fd42925045]
+link tf to rgmain--><path d="M391.61,99.4059 C433.27,106.0659 496.44,122.8059 531.5,164.5659 C560.16,198.7059 570.055,247.6884 572.7138,288.6334 C572.7968,289.9129 572.8729,291.1846 572.9422,292.4478 " fill="none" id="tf-to-rgmain" style="stroke:#A80036;stroke-width:1.0;"/><polygon fill="#A80036" points="572.9422,292.4478,576.4431,283.2421,572.6682,287.4553,568.4551,283.6804,572.9422,292.4478" style="stroke:#A80036;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="253" x="542.5" y="177.6328">3: Provisions resources and reconciles state</text><!--MD5=[8c4aeaad0079c193737629f0bb6189e3]
+link ops to tf--><path d="M63.21,66.0259 C68.69,61.4959 74.57,57.1359 80.5,53.5659 C128,24.9959 146.53,6.9059 200.5,19.5659 C244.3,29.8459 289.95,54.9159 319.21,73.1359 " fill="none" id="ops-to-tf" style="stroke:#A80036;stroke-width:1.0;"/><polygon fill="#A80036" points="323.76,75.9959,318.2678,67.8206,319.5264,73.3356,314.0114,74.5943,323.76,75.9959" style="stroke:#A80036;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="28" x="171.5" y="19.6328">Uses</text><!--MD5=[af0046e4acb19c97d0ca8c7c842454f0]
+link ci to tf--><path d="M244.56,94.0659 C264.8,94.0659 286.2,94.0659 304.42,94.0659 " fill="none" id="ci-to-tf" style="stroke:#A80036;stroke-width:1.0;"/><polygon fill="#A80036" points="309.47,94.0659,300.47,90.0659,304.47,94.0659,300.47,98.0659,309.47,94.0659" style="stroke:#A80036;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="28" x="263" y="87.1328">Uses</text><!--MD5=[7db86bc1c7837039983354e333bf80f6]
+@startuml terraform_overview
+actor "Continuous Integration" as ci
+actor "Operator" as ops
+agent "Terraform" as tf
+
+node "Subscription" as sub {
+  package "Resource Group: Terraform" as rgterra {
+    package "Storage account" {
+      storage "Terraform state" as tfstate
+    }
+
+    package "Key Vault" {
+      storage "Storage Account Key" as storagekey
+    }
+  }
+  package "Resource Group: Main" as rgmain {
+    card "Resources..."
+  }
+}
+
+tf <- -> storagekey: 1: Unlocks storage account key
+tf <- -> tfstate: 2: Reads state
+tf - -> rgmain: 3: Provisions resources and reconciles state
+
+ops -> tf: Uses
+ci -> tf: Uses
+
+@enduml
+
+PlantUML version 1.2021.9(Sun Jul 25 10:13:56 GMT 2021)
+(GPL source distribution)
+Java Runtime: OpenJDK Runtime Environment
+JVM: OpenJDK 64-Bit Server VM
+Default Encoding: UTF-8
+Language: en
+Country: US
+--></g></svg>
