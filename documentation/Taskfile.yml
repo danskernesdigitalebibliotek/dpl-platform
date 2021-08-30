@@ -1,0 +1,69 @@
+version: "3"
+
+vars:
+  PLANTUML_RENDERER_VERSION: 1.2021.5
+  DRAWIO_EXPORT_VERSION: 4.1.0
+
+tasks:
+  _mkdir:
+    cmds:
+      - mkdir -p diagrams/render-png
+      - mkdir -p diagrams/render-svg
+      - mkdir -p diagrams/render-pdf
+
+  clean:
+    desc: Delete all rendered diagrams
+    cmds:
+      - rm -fr diagrams/render-png
+      - rm -fr diagrams/render-svg
+      - rm -fr diagrams/render-pdf
+
+  render:
+    desc: Render all diagrams
+    cmds:
+      - task: render:plantuml
+      - task: render:drawio
+
+  build:plantuml:
+    desc: Build the container image we use for rendering plantuml
+    dir: ../tools/plantuml
+    cmds:
+      # We do not publish the image as it is very then wrapper around a download
+      # of platuml an as such having a published image would just be an extra
+      # thing to keep track of.
+      - IMAGE_URL=plantuml TAG=0.0.0 PLANTUML_VERSION={{.PLANTUML_RENDERER_VERSION}} task build
+
+  render:plantuml:
+    desc: Render svg and png versions plantuml diagrams
+    deps: [_mkdir, build:plantuml]
+    cmds:
+      # PDF is currently not supported: https://plantuml.com/pdf
+      - |
+        docker run \
+          -v "${PWD}/diagrams/:/checkout" \
+          -w "/checkout" \
+          plantuml:0.0.0 \
+          -verbose -tpng -o render-png *.puml
+
+      - |
+        docker run \
+          -v "${PWD}/diagrams/:/checkout" \
+          -w "/checkout" \
+          plantuml:0.0.0 \
+          -verbose -tsvg -o render-svg *.puml
+
+  render:drawio:
+    desc: Render svg, png and pdf versions drawio diagrams
+    deps: [_mkdir]
+    cmds:
+      - |
+        docker run \
+          -v "${PWD}/diagrams:/data" rlespinasse/drawio-export:{{.DRAWIO_EXPORT_VERSION}} --remove-page-suffix --format png --output render-png --scale 2
+
+      - |
+        docker run \
+          -v "${PWD}/diagrams:/data" rlespinasse/drawio-export:{{.DRAWIO_EXPORT_VERSION}} --remove-page-suffix --format svg --output render-svg --scale 2
+
+      - |
+        docker run \
+          -v "${PWD}/diagrams:/data" rlespinasse/drawio-export:{{.DRAWIO_EXPORT_VERSION}} --remove-page-suffix --format pdf --output render-pdf --scale 2

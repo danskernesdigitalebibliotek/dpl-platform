@@ -1,3 +1,8 @@
+# Build the container image for the DPL shell on any modifications to the
+# workflow or the shell project.
+# The build is then tested, and if we where triggered by a tag, a tagged
+# version of the image is pushed to a public registry.
+
 on:
   pull_request:
     paths:

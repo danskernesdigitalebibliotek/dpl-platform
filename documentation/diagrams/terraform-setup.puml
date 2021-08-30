@@ -1,0 +1,28 @@
+@startuml terraform_overview
+actor "Continuous Integration" as ci
+actor "Operator" as ops
+agent "Terraform" as tf
+
+node "Subscription" as sub {
+  package "Resource Group: Terraform" as rgterra {
+    package "Storage account" {
+      storage "Terraform state" as tfstate
+    }
+
+    package "Key Vault" {
+      storage "Storage Account Key" as storagekey
+    }
+  }
+  package "Resource Group: Main" as rgmain {
+    card "Resources..."
+  }
+}
+
+tf <--> storagekey: 1: Unlocks storage account key
+tf <--> tfstate: 2: Reads state
+tf --> rgmain: 3: Provisions resources and reconciles state
+
+ops -> tf: Uses
+ci -> tf: Uses
+
+@enduml

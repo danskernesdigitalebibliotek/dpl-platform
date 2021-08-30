@@ -1,0 +1,13 @@
+version: '3'
+
+vars:
+  image_url: '{{.IMAGE_URL | default "plantuml"}}'
+  tag: '{{.TAG | default "0.0.0"}}'
+
+tasks:
+  build:
+    cmds:
+      - docker build . -t {{.image_url}}:{{.tag}}
+  push:
+    cmds:
+      - docker push {{.image_url}}:{{.tag}}
