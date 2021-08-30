@@ -26,7 +26,7 @@ As a final step you must grant any administrative users that are to use the setu
 permission to read from the created keyvault.
 
 ## Setting up an environments
-The easies way to set up a new environment is to create a new `terraform/environments/<name>`
+The easiest way to set up a new environment is to create a new `terraform/environments/<name>`
 directory and copy a `backend.tf` file from an existing module replacing any
 references to the previous environment with a new value corresponding to the new
 environment.

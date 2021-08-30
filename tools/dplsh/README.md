@@ -33,7 +33,7 @@ Should you need to launch the shell without having access to the shell-script
 it can be done by streaming it from the image like this:
 ```shell
 # You need to do a one-time pull of the image:
-docker run docker.pkg.github.com/danskernesdigitalebibliotek/dpl-platform/dplsh:lates
+docker run docker.pkg.github.com/danskernesdigitalebibliotek/dpl-platform/dplsh:latest
 
 # Then launch the shell
 bash -c "$(docker run docker.pkg.github.com/danskernesdigitalebibliotek/dpl-platform/dplsh:latest bootstrap)"

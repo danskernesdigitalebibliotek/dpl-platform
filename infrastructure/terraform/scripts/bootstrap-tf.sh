@@ -78,7 +78,7 @@ az keyvault secret set --subscription "${SUBSCRIPTION_ID}" --name tfstate-storag
 
 echo "Key vault secret created."
 
-# Display information to be used for configuering backends for the individual
+# Display information to be used for configuring backends for the individual
 # Terraform-managed environments.
 echo "Azure Storage Account and KeyVault have been created."
 echo "Create the following DPL shell profile in the root of the terraform directory."
