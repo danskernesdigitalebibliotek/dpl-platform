@@ -8,8 +8,8 @@ terraform {
 
 terraform {
   required_providers {
-    azurerm = {
-      source = "hashicorp/azurerm"
+    dnsimple = {
+      source = "dnsimple/dnsimple"
     }
   }
 }
@@ -17,4 +17,8 @@ terraform {
 provider "azurerm" {
   features {}
   subscription_id = "8ac8a259-5bb3-4799-bd1e-455145b12550"
+}
+
+provider "dnsimple" {
+  sandbox = false
 }
