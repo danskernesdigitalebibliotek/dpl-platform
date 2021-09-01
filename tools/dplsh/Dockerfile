@@ -4,7 +4,7 @@ ARG AZURE_CLI_TAG=latest
 ARG DPLSH_BUILD_VERSION=latest
 
 # Use an intermediate images as a way to have dependabot track our dependency
-FROM alpine/helm:3.5.4 as helm
+FROM alpine/helm:3.6.3 as helm
 FROM hashicorp/terraform:1.0.5 as terraform
 
 # We use the official azure cli as a base-image. It is itself based on alpine
