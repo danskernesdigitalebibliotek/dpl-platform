@@ -12,7 +12,7 @@ while getopts ":s:h" opt; do
             echo "Finds Dockerfiles and checks that they're mentioned in depentabot config."
             echo
             echo "Options:"
-            echo "  -s    Comma seperated list of paths to skip"
+            echo "  -s    Comma separated list of paths to skip"
             echo "  -h    This help text"
             exit
             ;;
