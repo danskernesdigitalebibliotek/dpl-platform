@@ -12,6 +12,7 @@ variable "environment_name" {
 variable "location" {
   description = "The Azure location to use for the environment"
   type        = string
+  default     = "West Europe"
 }
 
 variable "node_pool_system_count" {
