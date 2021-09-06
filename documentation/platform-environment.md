@@ -6,7 +6,7 @@ All resources of a Platform environment is contained in a single Azure Resource
 Group. The resources are provisioned via a [Terraform setup](../../dpl-platform/infrastructure/README.md)
 that keeps its resources in a separate resource group.
 
-An environment is created in two seperate stages. First all required
+An environment is created in two separate stages. First all required
 infrastructure resources are provisioned, then a semi-automated deployment
 process carried out which configures all the various software-components that
 makes up an environment.
@@ -26,6 +26,6 @@ the following primary resources.
 The **Azure Kubernetes Cluster** in return creates its own resource group that
 contains a number of resources that are automatically managed by the AKS service.
 AKS also has a managed control-plane component that is mostly invisible to us.
-It has a seperate managed identity which we need to grant access to any
+It has a separate managed identity which we need to grant access to any
 additional infrastructure-resources outside the "MC" resource-group that we
 need AKS to manage.

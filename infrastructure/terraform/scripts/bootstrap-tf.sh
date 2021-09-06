@@ -4,7 +4,7 @@
 #
 # It should only be nessecary to run this script once in the lifetime of the
 # a Terraform setup. A single setup manages multiple environments and stores
-# the state for the individual envrionments in seperate Terraform states.
+# the state for the individual envrionments in separate Terraform states.
 #
 # The script sets up a resource-group and places a storage-account
 # and an keyvault into this group all to be used for managing Terraforms own
