@@ -1,0 +1,23 @@
+# Locate all shell-scripts and run shellcheck against them.
+#
+# A local version of this functionality can be found under .github/local
+on:
+  pull_request:
+    paths:
+      - "**sh"
+      - ".github/workflows/shellcheck.yaml"
+
+name: shellcheck
+jobs:
+  shellcheck:
+    name: Shellcheck
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+      - name: shellcheck
+        uses: reviewdog/action-shellcheck@v1
+        with:
+          github_token: ${{ secrets.github_token }}
+          fail_on_error: true
+          reporter: github-pr-review # Change reporter.
+          exclude: "./.git/*" # We can exclude a single directory, so we go for .git.
