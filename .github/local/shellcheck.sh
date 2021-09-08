@@ -18,7 +18,9 @@ cd "${SCRIPT_DIR}/../.."
 SHELLCHECK_VERSION=v0.7.0
 # Consult https://github.com/actions/virtual-environments for the current version
 # of shellcheck being used.
+# We use find to pick out the files we want processed, clean up the result a
+# bit so that the path to the file is a clean as possible, and then run shellcheck.
 docker run \
   --mount "type=bind,src=$(pwd),dst=/mnt,readonly" \
   "koalaman/shellcheck-alpine:${SHELLCHECK_VERSION}" \
-  sh -c "find /mnt -name '*.sh' ! -path '*/vendor/*' -not -path '*/.terraform/*' -not -path './.git/*'| xargs shellcheck"
+  sh -c "cd /mnt && find . -name '*.sh' ! -path '*/vendor/*' -not -path '*/.terraform/*' -not -path './.git/*'| cut -c3- | xargs shellcheck --external-sources -P SCRIPTDIR"

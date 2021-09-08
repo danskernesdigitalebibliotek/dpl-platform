@@ -21,5 +21,7 @@ jobs:
           fail_on_error: true
           reporter: github-pr-review # Change reporter.
           exclude: "./.git/*" # We can exclude a single directory, so we go for .git.
+          shellcheck_flags: "--external-sources -P SCRIPTDIR"
           # Temporary setting while we make the current state clean.
           filter_mode: nofilter
+
