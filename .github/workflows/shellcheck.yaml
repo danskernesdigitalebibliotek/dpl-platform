@@ -19,9 +19,17 @@ jobs:
         with:
           github_token: ${{ secrets.github_token }}
           fail_on_error: true
-          reporter: github-pr-review # Change reporter.
-          exclude: "./.git/*" # We can exclude a single directory, so we go for .git.
+          # Use the GitHub PullRequest review comment that reports findings
+          # as inlined comments in a PullRequest.
+          # Read more about reporters: https://github.com/reviewdog/reviewdog#reporters
+          reporter: github-pr-review
+          # We can exclude a single directory, so we go for .git.
+          exclude: "./.git/*"
+          # We allow shellcheck to follow references to sourced files and
+          # resolve sourced files relative to the script being analysed.
           shellcheck_flags: "--external-sources -P SCRIPTDIR"
-          # Temporary setting while we make the current state clean.
+          # Set the default filter-mode which only reports violations caused by
+          # added/modified lines.
+          # Read more about filter-mode: https://github.com/reviewdog/reviewdog#filter-mode
           filter_mode: nofilter
 
