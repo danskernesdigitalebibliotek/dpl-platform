@@ -1,0 +1,35 @@
+# Locate all shell-scripts and run shellcheck against them.
+#
+# A local version of this functionality can be found under .github/local
+on:
+  pull_request:
+    paths:
+      - "**sh"
+      - ".github/workflows/shellcheck.yaml"
+
+name: shellcheck
+jobs:
+  shellcheck:
+    name: Shellcheck
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+      - name: shellcheck
+        uses: reviewdog/action-shellcheck@v1
+        with:
+          github_token: ${{ secrets.github_token }}
+          fail_on_error: true
+          # Use the GitHub PullRequest review comment that reports findings
+          # as inlined comments in a PullRequest.
+          # Read more about reporters: https://github.com/reviewdog/reviewdog#reporters
+          reporter: github-pr-review
+          # We can exclude a single directory, so we go for .git.
+          exclude: "./.git/*"
+          # We allow shellcheck to follow references to sourced files and
+          # resolve sourced files relative to the script being analysed.
+          shellcheck_flags: "--external-sources -P SCRIPTDIR"
+          # Set the default filter-mode which only reports violations caused by
+          # added/modified lines.
+          # Read more about filter-mode: https://github.com/reviewdog/reviewdog#filter-mode
+          filter_mode: nofilter
+

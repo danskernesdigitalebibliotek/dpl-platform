@@ -35,8 +35,8 @@ EXIT_CODE=0
 echo "Checking that depentabot it configured with all Dockerfiles"
 
 for FILE in $DOCKER_FILES; do
-    DIR=$(dirname $FILE)
-    echo -n $DIR
+    DIR=$(dirname "${FILE}")
+    echo -n "${DIR}"
     if [[ ",$SKIPLIST," = *,$DIR,* ]]; then
         echo " [SKIPPED]"
         continue
