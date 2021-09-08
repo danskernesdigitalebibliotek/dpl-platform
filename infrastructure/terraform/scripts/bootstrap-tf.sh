@@ -48,11 +48,11 @@ echo "Resource group $RESOURCE_GROUP created."
 # Create the storage account that will hold the Terraform state.
 echo "Creating $TF_STATE_STORAGE_ACCOUNT_NAME storage account..."
 az storage account create --subscription "${SUBSCRIPTION_ID}" -g "${RESOURCE_GROUP}" -l "${LOCATION}" \
-  --name $TF_STATE_STORAGE_ACCOUNT_NAME \
+  --name "${TF_STATE_STORAGE_ACCOUNT_NAME}" \
   --sku Standard_LRS \
   --encryption-services blob
 
-echo "Storage account $TF_STATE_STORAGE_ACCOUNT_NAME created."
+echo "Storage account ${TF_STATE_STORAGE_ACCOUNT_NAME} created."
 
 # Retrieve the storage account key that Terraform will use to access its state.
 echo "Retrieving storage account key..."
@@ -62,7 +62,7 @@ echo "Storage account key retrieved."
 
 # Create a storage container (for the Terraform State)
 echo "Creating $TF_STATE_CONTAINER_NAME storage container..."
-az storage container create --subscription "${SUBSCRIPTION_ID}" --name $TF_STATE_CONTAINER_NAME --account-name $TF_STATE_STORAGE_ACCOUNT_NAME --account-key $ACCOUNT_KEY
+az storage container create --subscription "${SUBSCRIPTION_ID}" --name "${TF_STATE_CONTAINER_NAME}" --account-name "${TF_STATE_STORAGE_ACCOUNT_NAME}" --account-key "${ACCOUNT_KEY}"
 
 echo "Storage container $TF_STATE_CONTAINER_NAME created."
 
@@ -74,7 +74,7 @@ echo "Key vault ${KEYVAULT_NAME} created."
 
 # Store the Storage Account Key into KeyVault
 echo "Store storage access key into key vault secret..."
-az keyvault secret set --subscription "${SUBSCRIPTION_ID}" --name tfstate-storage-key --value "${ACCOUNT_KEY}" --vault-name $KEYVAULT_NAME
+az keyvault secret set --subscription "${SUBSCRIPTION_ID}" --name tfstate-storage-key --value "${ACCOUNT_KEY}" --vault-name "${KEYVAULT_NAME}"
 
 echo "Key vault secret created."
 

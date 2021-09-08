@@ -1,3 +1,5 @@
+#!/usr/bin/env bash
+# shellcheck source=/dev/null # no way for shellcheck to verify.
 source <(kubectl completion bash)
 SHELL_INCLUDE="${HOME}/.dplsh.profile"
 
@@ -25,5 +27,5 @@ for (( i=0 ; ; i++ )); do
 done
 
 if [[ -f $SHELL_INCLUDE ]]; then
-    source $SHELL_INCLUDE
+    source "${SHELL_INCLUDE}"
 fi;

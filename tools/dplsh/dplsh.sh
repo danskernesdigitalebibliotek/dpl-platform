@@ -33,7 +33,7 @@ function relativePath {
   local commonPart=$source
   local result=""
 
-  while [[ "${target#$commonPart}" == "${target}" ]]; do
+  while [[ "${target#"$commonPart"}" == "${target}" ]]; do
     # no match, means that candidate common part is not correct
     # go up one level (reduce common part)
     commonPart=$(dirname "${commonPart}")
@@ -52,7 +52,7 @@ function relativePath {
 
   # since we now have identified the common part,
   # compute the non-common part
-  local forwardPart="${target#$commonPart}"
+  local forwardPart="${target#"$commonPart"}"
 
   # and now stick all parts together
   if [[ -n $result ]] && [[ -n $forwardPart ]]; then
@@ -119,7 +119,7 @@ else
 fi
 
 ADDITIONAL_ARGS=()
-if [[ ! -z "${PROFILE_ROOT}" ]]; then
+if [[ -n "${PROFILE_ROOT}" ]]; then
     ADDITIONAL_ARGS+=(-v "${PROFILE_ROOT}/${PROFILE_FILE}:/home/dplsh/.dplsh.profile")
     CHDIR=$(relativePath "${PROFILE_ROOT}" "$PWD")
     SHELL_ROOT="${PROFILE_ROOT}"
@@ -167,7 +167,7 @@ function export-docker-creds() {
         # We have a credential store - use it to get the credentials and extract
         # the value from the returned json object.
         local creds
-        creds=$(echo "${cred_key}" | docker-credential-${docker_credstore} get)
+        creds=$(echo "${cred_key}" | "docker-credential-${docker_credstore}" get)
         docker_user=$(echo "${creds}" | jq -r '.Username' | base64)
         docker_password=$(echo "${creds}" | jq -r '.Secret' | base64)
         docker_registry=$(echo "${creds}" | jq -r '.ServerURL' | base64)
@@ -175,7 +175,7 @@ function export-docker-creds() {
         # No credential store, so the password should be availably directly in the
         # config.
         local docker_auth
-        docker_auth=$(jq -r ".auths[\"$cred_key\"].auth" < ${docker_conf})
+        docker_auth=$(jq -r ".auths[\"$cred_key\"].auth" < "${docker_conf}")
         # Split out the credentials if found.
         IFS=':' read -ra auth <<< "$(echo "${docker_auth}" | base64 -d)"
         docker_user=$(echo "${auth[0]}" | base64)
@@ -187,6 +187,7 @@ function export-docker-creds() {
       if [[ -n "${docker_user}" && "${docker_user}" != "null" && -n "${docker_password}" && "${docker_password}" != "null" ]]; then
         return_map["DOCKER_USER_$cred_count"]="${docker_user}"
         return_map["DOCKER_PASSWORD_$cred_count"]="${docker_password}"
+        # shellcheck disable=SC2034 # passed as reference so we know it to be used
         return_map["DOCKER_REGISTRY_$cred_count"]="${docker_registry}"
 
         # Increment for the next cred.
