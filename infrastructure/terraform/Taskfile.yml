@@ -1,0 +1,117 @@
+# DPL Platform Infrastructure automation
+#
+# Provisions and configures Azure infrastructure and support software that is
+# required by the DPL Platform.
+version: '3'
+
+# Pull in defaults that are used across the tasks.
+dotenv:
+  - "defaults.env"
+
+# Any task that uses these variables must have a dependency on the _req_env
+# task.
+vars:
+  # The root directory for the environment.
+  dir_env: "environments/{{.DPLPLAT_ENV}}"
+  # Root of the Terraform-configuration for the environment.
+  dir_infra: "environments/{{.DPLPLAT_ENV}}/infrastructure"
+  # Root of the configurations for the environment.
+  dir_configuration: "environments/{{.DPLPLAT_ENV}}/configuration"
+
+tasks:
+    default:
+      silent: true
+      cmds:
+        - task -l
+
+
+    # Internal task for initializing Terraform.
+    _infra:terraform:init:
+      dir: "{{.dir_infra}}"
+      cmds:
+        - terraform init
+
+    infra:provision:
+      deps: [_req_env, _infra:terraform:init]
+      desc: Provision infrastructure for an environment
+      summary: |
+        Use Terraform to provision the infrastructure for an environment.
+      dir: "{{.dir_infra}}"
+      cmds:
+        - terraform apply
+
+    cluster:auth:
+        deps: [_req_env]
+        desc: "Authenticate against AKS and setup a functional kubecontext."
+        dir: "{{.dir_infra}}"
+        vars:
+          CLUSTER_NAME:
+            sh: terraform output -json | jq --raw-output ".cluster_name.value"
+          RESOURCEGROUP_NAME:
+            sh: terraform output -json | jq --raw-output ".resourcegroup_name.value"
+        status:
+          - "[ $(kubectl config view --output jsonpath='{.current-context}') == '{{.CLUSTER_NAME}}' ] || exit 1"
+        cmds:
+          - az aks get-credentials --subscription {{.AZURE_SUBSCRIPTION_ID}} --resource-group {{.RESOURCEGROUP_NAME}} --name {{.CLUSTER_NAME}}
+        preconditions:
+          - sh: "[ ! -z {{.AZURE_SUBSCRIPTION_ID}} ]"
+            msg: "Env variable AZURE_SUBSCRIPTION_ID is not set or empty."
+
+    support:provision:cert-manager:
+      deps: [cluster:auth]
+      summary: Set the DIFF environment variable to any value to switch to diffing instead of an actual upgrade.
+      desc: Install and configure cert-manager
+      env:
+        DIFF: "{{.should_diff}}"
+      cmds:
+        - scripts/provision-cert-manager.sh
+
+    support:provision:ingress-nginx:
+      deps: [cluster:auth]
+      summary: Set the DIFF environment variable to any value to switch to diffing instead of an actual upgrade.
+      desc: Install and configure ingress-nginx
+      env:
+        INGRESS_IP:
+          sh: terraform -chdir={{.dir_infra}} output -json | jq --raw-output ".ingress_ip.value"
+        RESOURCE_GROUP:
+          sh: terraform  -chdir={{.dir_infra}} output -json | jq --raw-output ".resourcegroup_name.value"
+      cmds:
+        - scripts/provision-ingress-nginx.sh
+
+    support:provision:bulk-storage:
+      deps: [cluster:auth]
+      summary: Set the DIFF environment variable to any value to switch to diffing instead of an actual upgrade.
+      desc: Install and configure a bulk storage class
+      env:
+        STORAGE_ACCOUNT_NAME:
+          sh: terraform -chdir={{.dir_infra}} output -json | jq --raw-output ".storage_account_name.value"
+        STORAGE_ACCOUNT_KEY:
+          sh: az keyvault secret show --subscription "{{.AZURE_SUBSCRIPTION_ID}}" --name $(terraform -chdir={{.dir_infra}} output -json | jq --raw-output ".storage_primary_access_key_name.value") --vault-name $(terraform -chdir={{.dir_infra}} output -json | jq --raw-output ".keyvault_name.value") --query value -o tsv
+        RESOURCE_GROUP:
+          sh: terraform  -chdir={{.dir_infra}} output -json | jq --raw-output ".resourcegroup_name.value"
+      cmds:
+        - scripts/provision-bulk-storage.sh
+
+    support:provision:
+      deps: [cluster:auth]
+      desc: Install and configure the support tools Lagoon and DPL Platform builds on
+      summary: Set the DIFF environment variable to any value to switch to diffing instead of an actual upgrade.
+      dir: "{{.dir_configuration}}"
+      vars:
+        DIFF_COMMAND: '{{empty .DIFF | ternary "" "diff"}}'
+      cmds:
+        - task: support:provision:cert-manager
+        - task: support:provision:ingress-nginx
+        - task: support:provision:bulk-storage
+
+    _req_env:
+      preconditions:
+      - sh: "[ ! -z {{.DPLPLAT_ENV}} ]"
+        msg: "Env variable DPLPLAT_ENV is not set or empty."
+      - sh: "[ -d {{.dir_env}} ]"
+        msg: "Could not find directory {{.dir_env}}"
+      - sh: "[ -d {{.dir_infra}} ]"
+        msg: "Could not find directory {{.dir_infra}}"
+      - sh: "[ -d {{.dir_configuration}} ]"
+        msg: "Could not find directory {{.dir_configuration}}"
+
