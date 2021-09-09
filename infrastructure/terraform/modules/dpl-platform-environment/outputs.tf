@@ -1,3 +1,13 @@
+output "cluster_name" {
+  description = "Name of the provisioned AKS cluster"
+  value       = azurerm_kubernetes_cluster.cluster.name
+}
+
+output "egress_ip" {
+  description = "IP address outbound traffic from AKS wil origin from"
+  value       = azurerm_public_ip.aks_egress.ip_address
+}
+
 output "mariadb_user" {
   description = "Username for the administrative mariadb user"
   value       = azurerm_mariadb_server.sql.administrator_login
@@ -19,18 +29,13 @@ output "mariadb_servername" {
   value       = azurerm_mariadb_server.sql.name
 }
 
-output "keyvault_name" {
-  description = "Name of the Key Vault"
-  value       = azurerm_key_vault.keyvault.name
-}
 output "ingress_ip" {
   description = "IP adresse to use for inbound traffic"
   value       = azurerm_public_ip.aks_ingress.ip_address
 }
-
-output "egress_ip" {
-  description = "IP address outbound traffic from AKS wil origin from"
-  value       = azurerm_public_ip.aks_egress.ip_address
+output "keyvault_name" {
+  description = "Name of the Key Vault"
+  value       = azurerm_key_vault.keyvault.name
 }
 
 output "ingress_hostname" {
@@ -46,6 +51,16 @@ output "resourcegroup_name" {
 output "storage_account_name" {
   description = "Name of the Azure Storage Account"
   value       = azurerm_storage_account.storage.name
+}
+
+output "storage_primary_access_key_name" {
+  description = "Name under which the primary storage account key is stored in keyvault"
+  value       = azurerm_key_vault_secret.storage_primary_access_key.name
+}
+
+output "storage_secondary_access_key_name" {
+  description = "Name under which the secondary storage account key is stored in keyvault"
+  value       = azurerm_key_vault_secret.storage_secondary_access_key.name
 }
 
 output "storage_share_name" {
