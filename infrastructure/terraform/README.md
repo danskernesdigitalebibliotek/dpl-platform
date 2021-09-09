@@ -10,7 +10,7 @@ consists of.
   individual environments.
 * [scripts/](scripts): Shell-scripts used to perform the automation. The recommended way
    to invoke these is via task.
-* [Taskfile.yml](Taskfile.yml): The [task](https://taskfile.dev) configuration. Involke `task`
+* [Taskfile.yml](Taskfile.yml): The [task](https://taskfile.dev) configuration. Invoke `task`
   to get a list of targets.
 
 ### Environments
