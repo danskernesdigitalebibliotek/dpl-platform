@@ -55,6 +55,9 @@ RUN echo "${DPLSH_BUILD_VERSION}" > /etc/dplsh.version
 USER dplsh
 WORKDIR /home/dplsh
 
+# Install a tool for diffing charts
+RUN helm plugin install https://github.com/databus23/helm-diff
+
 # Append our profile to the current one.
 COPY files/dot.profile.sh /tmp/.profile.tmp
 RUN cat /tmp/.profile.tmp >> /home/dplsh/.profile
