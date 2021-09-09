@@ -35,7 +35,7 @@ resource "azurerm_key_vault_secret" "storage_primary_access_key" {
   value        = azurerm_storage_account.storage.primary_access_key
   key_vault_id = azurerm_key_vault.keyvault.id
 }
-resource "azurerm_key_vault_secret" "secondary_access_key" {
+resource "azurerm_key_vault_secret" "storage_secondary_access_key" {
   name         = "storage-secondary-access-key"
   value        = azurerm_storage_account.storage.secondary_access_key
   key_vault_id = azurerm_key_vault.keyvault.id

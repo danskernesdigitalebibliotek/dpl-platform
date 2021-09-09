@@ -1,0 +1,15 @@
+controller:
+  replicaCount: 2
+  service:
+    loadBalancerIP: "${INGRESS_IP}"
+    annotations:
+      service.beta.kubernetes.io/azure-load-balancer-internal: "false"
+      service.beta.kubernetes.io/azure-load-balancer-resource-group: "${RESOURCE_GROUP}"
+  nodeSelector:
+    beta.kubernetes.io/os: linux
+  admissionWebhooks:
+    patch.nodeSelector:
+      beta.kubernetes.io/os: linux
+defaultBackend:
+  nodeSelector:
+    beta.kubernetes.io/os: linux
