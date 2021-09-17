@@ -46,7 +46,7 @@ helm repo add ingress-nginx https://kubernetes.github.io/ingress-nginx \
 # shellcheck disable=SC2016
 envsubst '$RESOURCE_GROUP $INGRESS_IP' \
   < "${configuration_dir}/ingress-nginx/ingres-nginx-values.template.yaml" \
-  > "${configuration_dir}/ingress-nginx/values.yaml"
+  > "${configuration_dir}/ingress-nginx/ingres-nginx-values.yaml"
 
 isDiffing && echo " > Diffing release"
 # shellcheck disable=SC2086 # We need diff_or_nothing to be unquoted
@@ -54,6 +54,6 @@ helm ${diff_or_nothing} upgrade --install \
   ingress-nginx ingress-nginx/ingress-nginx \
   --namespace ingress-nginx \
   --version "${VERSION_INGRESS_NGINX}" \
-  --values "${configuration_dir}/ingress-nginx/values.yaml"
+  --values "${configuration_dir}/ingress-nginx/ingres-nginx-values.yaml"
 
 echo " > Done."
