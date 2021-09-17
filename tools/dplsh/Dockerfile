@@ -12,6 +12,7 @@ FROM hashicorp/terraform:1.0.6 as terraform
 FROM mcr.microsoft.com/azure-cli:$AZURE_CLI_TAG
 ARG TASK_VERSION=v3.4.2
 ARG STERN_RELEASE=1.11.0
+ARG LAGOON_CLI_RELEASE=v0.11.6
 
 LABEL org.opencontainers.image.source https://github.com/danskernesdigitalebibliotek/dpl-platform
 
@@ -35,6 +36,12 @@ RUN curl -sL https://taskfile.dev/install.sh | bash -s -- -b /usr/local/bin ${TA
 # Add Stern, a multi pod and container log tailing tool.
 RUN curl -Lo /usr/local/bin/stern https://github.com/wercker/stern/releases/download/${STERN_RELEASE}/stern_linux_amd64 \
   && chmod +x /usr/local/bin/stern
+
+# Add the Lagoon CLI
+RUN curl -Lo /tmp/lagooncli.tar.gz https://github.com/uselagoon/lagoon-cli/releases/download/${LAGOON_CLI_RELEASE}/lagoon-cli-${LAGOON_CLI_RELEASE}-linux-amd64.tar.gz \
+  && tar -x -C /usr/local/bin -f /tmp/lagooncli.tar.gz lagoon \
+  && chmod +x /usr/local/bin \
+  && rm /tmp/lagooncli.tar.gz
 
 WORKDIR /tmp
 
