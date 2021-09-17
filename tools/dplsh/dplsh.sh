@@ -215,6 +215,7 @@ docker run --hostname=dplsh \
     "${ADDITIONAL_ARGS[@]}" \
     -t \
     -v "${HOME}/.azure:/home/dplsh/.azure-host" \
+    -v "${HOME}/.ssh:/home/dplsh/.ssh-host" \
     -v "${SHELL_ROOT}:/home/dplsh/host_mount" \
     -w "/home/dplsh/host_mount/${CHDIR}" \
     "${DOCKER_IMAGE}" "$@"
