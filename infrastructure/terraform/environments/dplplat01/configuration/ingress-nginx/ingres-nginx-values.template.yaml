@@ -1,4 +1,5 @@
 controller:
+  watchIngressWithoutClass: true
   config:
     # Setup a json-based access-log.
     log-format-upstream: '{"time": "$time_iso8601", "remote_addr": "$proxy_protocol_addr", "x-forward-for": "$proxy_add_x_forwarded_for", "request_id": "$req_id",
