@@ -3,6 +3,11 @@ output "cluster_name" {
   value       = azurerm_kubernetes_cluster.cluster.name
 }
 
+output "cluster_api_url" {
+  description = "URL of the AKS api server"
+  value       = azurerm_kubernetes_cluster.cluster.fqdn
+}
+
 output "egress_ip" {
   description = "IP address outbound traffic from AKS wil origin from"
   value       = azurerm_public_ip.aks_egress.ip_address
@@ -29,13 +34,14 @@ output "mariadb_servername" {
   value       = azurerm_mariadb_server.sql.name
 }
 
+output "harbor_admin_pass_key_name" {
+  description = "Name under which the admin password for harbor is stored in keyvault"
+  value       = azurerm_key_vault_secret.harbor_admin_pass.name
+}
+
 output "ingress_ip" {
   description = "IP adresse to use for inbound traffic"
   value       = azurerm_public_ip.aks_ingress.ip_address
-}
-output "keyvault_name" {
-  description = "Name of the Key Vault"
-  value       = azurerm_key_vault.keyvault.name
 }
 
 output "ingress_hostname" {
@@ -43,9 +49,49 @@ output "ingress_hostname" {
   value       = dnsimple_record.aks_ingress.hostname
 }
 
+output "keycloak_admin_pass_key_name" {
+  description = "Name under which the admin password for keycloak is stored in keyvault"
+  value       = azurerm_key_vault_secret.keycloak_admin_pass.name
+}
+
+output "keyvault_name" {
+  description = "Name of the Key Vault"
+  value       = azurerm_key_vault.keyvault.name
+}
+
+output "lagoon_hostname_api" {
+  description = "Hostname for the lagoon API server"
+  value       = "api.lagoon.${var.lagoon_domain_base}"
+}
+
+output "lagoon_domain_base" {
+  description = "Domain base"
+  value       = var.lagoon_domain_base
+}
+
 output "resourcegroup_name" {
   description = "Name of the environments main Resource Group"
   value       = azurerm_resource_group.rg.name
+}
+
+output "sql_user" {
+  description = "Username of the administrative MariaDB user"
+  value       = azurerm_mariadb_server.sql.administrator_login
+}
+
+output "sql_hostname" {
+  description = "Fully qualified hostname for the MariaDB server"
+  value       = azurerm_mariadb_server.sql.fqdn
+}
+
+output "sql_servername" {
+  description = "value"
+  value       = azurerm_mariadb_server.sql.name
+}
+
+output "sql_password_key_name" {
+  description = "Name under which the administrative sql users passwqord is stored in keyvault"
+  value       = azurerm_key_vault_secret.sql_pass.name
 }
 
 output "storage_account_name" {

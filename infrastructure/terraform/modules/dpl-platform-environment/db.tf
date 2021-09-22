@@ -70,12 +70,6 @@ resource "azurerm_mariadb_firewall_rule" "allowallwindowsazureips" {
 }
 
 # Place the admin-credentials for the database into the environments keyvault.
-resource "azurerm_key_vault_secret" "sql_user" {
-  name         = "sql-user"
-  value        = random_string.sql_user.result
-  key_vault_id = azurerm_key_vault.keyvault.id
-}
-
 resource "azurerm_key_vault_secret" "sql_pass" {
   name         = "sql-pass"
   value        = random_password.sql_pass.result
