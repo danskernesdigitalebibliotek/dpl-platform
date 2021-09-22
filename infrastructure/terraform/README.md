@@ -4,8 +4,7 @@ for maintaining the infrastructure-component that each platform environment
 consists of.
 
 ## Directory layout
-* [environments/](environments): contains a directory for each platform environment. Read more
-  below.
+* [environments/](environments): contains a directory for each platform environment.
 * [modules/](modules): The Terraform modules used to provision infrastructure for the
   individual environments.
 * [scripts/](scripts): Shell-scripts used to perform the automation. The recommended way
@@ -63,8 +62,9 @@ directory and copy the contents of an existing environment replacing any
 references to the previous environment with a new value corresponding to the new
 environment.
 
+### Provisioning infrastructure
 When you have prepared the environment directory, launch `dplsh` and go through
-the following steps:
+the following steps to provision the infrastructure:
 
 ```shell
 # We export the variable to simplify the example, you can also specify it inline.
@@ -76,8 +76,54 @@ task infra:provision
 # Provision the support software that the Platform relies on
 task support:provision
 ```
+### Installing and configuring Lagoon
+The previous step has established the raw infrastructure and the Kubernetes support
+projects that Lagoon needs to function. You can proceed to follow the [official
+Lagoon installation procedure](https://docs.lagoon.sh/lagoon/using-lagoon-advanced/installing-lagoon-into-existing-kubernetes-cluster).
 
-## Terraform Setup
+The execution of the individual steps of the guide has been somewhat automated,
+the following describes how to use the automation, make sure to follow along
+in the official documentation to understand the steps and some of the
+additional actions you have to take.
+
+```shell
+# The following must be carried out from within dplsh, launched as described
+# in the previous step including the definition of DPLPLAT_ENV.
+
+# Provision a lagoon core into the cluster. You can skip the steps about
+# email setup as we currently do not support sending emails.
+task lagoon:provision:core
+
+# Configure the CLI (the cli itself has already been installed)
+# First you must access the lagoon UI and add the ssh-key you wish to use for the
+# admin-account. Consult the official guide for the steps.
+# Then:
+task lagoon:cli:config
+
+# You can now add additional users, this step is currently skipped.
+
+# Install Harbor.
+# Skip the step that asks you to update the lagoon-core release with the
+# credentials for Harbor as we've already set that ahead of time.
+task lagoon:provision:harbor
+
+# Install a Lagoon Remote into the cluster
+task lagoon:provision:remote
+
+# Register the cluster administered by the Remote with Lagoon Core
+# Notice that you must provide a bearer token via the USER_TOKEN environment-
+# variable. The token can be found in $HOME/.lagoon.yml after a successful
+# "lagoon login"
+USER_TOKEN=<token> task lagoon:add:cluster:
+```
+The Lagoon core has now been installed, and the remote registered with it.
+
+You can now proceed to adding projects.
+
+### Adding a project to Lagoon.
+See "Add a Project" in [the official documentation](https://docs.lagoon.sh/lagoon/using-lagoon-advanced/installing-lagoon-into-existing-kubernetes-cluster#add-a-project).
+
+## The Terraform setup
 The setup keeps a single terraform-state pr. environment. Each state is kept as
 separate blobs in a Azure Storage Account.
 
