@@ -12,7 +12,8 @@ module "environment" {
   node_pool_default_count_max = 5
 }
 
-# Outputs, the dpl-platform-environment for documentation.
+# Outputs, for values that comes straight from the dpl-platform-environment
+# module, please refer to its documentation in the module.
 output "cluster_name" {
   value = module.environment.cluster_name
 }
