@@ -75,7 +75,7 @@ resource "azurerm_kubernetes_cluster_node_pool" "default" {
 
   vm_size = var.node_pool_default_vm_sku
 
-  # Enable autscaling.
+  # Enable autoscaling.
   enable_auto_scaling = true
   min_count           = var.node_pool_default_count_min
   max_count           = var.node_pool_default_count_max
