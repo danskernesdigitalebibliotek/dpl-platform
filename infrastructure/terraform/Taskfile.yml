@@ -12,15 +12,15 @@ dotenv:
 # task.
 vars:
   # The current environment.
-  env: "{{.DPLPLAT_ENV}}"
+  platform_env: "{{.DPLPLAT_ENV}}"
   # The root directory for the environment.
-  dir_env: "environments/{{.env}}"
+  dir_env: "environments/{{.platform_env}}"
   # Root of the Terraform-configuration for the environment.
-  dir_infra: "environments/{{.env}}/infrastructure"
+  dir_infra: "environments/{{.platform_env}}/infrastructure"
   # Root of the configurations for the environment.
-  dir_configuration: "environments/{{.env}}/configuration"
+  dir_configuration: "environments/{{.platform_env}}/configuration"
   # Root of the lagoon-configurations for the environment.
-  dir_lagoon: "environments/{{.env}}/lagoon"
+  dir_lagoon: "environments/{{.platform_env}}/lagoon"
 
 tasks:
     default:
@@ -120,12 +120,12 @@ tasks:
 
       cmds:
         - |
-            lagoon config add --graphql https://api.lagoon.{{.env}}.dpl.reload.dk/graphql \
-            --ui https://ui.lagoon.{{.env}}.dpl.reload.dk \
+            lagoon config add --graphql https://api.lagoon.{{.platform_env}}.dpl.reload.dk/graphql \
+            --ui https://ui.lagoon.{{.platform_env}}.dpl.reload.dk \
             --hostname {{.ssh_loadbalancer_ip}} \
             --port 22 \
-            --lagoon {{.env}}
-        - lagoon config default --lagoon {{.env}}
+            --lagoon {{.platform_env}}
+        - lagoon config default --lagoon {{.platform_env}}
         - lagoon login
         - lagoon whoami
       preconditions:
