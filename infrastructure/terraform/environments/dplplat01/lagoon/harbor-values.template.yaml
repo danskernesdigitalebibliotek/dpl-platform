@@ -1,0 +1,25 @@
+expose:
+  ingress:
+    annotations:
+      kubernetes.io/tls-acme: "true"
+    hosts:
+     core: harbor.lagoon.dplplat01.dpl.reload.dk
+  tls:
+    enabled: true
+    certSource: secret
+    secret:
+      secretName: harbor-harbor-ingress
+externalURL: https://harbor.lagoon.dplplat01.dpl.reload.dk
+harborAdminPassword: "$HARBOR_ADMIN_PASS"
+chartmuseum:
+  enabled: false
+clair:
+  enabled: false
+notary:
+  enabled: false
+trivy:
+  enabled: false
+jobservice:
+  jobLogger: stdout
+registry:
+  replicas: 1

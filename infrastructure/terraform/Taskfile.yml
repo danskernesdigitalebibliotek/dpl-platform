@@ -11,19 +11,24 @@ dotenv:
 # Any task that uses these variables must have a dependency on the _req_env
 # task.
 vars:
+  # The current environment.
+  platform_env: "{{.DPLPLAT_ENV}}"
   # The root directory for the environment.
-  dir_env: "environments/{{.DPLPLAT_ENV}}"
+  dir_env: "environments/{{.platform_env}}"
   # Root of the Terraform-configuration for the environment.
-  dir_infra: "environments/{{.DPLPLAT_ENV}}/infrastructure"
+  dir_infra: "environments/{{.platform_env}}/infrastructure"
   # Root of the configurations for the environment.
-  dir_configuration: "environments/{{.DPLPLAT_ENV}}/configuration"
+  dir_configuration: "environments/{{.platform_env}}/configuration"
+  # Root of the lagoon-configurations for the environment.
+  dir_lagoon: "environments/{{.platform_env}}/lagoon"
+  # The suffix domain we will use when constructing urls
+  global_environment_suffix: "dpl.reload.dk"
 
 tasks:
     default:
       silent: true
       cmds:
         - task -l
-
 
     # Internal task for initializing Terraform.
     _infra:terraform:init:
@@ -77,6 +82,205 @@ tasks:
           sh: terraform  -chdir={{.dir_infra}} output -json | jq --raw-output ".resourcegroup_name.value"
       cmds:
         - scripts/provision-ingress-nginx.sh
+
+    lagoon:provision:core:
+      deps: [cluster:auth]
+      desc: Install and configure Lagoon core
+      env:
+        # Collect the values we'll render into the values-file for the chart.
+        KEYCLOAK_ADMIN_PASS:
+          sh: az keyvault secret show --subscription "{{.AZURE_SUBSCRIPTION_ID}}" --name $(terraform -chdir={{.dir_infra}} output -json | jq --raw-output ".keycloak_admin_pass_key_name.value") --vault-name $(terraform -chdir={{.dir_infra}} output -json | jq --raw-output ".keyvault_name.value") --query value -o tsv
+        HARBOR_ADMIN_PASS:
+          sh: az keyvault secret show --subscription "{{.AZURE_SUBSCRIPTION_ID}}" --name $(terraform -chdir={{.dir_infra}} output -json | jq --raw-output ".harbor_admin_pass_key_name.value") --vault-name $(terraform -chdir={{.dir_infra}} output -json | jq --raw-output ".keyvault_name.value") --query value -o tsv
+      cmds:
+        - |
+          envsubst '$HARBOR_ADMIN_PASS $KEYCLOAK_ADMIN_PASS' \
+          < "{{.dir_lagoon}}/lagoon-core-values.template.yaml" \
+          > "{{.dir_lagoon}}/lagoon-core-values.yaml"
+        # Setup the namespace manually to control eg. labels on the namespace.
+        - kubectl apply -f {{.dir_lagoon}}/lagoon-core-namespace.yaml
+        - helm repo add lagoon https://uselagoon.github.io/lagoon-charts/
+        - |
+          helm diff upgrade --install --namespace lagoon-core \
+          -f {{.dir_lagoon}}/lagoon-core-values.yaml lagoon-core \
+          lagoon/lagoon-core
+      preconditions:
+      - sh: "[ ! -z ${KEYCLOAK_ADMIN_PASS} ]"
+        msg: "Could not extract the password for the keycloak admin from keyvault."
+      - sh: "[ ! -z ${HARBOR_ADMIN_PASS} ]"
+        msg: "Could not extract the password for the habor admin from keyvault."
+
+    lagoon:cli:config:
+      deps: [cluster:auth]
+      desc: Configure a lagoon cli with the knowledge of a lagoon core.
+      summary: |
+        In order for the cli to auth your public ssh-key must have been added to
+        the core and must be available to ssh eg via "eval $(ssh-agent); ssh-add"
+      vars:
+        ssh_loadbalancer_ip:
+          sh: kubectl get -o jsonpath='{.status.loadBalancer.ingress[0].ip}' -n lagoon-core service lagoon-core-ssh
+
+      cmds:
+        - |
+            lagoon config add --graphql https://api.lagoon.{{.platform_env}}.{{.global_environment_suffix}}/graphql \
+            --ui https://ui.lagoon.{{.platform_env}}.{{.global_environment_suffix}} \
+            --hostname {{.ssh_loadbalancer_ip}} \
+            --port 22 \
+            --lagoon {{.platform_env}}
+        - lagoon config default --lagoon {{.platform_env}}
+        - lagoon login
+        - lagoon whoami
+      preconditions:
+      - sh: "[ ! -z {{.ssh_loadbalancer_ip}} ]"
+        msg: "Could not determine IP of the ssh-endpoint for Lagoon. The Kubernetes lagoon-core/lagoon-core-ssh service may not have been provisioned yet."
+
+    lagoon:provision:harbor:
+      deps: [cluster:auth]
+      desc: Install an instance of Harbor into a Lagoon cluster.
+      env:
+        HARBOR_ADMIN_PASS:
+          sh: az keyvault secret show --subscription "{{.AZURE_SUBSCRIPTION_ID}}" --name $(terraform -chdir={{.dir_infra}} output -json | jq --raw-output ".harbor_admin_pass_key_name.value") --vault-name $(terraform -chdir={{.dir_infra}} output -json | jq --raw-output ".keyvault_name.value") --query value -o tsv
+
+      cmds:
+        - |
+          envsubst '$HARBOR_ADMIN_PASS' \
+          < "{{.dir_lagoon}}/harbor-values.template.yaml" \
+          > "{{.dir_lagoon}}/harbor-values.yaml"
+        # Setup the namespace manually to control eg. labels on the namespace.
+        - kubectl apply -f {{.dir_lagoon}}/harbor-namespace.yaml
+        - helm repo add harbor https://helm.goharbor.io
+        # From the official installation guide:
+        #   We are currently using Harbor version 1.5.2. A recent update to Harbor breaks the API.
+        - |
+          helm upgrade --install --namespace harbor \
+          --wait -f {{.dir_lagoon}}/harbor-values.yaml --version=1.5.2 \
+          harbor harbor/harbor
+      preconditions:
+      - sh: "[ ! -z ${HARBOR_ADMIN_PASS} ]"
+        msg: "Could not extract the password for the Harbor admin from keyvault."
+
+    lagoon:provision:remote:
+      deps: [cluster:auth]
+      desc: Install and configure Lagoon remote
+      env:
+        # Fetch a number of variables we'll need to add to a values-file.
+        SSH_LOADBALANCER_IP:
+          sh: kubectl get -o jsonpath='{.status.loadBalancer.ingress[0].ip}' -n lagoon-core service lagoon-core-ssh
+        RABBITMQ_PASS:
+          sh: kubectl -n lagoon-core get secret lagoon-core-broker -o jsonpath="{.data.RABBITMQ_PASSWORD}" | base64 -d
+        HARBOR_ADMIN_PASS:
+          sh: az keyvault secret show --subscription "{{.AZURE_SUBSCRIPTION_ID}}" --name $(terraform -chdir={{.dir_infra}} output -json | jq --raw-output ".harbor_admin_pass_key_name.value") --vault-name $(terraform -chdir={{.dir_infra}} output -json | jq --raw-output ".keyvault_name.value") --query value -o tsv
+        SQL_HOSTNAME:
+          sh: terraform -chdir={{.dir_infra}} output -json | jq --raw-output ".sql_hostname.value"
+        SQL_SERVERNAME:
+          sh: terraform -chdir={{.dir_infra}} output -json | jq --raw-output ".sql_servername.value"
+        SQL_USER:
+          sh: terraform -chdir={{.dir_infra}} output -json | jq --raw-output ".sql_user.value"
+        SQL_PASSWORD:
+          sh: az keyvault secret show --subscription "{{.AZURE_SUBSCRIPTION_ID}}" --name $(terraform -chdir={{.dir_infra}} output -json | jq --raw-output ".sql_password_key_name.value") --vault-name $(terraform -chdir={{.dir_infra}} output -json | jq --raw-output ".keyvault_name.value") --query value -o tsv
+      cmds:
+        # Render the variables we've collected into a values file we can install.
+        - |
+          envsubst '$SSH_LOADBALANCER_IP $RABBITMQ_PASS $HARBOR_ADMIN_PASS $SQL_HOSTNAME $SQL_SERVERNAME $SQL_USER $SQL_PASSWORD' \
+          < "{{.dir_lagoon}}/lagoon-remote-values.template.yaml" \
+          > "{{.dir_lagoon}}/lagoon-remote-values.yaml"
+        # Setup the namespace manually to control eg. labels on the namespace.
+        - kubectl apply -f {{.dir_lagoon}}/lagoon-remote-namespace.yaml
+        # Add the lagoon helm repo and install or upgrade the chart.
+        - helm repo add lagoon https://uselagoon.github.io/lagoon-charts/
+        - |
+          helm upgrade --install --namespace lagoon \
+          -f {{.dir_lagoon}}/lagoon-remote-values.yaml lagoon-remote \
+          lagoon/lagoon-remote
+      preconditions:
+      - sh: "[ ! -z ${RABBITMQ_PASS} ]"
+        msg: "Could not extract the password for the rabbitmq admin from Kubernetes."
+      - sh: "[ ! -z ${SSH_LOADBALANCER_IP} ]"
+        msg: "Could not determine IP of the load balancer. The lagoon-core/lagoon-core-ssh service may not have been provisioned yet."
+      - sh: "[ ! -z ${HARBOR_ADMIN_PASS} ]"
+        msg: "Could not extract the password for the Harbor admin from keyvault."
+
+
+    lagoon:add:cluster:
+      deps: [cluster:auth]
+      desc: Add a Kubernetes cluster (Lagoon Remote) to the Lagoon Core.
+      summary: |
+       You must provide a valid barerer token for a lagoon user via the USER_TOKEN environment variable.
+       It can be found under the token property in $HOME/.lagoon.yml after you've done a lagoon login
+
+      vars:
+        # Collect the values we'll need for a graphql invocation.
+        lagoon_hostname_api:
+          sh: terraform -chdir={{.dir_infra}} output -json | jq --raw-output ".lagoon_hostname_api.value"
+        cluster_api_url:
+          sh: terraform -chdir={{.dir_infra}} output -json | jq --raw-output ".cluster_api_url.value"
+        lagoon_domain_base:
+          sh: terraform -chdir={{.dir_infra}} output -json | jq --raw-output ".lagoon_domain_base.value"
+        builddeploy_token:
+          sh: "kubectl -n lagoon describe secret $(kubectl -n lagoon get secret | grep kubernetes-build-deploy | awk '{print $1}') | grep token: | awk '{print $2}'"
+
+        # Prepare the mutation.
+        mutation: |
+          {
+          "query": "mutation addKubernetes {
+              addKubernetes(input:
+                {
+                  id: 1,
+                  name: \"lagoon\",
+                  consoleUrl: \"{{.cluster_api_url}}\",
+                  token: \"{{.builddeploy_token}}\",
+                  routerPattern: \"${environment}.${project}.{{.lagoon_domain_base}}\"
+                }
+              )
+              {id}
+            }"
+          }
+
+      # Send the mutation request against graphql, using the bearer token passed
+      # by the user.
+      cmds:
+        - |
+          curl \
+            -H 'Content-Type: application/json' \
+            -H "Authorization: Bearer {{.USER_TOKEN}}" \
+            -d '{{.mutation | replace "\n" ""}}' \
+            https://{{.lagoon_hostname_api}}/graphql
+
+      preconditions:
+      - sh: "[ ! -z {{.lagoon_hostname_api}} ]"
+        msg: "Could not determine the api hostname for Lagoon from Kubernetes"
+      - sh: "[ ! -z {{.cluster_api_url}} ]"
+        msg: "Could not determine the hostname for the Kubernetes API"
+      - sh: "[ ! -z {{.lagoon_domain_base}} ]"
+        msg: "Could not determine the Lagoon base domain"
+      - sh: "[ ! -z {{.builddeploy_token}} ]"
+        msg: "Could not determine the build-deploy token from Kubernetes"
+      - sh: "[ ! -z {{.USER_TOKEN}} ]"
+        msg: "Missing USER_TOKEN"
+
+    lagoon:project:add:
+      deps: [cluster:auth]
+      desc: Add a project to a lagoon remote
+      vars:
+        ssh_loadbalancer_ip:
+          sh: kubectl get -o jsonpath='{.status.loadBalancer.ingress[0].ip}' -n lagoon-core service lagoon-core-ssh
+
+      cmds:
+        # We assume that there will only be a single remote pr core, so we
+        # hardcode --openshift (aka remote) to 1.
+        - |
+            lagoon add project \
+            --gitUrl {{.GIT_URL}} \
+            --openshift 1 \
+            --productionEnvironment main \
+            --branches "^(main|develop)$" \
+            --project {{.PROJECT_NAME}}
+      preconditions:
+      - sh: "[ ! -z {{.GIT_URL}} ]"
+        msg: "Env variable GIT_URL is not set or empty."
+      - sh: "[ ! -z {{.PROJECT_NAME}} ]"
+        msg: "Env variable PROJECT_NAME is not set or empty."
+
 
     support:provision:bulk-storage:
       deps: [cluster:auth]

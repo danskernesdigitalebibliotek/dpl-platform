@@ -14,7 +14,7 @@ Inspect [outputs.tf](./dpl-platform-environment/outputs.tf) for a list of output
 
 Inspect the individual module files for documentation of the resources.
 
-The following diagram depicts (amonst other things) the provisioned resources.
+The following diagram depicts (amongst other things) the provisioned resources.
 Consult the [platform environment documentation](../../../documentation/platform-environment.md) for more details on the role the various resources
 plays.
 ![](../../../documentation/diagrams/render-png/dpl-platform-azure.png)

@@ -58,3 +58,33 @@ resource "azurerm_kubernetes_cluster" "cluster" {
     }
   }
 }
+
+# Add a default nodepool.
+resource "azurerm_kubernetes_cluster_node_pool" "default" {
+  name                  = "default"
+  kubernetes_cluster_id = azurerm_kubernetes_cluster.cluster.id
+  vnet_subnet_id        = azurerm_subnet.aks.id
+  availability_zones = [
+    "1",
+  ]
+
+  # This is the default. The value could be increased in the future if our
+  # workloads are small enough.
+  # Be aware that changing this value will destroy and recreate the nodepool.
+  max_pods = 60
+
+  vm_size = var.node_pool_default_vm_sku
+
+  # Enable autoscaling.
+  enable_auto_scaling = true
+  min_count           = var.node_pool_default_count_min
+  max_count           = var.node_pool_default_count_max
+  node_count          = var.node_pool_default_count_min
+
+  lifecycle {
+    ignore_changes = [
+      # Changed by the autoscaler, so we need to ignore it.
+      node_count
+    ]
+  }
+}

@@ -15,6 +15,11 @@ if [[ -d /home/dplsh/.azure-host ]] ; then
     rsync -a --exclude=logs --exclude=commands --exclude=telemetry /home/dplsh/.azure-host/ /home/dplsh/.azure/
 fi
 
+if [[ -d /home/dplsh/.ssh-host ]] ; then
+    mkdir -p /home/dplsh/.ssh
+    rsync -a --exclude=commands /home/dplsh/.ssh-host/ /home/dplsh/.ssh/
+fi
+
 PATH=${PATH}:${HOME}/bin
 export PATH
 
