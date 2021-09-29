@@ -21,6 +21,8 @@ vars:
   dir_configuration: "environments/{{.platform_env}}/configuration"
   # Root of the lagoon-configurations for the environment.
   dir_lagoon: "environments/{{.platform_env}}/lagoon"
+  # The suffix domain we will use when constructing urls
+  global_environment_suffix: "dpl.reload.dk"
 
 tasks:
     default:
@@ -120,8 +122,8 @@ tasks:
 
       cmds:
         - |
-            lagoon config add --graphql https://api.lagoon.{{.platform_env}}.dpl.reload.dk/graphql \
-            --ui https://ui.lagoon.{{.platform_env}}.dpl.reload.dk \
+            lagoon config add --graphql https://api.lagoon.{{.platform_env}}.{{.global_environment_suffix}}/graphql \
+            --ui https://ui.lagoon.{{.platform_env}}.{{.global_environment_suffix}} \
             --hostname {{.ssh_loadbalancer_ip}} \
             --port 22 \
             --lagoon {{.platform_env}}
