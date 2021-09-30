@@ -6,7 +6,7 @@ version: '3'
 
 # Pull in defaults that are used across the tasks.
 dotenv:
-  - "defaults.env"
+  - "task/defaults.env"
 
 # Any task that uses these variables must have a dependency on the _req_env
 # task.
@@ -69,7 +69,7 @@ tasks:
       env:
         DIFF: "{{.should_diff}}"
       cmds:
-        - scripts/provision-cert-manager.sh
+        - task/scripts/provision-cert-manager.sh
 
     support:provision:ingress-nginx:
       deps: [cluster:auth]
@@ -81,7 +81,7 @@ tasks:
         RESOURCE_GROUP:
           sh: terraform  -chdir={{.dir_infra}} output -json | jq --raw-output ".resourcegroup_name.value"
       cmds:
-        - scripts/provision-ingress-nginx.sh
+        - task/scripts/provision-ingress-nginx.sh
 
     lagoon:provision:core:
       deps: [cluster:auth]
@@ -294,7 +294,7 @@ tasks:
         RESOURCE_GROUP:
           sh: terraform  -chdir={{.dir_infra}} output -json | jq --raw-output ".resourcegroup_name.value"
       cmds:
-        - scripts/provision-bulk-storage.sh
+        - task/scripts/provision-bulk-storage.sh
 
     support:provision:
       deps: [cluster:auth]

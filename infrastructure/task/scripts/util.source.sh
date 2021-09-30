@@ -5,7 +5,7 @@
 function getEnvDir() {
   local env="${DPLPLAT_ENV:-}"
   local env_dir
-  env_dir=$(realpath "${SCRIPT_DIR}/../environments/${env}")
+  env_dir=$(realpath "${SCRIPT_DIR}/../../environments/${env}")
   if [[ ! -d "${env_dir}" ]]; then
     echo "${env_dir} does not exist"
     exit 1

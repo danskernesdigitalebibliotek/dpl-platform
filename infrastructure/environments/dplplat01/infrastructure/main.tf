@@ -1,7 +1,7 @@
 data "azurerm_client_config" "current" {}
 
 module "environment" {
-  source           = "../../../modules/dpl-platform-environment"
+  source           = "../../../terraform-modules/dpl-platform-environment"
   environment_name = "dplplat01"
   # This variable current _has_ to match the pattern
   # <environment_name>.dpl.reload.dk
