@@ -1,140 +1,22 @@
-# DPL Platform Infrastructure
-This directory contains the Infrastructure as Code and scripts that are used
-for maintaining the infrastructure-component that each platform environment
-consists of.
+# Terraform
 
-## Directory layout
-* [environments/](environments): contains a directory for each platform environment.
-* [modules/](modules): The Terraform modules used to provision infrastructure for the
-  individual environments.
-* [scripts/](scripts): Shell-scripts used to perform the automation. The recommended way
-   to invoke these is via task.
-* [Taskfile.yml](Taskfile.yml): The [task](https://taskfile.dev) configuration. Invoke `task`
-  to get a list of targets.
-
-### Environments
-The `environments` directory contains a subdirectory for each platform
-environment, and each directory has two subdirectories:
-* `environments/<name>/infrastructure`: contains the terraform files needed to
-   provision the basic infrastructure components that the platform requires.
-* `environments/<name>/configuration`: contains the various configurations the
-  applications that are installed on top of the infrastructure requires.
-
-## Day to day use
-
-Prerequisites:
-* An properly authenticated azure CLI (`az`). See the section on initial
-  Terraform setup for more details on the requirements
-
-To provision/configure a given environment we use the [DPL shell](../../../dpl-platform/tools/dplsh)
-which comes with all the tools we need. While it is possible to run the
-commands described below outside of the shell, it is not supported.
-
-First `cd` to the `infrastructure/terraform`, then launch the shell.
-
-The shell will now launch, and authenticate against Azure.
-
-While inside the shell, use `DPLPLAT_ENV=<name> task` to run the pieces of
-automation you need.
-
-Running `task` without any arguments will yield a list of targets.
-
-```shell
-$ cd infrastructure/terraform
-$ dplsh
-dplsh:~/host_mount$ DPLPLAT_ENV=dplplat01 task ...
-
-# Eg.
-dplsh:~/host_mount$ DPLPLAT_ENV=dplplat01 task infra:provision
-```
-
-Any applied changes is persisted into the environments remote state-file. This
-means that you should be careful to coordinate when you commit changes to
-`.tf` files to git with when they are applied. For dev/test environments it is
-generally acceptable to `apply` and then commit when everything is applied
-correctly. For test/production environments a more rigorous process with a
-review of plans may be advisable.
-
-## Setting up a new environment
-
-The easiest way to set up a new environment is to create a new `environments/<name>`
-directory and copy the contents of an existing environment replacing any
-references to the previous environment with a new value corresponding to the new
-environment.
-
-### Provisioning infrastructure
-When you have prepared the environment directory, launch `dplsh` and go through
-the following steps to provision the infrastructure:
-
-```shell
-# We export the variable to simplify the example, you can also specify it inline.
-export DPLPLAT_ENV=dplplat01
-
-# Provision the Azure resources
-task infra:provision
-
-# Provision the support software that the Platform relies on
-task support:provision
-```
-### Installing and configuring Lagoon
-The previous step has established the raw infrastructure and the Kubernetes support
-projects that Lagoon needs to function. You can proceed to follow the [official
-Lagoon installation procedure](https://docs.lagoon.sh/lagoon/using-lagoon-advanced/installing-lagoon-into-existing-kubernetes-cluster).
-
-The execution of the individual steps of the guide has been somewhat automated,
-the following describes how to use the automation, make sure to follow along
-in the official documentation to understand the steps and some of the
-additional actions you have to take.
-
-```shell
-# The following must be carried out from within dplsh, launched as described
-# in the previous step including the definition of DPLPLAT_ENV.
-
-# Provision a lagoon core into the cluster. You can skip the steps about
-# email setup as we currently do not support sending emails.
-task lagoon:provision:core
-
-# Configure the CLI (the cli itself has already been installed)
-# First you must access the lagoon UI and add the ssh-key you wish to use for the
-# admin-account. Consult the official guide for the steps.
-# Then:
-task lagoon:cli:config
-
-# You can now add additional users, this step is currently skipped.
-
-# Install Harbor.
-# Skip the step that asks you to update the lagoon-core release with the
-# credentials for Harbor as we've already set that ahead of time.
-task lagoon:provision:harbor
-
-# Install a Lagoon Remote into the cluster
-task lagoon:provision:remote
-
-# Register the cluster administered by the Remote with Lagoon Core
-# Notice that you must provide a bearer token via the USER_TOKEN environment-
-# variable. The token can be found in $HOME/.lagoon.yml after a successful
-# "lagoon login"
-USER_TOKEN=<token> task lagoon:add:cluster:
-```
-The Lagoon core has now been installed, and the remote registered with it.
-
-You can now proceed to adding projects.
-
-### Adding a project to Lagoon.
-See "Add a Project" in [the official documentation](https://docs.lagoon.sh/lagoon/using-lagoon-advanced/installing-lagoon-into-existing-kubernetes-cluster#add-a-project).
+This directory contains the configuration and tooling we use to support our
+use of terraform.
 
 ## The Terraform setup
+
 The setup keeps a single terraform-state pr. environment. Each state is kept as
 separate blobs in a Azure Storage Account.
 
-![](../../documentation/diagrams/render-png/terraform_overview.png)
+![](../../../../documentation/diagrams/render-png/terraform_overview.png)
 
 Access to the storage account is granted via a Storage Account Key which is
-kept in a Azure Keyvault in the same resource-group. The keyvault, storage account
+kept in a Azure Key Vault in the same resource-group. The key vault, storage account
 and the resource-group that contains these resources are the only resources
 that are not provisioned via Terraform.
 
 ### Initial setup of Terraform
+
 The following procedure must be carried out before the first environment can be
 created.
 
@@ -151,7 +33,7 @@ run successfully it outputs instructions for how to set up a terraform module
 that uses the newly created storage-account for state-tracking.
 
 As a final step you must grant any administrative users that are to use the setup
-permission to read from the created keyvault.
+permission to read from the created key vault.
 
 ### Dnsimple
 
@@ -159,13 +41,14 @@ The setup uses an integration with DNSimple to set a domain name when the
 environments ingress ip has been provisioned. To use this integration first
 [obtain a api-key](https://support.dnsimple.com/articles/api-access-token/) for
 the DNSimple account. Then use `scripts/add-dnsimple-apikey.sh` to write it to
-the setups KeyVault and finally add the following section to `.dplsh.profile` (
-get the subscription id and keyvault name from existing export for `ARM_ACCESS_KEY`).
+the setups Key Vault and finally add the following section to `.dplsh.profile` (
+get the subscription id and key vault name from existing export for `ARM_ACCESS_KEY`).
 
 ```shell
-export DNSIMPLE_TOKEN=$(az keyvault secret show --subscription "<subscriptionid>" --name dnsimple-api-key --vault-name <keyvault-name> --query value -o tsv)
+export DNSIMPLE_TOKEN=$(az keyvault secret show --subscription "<subscriptionid>" --name dnsimple-api-key --vault-name <key vault-name> --query value -o tsv)
 export DNSIMPLE_ACCOUNT="<dnsimple-account-id>"
 ```
+
 ### Terraform Setups
 
 A setup is used to manage a set of environments. We currently have a single that
@@ -175,20 +58,38 @@ manages all environments.
 
 - Name: alpha
 - Resource-group: rg-tfstate-alpha
-- KeyVault name: kv-dpltfstatealpha001
+- Key Vault name: kv-dpltfstatealpha001
 - Storage account: stdpltfstatealpha001
 
 ## Terraform Modules
 
-We use a root "environment" module pr environment which in turn uses our main
+### Environment modules
+We use a root "environment" module pr. environment which in turn uses our main
 platform module for provisioning.
 
-Consult the general [environment documentation](../../documentation/platform-environment.md)
+Consult the general [environment documentation](../../../../dpl-platform-poc/infrastructure/platform-environment.md)
 for descriptions on which resources you can expect to find in an environment and
 how they are used.
 
 Consult the [environment overview](environments/README.md) for an overview of
 environments.
 
-Consult the [module overview](modules/README.md) for an overview over our
-modules.
+Each environment root-module uses a shared module for provisioning the actual
+environment.
+
+### DPL Platform Terraform Module
+
+The [dpl-platform-environment](./dpl-platform-environment) Terraform module
+provisions all resources that are required for a single DPL Platform Environment.
+
+Inspect [variables.tf](./dpl-platform-environment/variables.tf) for a description of the required module-
+variables.
+
+Inspect [outputs.tf](./dpl-platform-environment/outputs.tf) for a list of outputs.
+
+Inspect the individual module files for documentation of the resources.
+
+The following diagram depicts (amongst other things) the provisioned resources.
+Consult the [platform environment documentation](../../../../documentation/platform-environment.md) for more details on the role the various resources
+plays.
+![](../../../../documentation/diagrams/render-png/dpl-platform-azure.png)
