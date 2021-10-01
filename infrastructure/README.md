@@ -195,3 +195,14 @@ with the following configuration (the base-domain for the ):
 * Content type: application/json
 * Select individual events: Pushes, Pull requests
 
+### Deploy a dpl-cms release to a core test site
+Prerequisites:
+* a shell with a user that is authorized to interact with the github environment-repository in question over ssh.
+
+*Notice*: We currently do not have a flow for using Git inside dplsh. As the deployment to a site relies on Git you will have to run the following outside dplsh.
+
+The following describes how to do a simple deployment. Consult the [dpladm](dpladm) directory for more examples of how to use the various features of the deployment tool.
+```sh
+# Deploy
+SITE=<sitename> RELEASE_TAG=<dpl-cms-source-tag> task site:deploy
+```
