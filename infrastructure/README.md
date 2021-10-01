@@ -54,7 +54,9 @@ generally acceptable to `apply` and then commit when everything is applied
 correctly. For test/production environments a more rigorous process with a
 review of plans may be advisable.
 
-## Setting up a new environment
+## Setting up a new platform environment
+The following describes how to set up a whole new platform envionment to host
+multiple platform sites.
 
 The easiest way to set up a new environment is to create a new `environments/<name>`
 directory and copy the contents of an existing environment replacing any
@@ -122,5 +124,74 @@ The Lagoon core has now been installed, and the remote registered with it.
 
 You can now proceed to adding projects.
 
-### Adding a project to Lagoon.
+## Administrating sites
+
+### Add a new site
+Prerequisites:
+* A lagoon account with your ssh-key associated
+* The git-url for the sites environment repository
+* A personal access-token that is allowed to pull images from the image-registy
+  that hosts our images.
+* The URL for the environments webhook handler - consult `lagoon-core-values.template.yaml`
+  in the `infrastructure/environments/<environment>/lagoon/` folder or list the
+  ingresses in the lagoon-core namespace and locate the ingress for the
+  webhook handler.
+
 See "Add a Project" in [the official documentation](https://docs.lagoon.sh/lagoon/using-lagoon-advanced/installing-lagoon-into-existing-kubernetes-cluster#add-a-project).
+
+The following describes a semi-automated way of carrying out the same steps
+
+```sh
+# TODO
+# This is a work in progress as we refine the automation around project creation
+# and deletion. There are a lot of manuel steps as it stands right now.
+#
+$ cd infrastructure
+$ dplsh
+
+# You are assumed to be inside dplsh from now on.
+
+# Set an environment, eg dplplat01
+$ export DPLPLAT_ENV=dplplat01
+
+# Setup access to ssh-keys so that the lagoon cli can authenticate.
+$ eval $(ssh-agent); ssh-add
+
+# Authenticate against lagoon
+$ task lagoon:cli:config
+
+# Add a project
+# lagoon add project --gitUrl <url> --openshift 1 --project core_test1 --productionEnvironment main --branches '^(main)$'
+$ lagoon add project --gitUrl git@github.com:danskernesdigitalebibliotek/dpl-platform-env-core_test1.git \
+--openshift 1 --productionEnvironment main --branches '^(main)$' --project core_test1
+
+# The project is added, and a deploymentkey is printed - add it to the github
+# repository.
+
+# Configure image registry crendentials:
+# First get a user token
+# Refresh it
+$ lagoon login
+# Then get it from ~/.lagoon.yml
+$ cat ~/.lagoon.yml
+$ export USER_TOKEN=<token>
+# Then export a github personal access-token with pull access
+$ export REGISTRY_PASSWORD=<github pat>
+# Then get the project id by listing your projects
+$ lagoon list projects
+# Finally, add the credentials
+$ PROJECT_ID=<project id> task lagoon:add:registry-credentials
+# If you get a "Invalid Auth Token" your token has probably expired, genereate a
+# new with "lagoon login" and try again.
+
+# Then trigger a deployment
+# lagoon deploy branch -p <project-name> -b <branch>
+$ lagoon deploy branch -p core-test1 -b main
+```
+If everything works, configure the repository to react to webhook events.
+Access the "Settings -> Webhooks" page on the repository, and add a new webhook
+with the following configuration (the base-domain for the ):
+* Payload URL: https://webhookhandler.lagoon.<environment base domain>
+* Content type: application/json
+* Select individual events: Pushes, Pull requests
+
