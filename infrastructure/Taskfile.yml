@@ -308,6 +308,13 @@ tasks:
         - task: support:provision:ingress-nginx
         - task: support:provision:bulk-storage
 
+    site:deploy:
+      desc: Runs the a dpladm deploy of a site
+      summary: Run the task without additional variables to see required arguments
+      dir: "dpladm"
+      cmds:
+        - bin/deploy-release.sh
+
     _req_env:
       preconditions:
       - sh: "[ ! -z {{.DPLPLAT_ENV}} ]"
