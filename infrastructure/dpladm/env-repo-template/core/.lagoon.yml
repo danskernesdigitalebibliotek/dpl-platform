@@ -1,0 +1,42 @@
+docker-compose-yaml: docker-compose.yml
+
+project: ${LAGOON_PROJECT_NAME}
+
+tasks:
+  post-rollout:
+    - run:
+        name: If drupal is not installed
+        command: |
+            if tables=$(drush sqlq "show tables like 'node';") && [ -z "$tables" ]; then
+                drush si -y
+            fi
+        service: cli
+        shell: bash
+    - run:
+        name: drush deploy
+        command: |
+            if [[ -d ../config ]]; then
+                echo "Config detected, doing a drush deploy"
+                drush deploy
+            else
+                echo "No config detected, clearing cache"
+                drush cr
+            fi
+        service: cli
+
+environments:
+  mains:
+    # routes:
+    cronjobs:
+      - name: drush cron
+        schedule: "*/15 * * * *"
+        command: drush cron
+        service: cli
+
+container-registries:
+  github:
+    username: any-user-works
+    # The password gets replaced with the value of an lagoon project environment-
+    # variable during lagoons build/deploy process.
+    password: GITHUB_REGISTRY_CREDENTIALS
+    url: ghcr.io

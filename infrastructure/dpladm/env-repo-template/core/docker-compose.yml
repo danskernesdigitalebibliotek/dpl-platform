@@ -1,0 +1,32 @@
+version: '2.3'
+
+services:
+  cli: # cli container, will be used for executing composer and any local commands (drush, drupal, etc.)
+    build:
+      dockerfile: lagoon/cli.dockerfile
+    labels:
+      # Lagoon Labels
+      lagoon.type: cli-persistent
+      lagoon.persistent.name: nginx # mount the persistent storage of nginx into this container
+      lagoon.persistent: /app/web/sites/default/files/ # location where the persistent storage should be mounted
+
+  nginx:
+    build:
+      context: .
+      dockerfile: lagoon/nginx.dockerfile
+    labels:
+      lagoon.type: nginx-php-persistent
+      lagoon.persistent: /app/web/sites/default/files/ # define where the persistent storage should be mounted too
+
+  php:
+    build:
+      context: .
+      dockerfile: lagoon/php.dockerfile
+    labels:
+      lagoon.type: nginx-php-persistent
+      lagoon.name: nginx # we want this service be part of the nginx pod in Lagoon
+      lagoon.persistent: /app/web/sites/default/files/ # define where the persistent storage should be mounted too
+
+  mariadb:
+    labels:
+      lagoon.type: mariadb

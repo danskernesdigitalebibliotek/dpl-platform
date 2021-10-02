@@ -1,0 +1,160 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+ENVIRONMENT_REPO_ORG=danskernesdigitalebibliotek
+LAGOON_IMAGES_RELEASE_TAG="21.9.0"
+
+function getRepoName {
+  echo "dpl-platform-env-${1}"
+}
+
+# Get the absolute path to a profile template directory
+function getProfileTemplatePath {
+  local profile=$1
+
+  local scriptDir
+  scriptDir="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+
+
+  local relativePath="${scriptDir}/../env-repo-template/$profile"
+  local profileTemplatePath
+  profileTemplatePath=$(realpath "${relativePath}")
+  if [[ ! -d "${profileTemplatePath}" ]]; then
+    # If we run in to problems, make sure to output the relative path as it
+    # will be more informative.
+    echo "Could not find profile template at ${relativePath}"
+    exit 1
+  fi
+
+  echo "${profileTemplatePath}"
+}
+
+# Get the absolute path to the directory we should be using for our work.
+# Will make sure the directory exists and that it is empty.
+function getCleanWorkspacePath {
+  # TODO, we could be using a real tempdir here, but for now it seems like a
+  # good idea to have the files lying around after the run for easier debugging.
+  local scriptDir
+  scriptDir="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+  local workspacePath
+  workspacePath=$(realpath "${scriptDir}/../workspace")
+  # Clear out any existing directory.
+  if [[ -d "${workspacePath}" ]]; then
+    rm -fr "${workspacePath}"
+  fi
+  mkdir -p "${workspacePath}"
+  echo "${workspacePath}"
+}
+
+# This function assumes working directory is in a root of a un-rendered profile template.s
+function renderProfileTemplate {
+  local siteName=$1
+  local releaseTag=$2
+
+  # TODO, we could probably do with a repo-wide search replace of variables.
+  # Something https://github.com/kreuzwerker/envplate could do the trick
+  # Export our globals and locals so that envubst can access them
+  export DPL_CMS_RELEASE_IMAGE=dpl-cms-source
+  export DPL_CMS_RELEASE_TAG="${releaseTag}"
+  export LAGOON_PROJECT_NAME="${siteName}"
+  export LAGOON_IMAGES_RELEASE_TAG
+
+  # TODO this templating could be quite a bit more flexible.
+  # Tell envsubst which variables to replace. This allows other variables to
+  # remain untouched.
+  # shellcheck disable=SC2016
+  local variablesToSubst='$DPL_CMS_RELEASE_IMAGE $DPL_CMS_RELEASE_TAG $LAGOON_IMAGES_RELEASE_TAG $LAGOON_PROJECT_NAME'
+
+  # Loop through the files we know to contain variables that needs replacing.
+  local templateFiles=(
+    ".lagoon.yml"
+    "lagoon/cli.dockerfile"
+    "lagoon/nginx.dockerfile"
+    "lagoon/php.dockerfile"
+    "README.md"
+  )
+  for templateFile in "${templateFiles[@]}"
+  do
+      envsubst "${variablesToSubst}" < "${templateFile}" > "${templateFile}.render"
+      mv "${templateFile}.render" "${templateFile}"
+  done
+
+}
+
+# Renders deployment-configurations to a sites environment-repository.
+function deploy {
+  local siteName=$1
+  local releaseTag=$2
+  local branchName=$3
+
+  # TODO, preflight checks that verifies this repository looks good to go.
+  # makes most sense to do when we're doing more complicated things inside
+  # the repository. At the very least we should verify that this actually
+  # looks like an environment-repo.
+
+  # TODO, determine profile type and act accordingly
+  # The site profil is used to determine whether we should refer to an
+  # downstream image, or use core.
+  local siteProfile="core"
+
+  local repoName
+  repoName=$(getRepoName "${siteName}")
+
+  # Move in to our workspace.
+  local workspace
+  workspace="$(getCleanWorkspacePath)"
+  cd "${workspace}"
+
+  # Fetch a clone of the environment repo.
+  local repoPath="${ENVIRONMENT_REPO_ORG}/${repoName}"
+  echo "** Cloning branch ${branchName} of env-repo ${repoPath} for ${siteName}"
+  git clone --depth 1 "git@github.com:${repoPath}.git" -b "${branchName}"
+
+  # Clear out any previous content and replace it with a unrendered template.
+  mv "${repoName}/.git" ./
+  rm -fr "${repoName}"
+  cp -r "$(getProfileTemplatePath $siteProfile)" "${repoName}"
+  mv .git "${repoName}"
+  # We now have a repository with a diff from <previous revision>...<unrendered template>
+
+  # Enter the template and rendered it
+  cd "${repoName}"
+  renderProfileTemplate "${siteName}" "${releaseTag}"
+
+  # Detect changes
+  local changedFiles
+  changedFiles="$(git status --porcelain)"
+  if [[ -z "${changedFiles}" && "${FORCE:-}" != "1" ]]; then
+    echo "No changes found, aborting deployment"
+    return
+  fi
+
+  # Our diff should now be minimal, potentially only the updated tag.
+  # First store the sha for potential diffing
+  local previousSha
+  previousSha="$(git rev-parse HEAD)"
+
+  if [[ -n "${changedFiles}" ]]; then
+    git add .
+    git commit -m "Deploying release ${releaseTag} to ${branchName}"
+  else
+    git commit --allow-empty -m "Deploying release ${releaseTag} to ${branchName} (no changes)"
+  fi
+
+  local newSha
+  newSha="$(git rev-parse HEAD)"
+
+  if [[ "${DIFF:-}" == "1" ]]; then
+    echo "In diff-mode, skipping push."
+    echo
+    echo "Git diff between ${previousSha} and ${newSha}:"
+    git diff "${previousSha}...${newSha}"
+    echo
+    echo "You can inspect the unpushed repository here: ${workspace}/${repoName}"
+    return
+  fi
+
+  # Push the result.
+  git push origin "${branchName}"
+}
+
