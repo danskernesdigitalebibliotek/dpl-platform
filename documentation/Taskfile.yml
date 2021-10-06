@@ -9,14 +9,12 @@ tasks:
     cmds:
       - mkdir -p diagrams/render-png
       - mkdir -p diagrams/render-svg
-      - mkdir -p diagrams/render-pdf
 
   clean:
     desc: Delete all rendered diagrams
     cmds:
       - rm -fr diagrams/render-png
       - rm -fr diagrams/render-svg
-      - rm -fr diagrams/render-pdf
 
   render:
     desc: Render all diagrams
@@ -53,7 +51,7 @@ tasks:
           -verbose -tsvg -o render-svg *.puml
 
   render:drawio:
-    desc: Render svg, png and pdf versions drawio diagrams
+    desc: Render svg and png versions drawio diagrams
     deps: [_mkdir]
     cmds:
       - |
@@ -63,7 +61,3 @@ tasks:
       - |
         docker run \
           -v "${PWD}/diagrams:/data" rlespinasse/drawio-export:{{.DRAWIO_EXPORT_VERSION}} --remove-page-suffix --format svg --output render-svg --scale 2
-
-      - |
-        docker run \
-          -v "${PWD}/diagrams:/data" rlespinasse/drawio-export:{{.DRAWIO_EXPORT_VERSION}} --remove-page-suffix --format pdf --output render-pdf --scale 2
