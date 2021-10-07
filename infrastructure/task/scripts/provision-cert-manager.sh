@@ -42,7 +42,7 @@ handleApplyDiffExit $?
 set -e
 
 # Install the Helm repo, we'll need this regardless of whether we're diffing.
-helm repo add jetstack https://charts.jetstack.io
+setupHelmRepo jetstack https://charts.jetstack.io
 
 isDiffing && echo " > Diffing release"
 # shellcheck disable=SC2086 # We need diff_or_nothing to be unquoted
