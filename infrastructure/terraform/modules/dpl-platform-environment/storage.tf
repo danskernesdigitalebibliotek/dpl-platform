@@ -5,7 +5,7 @@ resource "random_id" "storage_account" {
 }
 
 # Setup a storage-account we can use to host file-shares needed by the platform-
-# sites, as well as logs.
+# sites.
 resource "azurerm_storage_account" "storage" {
   name                     = "stdpl${var.environment_name}${random_id.storage_account.hex}"
   resource_group_name      = azurerm_resource_group.rg.name

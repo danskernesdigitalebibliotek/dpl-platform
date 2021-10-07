@@ -1,0 +1,6 @@
+# See https://github.com/grafana/helm-charts/blob/main/charts/promtail/values.yaml
+# for default values.
+config:
+  # -- The Loki address to post logs to.
+  # The service "loki" deployed in the "loki" namespace.
+  lokiAddress: http://loki.loki.svc.cluster.local:3100/loki/api/v1/push

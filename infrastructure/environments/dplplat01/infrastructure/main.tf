@@ -1,19 +1,23 @@
 data "azurerm_client_config" "current" {}
 
 module "environment" {
-  source           = "../../../terraform-modules/dpl-platform-environment"
+  source           = "../../../terraform/modules/dpl-platform-environment/"
   environment_name = "dplplat01"
   # This variable current _has_ to match the pattern
   # <environment_name>.dpl.reload.dk
   lagoon_domain_base          = "dplplat01.dpl.reload.dk"
   random_seed                 = "LahYegheePhohGeew9Fa"
   node_pool_system_count      = 1
-  node_pool_default_count_min = 1
+  node_pool_default_count_min = 2
   node_pool_default_count_max = 5
 }
 
 # Outputs, for values that comes straight from the dpl-platform-environment
 # module, please refer to its documentation in the module.
+output "cluster_api_url" {
+  value = module.environment.cluster_api_url
+}
+
 output "cluster_name" {
   value = module.environment.cluster_name
 }
@@ -36,6 +40,26 @@ output "harbor_admin_pass_key_name" {
 
 output "keycloak_admin_pass_key_name" {
   value = module.environment.keycloak_admin_pass_key_name
+}
+
+output "lagoon_domain_base" {
+  value = module.environment.lagoon_domain_base
+}
+
+output "monitoring_storage_account_name" {
+  value = module.environment.monitoring_storage_account_name
+}
+
+output "monitoring_primary_access_key_name" {
+  value = module.environment.monitoring_primary_access_key_name
+}
+
+output "monitoring_secondary_access_key_name" {
+  value = module.environment.monitoring_secondary_access_key_name
+}
+
+output "monitoring_blob_storage_container_name" {
+  value = module.environment.monitoring_blob_storage_container_name
 }
 
 output "resourcegroup_name" {
@@ -70,12 +94,4 @@ output "sql_password_key_name" {
 
 output "lagoon_hostname_api" {
   value = module.environment.lagoon_hostname_api
-}
-
-output "cluster_api_url" {
-  value = module.environment.cluster_api_url
-}
-
-output "lagoon_domain_base" {
-  value = module.environment.lagoon_domain_base
 }
