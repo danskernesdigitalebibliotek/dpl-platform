@@ -51,9 +51,9 @@ tasks:
         dir: "{{.dir_infra}}"
         vars:
           CLUSTER_NAME:
-            sh: terraform output -json | jq --raw-output ".cluster_name.value"
+            sh: terraform output -json | jq --raw-output ".cluster_name.value | select (.!=null)"
           RESOURCEGROUP_NAME:
-            sh: terraform output -json | jq --raw-output ".resourcegroup_name.value"
+            sh: terraform output -json | jq --raw-output ".resourcegroup_name.value | select (.!=null)"
         status:
           - "[ $(kubectl config view --output jsonpath='{.current-context}') == '{{.CLUSTER_NAME}}' ] || exit 1"
         cmds:
@@ -77,9 +77,9 @@ tasks:
       desc: Install and configure ingress-nginx
       env:
         INGRESS_IP:
-          sh: terraform -chdir={{.dir_infra}} output -json | jq --raw-output ".ingress_ip.value"
+          sh: terraform -chdir={{.dir_infra}} output -json | jq --raw-output ".ingress_ip.value | select (.!=null)"
         RESOURCE_GROUP:
-          sh: terraform  -chdir={{.dir_infra}} output -json | jq --raw-output ".resourcegroup_name.value"
+          sh: terraform  -chdir={{.dir_infra}} output -json | jq --raw-output ".resourcegroup_name.value | select (.!=null)"
       cmds:
         - task/scripts/provision-ingress-nginx.sh
 
@@ -89,9 +89,9 @@ tasks:
       env:
         # Collect the values we'll render into the values-file for the chart.
         KEYCLOAK_ADMIN_PASS:
-          sh: az keyvault secret show --subscription "{{.AZURE_SUBSCRIPTION_ID}}" --name $(terraform -chdir={{.dir_infra}} output -json | jq --raw-output ".keycloak_admin_pass_key_name.value") --vault-name $(terraform -chdir={{.dir_infra}} output -json | jq --raw-output ".keyvault_name.value") --query value -o tsv
+          sh: az keyvault secret show --subscription "{{.AZURE_SUBSCRIPTION_ID}}" --name $(terraform -chdir={{.dir_infra}} output -json | jq --raw-output ".keycloak_admin_pass_key_name.value | select (.!=null)") --vault-name $(terraform -chdir={{.dir_infra}} output -json | jq --raw-output ".keyvault_name.value | select (.!=null)") --query value -o tsv
         HARBOR_ADMIN_PASS:
-          sh: az keyvault secret show --subscription "{{.AZURE_SUBSCRIPTION_ID}}" --name $(terraform -chdir={{.dir_infra}} output -json | jq --raw-output ".harbor_admin_pass_key_name.value") --vault-name $(terraform -chdir={{.dir_infra}} output -json | jq --raw-output ".keyvault_name.value") --query value -o tsv
+          sh: az keyvault secret show --subscription "{{.AZURE_SUBSCRIPTION_ID}}" --name $(terraform -chdir={{.dir_infra}} output -json | jq --raw-output ".harbor_admin_pass_key_name.value | select (.!=null)") --vault-name $(terraform -chdir={{.dir_infra}} output -json | jq --raw-output ".keyvault_name.value | select (.!=null)") --query value -o tsv
       cmds:
         - |
           envsubst '$HARBOR_ADMIN_PASS $KEYCLOAK_ADMIN_PASS' \
@@ -141,7 +141,7 @@ tasks:
       desc: Install an instance of Harbor into a Lagoon cluster.
       env:
         HARBOR_ADMIN_PASS:
-          sh: az keyvault secret show --subscription "{{.AZURE_SUBSCRIPTION_ID}}" --name $(terraform -chdir={{.dir_infra}} output -json | jq --raw-output ".harbor_admin_pass_key_name.value") --vault-name $(terraform -chdir={{.dir_infra}} output -json | jq --raw-output ".keyvault_name.value") --query value -o tsv
+          sh: az keyvault secret show --subscription "{{.AZURE_SUBSCRIPTION_ID}}" --name $(terraform -chdir={{.dir_infra}} output -json | jq --raw-output ".harbor_admin_pass_key_name.value | select (.!=null)") --vault-name $(terraform -chdir={{.dir_infra}} output -json | jq --raw-output ".keyvault_name.value | select (.!=null)") --query value -o tsv
 
       cmds:
         - |
@@ -171,15 +171,15 @@ tasks:
         RABBITMQ_PASS:
           sh: kubectl -n lagoon-core get secret lagoon-core-broker -o jsonpath="{.data.RABBITMQ_PASSWORD}" | base64 -d
         HARBOR_ADMIN_PASS:
-          sh: az keyvault secret show --subscription "{{.AZURE_SUBSCRIPTION_ID}}" --name $(terraform -chdir={{.dir_infra}} output -json | jq --raw-output ".harbor_admin_pass_key_name.value") --vault-name $(terraform -chdir={{.dir_infra}} output -json | jq --raw-output ".keyvault_name.value") --query value -o tsv
+          sh: az keyvault secret show --subscription "{{.AZURE_SUBSCRIPTION_ID}}" --name $(terraform -chdir={{.dir_infra}} output -json | jq --raw-output ".harbor_admin_pass_key_name.value | select (.!=null)") --vault-name $(terraform -chdir={{.dir_infra}} output -json | jq --raw-output ".keyvault_name.value | select (.!=null)") --query value -o tsv
         SQL_HOSTNAME:
-          sh: terraform -chdir={{.dir_infra}} output -json | jq --raw-output ".sql_hostname.value"
+          sh: terraform -chdir={{.dir_infra}} output -json | jq --raw-output ".sql_hostname.value | select (.!=null)"
         SQL_SERVERNAME:
-          sh: terraform -chdir={{.dir_infra}} output -json | jq --raw-output ".sql_servername.value"
+          sh: terraform -chdir={{.dir_infra}} output -json | jq --raw-output ".sql_servername.value | select (.!=null)"
         SQL_USER:
-          sh: terraform -chdir={{.dir_infra}} output -json | jq --raw-output ".sql_user.value"
+          sh: terraform -chdir={{.dir_infra}} output -json | jq --raw-output ".sql_user.value | select (.!=null)"
         SQL_PASSWORD:
-          sh: az keyvault secret show --subscription "{{.AZURE_SUBSCRIPTION_ID}}" --name $(terraform -chdir={{.dir_infra}} output -json | jq --raw-output ".sql_password_key_name.value") --vault-name $(terraform -chdir={{.dir_infra}} output -json | jq --raw-output ".keyvault_name.value") --query value -o tsv
+          sh: az keyvault secret show --subscription "{{.AZURE_SUBSCRIPTION_ID}}" --name $(terraform -chdir={{.dir_infra}} output -json | jq --raw-output ".sql_password_key_name.value | select (.!=null)") --vault-name $(terraform -chdir={{.dir_infra}} output -json | jq --raw-output ".keyvault_name.value | select (.!=null)") --query value -o tsv
       cmds:
         # Render the variables we've collected into a values file we can install.
         - |
@@ -209,11 +209,11 @@ tasks:
       vars:
         # Collect the values we'll need for a graphql invocation.
         lagoon_hostname_api:
-          sh: terraform -chdir={{.dir_infra}} output -json | jq --raw-output ".lagoon_hostname_api.value"
+          sh: terraform -chdir={{.dir_infra}} output -json | jq --raw-output ".lagoon_hostname_api.value | select (.!=null)"
         cluster_api_url:
-          sh: terraform -chdir={{.dir_infra}} output -json | jq --raw-output ".cluster_api_url.value"
+          sh: terraform -chdir={{.dir_infra}} output -json | jq --raw-output ".cluster_api_url.value | select (.!=null)"
         lagoon_domain_base:
-          sh: terraform -chdir={{.dir_infra}} output -json | jq --raw-output ".lagoon_domain_base.value"
+          sh: terraform -chdir={{.dir_infra}} output -json | jq --raw-output ".lagoon_domain_base.value | select (.!=null)"
 
         # Prepare the mutation.
         mutation: |
@@ -268,11 +268,11 @@ tasks:
       vars:
         # Collect the values we'll need for a graphql invocation.
         lagoon_hostname_api:
-          sh: terraform -chdir={{.dir_infra}} output -json | jq --raw-output ".lagoon_hostname_api.value"
+          sh: terraform -chdir={{.dir_infra}} output -json | jq --raw-output ".lagoon_hostname_api.value | select (.!=null)"
         cluster_api_url:
-          sh: terraform -chdir={{.dir_infra}} output -json | jq --raw-output ".cluster_api_url.value"
+          sh: terraform -chdir={{.dir_infra}} output -json | jq --raw-output ".cluster_api_url.value | select (.!=null)"
         lagoon_domain_base:
-          sh: terraform -chdir={{.dir_infra}} output -json | jq --raw-output ".lagoon_domain_base.value"
+          sh: terraform -chdir={{.dir_infra}} output -json | jq --raw-output ".lagoon_domain_base.value | select (.!=null)"
         builddeploy_token:
           sh: "kubectl -n lagoon describe secret $(kubectl -n lagoon get secret | grep kubernetes-build-deploy | awk '{print $1}') | grep token: | awk '{print $2}'"
 
@@ -353,11 +353,11 @@ tasks:
       desc: Install and configure a bulk storage class
       env:
         STORAGE_ACCOUNT_NAME:
-          sh: terraform -chdir={{.dir_infra}} output -json | jq --raw-output ".storage_account_name.value"
+          sh: terraform -chdir={{.dir_infra}} output -json | jq --raw-output ".storage_account_name.value | select (.!=null)"
         STORAGE_ACCOUNT_KEY:
-          sh: az keyvault secret show --subscription "{{.AZURE_SUBSCRIPTION_ID}}" --name $(terraform -chdir={{.dir_infra}} output -json | jq --raw-output ".storage_primary_access_key_name.value") --vault-name $(terraform -chdir={{.dir_infra}} output -json | jq --raw-output ".keyvault_name.value") --query value -o tsv
+          sh: az keyvault secret show --subscription "{{.AZURE_SUBSCRIPTION_ID}}" --name $(terraform -chdir={{.dir_infra}} output -json | jq --raw-output ".storage_primary_access_key_name.value | select (.!=null)") --vault-name $(terraform -chdir={{.dir_infra}} output -json | jq --raw-output ".keyvault_name.value | select (.!=null)") --query value -o tsv
         RESOURCE_GROUP:
-          sh: terraform  -chdir={{.dir_infra}} output -json | jq --raw-output ".resourcegroup_name.value"
+          sh: terraform  -chdir={{.dir_infra}} output -json | jq --raw-output ".resourcegroup_name.value | select (.!=null)"
       cmds:
         - task/scripts/provision-bulk-storage.sh
 
