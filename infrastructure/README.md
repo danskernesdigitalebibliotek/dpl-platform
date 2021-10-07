@@ -126,9 +126,34 @@ You can now proceed to adding projects.
 
 ## Administrating sites
 
-### Add a new site
+### Add a new site to the platform
+The following describes how to add a new site to the platform. In order to do
+this you need to
+* Create a github "environment" repository that contains the description of
+  what should be deployed to the environment.
+* Make the platform aware of the repository.
+* Configure the repository to trigger lagoon deployments via webhooks
+
+After these steps has been completed, you can continue to deploying to the
+site.
+
+#### Create a environment repository
 Prerequisites:
+* Administrative access to a GitHub organization in order to create the repository
+* A "machine" name for the site, the can contain a-z, 0-9 and dashes.
+
+Consult the [platform environment documentation](https://github.com/danskernesdigitalebibliotek/dpl-platform/wiki/Platform-Environments)
+to see which GitHub organization you should create the repository under.
+
+Then create a repository with the following properties
+* Name: `dpl-platform-env-<type>-<site_name>`, eg "dpl-platform-env-core-test1"
+* Access: ensure to grant the administrative personnel "admin" permission to the repository
+
+#### Add the environment repository to lagoon.
+Prerequisites:
+* An user with administrative access to the environment repository
 * A lagoon account with your ssh-key associated
+* A "machine" name for the site, the can contain a-z, 0-9 and dashes.
 * The git-url for the sites environment repository
 * A personal access-token that is allowed to pull images from the image-registy
   that hosts our images.
@@ -136,6 +161,7 @@ Prerequisites:
   in the `infrastructure/environments/<environment>/lagoon/` folder or list the
   ingresses in the lagoon-core namespace and locate the ingress for the
   webhook handler.
+* A platform environment name (Consult the [platform environment documentation](https://github.com/danskernesdigitalebibliotek/dpl-platform/wiki/Platform-Environments))
 
 See "Add a Project" in [the official documentation](https://docs.lagoon.sh/lagoon/using-lagoon-advanced/installing-lagoon-into-existing-kubernetes-cluster#add-a-project).
 
@@ -151,7 +177,9 @@ $ dplsh
 
 # You are assumed to be inside dplsh from now on.
 
-# Set an environment, eg dplplat01
+# Set an environment,
+# export DPLPLAT_ENV=<platform environment name>
+# eg.
 $ export DPLPLAT_ENV=dplplat01
 
 # Setup access to ssh-keys so that the lagoon cli can authenticate.
@@ -161,9 +189,9 @@ $ eval $(ssh-agent); ssh-add
 $ task lagoon:cli:config
 
 # Add a project
-# lagoon add project --gitUrl <url> --openshift 1 --project core_test1 --productionEnvironment main --branches '^(main)$'
-$ lagoon add project --gitUrl git@github.com:danskernesdigitalebibliotek/dpl-platform-env-core_test1.git \
---openshift 1 --productionEnvironment main --branches '^(main)$' --project core_test1
+# lagoon add project --gitUrl <url> --openshift 1 --project core-test1 --productionEnvironment main --branches '^(main)$'
+$ lagoon add project --gitUrl git@github.com:danskernesdigitalebibliotek/dpl-platform-env-core-test1.git \
+--openshift 1 --productionEnvironment main --branches '^(main)$' --project core-test1
 
 # The project is added, and a deploymentkey is printed - add it to the github
 # repository.
@@ -184,16 +212,21 @@ $ PROJECT_ID=<project id> task lagoon:add:registry-credentials
 # If you get a "Invalid Auth Token" your token has probably expired, genereate a
 # new with "lagoon login" and try again.
 
-# Then trigger a deployment
+# Optional: Trigger a deployment manually
 # lagoon deploy branch -p <project-name> -b <branch>
 $ lagoon deploy branch -p core-test1 -b main
 ```
+
+#### Configure webhooks
+Prerequisites:
+* An user with administrative access to the environment repository
+
 If everything works, configure the repository to react to webhook events.
 Access the "Settings -> Webhooks" page on the repository, and add a new webhook
 with the following configuration (the base-domain for the ):
-* Payload URL: https://webhookhandler.lagoon.<environment base domain>
-* Content type: application/json
-* Select individual events: Pushes, Pull requests
+* Payload URL: https://webhookhandler.lagoon.(environment base domain) eg. `webhookhandler.lagoon.dplplat01.dpl.reload.dk`
+* Content type: `application/json`
+* Select individual events: `Pushes, Pull requests`
 
 ### Deploy a dpl-cms release to a core test site
 Prerequisites:
@@ -206,3 +239,57 @@ The following describes how to do a simple deployment. Consult the [dpladm](dpla
 # Deploy
 SITE=<sitename> RELEASE_TAG=<dpl-cms-source-tag> task site:deploy
 ```
+
+### Removing a site from the platform
+To remove a site you need to
+* Remove the project from Lagoon
+* Delete the projects namespace from kubernetes.
+* Delete the environment repository
+* The platform environment name and github organization (Consult the [platform environment documentation](https://github.com/danskernesdigitalebibliotek/dpl-platform/wiki/Platform-Environments))
+
+Prerequisites:
+* An user with administrative access to the environment repository
+* A lagoon account with your ssh-key associated
+* A "machine" name for the site, the can contain a-z, 0-9 and dashes.
+* An properly authenticated azure CLI (`az`) that has administrative access to
+  the cluster running the lagoon installation
+
+```sh
+# Launch dplsh.
+$ cd infrastructure
+$ dplsh
+
+# You are assumed to be inside dplsh from now on.
+
+# Set an environment,
+# export DPLPLAT_ENV=<platform environment name>
+# eg.
+$ export DPLPLAT_ENV=dplplat01
+
+# Setup access to ssh-keys so that the lagoon cli can authenticate.
+$ eval $(ssh-agent); ssh-add
+
+# Authenticate against lagoon
+$ task lagoon:cli:config
+
+# Add a project
+# lagoon delete project --project <site machine-name>
+$ lagoon delete project  --project core-test1
+
+# Authenticate against kubernetes
+$ task cluster:auth
+
+# List the namespaces
+$ kubectl get ns
+
+# Identify all the project namespace with the syntax <sitename>-<branchname>
+# eg "core-test1-main" for the main branch for the "core-test1" site.
+# delete each namespace
+# kubectl delete ns <namespace>
+# eg.
+kubectl delete ns core-test1-main
+```
+
+Finally access the github organisation that hosts the environment repository and
+delete the environment-repository named * `dpl-platform-env-<type>-<site_name>`,
+ eg "dpl-platform-env-core-test1".
