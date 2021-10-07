@@ -41,7 +41,7 @@ handleApplyDiffExit $?
 set -e
 
 # Install the Helm repo, we'll need this regardless of whether we're diffing.
-helm repo add ingress-nginx https://kubernetes.github.io/ingress-nginx \
+setupHelmRepo ingress-nginx https://kubernetes.github.io/ingress-nginx
 
 # shellcheck disable=SC2016
 envsubst '$RESOURCE_GROUP $INGRESS_IP' \

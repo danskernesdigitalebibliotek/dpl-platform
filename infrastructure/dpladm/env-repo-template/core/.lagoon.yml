@@ -8,14 +8,14 @@ tasks:
         name: If drupal is not installed
         command: |
             if tables=$(drush sqlq "show tables like 'node';") && [ -z "$tables" ]; then
-                drush si -y
+                drush si --existing-config -y
             fi
         service: cli
         shell: bash
     - run:
         name: drush deploy
         command: |
-            if [[ -d ../config ]]; then
+            if [[ -f config/sync/system.site.yml ]]; then
                 echo "Config detected, doing a drush deploy"
                 drush deploy
             else

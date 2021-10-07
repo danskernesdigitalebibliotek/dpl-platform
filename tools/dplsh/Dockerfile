@@ -1,15 +1,17 @@
-# List of available tags can be found here
-# https://mcr.microsoft.com/v2/azure-cli/tags/list
-ARG AZURE_CLI_TAG=latest
 ARG DPLSH_BUILD_VERSION=latest
 
 # Use an intermediate images as a way to have dependabot track our dependency
+# https://hub.docker.com/r/alpine/helm/tags?page=1&ordering=last_updated
 FROM alpine/helm:3.7.0 as helm
+
+# https://hub.docker.com/r/hashicorp/terraform/tags?page=1&ordering=last_updated
 FROM hashicorp/terraform:1.0.8 as terraform
 
 # We use the official azure cli as a base-image. It is itself based on alpine
 # and is quite minimal.
-FROM mcr.microsoft.com/azure-cli:$AZURE_CLI_TAG
+# https://mcr.microsoft.com/v2/azure-cli/tags/list
+FROM mcr.microsoft.com/azure-cli:2.28.0
+
 ARG TASK_VERSION=v3.4.2
 ARG STERN_RELEASE=1.11.0
 ARG LAGOON_CLI_RELEASE=v0.11.6
