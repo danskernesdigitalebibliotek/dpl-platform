@@ -113,3 +113,23 @@ output "storage_share_name" {
   description = "Name of the lagoon bulk storage share"
   value       = azurerm_storage_share.bulk.name
 }
+
+output "monitoring_storage_account_name" {
+  description = "Name of the monitoring Azure Storage Account"
+  value       = azurerm_storage_account.monitoring.name
+}
+
+output "monitoring_primary_access_key_name" {
+  description = "Name under which the primary monitoring storage account key is stored in keyvault"
+  value       = azurerm_key_vault_secret.monitoring_primary_access_key.name
+}
+
+output "monitoring_secondary_access_key_name" {
+  description = "Name under which the secondary monitoring storage account key is stored in keyvault"
+  value       = azurerm_key_vault_secret.monitoring_secondary_access_key.name
+}
+
+output "monitoring_blob_storage_container_name" {
+  description = "Name of the storage-container to be used for loki logs"
+  value       = azurerm_storage_container.logging.name
+}

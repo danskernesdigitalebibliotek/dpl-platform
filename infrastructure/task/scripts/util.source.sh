@@ -14,6 +14,15 @@ function getEnvDir() {
   echo "${env_dir}"
 }
 
+# Adds the helm repo (if it does not exist) and refreshes our state
+function setupHelmRepo() {
+  local alias=$1
+  local url=$2
+  # See if we can find the repo in the list of repos, if not add it
+  helm repo list | grep "^${alias}\b" || helm repo add "${alias}" "${url}"
+  helm repo update "${alias}"
+}
+
 # Returns the path to the versions.env for the environment.
 # Errors out if the file does not exist.
 function getVersionsEnv() {
