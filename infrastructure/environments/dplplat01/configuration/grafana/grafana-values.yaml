@@ -46,17 +46,16 @@ datasources:
   datasources.yaml:
     apiVersion: 1
     datasources:
-      - name: Loki in-cluster
+      - name: Loki
         type: loki
         url: http://loki.loki.svc.cluster.local:3100
         access: proxy
         isDefault: true
-      # We will add the following when prometheus is ready.
-      # - name: Prometheus in-cluster
-      #   type: prometheus
-      #   url: http://prometheus-operated.prometheus.svc.cluster.local:9090
-      #   access: proxy
-      #   isDefault: false
+      - name: Prometheus
+        type: prometheus
+        url: http://prometheus-operated.prometheus.svc.cluster.local:9090
+        access: proxy
+        isDefault: false
 
 ## Grafana's primary configuration
 # Sample plugin installation

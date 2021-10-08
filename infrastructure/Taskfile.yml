@@ -382,6 +382,13 @@ tasks:
       cmds:
         - task/scripts/provision-grafana.sh
 
+    support:provision:prometheus:
+      deps: [cluster:auth]
+      summary: Set the DIFF environment variable to any value to switch to diffing instead of an actual upgrade.
+      desc: Install and configure Prometheus
+      cmds:
+        - task/scripts/provision-prometheus.sh
+
     support:provision:
       deps: [cluster:auth]
       desc: Install and configure the support tools Lagoon and DPL Platform builds on
@@ -393,8 +400,9 @@ tasks:
         - task: support:provision:cert-manager
         - task: support:provision:ingress-nginx
         - task: support:provision:bulk-storage
-        - task: support:provision:grafana
+        - task: support:provision:promethus
         - task: support:provision:loki-promtail
+        - task: support:provision:grafana
 
     site:deploy:
       desc: Runs the a dpladm deploy of a site

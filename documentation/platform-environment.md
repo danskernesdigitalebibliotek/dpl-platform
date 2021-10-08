@@ -55,9 +55,21 @@ TODO
 
 ### Cert Manager
 TODO
+### Prometheus and Alertmanager
+[Prometheus](https://prometheus.io/) is a timeseries database used by the platform
+to store and index runtime metrics from both the platform itself and the sites
+running on the platform.
 
-### Prometheus
-TODO
+Prometheus is configured to scrape and ingest the following sources
+* [Node Exporter](https://github.com/prometheus/node_exporter) (Kubernetes runtime metrics)
+* Ingress Nginx
+
+Prometheus is installed via an [Operator](https://github.com/prometheus-operator/prometheus-operator)
+which amongst other things allows us to configure Prometheus and Alertmanager via
+ `ServiceMonitor` and `AlertmanagerConfig`.
+
+[Alertmanager](https://prometheus.io/docs/alerting/latest/alertmanager/) handles
+the delivery of alerts produced by Prometheus.
 
 ### Grafana
 [Grafana](https://grafana.com/oss/grafana/) provides the graphical user-interface
