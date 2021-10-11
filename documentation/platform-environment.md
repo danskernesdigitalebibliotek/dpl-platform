@@ -45,19 +45,45 @@ configured, consult the corresponding values-file for the component found in
 the individual [environments](../infrastructure/environments)  configuration
 folder.
 
-TODO: Cluster Diagram
+![](../../documentation/../dpl-platform/documentation/diagrams/render-png/cluster-support-workloads.png)
 
 ### Lagoon
-TODO
+[Lagoon](https://docs.lagoon.sh/lagoon/) is an Open Soured Platform As A Service
+created by [Amazee](https://www.amazee.io/). The platform builds on top of a
+Kubernetes cluster, and provides features such as automated builds and the
+hosting of a large number of sites.
 
 ### Ingress Nginx
-TODO
+Kubernetes does not come with an Ingress Controller out of the box. An ingress-
+controllers job is to accept traffic approaching the cluster, and route it via
+services to pods that has requested ingress traffic.
+
+We use the widely used [Ingress Nginx](vhttps://kubernetes.github.io/ingress-nginx)
+Ingress controller.
 
 ### Cert Manager
-TODO
+[Cert Manager](https://cert-manager.io/docs/) allows an administrator specify
+a request for a TLS certificate, eg. as a part of an Ingress, and have the
+request automatically fulfilled.
 
-### Prometheus
-TODO
+The platform uses a cert-manager configured to handle certificate requests via
+[Let's Encrypt](https://letsencrypt.org/).
+
+### Prometheus and Alertmanager
+[Prometheus](https://prometheus.io/) is a timeseries database used by the platform
+to store and index runtime metrics from both the platform itself and the sites
+running on the platform.
+
+Prometheus is configured to scrape and ingest the following sources
+* [Node Exporter](https://github.com/prometheus/node_exporter) (Kubernetes runtime metrics)
+* Ingress Nginx
+
+Prometheus is installed via an [Operator](https://github.com/prometheus-operator/prometheus-operator)
+which amongst other things allows us to configure Prometheus and Alertmanager via
+ `ServiceMonitor` and `AlertmanagerConfig`.
+
+[Alertmanager](https://prometheus.io/docs/alerting/latest/alertmanager/) handles
+the delivery of alerts produced by Prometheus.
 
 ### Grafana
 [Grafana](https://grafana.com/oss/grafana/) provides the graphical user-interface
