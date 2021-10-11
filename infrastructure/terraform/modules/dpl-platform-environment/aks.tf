@@ -8,7 +8,10 @@ resource "azurerm_kubernetes_cluster" "cluster" {
   # We use a single manually scaled node pool in a single availabillity zone.
   default_node_pool {
     name = "system"
-
+    # This is the default. The value could be increased in the future if our
+    # workloads are small enough.
+    # Be aware that changing this value will destroy and recreate the nodepool.
+    max_pods = 60
     # We control the size of the cluster manually, this may switch to auto-
     # scaling in the future.
     node_count = var.node_pool_system_count
@@ -20,8 +23,11 @@ resource "azurerm_kubernetes_cluster" "cluster" {
     # High Avaiabillity is not a high enough priority to warrent the extra
     # complexity and cost of having a multi-zonal cluster.
     availability_zones = ["1"]
-  }
 
+    node_labels = {
+      "noderole.dplplatform" : "system"
+    }
+  }
 
   network_profile {
     # Use Azure CNI over kubenet.
@@ -64,6 +70,9 @@ resource "azurerm_kubernetes_cluster_node_pool" "default" {
   name                  = "default"
   kubernetes_cluster_id = azurerm_kubernetes_cluster.cluster.id
   vnet_subnet_id        = azurerm_subnet.aks.id
+  node_labels = {
+    "noderole.dplplatform" : "default"
+  }
   availability_zones = [
     "1",
   ]
