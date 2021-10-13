@@ -189,9 +189,8 @@ $ eval $(ssh-agent); ssh-add
 $ task lagoon:cli:config
 
 # Add a project
-# lagoon add project --gitUrl <url> --openshift 1 --project core-test1 --productionEnvironment main --branches '^(main)$'
-$ lagoon add project --gitUrl git@github.com:danskernesdigitalebibliotek/dpl-platform-env-core-test1.git \
---openshift 1 --productionEnvironment main --branches '^(main)$' --project core-test1
+# PROJECT_NAME=<project name>  GIT_URL=<url> task lagoon:project:add
+$ PROJECT_NAME=core-test1  GIT_URL=git@github.com:danskernesdigitalebibliotek/dpl-platform-env-core-test1.git task lagoon:project:add
 
 # The project is added, and a deploymentkey is printed - add it to the github
 # repository.
