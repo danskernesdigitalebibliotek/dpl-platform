@@ -101,7 +101,7 @@ tasks:
         - kubectl apply -f {{.dir_lagoon}}/lagoon-core-namespace.yaml
         - helm repo add lagoon https://uselagoon.github.io/lagoon-charts/
         - |
-          helm diff upgrade --install --namespace lagoon-core \
+          helm upgrade --install --namespace lagoon-core \
           -f {{.dir_lagoon}}/lagoon-core-values.yaml lagoon-core \
           lagoon/lagoon-core
       preconditions:
@@ -400,7 +400,7 @@ tasks:
         - task: support:provision:cert-manager
         - task: support:provision:ingress-nginx
         - task: support:provision:bulk-storage
-        - task: support:provision:promethus
+        - task: support:provision:prometheus
         - task: support:provision:loki-promtail
         - task: support:provision:grafana
 
