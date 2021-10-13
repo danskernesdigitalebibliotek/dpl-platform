@@ -6,11 +6,11 @@ terraform {
     }
 
     azuread = {
-      version = ">=2.0.0"
+      version = ">=2.6.0"
     }
 
     azurerm = {
-      version = ">=2.0.0"
+      version = ">=2.80.0"
     }
 
     random = {
