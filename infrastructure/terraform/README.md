@@ -63,21 +63,18 @@ manages all environments.
 
 ## Terraform Modules
 
-### Environment modules
-We use a root "environment" module pr. environment which in turn uses our main
-platform module for provisioning.
+### Root module
+The platform environments share a number of general modules, which are then
+used via a number of root-modules set up for each environment.
 
-Consult the general [environment documentation](../../../../dpl-platform-poc/infrastructure/platform-environment.md)
+Consult the general [environment documentation](../../documentation/platform-environment.md)
 for descriptions on which resources you can expect to find in an environment and
 how they are used.
 
 Consult the [environment overview](environments/README.md) for an overview of
 environments.
 
-Each environment root-module uses a shared module for provisioning the actual
-environment.
-
-### DPL Platform Terraform Module
+### DPL Platform Infrastructure Module
 
 The [dpl-platform-environment](./dpl-platform-environment) Terraform module
 provisions all resources that are required for a single DPL Platform Environment.
@@ -93,3 +90,20 @@ The following diagram depicts (amongst other things) the provisioned resources.
 Consult the [platform environment documentation](../../../../documentation/platform-environment.md) for more details on the role the various resources
 plays.
 ![](../../../../documentation/diagrams/render-png/dpl-platform-azure.png)
+
+### DPL Platform Site Environment Module
+
+The [dpl-platform-env-repos](./dpl-platform-env-repos) Terraform module provisions
+the GitHub Git repositories that the platform uses to integrate with Lagoon. Each
+site hosted on the platform has a registry.
+
+Inspect [variables.tf](./dpl-platform-env-repos/variables.tf) for a description
+of the required module-variables.
+
+Inspect [outputs.tf](./dpl-platform-env-repos/outputs.tf) for a list of outputs.
+
+Inspect the individual module files for documentation of the resources.
+
+The following diagram depicts how the module gets its credentials for accessing
+GitHub and what it provisions.
+![](../../../../documentation/diagrams/render-png/github-environment-repositories.png)

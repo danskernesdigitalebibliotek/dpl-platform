@@ -15,7 +15,7 @@ a summary of its primary configurations can be found [in the wiki](https://githu
 ## Environment infrastructure.
 ![](diagrams/render-png/dpl-platform-azure.png)
 
-A platform environment contains the following primary infrastructure resources.
+A platform environment uses the following Azure infrastructure resources.
 
 - A virtual Network - with a subnet, configured with access to a number of services.
 - A Storage account used for storing logs and the file-shares the sites uses.
@@ -95,3 +95,9 @@ values-file, which connects it to Prometheus and Loki.
  running in AKS. [Promtail]https://grafana.com/docs/loki/latest/clients/promtail/
 streams the logs to Loki, and Loki in turn makes the logs available to the
 administrator via Grafana.
+
+## Environment Site Git Repositories
+Each platform-site is controlled via a GitHub repository. The repositories are
+provisioned via Terraform. The following depicts the authorization and control-
+flow in use:
+![](diagrams/render-png/github-environment-repositories.png)
