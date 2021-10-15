@@ -17,6 +17,8 @@ vars:
   dir_env: "environments/{{.platform_env}}"
   # Root of the Terraform-configuration for the environment.
   dir_infra: "environments/{{.platform_env}}/infrastructure"
+  # Root of the Terraform-configuration for the github organization.
+  dir_env_repos: "environments/{{.platform_env}}/env_repos"
   # Root of the configurations for the environment.
   dir_configuration: "environments/{{.platform_env}}/configuration"
   # Root of the lagoon-configurations for the environment.
@@ -44,6 +46,51 @@ tasks:
       dir: "{{.dir_infra}}"
       cmds:
         - terraform apply
+
+    infra:keyvault:secret:set:
+      deps: [_req_env, _infra:terraform:init]
+      desc: Sets a keyvault secret
+      cmds:
+        # Don't print secrets
+        - silent: true
+          cmd: az keyvault secret set
+              --subscription "{{.AZURE_SUBSCRIPTION_ID}}"
+              --name "{{.SECRET_KEY}}"
+              --vault-name
+                $(
+                  terraform -chdir={{.dir_infra}} output -json | jq --raw-output ".keyvault_name.value | select (.!=null)"
+                )
+              --value "{{.SECRET_VALUE}}"
+              --query id -o tsv
+
+      preconditions:
+      - sh: "[ ! -z ${SECRET_KEY} ]"
+        msg: "Env variable SECRET_KEY is not set or empty."
+      - sh: "[ ! -z ${SECRET_VALUE} ]"
+        msg: "Env variable SECRET_VALUE is not set or empty."
+
+    _env_repos:terraform:init:
+      dir: "{{.dir_env_repos}}"
+      cmds:
+        - terraform init
+
+    env_repos:provision:
+      deps: [_req_env, _env_repos:terraform:init]
+      desc: Provision infrastructure for an environment
+      summary: |
+        Use Terraform to provision the repositories for our environments.
+      env:
+        GITHUB_TOKEN:
+          sh: az keyvault secret show
+              --subscription "{{.AZURE_SUBSCRIPTION_ID}}"
+              --name github-infra-admin-pat
+              --vault-name
+                $(
+                  terraform -chdir={{.dir_infra}} output -json | jq --raw-output ".keyvault_name.value | select (.!=null)"
+                )
+              --query value -o tsv
+      cmds:
+        - cmd: cd {{.dir_env_repos}} && terraform apply
 
     cluster:auth:
         deps: [_req_env]
