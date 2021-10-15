@@ -15,6 +15,7 @@ FROM mcr.microsoft.com/azure-cli:2.29.0
 ARG TASK_VERSION=v3.4.2
 ARG STERN_RELEASE=1.11.0
 ARG LAGOON_CLI_RELEASE=v0.11.6
+ARG KREW_VERSION=v0.4.2
 
 LABEL org.opencontainers.image.source https://github.com/danskernesdigitalebibliotek/dpl-platform
 
@@ -72,12 +73,11 @@ RUN ( \
     set -x; cd "$(mktemp -d)" && \
     OS="$(uname | tr '[:upper:]' '[:lower:]')" && \
     ARCH="$(uname -m | sed -e 's/x86_64/amd64/' -e 's/\(arm\)\(64\)\?.*/\1\2/' -e 's/aarch64$/arm64/')" && \
-    curl -fsSLO "https://github.com/kubernetes-sigs/krew/releases/latest/download/krew.tar.gz" && \
-    tar zxvf krew.tar.gz && \
-    KREW=./krew-"${OS}_${ARCH}" && \
-    "$KREW" install krew \
+    KREW="krew-${OS}_${ARCH}" && \
+    curl -fsSLO "https://github.com/kubernetes-sigs/krew/releases/download/${KREW_VERSION}/${KREW}.tar.gz" && \
+    tar zxvf "${KREW}.tar.gz" && \
+    ./"${KREW}" install krew  \
   )
-
 ENV PATH=/home/dplsh/.krew/bin::$PATH
 
 # Install a plugin for viewing secrets
