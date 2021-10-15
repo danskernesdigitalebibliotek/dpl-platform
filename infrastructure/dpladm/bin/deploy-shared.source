@@ -1,11 +1,11 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-ENVIRONMENT_REPO_ORG=danskernesdigitalebibliotek
+ENVIRONMENT_REPO_ORG=danishpubliclibraries
 LAGOON_IMAGES_RELEASE_TAG="21.9.0"
 
 function getRepoName {
-  echo "dpl-platform-env-${1}"
+  echo "env-${1}"
 }
 
 # Get the absolute path to a profile template directory
