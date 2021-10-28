@@ -7,5 +7,6 @@ found in READMEs in the respective components directory.
 
 
 ## Table of contents
-* [Platform Environment](platform-environment.md) gives an overview of the parts
+* [Platform Environment Architecture](platform-environment-architecture.md) gives an overview of the parts
   that makes up a single DPL Platform environment.
+* [Current Platform Environments](platform-environments.md)
