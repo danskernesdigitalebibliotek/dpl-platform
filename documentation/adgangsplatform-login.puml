@@ -1,0 +1,53 @@
+@startuml
+actor       User              as  user
+participant DPL_CMS           as  cms
+participant OpenidConnect    as  oc
+participant Adgangsplatformen as  ap
+user -> cms: Click login into Adgangsplatformen
+cms -> oc: Get authorization url and return url
+oc -> oc: Gets urls and creates oauth state hash
+
+oc -> user: Tell browser to redirect to authorization url
+activate user
+note left
+The authorization url contains:
+* returnurl
+* state hash
+* agency id
+end note
+user -> ap: Redirect to external site using the full authorization url
+ap -> ap: Internal authentication
+
+ap -> user: Redirect to the return url
+deactivate user
+user -> cms: Send Adgangsplatform reponse
+cms -> oc: Validate values from the Adgangsplatform reponse
+
+oc -> ap: Request access token
+activate oc
+ap -> oc: Returning access token with expire time stamp
+oc -> ap: Requesting user info
+ap -> oc: Returning user info (UUID)
+deactivate oc
+
+group First time login [The user is not in Drupal yet]
+oc -> cms: Create user
+note left
+* Random unique email/username set on user.
+* The UUID from Adgangsplatformen is encrypted
+and used for mapping external user to the Drupal user.
+* The Drupal user gets the Drupal role: Patron.
+end note
+end
+group Recurrent login [The user exists in Drupal]
+oc -> cms: Update user
+note left
+Nothing is updated on the user
+end note
+end
+
+
+oc -> cms: Begin Drupal user session.
+oc -> cms: Saving access token in active user session
+oc -> user: Redirecting inlogged user to the frontpage
+@enduml
