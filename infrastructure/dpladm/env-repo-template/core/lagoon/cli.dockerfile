@@ -3,7 +3,7 @@
 # static across all sites.
 FROM ghcr.io/danskernesdigitalebibliotek/${DPL_CMS_RELEASE_IMAGE}:${DPL_CMS_RELEASE_TAG} AS release
 
-FROM uselagoon/php-7.4-cli-drupal:${LAGOON_IMAGES_RELEASE_TAG}
+FROM uselagoon/php-8.0-cli-drupal:${LAGOON_IMAGES_RELEASE_TAG}
 
 COPY --from=release /app /app
 RUN mkdir -p -v -m775 /app/web/sites/default/files
