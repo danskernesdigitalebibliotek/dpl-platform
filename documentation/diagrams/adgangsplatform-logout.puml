@@ -1,0 +1,30 @@
+@startuml
+actor       User              as  user
+participant DPL_CMS           as  cms
+participant Adgangsplatformen as  ap
+user -> cms: Clicks logout
+group The user has an access token
+cms -> ap: Requests the single logout service at Adgangsplatformen\nThe access token is used in the request
+ap -> cms: Response to the cms
+
+cms -> cms: Logs user out by ending session
+note right
+The access token is a part of the user session
+and gets flushed in the procedure.
+end note
+cms -> user: Redirects to front page
+end
+
+group The user has no access token
+cms -> cms: Logs user out by ending session
+cms -> user: Redirects to front page
+end
+note left
+There can be two reasons why the user
+does not have an access token:
+* The user is a "non-adgangsplatformen" user, eg. an editor.
+* Something failed in the access token retrival
+and the access token is missing.
+end note
+
+@enduml
