@@ -18,6 +18,12 @@ tasks:
             if [[ -f config/sync/system.site.yml ]]; then
                 echo "Config detected, doing a drush deploy"
                 drush deploy
+
+                # Purge all varnish cache to make sure
+                # that new changes will come through
+                #" eg. js assets.
+                echo "...and clearing the external cache."
+                drush cache:rebuild-external -y || true
             else
                 echo "No config detected, clearing cache"
                 drush cr
