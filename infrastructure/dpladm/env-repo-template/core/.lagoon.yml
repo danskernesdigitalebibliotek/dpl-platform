@@ -21,7 +21,7 @@ tasks:
 
                 # Purge all varnish cache to make sure
                 # that new changes will come through
-                #" eg. js assets.
+                # eg. js assets.
                 echo "...and clearing the external cache."
                 drush cache:rebuild-external -y || true
             else
