@@ -141,3 +141,11 @@ webhookHandler:
       - secretName: webhookhandler-tls
         hosts:
           - webhookhandler.lagoon.dplplat01.dpl.reload.dk
+
+controller:
+  config:
+    client-body-timeout: '600' # max 600 secs fileuploads
+    proxy-send-timeout: '1800' # max 30min connections - needed for websockets
+    proxy-read-timeout: '1800' # max 30min connections - needed for websockets
+    proxy-body-size: 1024m # 1GB file size
+    proxy-buffer-size: 64k # bigger buffer

@@ -133,3 +133,23 @@ output "monitoring_blob_storage_container_name" {
   description = "Name of the storage-container to be used for loki logs"
   value       = azurerm_storage_container.logging.name
 }
+
+output "backup_blob_storage_container_name" {
+  description = "Name of the storage-container to be used for Lagoon project backups"
+  value       = azurerm_storage_container.backup.name
+}
+
+output "backup_storage_account_name" {
+  description = "Name of the backup Azure Storage Account"
+  value       = azurerm_storage_account.backup.name
+}
+
+output "backup_primary_access_key_name" {
+  description = "Name under which the primary backup storage account key is stored in keyvault"
+  value       = azurerm_key_vault_secret.backup_primary_access_key.name
+}
+
+output "backup_secondary_access_key_name" {
+  description = "Name under which the secondary backup storage account key is stored in keyvault"
+  value       = azurerm_key_vault_secret.backup_secondary_access_key.name
+}

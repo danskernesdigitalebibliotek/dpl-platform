@@ -1,0 +1,30 @@
+
+k8up:
+  envVars:
+   - name: BACKUP_GLOBALS3ENDPOINT
+     value: "https://s3.eu-west-1.amazonaws.com"
+   - name: BACKUP_GLOBALS3BUCKET
+     value: ""
+   - name: BACKUP_GLOBALKEEPJOBS
+     value: "1"
+   - name: BACKUP_GLOBALSTATSURL
+     value: "https://backup.lagoon.dplplat01.dpl.reload.dk" # URL of Backup Handler Ingress
+   - name: BACKUP_GLOBALACCESSKEYID
+     value: "" # AWS AccessKey which has S3 read/write access to all `baas-*` buckets
+   - name: BACKUP_GLOBALSECRETACCESSKEY
+     value: "" # AWS AccessKey Secret which has S3 read/write access to all `baas-*` buckets
+   - name: BACKUP_BACKOFFLIMIT
+     value: "2"
+   - name: BACKUP_GLOBALRESTORES3BUCKET
+     value: "" # should start with `baas-*` for simpler permissions
+   - name: BACKUP_GLOBALRESTORES3ENDPOINT
+     value: "https://s3.eu-west-1.amazonaws.com"
+   - name: BACKUP_GLOBALRESTORES3ACCESSKEYID
+     value: "" # AWS AccessKey which has S3 read/write access to the bucket defined in BACKUP_GLOBALRESTORES3BUCKET
+   - name: BACKUP_GLOBALRESTORES3SECRETACCESSKEY
+     value: "" # AWS AccessKey which has S3 read/write access to the bucket defined in BACKUP_GLOBALRESTORES3BUCKET
+
+  # -- Specifies the timezone K8up is using for scheduling.
+  # Empty value defaults to the timezone in which Kubernetes is deployed.
+  # Accepts `tz database` compatible entries, e.g. `Europe/Zurich`
+  timezone: "Europe/Copenhagen"
