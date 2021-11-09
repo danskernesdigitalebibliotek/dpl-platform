@@ -155,7 +155,7 @@ tasks:
       - sh: "[ ! -z ${KEYCLOAK_ADMIN_PASS} ]"
         msg: "Could not extract the password for the keycloak admin from keyvault."
       - sh: "[ ! -z ${HARBOR_ADMIN_PASS} ]"
-        msg: "Could not extract the password for the habor admin from keyvault."
+        msg: "Could not extract the password for the harbor admin from keyvault."
 
     lagoon:cli:config:
       deps: [cluster:auth]
@@ -309,7 +309,7 @@ tasks:
       deps: [cluster:auth]
       desc: Add a Kubernetes cluster (Lagoon Remote) to the Lagoon Core.
       summary: |
-       You must provide a valid barerer token for a lagoon user via the USER_TOKEN environment variable.
+       You must provide a valid bearer token for a lagoon user via the USER_TOKEN environment variable.
        It can be found under the token property in $HOME/.lagoon.yml after you've done a lagoon login
 
       vars:
