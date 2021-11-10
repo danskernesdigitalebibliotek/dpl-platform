@@ -5,11 +5,11 @@ module "environment" {
   environment_name = "dplplat01"
   # This variable current _has_ to match the pattern
   # <environment_name>.dpl.reload.dk
-  lagoon_domain_base          = "dplplat01.dpl.reload.dk"
-  random_seed                 = "LahYegheePhohGeew9Fa"
-  node_pool_system_count      = 1
-  node_pool_default_count_min = 2
-  node_pool_default_count_max = 5
+  lagoon_domain_base              = "dplplat01.dpl.reload.dk"
+  random_seed                     = "LahYegheePhohGeew9Fa"
+  node_pool_system_count          = 1
+  node_pool_app_default_count_min = 2
+  node_pool_app_default_count_max = 5
 }
 
 # Outputs, for values that comes straight from the dpl-platform-environment
