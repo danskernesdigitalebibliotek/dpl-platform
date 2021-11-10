@@ -14,18 +14,11 @@ resource "azurerm_storage_account" "storage" {
   account_replication_type = "LRS"
 }
 
-# Bulk storage for Lagoon.
+# Bulk storage for workloads running on Lagoon.
 resource "azurerm_storage_share" "bulk" {
   name                 = "bulk"
   storage_account_name = azurerm_storage_account.storage.name
   quota                = 50
-}
-
-# Setup a blob storage container for log storage.
-resource "azurerm_storage_container" "log_storage" {
-  name                  = "log-storage"
-  storage_account_name  = azurerm_storage_account.storage.name
-  container_access_type = "private"
 }
 
 # We export the storage keys to keyvault so that we can inject them into

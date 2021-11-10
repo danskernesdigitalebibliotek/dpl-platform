@@ -139,9 +139,24 @@ tasks:
           sh: az keyvault secret show --subscription "{{.AZURE_SUBSCRIPTION_ID}}" --name $(terraform -chdir={{.dir_infra}} output -json | jq --raw-output ".keycloak_admin_pass_key_name.value | select (.!=null)") --vault-name $(terraform -chdir={{.dir_infra}} output -json | jq --raw-output ".keyvault_name.value | select (.!=null)") --query value -o tsv
         HARBOR_ADMIN_PASS:
           sh: az keyvault secret show --subscription "{{.AZURE_SUBSCRIPTION_ID}}" --name $(terraform -chdir={{.dir_infra}} output -json | jq --raw-output ".harbor_admin_pass_key_name.value | select (.!=null)") --vault-name $(terraform -chdir={{.dir_infra}} output -json | jq --raw-output ".keyvault_name.value | select (.!=null)") --query value -o tsv
+        LAGOON_FILES_API_URL: https://files.lagoon.{{.platform_env}}.{{.global_environment_suffix}}
+        LAGOON_FILES_HOSTNAME:
+          sh: az keyvault secret show --subscription "{{.AZURE_SUBSCRIPTION_ID}}" --name $(terraform -chdir={{.dir_infra}} output -json | jq --raw-output ".lagoon_files_blob_storage_client_access_key_name.value | select (.!=null)") --vault-name $(terraform -chdir={{.dir_infra}} output -json | jq --raw-output ".keyvault_name.value | select (.!=null)") --query value -o tsv
+        LAGOON_FILES_ACCESS_KEY:
+          sh: az keyvault secret show --subscription "{{.AZURE_SUBSCRIPTION_ID}}" --name $(terraform -chdir={{.dir_infra}} output -json | jq --raw-output ".lagoon_files_blob_storage_client_access_key_name.value | select (.!=null)") --vault-name $(terraform -chdir={{.dir_infra}} output -json | jq --raw-output ".keyvault_name.value | select (.!=null)") --query value -o tsv
+        LAGOON_FILES_SECRET_KEY:
+          sh: az keyvault secret show --subscription "{{.AZURE_SUBSCRIPTION_ID}}" --name $(terraform -chdir={{.dir_infra}} output -json | jq --raw-output ".lagoon_files_blob_storage_client_secret_key_name.value | select (.!=null)") --vault-name $(terraform -chdir={{.dir_infra}} output -json | jq --raw-output ".keyvault_name.value | select (.!=null)") --query value -o tsv
+        LAGOON_FILES_BUCKET:
+          sh: terraform -chdir={{.dir_infra}} output -json | jq --raw-output ".lagoon_files_blob_storage_container_name.value | select (.!=null)"
+        BAAS_STORAGE_ACCESS_KEY:
+          sh: az keyvault secret show --subscription "{{.AZURE_SUBSCRIPTION_ID}}" --name $(terraform -chdir={{.dir_infra}} output -json | jq --raw-output ".backup_blob_storage_client_access_key_name.value | select (.!=null)") --vault-name $(terraform -chdir={{.dir_infra}} output -json | jq --raw-output ".keyvault_name.value | select (.!=null)") --query value -o tsv
+        BAAS_STORAGE_SECRET_KEY:
+          sh: az keyvault secret show --subscription "{{.AZURE_SUBSCRIPTION_ID}}" --name $(terraform -chdir={{.dir_infra}} output -json | jq --raw-output ".backup_blob_storage_client_secret_key_name.value | select (.!=null)") --vault-name $(terraform -chdir={{.dir_infra}} output -json | jq --raw-output ".keyvault_name.value | select (.!=null)") --query value -o tsv
+        CHART_VERSION_LAGOON_CORE:
+          sh: source "{{.dir_lagoon}}/lagoon-versions.env" && echo $VERSION_LAGOON_CORE
       cmds:
         - |
-          envsubst '$HARBOR_ADMIN_PASS $KEYCLOAK_ADMIN_PASS' \
+          envsubst '$HARBOR_ADMIN_PASS $KEYCLOAK_ADMIN_PASS $LAGOON_FILES_API_URL $LAGOON_FILES_ACCESS_KEY $LAGOON_FILES_BUCKET $LAGOON_FILES_SECRET_KEY $BAAS_STORAGE_ACCESS_KEY $BAAS_STORAGE_SECRET_KEY' \
           < "{{.dir_lagoon}}/lagoon-core-values.template.yaml" \
           > "{{.dir_lagoon}}/lagoon-core-values.yaml"
         # Setup the namespace manually to control eg. labels on the namespace.

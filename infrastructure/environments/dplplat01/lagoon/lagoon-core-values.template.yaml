@@ -1,20 +1,20 @@
-elasticsearchURL: https://es.lagoon.dplplat01.dpl.reload.dk
+elasticsearchURL: none
 harborURL: https://habor.lagoon.dplplat01.dpl.reload.dk
 harborAdminPassword: "$HARBOR_ADMIN_PASS"
 keycloakAdminPassword: "$KEYCLOAK_ADMIN_PASS"
-kibanaURL: https://kibana.lagoon.dplplat01.dpl.reload.dk
+kibanaURL: none
 logsDBAdminPassword: ke2ue1Chae
-s3FilesAccessKeyID: none
-s3FilesBucket: none
-s3FilesHost: none
-s3FilesSecretAccessKey: none
-s3FilesRegion: none
-s3BAASAccessKeyID: none
-s3BAASSecretAccessKey: none
-imageTag: v2.0.0-rc.9
+s3FilesAccessKeyID: $LAGOON_FILES_ACCESS_KEY
+s3FilesSecretAccessKey: $LAGOON_FILES_SECRET_KEY
+s3FilesBucket: $LAGOON_FILES_BUCKET
+s3FilesHost: $LAGOON_FILES_API_URL
+s3BAASAccessKeyID: $BAAS_STORAGE_ACCESS_KEY
+s3BAASSecretAccessKey: $BAAS_STORAGE_SECRET_KEY
 registry: none.com
 
 api:
+  nodeSelector:
+    noderole.dplplatform: admin
   ingress:
     enabled: true
     annotations:

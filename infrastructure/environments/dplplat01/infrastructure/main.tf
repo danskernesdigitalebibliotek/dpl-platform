@@ -14,12 +14,40 @@ module "environment" {
 
 # Outputs, for values that comes straight from the dpl-platform-environment
 # module, please refer to its documentation in the module.
+output "backup_blob_storage_container_name" {
+  value = module.environment.backup_blob_storage_container_name
+}
+
+output "backup_storage_account_name" {
+  value = module.environment.backup_storage_account_name
+}
+
+output "backup_blob_storage_client_access_key_name" {
+  value = module.environment.backup_blob_storage_client_access_key_name
+}
+
+output "backup_blob_storage_client_secret_key_name" {
+  value = module.environment.backup_blob_storage_client_secret_key_name
+}
+
+output "backup_primary_access_key_name" {
+  value = module.environment.backup_primary_access_key_name
+}
+
+output "backup_secondary_access_key_name" {
+  value = module.environment.backup_secondary_access_key_name
+}
+
 output "cluster_api_url" {
   value = module.environment.cluster_api_url
 }
 
 output "cluster_name" {
   value = module.environment.cluster_name
+}
+
+output "harbor_admin_pass_key_name" {
+  value = module.environment.harbor_admin_pass_key_name
 }
 
 output "ingress_ip" {
@@ -34,16 +62,40 @@ output "keyvault_name" {
   value = module.environment.keyvault_name
 }
 
-output "harbor_admin_pass_key_name" {
-  value = module.environment.harbor_admin_pass_key_name
-}
-
 output "keycloak_admin_pass_key_name" {
   value = module.environment.keycloak_admin_pass_key_name
 }
 
 output "lagoon_domain_base" {
   value = module.environment.lagoon_domain_base
+}
+
+output "lagoon_files_storage_account_name" {
+  value = module.environment.lagoon_files_storage_account_name
+}
+
+output "lagoon_files_primary_access_key_name" {
+  value = module.environment.lagoon_files_primary_access_key_name
+}
+
+output "lagoon_files_secondary_access_key_name" {
+  value = module.environment.lagoon_files_secondary_access_key_name
+}
+
+output "lagoon_files_blob_storage_container_name" {
+  value = module.environment.lagoon_files_blob_storage_container_name
+}
+
+output "lagoon_files_blob_storage_client_access_key_name" {
+  value = module.environment.lagoon_files_blob_storage_client_access_key_name
+}
+
+output "lagoon_files_blob_storage_client_secret_key_name" {
+  value = module.environment.lagoon_files_blob_storage_client_secret_key_name
+}
+
+output "lagoon_hostname_api" {
+  value = module.environment.lagoon_hostname_api
 }
 
 output "monitoring_storage_account_name" {
@@ -90,8 +142,4 @@ output "sql_servername" {
 
 output "sql_password_key_name" {
   value = module.environment.sql_password_key_name
-}
-
-output "lagoon_hostname_api" {
-  value = module.environment.lagoon_hostname_api
 }
