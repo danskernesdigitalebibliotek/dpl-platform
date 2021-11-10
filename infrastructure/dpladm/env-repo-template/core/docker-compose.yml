@@ -1,32 +1,73 @@
 version: '2.3'
+x-user:
+  &default-user
+    # The default user under which the containers should run. Change this if you are on linux and run with another user than id `1000`
+    user: '1000'
+
+x-environment:
+  &default-environment
+    # Have lagoon run in production mode
+    # https://docs.lagoon.sh/lagoon/using-lagoon-advanced/environment-types
+    LAGOON_ENVIRONMENT_TYPE: production
 
 services:
   cli: # cli container, will be used for executing composer and any local commands (drush, drupal, etc.)
     build:
       dockerfile: lagoon/cli.dockerfile
+    user: root
     labels:
       # Lagoon Labels
       lagoon.type: cli-persistent
       lagoon.persistent.name: nginx # mount the persistent storage of nginx into this container
       lagoon.persistent: /app/web/sites/default/files/ # location where the persistent storage should be mounted
+    environment:
+      << : *default-environment # loads the defined environment variables from the top
 
   nginx:
     build:
       context: .
       dockerfile: lagoon/nginx.dockerfile
+    << : *default-user # uses the defined user from top
     labels:
       lagoon.type: nginx-php-persistent
       lagoon.persistent: /app/web/sites/default/files/ # define where the persistent storage should be mounted too
+    environment:
+      << : *default-environment # loads the defined environment variables from the top
 
   php:
     build:
       context: .
       dockerfile: lagoon/php.dockerfile
+    << : *default-user # uses the defined user from top
     labels:
       lagoon.type: nginx-php-persistent
       lagoon.name: nginx # we want this service be part of the nginx pod in Lagoon
       lagoon.persistent: /app/web/sites/default/files/ # define where the persistent storage should be mounted too
+    environment:
+      << : *default-environment # loads the defined environment variables from the top
 
   mariadb:
     labels:
       lagoon.type: mariadb
+    << : *default-user # uses the defined user from top
+    environment:
+      << : *default-environment
+
+  varnish:
+    image: uselagoon/varnish-6-drupal:latest
+    labels:
+      lagoon.type: varnish
+    links:
+      - nginx # links varnish to the nginx in this docker-compose project, or it would try to connect to any nginx running in docker
+    << : *default-user # uses the defined user from top
+    environment:
+      << : *default-environment
+
+  redis:
+    image: uselagoon/redis-6:latest
+    labels:
+      lagoon.type: redis
+    << : *default-user # uses the defined user from top
+    environment:
+      << : *default-environment
+
