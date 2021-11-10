@@ -44,7 +44,7 @@ to the various credentials the tools requires to function.
 
 First `cd` to the `infrastructure`, then launch the shell.
 
-The shell will contact Azure to retrive a storage account key Terraform needs to
+The shell will contact Azure to retrieve a storage account key Terraform needs to
 access its state, and export it and other require credentials via a number of
 environment variables. See `.dplsh.profile` for details.
 
