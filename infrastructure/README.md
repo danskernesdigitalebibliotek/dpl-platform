@@ -140,10 +140,9 @@ task lagoon:cli:config
 
 # You can now add additional users, this step is currently skipped.
 
-# 6. Install Harbor.
-# Skip the step in the official guide that asks you to update the lagoon-core
-# release with the credentials for Harbor as we've already set that ahead of time.
-task lagoon:provision:harbor
+# (6. Install Harbor.)
+# This step has already been performed as a part of the installation of
+# support software.
 
 # 7. Install a Lagoon Remote into the cluster
 task lagoon:provision:remote
