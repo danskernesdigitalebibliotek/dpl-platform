@@ -130,6 +130,66 @@ tasks:
       cmds:
         - task/scripts/provision-ingress-nginx.sh
 
+    support:provision:minio:
+      deps: [cluster:auth]
+      summary: Set the DIFF environment variable to any value to switch to diffing instead of an actual upgrade.
+      desc: Install and configure two minio gateways for backups and lagoon files
+      vars:
+        INGRESS_CLASS: nginx
+        API_HOSTNAME: files.lagoon.{{.platform_env}}.{{.global_environment_suffix}}
+        LAGOON_FILES_CLIENT_ACCESS_KEY:
+          sh: az keyvault secret show --subscription "{{.AZURE_SUBSCRIPTION_ID}}" --name $(terraform -chdir={{.dir_infra}} output -json | jq --raw-output ".lagoon_files_blob_storage_client_access_key_name.value | select (.!=null)") --vault-name $(terraform -chdir={{.dir_infra}} output -json | jq --raw-output ".keyvault_name.value | select (.!=null)") --query value -o tsv
+        LAGOON_FILES_CLIENT_SECRET_KEY:
+          sh: az keyvault secret show --subscription "{{.AZURE_SUBSCRIPTION_ID}}" --name $(terraform -chdir={{.dir_infra}} output -json | jq --raw-output ".lagoon_files_blob_storage_client_secret_key_name.value | select (.!=null)") --vault-name $(terraform -chdir={{.dir_infra}} output -json | jq --raw-output ".keyvault_name.value | select (.!=null)") --query value -o tsv
+        LAGOON_FILES_STORAGE_ACCOUNT_NAME:
+          sh: terraform -chdir={{.dir_infra}} output -json | jq --raw-output ".lagoon_files_storage_account_name.value | select (.!=null)"
+        LAGOON_FILES_STORAGE_ACCOUNT_KEY:
+          sh: az keyvault secret show --subscription "{{.AZURE_SUBSCRIPTION_ID}}" --name $(terraform -chdir={{.dir_infra}} output -json | jq --raw-output ".lagoon_files_primary_access_key_name.value | select (.!=null)") --vault-name $(terraform -chdir={{.dir_infra}} output -json | jq --raw-output ".keyvault_name.value | select (.!=null)") --query value -o tsv
+        BAAS_STORAGE_CLIENT_ACCESS_KEY:
+          sh: az keyvault secret show --subscription "{{.AZURE_SUBSCRIPTION_ID}}" --name $(terraform -chdir={{.dir_infra}} output -json | jq --raw-output ".backup_blob_storage_client_access_key_name.value | select (.!=null)") --vault-name $(terraform -chdir={{.dir_infra}} output -json | jq --raw-output ".keyvault_name.value | select (.!=null)") --query value -o tsv
+        BAAS_STORAGE_CLIENT_SECRET_KEY:
+          sh: az keyvault secret show --subscription "{{.AZURE_SUBSCRIPTION_ID}}" --name $(terraform -chdir={{.dir_infra}} output -json | jq --raw-output ".backup_blob_storage_client_secret_key_name.value | select (.!=null)") --vault-name $(terraform -chdir={{.dir_infra}} output -json | jq --raw-output ".keyvault_name.value | select (.!=null)") --query value -o tsv
+        BAAS_STORAGE_ACCOUNT_NAME:
+          sh: terraform -chdir={{.dir_infra}} output -json | jq --raw-output ".backup_storage_account_name.value | select (.!=null)"
+        BAAS_STORAGE_ACCOUNT_KEY:
+          sh: az keyvault secret show --subscription "{{.AZURE_SUBSCRIPTION_ID}}" --name $(terraform -chdir={{.dir_infra}} output -json | jq --raw-output ".backup_primary_access_key_name.value | select (.!=null)") --vault-name $(terraform -chdir={{.dir_infra}} output -json | jq --raw-output ".keyvault_name.value | select (.!=null)") --query value -o tsv
+      cmds:
+        # We're doing this twice, so we use a separate task for invoking the
+        # installation script.
+
+        # Install lagoon files.
+        - task: _support:provision:minio:install
+          vars:
+            HOSTNAME_PREFIX: "files"
+            HELM_RELEASE_NAME: "minio-lagoon-files"
+            CLIENT_ACCESS_KEY: "{{.LAGOON_FILES_CLIENT_ACCESS_KEY}}"
+            CLIENT_SECRET_KEY: "{{.LAGOON_FILES_CLIENT_SECRET_KEY}}"
+            STORAGE_ACCOUNT_NAME: "{{.LAGOON_FILES_STORAGE_ACCOUNT_NAME}}"
+            STORAGE_ACCOUNT_KEY: "{{.LAGOON_FILES_STORAGE_ACCOUNT_KEY}}"
+        - task: _support:provision:minio:install
+          vars:
+            HOSTNAME_PREFIX: "backup-storage"
+            HELM_RELEASE_NAME: "minio-backup"
+            CLIENT_ACCESS_KEY: "{{.BAAS_STORAGE_CLIENT_ACCESS_KEY}}"
+            CLIENT_SECRET_KEY: "{{.BAAS_STORAGE_CLIENT_SECRET_KEY}}"
+            STORAGE_ACCOUNT_NAME: "{{.BAAS_STORAGE_ACCOUNT_NAME}}"
+            STORAGE_ACCOUNT_KEY: "{{.BAAS_STORAGE_ACCOUNT_KEY}}"
+
+    _support:provision:minio:install:
+      summary: Do one of the two minio installations.
+      env:
+        INGRESS_CLASS: nginx
+        HELM_RELEASE_NAME: "{{.HELM_RELEASE_NAME}}"
+        API_HOSTNAME: "{{.HOSTNAME_PREFIX}}.lagoon.{{.platform_env}}.{{.global_environment_suffix}}"
+        # Copy the task variables we've been passed into environment variables
+        # that the script can read.
+        CLIENT_ACCESS_KEY: "{{.CLIENT_ACCESS_KEY}}"
+        CLIENT_SECRET_KEY: "{{.CLIENT_SECRET_KEY}}"
+        STORAGE_ACCOUNT_NAME: "{{.STORAGE_ACCOUNT_NAME}}"
+        STORAGE_ACCOUNT_KEY: "{{.STORAGE_ACCOUNT_KEY}}"
+      cmds:
+        - task/scripts/provision-minio.sh
+
     lagoon:provision:core:
       deps: [cluster:auth]
       desc: Install and configure Lagoon core
@@ -484,6 +544,7 @@ tasks:
         - task: support:provision:cert-manager
         - task: support:provision:ingress-nginx
         - task: support:provision:bulk-storage
+        - task: support:provision:minio
         - task: support:provision:prometheus
         - task: support:provision:loki-promtail
         - task: support:provision:grafana
