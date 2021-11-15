@@ -14,7 +14,7 @@ FROM mcr.microsoft.com/azure-cli:2.30.0
 
 ARG TASK_VERSION=v3.4.2
 ARG STERN_RELEASE=1.11.0
-ARG LAGOON_CLI_RELEASE=v0.11.6
+ARG LAGOON_CLI_RELEASE=v0.12.0
 ARG KREW_VERSION=v0.4.2
 
 LABEL org.opencontainers.image.source https://github.com/danskernesdigitalebibliotek/dpl-platform
@@ -42,7 +42,7 @@ RUN curl -Lo /usr/local/bin/stern https://github.com/wercker/stern/releases/down
 
 # Add the Lagoon CLI
 RUN curl -Lo /tmp/lagooncli.tar.gz https://github.com/uselagoon/lagoon-cli/releases/download/${LAGOON_CLI_RELEASE}/lagoon-cli-${LAGOON_CLI_RELEASE}-linux-amd64.tar.gz \
-  && tar -x -C /usr/local/bin -f /tmp/lagooncli.tar.gz lagoon \
+  && tar -x -C /usr/local/bin -f /tmp/lagooncli.tar.gz lagoon-cli-${LAGOON_CLI_RELEASE}-linux-amd64/lagoon \
   && chmod +x /usr/local/bin \
   && rm /tmp/lagooncli.tar.gz
 
