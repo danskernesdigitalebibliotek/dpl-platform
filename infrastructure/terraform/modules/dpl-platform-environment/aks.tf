@@ -65,30 +65,61 @@ resource "azurerm_kubernetes_cluster" "cluster" {
   }
 }
 
-# Add a default nodepool.
-resource "azurerm_kubernetes_cluster_node_pool" "default" {
-  name                  = "default"
+# Add a nodepool for administrative workloads
+resource "azurerm_kubernetes_cluster_node_pool" "admin" {
+  name                  = "admin"
   kubernetes_cluster_id = azurerm_kubernetes_cluster.cluster.id
   vnet_subnet_id        = azurerm_subnet.aks.id
   node_labels = {
-    "noderole.dplplatform" : "default"
+    "noderole.dplplatform" : "admin"
   }
   availability_zones = [
     "1",
   ]
 
-  # This is the default. The value could be increased in the future if our
-  # workloads are small enough.
-  # Be aware that changing this value will destroy and recreate the nodepool.
-  max_pods = 60
-
-  vm_size = var.node_pool_default_vm_sku
+  vm_size = var.node_pool_admin_vm_sku
 
   # Enable autoscaling.
   enable_auto_scaling = true
-  min_count           = var.node_pool_default_count_min
-  max_count           = var.node_pool_default_count_max
-  node_count          = var.node_pool_default_count_min
+  min_count           = var.node_pool_admin_count_min
+  max_count           = var.node_pool_admin_count_max
+  node_count          = var.node_pool_admin_count_min
+
+  lifecycle {
+    ignore_changes = [
+      # Changed by the autoscaler, so we need to ignore it.
+      node_count
+    ]
+  }
+}
+
+
+# Add a application default nodepool.
+resource "azurerm_kubernetes_cluster_node_pool" "app_default" {
+  name                  = "appdefault"
+  kubernetes_cluster_id = azurerm_kubernetes_cluster.cluster.id
+  vnet_subnet_id        = azurerm_subnet.aks.id
+  node_labels = {
+    "noderole.dplplatform" : "application"
+  }
+  availability_zones = [
+    "1",
+  ]
+
+  # The default for AKS is 30 pods pr node. This can be a rather low number
+  # of pods depending on the workload, but as we know Lagoon to run with quite
+  # low resource requests, we're keeping the number of pods on a node low to
+  # avoid running the nodes too hot.
+  # Be aware that changing this value will destroy and recreate the nodepool.
+  max_pods = 30
+
+  vm_size = var.node_pool_app_default_vm_sku
+
+  # Enable autoscaling.
+  enable_auto_scaling = true
+  min_count           = var.node_pool_app_default_count_min
+  max_count           = var.node_pool_app_default_count_max
+  node_count          = var.node_pool_app_default_count_min
 
   lifecycle {
     ignore_changes = [

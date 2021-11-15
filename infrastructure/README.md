@@ -79,7 +79,9 @@ The following describes how to set up a whole new platform environment to host
 The easiest way to set up a new environment is to create a new `environments/<name>`
 directory and copy the contents of an existing environment replacing any
 references to the previous environment with a new value corresponding to the new
-environment.
+environment. Take note of the various URLs, and make sure to update the
+[Current Platform environments](../documentation/platform-environments.md)
+documentation.
 
 If this is the very first environment, remember to first initialize the Terraform-
 setup, see the [terraform README.md](terraform/README.md).
@@ -112,27 +114,40 @@ additional actions you have to take.
 # The following must be carried out from within dplsh, launched as described
 # in the previous step including the definition of DPLPLAT_ENV.
 
-# Provision a lagoon core into the cluster. You can skip the steps about
-# email setup as we currently do not support sending emails.
+# 1. Provision a lagoon core into the cluster.
 task lagoon:provision:core
 
-# Configure the CLI (the cli itself has already been installed)
-# First you must access the lagoon UI and add the ssh-key you wish to use for the
-# admin-account. Consult the official guide for the steps.
-# Then:
+# 2. Skip the steps in the documentation that speaks about setting up email, as
+# we currently do not support sending emails.
+
+
+# 3. Setup ssh-keys for the lagoonadmin user
+# Access the Lagoon UI (consult the platform-environments.md for the url) and
+# log in with lagoonadmin + the admin password that can be extracted from a
+# Kubernetes secret:
+kubectl -n lagoon-core get secret lagoon-core-keycloak -o jsonpath="{.data.KEYCLOAK_LAGOON_ADMIN_PASSWORD}" | base64 --decode
+
+# Then go to settings and add the ssh-keys that should be able to access the
+# lagoon admin user. Consider keeping this list short, and instead add
+# additional users with fewer privileges laster.
+
+# 4. If your ssh-key is passphrase-projected we'll need to setup an ssh-agent
+# instance:
+$ eval $(ssh-agent); ssh-add
+
+# 5. Configure the CLI to verify that access (the cli itself has already been installed in dplsh)
 task lagoon:cli:config
 
 # You can now add additional users, this step is currently skipped.
 
-# Install Harbor.
-# Skip the step that asks you to update the lagoon-core release with the
-# credentials for Harbor as we've already set that ahead of time.
-task lagoon:provision:harbor
+# (6. Install Harbor.)
+# This step has already been performed as a part of the installation of
+# support software.
 
-# Install a Lagoon Remote into the cluster
+# 7. Install a Lagoon Remote into the cluster
 task lagoon:provision:remote
 
-# Register the cluster administered by the Remote with Lagoon Core
+# 8. Register the cluster administered by the Remote with Lagoon Core
 # Notice that you must provide a bearer token via the USER_TOKEN environment-
 # variable. The token can be found in $HOME/.lagoon.yml after a successful
 # "lagoon login"
@@ -178,7 +193,7 @@ $ SECRET_KEY=github-infra-admin-ssh-key SECRET_VALUE=$(cat dplplatinfra01_id_ed2
 
 # 4. Access GitHub again, and generate a Personal Access Token for the account.
 #    The token should
-#     - be named after the platform environment (eg. dplplat01-terraform)
+#     - be named after the platform environment (eg. dplplat01-terraform-timestamp)
 #     - Have a fairly long expiration - do remember to renew it
 #     - Have the following permissions: admin:org, delete_repo, repo
 # 5. Add the access token to Key Vault under the name "github-infra-admin-pat"

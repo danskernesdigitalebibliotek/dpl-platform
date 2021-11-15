@@ -130,26 +130,125 @@ tasks:
       cmds:
         - task/scripts/provision-ingress-nginx.sh
 
+    support:provision:minio:
+      deps: [cluster:auth]
+      summary: Set the DIFF environment variable to any value to switch to diffing instead of an actual upgrade.
+      desc: Install and configure two minio gateways for backups and lagoon files
+      vars:
+        INGRESS_CLASS: nginx
+        API_HOSTNAME: files.lagoon.{{.platform_env}}.{{.global_environment_suffix}}
+        LAGOON_FILES_CLIENT_ACCESS_KEY:
+          sh: az keyvault secret show --subscription "{{.AZURE_SUBSCRIPTION_ID}}" --name $(terraform -chdir={{.dir_infra}} output -json | jq --raw-output ".lagoon_files_blob_storage_client_access_key_name.value | select (.!=null)") --vault-name $(terraform -chdir={{.dir_infra}} output -json | jq --raw-output ".keyvault_name.value | select (.!=null)") --query value -o tsv
+        LAGOON_FILES_CLIENT_SECRET_KEY:
+          sh: az keyvault secret show --subscription "{{.AZURE_SUBSCRIPTION_ID}}" --name $(terraform -chdir={{.dir_infra}} output -json | jq --raw-output ".lagoon_files_blob_storage_client_secret_key_name.value | select (.!=null)") --vault-name $(terraform -chdir={{.dir_infra}} output -json | jq --raw-output ".keyvault_name.value | select (.!=null)") --query value -o tsv
+        LAGOON_FILES_STORAGE_ACCOUNT_NAME:
+          sh: terraform -chdir={{.dir_infra}} output -json | jq --raw-output ".lagoon_files_storage_account_name.value | select (.!=null)"
+        LAGOON_FILES_STORAGE_ACCOUNT_KEY:
+          sh: az keyvault secret show --subscription "{{.AZURE_SUBSCRIPTION_ID}}" --name $(terraform -chdir={{.dir_infra}} output -json | jq --raw-output ".lagoon_files_primary_access_key_name.value | select (.!=null)") --vault-name $(terraform -chdir={{.dir_infra}} output -json | jq --raw-output ".keyvault_name.value | select (.!=null)") --query value -o tsv
+        BAAS_STORAGE_CLIENT_ACCESS_KEY:
+          sh: az keyvault secret show --subscription "{{.AZURE_SUBSCRIPTION_ID}}" --name $(terraform -chdir={{.dir_infra}} output -json | jq --raw-output ".backup_blob_storage_client_access_key_name.value | select (.!=null)") --vault-name $(terraform -chdir={{.dir_infra}} output -json | jq --raw-output ".keyvault_name.value | select (.!=null)") --query value -o tsv
+        BAAS_STORAGE_CLIENT_SECRET_KEY:
+          sh: az keyvault secret show --subscription "{{.AZURE_SUBSCRIPTION_ID}}" --name $(terraform -chdir={{.dir_infra}} output -json | jq --raw-output ".backup_blob_storage_client_secret_key_name.value | select (.!=null)") --vault-name $(terraform -chdir={{.dir_infra}} output -json | jq --raw-output ".keyvault_name.value | select (.!=null)") --query value -o tsv
+        BAAS_STORAGE_ACCOUNT_NAME:
+          sh: terraform -chdir={{.dir_infra}} output -json | jq --raw-output ".backup_storage_account_name.value | select (.!=null)"
+        BAAS_STORAGE_ACCOUNT_KEY:
+          sh: az keyvault secret show --subscription "{{.AZURE_SUBSCRIPTION_ID}}" --name $(terraform -chdir={{.dir_infra}} output -json | jq --raw-output ".backup_primary_access_key_name.value | select (.!=null)") --vault-name $(terraform -chdir={{.dir_infra}} output -json | jq --raw-output ".keyvault_name.value | select (.!=null)") --query value -o tsv
+      cmds:
+        # We're doing this twice, so we use a separate task for invoking the
+        # installation script.
+
+        # Install lagoon files.
+        - task: _support:provision:minio:install
+          vars:
+            HOSTNAME_PREFIX: "files"
+            HELM_RELEASE_NAME: "minio-lagoon-files"
+            CLIENT_ACCESS_KEY: "{{.LAGOON_FILES_CLIENT_ACCESS_KEY}}"
+            CLIENT_SECRET_KEY: "{{.LAGOON_FILES_CLIENT_SECRET_KEY}}"
+            STORAGE_ACCOUNT_NAME: "{{.LAGOON_FILES_STORAGE_ACCOUNT_NAME}}"
+            STORAGE_ACCOUNT_KEY: "{{.LAGOON_FILES_STORAGE_ACCOUNT_KEY}}"
+        - task: _support:provision:minio:install
+          vars:
+            HOSTNAME_PREFIX: "backup-storage"
+            HELM_RELEASE_NAME: "minio-backup"
+            CLIENT_ACCESS_KEY: "{{.BAAS_STORAGE_CLIENT_ACCESS_KEY}}"
+            CLIENT_SECRET_KEY: "{{.BAAS_STORAGE_CLIENT_SECRET_KEY}}"
+            STORAGE_ACCOUNT_NAME: "{{.BAAS_STORAGE_ACCOUNT_NAME}}"
+            STORAGE_ACCOUNT_KEY: "{{.BAAS_STORAGE_ACCOUNT_KEY}}"
+
+    _support:provision:minio:install:
+      summary: Do one of the two minio installations.
+      env:
+        INGRESS_CLASS: nginx
+        HELM_RELEASE_NAME: "{{.HELM_RELEASE_NAME}}"
+        API_HOSTNAME: "{{.HOSTNAME_PREFIX}}.lagoon.{{.platform_env}}.{{.global_environment_suffix}}"
+        # Copy the task variables we've been passed into environment variables
+        # that the script can read.
+        CLIENT_ACCESS_KEY: "{{.CLIENT_ACCESS_KEY}}"
+        CLIENT_SECRET_KEY: "{{.CLIENT_SECRET_KEY}}"
+        STORAGE_ACCOUNT_NAME: "{{.STORAGE_ACCOUNT_NAME}}"
+        STORAGE_ACCOUNT_KEY: "{{.STORAGE_ACCOUNT_KEY}}"
+      cmds:
+        - task/scripts/provision-minio.sh
+
+    support:provision:k8up:
+      deps: [cluster:auth]
+      summary: Set the DIFF environment variable to any value to switch to diffing instead of an actual upgrade.
+      desc: Install and configure the K8up backup operator
+      env:
+        # As specified in the values file for the backup minio workload.
+        API_URL: http://minio-backup.minio.svc.cluster.local:9000
+        # As specified in the values file for lagoon-core
+        LAGOON_BACKUP_HANDLER_URL: https://backuphandler.lagoon.{{.platform_env}}.{{.global_environment_suffix}}
+        K8UP_GLOBALSTATSURL: https://k8up.lagoon.{{.platform_env}}.{{.global_environment_suffix}}
+        CLIENT_ACCESS_KEY:
+          sh: az keyvault secret show --subscription "{{.AZURE_SUBSCRIPTION_ID}}" --name $(terraform -chdir={{.dir_infra}} output -json | jq --raw-output ".backup_blob_storage_client_access_key_name.value | select (.!=null)") --vault-name $(terraform -chdir={{.dir_infra}} output -json | jq --raw-output ".keyvault_name.value | select (.!=null)") --query value -o tsv
+        CLIENT_SECRET_KEY:
+          sh: az keyvault secret show --subscription "{{.AZURE_SUBSCRIPTION_ID}}" --name $(terraform -chdir={{.dir_infra}} output -json | jq --raw-output ".backup_blob_storage_client_secret_key_name.value | select (.!=null)") --vault-name $(terraform -chdir={{.dir_infra}} output -json | jq --raw-output ".keyvault_name.value | select (.!=null)") --query value -o tsv
+      cmds:
+        - task/scripts/provision-k8up.sh
+
     lagoon:provision:core:
       deps: [cluster:auth]
       desc: Install and configure Lagoon core
+      vars:
+        # If DIFF is set, use the diff helm plugin
+        DIFF_COMMAND: '{{empty .DIFF | ternary "" "diff"}}'
       env:
         # Collect the values we'll render into the values-file for the chart.
         KEYCLOAK_ADMIN_PASS:
           sh: az keyvault secret show --subscription "{{.AZURE_SUBSCRIPTION_ID}}" --name $(terraform -chdir={{.dir_infra}} output -json | jq --raw-output ".keycloak_admin_pass_key_name.value | select (.!=null)") --vault-name $(terraform -chdir={{.dir_infra}} output -json | jq --raw-output ".keyvault_name.value | select (.!=null)") --query value -o tsv
         HARBOR_ADMIN_PASS:
           sh: az keyvault secret show --subscription "{{.AZURE_SUBSCRIPTION_ID}}" --name $(terraform -chdir={{.dir_infra}} output -json | jq --raw-output ".harbor_admin_pass_key_name.value | select (.!=null)") --vault-name $(terraform -chdir={{.dir_infra}} output -json | jq --raw-output ".keyvault_name.value | select (.!=null)") --query value -o tsv
+        LAGOON_FILES_API_URL: https://files.lagoon.{{.platform_env}}.{{.global_environment_suffix}}
+        LAGOON_FILES_HOSTNAME:
+          sh: az keyvault secret show --subscription "{{.AZURE_SUBSCRIPTION_ID}}" --name $(terraform -chdir={{.dir_infra}} output -json | jq --raw-output ".lagoon_files_blob_storage_client_access_key_name.value | select (.!=null)") --vault-name $(terraform -chdir={{.dir_infra}} output -json | jq --raw-output ".keyvault_name.value | select (.!=null)") --query value -o tsv
+        LAGOON_FILES_ACCESS_KEY:
+          sh: az keyvault secret show --subscription "{{.AZURE_SUBSCRIPTION_ID}}" --name $(terraform -chdir={{.dir_infra}} output -json | jq --raw-output ".lagoon_files_blob_storage_client_access_key_name.value | select (.!=null)") --vault-name $(terraform -chdir={{.dir_infra}} output -json | jq --raw-output ".keyvault_name.value | select (.!=null)") --query value -o tsv
+        LAGOON_FILES_SECRET_KEY:
+          sh: az keyvault secret show --subscription "{{.AZURE_SUBSCRIPTION_ID}}" --name $(terraform -chdir={{.dir_infra}} output -json | jq --raw-output ".lagoon_files_blob_storage_client_secret_key_name.value | select (.!=null)") --vault-name $(terraform -chdir={{.dir_infra}} output -json | jq --raw-output ".keyvault_name.value | select (.!=null)") --query value -o tsv
+        LAGOON_FILES_BUCKET:
+          sh: terraform -chdir={{.dir_infra}} output -json | jq --raw-output ".lagoon_files_blob_storage_container_name.value | select (.!=null)"
+        BAAS_STORAGE_ACCESS_KEY:
+          sh: az keyvault secret show --subscription "{{.AZURE_SUBSCRIPTION_ID}}" --name $(terraform -chdir={{.dir_infra}} output -json | jq --raw-output ".backup_blob_storage_client_access_key_name.value | select (.!=null)") --vault-name $(terraform -chdir={{.dir_infra}} output -json | jq --raw-output ".keyvault_name.value | select (.!=null)") --query value -o tsv
+        BAAS_STORAGE_SECRET_KEY:
+          sh: az keyvault secret show --subscription "{{.AZURE_SUBSCRIPTION_ID}}" --name $(terraform -chdir={{.dir_infra}} output -json | jq --raw-output ".backup_blob_storage_client_secret_key_name.value | select (.!=null)") --vault-name $(terraform -chdir={{.dir_infra}} output -json | jq --raw-output ".keyvault_name.value | select (.!=null)") --query value -o tsv
+        CHART_VERSION_LAGOON_CORE:
+          sh: source "{{.dir_lagoon}}/lagoon-versions.env" && echo $VERSION_LAGOON_CORE
       cmds:
         - |
-          envsubst '$HARBOR_ADMIN_PASS $KEYCLOAK_ADMIN_PASS' \
+          envsubst '$HARBOR_ADMIN_PASS $KEYCLOAK_ADMIN_PASS $LAGOON_FILES_API_URL $LAGOON_FILES_ACCESS_KEY $LAGOON_FILES_BUCKET $LAGOON_FILES_SECRET_KEY $BAAS_STORAGE_ACCESS_KEY $BAAS_STORAGE_SECRET_KEY' \
           < "{{.dir_lagoon}}/lagoon-core-values.template.yaml" \
           > "{{.dir_lagoon}}/lagoon-core-values.yaml"
         # Setup the namespace manually to control eg. labels on the namespace.
         - kubectl apply -f {{.dir_lagoon}}/lagoon-core-namespace.yaml
         - helm repo add lagoon https://uselagoon.github.io/lagoon-charts/
         - |
-          helm upgrade --install --namespace lagoon-core \
-          -f {{.dir_lagoon}}/lagoon-core-values.yaml lagoon-core \
+          helm {{.DIFF_COMMAND}} upgrade \
+          --install \
+          --namespace lagoon-core \
+          -f {{.dir_lagoon}}/lagoon-core-values.yaml \
+          --version $CHART_VERSION_LAGOON_CORE \
+          lagoon-core \
           lagoon/lagoon-core
       preconditions:
       - sh: "[ ! -z ${KEYCLOAK_ADMIN_PASS} ]"
@@ -183,12 +282,18 @@ tasks:
       - sh: "[ ! -z {{.ssh_loadbalancer_ip}} ]"
         msg: "Could not determine IP of the ssh-endpoint for Lagoon. The Kubernetes lagoon-core/lagoon-core-ssh service may not have been provisioned yet."
 
-    lagoon:provision:harbor:
+    support:provision:harbor:
       deps: [cluster:auth]
       desc: Install an instance of Harbor into a Lagoon cluster.
+      vars:
+        # If DIFF is set, use the diff helm plugin
+        DIFF_COMMAND: '{{empty .DIFF | ternary "" "diff"}}'
+
       env:
         HARBOR_ADMIN_PASS:
           sh: az keyvault secret show --subscription "{{.AZURE_SUBSCRIPTION_ID}}" --name $(terraform -chdir={{.dir_infra}} output -json | jq --raw-output ".harbor_admin_pass_key_name.value | select (.!=null)") --vault-name $(terraform -chdir={{.dir_infra}} output -json | jq --raw-output ".keyvault_name.value | select (.!=null)") --query value -o tsv
+        CHART_VERSION_HARBOR:
+          sh: source "{{.dir_configuration}}/versions.env" && echo $VERSION_HARBOR
 
       cmds:
         - |
@@ -198,12 +303,13 @@ tasks:
         # Setup the namespace manually to control eg. labels on the namespace.
         - kubectl apply -f {{.dir_lagoon}}/harbor-namespace.yaml
         - helm repo add harbor https://helm.goharbor.io
-        # From the official installation guide:
-        #   We are currently using Harbor version 1.5.2. A recent update to Harbor breaks the API.
         - |
-          helm upgrade --install --namespace harbor \
-          --wait -f {{.dir_lagoon}}/harbor-values.yaml --version=1.5.2 \
-          harbor harbor/harbor
+          helm {{.DIFF_COMMAND}} \
+            upgrade --install \
+            --namespace harbor \
+            -f {{.dir_lagoon}}/harbor-values.yaml \
+            --version=$CHART_VERSION_HARBOR \
+            harbor harbor/harbor
       preconditions:
       - sh: "[ ! -z ${HARBOR_ADMIN_PASS} ]"
         msg: "Could not extract the password for the Harbor admin from keyvault."
@@ -211,6 +317,9 @@ tasks:
     lagoon:provision:remote:
       deps: [cluster:auth]
       desc: Install and configure Lagoon remote
+      vars:
+        # If DIFF is set, use the diff helm plugin
+        DIFF_COMMAND: '{{empty .DIFF | ternary "" "diff"}}'
       env:
         # Fetch a number of variables we'll need to add to a values-file.
         SSH_LOADBALANCER_IP:
@@ -227,6 +336,8 @@ tasks:
           sh: terraform -chdir={{.dir_infra}} output -json | jq --raw-output ".sql_user.value | select (.!=null)"
         SQL_PASSWORD:
           sh: az keyvault secret show --subscription "{{.AZURE_SUBSCRIPTION_ID}}" --name $(terraform -chdir={{.dir_infra}} output -json | jq --raw-output ".sql_password_key_name.value | select (.!=null)") --vault-name $(terraform -chdir={{.dir_infra}} output -json | jq --raw-output ".keyvault_name.value | select (.!=null)") --query value -o tsv
+        CHART_VERSION_LAGOON_REMOTE:
+          sh: source "{{.dir_lagoon}}/lagoon-versions.env" && echo $VERSION_LAGOON_REMOTE
       cmds:
         # Render the variables we've collected into a values file we can install.
         - |
@@ -238,9 +349,12 @@ tasks:
         # Add the lagoon helm repo and install or upgrade the chart.
         - helm repo add lagoon https://uselagoon.github.io/lagoon-charts/
         - |
-          helm upgrade --install --namespace lagoon \
-          -f {{.dir_lagoon}}/lagoon-remote-values.yaml lagoon-remote \
-          lagoon/lagoon-remote
+          helm {{.DIFF_COMMAND}} \
+            upgrade --install \--namespace lagoon \
+            -f {{.dir_lagoon}}/lagoon-remote-values.yaml \
+            --version $CHART_VERSION_LAGOON_REMOTE \
+            lagoon-remote \
+            lagoon/lagoon-remote
       preconditions:
       - sh: "[ ! -z ${RABBITMQ_PASS} ]"
         msg: "Could not extract the password for the rabbitmq admin from Kubernetes."
@@ -447,9 +561,12 @@ tasks:
         - task: support:provision:cert-manager
         - task: support:provision:ingress-nginx
         - task: support:provision:bulk-storage
+        - task: support:provision:minio
+        - task: support:provision:k8up
         - task: support:provision:prometheus
         - task: support:provision:loki-promtail
         - task: support:provision:grafana
+        - task: support:provision:harbor
 
     site:deploy:
       desc: Runs the a dpladm deploy of a site

@@ -4,7 +4,7 @@ sites:
   tbd-core-test01:
     name: "Core test 01"
     description: "Core test site no. 01"
-    deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINJKeUGVv6OaucgsTCsX/Mf9NtfAZYBGqNLeEh2hO2MT"
+    deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKWJ++ijZpWsZdHvKuWEwOvyshQ5EOEOP3SXv7eC9MPr"
   tbd-core-test02:
     name: "Core test 02"
     description: "Core test site no. 02"
