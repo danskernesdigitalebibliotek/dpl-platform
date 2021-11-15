@@ -14,6 +14,18 @@ s3BAASSecretAccessKey: none
 imageTag: v2.0.0-rc.9
 registry: none.com
 
+# Disabled services:
+logs2email:
+  enabled: false
+logs2microsoftteams:
+  enabled: false
+logs2rocketchat:
+  enabled: false
+logs2slack:
+  enabled: false
+logs2webhook:
+  enabled: false
+
 api:
   ingress:
     enabled: true
