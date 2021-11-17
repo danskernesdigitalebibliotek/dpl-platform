@@ -18,7 +18,11 @@ a summary of its primary configurations can be found [in the wiki](https://githu
 A platform environment uses the following Azure infrastructure resources.
 
 - A virtual Network - with a subnet, configured with access to a number of services.
-- A Storage account used for storing logs and the file-shares the sites uses.
+- Separate storage accounts for
+  - Monitoring data (logs)
+  - Lagoon files (eg. results of running user-triggered administrative actions)
+  - Backups
+  - Drupal site files
 - A MariaDB used to host the sites databases.
 - A Key Vault that holds administrative credentials to resources that Lagoon needs administrative access to.
 - An Azure Kubernetes Service cluster that hosts the platform itself.

@@ -46,3 +46,18 @@ container-registries:
     # variable during lagoons build/deploy process.
     password: GITHUB_REGISTRY_CREDENTIALS
     url: ghcr.io
+
+# The following is the default values for Lagoon backup configuration.
+# https://docs.lagoon.sh/lagoon/using-lagoon-the-basics/lagoon-yml#backup-retention
+backup-retention:
+  # Configure the number of monthly, weekly, daily and hourly backups to retain.
+  production:
+    monthly: 1
+    weekly: 6
+    daily: 7
+    # Be aware that hourly backups are only possible if the backup schedule is
+    # adjusted to run every hour.
+    hourly: 0
+# https://docs.lagoon.sh/lagoon/using-lagoon-the-basics/lagoon-yml#backup-schedule
+backup-schedule:
+  production: M H(22-2) * * *
