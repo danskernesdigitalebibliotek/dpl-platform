@@ -1,6 +1,7 @@
 # Backup
 
 ## Site backup configuration
+
 We configure all production backups with a backup schedule that ensure that the
 site is backed up at least once a day.
 
@@ -15,13 +16,7 @@ deployed. The templates for the different site types can be found as a part
 of [dpladm](../infrastructure/dpladm).
 
 Refer to the [lagoon documentation on backups](https://docs.lagoon.sh/lagoon/using-lagoon-advanced/backups)
-for more information
+for more general information.
 
-## Retrieving backups
-Citing the [Lagoon backup documentation](https://docs.lagoon.sh/lagoon/using-lagoon-advanced/backups#retrieving-backups)
-> Backups stored in Restic will be tracked within Lagoon, and can be recovered via the "Backup" tab for each environment in the Lagoon UI.
-
-Backups can be downloaded on demand. Restoring a backup onto a running site
-is a manual process where an administrator first copies the backup into a
-site pod eg. via `kubectl cp` and then copies files into their destination and
-imports databasedumps via eg. `drush sqlc`.
+Refer to any [runbooks](runbooks) relevant to backups for operational instructions
+on eg. retrieving a backup.

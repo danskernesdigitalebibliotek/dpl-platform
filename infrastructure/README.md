@@ -38,39 +38,7 @@ is put in to effect by running the appropiate `task` :
 
 ## Basic usage of dplsh and an environment configuration
 The remaining guides in this document assumes that you work from an instance
-of the [DPL shell](../../../dpl-platform/tools/dplsh), and that you have a
-properly authenticated azure CLI (`az`). This is require to bootstrap the access
-to the various credentials the tools requires to function.
-
-First `cd` to the `infrastructure`, then launch the shell.
-
-The shell will contact Azure to retrieve a storage account key Terraform needs to
-access its state, and export it and other require credentials via a number of
-environment variables. See `.dplsh.profile` for details.
-
-While inside the shell, use `DPLPLAT_ENV=<name> task` to run the pieces of
-automation you need or export `DPLPLAT_ENV` to simplify repeated executions.
-
-Running `task` without any arguments will yield a list of targets:
-
-```shell
-cd infrastructure
-dplsh
-# or if you do not have dplsh on path
-../tools/dplsh/dplsh.sh
-
-# From with the shell
-dplsh:~/host_mount$ DPLPLAT_ENV=dplplat01 task <target>
-
-# Or if you expect to run task multiple times
-dplsh:~/host_mount$ export DPLPLAT_ENV=dplplat01
-dplsh:~/host_mount$ task <target>
-```
-
-Any applied changes is persisted into the environments remote state-file. This
-means that you should be careful to coordinate when you commit changes to
-`.tf` files to git with when they are applied with your team. The recommended
-approach is to commit and merge any applied changes as quickly as possible.
+of the [DPL shell](../../../dpl-platform/tools/dplsh). See the [DPLSH Runbook](../documentation/runbooks/using-dplsh.md) for a basic introduction to how to use dplsh.
 
 # Installing a platform environment from scratch
 The following describes how to set up a whole new platform environment to host
