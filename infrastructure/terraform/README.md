@@ -8,7 +8,7 @@ use of terraform.
 The setup keeps a single terraform-state pr. environment. Each state is kept as
 separate blobs in a Azure Storage Account.
 
-![](../../documentation/diagrams/render-png/terraform_overview.png)
+![Overview of the Terraform setup](../../documentation/diagrams/render-png/terraform_overview.png)
 
 Access to the storage account is granted via a Storage Account Key which is
 kept in a Azure Key Vault in the same resource-group. The key vault, storage account
@@ -25,8 +25,8 @@ Prerequisites:
 - A Azure subscription
 - An authenticated azure CLI that is allowed to use create resources and grant
   access to these resources under the subscription including Key Vaults.
-  The easiest way to achieve this is to grant the user the `Owner` and `Key Vault Administrator`
-  roles to on subscription.
+  The easiest way to achieve this is to grant the user the `Owner` and
+  `Key Vault Administrator` roles to on subscription.
 
 Use the `scripts/bootstrap-tf.sh` for bootstrapping. After the script has been
 run successfully it outputs instructions for how to set up a terraform module
@@ -45,7 +45,8 @@ the setups Key Vault and finally add the following section to `.dplsh.profile` (
 get the subscription id and key vault name from existing export for `ARM_ACCESS_KEY`).
 
 ```shell
-export DNSIMPLE_TOKEN=$(az keyvault secret show --subscription "<subscriptionid>" --name dnsimple-api-key --vault-name <key vault-name> --query value -o tsv)
+export DNSIMPLE_TOKEN=$(az keyvault secret show --subscription "<subscriptionid>"\
+ --name dnsimple-api-key --vault-name <key vault-name> --query value -o tsv)
 export DNSIMPLE_ACCOUNT="<dnsimple-account-id>"
 ```
 
@@ -64,6 +65,7 @@ manages all environments.
 ## Terraform Modules
 
 ### Root module
+
 The platform environments share a number of general modules, which are then
 used via a number of root-modules set up for each environment.
 
@@ -79,17 +81,17 @@ environments.
 The [dpl-platform-environment](./dpl-platform-environment) Terraform module
 provisions all resources that are required for a single DPL Platform Environment.
 
-Inspect [variables.tf](./dpl-platform-environment/variables.tf) for a description of the required module-
-variables.
+Inspect [variables.tf](./dpl-platform-environment/variables.tf) for a description
+of the required module-variables.
 
 Inspect [outputs.tf](./dpl-platform-environment/outputs.tf) for a list of outputs.
 
 Inspect the individual module files for documentation of the resources.
 
 The following diagram depicts (amongst other things) the provisioned resources.
-Consult the [platform environment documentation](../../../../documentation/platform-environment.md) for more details on the role the various resources
-plays.
-![](../../../../documentation/diagrams/render-png/dpl-platform-azure.png)
+Consult the [platform environment documentation](../../../../documentation/platform-environment.md)
+for more details on the role the various resources plays.
+![The Azure infrastructure](../../documentation/diagrams/render-png/dpl-platform-azure.png)
 
 ### DPL Platform Site Environment Module
 
@@ -106,4 +108,4 @@ Inspect the individual module files for documentation of the resources.
 
 The following diagram depicts how the module gets its credentials for accessing
 GitHub and what it provisions.
-![](../../../../documentation/diagrams/render-png/github-environment-repositories.png)
+![Provisioning Github infrastructure](../../documentation/diagrams/render-png/github-environment-repositories.png)

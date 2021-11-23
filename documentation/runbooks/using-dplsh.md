@@ -14,13 +14,14 @@ to know more about the shell itself? Refer to [tools/dplsh](../../tools/dplsh).
 * [jq](https://stedolan.github.io/jq/download/)
 * Bash 4 or newer
 * An authorized Azure `az` cli. The version should match the version found in
-  `FROM mcr.microsoft.com/azure-cli:version` in the [dplsh Dockerfile](../../tools/dplsh/Dockerfile).
+  `FROM mcr.microsoft.com/azure-cli:version` in the [dplsh Dockerfile](../../tools/dplsh/Dockerfile)
   You can choose to authorize the az cli from within dplsh, but your session
   will only last as long as the shell-session. The use you authorize as must
-  have permission to read the Terraform state from the [Terraform setup](../../infrastructure/terraform/README.md#terraform-setups), and
-  Contributor permissions on the [environments](../platform-environments.md) resource-group in order to
-  provision infrastructure.
-* `dplsh.sh` symlinked into your path as `dplsh`, see [Launching the Shell](../../tools/dplsh/README.md#launching-the-shell) (optional, but assumed below)
+  have permission to read the Terraform state from the [Terraform setup](../../infrastructure/terraform/README.md#terraform-setups)
+  , and Contributor permissions on the [environments](../platform-environments.md)
+  resource-group in order to provision infrastructure.
+* `dplsh.sh` symlinked into your path as `dplsh`, see [Launching the Shell](../../tools/dplsh/README.md#launching-the-shell)
+ (optional, but assumed below)
 
 ## Procedure
 
@@ -45,5 +46,3 @@ $ eval $(ssh-agent); ssh-add
 # Then authorize the lagoon cli
 $ task lagoon:cli:config
 ```
-
-

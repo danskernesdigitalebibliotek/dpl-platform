@@ -32,9 +32,15 @@ While there are no authoritative discussion of imperative vs declarative IoC,
 the following quote from an [OVH Tech Blog](https://tech.ovoenergy.com/imperative-vs-declarative/)
 summarizes the current consensus in the industry pretty well:
 
-> In summary declarative infrastructure tools like Terraform and CloudFormation offer a much lower overhead to create powerful infrastructure definitions that can grow to a massive scale with minimal overheads. The complexities of hierarchy, timing, and resource updates are handled by the underlying implementation so you can focus on defining what you want rather than how to do it.
+> In summary declarative infrastructure tools like Terraform and CloudFormation
+> offer a much lower overhead to create powerful infrastructure definitions that
+> can grow to a massive scale with minimal overheads. The complexities of hierarchy,
+> timing, and resource updates are handled by the underlying implementation so
+> you can focus on defining what you want rather than how to do it.
 >
-> The additional power and control offered by imperative style languages can be a big draw but they also move a lot of the responsibility and effort onto the developer, be careful when choosing to take this approach.
+> The additional power and control offered by imperative style languages can be
+> a big draw but they also move a lot of the responsibility and effort onto the
+> developer, be careful when choosing to take this approach.
 
 ## Decision
 

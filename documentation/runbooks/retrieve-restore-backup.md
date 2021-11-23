@@ -83,7 +83,8 @@ kubectl exec \
   -- \
     bash -c " \
          echo Verifying file \
-      && test -s /tmp/database-backup.sql || (echo database-backup.sql is missing or empty && exit 1) \
+      && test -s /tmp/database-backup.sql \
+         || (echo database-backup.sql is missing or empty && exit 1) \
       && echo Dropping database \
       && drush sql-drop -y \
       && echo Importing backup \
@@ -140,14 +141,19 @@ kubectl exec \
   -- \
     bash -c " \
          echo Verifying file \
-      && test -s /tmp/files-backup.tar.gz || (echo files-backup.tar.gz is missing or empty && exit 1) \
-      && tar ztf /tmp/files-backup.tar.gz data/nginx &> /dev/null || (echo could not verify the tar.gz file files-backup.tar && exit 1) \
-      && test -d /app/web/sites/default/files || (echo Could not find destination /app/web/sites/default/files && exit 1) \
+      && test -s /tmp/files-backup.tar.gz \
+         || (echo files-backup.tar.gz is missing or empty && exit 1) \
+      && tar ztf /tmp/files-backup.tar.gz data/nginx &> /dev/null \
+         || (echo could not verify the tar.gz file files-backup.tar && exit 1) \
+      && test -d /app/web/sites/default/files \
+         || (echo Could not find destination /app/web/sites/default/files \
+             && exit 1) \
       && echo Removing existing sites/default/files \
       && rm -fr /app/web/sites/default/files \
       && echo Unpacking backup \
       && mkdir -p /app/web/sites/default/files \
-      && tar --strip 2 --gzip --extract --file /tmp/files-backup.tar.gz --directory /app/web/sites/default/files data/nginx \
+      && tar --strip 2 --gzip --extract --file /tmp/files-backup.tar.gz \
+             --directory /app/web/sites/default/files data/nginx \
       && echo Fixing permissions \
       && chmod -R 777 /app/web/sites/default/files \
       && echo Clearing cache \
