@@ -16,6 +16,8 @@ ARG TASK_VERSION=v3.4.2
 ARG STERN_RELEASE=1.11.0
 ARG LAGOON_CLI_RELEASE=v0.12.0
 ARG KREW_VERSION=v0.4.2
+# This version can be bumped as we upgrade the cluster minor version.
+ARG KUBECTL_VERSION=v1.20.9
 
 LABEL org.opencontainers.image.source https://github.com/danskernesdigitalebibliotek/dpl-platform
 
@@ -24,14 +26,15 @@ WORKDIR /tmp
 
 # TODO - this will install the latest version - we should pin to the version we
 # actually use.
-RUN az aks install-cli
+RUN az aks install-cli --kubelogin-version v0.0.10 --client-version ${KUBECTL_VERSION}
 RUN apk add --no-cache \
   ca-certificates \
   rsync \
   vim \
   gettext \
   bash-completion \
-  docker-cli
+  docker-cli \
+  yq
 
 # Add task, a modern Make equivalent.
 RUN curl -sL https://taskfile.dev/install.sh | bash -s -- -b /usr/local/bin ${TASK_VERSION}
@@ -41,11 +44,8 @@ RUN curl -Lo /usr/local/bin/stern https://github.com/wercker/stern/releases/down
   && chmod +x /usr/local/bin/stern
 
 # Add the Lagoon CLI
-RUN curl -Lo /tmp/lagooncli.tar.gz https://github.com/uselagoon/lagoon-cli/releases/download/${LAGOON_CLI_RELEASE}/lagoon-cli-${LAGOON_CLI_RELEASE}-linux-amd64.tar.gz \
-  && tar -x -C /usr/local/bin -f /tmp/lagooncli.tar.gz lagoon-cli-${LAGOON_CLI_RELEASE}-linux-amd64/lagoon \
-  && chmod +x /usr/local/bin \
-  && rm /tmp/lagooncli.tar.gz
-
+RUN curl -Lo /usr/local/bin/lagoon https://github.com/uselagoon/lagoon-cli/releases/download/${LAGOON_CLI_RELEASE}/lagoon-cli-${LAGOON_CLI_RELEASE}-linux-amd64 \
+  && chmod +x /usr/local/bin/lagoon
 WORKDIR /tmp
 
 # Add Terraform

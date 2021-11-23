@@ -4,6 +4,7 @@ sites:
   tbd-core-test01:
     name: "Core test 01"
     description: "Core test site no. 01"
+    dpl-cms-release: "0.6.0"
     deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKWJ++ijZpWsZdHvKuWEwOvyshQ5EOEOP3SXv7eC9MPr"
   tbd-core-test02:
     name: "Core test 02"
@@ -35,3 +36,7 @@ sites:
   tbd-bib-rb:
     name: "Rødovre Bibliotek"
     description: "PoC environment for Rødovre Bibliotek"
+    primary-domain: "rdb.dplplat01.dpl.reload.dk"
+    secondary-domains: ["www.rdb.dplplat01.dpl.reload.dk", "www2.rdb.dplplat01.dpl.reload.dk"]
+    dpl-cms-release: "0.6.0"
+    deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIEEqMszAfB6roiO49D1Zu407G2cUvCAhiJkI3sPOzQCs"
