@@ -48,22 +48,61 @@ function getCleanWorkspacePath {
 
 # This function assumes working directory is in a root of a un-rendered profile template.s
 function renderProfileTemplate {
+  # Name of the site
   local siteName=$1
+  # Which dpl-cms release to use.
   local releaseTag=$2
+  # The primary domain of the site (optional)
+  local primaryDomain=${3:-}
+  # A space-seperated list of secondary domains (optional)
+  local secondaryDomainsString=${4:-}
+
+  PRIMARY_DOMAIN=""
+  ENABLE_ROUTES=""
+  # This is a little bit terrible. As we're injecting this into a yaml-
+  # document we need to maintain the indentation
+  local routesIndent="    "
+  local singleRouteIndent="${routesIndent}    "
+  if [[ -n "${primaryDomain}" ]]; then
+    ENABLE_ROUTES+=$(cat << EndOfMessage
+${routesIndent}routes:
+${routesIndent}  - nginx:
+EndOfMessage
+)
+    PRIMARY_DOMAIN="${singleRouteIndent}- \"${primaryDomain}\""
+  fi
+
+  # Only render secondary domains if we have a primary domain.
+  if [[ -n "${primaryDomain}" && -n "${secondaryDomainsString}" ]]; then
+    SECONDARY_DOMAINS=""
+    IFS=' '
+    for secondaryDomain in ${secondaryDomainsString}; do
+      SECONDARY_DOMAINS+=$(cat << EndOfMessage
+
+${singleRouteIndent}- "$secondaryDomain":
+${singleRouteIndent}    annotations:
+${singleRouteIndent}      nginx.ingress.kubernetes.io/permanent-redirect: https://${primaryDomain}\$request_uri
+EndOfMessage
+)
+    done
+  fi
 
   # TODO, we could probably do with a repo-wide search replace of variables.
   # Something https://github.com/kreuzwerker/envplate could do the trick
   # Export our globals and locals so that envubst can access them
   export DPL_CMS_RELEASE_IMAGE=dpl-cms-source
   export DPL_CMS_RELEASE_TAG="${releaseTag}"
+  export ENABLE_ROUTES
   export LAGOON_PROJECT_NAME="${siteName}"
   export LAGOON_IMAGES_RELEASE_TAG
+  export PRIMARY_DOMAIN
+  export SECONDARY_DOMAINS
 
   # TODO this templating could be quite a bit more flexible.
   # Tell envsubst which variables to replace. This allows other variables to
   # remain untouched.
   # shellcheck disable=SC2016
-  local variablesToSubst='$DPL_CMS_RELEASE_IMAGE $DPL_CMS_RELEASE_TAG $LAGOON_IMAGES_RELEASE_TAG $LAGOON_PROJECT_NAME'
+  local variablesToSubst='$DPL_CMS_RELEASE_IMAGE $DPL_CMS_RELEASE_TAG $ENABLE_ROUTES $LAGOON_IMAGES_RELEASE_TAG $LAGOON_PROJECT_NAME $PRIMARY_DOMAIN $SECONDARY_DOMAINS'
 
   # Loop through the files we know to contain variables that needs replacing.
   local templateFiles=(
@@ -81,21 +120,21 @@ function renderProfileTemplate {
 
 }
 
-# Renders deployment-configurations to a sites environment-repository.
-function deploy {
+# Renders the contents of a sites environment repository and pushes the result.
+function syncEnvRepo {
   local siteName=$1
   local releaseTag=$2
   local branchName=$3
+  local primaryDomain="${4:-}"
+  local secondaryDomains="${5:-}"
 
   # TODO, preflight checks that verifies this repository looks good to go.
   # makes most sense to do when we're doing more complicated things inside
   # the repository. At the very least we should verify that this actually
   # looks like an environment-repo.
 
-  # TODO, determine profile type and act accordingly
-  # The site profil is used to determine whether we should refer to an
-  # downstream image, or use core.
-  local siteProfile="core"
+  # TODO
+  local repoTemplate="standard"
 
   local repoName
   repoName=$(getRepoName "${siteName}")
@@ -113,19 +152,19 @@ function deploy {
   # Clear out any previous content and replace it with a unrendered template.
   mv "${repoName}/.git" ./
   rm -fr "${repoName}"
-  cp -r "$(getProfileTemplatePath $siteProfile)" "${repoName}"
+  cp -r "$(getProfileTemplatePath $repoTemplate)" "${repoName}"
   mv .git "${repoName}"
   # We now have a repository with a diff from <previous revision>...<unrendered template>
 
   # Enter the template and rendered it
   cd "${repoName}"
-  renderProfileTemplate "${siteName}" "${releaseTag}"
+  renderProfileTemplate "${siteName}" "${releaseTag}" "${primaryDomain}" "${secondaryDomains}"
 
   # Detect changes
   local changedFiles
   changedFiles="$(git status --porcelain)"
   if [[ -z "${changedFiles}" && "${FORCE:-}" != "1" ]]; then
-    echo "No changes found, aborting deployment"
+    echo "No changes found."
     return
   fi
 
@@ -136,9 +175,9 @@ function deploy {
 
   if [[ -n "${changedFiles}" ]]; then
     git add .
-    git commit -m "Deploying release ${releaseTag} to ${branchName}"
+    git commit -m "Syncing site to release ${releaseTag} on ${branchName}"
   else
-    git commit --allow-empty -m "Deploying release ${releaseTag} to ${branchName} (no changes)"
+    git commit --allow-empty -m "Syncing site to release ${releaseTag} on ${branchName} (no changes)"
   fi
 
   local newSha
@@ -148,7 +187,7 @@ function deploy {
     echo "In diff-mode, skipping push."
     echo
     echo "Git diff between ${previousSha} and ${newSha}:"
-    git diff "${previousSha}...${newSha}"
+    git --no-pager diff "${previousSha}...${newSha}"
     echo
     echo "You can inspect the unpushed repository here: ${workspace}/${repoName}"
     return

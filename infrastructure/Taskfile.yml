@@ -577,12 +577,17 @@ tasks:
         - task: support:provision:grafana
         - task: support:provision:harbor
 
-    site:deploy:
-      desc: Runs the a dpladm deploy of a site
+    site:sync:
+      desc: Runs the a dpladm sync of a site which eg. can be used to deploy a new release
       summary: Run the task without additional variables to see required arguments
-      dir: "dpladm"
+      env:
+        SITES_CONFIG: "{{.dir_env}}/sites.yaml"
+        SITE: "{{.SITE}}"
       cmds:
-        - bin/deploy-release.sh
+        - dpladm/bin/sync-site.sh
+      preconditions:
+      - sh: "[ ! -z {{.SITE}} ]"
+        msg: "Env variable SITE is not set or empty."
 
     _req_env:
       preconditions:

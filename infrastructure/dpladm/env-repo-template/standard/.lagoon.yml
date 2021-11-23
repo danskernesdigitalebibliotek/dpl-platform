@@ -31,8 +31,10 @@ tasks:
         service: cli
 
 environments:
-  mains:
-    # routes:
+  main:
+$ENABLE_ROUTES
+$PRIMARY_DOMAIN
+$SECONDARY_DOMAINS
     cronjobs:
       - name: drush cron
         schedule: "*/15 * * * *"
