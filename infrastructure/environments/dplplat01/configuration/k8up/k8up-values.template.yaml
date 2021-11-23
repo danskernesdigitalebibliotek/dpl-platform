@@ -2,27 +2,27 @@
 k8up:
   envVars:
    - name: BACKUP_GLOBALS3ENDPOINT
-     value: "${API_URL}"
+     value: "${BACKUP_API_URL}"
    - name: BACKUP_GLOBALS3BUCKET
-     value: ""
+     value: "backup"
    - name: BACKUP_GLOBALKEEPJOBS
      value: "1"
    - name: BACKUP_GLOBALSTATSURL
      value: "${LAGOON_BACKUP_HANDLER_URL}"
    - name: BACKUP_GLOBALACCESSKEYID
-     value: "${CLIENT_ACCESS_KEY}"
+     value: "${BACKUP_CLIENT_ACCESS_KEY}"
    - name: BACKUP_GLOBALSECRETACCESSKEY
-     value: "${CLIENT_SECRET_KEY}"
+     value: "${BACKUP_CLIENT_SECRET_KEY}"
    - name: BACKUP_BACKOFFLIMIT
      value: "2"
    - name: BACKUP_GLOBALRESTORES3BUCKET
-     value: "" # should start with `baas-*` for simpler permissions
+     value: "restore" # should start with `baas-*` for simpler permissions
    - name: BACKUP_GLOBALRESTORES3ENDPOINT
-     value: "${API_URL}"
+     value: "${RESTORE_API_URL}"
    - name: BACKUP_GLOBALRESTORES3ACCESSKEYID
-     value: "${CLIENT_ACCESS_KEY}"
+     value: "${RESTORE_CLIENT_ACCESS_KEY}"
    - name: BACKUP_GLOBALRESTORES3SECRETACCESSKEY
-     value: "${CLIENT_SECRET_KEY}"
+     value: "${RESTORE_CLIENT_SECRET_KEY}"
 
   # -- Specifies the timezone K8up is using for scheduling.
   # Empty value defaults to the timezone in which Kubernetes is deployed.
