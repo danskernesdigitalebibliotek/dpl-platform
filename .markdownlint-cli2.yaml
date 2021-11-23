@@ -1,0 +1,5 @@
+globs:
+  - './**/*.{md,markdown}'
+
+ignores:
+  - '.git'

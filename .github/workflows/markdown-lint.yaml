@@ -1,0 +1,21 @@
+# Lint all Markdown files in the repository.
+on:
+  push:
+    paths:
+      - "**.md"
+      - ".github/workflows/markdown-lint.yaml"
+name: Lint Markdown
+jobs:
+  MarkdownLint:
+    name: Lint Markdown
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        # git with HTTP authentication provides an easy way for us to install
+        # unreleased commits of NPM projects.
+      - name: Reconfigure git to use HTTP authentication
+        run: git config --global url."https://${{ secrets.GITHUB_TOKEN }}@github.com/".insteadOf ssh://git@github.com/
+      - name: Install problem matcher
+        uses: xt0rted/markdownlint-problem-matcher@v1
+      - name: Lint Markdown
+        run: npx markdownlint-cli2
