@@ -279,7 +279,9 @@ tasks:
 
       cmds:
         - |
-            lagoon config add --graphql https://api.lagoon.{{.platform_env}}.{{.global_environment_suffix}}/graphql \
+            lagoon config add \
+            --graphql https://api.lagoon.{{.platform_env}}.{{.global_environment_suffix}}/graphql \
+            --force \
             --ui https://ui.lagoon.{{.platform_env}}.{{.global_environment_suffix}} \
             --hostname {{.ssh_loadbalancer_ip}} \
             --port 22 \

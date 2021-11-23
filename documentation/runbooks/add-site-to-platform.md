@@ -67,7 +67,8 @@ $ task lagoon:cli:config
 
 # 2. Add a project
 # PROJECT_NAME=<project name>  GIT_URL=<url> task lagoon:project:add
-$ PROJECT_NAME=core-test1  GIT_URL=git@github.com:danishpubliclibraries/env-core-test1.git task lagoon:project:add
+$ PROJECT_NAME=core-test1 GIT_URL=git@github.com:danishpubliclibraries/env-core-test1.git\
+  task lagoon:project:add
 
 # The project is added, and a deployment key is printed, use it for the next step.
 

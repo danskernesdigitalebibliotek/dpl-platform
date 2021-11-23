@@ -35,7 +35,8 @@ be especially aware of.
 
 ### Terraform
 
-* Any Terraform HCL must be formatted to match the format required by `terraform fmt`
+* Any Terraform HCL must be formatted to match the format required by
+  `terraform fmt`
 * Terraform configuration should be organized into submodules instantiated by
   root modules.
 

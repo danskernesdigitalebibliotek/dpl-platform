@@ -4,7 +4,7 @@
 
 ### Expected traffic
 
-![](../../diagrams/render-png/request-path.png)
+![The request path and expected traffic](../../diagrams/render-png/request-path.png)
 The platform is required to be able to handle an estimated 275.000 page-views
 per day spread out over 100 websites. A visit to a website that causes the
 browser to request a single html-document followed by a number of assets is only
@@ -51,9 +51,9 @@ resource requirements.
 
 Lagoon sets its resource-requests based on a helm values default in the
 `kubectl-build-deploy-dind` image. The default is typically 10Mi pr. container
-which can [be seen in the nginx-php chart](https://github.com/uselagoon/lagoon/blob/e08be8e274e3fd093f7a103b2cd00a46075b763c/images/kubectl-build-deploy-dind/helmcharts/nginx-php/values.yaml#L40)
-which runs a php and nginx container. Lagoon [configures php-fpm to allow up to 50 children](https://github.com/uselagoon/lagoon-images/blob/4ce87252e381f3647e36eddbfd3913ddf4cfa3bb/images/php-fpm/php-fpm.d/www.conf)
-and [allows php to use up to 400Mi](https://github.com/uselagoon/lagoon-images/blob/e1f8d8a7064aac663d4b972da90e54f292486ed3/images/php-fpm/php.ini#L211) memory.
+which can [be seen in the nginx-php chart][nginx-values] which runs a php and
+nginx container. Lagoon [configures php-fpm to allow up to 50 children][lagoon-phpfpm-children]
+and [allows php to use up to 400Mi][php-400mi] memory.
 
 Combining these numbers we can see that a site that is scheduled as if it only
 uses 20 Megabytes of memory, can in fact take up to 20 Gigabytes. The main thing
@@ -88,22 +88,23 @@ We've inspected the process Lagoon uses to deploy workloads, and determined that
 it would be possible to alter the defaults used without too many modifications.
 
 The `build-deploy-docker-compose.sh` script that renders the manifests that
-describes a sites workloads via Helm includes a [service-specific values-file](https://github.com/uselagoon/lagoon/blob/59a2387030f6d5f8affc316e4d2c62d5ce39ed57/images/kubectl-build-deploy-dind/build-deploy-docker-compose.sh#L839). This file can be used to modify the
-defaults for the Helm chart. By creating custom container-image for the build-
-process based on the upstream Lagoon build image, we can deliver our own version
-of this image.
+describes a sites workloads via Helm includes a
+[service-specific values-file][service-values-file]. This file can be used to
+modify the defaults for the Helm chart. By creating custom container-image for
+the build-process based on the upstream Lagoon build image, we can deliver our
+own version of this image.
 
 As an example, the following Dockerfile will add a custom values file for the
 redis service.
 
-```
+```Dockerfile
 FROM docker.io/uselagoon/kubectl-build-deploy-dind:latest
 COPY redis-values.yaml /kubectl-build-deploy/
 ```
 
 Given the following `redis-values.yaml`
 
-```
+```yaml
 resources:
   requests:
     cpu: 10m
@@ -116,7 +117,8 @@ The Redis deployment would request 100Mi instead of the previous default of 10Mi
 
 Building upon the modification described in the previous chapter, we could go
 even further and modify the build-script itself. By inspecting project variables
-we could have the build-script pass in eg. a configurable value for [replicaCount](https://github.com/uselagoon/lagoon/blob/59a2387030f6d5f8affc316e4d2c62d5ce39ed57/images/kubectl-build-deploy-dind/helmcharts/nginx-php/values.yaml#L5) for a pod. This would allow us to introduce a
+we could have the build-script pass in eg. a configurable value for
+[replicaCount][nginx-replica-count] for a pod. This would allow us to introduce a
 small/medium/large concept for sites. This could be taken even further to eg.
 introduce whole new services into Lagoon.
 
@@ -135,3 +137,9 @@ occur.
 The best way to handle these potential situations is to be knowledgeable about
 how to operate Kubernetes and Lagoon, and to monitor the workloads as they are
 in use.
+
+[nginx-values]: (https://github.com/uselagoon/lagoon/blob/e08be8e274e3fd093f7a103b2cd00a46075b763c/images/kubectl-build-deploy-dind/helmcharts/nginx-php/values.yaml#L40)
+[lagoon-phpfpm-children]: (https://github.com/uselagoon/lagoon-images/blob/4ce87252e381f3647e36eddbfd3913ddf4cfa3bb/images/php-fpm/php-fpm.d/www.conf)
+[php-400mi]: (https://github.com/uselagoon/lagoon-images/blob/e1f8d8a7064aac663d4b972da90e54f292486ed3/images/php-fpm/php.ini#L211)
+[nginx-replica-count]: (https://github.com/uselagoon/lagoon/blob/59a2387030f6d5f8affc316e4d2c62d5ce39ed57/images/kubectl-build-deploy-dind/helmcharts/nginx-php/values.yaml#L5)
+[service-values-file]: (https://github.com/uselagoon/lagoon/blob/59a2387030f6d5f8affc316e4d2c62d5ce39ed57/images/kubectl-build-deploy-dind/build-deploy-docker-compose.sh#L839)
