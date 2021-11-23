@@ -8,7 +8,7 @@ use of terraform.
 The setup keeps a single terraform-state pr. environment. Each state is kept as
 separate blobs in a Azure Storage Account.
 
-![](../../../../documentation/diagrams/render-png/terraform_overview.png)
+![](../../documentation/diagrams/render-png/terraform_overview.png)
 
 Access to the storage account is granted via a Storage Account Key which is
 kept in a Azure Key Vault in the same resource-group. The key vault, storage account
