@@ -1,0 +1,6 @@
+# The backup/restore runbook instructs the user to place backup files in this
+# directory. We therefore ignore some specific backup file patterns to prevent
+# accidential commits of these archives.
+*backup*.sql
+*backup*.sql.gz
+*backup*.tar.gz
