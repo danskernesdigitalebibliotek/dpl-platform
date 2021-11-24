@@ -21,6 +21,10 @@ site.
 # 1. Make any changes to the sites entry sites.yml you need.
 # 2. (optional) diff the deployment
 DIFF=1 SITE=<sitename> task site:sync
-# 3. Synchronize the site, triggering a deployment if the current state differs
+# 3a. Synchronize the site, triggering a deployment if the current state differs
 #    from the intended state in sites.yaml
+SITE=<sitename> task site:sync
+# 3b. If the state does not differ but you still want to trigger a deployment,
+#     specify FORCE=1
+FORCE=1 SITE=<sitename> task site:sync
 ```
