@@ -14,6 +14,7 @@ lagoon-build-deploy:
   taskSSHHost: "$SSH_LOADBALANCER_IP"
   taskSSHPort: "22"
   taskAPIHost: "api.lagoon.dplplat01.dpl.reload.dk"
+  lagoonFeatureFlagDefaultRootlessWorkload: "enabled"
 dbaas-operator:
   enabled: true
 
