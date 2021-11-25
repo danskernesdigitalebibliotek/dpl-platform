@@ -29,6 +29,12 @@ tasks:
                 drush cr
             fi
         service: cli
+    - run:
+        name: Import translations
+        command: |
+            drush locale-check
+            drush locale-update
+        service: cli
 
 environments:
   main:
