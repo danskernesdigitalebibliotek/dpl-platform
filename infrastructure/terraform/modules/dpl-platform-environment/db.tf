@@ -43,14 +43,11 @@ resource "azurerm_mariadb_server" "sql" {
   # for all tiers: https://docs.microsoft.com/en-us/azure/mysql/concepts-data-access-security-private-link
   public_network_access_enabled = true
 
-  # TODO, we need to verifiy whether this can be toggled on. We'll know it when
-  # the first version of Lagoon is up and running.
+  # Lagoon does not yet support TLS.
   ssl_enforcement_enabled = false
 }
 
 # Allow any inbound connections
-# TODO: verifiy that we actually need this during the initial installation of
-# lagoon. It seems that the next rule should at the very least work.
 resource "azurerm_mariadb_firewall_rule" "anyany" {
   name                = "any-any"
   resource_group_name = azurerm_resource_group.rg.name

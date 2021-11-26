@@ -86,7 +86,7 @@ variable "sql_version" {
 }
 
 variable "sql_storage_mb" {
-  description = "Amount of storage to request for the MariaDB services"
+  description = "Amount of storage to request for the MariaDB services. Be aware that the number of IOPS you get scales with the storage size. 100GB will give you 300IOPS, every additional GB gives you 3 IOPS"
   type        = number
-  default     = 5120
+  default     = 102400
 }

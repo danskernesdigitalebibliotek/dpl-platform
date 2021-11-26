@@ -10,6 +10,12 @@ module "environment" {
   node_pool_system_count          = 1
   node_pool_app_default_count_min = 2
   node_pool_app_default_count_max = 5
+  # We've increased this quite a bit to test performance. The ideal starting-
+  # point seems to be in the range 102400 - 204800 to get enough IOPS to
+  # maintain performance during a Drupal site-install.
+  # When copying this value, consider leaving it out and falling back to the
+  # default of 102400.
+  sql_storage_mb = 409600
 }
 
 # Outputs, for values that comes straight from the dpl-platform-environment
