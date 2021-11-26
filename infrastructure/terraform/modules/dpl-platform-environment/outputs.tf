@@ -193,3 +193,33 @@ output "backup_secondary_access_key_name" {
   description = "Name under which the secondary backup storage account key is stored in keyvault"
   value       = azurerm_key_vault_secret.backup_secondary_access_key.name
 }
+
+output "harbor_blob_storage_container_name" {
+  description = "Name of the storage-container to be used for Harbors container image storage"
+  value       = azurerm_storage_container.harbor.name
+}
+
+output "harbor_blob_storage_client_access_key_name" {
+  description = "Name under which the access id for lagoon files is stored in keyvault"
+  value       = azurerm_key_vault_secret.harbor_blob_storage_client_access_key.name
+}
+
+output "harbor_blob_storage_client_secret_key_name" {
+  description = "Name under which the secret for lagoon files is stored in keyvault"
+  value       = azurerm_key_vault_secret.harbor_blob_storage_client_secret_key.name
+}
+
+output "harbor_storage_account_name" {
+  description = "Name of the harbor Azure Storage Account"
+  value       = azurerm_storage_account.harbor.name
+}
+
+output "harbor_primary_access_key_name" {
+  description = "Name under which the primary harbor storage account key is stored in keyvault"
+  value       = azurerm_key_vault_secret.harbor_primary_access_key.name
+}
+
+output "harbor_secondary_access_key_name" {
+  description = "Name under which the secondary harbor storage account key is stored in keyvault"
+  value       = azurerm_key_vault_secret.harbor_secondary_access_key.name
+}

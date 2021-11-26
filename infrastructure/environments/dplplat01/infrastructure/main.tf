@@ -50,6 +50,30 @@ output "harbor_admin_pass_key_name" {
   value = module.environment.harbor_admin_pass_key_name
 }
 
+output "harbor_blob_storage_container_name" {
+  value = module.environment.harbor_blob_storage_container_name
+}
+
+output "harbor_storage_account_name" {
+  value = module.environment.harbor_storage_account_name
+}
+
+output "harbor_blob_storage_client_access_key_name" {
+  value = module.environment.harbor_blob_storage_client_access_key_name
+}
+
+output "harbor_blob_storage_client_secret_key_name" {
+  value = module.environment.harbor_blob_storage_client_secret_key_name
+}
+
+output "harbor_primary_access_key_name" {
+  value = module.environment.harbor_primary_access_key_name
+}
+
+output "harbor_secondary_access_key_name" {
+  value = module.environment.harbor_secondary_access_key_name
+}
+
 output "ingress_ip" {
   value = module.environment.ingress_ip
 }
