@@ -8,7 +8,7 @@ output "site_repositories" {
   value = {
     for instance in github_repository.site :
     instance.name => {
-      "git_url" = instance.git_clone_url
+      "git_url" = instance.ssh_clone_url
     }
   }
 }
