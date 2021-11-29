@@ -28,3 +28,7 @@ SITE=<sitename> task site:sync
 #     specify FORCE=1
 FORCE=1 SITE=<sitename> task site:sync
 ```
+
+The following diagram outlines the full release-flow starting from dpl-cms (or
+a fork) and to the release is deployed:
+![release flow](../diagrams/render-png/build-release-deploy.png)
