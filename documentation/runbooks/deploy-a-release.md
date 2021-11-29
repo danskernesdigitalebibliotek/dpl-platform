@@ -3,7 +3,7 @@
 ## When to use
 
 When you wish to roll out a release of [DPL-CMS](https://github.com/danskernesdigitalebibliotek/dpl-cms)
-to a single site.
+or a fork to a single site.
 
 If you want to deploy to more than one site, simply repeat the procedure for each
 site.
@@ -14,6 +14,8 @@ site.
 * a shell with a user that is authorized to interact with the [environment
   repositories](../platform-environments.md) in the github organisation used for
    the environment over ssh.
+* The release-tag you whish to deploy, consult the readme in the dpl-cms repository
+  for instructions on how to build an publish a release.
 
 ## Procedure
 
