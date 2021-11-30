@@ -30,7 +30,43 @@ Create an entry for the site in `sites.yaml`.
 For now specify an unique site key (its key in the map of sites), name and
 description. Leave out the deployment-key, you will add it in a later step.
 
-The continue to provision the a Github repository for the site.
+Sample entry (beware that this example be out of sync with the environment you
+are operating, so make sure to compare it with existing entries from the
+environment)
+
+```yaml
+sites:
+  bib-rb:
+    name: "Roskilde Bibliotek"
+    description: "Roskilde Bibliotek"
+    primary-domain: "www.roskildebib.dk"
+    secondary-domains: ["roskildebib.dk"]
+    dpl-cms-release: "1.2.3"
+    << : *default-release-image-source
+```
+
+The last entry merges in a default set of properties for the source of release-
+images. If the site is on the "programmer" plan, specify a custom set of
+properties like so:
+
+```yaml
+sites:
+  bib-rb:
+    name: "Roskilde Bibliotek"
+    description: "Roskilde Bibliotek"
+    primary-domain: "www.roskildebib.dk"
+    secondary-domains: ["roskildebib.dk"]
+    dpl-cms-release: "1.2.3"
+    # Github package registry used as an example here, but any registry will
+    # work.
+    releaseImageRepository: ghcr.io/some-github-org
+    releaseImageName: some-image-name
+```
+
+Be aware that the referenced images needs to be publicly available as Lagoon
+currently only authenticates against ghcr.io.
+
+Then continue to provision the a Github repository for the site.
 
 ### Step 2: Provision a Github repository
 
@@ -99,7 +135,11 @@ $ VARIABLE_TYPE_ID=<project id> \
 # If you get a "Invalid Auth Token" your token has probably expired, generated a
 # new with "lagoon login" and try again.
 
-# 5. Optional: Trigger a deployment manually (or just push to main).
+# 5. Trigger a deployment manually, this will fail as the repository is empty
+#    but will serve to prepare Lagoon for future deployments.
 # lagoon deploy branch -p <project-name> -b <branch>
 $ lagoon deploy branch -p core-test1 -b main
 ```
+
+If you want to deploy a release to the site, continue to
+[Deploying a release](deploy-a-release.md).

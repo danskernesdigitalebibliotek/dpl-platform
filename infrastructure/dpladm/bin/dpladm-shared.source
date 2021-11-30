@@ -4,6 +4,16 @@ set -euo pipefail
 ENVIRONMENT_REPO_ORG=danishpubliclibraries
 LAGOON_IMAGES_RELEASE_TAG="21.9.0"
 
+# Echo the second argument Exit 1 if the first argument is not 0
+# Use this function to process $? after an invocation of something that might
+# return a non-zero exitcode.
+function failOnErr {
+  if [[ ! $1 -eq 0 ]]; then
+    echo "${2}"
+    exit 1
+  fi
+}
+
 function getRepoName {
   echo "env-${1}"
 }
@@ -52,10 +62,14 @@ function renderProfileTemplate {
   local siteName=$1
   # Which dpl-cms release to use.
   local releaseTag=$2
+  # Image registry to pull the release from
+  local releaseImageRepository=$3
+  # Name of the container-image that contains the built release
+  local releaseImageName=$4
   # The primary domain of the site (optional)
-  local primaryDomain=${3:-}
+  local primaryDomain=${5:-}
   # A space-seperated list of secondary domains (optional)
-  local secondaryDomainsString=${4:-}
+  local secondaryDomainsString=${6:-}
 
   PRIMARY_DOMAIN=""
   ENABLE_ROUTES=""
@@ -90,8 +104,9 @@ EndOfMessage
   # TODO, we could probably do with a repo-wide search replace of variables.
   # Something https://github.com/kreuzwerker/envplate could do the trick
   # Export our globals and locals so that envubst can access them
-  export DPL_CMS_RELEASE_IMAGE=dpl-cms-source
-  export DPL_CMS_RELEASE_TAG="${releaseTag}"
+  export RELEASE_IMAGE_REPOSITORY=${releaseImageRepository}
+  export RELEASE_IMAGE_NAME=${releaseImageName}
+  export RELEASE_TAG="${releaseTag}"
   export ENABLE_ROUTES
   export LAGOON_PROJECT_NAME="${siteName}"
   export LAGOON_IMAGES_RELEASE_TAG
@@ -102,7 +117,7 @@ EndOfMessage
   # Tell envsubst which variables to replace. This allows other variables to
   # remain untouched.
   # shellcheck disable=SC2016
-  local variablesToSubst='$DPL_CMS_RELEASE_IMAGE $DPL_CMS_RELEASE_TAG $ENABLE_ROUTES $LAGOON_IMAGES_RELEASE_TAG $LAGOON_PROJECT_NAME $PRIMARY_DOMAIN $SECONDARY_DOMAINS'
+  local variablesToSubst='$RELEASE_IMAGE_REPOSITORY $RELEASE_IMAGE_NAME $RELEASE_TAG $ENABLE_ROUTES $LAGOON_IMAGES_RELEASE_TAG $LAGOON_PROJECT_NAME $PRIMARY_DOMAIN $SECONDARY_DOMAINS'
 
   # Loop through the files we know to contain variables that needs replacing.
   local templateFiles=(
@@ -125,8 +140,10 @@ function syncEnvRepo {
   local siteName=$1
   local releaseTag=$2
   local branchName=$3
-  local primaryDomain="${4:-}"
-  local secondaryDomains="${5:-}"
+  local releaseImageRepository=$4
+  local releaseImageName=$5
+  local primaryDomain="${6:-}"
+  local secondaryDomains="${7:-}"
 
   # TODO, preflight checks that verifies this repository looks good to go.
   # makes most sense to do when we're doing more complicated things inside
@@ -158,7 +175,7 @@ function syncEnvRepo {
 
   # Enter the template and rendered it
   cd "${repoName}"
-  renderProfileTemplate "${siteName}" "${releaseTag}" "${primaryDomain}" "${secondaryDomains}"
+  renderProfileTemplate "${siteName}" "${releaseTag}" "${releaseImageRepository}" "${releaseImageName}" "${primaryDomain}" "${secondaryDomains}"
 
   # Detect changes
   local changedFiles

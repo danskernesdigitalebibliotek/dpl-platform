@@ -1,7 +1,7 @@
 # This template contains variables for all aspects of the file that may change
 # from site to site. Reversly it hardcodes any configuration that should be kept
 # static across all sites.
-FROM ghcr.io/danskernesdigitalebibliotek/${DPL_CMS_RELEASE_IMAGE}:${DPL_CMS_RELEASE_TAG} AS release
+FROM ${RELEASE_IMAGE_REPOSITORY}/${RELEASE_IMAGE_NAME}:${RELEASE_TAG} AS release
 
 FROM uselagoon/php-8.0-cli-drupal:${LAGOON_IMAGES_RELEASE_TAG}
 

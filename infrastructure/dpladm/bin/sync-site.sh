@@ -51,6 +51,32 @@ function getSiteDplCmsRelease {
     return
 }
 
+function getSiteReleaseImageRepository {
+    local repository
+    repository=$(yq eval ".sites.${1}.releaseImageRepository" "${2}")
+    if [[ "${repository}" == "null" ]]; then
+        echo "Error, could not determine releaseImageRepository for ${SITE} in ${SITES_CONFIG}"
+        set +e
+        return 1
+    fi
+
+    echo "${repository}"
+    return
+}
+
+function getSiteReleaseImageName {
+    local imageName
+    imageName=$(yq eval ".sites.${1}.releaseImageName" "${2}")
+    if [[ "${imageName}" == "null" ]]; then
+        echo "Error, could not determine releaseImageName for ${SITE} in ${SITES_CONFIG}"
+        set +e
+        return 1
+    fi
+
+    echo "${imageName}"
+    return
+}
+
 function getSitePrimaryDomain {
     local domain
     domain=$(yq eval ".sites.${1}.primary-domain" "${2}")
@@ -97,13 +123,20 @@ if [[ -z "${siteConfig}" ]]; then
     echo "Error, could not look up ${SITE} in ${SITES_CONFIG}"
     exit 1
 fi
-# Get the primary and secondary domains from site.yml.
 
+# We're using subshells below, in order to display error-messages we have to
+# allow errors, and then pass them on for seperate handling.
+set +o errexit
+# Get the primary and secondary domains from site.yml.
 primaryDomain=$(getSitePrimaryDomain "${SITE}" "${SITES_CONFIG}")
 secondaryDomains=$(getSiteSecondaryDomains "${SITE}" "${SITES_CONFIG}")
 releaseTag=$(getSiteDplCmsRelease "${SITE}" "${SITES_CONFIG}")
-
+siteImageRepository=$(getSiteReleaseImageRepository "${SITE}" "${SITES_CONFIG}" || exit 1)
+failOnErr $? "${siteImageRepository}"
+siteReleaseImageName=$(getSiteReleaseImageName "${SITE}" "${SITES_CONFIG}")
+failOnErr $? "${siteReleaseImageName}"
+set -o errexit
 
 # Synchronise the sites environment repository.
-syncEnvRepo "${SITE}" "${releaseTag}" "${BRANCH}" "${primaryDomain}" "${secondaryDomains}"
+syncEnvRepo "${SITE}" "${releaseTag}" "${BRANCH}" "${siteImageRepository}" "${siteReleaseImageName}" "${primaryDomain}" "${secondaryDomains}"
 
