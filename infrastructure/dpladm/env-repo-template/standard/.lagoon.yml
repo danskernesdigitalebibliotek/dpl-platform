@@ -29,6 +29,22 @@ tasks:
                 drush cr
             fi
         service: cli
+    - run:
+        # We need this because if we create the directory before volume mount
+        # it will be gone.
+        name: Create module upload directory in public files
+        command: |
+            if [[ ! -d "web/sites/default/files/modules_local" ]]; then
+                echo "Creating directory for module uploads"
+                mkdir web/sites/default/files/modules_local
+            fi
+        service: cli
+    - run:
+        name: Import translations
+        command: |
+            drush locale-check
+            drush locale-update
+        service: cli
 
 environments:
   main:
