@@ -2,7 +2,7 @@
 resource "github_repository" "site" {
   for_each = local.sites
 
-  name        = "env-${each.key}"
+  name        = format("%senv-%s", var.prefix, each.key)
   description = "${each.value.name}. ${each.value.description}"
   visibility  = "private"
   auto_init   = true
