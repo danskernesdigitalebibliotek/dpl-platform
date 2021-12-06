@@ -8,6 +8,12 @@ variable "webhook_url" {
   type        = string
 }
 
+variable "prefix" {
+  description = "Adding the possibility for having multiple github teams and repos in the same organization"
+  type        = string
+  default     = ""
+}
+
 locals {
   # Read in the list of sites from the root module, eg.
   # infrastructure/environments/dplplat01/sites.yaml
