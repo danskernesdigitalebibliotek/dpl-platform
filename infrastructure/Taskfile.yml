@@ -574,9 +574,9 @@ tasks:
         - task: support:provision:cert-manager
         - task: support:provision:ingress-nginx
         - task: support:provision:bulk-storage
+        - task: support:provision:prometheus
         - task: support:provision:minio
         - task: support:provision:k8up
-        - task: support:provision:prometheus
         - task: support:provision:loki-promtail
         - task: support:provision:grafana
         - task: support:provision:harbor
