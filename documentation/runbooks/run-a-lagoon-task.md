@@ -12,7 +12,7 @@ You need access to the [Lagoon UI][url-lagoon-ui]
 
 * Login to the Lagoon UI.
 * Navigate to the project you want to access.
-* Choose the environment you want to login to.
+* Choose the environment you want to interact with.
 * Click the "Tasks" tab.
 
 [url-lagoon-ui]: https://github.com/danskernesdigitalebibliotek/dpl-platform/blob/main/documentation/platform-environments.md#urls
