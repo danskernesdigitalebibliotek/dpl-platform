@@ -68,7 +68,7 @@ configured, consult the corresponding values-file for the component found in
 the individual [environments](../infrastructure/environments)  configuration
 folder.
 
-![Depiction of the support workloads in the cluster](../../documentation/../dpl-platform/documentation/diagrams/render-png/cluster-support-workloads.png)
+![Depiction of the support workloads in the cluster](../diagrams/render-png/cluster-support-workloads.png)
 
 ### Lagoon
 
