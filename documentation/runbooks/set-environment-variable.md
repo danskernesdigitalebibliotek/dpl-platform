@@ -1,4 +1,4 @@
-# Add a new site to the platform
+# Set an environment variable for a site
 
 ## When to use
 
@@ -6,7 +6,11 @@ When you wish to set an environment variable on a site. The variable can be
 available for either all sites in the project, or for a specific site in the
 project.
 
-The variables are safe for holding secrets.
+The variables are safe for holding secrets, and as such can be used both for
+"normal" configuration values, and secrets such as api-keys.
+
+The variabel will be available to all containers in the environment can can be
+picked up and parsed eg. in Drupals `settings.php`.
 
 ## Prerequisites
 
