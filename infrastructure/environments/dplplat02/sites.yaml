@@ -1,0 +1,66 @@
+# Configure the source we default to when looking for release images.
+x-defaults:
+  &default-release-image-source
+    releaseImageRepository: ghcr.io/danskernesdigitalebibliotek
+    releaseImageName: dpl-cms-source
+
+sites:
+  # Site objects are indexed by a unique key that must be a valid lagoon, and
+  # github project name. That is, alphanumeric and dashes.
+  dpl-cms-plat02:
+    name: "Test dpl-cms plato2"
+    description: "I'm testing my day away"
+    << : *default-release-image-source
+    dpl-cms-release: "0.6.0"
+    deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAID2EcpEdTUJTBnEsfjZhogrYsSynPK9Jssg5RRhisXoh"
+  tbd-core-test02:
+    name: "Core test 02"
+    description: "Core test site no. 02"
+    << : *default-release-image-source
+  tbd-core-test03:
+    name: "Core test 03"
+    description: "Core test site no. 03"
+    << : *default-release-image-source
+  tbd-core-test04:
+    name: "Core test 04"
+    description: "Core test site no. 04"
+    << : *default-release-image-source
+  tbd-core-test05:
+    name: "Core test 05"
+    description: "Core test site no. 05"
+    << : *default-release-image-source
+  tbd-core-test06:
+    name: "Core test 06"
+    description: "Core test site no. 06"
+    << : *default-release-image-source
+  tbd-core-test07:
+    name: "Core test 07"
+    description: "Core test site no. 07"
+    << : *default-release-image-source
+  tbd-core-test08:
+    name: "Core test 08"
+    description: "Core test site no. 08"
+    << : *default-release-image-source
+  tbd-core-test09:
+    name: "Core test 09"
+    description: "Core test site no. 09"
+    << : *default-release-image-source
+  tbd-core-test10:
+    name: "Core test 10"
+    description: "Core test site no. 10"
+    << : *default-release-image-source
+  tbd-programmer-demo:
+    name: "Programmer Profile Demo"
+    description: "Test that we can deploy custom images to a site"
+    releaseImageRepository: ghcr.io/reload/tbd-dpl-cms-programmer-test
+    releaseImageName: my-source-release
+    dpl-cms-release: "1.2.3"
+    deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMBxXHbrQ1FCFfldHdTwPb24hGnYeuMujIytVWEeqx66"
+  tbd-bib-rb:
+    name: "Rødovre Bibliotek"
+    description: "PoC environment for Rødovre Bibliotek"
+    primary-domain: "rdb.dplplat02.dpl.reload.dk"
+    secondary-domains: ["www.rdb.dplplat02.dpl.reload.dk", "www2.rdb.dplplat02.dpl.reload.dk"]
+    dpl-cms-release: "0.6.0"
+    deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIEEqMszAfB6roiO49D1Zu407G2cUvCAhiJkI3sPOzQCs"
+    << : *default-release-image-source

@@ -1,0 +1,34 @@
+expose:
+  ingress:
+    annotations:
+      kubernetes.io/tls-acme: "true"
+    hosts:
+     core: harbor.lagoon.dplplat02.dpl.reload.dk
+  tls:
+    enabled: true
+    certSource: secret
+    secret:
+      secretName: harbor-harbor-ingress
+externalURL: https://harbor.lagoon.dplplat02.dpl.reload.dk
+harborAdminPassword: "$HARBOR_ADMIN_PASS"
+chartmuseum:
+  enabled: false
+clair:
+  enabled: false
+notary:
+  enabled: false
+trivy:
+  enabled: false
+jobservice:
+  jobLogger: stdout
+registry:
+  replicas: 1
+
+# Use Azure blob storage for persistence
+persistence:
+  imageChartStorage:
+    type: "azure"
+    azure:
+      accountname: "$STORAGE_ACCOUNT_NAME"
+      accountkey: "$STORAGE_ACCOUNT_KEY"
+      container: "$STORAGE_CONTAINER_NAME"

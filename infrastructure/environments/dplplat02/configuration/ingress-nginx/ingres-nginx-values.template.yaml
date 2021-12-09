@@ -1,0 +1,25 @@
+controller:
+  watchIngressWithoutClass: true
+  config:
+    # Setup a json-based access-log.
+    # We use $proxy_add_x_forwarded_for as remote_addr as we're behind a load-
+    # balancer with externalTrafficPolicy=Local: https://docs.microsoft.com/en-us/azure/aks/load-balancer-standard#maintain-the-clients-ip-on-inbound-connections
+    log-format-upstream: '{"time": "$time_iso8601", "remote_addr": "$proxy_add_x_forwarded_for", "x-forward-for": "$proxy_add_x_forwarded_for", "request_id": "$req_id",
+      "bytes_sent": $bytes_sent, "request_time": $request_time, "status":$status, "vhost": "$host", "request_proto": "$server_protocol",
+      "path": "$uri", "request_query": "$args", "request_length": $request_length, "duration": $request_time,"method": "$request_method", "http_referrer": "$http_referer",
+      "http_user_agent": "$http_user_agent" }'
+  replicaCount: 2
+  service:
+    loadBalancerIP: "${INGRESS_IP}"
+    externalTrafficPolicy: "Local"
+    annotations:
+      service.beta.kubernetes.io/azure-load-balancer-internal: "false"
+      service.beta.kubernetes.io/azure-load-balancer-resource-group: "${RESOURCE_GROUP}"
+  nodeSelector:
+    beta.kubernetes.io/os: linux
+  admissionWebhooks:
+    patch.nodeSelector:
+      beta.kubernetes.io/os: linux
+defaultBackend:
+  nodeSelector:
+    beta.kubernetes.io/os: linux
