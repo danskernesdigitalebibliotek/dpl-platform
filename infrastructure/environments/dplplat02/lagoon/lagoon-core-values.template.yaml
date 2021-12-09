@@ -1,0 +1,156 @@
+elasticsearchURL: none
+harborURL: https://habor.lagoon.dplplat02.dpl.reload.dk
+harborAdminPassword: "$HARBOR_ADMIN_PASS"
+keycloakAdminPassword: "$KEYCLOAK_ADMIN_PASS"
+kibanaURL: none
+logsDBAdminPassword: ke2ue1Chae
+s3FilesAccessKeyID: $LAGOON_FILES_ACCESS_KEY
+s3FilesSecretAccessKey: $LAGOON_FILES_SECRET_KEY
+s3FilesBucket: $LAGOON_FILES_BUCKET
+s3FilesHost: $LAGOON_FILES_API_URL
+s3BAASAccessKeyID: $BAAS_STORAGE_ACCESS_KEY
+s3BAASSecretAccessKey: $BAAS_STORAGE_SECRET_KEY
+registry: none.com
+
+# Disabled services:
+logs2email:
+  enabled: false
+logs2microsoftteams:
+  enabled: false
+logs2rocketchat:
+  enabled: false
+logs2slack:
+  enabled: false
+logs2webhook:
+  enabled: false
+
+api:
+  nodeSelector:
+    noderole.dplplatform: admin
+  ingress:
+    enabled: true
+    annotations:
+      kubernetes.io/tls-acme: "true"
+      kubernetes.io/ingress.class: "nginx"
+      nginx.ingress.kubernetes.io/ssl-redirect: "false"
+    hosts:
+    - host: api.lagoon.dplplat02.dpl.reload.dk
+      paths:
+      - /
+    tls:
+      - secretName: api-tls
+        hosts:
+          - api.lagoon.dplplat02.dpl.reload.dk
+
+keycloak:
+  ingress:
+    enabled: true
+    annotations:
+      kubernetes.io/tls-acme: "true"
+      kubernetes.io/ingress.class: "nginx"
+    hosts:
+    - host: keycloak.lagoon.dplplat02.dpl.reload.dk
+      paths:
+      - /
+    tls:
+      - secretName: keycloak-tls
+        hosts:
+          - keycloak.lagoon.dplplat02.dpl.reload.dk
+
+webhookHandler:
+  ingress:
+    enabled: true
+    annotations:
+      kubernetes.io/tls-acme: "true"
+      kubernetes.io/ingress.class: "nginx"
+    hosts:
+    - host: webhookhandler.lagoon.dplplat02.dpl.reload.dk
+      paths:
+      - /
+    tls:
+      - secretName: webhookhandler-tls
+        hosts:
+          - webhookhandler.lagoon.dplplat02.dpl.reload.dk
+
+ui:
+  ingress:
+    enabled: true
+    annotations:
+      kubernetes.io/tls-acme: "true"
+      kubernetes.io/ingress.class: "nginx"
+    hosts:
+    - host: ui.lagoon.dplplat02.dpl.reload.dk
+      paths:
+      - /
+    tls:
+      - secretName: ui-tls
+        hosts:
+          - ui.lagoon.dplplat02.dpl.reload.dk
+
+backupHandler:
+  ingress:
+    enabled: true
+    annotations:
+      kubernetes.io/tls-acme: "true"
+      kubernetes.io/ingress.class: "nginx"
+    hosts:
+    - host: backuphandler.lagoon.dplplat02.dpl.reload.dk
+      paths:
+      - /
+    tls:
+      - secretName: backuphandler-tls
+        hosts:
+          - backuphandler.lagoon.dplplat02.dpl.reload.dk
+
+drushAlias:
+  ingress:
+    enabled: true
+    annotations:
+      kubernetes.io/tls-acme: "true"
+      kubernetes.io/ingress.class: "nginx"
+    hosts:
+    - host: drushalias.lagoon.dplplat02.dpl.reload.dk
+      paths:
+      - /
+    tls:
+      - secretName: drushalias-tls
+        hosts:
+          - drushalias.lagoon.dplplat02.dpl.reload.dk
+
+ssh:
+  service:
+    type: LoadBalancer
+    port: 22
+
+
+broker:
+  serviceMonitor:
+    enabled: false
+  ingress:
+    enabled: true
+    annotations:
+      kubernetes.io/tls-acme: "true"
+      kubernetes.io/ingress.class: "nginx"
+    hosts:
+    - host: broker.lagoon.dplplat02.dpl.reload.dk
+      paths:
+      - /
+    tls:
+      - secretName: broker-tls
+        hosts:
+          - broker.lagoon.dplplat02.dpl.reload.dk
+
+webhookHandler:
+  ingress:
+    enabled: true
+    annotations:
+      kubernetes.io/tls-acme: "true"
+      kubernetes.io/ingress.class: "nginx"
+    hosts:
+    - host: webhookhandler.lagoon.dplplat02.dpl.reload.dk
+      paths:
+      - /
+    tls:
+      - secretName: webhookhandler-tls
+        hosts:
+          - webhookhandler.lagoon.dplplat02.dpl.reload.dk

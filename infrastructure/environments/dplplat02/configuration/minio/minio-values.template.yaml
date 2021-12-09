@@ -1,0 +1,51 @@
+nodeSelector:
+  noderole.dplplatform: admin
+apiIngress:
+  enabled: true
+  tls: true
+  ingressClassName: "${INGRESS_CLASS}"
+  ## @param apiIngress.hostname Default host for the ingress resource
+  ##
+  hostname: "${API_HOSTNAME}"
+  annotations:
+    # This seems to conflict with the Ingress controller helm chart
+    # that accepts either an ingressClassName or an annotation - not both.
+    #kubernetes.io/ingress.class: nginx
+    # Increased to allow large posts.
+    nginx.ingress.kubernetes.io/proxy-body-size: 1024m
+    cert-manager.io/cluster-issuer: letsencrypt-prod
+
+metrics:
+  serviceMonitor:
+    enabled: true
+gateway:
+  ## @param gateway.enabled Use MinIO&reg; as Gateway for other storage systems
+  ##
+  enabled: true
+
+  ## ref: https://docs.minio.io/docs/minio-gateway-for-azure
+  type: azure
+
+  ## @param gateway.replicaCount Number of MinIO&reg; Gateway replicas
+  ## We use a replicaCount of 2 to stay up during upgrades.
+  ##
+  replicaCount: 2
+
+  ## @param gateway.updateStrategy.type Update strategy type for MinIO&reg; Gateway replicas
+  updateStrategy:
+    type: Recreate
+
+  ## Gateway authentication configuration
+  ##
+  auth:
+    ## Authentication configuration for Azure. Ignored unless type=azure
+    ## @param gateway.auth.azure.accessKey Access key to access MinIO&reg; using Azure Gateway
+    ## @param gateway.auth.azure.secretKey Secret key to access MinIO&reg; using Azure Gateway
+    ## @param gateway.auth.azure.storageAccountName Azure Storage Account Name to use to access Azure Blob Storage
+    ## @param gateway.auth.azure.storageAccountKey Azure Storage Account Key to use to access Azure Blob Storage
+    ##
+    azure:
+      accessKey: "${CLIENT_ACCESS_KEY}"
+      secretKey: "${CLIENT_SECRET_KEY}"
+      storageAccountName: "${STORAGE_ACCOUNT_NAME}"
+      storageAccountKey: "${STORAGE_ACCOUNT_KEY}"
