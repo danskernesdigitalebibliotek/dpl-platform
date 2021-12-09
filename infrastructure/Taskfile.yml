@@ -64,9 +64,9 @@ tasks:
               --query id -o tsv
 
       preconditions:
-      - sh: "[ ! -z ${SECRET_KEY} ]"
+      - sh: '[ ! -z "{{.SECRET_KEY}}" ]'
         msg: "Env variable SECRET_KEY is not set or empty."
-      - sh: "[ ! -z ${SECRET_VALUE} ]"
+      - sh: '[ ! -z "{{.SECRET_VALUE}}" ]'
         msg: "Env variable SECRET_VALUE is not set or empty."
 
     _env_repos:terraform:init:
