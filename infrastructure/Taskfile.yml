@@ -593,6 +593,14 @@ tasks:
       - sh: "[ ! -z {{.SITE}} ]"
         msg: "Env variable SITE is not set or empty."
 
+    ui-password:
+      desc: Get the password to access a given user interface
+      cmds:
+      - task/scripts/ui-password.sh
+      preconditions:
+      - sh: "[ ! -z {{.UI_NAME}} ]"
+        msg: "Env variable UI_NAME is not set or empty."
+
     _req_env:
       preconditions:
       - sh: "[ ! -z {{.DPLPLAT_ENV}} ]"
