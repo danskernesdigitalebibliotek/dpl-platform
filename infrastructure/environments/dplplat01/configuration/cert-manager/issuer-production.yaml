@@ -6,7 +6,7 @@ spec:
   acme:
     # Production API
     server: https://acme-v02.api.letsencrypt.org/directory
-    email: mads+dplplatform01@reload.dk
+    email: security+certmgr+dplplat01@reload.dk
     privateKeySecretRef:
       name: cm-account-key-prod
     solvers:
