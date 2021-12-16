@@ -6,7 +6,7 @@ spec:
   acme:
     # Staging API
     server: https://acme-staging-v02.api.letsencrypt.org/directory
-    email: mads+dplplatform01@reload.dk
+    email: security+certmgr+dplplat01@reload.dk
     privateKeySecretRef:
       name: cm-account-key-staging
     solvers:
