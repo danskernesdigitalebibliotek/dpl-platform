@@ -5,5 +5,5 @@ resource "dnsimple_record" "aks_ingress" {
   name   = "*.${var.environment_name}.dpl"
   value  = azurerm_public_ip.aks_ingress.ip_address
   type   = "A"
-  ttl    = 60
+  ttl    = 3600 
 }
