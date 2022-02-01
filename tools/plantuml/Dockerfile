@@ -1,5 +1,5 @@
 
-FROM openjdk:18-jdk-alpine
+FROM openjdk:19-jdk-alpine
 
 ARG PLANTUML_VERSION=1.2021.9
 
