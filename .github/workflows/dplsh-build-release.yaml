@@ -32,7 +32,7 @@ jobs:
       image: dplsh
     steps:
     - name: Checkout
-      uses: actions/checkout@v2.3.4
+      uses: actions/checkout@v3
     - name: Install Task
       uses: Arduino/actions/setup-taskfile@master
     # Generate a sane tag based on current git ref (branch, tag, etc).
