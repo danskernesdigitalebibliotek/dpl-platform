@@ -5,7 +5,7 @@ ARG DPLSH_BUILD_VERSION=latest
 FROM alpine/helm:3.7.2 as helm
 
 # https://hub.docker.com/r/hashicorp/terraform/tags?page=1&ordering=last_updated
-FROM hashicorp/terraform:1.1.1 as terraform
+FROM hashicorp/terraform:1.2.0 as terraform
 
 # We use the official azure cli as a base-image. It is itself based on alpine
 # and is quite minimal.
