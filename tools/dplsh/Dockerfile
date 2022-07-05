@@ -10,7 +10,7 @@ FROM hashicorp/terraform:1.1.1 as terraform
 # We use the official azure cli as a base-image. It is itself based on alpine
 # and is quite minimal.
 # https://mcr.microsoft.com/v2/azure-cli/tags/list
-FROM mcr.microsoft.com/azure-cli:2.31.0
+FROM mcr.microsoft.com/azure-cli:2.38.0
 
 ARG TASK_VERSION=v3.4.2
 ARG STERN_RELEASE=1.11.0
