@@ -6,70 +6,91 @@
 on:
   pull_request:
     paths:
-    - 'tools/dplsh/**'
-    - '.github/workflows/dplsh-build-release.yaml'
+      - "tools/dplsh/**"
+      - ".github/workflows/dplsh-build-release.yaml"
   push:
     branches:
-    - master
-    # Limit pushes on master to only build if these files has changed.
+      - main
+    # Limit pushes on main to only build if these files has changed.
     paths:
-    - 'tools/dplsh/**'
-    - '.github/workflows/dplsh-build-release.yaml'
+      - "tools/dplsh/**"
+      - ".github/workflows/dplsh-build-release.yaml"
     tags:
-    - 'dplsh-*'
+      - "dplsh-*"
 
 name: Build, test and publish DPL Shell image
 jobs:
   dplsh_build:
+    name: Build, test and publish DPL Shell image
     runs-on: ubuntu-latest
+    permissions:
+      # Allow push to ghcr
+      packages: write
     # Set some environment vars about the image and container registry.
     env:
       # Registry to push the image to.
       repo: ghcr.io
       # Complete registry url for image. (omitting image name).
       image-url: ghcr.io/danskernesdigitalebibliotek/dpl-platform/dplsh
-      # Name of the container image to build and push.
-      image: dplsh
     steps:
-    - name: Checkout
-      uses: actions/checkout@v2.3.4
-    - name: Install Task
-      uses: Arduino/actions/setup-taskfile@master
-    # Generate a sane tag based on current git ref (branch, tag, etc).
-    - uses: rlespinasse/github-slug-action@v3.x
-    - name: Build ${{env.image}} container image
-      env:
-        IMAGE_URL: working-image
-        IMAGE_TAG: 0.0.0
-      run: task build
-      working-directory: tools/dplsh
-    - name: Test ${{env.image}} container image
-      env:
-        IMAGE_URL: working-image
-        IMAGE_TAG: 0.0.0
-      run: task test
-      working-directory: tools/dplsh
-    # Publish to container registry if this was a push event (not a PR).
-    - name: Publish image to registry
-      if: github.event_name == 'push'
-      run: |
-        IMAGE_VERSION=
-        # If this is a push of a tag, do a docker tag and push
-        if [[ "${{github.ref}}" == refs/tags/* ]]; then
-          # If we build a tag, push that image to docker tag.
-          IMAGE_VERSION=$(echo ${GITHUB_REF_SLUG} | sed -e 's/^${{env.image}}-//')
+      - name: Checkout
+        uses: actions/checkout@v2.3.4
+      - name: Install Task
+        uses: arduino/setup-task@v1
+      - name: Log in to the Container registry
+        uses: docker/login-action@v2
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      # Setup QEMU and buildx so that we can build multiarch images.
+      # https://github.com/docker/setup-qemu-action
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v2
+      # https://github.com/docker/setup-buildx-action
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+      # Pickup metadata for tags and labels.
+      - name: Docker meta
+        id: meta
+        uses: docker/metadata-action@v4
+        with:
+          images: ${{env.image-url}}
+          labels: |
+            org.opencontainers.image.title=DPL Shell
+            org.opencontainers.image.description=Danish Public Libraries infrastructure Shell
 
-          # Push the service-image to the github registry.
-          echo ${{ secrets.GITHUB_TOKEN }} | docker login ${{env.repo}} -u username-is-ignored --password-stdin
-          # Tag latest and release version
-          docker tag working-image:0.0.0 ${{env.image-url}}:$IMAGE_VERSION
-          docker tag working-image:0.0.0 ${{env.image-url}}:latest
-          # And push to github registry
-          docker push ${{env.image-url}}:$IMAGE_VERSION
-          docker push ${{env.image-url}}:latest
-        fi
-    - name: Create release
-      uses: softprops/action-gh-release@v1
-      if: startsWith(github.ref, 'refs/tags/')
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      # Do a first build and export it to the docker cache. This allows us to
+      # run som tests on the image, while still avoiding to have to rebuild the
+      # image when we do the final build.
+      - name: Build and export to Docker
+        uses: docker/build-push-action@v3
+        with:
+          context: tools/dplsh
+          load: true
+          tags: working-image:0.0.0
+
+      - name: Test the dplsh container image
+        env:
+          IMAGE_URL: working-image
+          IMAGE_TAG: 0.0.0
+        run: task test
+        working-directory: tools/dplsh
+
+      - name: Build and push
+        uses: docker/build-push-action@v3
+        with:
+          context: tools/dplsh
+          platforms: linux/amd64,linux/arm64
+          # push: github.event_name == 'push'
+          push: true
+          labels: ${{ steps.meta.outputs.labels }}
+          tags: ${{ steps.meta.outputs.tags }}
+
+      # Create a github release if this was a tag.
+      - name: Create release
+        uses: softprops/action-gh-release@v1
+        if: startsWith(github.ref, 'refs/tags/')
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
