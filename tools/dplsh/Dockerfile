@@ -5,17 +5,17 @@ ARG DPLSH_BUILD_VERSION=latest
 FROM alpine/helm:3.7.2 as helm
 
 # https://hub.docker.com/r/hashicorp/terraform/tags?page=1&ordering=last_updated
-FROM hashicorp/terraform:1.1.1 as terraform
+FROM hashicorp/terraform:1.2.6 as terraform
 
 # We use the official azure cli as a base-image. It is itself based on alpine
 # and is quite minimal.
 # https://mcr.microsoft.com/v2/azure-cli/tags/list
-FROM mcr.microsoft.com/azure-cli:2.31.0
+FROM mcr.microsoft.com/azure-cli:2.39.0
 
-ARG TASK_VERSION=v3.4.2
+ARG TASK_VERSION=v3.14.1
 ARG STERN_RELEASE=1.11.0
-ARG LAGOON_CLI_RELEASE=v0.12.0
-ARG KREW_VERSION=v0.4.2
+ARG LAGOON_CLI_RELEASE=v0.13.0
+ARG KREW_VERSION=v0.4.3
 # This version can be bumped as we upgrade the cluster minor version.
 ARG KUBECTL_VERSION=v1.20.9
 
