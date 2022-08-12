@@ -265,6 +265,12 @@ tasks:
       - sh: "[ ! -z ${HARBOR_ADMIN_PASS} ]"
         msg: "Could not extract the password for the harbor admin from keyvault."
 
+    lagoon:provision:core-db-migration:
+      deps: [cluster:auth]
+      desc: Run database migrations after an upgrade
+      cmds:
+        - kubectl --namespace lagoon-core exec -it lagoon-core-api-db-0 -- sh -c /rerun_initdb.sh
+
     lagoon:cli:config:
       deps: [cluster:auth]
       desc: Configure a lagoon cli with the knowledge of a lagoon core.
