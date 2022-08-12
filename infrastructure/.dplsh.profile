@@ -7,5 +7,7 @@ export DNSIMPLE_ACCOUNT="61014"
 echo
 echo "Now run"
 echo "   export DPLPLAT_ENV=<environment>"
-echo "to set your platform environment, then run "task" to continue your work..."
+echo "to set your platform environment, then run "task" to continue your work."
+echo "consult https://github.com/danskernesdigitalebibliotek/dpl-platform/blob/main/documentation/platform-environments.md"
+echo "for a list of environments"
 echo
