@@ -345,10 +345,12 @@ tasks:
           sh: az keyvault secret show --subscription "{{.AZURE_SUBSCRIPTION_ID}}" --name $(terraform -chdir={{.dir_infra}} output -json | jq --raw-output ".sql_password_key_name.value | select (.!=null)") --vault-name $(terraform -chdir={{.dir_infra}} output -json | jq --raw-output ".keyvault_name.value | select (.!=null)") --query value -o tsv
         CHART_VERSION_LAGOON_REMOTE:
           sh: source "{{.dir_lagoon}}/lagoon-versions.env" && echo $VERSION_LAGOON_REMOTE
+        BUILD_DEPLOY_DIND_IMAGE:
+          sh: source "{{.dir_lagoon}}/lagoon-versions.env" && echo $BUILD_DEPLOY_DIND_IMAGE
       cmds:
         # Render the variables we've collected into a values file we can install.
         - |
-          envsubst '$SSH_LOADBALANCER_IP $RABBITMQ_PASS $HARBOR_ADMIN_PASS $SQL_HOSTNAME $SQL_SERVERNAME $SQL_USER $SQL_PASSWORD' \
+          envsubst '$SSH_LOADBALANCER_IP $RABBITMQ_PASS $HARBOR_ADMIN_PASS $SQL_HOSTNAME $SQL_SERVERNAME $SQL_USER $SQL_PASSWORD $BUILD_DEPLOY_DIND_IMAGE' \
           < "{{.dir_lagoon}}/lagoon-remote-values.template.yaml" \
           > "{{.dir_lagoon}}/lagoon-remote-values.yaml"
         # Setup the namespace manually to control eg. labels on the namespace.
@@ -611,4 +613,3 @@ tasks:
         msg: "Could not find directory {{.dir_infra}}"
       - sh: "[ -d {{.dir_configuration}} ]"
         msg: "Could not find directory {{.dir_configuration}}"
-
