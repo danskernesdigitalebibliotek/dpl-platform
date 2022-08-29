@@ -90,7 +90,7 @@ tasks:
                 )
               --query value -o tsv
       cmds:
-        - cmd: cd {{.dir_env_repos}} && terraform apply
+        - cmd: terraform -chdir {{.dir_env_repos}} apply
 
     cluster:auth:
         deps: [_req_env]
@@ -98,9 +98,9 @@ tasks:
         dir: "{{.dir_infra}}"
         vars:
           CLUSTER_NAME:
-            sh: terraform output -json | jq --raw-output ".cluster_name.value | select (.!=null)"
+            sh: terraform -chdir={{.dir_infra}} output -json | jq --raw-output ".cluster_name.value | select (.!=null)"
           RESOURCEGROUP_NAME:
-            sh: terraform output -json | jq --raw-output ".resourcegroup_name.value | select (.!=null)"
+            sh: terraform -chdir={{.dir_infra}} output -json | jq --raw-output ".resourcegroup_name.value | select (.!=null)"
         status:
           - "[ $(kubectl config view --output jsonpath='{.current-context}') == '{{.CLUSTER_NAME}}' ] || exit 1"
         cmds:
@@ -126,7 +126,7 @@ tasks:
         INGRESS_IP:
           sh: terraform -chdir={{.dir_infra}} output -json | jq --raw-output ".ingress_ip.value | select (.!=null)"
         RESOURCE_GROUP:
-          sh: terraform  -chdir={{.dir_infra}} output -json | jq --raw-output ".resourcegroup_name.value | select (.!=null)"
+          sh: terraform -chdir={{.dir_infra}} output -json | jq --raw-output ".resourcegroup_name.value | select (.!=null)"
       cmds:
         - task/scripts/provision-ingress-nginx.sh
 
@@ -264,6 +264,12 @@ tasks:
         msg: "Could not extract the password for the keycloak admin from keyvault."
       - sh: "[ ! -z ${HARBOR_ADMIN_PASS} ]"
         msg: "Could not extract the password for the harbor admin from keyvault."
+
+    lagoon:provision:core-db-migration:
+      deps: [cluster:auth]
+      desc: Run database migrations after an upgrade
+      cmds:
+        - kubectl --namespace lagoon-core exec -it lagoon-core-api-db-0 -- sh -c /rerun_initdb.sh
 
     lagoon:cli:config:
       deps: [cluster:auth]
@@ -533,7 +539,7 @@ tasks:
         STORAGE_ACCOUNT_KEY:
           sh: az keyvault secret show --subscription "{{.AZURE_SUBSCRIPTION_ID}}" --name $(terraform -chdir={{.dir_infra}} output -json | jq --raw-output ".storage_primary_access_key_name.value | select (.!=null)") --vault-name $(terraform -chdir={{.dir_infra}} output -json | jq --raw-output ".keyvault_name.value | select (.!=null)") --query value -o tsv
         RESOURCE_GROUP:
-          sh: terraform  -chdir={{.dir_infra}} output -json | jq --raw-output ".resourcegroup_name.value | select (.!=null)"
+          sh: terraform -chdir={{.dir_infra}} output -json | jq --raw-output ".resourcegroup_name.value | select (.!=null)"
       cmds:
         - task/scripts/provision-bulk-storage.sh
 
