@@ -15,6 +15,7 @@ lagoon-build-deploy:
   taskSSHPort: "22"
   taskAPIHost: "api.lagoon.dplplat01.dpl.reload.dk"
   lagoonFeatureFlagDefaultRootlessWorkload: "enabled"
+  overrideBuildDeployImage: "$BUILD_DEPLOY_DIND_IMAGE"
 dbaas-operator:
   enabled: true
 

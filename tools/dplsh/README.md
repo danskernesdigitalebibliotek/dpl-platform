@@ -72,7 +72,6 @@ dplsh -p my-profile
 * cd to /home/dplsh/host_mount/some/subpath
 * source /home/dplsh/.dplsh.profile
 
-*
 Notice, CWD while sourcing is the subdirectory the shell was launched for in.
 
 ### Example 2

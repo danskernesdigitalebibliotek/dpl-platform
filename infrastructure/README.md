@@ -76,8 +76,8 @@ task infra:provision
 
 # Create DNS record
 Create an A record in the administration area of your DNS provider.
-Take the terraform output: "ingress_ip" of the former command and create an entry like:
-"*.[DOMAN_NAME].[TLD]": "[ingress_ip]"
+Take the terraform output: "ingress_ip" of the former command and create an entry
+like: "*.[DOMAN_NAME].[TLD]": "[ingress_ip]"
 
 # Provision the support software that the Platform relies on
 task support:provision
