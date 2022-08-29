@@ -3,3 +3,5 @@ globs:
 
 ignores:
   - '.git'
+  - './**/.terraform'
+  - 'node_modules'
