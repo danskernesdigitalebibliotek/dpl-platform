@@ -95,7 +95,6 @@ tasks:
     cluster:auth:
         deps: [_req_env]
         desc: "Authenticate against AKS and setup a functional kubecontext."
-        dir: "{{.dir_infra}}"
         vars:
           CLUSTER_NAME:
             sh: terraform -chdir={{.dir_infra}} output -json | jq --raw-output ".cluster_name.value | select (.!=null)"
