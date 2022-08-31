@@ -505,11 +505,13 @@ tasks:
         # - We deploy the main and develop branch
         # - We configure the main branch to be the production environment,
         #   This primarily means that develop will auto-idle
+        # - We bump the max allowed dev environments (default is 5)
         - |
             lagoon add project \
             --gitUrl {{.GIT_URL}} \
             --openshift 1 \
             --productionEnvironment main \
+            --developmentEnvironmentsLimit 25 \
             --branches "^(main|develop)$" \
             --project {{.PROJECT_NAME}}
         - task: lagoon:project:deploykey
