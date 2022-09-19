@@ -44,8 +44,15 @@ RUN apk add --no-cache \
 RUN curl -sL https://taskfile.dev/install.sh | bash -s -- -b /usr/local/bin ${TASK_VERSION}
 
 # Add Stern, a multi pod and container log tailing tool.
-RUN curl -Lo /usr/local/bin/stern https://github.com/stern/stern/releases/download/${STERN_RELEASE}/stern_linux_amd64 \
-  && chmod +x /usr/local/bin/stern
+RUN ( \
+    set -x; cd "$(mktemp -d)" && \
+    OS="$(uname | tr '[:upper:]' '[:lower:]')" && \
+    ARCH="$(uname -m | sed -e 's/x86_64/amd64/' -e 's/\(arm\)\(64\)\?.*/\1\2/' -e 's/aarch64$/arm64/')" && \
+    STERN="stern_${STERN_RELEASE}_${OS}_${ARCH}" && \
+    curl -fsSLO "https://github.com/stern/stern/releases/download/v${STERN_RELEASE}/${STERN}.tar.gz" && \
+    tar zxvf "${STERN}.tar.gz" && \
+    mv ./stern /usr/bin \
+  )
 
 # Add the Lagoon CLI
 RUN curl -Lo /usr/local/bin/lagoon https://github.com/uselagoon/lagoon-cli/releases/download/${LAGOON_CLI_RELEASE}/lagoon-cli-${LAGOON_CLI_RELEASE}-linux-amd64 \
