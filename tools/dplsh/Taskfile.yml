@@ -2,7 +2,7 @@
 #
 # Builds, tests and pushes builds of container-images for the DPL Shell.
 
-version: '2'
+version: '3'
 
 vars:
   repository: '{{.IMAGE_URL | default "ghcr.io/danskernesdigitalebibliotek/dpl-platform/dplsh"}}'

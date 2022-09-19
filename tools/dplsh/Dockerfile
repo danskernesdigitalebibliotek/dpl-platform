@@ -12,9 +12,13 @@ FROM hashicorp/terraform:1.2.9 as terraform
 # https://mcr.microsoft.com/v2/azure-cli/tags/list
 FROM mcr.microsoft.com/azure-cli:2.40.0
 
-ARG TASK_VERSION=v3.14.1
-ARG STERN_RELEASE=1.11.0
-ARG LAGOON_CLI_RELEASE=v0.13.0
+# See https://github.com/go-task/task/releases
+ARG TASK_VERSION=v3.15.2
+# See https://github.com/stern/stern/releases
+ARG STERN_RELEASE=1.21.0
+# See https://github.com/uselagoon/lagoon-cli/releases
+ARG LAGOON_CLI_RELEASE=v0.14.0
+# See https://github.com/kubernetes-sigs/krew/releases
 ARG KREW_VERSION=v0.4.3
 # This version can be bumped as we upgrade the cluster minor version.
 ARG KUBECTL_VERSION=v1.20.9
@@ -40,7 +44,7 @@ RUN apk add --no-cache \
 RUN curl -sL https://taskfile.dev/install.sh | bash -s -- -b /usr/local/bin ${TASK_VERSION}
 
 # Add Stern, a multi pod and container log tailing tool.
-RUN curl -Lo /usr/local/bin/stern https://github.com/wercker/stern/releases/download/${STERN_RELEASE}/stern_linux_amd64 \
+RUN curl -Lo /usr/local/bin/stern https://github.com/stern/stern/releases/download/${STERN_RELEASE}/stern_linux_amd64 \
   && chmod +x /usr/local/bin/stern
 
 # Add the Lagoon CLI
