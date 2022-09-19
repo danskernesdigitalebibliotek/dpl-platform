@@ -25,6 +25,7 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       # Allow push to ghcr
+      contents: write
       packages: write
     # Set some environment vars about the image and container registry.
     env:
