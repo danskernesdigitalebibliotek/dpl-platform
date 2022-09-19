@@ -5,15 +5,35 @@ on:
     paths:
       - "infrastructure/**.tf"
       - "infrastructure/**.tfvars"
-      - ".github/workflows/terraform-lint.yaml"
+      - ".github/workflows/terraform-*.yaml"
+
 name: Terraform Lint
 jobs:
   terraform_format:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3.5.3
+      # Run terraform fmt as rudimentary linting
       - uses: hashicorp/setup-terraform@v2.0.3
       - name: Terraform fmt
         id: fmt
-        run: terraform fmt -recursive -check infrastructure/terraform
+        run: terraform fmt -recursive -check -diff -no-color infrastructure/terraform
         continue-on-error: false
+
+  tflint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2.3.4
+      # Run tflint https://github.com/terraform-linters/tflint
+      - uses: terraform-linters/setup-tflint@v2
+        name: Setup TFLint
+      - name: Init TFLint
+        run: tflint --init
+      - name: Show version
+        run: tflint --version
+      - name: Run TFLint
+        env:
+          TFLINT_LOG: debug
+        run: |
+          tflint --module --no-color --var='environment_name=dplplatlint' infrastructure/terraform/modules/dpl-platform-environment/ && \
+          tflint --module --no-color --var='environment_name=dplplatlint' infrastructure/terraform/modules/dpl-platform-env-repos/

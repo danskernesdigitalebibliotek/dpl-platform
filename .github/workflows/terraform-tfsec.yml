@@ -1,0 +1,25 @@
+
+on:
+  pull_request:
+    paths:
+      - "infrastructure/**.tf"
+      - "infrastructure/**.tfvars"
+      - ".github/workflows/terraform-*.yaml"
+
+name: Run tfsec
+jobs:
+  tfsec:
+    name: tfsec PR commenter
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: read
+      pull-requests: write
+
+    steps:
+      - name: Clone repo
+        uses: actions/checkout@master
+      - name: tfsec
+        uses: aquasecurity/tfsec-pr-commenter-action@v1.2.0
+        with:
+          github_token: ${{ github.token }}
