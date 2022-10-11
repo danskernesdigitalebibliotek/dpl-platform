@@ -34,7 +34,7 @@ jobs:
           } >>"$GITHUB_ENV"
 
       - name: Commit changed files
-        uses: stefanzweifel/git-auto-commit-action@v4.14.1
+        uses: stefanzweifel/git-auto-commit-action@v4.15.1
         with:
           commit_message: "diagrams: re-render of updated diagrams"
           commit_user_name: "${{ env.GIT_COMMIT_COMMITTER_NAME }}"
