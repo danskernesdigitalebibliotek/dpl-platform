@@ -3,6 +3,11 @@ output "cluster_name" {
   value       = azurerm_kubernetes_cluster.cluster.name
 }
 
+output "kubernetes_version" {
+  description = "Kubernetes version in use"
+  value       = azurerm_kubernetes_cluster.cluster.kubernetes_version
+}
+
 output "cluster_api_url" {
   description = "URL of the AKS api server"
   value       = azurerm_kubernetes_cluster.cluster.fqdn

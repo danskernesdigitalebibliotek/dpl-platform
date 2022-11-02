@@ -4,6 +4,7 @@ resource "azurerm_kubernetes_cluster" "cluster" {
   location            = var.location
   resource_group_name = azurerm_resource_group.rg.name
   dns_prefix          = var.environment_name
+  kubernetes_version  = var.kubernetes_version
 
   # We use a single manually scaled node pool in a single availabillity zone.
   default_node_pool {
