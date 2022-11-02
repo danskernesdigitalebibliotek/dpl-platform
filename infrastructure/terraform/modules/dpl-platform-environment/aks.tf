@@ -36,8 +36,10 @@ resource "azurerm_kubernetes_cluster" "cluster" {
 
     # The Azure Network Policy handling is not mature enough as pr
     # september 2021.
-    network_policy = "calico"
-
+    network_policy     = "calico"
+    dns_service_ip     = "10.10.0.10"
+    docker_bridge_cidr = "172.18.0.1/16"
+    service_cidr       = "10.10.0.0/16"
     # The Standard load balancer provides all the feature we need at this point.
     load_balancer_sku = "standard"
     load_balancer_profile {
