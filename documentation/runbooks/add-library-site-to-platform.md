@@ -1,4 +1,4 @@
-# Add a new site to the platform
+# Add a new library site to the platform
 
 ## When to use
 
@@ -83,7 +83,7 @@ Prerequisites:
 * The platform environment name (Consult the [platform environment documentation](https://github.com/danskernesdigitalebibliotek/dpl-platform/wiki/Platform-Environments))
 
 The following describes a semi-automated version of "Add a Project" in
-[the official documentation](https://docs.lagoon.sh/lagoon/using-lagoon-advanced/installing-lagoon-into-existing-kubernetes-cluster#add-a-project).
+[the official documentation](https://docs.lagoon.sh/installing-lagoon/add-project/).
 
 ```sh
 # From within dplsh:
