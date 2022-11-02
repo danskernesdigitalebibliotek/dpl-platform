@@ -11,16 +11,25 @@ When there is a need to upgrade Lagoon to a new patch or minor version.
 
 ## Prerequisites
 
-* A running [dplsh](using-dplsh.md) with `DPLPLAT_ENV` set to the platform
-  environment name.
+* A running [dplsh](using-dplsh.md) launched from `./infrastructure` with
+  `DPLPLAT_ENV` set to the platform environment name.
 * Knowledge about the version of Lagoon you want to upgrade to.
   * You can extract version (= chart version) and appVersion (= lagoon release
     version) for the lagoon-remote / lagoon-core charts via the following commands
     (replace lagoon-core for lagoon-remote if necessary).
 
+Lagoon-core:
+
 ```shell
 curl -s https://uselagoon.github.io/lagoon-charts/index.yaml \
   | yq '.entries.lagoon-core[] | [.name, .appVersion, .version, .created] | @tsv'
+```
+
+Lagoon-remote:
+
+```shell
+curl -s https://uselagoon.github.io/lagoon-charts/index.yaml \
+  | yq '.entries.lagoon-remote[] | [.name, .appVersion, .version, .created] | @tsv'
 ```
 
 * Knowledge of any breaking changes or necessary actions that may affect the
