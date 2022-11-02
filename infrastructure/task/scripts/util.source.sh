@@ -19,8 +19,10 @@ function setupHelmRepo() {
   local alias=$1
   local url=$2
   # See if we can find the repo in the list of repos, if not add it
-  helm repo list | grep "^${alias}\b" || helm repo add "${alias}" "${url}"
-  helm repo update "${alias}"
+  if ! helm repo list | grep "^${alias}\b"; then
+    helm repo add "${alias}" "${url}"
+    helm repo update "${alias}"
+  fi
 }
 
 # Returns the path to the versions.env for the environment.
