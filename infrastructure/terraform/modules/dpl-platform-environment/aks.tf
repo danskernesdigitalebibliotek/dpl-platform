@@ -22,7 +22,7 @@ resource "azurerm_kubernetes_cluster" "cluster" {
 
     # High Avaiabillity is not a high enough priority to warrent the extra
     # complexity and cost of having a multi-zonal cluster.
-    availability_zones = ["1"]
+    zones = ["1"]
 
     node_labels = {
       "noderole.dplplatform" : "system"
@@ -38,7 +38,7 @@ resource "azurerm_kubernetes_cluster" "cluster" {
     network_policy = "calico"
 
     # The Standard load balancer provides all the feature we need at this point.
-    load_balancer_sku = "Standard"
+    load_balancer_sku = "standard"
     load_balancer_profile {
       # We specifiy a pre-provisoned egress-ip which allows us to reprovision
       # the cluster without loosing the outbound ip.
@@ -65,7 +65,7 @@ resource "azurerm_kubernetes_cluster_node_pool" "admin" {
   node_labels = {
     "noderole.dplplatform" : "admin"
   }
-  availability_zones = [
+  zones = [
     "1",
   ]
 
@@ -94,7 +94,7 @@ resource "azurerm_kubernetes_cluster_node_pool" "app_default" {
   node_labels = {
     "noderole.dplplatform" : "application"
   }
-  availability_zones = [
+  zones = [
     "1",
   ]
 
