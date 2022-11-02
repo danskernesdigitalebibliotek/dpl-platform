@@ -55,14 +55,6 @@ resource "azurerm_kubernetes_cluster" "cluster" {
   identity {
     type = "SystemAssigned"
   }
-
-  addon_profile {
-    # We do not plan to use the azure monitoring as of right now. This may
-    # change but until then we disable the feature to free up resources.
-    oms_agent {
-      enabled = false
-    }
-  }
 }
 
 # Add a nodepool for administrative workloads
