@@ -9,6 +9,12 @@ variable "kubernetes_version" {
   type        = string
 }
 
+variable "domain_ttl" {
+  description = "The Time To Live for the provisioned domains."
+  type        = number
+  default     = 43200
+}
+
 variable "lagoon_domain_base" {
   description = "Base domain to use for lagoon hostnames"
   type        = string
