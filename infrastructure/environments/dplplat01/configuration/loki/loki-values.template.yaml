@@ -18,6 +18,7 @@ limits_config:
   retention_period: 93d
 
 loki:
+  auth_enabled: false
   structuredConfig:
     # Setup our index and the azure blob-storage as the storage backend.
     storage_config:
@@ -25,13 +26,17 @@ loki:
         active_index_directory: /var/loki/boltdb-shipper-active
         shared_store: azure
         cache_location: /var/loki/boltdb-shipper-cache
+      # The chart does not yet fully support azure even though Loki does, so
+      # We're adding the storage config manually here.
+      # Should be refactored when https://github.com/grafana/loki/pull/7500 is
+      # merged.
+      azure:
+        container_name: ${STORAGE_CONTAINER_NAME}
+        account_name: ${STORAGE_ACCOUNT_NAME}
+        account_key: ${STORAGE_ACCOUNT_KEY}
 
   storage:
     type: azure
-    azure:
-      container_name: ${STORAGE_CONTAINER_NAME}
-      account_name: ${STORAGE_ACCOUNT_NAME}
-      account_key: ${STORAGE_ACCOUNT_KEY}
 
   schemaConfig:
     configs:
