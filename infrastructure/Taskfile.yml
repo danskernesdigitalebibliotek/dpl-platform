@@ -34,7 +34,13 @@ tasks:
 
     # Internal task for initializing Terraform.
     _infra:terraform:init:
+      deps:
+        - _req_env
       dir: "{{.dir_infra}}"
+      sources:
+        - "*.tf"
+      generates:
+        - ".terraform.lock.hcl"
       cmds:
         - terraform init
 
@@ -93,17 +99,25 @@ tasks:
         - cmd: terraform -chdir {{.dir_env_repos}} apply
 
     cluster:auth:
-        deps: [_req_env]
+        deps: [_req_env, _infra:terraform:init]
         desc: "Authenticate against AKS and setup a functional kubecontext."
-        vars:
-          CLUSTER_NAME:
-            sh: terraform -chdir={{.dir_infra}} output -json | jq --raw-output ".cluster_name.value | select (.!=null)"
-          RESOURCEGROUP_NAME:
-            sh: terraform -chdir={{.dir_infra}} output -json | jq --raw-output ".resourcegroup_name.value | select (.!=null)"
         status:
           - "[ $(kubectl config view --output jsonpath='{.current-context}') == '{{.CLUSTER_NAME}}' ] || exit 1"
+        # We normally handle variables via dynamic task variables, but as terraform.
+        # Variables are interpolated before dependencies are resolved, so
+        # in cases where Terraform is not initialized, this task will break.
+        # A lot of other tasks are in the exact same situations.
+        # So, to mitigate this, we instead export the variables we need as
+        # commands.
+        # We sneakily rely on the fact that most procedures starts off with a
+        # cluster:auth, which means most people will have their terraform workspace
+        # initialized before the run the next task which can then extract variables
+        # the "normal" way.
         cmds:
-          - az aks get-credentials --subscription {{.AZURE_SUBSCRIPTION_ID}} --resource-group {{.RESOURCEGROUP_NAME}} --name {{.CLUSTER_NAME}}
+          -
+            export CLUSTER_NAME=$(terraform -chdir={{.dir_infra}} output -json | jq --raw-output ".cluster_name.value | select (.!=null)") &&
+            export RESOURCEGROUP_NAME=$(terraform -chdir={{.dir_infra}} output -json | jq --raw-output ".resourcegroup_name.value | select (.!=null)") &&
+            az aks get-credentials --subscription {{.AZURE_SUBSCRIPTION_ID}} --resource-group $RESOURCEGROUP_NAME --name $CLUSTER_NAME
         preconditions:
           - sh: "[ ! -z {{.AZURE_SUBSCRIPTION_ID}} ]"
             msg: "Env variable AZURE_SUBSCRIPTION_ID is not set or empty."
