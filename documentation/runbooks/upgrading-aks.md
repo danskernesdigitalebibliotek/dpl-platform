@@ -26,7 +26,7 @@ and on [upgrading node pools](https://learn.microsoft.com/en-us/azure/aks/use-mu
 Be aware in both cases that the Terraform state needs to be brought into sync
 via some means, so this is not a recommended approach.
 
-## 1. find out which versions of kubernetes an environment can upgrade to
+### Find out which versions of kubernetes an environment can upgrade to
 
 In order to find out which versions of kubernetes we can upgrade to, we need to
 use the following command:
@@ -51,7 +51,7 @@ patch version, e.g. `1.21.14`.
 You should know know which version(s) you need to upgrade to, and can continue to
 the actual upgrade.
 
-## Ensuring the Terraform state is in sync
+### Ensuring the Terraform state is in sync
 
 As we will be using Terraform to perform the upgrade we want to make sure it its
 state is in sync. Execute the following task and resolve any drift:
@@ -60,7 +60,7 @@ state is in sync. Execute the following task and resolve any drift:
 task infra:provision
 ```
 
-## Upgrading the cluster
+### Upgrade the cluster
 
 1. Then update the `kubernetes_version` reference in `infrastructure/environments/<environment>/infrastructure/main.tf`
   and run `task infra:provision` to apply. You can skip patch-versions, but you
