@@ -104,7 +104,6 @@ task lagoon:provision:core
 # 2. Skip the steps in the documentation that speaks about setting up email, as
 # we currently do not support sending emails.
 
-
 # 3. Setup ssh-keys for the lagoonadmin user
 # Access the Lagoon UI (consult the platform-environments.md for the url) and
 # log in with lagoonadmin + the admin password that can be extracted from a

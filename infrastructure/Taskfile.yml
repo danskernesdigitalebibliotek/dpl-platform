@@ -108,6 +108,24 @@ tasks:
           - sh: "[ ! -z {{.AZURE_SUBSCRIPTION_ID}} ]"
             msg: "Env variable AZURE_SUBSCRIPTION_ID is not set or empty."
 
+    cluster:get-upgrades:
+        deps: [_req_env]
+        desc: "Get available upgrades for the cluster."
+        vars:
+          CLUSTER_NAME:
+            sh: terraform -chdir={{.dir_infra}} output -json | jq --raw-output ".cluster_name.value | select (.!=null)"
+          RESOURCEGROUP_NAME:
+            sh: terraform -chdir={{.dir_infra}} output -json | jq --raw-output ".resourcegroup_name.value | select (.!=null)"
+        cmds:
+          - az aks get-upgrades
+              --subscription {{.AZURE_SUBSCRIPTION_ID}}
+              --resource-group {{.RESOURCEGROUP_NAME}}
+              --name {{.CLUSTER_NAME}}
+              --output table
+        preconditions:
+          - sh: "[ ! -z {{.AZURE_SUBSCRIPTION_ID}} ]"
+            msg: "Env variable AZURE_SUBSCRIPTION_ID is not set or empty."
+
     support:provision:cert-manager:
       deps: [cluster:auth]
       summary: Set the DIFF environment variable to any value to switch to diffing instead of an actual upgrade.

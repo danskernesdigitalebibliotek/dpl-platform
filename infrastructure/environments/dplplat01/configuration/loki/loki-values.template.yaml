@@ -4,23 +4,41 @@ ingress:
   # We deploy promtail and loki in the same cluster, so no need for ingress.
   enabled: false
 
-# Keep multiple replicas to ensure high availability.
-replicas: 2
-
 # Back the loki instances with storage as a buffer
 persistence:
   enabled: true
   accessModes:
   - ReadWriteOnce
-  size: 10Gi
+  size: 16Gi
 
-config:
-  table_manager:
-    retention_deletes_enabled: true
-    # We keep logs for 3 months.
-    retention_period: 93d
+compactor:
+  retention_enabled: true
+limits_config:
+  # We keep logs for 3 months.
+  retention_period: 93d
 
-  schema_config:
+loki:
+  auth_enabled: false
+  structuredConfig:
+    # Setup our index and the azure blob-storage as the storage backend.
+    storage_config:
+      boltdb_shipper:
+        active_index_directory: /var/loki/boltdb-shipper-active
+        shared_store: azure
+        cache_location: /var/loki/boltdb-shipper-cache
+      # The chart does not yet fully support azure even though Loki does, so
+      # We're adding the storage config manually here.
+      # Should be refactored when https://github.com/grafana/loki/pull/7500 is
+      # merged.
+      azure:
+        container_name: ${STORAGE_CONTAINER_NAME}
+        account_name: ${STORAGE_ACCOUNT_NAME}
+        account_key: ${STORAGE_ACCOUNT_KEY}
+
+  storage:
+    type: azure
+
+  schemaConfig:
     configs:
       - from: 2021-10-05
         store: boltdb-shipper
@@ -29,13 +47,18 @@ config:
         index:
           prefix: loki_index_
           period: 24h
-  # Setup our index and the azure blob-storage as the storage backend.
-  storage_config:
-    boltdb_shipper:
-      active_index_directory: /data/loki/index
-      shared_store: azure
-      cache_location: /data/loki/boltdb-cache
-    azure:
-      container_name: ${STORAGE_CONTAINER_NAME}
-      account_name: ${STORAGE_ACCOUNT_NAME}
-      account_key: ${STORAGE_ACCOUNT_KEY}
+
+
+write:
+  replicas: 2
+  persistence:
+    # Size of persistent disk, make sure to match a azure disk size or you will
+    # just provision a larger disk capped to a smaller size.
+    size: 16Gi
+
+read:
+  replicas: 2
+  persistence:
+    # Size of persistent disk, make sure to match a azure disk size or you will
+    # just provision a larger disk capped to a smaller size.
+    size: 16Gi

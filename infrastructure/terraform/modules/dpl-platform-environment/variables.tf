@@ -4,6 +4,17 @@ variable "base_domain" {
   default     = "reload.dk"
 }
 
+variable "kubernetes_version" {
+  description = "Which version of AKS to provision. Bump this variable to trigger an upgrade."
+  type        = string
+}
+
+variable "domain_ttl" {
+  description = "The Time To Live for the provisioned domains."
+  type        = number
+  default     = 43200
+}
+
 variable "lagoon_domain_base" {
   description = "Base domain to use for lagoon hostnames"
   type        = string

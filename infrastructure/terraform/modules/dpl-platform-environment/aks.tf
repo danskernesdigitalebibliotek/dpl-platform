@@ -4,6 +4,7 @@ resource "azurerm_kubernetes_cluster" "cluster" {
   location            = var.location
   resource_group_name = azurerm_resource_group.rg.name
   dns_prefix          = var.environment_name
+  kubernetes_version  = var.kubernetes_version
 
   # We use a single manually scaled node pool in a single availabillity zone.
   default_node_pool {
@@ -22,7 +23,7 @@ resource "azurerm_kubernetes_cluster" "cluster" {
 
     # High Avaiabillity is not a high enough priority to warrent the extra
     # complexity and cost of having a multi-zonal cluster.
-    availability_zones = ["1"]
+    zones = ["1"]
 
     node_labels = {
       "noderole.dplplatform" : "system"
@@ -35,10 +36,12 @@ resource "azurerm_kubernetes_cluster" "cluster" {
 
     # The Azure Network Policy handling is not mature enough as pr
     # september 2021.
-    network_policy = "calico"
-
+    network_policy     = "calico"
+    dns_service_ip     = "10.10.0.10"
+    docker_bridge_cidr = "172.18.0.1/16"
+    service_cidr       = "10.10.0.0/16"
     # The Standard load balancer provides all the feature we need at this point.
-    load_balancer_sku = "Standard"
+    load_balancer_sku = "standard"
     load_balancer_profile {
       # We specifiy a pre-provisoned egress-ip which allows us to reprovision
       # the cluster without loosing the outbound ip.
@@ -55,14 +58,6 @@ resource "azurerm_kubernetes_cluster" "cluster" {
   identity {
     type = "SystemAssigned"
   }
-
-  addon_profile {
-    # We do not plan to use the azure monitoring as of right now. This may
-    # change but until then we disable the feature to free up resources.
-    oms_agent {
-      enabled = false
-    }
-  }
 }
 
 # Add a nodepool for administrative workloads
@@ -73,7 +68,7 @@ resource "azurerm_kubernetes_cluster_node_pool" "admin" {
   node_labels = {
     "noderole.dplplatform" : "admin"
   }
-  availability_zones = [
+  zones = [
     "1",
   ]
 
@@ -102,7 +97,7 @@ resource "azurerm_kubernetes_cluster_node_pool" "app_default" {
   node_labels = {
     "noderole.dplplatform" : "application"
   }
-  availability_zones = [
+  zones = [
     "1",
   ]
 
