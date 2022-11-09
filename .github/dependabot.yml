@@ -19,3 +19,13 @@ updates:
       interval: daily
       time: "04:00"
     open-pull-requests-limit: 10
+  - package-ecosystem: terraform
+    directory: "/infrastructure/terraform/modules/dpl-platform-environment"
+    schedule:
+      interval: daily
+      time: "04:00"
+  - package-ecosystem: terraform
+    directory: "/infrastructure/terraform/modules/dpl-platform-env-repos"
+    schedule:
+      interval: daily
+      time: "04:00"
