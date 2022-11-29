@@ -2,7 +2,7 @@ ARG DPLSH_BUILD_VERSION=latest
 
 # Use an intermediate images as a way to have dependabot track our dependency
 # https://hub.docker.com/r/alpine/helm/tags?page=1&ordering=last_updated
-FROM alpine/helm:3.10.1 as helm
+FROM alpine/helm:3.10.2 as helm
 
 # https://hub.docker.com/r/hashicorp/terraform/tags?page=1&ordering=last_updated
 FROM hashicorp/terraform:1.3.5 as terraform
