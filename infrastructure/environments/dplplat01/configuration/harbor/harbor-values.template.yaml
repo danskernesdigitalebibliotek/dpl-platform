@@ -26,6 +26,23 @@ registry:
 
 # Use Azure blob storage for persistence
 persistence:
+  persistentVolumeClaim:
+    jobservice:
+      scanDataExports:
+        # The actual size of the disk Azure will give us if we ask for a 1Gi
+        size: 4Gi
+      jobLog:
+        # The actual size of the disk Azure will give us if we ask for a 1Gi
+        size: 4Gi
+  # It was not possible to change the values below after the initial provisioning
+  # as they are stateful sets, but the PVCs has been modified manually to
+  # match these values.
+  # database:
+  #   # The actual size of the disk Azure will give us if we ask for a 1Gi
+  #   size: 4Gi
+  # redis:
+  #   # The actual size of the disk Azure will give us if we ask for a 1Gi
+  #   size: 4Gi
   imageChartStorage:
     type: "azure"
     azure:
