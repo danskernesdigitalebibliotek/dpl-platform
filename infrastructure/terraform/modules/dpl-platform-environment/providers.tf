@@ -10,12 +10,11 @@ terraform {
     }
 
     azurerm = {
-      version = ">=3.29.0"
+      version = ">=3.33.0"
     }
 
     random = {
       version = ">=3.0.0"
     }
-
   }
 }
