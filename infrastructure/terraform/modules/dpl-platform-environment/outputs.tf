@@ -3,8 +3,8 @@ output "cluster_name" {
   value       = azurerm_kubernetes_cluster.cluster.name
 }
 
-output "kubernetes_version" {
-  description = "Kubernetes version in use"
+output "control_plane_version" {
+  description = "Kubernetes control-plane version in use"
   value       = azurerm_kubernetes_cluster.cluster.kubernetes_version
 }
 

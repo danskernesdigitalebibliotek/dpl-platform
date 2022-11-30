@@ -15,8 +15,11 @@ module "environment" {
   # maintain performance during a Drupal site-install.
   # When copying this value, consider leaving it out and falling back to the
   # default of 102400.
-  sql_storage_mb     = 409600
-  kubernetes_version = "1.22.15"
+  sql_storage_mb          = 409600
+  control_plane_version   = "1.24"
+  pool_system_version     = "1.24"
+  pool_admin_version      = "1.24"
+  pool_appdefault_version = "1.24"
 }
 
 # Outputs, for values that comes straight from the dpl-platform-environment
@@ -93,8 +96,8 @@ output "keyvault_name" {
   value = module.environment.keyvault_name
 }
 
-output "kubernetes_version" {
-  value = module.environment.kubernetes_version
+output "control_plane_version" {
+  value = module.environment.control_plane_version
 }
 
 output "keycloak_admin_pass_key_name" {

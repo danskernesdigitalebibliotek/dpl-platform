@@ -62,11 +62,34 @@ task infra:provision
 
 ### Upgrade the cluster
 
-1. Then update the `kubernetes_version` reference in `infrastructure/environments/<environment>/infrastructure/main.tf`
+Upgrade the control-plane:
+
+1. Update the `control_plane_version` reference in `infrastructure/environments/<environment>/infrastructure/main.tf`
   and run `task infra:provision` to apply. You can skip patch-versions, but you
   can only do [one minor-version at the time](https://learn.microsoft.com/en-us/azure/aks/upgrade-cluster?tabs=azure-cli#check-for-available-aks-cluster-upgrades)
 
-2. Then monitor the upgrade as it progresses. Eg via
+2. Monitor the upgrade as it progresses. A control-plane upgrade is usually performed
+   in under 5 minutes.
+
+Monitor via eg.
+
+```shell
+watch -n 5 kubectl version
+```
+
+Then upgrade the system, admin and application node-pools in that order one by
+one.
+
+1. Update the `pool_[name]_version` reference in
+   `infrastructure/environments/<environment>/infrastructure/main.tf`.
+   The same rules applies for the version as with `control_plane_version`.
+
+2. Monitor the upgrade as it progresses. Expect the provisioning of and workload
+   scheduling to a single node to take about 5-10 minutes. In particular be aware
+   that the admin node-pool where harbor runs has a tendency to take a long time
+   as the harbor pvcs are slow to migrate to the new node.
+
+Monitor via eg.
 
 ```shell
 watch -n 5 kubectl get nodes
