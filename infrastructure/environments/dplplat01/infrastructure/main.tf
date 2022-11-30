@@ -16,10 +16,10 @@ module "environment" {
   # When copying this value, consider leaving it out and falling back to the
   # default of 102400.
   sql_storage_mb          = 409600
-  control_plane_version   = "1.23"
-  pool_admin_version      = "1.23"
-  pool_appdefault_version = "1.23"
-  pool_system_version     = "1.23"
+  control_plane_version   = "1.24"
+  pool_system_version     = "1.24"
+  pool_admin_version      = "1.24"
+  pool_appdefault_version = "1.24"
 }
 
 # Outputs, for values that comes straight from the dpl-platform-environment
