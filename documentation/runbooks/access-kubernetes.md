@@ -6,7 +6,9 @@ When you need to gain `kubectl` access to a platform-environments Kubernetes clu
 
 ## Prerequisites
 
-* An authenticated `az` cli. The logged in user must have permissions to list
+* An authenticated `az` cli (from the host). This likely means `az login
+  --tenant TENANT_ID`, where the tenant id is that of  "DPL Platform". See Azure
+  Portal > Tenant Properties. The logged in user must have permissions to list
   cluster credentials.
 * `docker` cli which is [authenticated against the GitHub Container Registry](https://docs.github.com/en/packages/working-with-a-github-packages-registry/working-with-the-container-registry#authenticating-to-the-container-registry).
   The access token used must have the `read:packages` scope.
