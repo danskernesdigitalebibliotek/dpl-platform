@@ -42,7 +42,7 @@ tasks:
       generates:
         - ".terraform.lock.hcl"
       cmds:
-        - terraform init
+        - terraform init -upgrade
 
     infra:provision:
       deps: [_req_env, _infra:terraform:init]
