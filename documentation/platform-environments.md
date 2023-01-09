@@ -15,12 +15,12 @@
 
 ### Lagoon CLI configuration
 
+* Lagoon name: dplplat01
 * Lagoon UI: <https://ui.lagoon.dplplat01.dpl.reload.dk/>
 * GraphQL endpoint: <https://api.lagoon.dplplat01.dpl.reload.dk/graphql>
 * SSH host: 20.238.147.183
 * SSH port: 22
 
-## Howto: Obtain Lagoon CLI configuration
+## Obtaining Lagoon CLI configuration
 
-From [`dplsh` with access to the Lagoon CLI](runbooks/using-dplsh.md) run
-`lagoon config list`.
+See [Connecting the Lagoon CLI](runbooks/connecting-the-lagoon-cli.md)
