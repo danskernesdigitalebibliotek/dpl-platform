@@ -83,7 +83,7 @@ Kubernetes does not come with an Ingress Controller out of the box. An ingress-
 controllers job is to accept traffic approaching the cluster, and route it via
 services to pods that has requested ingress traffic.
 
-We use the widely used [Ingress Nginx](vhttps://kubernetes.github.io/ingress-nginx)
+We use the widely used [Ingress Nginx](https://kubernetes.github.io/ingress-nginx)
 Ingress controller.
 
 ### Cert Manager
