@@ -142,9 +142,9 @@ function export-docker-creds() {
   # See if we have a docker-config.
   if [[ -f ${docker_conf} ]]; then
     local docker_credstore
-    docker_credstore=$(jq -r '.credsStore' < "${docker_conf}")
+    docker_credstore=$(jq -r '.credsStore // empty' < "${docker_conf}")
     local creds_key
-    creds_key=$(jq -r '.auths | keys[]' < "${docker_conf}")
+    creds_key=$(jq -r '.auths // [] | keys[]' < "${docker_conf}")
     # Split into array
     local creds_array
     declare -a creds_array
