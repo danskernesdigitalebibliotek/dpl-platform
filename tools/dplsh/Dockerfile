@@ -111,6 +111,4 @@ COPY dplsh.sh /opt/dplsh/
 # Setup the entrypoint.
 COPY files/dplsh-entrypoint.sh /usr/local/bin
 RUN chmod +x /usr/local/bin/dplsh-entrypoint.sh
-ENTRYPOINT [ "dplsh-entrypoint.sh"]
-
-USER dplsh
+ENTRYPOINT ["dplsh-entrypoint.sh"]
