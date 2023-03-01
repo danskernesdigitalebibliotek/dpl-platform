@@ -41,6 +41,11 @@ if [[ -d /opt/.ssh-host ]] ; then
       /opt/.ssh-host/ /home/dplsh/.ssh/
 fi
 
+# check if the gid exists, if not create it
+if ! getent group "${HOST_GID:-}" >/dev/null ; then
+    groupadd -g "${HOST_GID}" dplsh
+fi
+
 # # Change uid of the dplsh user so that it matches that of the host.
 if [[ -n "${HOST_UID:-}" ]] ; then
     usermod -u "${HOST_UID}" dplsh
