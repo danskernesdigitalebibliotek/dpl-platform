@@ -32,12 +32,13 @@ WORKDIR /tmp
 # actually use.
 RUN az aks install-cli --kubelogin-version v0.0.10 --client-version ${KUBECTL_VERSION}
 RUN apk add --no-cache \
-  ca-certificates \
-  rsync \
-  vim \
-  gettext \
   bash-completion \
+  ca-certificates \
   docker-cli \
+  gettext \
+  rsync \
+  shadow \
+  vim \
   yq
 
 # Add task, a modern Make equivalent.
