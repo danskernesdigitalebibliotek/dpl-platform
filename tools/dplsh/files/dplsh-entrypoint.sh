@@ -15,34 +15,49 @@ if [[ $# -eq 1 && $1 == "bootstrap" ]] ; then
     exit 0
 fi
 
+if [[ -f /opt/.gitconfig-host ]] ; then
+    cp /opt/.gitconfig-host /home/dplsh/.gitconfig
+fi
+
 # Copy the host' azure state into the current shell.
 # By working off of a copy, we can feel free to eg. deauth without affecting
 # the host.
-if [[ -d /home/dplsh/.azure-host ]] ; then
+if [[ -d /opt/.azure-host ]] ; then
     mkdir -p /home/dplsh/.azure
     rsync \
       --archive \
-      --chown dplsh:dplsh \
       --exclude=logs \
       --exclude=commands \
       --exclude=telemetry \
       --exclude=.git \
-      /home/dplsh/.azure-host/ /home/dplsh/.azure/
+      /opt/.azure-host/ /home/dplsh/.azure/
 fi
 
-if [[ -f /home/dplsh/.gitconfig-host ]] ; then
-    cp /home/dplsh/.gitconfig-host /home/dplsh/.gitconfig
-    chown dplsh /home/dplsh/.gitconfig
-fi
-
-if [[ -d /home/dplsh/.ssh-host ]] ; then
+if [[ -d /opt/.ssh-host ]] ; then
     mkdir -p /home/dplsh/.ssh
     rsync --archive \
-      --chown dplsh:dplsh \
       --exclude=commands \
       --exclude=.git \
-      /home/dplsh/.ssh-host/ /home/dplsh/.ssh/
+      /opt/.ssh-host/ /home/dplsh/.ssh/
 fi
+
+# # Change uid of the dplsh user so that it matches that of the host.
+if [[ -n "${HOST_UID:-}" ]] ; then
+    usermod -u "${HOST_UID}" dplsh
+fi
+if [[ -n "${HOST_GID:-}" ]] ; then
+    usermod -g "${HOST_GID}" dplsh
+fi
+
+# Change the ownership of the dplsh user's home directory to the new uid/gid but
+# exclude the directories we've mounted from the host as they already have the
+# ownership we want.
+find /home/dplsh \
+  -mindepth 1 \
+  -maxdepth 1 \
+  ! -name host_mount \
+  -exec \
+    chown -R "${HOST_UID}:${HOST_GID}" {} \;
 
 PATH=${PATH}:${HOME}/bin
 export PATH
