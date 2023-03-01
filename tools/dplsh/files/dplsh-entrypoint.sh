@@ -41,17 +41,10 @@ if [[ -d /opt/.ssh-host ]] ; then
       /opt/.ssh-host/ /home/dplsh/.ssh/
 fi
 
-# check if the gid exists, if not create it
-if ! getent group "${HOST_GID:-}" >/dev/null ; then
-    groupadd -g "${HOST_GID}" dplsh
-fi
 
 # # Change uid of the dplsh user so that it matches that of the host.
 if [[ -n "${HOST_UID:-}" ]] ; then
     usermod -u "${HOST_UID}" dplsh
-fi
-if [[ -n "${HOST_GID:-}" ]] ; then
-    usermod -g "${HOST_GID}" dplsh
 fi
 
 # Change the ownership of the dplsh user's home directory to the new uid/gid but
@@ -62,7 +55,7 @@ find /home/dplsh \
   -maxdepth 1 \
   ! -name host_mount \
   -exec \
-    chown -R "${HOST_UID}:${HOST_GID}" {} \;
+    chown -R "${HOST_UID}" {} \;
 
 PATH=${PATH}:${HOME}/bin
 export PATH

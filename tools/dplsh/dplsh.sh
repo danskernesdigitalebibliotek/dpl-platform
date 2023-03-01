@@ -215,7 +215,6 @@ docker run --hostname=dplsh \
     "${ADDITIONAL_ARGS[@]}" \
     -t \
     -e "HOST_UID=$(id -u)" \
-    -e "HOST_GID=$(id -g)" \
     -v "${HOME}/.azure:/opt/.azure-host:ro" \
     -v "${HOME}/.gitconfig:/opt/.gitconfig-host:ro" \
     -v "${HOME}/.ssh:/opt/.ssh-host:ro" \
