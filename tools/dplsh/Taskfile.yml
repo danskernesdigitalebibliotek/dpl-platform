@@ -14,7 +14,7 @@ tasks:
     desc: Build an image for the shell.
     summary: Tag can  be specified via the tag environment variable. If omitted the build will assume "latest".
     cmds:
-      - docker build --no-cache -t {{.image}} --build-arg DPLSH_BUILD_VERSION="{{.tag}}" .
+      - docker build -t {{.image}} --build-arg DPLSH_BUILD_VERSION="{{.tag}}" .
 
   push:
     desc: Push a build of the shell to {{.repository}}

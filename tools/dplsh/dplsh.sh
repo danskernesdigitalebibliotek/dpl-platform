@@ -214,9 +214,10 @@ docker run --hostname=dplsh \
     --rm \
     "${ADDITIONAL_ARGS[@]}" \
     -t \
-    -v "${HOME}/.azure:/home/dplsh/.azure-host:ro" \
-    -v "${HOME}/.gitconfig:/home/dplsh/.gitconfig-host:ro" \
-    -v "${HOME}/.ssh:/home/dplsh/.ssh-host:ro" \
+    -e "HOST_UID=$(id -u)" \
+    -v "${HOME}/.azure:/opt/.azure-host:ro" \
+    -v "${HOME}/.gitconfig:/opt/.gitconfig-host:ro" \
+    -v "${HOME}/.ssh:/opt/.ssh-host:ro" \
     -v "${SHELL_ROOT}:/home/dplsh/host_mount" \
     -w "/home/dplsh/host_mount/${CHDIR}" \
     "${DOCKER_IMAGE}" "$@"
