@@ -144,8 +144,6 @@ tasks:
       deps: [cluster:auth]
       summary: Set the DIFF environment variable to any value to switch to diffing instead of an actual upgrade.
       desc: Install and configure cert-manager
-      env:
-        DIFF: "{{.should_diff}}"
       cmds:
         - task/scripts/provision-cert-manager.sh
 
