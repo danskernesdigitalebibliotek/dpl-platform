@@ -1,3 +1,5 @@
+updateStrategy:
+  type: Recreate
 expose:
   ingress:
     annotations:
