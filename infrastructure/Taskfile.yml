@@ -111,7 +111,7 @@ tasks:
         deps: [_req_env, _infra:terraform:init]
         desc: "Authenticate against AKS and setup a functional kubecontext."
         status:
-          - "[ $(kubectl config view --output jsonpath='{.current-context}') == '{{.CLUSTER_NAME}}' ] || exit 1"
+          - "[ $(kubectl config current-context) == '{{.CLUSTER_NAME}}' ] || exit 1"
         # We normally handle variables via dynamic task variables, but as terraform.
         # Variables are interpolated before dependencies are resolved, so
         # in cases where Terraform is not initialized, this task will break.
