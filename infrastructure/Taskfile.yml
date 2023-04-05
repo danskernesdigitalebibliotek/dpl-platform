@@ -48,6 +48,11 @@ tasks:
       cmds:
         - terraform init -upgrade
 
+    infra:terraform:output:
+      deps: [_req_env, _infra:terraform:init]
+      cmds:
+        - terraform -chdir={{.dir_infra}} output -json
+
     infra:provision:
       deps: [_req_env, _infra:terraform:init]
       desc: Provision infrastructure for an environment
