@@ -7,6 +7,7 @@ version: '3'
 # Pull in defaults that are used across the tasks.
 dotenv:
   - "task/defaults.env"
+  - "{{.instance_vars_file}}"
 
 # Any task that uses these variables must have a dependency on the _req_env
 # task.
@@ -25,6 +26,9 @@ vars:
   dir_lagoon: "environments/{{.platform_env}}/lagoon"
   # The suffix domain we will use when constructing urls
   global_environment_suffix: "dpl.reload.dk"
+  # A file we can write environment variables in we want to persist for this
+  # instance of the shell.
+  instance_vars_file: "/tmp/instance-vars.env"
 
 tasks:
     default:
@@ -117,7 +121,8 @@ tasks:
           -
             export CLUSTER_NAME=$(terraform -chdir={{.dir_infra}} output -json | jq --raw-output ".cluster_name.value | select (.!=null)") &&
             export RESOURCEGROUP_NAME=$(terraform -chdir={{.dir_infra}} output -json | jq --raw-output ".resourcegroup_name.value | select (.!=null)") &&
-            az aks get-credentials --subscription {{.AZURE_SUBSCRIPTION_ID}} --resource-group $RESOURCEGROUP_NAME --name $CLUSTER_NAME
+            az aks get-credentials --only-show-errors --subscription {{.AZURE_SUBSCRIPTION_ID}} --resource-group $RESOURCEGROUP_NAME --name $CLUSTER_NAME &&
+            echo "CLUSTER_NAME=$CLUSTER_NAME" >> {{.instance_vars_file}}
         preconditions:
           - sh: "[ ! -z {{.AZURE_SUBSCRIPTION_ID}} ]"
             msg: "Env variable AZURE_SUBSCRIPTION_ID is not set or empty."
