@@ -44,6 +44,12 @@ diff_or_nothing=$(ifDiffTernary "diff")
 configuration_dir=$(getConfigurationDir)
 apply_or_diff=$(ifDiffTernary "diff" "apply" )
 
+# Install the Helm repo, we'll need this regardless of whether we're diffing.
+setupHelmRepo bitnami https://charts.bitnami.com/bitnami
+
+# Output the version if we're requested to.
+outputVersionAndExitIfRequested bitnami/minio "${VERSION_MINIO}"
+
 # Proceede to provisioning.
 
 # Setup the namespace.
@@ -52,15 +58,12 @@ kubectl "${apply_or_diff}" -f "${configuration_dir}/minio/namespace.yaml"
 handleApplyDiffExit $?
 set -e
 
-# Install the Helm repo, we'll need this regardless of whether we're diffing.
-setupHelmRepo bitnami https://charts.bitnami.com/bitnami
-
 # shellcheck disable=SC2016
 envsubst '$CLIENT_ACCESS_KEY $CLIENT_SECRET_KEY $STORAGE_ACCOUNT_NAME $STORAGE_ACCOUNT_KEY $API_HOSTNAME $INGRESS_CLASS' \
   < "${configuration_dir}/minio/minio-values.template.yaml" \
   > "${configuration_dir}/minio/minio-values.yaml"
 
-isDiffing && echo " > Diffing release"
+isDiffing && echo " > Diffing release" || echo " > Installing/upgrading release"
 # shellcheck disable=SC2086 # We need diff_or_nothing to be unquoted
 helm ${diff_or_nothing} upgrade --install \
   "${HELM_RELEASE_NAME}" bitnami/minio \

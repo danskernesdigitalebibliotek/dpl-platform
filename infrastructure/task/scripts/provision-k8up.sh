@@ -37,6 +37,12 @@ diff_or_nothing=$(ifDiffTernary "diff")
 configuration_dir=$(getConfigurationDir)
 apply_or_diff=$(ifDiffTernary "diff" "apply" )
 
+# Install the Helm repo, we'll need this regardless of whether we're diffing.
+setupHelmRepo appuio https://charts.appuio.ch
+
+# Output the version if we're requested to.
+outputVersionAndExitIfRequested appuio/k8up "${VERSION_K8UP}"
+
 # Proceede to provisioning.
 
 # Setup the namespace.
@@ -45,15 +51,12 @@ kubectl "${apply_or_diff}" -f "${configuration_dir}/k8up/namespace.yaml"
 handleApplyDiffExit $?
 set -e
 
-# Install the Helm repo, we'll need this regardless of whether we're diffing.
-setupHelmRepo appuio https://charts.appuio.ch
-
 # shellcheck disable=SC2016
 envsubst '$BACKUP_API_URL $RESTORE_API_URL $BACKUP_CLIENT_ACCESS_KEY $BACKUP_CLIENT_SECRET_KEY $RESTORE_CLIENT_ACCESS_KEY $RESTORE_CLIENT_SECRET_KEY $K8UP_GLOBALSTATSURL $LAGOON_BACKUP_HANDLER_URL' \
   < "${configuration_dir}/k8up/k8up-values.template.yaml" \
   > "${configuration_dir}/k8up/k8up-values.yaml"
 
-isDiffing && echo " > Diffing release"
+isDiffing && echo " > Diffing release" || echo " > Installing/upgrading release"
 kubectl "${apply_or_diff}" -f "https://github.com/vshn/k8up/releases/download/v1.2.0/k8up-crd.yaml"
 # shellcheck disable=SC2086 # We need diff_or_nothing to be unquoted
 helm ${diff_or_nothing} upgrade --install \

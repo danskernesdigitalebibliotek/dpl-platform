@@ -1,9 +1,11 @@
 #!/usr/bin/env bash
 #
-# Install and configure the Ingress Nginx Ingress Controller
+# Install and configure promtail we use to ship logs into loki.
 #
 # Requires a functional and authenticated kubectl context.
-# See https://kubernetes.github.io/ingress-nginx/ for more info.
+#
+# See https://github.com/grafana/helm-charts/tree/main/charts/promtail
+# For more info on the charts.
 set -euo pipefail
 
 IFS=$'\n\t'
@@ -22,41 +24,31 @@ fi
 # shellcheck source=/dev/null
 source "$(getVersionsEnv)"
 
-# These variables are either pulled in via the environment or versions.env.
-verifyVariable "RESOURCE_GROUP"
-verifyVariable "INGRESS_IP"
-verifyVariable "VERSION_INGRESS_NGINX"
-
 # Setup values well use troughout the scripts
 diff_or_nothing=$(ifDiffTernary "diff")
 configuration_dir=$(getConfigurationDir)
 apply_or_diff=$(ifDiffTernary "diff" "apply" )
 
 # Install the Helm repo, we'll need this regardless of whether we're diffing.
-setupHelmRepo ingress-nginx https://kubernetes.github.io/ingress-nginx
+setupHelmRepo grafana https://grafana.github.io/helm-charts
 
 # Output the version if we're requested to.
-outputVersionAndExitIfRequested ingress-nginx/ingress-nginx "${VERSION_INGRESS_NGINX}"
+outputVersionAndExitIfRequested grafana/promtail "${VERSION_PROMTAIL}"
 
 # Proceede to provisioning.
 
-# Setup the namespace.
+# Setup the namespaces.
 set +e
-kubectl "${apply_or_diff}" -f "${configuration_dir}/ingress-nginx/namespace.yaml"
+kubectl "${apply_or_diff}" -f "${configuration_dir}/promtail/namespace.yaml"
 handleApplyDiffExit $?
 set -e
-
-# shellcheck disable=SC2016
-envsubst '$RESOURCE_GROUP $INGRESS_IP' \
-  < "${configuration_dir}/ingress-nginx/ingres-nginx-values.template.yaml" \
-  > "${configuration_dir}/ingress-nginx/ingres-nginx-values.yaml"
 
 isDiffing && echo " > Diffing release" || echo " > Installing/upgrading release"
 # shellcheck disable=SC2086 # We need diff_or_nothing to be unquoted
 helm ${diff_or_nothing} upgrade --install \
-  ingress-nginx ingress-nginx/ingress-nginx \
-  --namespace ingress-nginx \
-  --version "${VERSION_INGRESS_NGINX}" \
-  --values "${configuration_dir}/ingress-nginx/ingres-nginx-values.yaml"
+  promtail grafana/promtail \
+  --namespace promtail \
+  --version "${VERSION_PROMTAIL}" \
+  --values "${configuration_dir}/promtail/promtail-values.yaml"
 
 echo " > Done."
