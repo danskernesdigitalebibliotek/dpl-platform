@@ -1,9 +1,0 @@
-# Configure the source we default to when looking for release images.
-x-defaults:
-  &default-release-image-source
-    releaseImageRepository: ghcr.io/danskernesdigitalebibliotek
-    releaseImageName: dpl-cms-source
-
-sites:
-  # Site objects are indexed by a unique key that must be a valid lagoon, and
-  # github project name. That is, alphanumeric and dashes.
