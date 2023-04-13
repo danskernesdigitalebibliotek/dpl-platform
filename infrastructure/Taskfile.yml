@@ -48,6 +48,17 @@ tasks:
       cmds:
         - terraform init -upgrade
 
+    infra:terraform:init-upgrade:
+      desc: Init and upgrade local Terraform state
+      summary: |
+        Use this task the local state needs to be updated. This happens eg. when
+        terraform is upgraded.
+      deps:
+        - _req_env
+      dir: "{{.dir_infra}}"
+      cmds:
+        - terraform init -upgrade
+
     infra:terraform:output:
       deps: [_req_env, _infra:terraform:init]
       cmds:
