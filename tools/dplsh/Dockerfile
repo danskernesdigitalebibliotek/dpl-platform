@@ -74,7 +74,7 @@ COPY --from=helm /usr/bin/helm /usr/bin/
 RUN ( \
     set -x; cd "$(mktemp -d)" && \
     OS="$(uname)" && \
-    ARCH="$(uname -m | sed -e 's/x86_64/amd64/' -e 's/\(arm\)\(64\)\?.*/\1\2/' -e 's/aarch64$/arm64/')" && \
+    ARCH="$(uname -m | sed -e 's/\(arm\)\(64\)\?.*/\1\2/' -e 's/aarch64$/arm64/')" && \
     ARTIFACT_NAME="cert-manager-verifier_${CERT_MANAGER_VERIFIER_VERSION}_${OS}_${ARCH}.tar.gz" && \
     curl -fsSLO "https://github.com/alenkacz/cert-manager-verifier/releases/download/v${CERT_MANAGER_VERIFIER_VERSION}/${ARTIFACT_NAME}" && \
     tar zxvf "${ARTIFACT_NAME}" && \
