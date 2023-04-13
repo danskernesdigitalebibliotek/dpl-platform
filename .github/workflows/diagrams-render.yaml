@@ -17,7 +17,7 @@ jobs:
     name: Render Drawio diagrams
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3.5.0
+      - uses: actions/checkout@v3.5.1
       - name: Install Task
         uses: Arduino/actions/setup-taskfile@master
       - name: Clean render
