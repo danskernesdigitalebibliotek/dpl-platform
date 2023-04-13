@@ -19,10 +19,39 @@ function setupHelmRepo() {
   local alias=$1
   local url=$2
   # See if we can find the repo in the list of repos, if not add it
-  if ! helm repo list | grep "^${alias}\b"; then
+  if ! helm repo list | grep -q "^${alias}\b"; then
     helm repo add "${alias}" "${url}"
-    helm repo update "${alias}"
+    helm repo update --fail-on-repo-update-fail "${alias}"
   fi
+}
+
+
+# Determines whether we're supposed to output a version.
+function shouldOutputVersion() {
+  test -n "${GET_AVAILABLE_VERSION:-}"
+}
+
+function outputVersionAndExitIfRequested() {
+  local chart=$1
+  local version=$2
+
+  # Output if a global environment variable has been set.
+  if shouldOutputVersion ; then
+    echo "- ${chart}:"
+    echo "    current: ${version}"
+    echo "    latest: $(helmGetLatestVersion "${chart}")"
+    exit 0
+  fi
+}
+
+# Fetches the latest version of helm chart, produces a non-zero exit code if the
+# version could not be determined.
+function helmGetLatestVersion() {
+  local chart=$1
+  helm search repo "${chart}" \
+    -o json \
+    --version ">0.0.0" \
+    | jq --exit-status -r ".[0].version"
 }
 
 # Returns the path to the versions.env for the environment.
@@ -44,7 +73,6 @@ function getConfigurationDir() {
   configuration_dir="$(getEnvDir)/configuration"
   echo "${configuration_dir}"
 }
-
 
 # Determines whether we're currently in DIFF mode.
 function isDiffing() {

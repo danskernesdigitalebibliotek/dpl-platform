@@ -17,6 +17,18 @@ if [[ -z "${DPLPLAT_ENV:-}" ]] ; then
     exit 1
 fi
 
+# This is a bit of a workaround.
+# We currently have a setup where we run the provisioning of all support resources
+# in a single Task task - and we use the same task for outputting the latest
+# version of a resource. This script is in the list, but as it does not really
+# handle a version of a upstream resource, it can't really output anything.
+# Instead we just exit silently.
+# Should we start having to implement this slightly wird behaviour in more scripts,
+# we should probably look into a better solution.
+if shouldOutputVersion; then
+  exit 0
+fi
+
 # Pull in the environment-specific versions and verify we have what we need.
 # shellcheck source=/dev/null
 source "$(getVersionsEnv)"

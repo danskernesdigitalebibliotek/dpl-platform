@@ -29,6 +29,12 @@ diff_or_nothing=$(ifDiffTernary "diff")
 configuration_dir=$(getConfigurationDir)
 apply_or_diff=$(ifDiffTernary "diff" "apply" )
 
+# Install the Helm repo, we'll need this regardless of whether we're diffing.
+setupHelmRepo prometheus-community https://prometheus-community.github.io/helm-charts
+
+# Output the version if we're requested to.
+outputVersionAndExitIfRequested prometheus-community/kube-prometheus-stack "${VERSION_PROMETHEUS}"
+
 # Proceede to provisioning.
 
 # Setup the namespaces.
@@ -37,10 +43,7 @@ kubectl "${apply_or_diff}" -f "${configuration_dir}/prometheus/namespace.yaml"
 handleApplyDiffExit $?
 set -e
 
-# Install the Helm repo, we'll need this regardless of whether we're diffing.
-setupHelmRepo prometheus-community https://prometheus-community.github.io/helm-charts
-
-isDiffing && echo " > Diffing release"
+isDiffing && echo " > Diffing release" || echo " > Installing/upgrading release"
 # shellcheck disable=SC2086 # We need diff_or_nothing to be unquoted
 helm ${diff_or_nothing} upgrade --install \
    promstack prometheus-community/kube-prometheus-stack \

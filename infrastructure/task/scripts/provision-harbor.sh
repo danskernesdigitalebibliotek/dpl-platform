@@ -37,6 +37,12 @@ diff_or_nothing=$(ifDiffTernary "diff")
 configuration_dir=$(getConfigurationDir)
 apply_or_diff=$(ifDiffTernary "diff" "apply" )
 
+# Install the Helm repo, we'll need this regardless of whether we're diffing.
+setupHelmRepo harbor https://helm.goharbor.io
+
+# Output the version if we're requested to.
+outputVersionAndExitIfRequested harbor/harbor "${VERSION_HARBOR}"
+
 # Proceede to provisioning.
 
 # Setup the namespaces.
@@ -45,15 +51,12 @@ kubectl "${apply_or_diff}" -f "${configuration_dir}/harbor/namespace.yaml"
 handleApplyDiffExit $?
 set -e
 
-# Install the Helm repo, we'll need this regardless of whether we're diffing.
-setupHelmRepo harbor https://helm.goharbor.io
-
 # shellcheck disable=SC2016
 envsubst '$HARBOR_ADMIN_PASS $HARBOR_EXTERNAL_URL $HARBOR_HOSTNAME $STORAGE_CONTAINER_NAME $STORAGE_ACCOUNT_NAME $STORAGE_ACCOUNT_KEY' \
   < "${configuration_dir}/harbor/harbor-values.template.yaml" \
   > "${configuration_dir}/harbor/harbor-values.yaml"
 
-isDiffing && echo " > Diffing release"
+isDiffing && echo " > Diffing release" || echo " > Installing/upgrading release"
 # shellcheck disable=SC2086 # We need diff_or_nothing to be unquoted
 helm ${diff_or_nothing} upgrade --install \
   harbor harbor/harbor \

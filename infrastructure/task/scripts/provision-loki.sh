@@ -1,11 +1,10 @@
 #!/usr/bin/env bash
 #
-# Install and configure Loki and promtail we use to ship logs into loki.
+# Install and configure Loki.
 #
 # Requires a functional and authenticated kubectl context.
 #
 # See https://github.com/grafana/helm-charts/tree/main/charts/loki
-# and https://github.com/grafana/helm-charts/tree/main/charts/promtail
 # For more info on the charts.
 set -euo pipefail
 
@@ -35,33 +34,26 @@ diff_or_nothing=$(ifDiffTernary "diff")
 configuration_dir=$(getConfigurationDir)
 apply_or_diff=$(ifDiffTernary "diff" "apply" )
 
+# Install the Helm repo, we'll need this regardless of whether we're diffing.
+setupHelmRepo grafana https://grafana.github.io/helm-charts
+
+# Output the version if we're requested to.
+outputVersionAndExitIfRequested grafana/loki "${VERSION_LOKI}"
+
 # Proceede to provisioning.
 
 # Setup the namespaces.
 set +e
 kubectl "${apply_or_diff}" -f "${configuration_dir}/loki/namespace.yaml"
 handleApplyDiffExit $?
-kubectl "${apply_or_diff}" -f "${configuration_dir}/promtail/namespace.yaml"
-handleApplyDiffExit $?
 set -e
-
-# Install the Helm repo, we'll need this regardless of whether we're diffing.
-setupHelmRepo grafana https://grafana.github.io/helm-charts
 
 # shellcheck disable=SC2016
 envsubst '$STORAGE_CONTAINER_NAME $STORAGE_ACCOUNT_NAME $STORAGE_ACCOUNT_KEY' \
   < "${configuration_dir}/loki/loki-values.template.yaml" \
   > "${configuration_dir}/loki/loki-values.yaml"
 
-isDiffing && echo " > Diffing release"
-# shellcheck disable=SC2086 # We need diff_or_nothing to be unquoted
-helm ${diff_or_nothing} upgrade --install \
-  promtail grafana/promtail \
-  --namespace promtail \
-  --version "${VERSION_PROMTAIL}" \
-  --values "${configuration_dir}/promtail/promtail-values.yaml"
-
-isDiffing && echo " > Diffing release"
+isDiffing && echo " > Diffing release" || echo " > Installing/upgrading release"
 # shellcheck disable=SC2086 # We need diff_or_nothing to be unquoted
 helm ${diff_or_nothing} upgrade --install \
   loki grafana/loki \

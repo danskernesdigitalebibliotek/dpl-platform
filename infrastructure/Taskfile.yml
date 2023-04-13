@@ -584,10 +584,10 @@ tasks:
       cmds:
         - task/scripts/provision-bulk-storage.sh
 
-    support:provision:loki-promtail:
+    support:provision:loki:
       deps: [cluster:auth]
       summary: Set the DIFF environment variable to any value to switch to diffing instead of an actual upgrade.
-      desc: Install and configure Promtail and Loki
+      desc: Install and configure Loki
       env:
         STORAGE_ACCOUNT_NAME:
           sh: terraform -chdir={{.dir_infra}} output -json | jq --raw-output ".monitoring_storage_account_name.value | select (.!=null)"
@@ -596,7 +596,21 @@ tasks:
         STORAGE_CONTAINER_NAME:
           sh: terraform -chdir={{.dir_infra}} output -json | jq --raw-output ".monitoring_blob_storage_container_name.value | select (.!=null)"
       cmds:
-        - task/scripts/provision-loki-promtail.sh
+        - task/scripts/provision-loki.sh
+
+    support:provision:promtail:
+      deps: [cluster:auth]
+      summary: Set the DIFF environment variable to any value to switch to diffing instead of an actual upgrade.
+      desc: Install and configure Promtail
+      env:
+        STORAGE_ACCOUNT_NAME:
+          sh: terraform -chdir={{.dir_infra}} output -json | jq --raw-output ".monitoring_storage_account_name.value | select (.!=null)"
+        STORAGE_ACCOUNT_KEY:
+          sh: az keyvault secret show --subscription "{{.AZURE_SUBSCRIPTION_ID}}" --name $(terraform -chdir={{.dir_infra}} output -json | jq --raw-output ".monitoring_primary_access_key_name.value | select (.!=null)") --vault-name $(terraform -chdir={{.dir_infra}} output -json | jq --raw-output ".keyvault_name.value | select (.!=null)") --query value -o tsv
+        STORAGE_CONTAINER_NAME:
+          sh: terraform -chdir={{.dir_infra}} output -json | jq --raw-output ".monitoring_blob_storage_container_name.value | select (.!=null)"
+      cmds:
+        - task/scripts/provision-promtail.sh
 
     support:provision:grafana:
       deps: [cluster:auth]
@@ -612,6 +626,20 @@ tasks:
       cmds:
         - task/scripts/provision-prometheus.sh
 
+    ops:get-versions:
+      deps: [cluster:auth]
+      summary: Extract the current and latest version for the things we've installed into the cluster.
+      desc: Extract the current and latest versions
+      env:
+        GET_AVAILABLE_VERSION: 1
+      silent: true
+      cmds:
+        # TODO - get Lagoon version
+        # A bit silly we have to invoke Task this way, but it is the only way
+        # to pass in an environment variable to another task.
+        - echo "Running support:provision in get version mode to retrive versions"
+        - task --silent support:provision
+
     support:provision:
       deps: [cluster:auth]
       desc: Install and configure the support tools Lagoon and DPL Platform builds on
@@ -626,7 +654,8 @@ tasks:
         - task: support:provision:prometheus
         - task: support:provision:minio
         - task: support:provision:k8up
-        - task: support:provision:loki-promtail
+        - task: support:provision:loki
+        - task: support:provision:promtail
         - task: support:provision:grafana
         - task: support:provision:harbor
 
