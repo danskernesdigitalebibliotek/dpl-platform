@@ -7,6 +7,7 @@ version: '3'
 # Pull in defaults that are used across the tasks.
 dotenv:
   - "task/defaults.env"
+  - "{{.instance_vars_file}}"
 
 # Any task that uses these variables must have a dependency on the _req_env
 # task.
@@ -25,6 +26,9 @@ vars:
   dir_lagoon: "environments/{{.platform_env}}/lagoon"
   # The suffix domain we will use when constructing urls
   global_environment_suffix: "dpl.reload.dk"
+  # A file we can write environment variables in we want to persist for this
+  # instance of the shell.
+  instance_vars_file: "/tmp/instance-vars.env"
 
 tasks:
     default:
@@ -43,6 +47,11 @@ tasks:
         - ".terraform.lock.hcl"
       cmds:
         - terraform init -upgrade
+
+    infra:terraform:output:
+      deps: [_req_env, _infra:terraform:init]
+      cmds:
+        - terraform -chdir={{.dir_infra}} output -json
 
     infra:provision:
       deps: [_req_env, _infra:terraform:init]
@@ -102,7 +111,7 @@ tasks:
         deps: [_req_env, _infra:terraform:init]
         desc: "Authenticate against AKS and setup a functional kubecontext."
         status:
-          - "[ $(kubectl config view --output jsonpath='{.current-context}') == '{{.CLUSTER_NAME}}' ] || exit 1"
+          - "[ $(kubectl config current-context) == '{{.CLUSTER_NAME}}' ] || exit 1"
         # We normally handle variables via dynamic task variables, but as terraform.
         # Variables are interpolated before dependencies are resolved, so
         # in cases where Terraform is not initialized, this task will break.
@@ -117,7 +126,8 @@ tasks:
           -
             export CLUSTER_NAME=$(terraform -chdir={{.dir_infra}} output -json | jq --raw-output ".cluster_name.value | select (.!=null)") &&
             export RESOURCEGROUP_NAME=$(terraform -chdir={{.dir_infra}} output -json | jq --raw-output ".resourcegroup_name.value | select (.!=null)") &&
-            az aks get-credentials --subscription {{.AZURE_SUBSCRIPTION_ID}} --resource-group $RESOURCEGROUP_NAME --name $CLUSTER_NAME
+            az aks get-credentials --only-show-errors --subscription {{.AZURE_SUBSCRIPTION_ID}} --resource-group $RESOURCEGROUP_NAME --name $CLUSTER_NAME &&
+            echo "CLUSTER_NAME=$CLUSTER_NAME" >> {{.instance_vars_file}}
         preconditions:
           - sh: "[ ! -z {{.AZURE_SUBSCRIPTION_ID}} ]"
             msg: "Env variable AZURE_SUBSCRIPTION_ID is not set or empty."
@@ -144,8 +154,6 @@ tasks:
       deps: [cluster:auth]
       summary: Set the DIFF environment variable to any value to switch to diffing instead of an actual upgrade.
       desc: Install and configure cert-manager
-      env:
-        DIFF: "{{.should_diff}}"
       cmds:
         - task/scripts/provision-cert-manager.sh
 

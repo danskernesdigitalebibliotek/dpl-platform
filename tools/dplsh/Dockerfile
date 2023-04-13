@@ -2,15 +2,15 @@ ARG DPLSH_BUILD_VERSION=latest
 
 # Use an intermediate images as a way to have dependabot track our dependency
 # https://hub.docker.com/r/alpine/helm/tags?page=1&ordering=last_updated
-FROM alpine/helm:3.10.2 as helm
+FROM alpine/helm:3.11.2 as helm
 
 # https://hub.docker.com/r/hashicorp/terraform/tags?page=1&ordering=last_updated
-FROM hashicorp/terraform:1.3.9 as terraform
+FROM hashicorp/terraform:1.4.5 as terraform
 
 # We use the official azure cli as a base-image. It is itself based on alpine
 # and is quite minimal.
 # https://mcr.microsoft.com/v2/azure-cli/tags/list
-FROM mcr.microsoft.com/azure-cli:2.43.0
+FROM mcr.microsoft.com/azure-cli:2.47.0
 
 # See https://github.com/go-task/task/releases
 ARG TASK_VERSION=v3.15.2

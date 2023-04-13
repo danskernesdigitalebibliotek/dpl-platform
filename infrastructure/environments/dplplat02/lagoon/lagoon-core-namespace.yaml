@@ -1,8 +1,0 @@
----
-apiVersion: v1
-kind: Namespace
-metadata:
-  name: lagoon-core
-  labels:
-    app.kubernetes.io/name: lagoon-core
-    app.kubernetes.io/instance: lagoon-core
