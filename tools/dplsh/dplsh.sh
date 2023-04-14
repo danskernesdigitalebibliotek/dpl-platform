@@ -19,7 +19,7 @@ find-up () {
 }
 
 PROFILE_FILE=
-DOCKER_IMAGE="${DPLSH_IMAGE:-ghcr.io/danskernesdigitalebibliotek/dpl-platform/dplsh:latest}"
+CONTAINER_IMAGE="${DPLSH_IMAGE:-ghcr.io/danskernesdigitalebibliotek/dpl-platform/dplsh:latest}"
 CHDIR=
 SHELL_ROOT="${PWD}"
 
@@ -71,6 +71,12 @@ if ! command -v realpath > /dev/null 2>&1; then
     realpath() { _realpath "$@"; }
 fi
 
+if [[ $# -gt 0 && $1 == "--update" ]] ; then
+  docker pull "${CONTAINER_IMAGE}"
+  echo "update done"
+  exit 0
+fi
+
 # Fix docker socket
 if [[ $# -gt 0 && $1 == "--fix-docker" ]] ; then
 
@@ -91,7 +97,7 @@ if [[ $# -gt 0 && $1 == "--fix-docker" ]] ; then
     --rm \
     --mount "type=bind,src=/var/run/docker.sock,target=/var/run/docker.sock" \
     --user root \
-    "${DOCKER_IMAGE}" chown dplsh /var/run/docker.sock
+    "${CONTAINER_IMAGE}" chown dplsh /var/run/docker.sock
 
     # Strip away the arg and continue.
     shift
@@ -220,4 +226,4 @@ docker run --hostname=dplsh \
     -v "${HOME}/.ssh:/opt/.ssh-host:ro" \
     -v "${SHELL_ROOT}:/home/dplsh/host_mount" \
     -w "/home/dplsh/host_mount/${CHDIR}" \
-    "${DOCKER_IMAGE}" "$@"
+    "${CONTAINER_IMAGE}" "$@"

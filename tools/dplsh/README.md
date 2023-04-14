@@ -57,7 +57,7 @@ shell. The shell will set its file-system root after the first profile it
 findes by traversing up towards the root of the host file-system. It then
 sources the file before starting the actual shell.
 
-### Example 1
+#### Example 1
 
 ```shell
 touch /project/.dplsh.profile.my-profile
@@ -74,7 +74,7 @@ dplsh -p my-profile
 
 Notice, CWD while sourcing is the subdirectory the shell was launched for in.
 
-### Example 2
+#### Example 2
 
 ```shell
 touch /project/.dplsh.profile
@@ -84,7 +84,7 @@ dplsh
 
 Same as example 1, but the shell will now default to .dplsh.profile
 
-### Example 3
+#### Example 3
 
 ```shell
 touch /project/subdir/.dplsh.profile
@@ -95,6 +95,16 @@ dplsh
 Same as example 1, but the shell will now mount /project/subdir as
 /home/dplsh/host_mount thus "jailing" the shell inside the directory it was
 launched from.
+
+### Updating the shell
+
+You can have the shell pull the latest version of itself via the `--update`
+argument. Be aware though that this will not update the `dplsh.sh` script
+that is used to launch the shell. If the shells update includes a change in
+this script, you will need to do a git pull of the repository.
+
+This is not an issue if you launch the shell via the streaming method described
+in the "Launching the shell" section.
 
 ## Troubleshooting
 

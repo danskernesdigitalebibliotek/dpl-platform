@@ -48,6 +48,17 @@ tasks:
       cmds:
         - terraform init -upgrade
 
+    infra:terraform:init-upgrade:
+      desc: Init and upgrade local Terraform state
+      summary: |
+        Use this task the local state needs to be updated. This happens eg. when
+        terraform is upgraded.
+      deps:
+        - _req_env
+      dir: "{{.dir_infra}}"
+      cmds:
+        - terraform init -upgrade
+
     infra:terraform:output:
       deps: [_req_env, _infra:terraform:init]
       cmds:
@@ -156,6 +167,14 @@ tasks:
       desc: Install and configure cert-manager
       cmds:
         - task/scripts/provision-cert-manager.sh
+
+    support:verify:cert-manager:
+      deps: [cluster:auth]
+      summary: Verify cert-manager
+      desc: Attempts to verify that cert-manager is installed and configured correctly.
+      cmds:
+        - cm-verifier
+        - kubectl get pods --namespace cert-manager
 
     support:provision:ingress-nginx:
       deps: [cluster:auth]
