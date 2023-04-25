@@ -69,7 +69,7 @@ manages all environments.
 The platform environments share a number of general modules, which are then
 used via a number of root-modules set up for each environment.
 
-Consult the general [environment documentation](../../docs/platform-environment.md)
+Consult the general [environment documentation](../../platform-environments.md)
 for descriptions on which resources you can expect to find in an environment and
 how they are used.
 
