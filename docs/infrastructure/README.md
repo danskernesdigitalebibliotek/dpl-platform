@@ -44,7 +44,7 @@ is put in to effect by running the appropiate `task` :
 
 The remaining guides in this document assumes that you work from an instance
 of the [DPL shell](../../../dpl-platform/tools/dplsh). See the
-[DPLSH Runbook](../documentation/runbooks/using-dplsh.md) for a basic introduction
+[DPLSH Runbook](../runbooks/using-dplsh.md) for a basic introduction
 to how to use dplsh.
 
 ## Installing a platform environment from scratch
@@ -56,7 +56,7 @@ The easiest way to set up a new environment is to create a new `environments/<na
 directory and copy the contents of an existing environment replacing any
 references to the previous environment with a new value corresponding to the new
 environment. Take note of the various URLs, and make sure to update the
-[Current Platform environments](../documentation/platform-environments.md)
+[Current Platform environments](../platform-environments.md)
 documentation.
 
 If this is the very first environment, remember to first initialize the Terraform-

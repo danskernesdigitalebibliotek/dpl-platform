@@ -36,7 +36,7 @@ export DPLPLAT_ENV="dplplat01"
 echo
 echo "Environment is assumed to be 'dplplat01'"
 echo "If you want to operate another environment, run 'export DPLPLAT_ENV=<environment>'"
-echo "Consult https://github.com/danskernesdigitalebibliotek/dpl-platform/blob/main/documentation/platform-environments.md"
+echo "Consult https://github.com/danskernesdigitalebibliotek/dpl-platform/blob/main/docs/platform-environments.md"
 echo
 echo "Now run "task" to continue your work."
 echo

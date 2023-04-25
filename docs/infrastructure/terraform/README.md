@@ -8,7 +8,7 @@ use of terraform.
 The setup keeps a single terraform-state pr. environment. Each state is kept as
 separate blobs in a Azure Storage Account.
 
-![Overview of the Terraform setup](../../documentation/diagrams/render-png/terraform_overview.png)
+![Overview of the Terraform setup](../../docs/diagrams/render-png/terraform_overview.png)
 
 Access to the storage account is granted via a Storage Account Key which is
 kept in a Azure Key Vault in the same resource-group. The key vault, storage account
@@ -69,7 +69,7 @@ manages all environments.
 The platform environments share a number of general modules, which are then
 used via a number of root-modules set up for each environment.
 
-Consult the general [environment documentation](../../documentation/platform-environment.md)
+Consult the general [environment documentation](../../platform-environments.md)
 for descriptions on which resources you can expect to find in an environment and
 how they are used.
 
@@ -89,9 +89,9 @@ Inspect [outputs.tf](./dpl-platform-environment/outputs.tf) for a list of output
 Inspect the individual module files for documentation of the resources.
 
 The following diagram depicts (amongst other things) the provisioned resources.
-Consult the [platform environment documentation](../../../../documentation/platform-environment.md)
+Consult the [platform environment documentation](../../../../docs/platform-environment.md)
 for more details on the role the various resources plays.
-![The Azure infrastructure](../../documentation/diagrams/render-png/dpl-platform-azure.png)
+![The Azure infrastructure](../../docs/diagrams/render-png/dpl-platform-azure.png)
 
 ### DPL Platform Site Environment Module
 
@@ -108,4 +108,4 @@ Inspect the individual module files for documentation of the resources.
 
 The following diagram depicts how the module gets its credentials for accessing
 GitHub and what it provisions.
-![Provisioning Github infrastructure](../../documentation/diagrams/render-png/github-environment-repositories.png)
+![Provisioning Github infrastructure](../../docs/diagrams/render-png/github-environment-repositories.png)
