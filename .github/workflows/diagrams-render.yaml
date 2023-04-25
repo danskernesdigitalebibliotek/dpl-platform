@@ -5,10 +5,10 @@
 on:
   push:
     paths:
-      - "documentation/Taskfile.yml"
+      - "docs/Taskfile.yml"
       - ".github/workflows/diagrams-render.yaml"
-      - "documentation/diagrams/*.puml"
-      - "documentation/diagrams/*.drawio"
+      - "docs/diagrams/*.puml"
+      - "docs/diagrams/*.drawio"
       - "tools/plantuml/*"
 
 name: Render diagrams
@@ -21,7 +21,7 @@ jobs:
       - name: Install Task
         uses: Arduino/actions/setup-taskfile@master
       - name: Clean render
-        working-directory: documentation
+        working-directory: docs
         run: task clean render
 
       - name: Get author and committer info from HEAD commit
