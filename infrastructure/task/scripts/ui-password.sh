@@ -23,7 +23,7 @@ case $UI_NAME in
     ;;
   harbor)
     NAMESPACE="harbor"
-    SECRET="harbor-harbor-core"
+    SECRET="harbor-core"
     JSON_PATH="{.data.HARBOR_ADMIN_PASSWORD}"
     ;;
   keycloak)

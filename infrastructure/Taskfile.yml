@@ -667,16 +667,16 @@ tasks:
       vars:
         DIFF_COMMAND: '{{empty .DIFF | ternary "" "diff"}}'
       cmds:
-        - task: support:provision:cert-manager
-        - task: support:provision:ingress-nginx
         - task: support:provision:bulk-storage
-        - task: support:provision:prometheus
-        - task: support:provision:minio
-        - task: support:provision:k8up
-        - task: support:provision:loki
-        - task: support:provision:promtail
+        - task: support:provision:cert-manager
         - task: support:provision:grafana
         - task: support:provision:harbor
+        - task: support:provision:ingress-nginx
+        - task: support:provision:k8up
+        - task: support:provision:loki
+        - task: support:provision:minio
+        - task: support:provision:prometheus
+        - task: support:provision:promtail
 
     site:sync:
       desc: Runs the a dpladm sync of a site which eg. can be used to deploy a new release
