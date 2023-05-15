@@ -24,7 +24,7 @@ followed by specific instructions for each workload (linked above).
 ## General Procedure
 
 1. Identify the version you want to bump in the `environment/configuration` directory
-   eg. for dplplat01 [infrastructure/environments/dplplat01/configuration/versions.env](../../infrastructure/environments/dplplat01/configuration/versions.env).
+   eg. for dplplat01 [infrastructure/environments/dplplat01/configuration/versions.env](https://github.com/danskernesdigitalebibliotek/dpl-platform/blob/main/infrastructure/environments/dplplat01/configuration/versions.env).
    The file contains links to the relevant Artifact Hub pages for the individual
    projects and can often be used to determine both the latest version, but also
    details about the chart such as how a specific manifest is used.
@@ -50,7 +50,7 @@ followed by specific instructions for each workload (linked above).
    This could be upgrading a Custom Resource Definition that the chart does not
    upgrade.
 
-4. Identify the relevant task in the main [Taskfile](../../infrastructure/Taskfile.yml)
+4. Identify the relevant task in the main [Taskfile](https://github.com/danskernesdigitalebibliotek/dpl-platform/blob/main/infrastructure/Taskfile.yml)
    for upgrading the workload. For example, for cert-manager, the task is called
    `support:provision:cert-manager` and run the task with `DIFF=1`, eg
    `DIFF=1 task support:provision:cert-manager`.
