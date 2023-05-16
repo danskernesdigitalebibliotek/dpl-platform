@@ -15,7 +15,6 @@ lagoon-build-deploy:
   taskSSHPort: "22"
   taskAPIHost: "api.lagoon.dplplat01.dpl.reload.dk"
   lagoonFeatureFlagDefaultRootlessWorkload: "enabled"
-  overrideBuildDeployImage: "uselagoon/kubectl-build-deploy-dind:$BUILD_DEPLOY_DIND_IMAGE_VER"
 dbaas-operator:
   enabled: true
 
