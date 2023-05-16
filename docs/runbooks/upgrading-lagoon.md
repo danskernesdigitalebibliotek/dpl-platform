@@ -39,20 +39,18 @@ curl -s https://uselagoon.github.io/lagoon-charts/index.yaml \
 ## Procedure
 
 1. Upgrade Lagoon core
-    1. Bump the chart version `VERSION_LAGOON_CORE` in
+    1. Backup the API and Keycloak dbs as described in [the official documentation](https://docs.lagoon.sh/installing-lagoon/update-lagoon/#database-backups)
+    2. Bump the chart version `VERSION_LAGOON_CORE` in
        `infrastructure/environments/<env>/lagoon/lagoon-versions.env`
-    2. Perform a helm diff
+    3. Perform a helm diff
         * `DIFF=1 task lagoon:provision:core`
-    3. Perform the actual upgrade
+    4. Perform the actual upgrade
         * `task lagoon:provision:core`
-    4. Run database migrations
-        * `task lagoon:provision:core-db-migration`
 2. Upgrade Lagoon remote
     1. Bump the chart version `VERSION_LAGOON_REMOTE` in
       `infrastructure/environments/dplplat01/lagoon/lagoon-versions.env`
-    2. Set `BUILD_DEPLOY_DIND_IMAGE_VER` to the new version of Lagoon
-    3. Perform a helm diff
+    2. Perform a helm diff
         * `DIFF=1 task lagoon:provision:remote`
-    4. Perform the actual upgrade
+    3. Perform the actual upgrade
         * `task lagoon:provision:remote`
-    5. Take note in the output from Helm of any CRD updates that *may* be required
+    4. Take note in the output from Helm of any CRD updates that *may* be required
