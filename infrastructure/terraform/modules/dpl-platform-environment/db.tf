@@ -45,6 +45,7 @@ resource "azurerm_mariadb_server" "sql" {
 
   # Lagoon does not yet support TLS.
   ssl_enforcement_enabled = false
+  ssl_minimal_tls_version_enforced = "TLSEnforcementDisabled"
 }
 
 # Allow any inbound connections

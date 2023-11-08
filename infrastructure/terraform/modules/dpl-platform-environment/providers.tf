@@ -2,7 +2,7 @@ terraform {
   required_providers {
     dnsimple = {
       source  = "dnsimple/dnsimple"
-      version = ">=0.6.0"
+      version = ">=1.3.1"
     }
 
     azuread = {
