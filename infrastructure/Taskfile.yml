@@ -51,8 +51,8 @@ tasks:
     infra:terraform:init-upgrade:
       desc: Init and upgrade local Terraform state
       summary: |
-        Use this task the local state needs to be updated. This happens eg. when
-        terraform is upgraded.
+        Use this task when the local state needs to be updated. This happens eg.
+        when terraform is upgraded.
       deps:
         - _req_env
       dir: "{{.dir_infra}}"
