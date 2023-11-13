@@ -9,6 +9,12 @@ variable "control_plane_version" {
   type        = string
 }
 
+variable "cluster_upgrade_channel" {
+  description = "Which channel to use for automatic cluster upgrades. Valid values are 'stable', 'rapid', 'patch' and 'node-image'."
+  type        = string
+  default     = "patch"
+}
+
 variable "domain_ttl" {
   description = "The Time To Live for the provisioned domains."
   type        = number
@@ -76,21 +82,6 @@ variable "node_pool_system_count" {
 variable "node_pool_system_vm_sku" {
   description = "The SKU of the virtual machines used for the system nodepool"
   default     = "Standard_B4ms"
-  type        = string
-}
-
-variable "pool_admin_version" {
-  description = "Which version Kubernetes to use for the admin node-pool. Must be compatible with control_plane_version, that is, cannot be higher and should at most trail one minor version."
-  type        = string
-}
-
-variable "pool_appdefault_version" {
-  description = "Which version Kubernetes to use for the default app node-pool. Must be compatible with control_plane_version, that is, cannot be higher and should at most trail one minor version."
-  type        = string
-}
-
-variable "pool_system_version" {
-  description = "Which version Kubernetes to use for the system node-pool. Must be compatible with control_plane_version, that is, cannot be higher and should at most trail one minor version."
   type        = string
 }
 

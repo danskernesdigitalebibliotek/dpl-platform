@@ -48,7 +48,7 @@ curl -s https://uselagoon.github.io/lagoon-charts/index.yaml \
         * `task lagoon:provision:core`
 2. Upgrade Lagoon remote
     1. Bump the chart version `VERSION_LAGOON_REMOTE` in
-      `infrastructure/environments/dplplat01/lagoon/lagoon-versions.env`
+      `infrastructure/environments/<env>/lagoon/lagoon-versions.env`
     2. Perform a helm diff
         * `DIFF=1 task lagoon:provision:remote`
     3. Perform the actual upgrade

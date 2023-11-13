@@ -51,7 +51,7 @@ output "ingress_ip" {
 
 output "ingress_hostname" {
   description = "DNS wildcard domain that points at the ingress ip"
-  value       = dnsimple_record.aks_ingress.hostname
+  value       = dnsimple_zone_record.aks_ingress.qualified_name
 }
 
 output "keycloak_admin_pass_key_name" {

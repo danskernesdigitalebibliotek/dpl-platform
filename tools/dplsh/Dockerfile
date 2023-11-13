@@ -13,19 +13,19 @@ FROM hashicorp/terraform:1.5.3 as terraform
 FROM mcr.microsoft.com/azure-cli:2.47.0
 
 # See https://github.com/go-task/task/releases
-ARG TASK_VERSION=v3.15.2
+ARG TASK_VERSION=v3.31.0
 # See https://github.com/stern/stern/releases
-ARG STERN_RELEASE=1.21.0
+ARG STERN_RELEASE=1.26.0
 # See https://github.com/uselagoon/lagoon-cli/releases
-ARG LAGOON_CLI_RELEASE=v0.14.0
+ARG LAGOON_CLI_RELEASE=v0.19.0
 # See https://github.com/kubernetes-sigs/krew/releases
-ARG KREW_VERSION=v0.4.3
+ARG KREW_VERSION=v0.4.4
 # https://github.com/alenkacz/cert-manager-verifier/releases
 # Exclude the "v" from the version.
 ARG CERT_MANAGER_VERIFIER_VERSION=0.3.0
 
 # This version can be bumped as we upgrade the cluster minor version.
-ARG KUBECTL_VERSION=v1.20.9
+ARG KUBECTL_VERSION=v1.25.11
 
 LABEL org.opencontainers.image.source https://github.com/danskernesdigitalebibliotek/dpl-platform
 

@@ -5,6 +5,7 @@ resource "azurerm_kubernetes_cluster" "cluster" {
   resource_group_name = azurerm_resource_group.rg.name
   dns_prefix          = var.environment_name
   kubernetes_version  = var.control_plane_version
+  automatic_channel_upgrade = var.cluster_upgrade_channel
 
   # We use a single manually scaled node pool in a single availabillity zone.
   default_node_pool {
@@ -20,8 +21,6 @@ resource "azurerm_kubernetes_cluster" "cluster" {
 
     # Attach the cluster to our private network.
     vnet_subnet_id = azurerm_subnet.aks.id
-
-    orchestrator_version = var.pool_system_version
 
     # High Avaiabillity is not a high enough priority to warrent the extra
     # complexity and cost of having a multi-zonal cluster.
@@ -67,7 +66,6 @@ resource "azurerm_kubernetes_cluster_node_pool" "admin" {
   name                  = "admin"
   kubernetes_cluster_id = azurerm_kubernetes_cluster.cluster.id
   vnet_subnet_id        = azurerm_subnet.aks.id
-  orchestrator_version  = var.pool_admin_version
   node_labels = {
     "noderole.dplplatform" : "admin"
   }
@@ -97,7 +95,6 @@ resource "azurerm_kubernetes_cluster_node_pool" "app_default" {
   name                  = "appdefault"
   kubernetes_cluster_id = azurerm_kubernetes_cluster.cluster.id
   vnet_subnet_id        = azurerm_subnet.aks.id
-  orchestrator_version  = var.pool_appdefault_version
   node_labels = {
     "noderole.dplplatform" : "application"
   }
