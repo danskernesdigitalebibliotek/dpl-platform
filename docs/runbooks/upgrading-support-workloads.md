@@ -259,7 +259,7 @@ Amongst others the
 Link for diffing two chart versions:
 <https://github.com/kubernetes/ingress-nginx/compare/helm-chart-4.6.0...helm-chart-4.6.1>
 
-The project keeps a quite good [changelog for the chart](https://github.com/kubernetes/ingress-nginx/blob/main/charts/ingress-nginx/CHANGELOG.md)
+The project keeps a quite good [changelog for the chart](https://github.com/kubernetes/ingress-nginx/tree/main/charts/ingress-nginx/changelog)
 
 Link for diffing two controller versions:
 <https://github.com/kubernetes/ingress-nginx/compare/controller-v1.7.1...controller-v1.7.0>
