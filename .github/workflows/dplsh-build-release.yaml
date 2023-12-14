@@ -39,7 +39,7 @@ jobs:
       - name: Install Task
         uses: arduino/setup-task@v1
       - name: Log in to the Container registry
-        uses: docker/login-action@v2
+        uses: docker/login-action@v3
         with:
           registry: ghcr.io
           username: ${{ github.actor }}
