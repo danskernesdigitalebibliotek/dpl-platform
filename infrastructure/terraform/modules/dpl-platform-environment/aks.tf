@@ -1,10 +1,10 @@
 # Setup a single cluster in a single availabillity zone.
 resource "azurerm_kubernetes_cluster" "cluster" {
-  name                = "aks-${var.environment_name}-01"
-  location            = var.location
-  resource_group_name = azurerm_resource_group.rg.name
-  dns_prefix          = var.environment_name
-  kubernetes_version  = var.control_plane_version
+  name                      = "aks-${var.environment_name}-01"
+  location                  = var.location
+  resource_group_name       = azurerm_resource_group.rg.name
+  dns_prefix                = var.environment_name
+  kubernetes_version        = var.control_plane_version
   automatic_channel_upgrade = var.cluster_upgrade_channel
 
   # We use a single manually scaled node pool in a single availabillity zone.
