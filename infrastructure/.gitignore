@@ -4,3 +4,5 @@
 *backup*.sql
 *backup*.sql.gz
 *backup*.tar.gz
+
+.terraform/
