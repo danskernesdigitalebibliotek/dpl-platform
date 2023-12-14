@@ -13,11 +13,11 @@ FROM hashicorp/terraform:1.6.6 as terraform
 FROM mcr.microsoft.com/azure-cli:2.47.0
 
 # See https://github.com/go-task/task/releases
-ARG TASK_VERSION=v3.31.0
+ARG TASK_VERSION=v3.32.0
 # See https://github.com/stern/stern/releases
-ARG STERN_RELEASE=1.26.0
+ARG STERN_RELEASE=1.27.0
 # See https://github.com/uselagoon/lagoon-cli/releases
-ARG LAGOON_CLI_RELEASE=v0.19.0
+ARG LAGOON_CLI_RELEASE=v0.20.2
 # See https://github.com/kubernetes-sigs/krew/releases
 ARG KREW_VERSION=v0.4.4
 # https://github.com/alenkacz/cert-manager-verifier/releases
@@ -38,6 +38,7 @@ RUN az aks install-cli --kubelogin-version v0.0.10 --client-version ${KUBECTL_VE
 RUN apk add --no-cache \
   bash-completion \
   ca-certificates \
+  curl \
   docker-cli \
   gettext \
   rsync \
