@@ -41,6 +41,7 @@ RUN apk add --no-cache \
   curl \
   docker-cli \
   gettext \
+  git \
   rsync \
   shadow \
   vim \
