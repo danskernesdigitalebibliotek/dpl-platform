@@ -10,7 +10,7 @@ FROM hashicorp/terraform:1.6.6 as terraform
 # We use the official azure cli as a base-image. It is itself based on alpine
 # and is quite minimal.
 # https://mcr.microsoft.com/v2/azure-cli/tags/list
-FROM mcr.microsoft.com/azure-cli:2.47.0
+FROM mcr.microsoft.com/azure-cli:2.55.0
 
 # See https://github.com/go-task/task/releases
 ARG TASK_VERSION=v3.32.0
@@ -24,23 +24,25 @@ ARG KREW_VERSION=v0.4.4
 # Exclude the "v" from the version.
 ARG CERT_MANAGER_VERIFIER_VERSION=0.3.0
 
-# This version can be bumped as we upgrade the cluster minor version.
+# The kubectl version can be bumped as we upgrade the cluster minor version.
 ARG KUBECTL_VERSION=v1.25.11
+# kubelogin is a client-go credential plugin implementing azure authentication.
+# https://github.com/Azure/kubelogin/releases
+ARG KUBELOGIN_VERSION=v0.0.34
 
 LABEL org.opencontainers.image.source https://github.com/danskernesdigitalebibliotek/dpl-platform
 
 SHELL ["/bin/bash", "-ox", "pipefail", "-c"]
 WORKDIR /tmp
 
-# TODO - this will install the latest version - we should pin to the version we
-# actually use.
-RUN az aks install-cli --kubelogin-version v0.0.10 --client-version ${KUBECTL_VERSION}
+RUN az aks install-cli --kubelogin-version ${KUBELOGIN_VERSION} --client-version ${KUBECTL_VERSION}
 RUN apk add --no-cache \
   bash-completion \
   ca-certificates \
   curl \
   docker-cli \
   gettext \
+  git \
   rsync \
   shadow \
   vim \
