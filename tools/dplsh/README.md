@@ -44,7 +44,7 @@ This is done by the `dplsh-build-release.yaml` GitHub Action, but can
 also be done manually for testing purposes or in an emergency:
 
 ```shell
-task build IMAGE_TAG=<some tag>
+IMAGE_TAG=<some tag> task build
 task push
 ```
 
