@@ -9,12 +9,6 @@ variable "control_plane_version" {
   type        = string
 }
 
-variable "cluster_upgrade_channel" {
-  description = "Which channel to use for automatic cluster upgrades. Valid values are 'stable', 'rapid', 'patch' and 'node-image'."
-  type        = string
-  default     = "patch"
-}
-
 variable "domain_ttl" {
   description = "The Time To Live for the provisioned domains."
   type        = number
