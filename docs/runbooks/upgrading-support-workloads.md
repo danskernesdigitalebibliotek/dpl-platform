@@ -19,7 +19,7 @@ followed by specific instructions for each workload (linked above).
 
 ## Prerequisites
 
-- Dplsh instance authorized against the cluster.
+- `dplsh` instance authorized against the cluster. See [Using the DPL Shell](./using-dplsh.md).
 
 ## General Procedure
 
@@ -59,6 +59,14 @@ followed by specific instructions for each workload (linked above).
 
 6. Then proceeded to perform the verification test for the relevant workload. See
    the following section for known verification tests.
+
+7. Finally, it is important to verify that Lagoon deployments still work. Some
+   breaking changes will not manifest themselves until an environment is
+   rebuilt, at which point it may subsequently fail. An example is the
+   [disabling of user snippets in the ingress-nginx controller
+   v1.9.0](https://github.com/kubernetes/ingress-nginx/pull/10393). To verify
+   deployments still work, log in to the Lagoon UI and select an environment to
+   redeploy.
 
 ## Specific producedures and tests
 
@@ -259,7 +267,7 @@ Amongst others the
 Link for diffing two chart versions:
 <https://github.com/kubernetes/ingress-nginx/compare/helm-chart-4.6.0...helm-chart-4.6.1>
 
-The project keeps a quite good [changelog for the chart](https://github.com/kubernetes/ingress-nginx/blob/main/charts/ingress-nginx/CHANGELOG.md)
+The project keeps a quite good [changelog for the chart](https://github.com/kubernetes/ingress-nginx/tree/main/charts/ingress-nginx/changelog)
 
 Link for diffing two controller versions:
 <https://github.com/kubernetes/ingress-nginx/compare/controller-v1.7.1...controller-v1.7.0>
