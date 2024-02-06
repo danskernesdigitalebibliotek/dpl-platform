@@ -88,11 +88,6 @@ The following describes a semi-automated version of "Add a Project" in
 ```sh
 # From within dplsh:
 
-# Set an environment,
-# export DPLPLAT_ENV=<platform environment name>
-# eg.
-$ export DPLPLAT_ENV=dplplat01
-
 # If your ssh-key is passphrase-projected we'll need to setup an ssh-agent
 # instance:
 $ eval $(ssh-agent); ssh-add
