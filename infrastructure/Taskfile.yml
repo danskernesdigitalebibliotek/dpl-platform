@@ -116,7 +116,7 @@ tasks:
                 )
               --query value -o tsv
       cmds:
-        - cmd: terraform -chdir {{.dir_env_repos}} apply
+        - cmd: terraform -chdir={{.dir_env_repos}} apply
 
     cluster:auth:
         deps: [_req_env, _infra:terraform:init]
