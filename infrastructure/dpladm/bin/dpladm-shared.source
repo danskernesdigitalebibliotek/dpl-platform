@@ -2,7 +2,7 @@
 set -euo pipefail
 
 ENVIRONMENT_REPO_ORG=danishpubliclibraries
-LAGOON_IMAGES_RELEASE_TAG="21.9.0"
+LAGOON_IMAGES_RELEASE_TAG="24.1.0"
 
 # Echo the second argument Exit 1 if the first argument is not 0
 # Use this function to process $? after an invocation of something that might
