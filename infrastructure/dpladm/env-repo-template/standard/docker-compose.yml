@@ -47,8 +47,15 @@ services:
       << : *default-environment # loads the defined environment variables from the top
 
   mariadb:
+      # https://docs.lagoon.sh/lagoon/docker-images/mariadb/mariadb-drupal
+    image: uselagoon/mariadb-10.6-drupal:latest
     labels:
       lagoon.type: mariadb
+    # Do a periodic healthcheck. This is mainly used to block the php service
+    # from starting up before we have a healthy database.
+    healthcheck:
+      test: "/usr/share/container-scripts/mysql/readiness-probe.sh"
+      interval: 10s
     << : *default-user # uses the defined user from top
     environment:
       << : *default-environment
