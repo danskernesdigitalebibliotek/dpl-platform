@@ -10,7 +10,7 @@ FROM hashicorp/terraform:1.6.6 as terraform
 # We use the official azure cli as a base-image. It is itself based on alpine
 # and is quite minimal.
 # https://mcr.microsoft.com/v2/azure-cli/tags/list
-FROM mcr.microsoft.com/azure-cli:2.55.0
+FROM mcr.microsoft.com/azure-cli:2.57.0
 
 # See https://github.com/go-task/task/releases
 ARG TASK_VERSION=v3.32.0
