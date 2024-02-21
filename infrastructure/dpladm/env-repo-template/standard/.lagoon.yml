@@ -53,8 +53,12 @@ $PRIMARY_DOMAIN
 $SECONDARY_DOMAINS
     cronjobs:
       - name: drush cron
-        schedule: "*/15 * * * *"
+        schedule: "M/15 * * * *"
         command: drush cron
+        service: cli
+      - name: import translations
+        schedule: "M H(2-5) * * *"
+        command: drush locale-check && drush locale-update
         service: cli
 
 container-registries:
