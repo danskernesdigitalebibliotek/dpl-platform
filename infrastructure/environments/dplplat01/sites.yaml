@@ -3,7 +3,7 @@ x-defaults:
   &default-release-image-source
     releaseImageRepository: ghcr.io/danskernesdigitalebibliotek
     releaseImageName: dpl-cms-source
-    dpl-cms-release: "2024.8.0"
+    dpl-cms-release: "2024.9.2"
 
 sites:
   # Site objects are indexed by a unique key that must be a valid lagoon, and
