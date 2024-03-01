@@ -45,6 +45,10 @@ tasks:
             drush locale-check
             drush locale-update
         service: cli
+    - run:
+        name: Generate static content
+        command: drush dpl_cms:create-static-content
+        service: cli
 
 environments:
   main:
