@@ -8,6 +8,11 @@ controller:
       "bytes_sent": $bytes_sent, "request_time": $request_time, "status":$status, "vhost": "$host", "request_proto": "$server_protocol",
       "path": "$uri", "request_query": "$args", "request_length": $request_length, "duration": $request_time,"method": "$request_method", "http_referrer": "$http_referer",
       "http_user_agent": "$http_user_agent" }'
+    # Default client_max_body_size is 1m, which is too small for our needs.
+    # We align this with the value in Lagoon itself.
+    # See https://kubernetes.github.io/ingress-nginx/user-guide/nginx-configuration/annotations/#custom-max-body-size
+    # and https://github.com/uselagoon/lagoon-images/blob/main/images/nginx/nginx.conf#L81
+    proxy-body-size: "2048m"
   replicaCount: 2
   service:
     loadBalancerIP: "${INGRESS_IP}"
