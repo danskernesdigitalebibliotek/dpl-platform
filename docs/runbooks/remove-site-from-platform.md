@@ -8,7 +8,8 @@ Prerequisites:
 
 * The platform environment name
 * An user with administrative access to the environment repository
-* A lagoon account with your ssh-key associated
+* A lagoon account with your ssh-key associated (created through
+  the Lagoon UI, on the Settings page)
 * The site key (its key in [sites.yaml](../architecture/platform-environment-architecture.md#sitesyaml))
 * An properly authenticated azure CLI (`az`) that has administrative access to
   the cluster running the lagoon installation
