@@ -46,7 +46,8 @@ RUN apk add --no-cache \
   rsync \
   shadow \
   vim \
-  yq
+  yq \
+  openssh
 
 # Add task, a modern Make equivalent.
 RUN curl -sL https://taskfile.dev/install.sh | bash -s -- -b /usr/local/bin ${TASK_VERSION}
