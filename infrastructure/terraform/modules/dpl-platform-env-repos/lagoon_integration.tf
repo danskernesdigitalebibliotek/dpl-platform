@@ -1,4 +1,4 @@
-# Register a webhook pr repository that will let Lagoon react on pushes and
+# Register a webhook per repository that will let Lagoon react on pushes and
 # pull-requests.
 resource "github_repository_webhook" "lagoon_deploy" {
   for_each = local.sites
