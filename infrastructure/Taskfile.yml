@@ -589,6 +589,31 @@ tasks:
       - sh: "[ ! -z {{.PROJECT_NAME}} ]"
         msg: "Env variable PROJECT_NAME is not set or empty."
 
+    lagoon:project:update:
+      desc: Add a project to a lagoon remote
+      deps: [lagoon:cli:config]
+      cmds:
+        # - We assume that there will only be a single remote pr core, so we
+        #   hardcode --openshift (aka remote) to 1.
+        # - We deploy the main and develop branch
+        # - We configure the main branch to be the production environment,
+        #   This primarily means that develop will auto-idle
+        # - We bump the max allowed dev environments (default is 5)
+        - |
+            lagoon update project \
+            --gitUrl {{.GIT_URL}} \
+            --openshift 1 \
+            --productionEnvironment main \
+            --developmentEnvironmentsLimit 25 \
+            --branches "^(main|develop)$" \
+            --project {{.PROJECT_NAME}}
+        - task: lagoon:project:deploykey
+      preconditions:
+      - sh: "[ ! -z {{.GIT_URL}} ]"
+        msg: "Env variable GIT_URL is not set or empty."
+      - sh: "[ ! -z {{.PROJECT_NAME}} ]"
+        msg: "Env variable PROJECT_NAME is not set or empty."
+
     support:provision:bulk-storage:
       deps: [cluster:auth]
       summary: Set the DIFF environment variable to any value to switch to diffing instead of an actual upgrade.
