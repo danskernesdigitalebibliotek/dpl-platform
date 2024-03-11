@@ -50,3 +50,9 @@ sites:
     description: "The library site for Faxe"
     deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBkdxUoBx0ZAXfMfA0rRUNo2EcUK39fp0M/zKJPOcYx2"
     << : *default-release-image-source
+  customizable-canary:
+    name: "Customizable bibliotek - eksempel"
+    description: "Eksempel på bibliotek der kører på 'customizable' plan, og derfor har et modultest-miljø"
+    deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAILj8lXv7C/7s7te9sEpwcHQhgDWfzsCkAN7rqQ4sdTzk"
+    plan: customizable
+    << : *default-release-image-source
