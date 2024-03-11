@@ -153,6 +153,6 @@ set -o errexit
 # Synchronise the sites environment repository.
 syncEnvRepo "${SITE}" "${releaseTag}" "${BRANCH}" "${siteImageRepository}" "${siteReleaseImageName}" "${primaryDomain}" "${secondaryDomains}"
 
-if [ "${plan}" = "customizable" ] && [ "${BRANCH}" = "main" ]; then
+if [ "${plan}" = "webmaster" ] && [ "${BRANCH}" = "main" ]; then
     syncEnvRepo "${SITE}" "${releaseTag}" "moduletest" "${siteImageRepository}" "${siteReleaseImageName}"
 fi

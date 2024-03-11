@@ -571,7 +571,7 @@ tasks:
             --openshift 1 \
             --productionEnvironment main \
             --developmentEnvironmentsLimit 25 \
-            --branches "^(main|develop)$" \
+            --branches "^(main|develop|moduletest)$" \
             --project {{.PROJECT_NAME}}
         - task: lagoon:project:deploykey
       preconditions:
