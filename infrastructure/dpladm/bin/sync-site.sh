@@ -77,6 +77,18 @@ function getSiteReleaseImageName {
     return
 }
 
+function getSitePlan {
+    local plan
+    plan=$(yq eval ".sites.${1}.plan" "${2}")
+    if [[ "${plan}" == "null" ]]; then
+        echo "standard"
+        return
+    fi
+
+    echo "${plan}"
+    return
+}
+
 function getSitePrimaryDomain {
     local domain
     domain=$(yq eval ".sites.${1}.primary-domain" "${2}")
@@ -135,8 +147,12 @@ siteImageRepository=$(getSiteReleaseImageRepository "${SITE}" "${SITES_CONFIG}" 
 failOnErr $? "${siteImageRepository}"
 siteReleaseImageName=$(getSiteReleaseImageName "${SITE}" "${SITES_CONFIG}")
 failOnErr $? "${siteReleaseImageName}"
+plan=$(getSitePlan "${SITE}" "${SITES_CONFIG}")
 set -o errexit
 
 # Synchronise the sites environment repository.
 syncEnvRepo "${SITE}" "${releaseTag}" "${BRANCH}" "${siteImageRepository}" "${siteReleaseImageName}" "${primaryDomain}" "${secondaryDomains}"
 
+if [ "${plan}" = "customizable" ] && [ "${BRANCH}" = "main" ]; then
+    syncEnvRepo "${SITE}" "${releaseTag}" "moduletest" "${siteImageRepository}" "${siteReleaseImageName}"
+fi
