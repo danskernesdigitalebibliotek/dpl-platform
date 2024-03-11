@@ -11,7 +11,7 @@ resource "github_repository" "site" {
 }
 
 resource "github_branch" "moduletest_branch" {
-  for_each = { for key, val in local.sites: key => val if try(val.plan, "standard") == "webmaster" }
+  for_each = { for key, val in local.sites : key => val if try(val.plan, "standard") == "webmaster" }
 
   branch     = "moduletest"
   repository = github_repository.site[each.key].name
