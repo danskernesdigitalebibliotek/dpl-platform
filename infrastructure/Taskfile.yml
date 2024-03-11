@@ -684,6 +684,15 @@ tasks:
       env:
         SITES_CONFIG: "{{.dir_env}}/sites.yaml"
         SITE: "{{.SITE}}"
+        GITHUB_TOKEN:
+          sh: az keyvault secret show
+              --subscription "{{.AZURE_SUBSCRIPTION_ID}}"
+              --name github-infra-admin-pat
+              --vault-name
+                $(
+                  terraform -chdir={{.dir_infra}} output -json | jq --raw-output ".keyvault_name.value | select (.!=null)"
+                )
+              --query value -o tsv
       cmds:
         - dpladm/bin/sync-site.sh
       preconditions:
