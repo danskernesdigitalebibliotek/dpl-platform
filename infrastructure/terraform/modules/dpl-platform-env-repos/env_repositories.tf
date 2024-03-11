@@ -10,6 +10,13 @@ resource "github_repository" "site" {
   archive_on_destroy = false
 }
 
+resource "github_branch" "moduletest_branch" {
+  for_each = { for key, val in local.sites: key => val if try(val.plan, "standard") == "customizable" }
+
+  branch     = "moduletest"
+  repository = github_repository.site[each.key].name
+}
+
 # Grant the default teams their respective permissions on the repository.
 resource "github_team_repository" "site_team_default_read" {
   for_each = local.sites
