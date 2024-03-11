@@ -66,11 +66,32 @@ sites:
 Be aware that the referenced images needs to be publicly available as Lagoon
 currently only authenticates against ghcr.io.
 
+Sites on the `webmaster` plan must have this specified as well, as this
+indicates that an environment for testing custom Drupal modules should be
+made available for the site. For example:
+
+```yaml
+sites:
+  bib-rb:
+    name: "Roskilde Bibliotek"
+    description: "Roskilde Bibliotek"
+    primary-domain: "www.roskildebib.dk"
+    secondary-domains: ["roskildebib.dk"]
+    dpl-cms-release: "1.2.3"
+    plan: webmaster
+    << : *default-release-image-source
+```
+
+The field `plan` defaults to `standard`.
+
 Then continue to provision the a Github repository for the site.
 
 ### Step 2: Provision a Github repository
 
 Run `task env_repos:provision` to create the repository.
+
+For sites with `plan: webmaster` this also creates a branch `moduletest` which
+represents the environment for testing custom Drupal modules.
 
 #### Create a Lagoon project and connect the GitHub repository
 
@@ -130,10 +151,14 @@ $ VARIABLE_TYPE_ID=<project id> \
 # If you get a "Invalid Auth Token" your token has probably expired, generated a
 # new with "lagoon login" and try again.
 
-# 5. Trigger a deployment manually, this will fail as the repository is empty
+# 5.a Trigger a deployment manually, this will fail as the repository is empty
 #    but will serve to prepare Lagoon for future deployments.
 # lagoon deploy branch -p <project-name> -b <branch>
 $ lagoon deploy branch -p core-test1 -b main
+
+# 5.b If you are setting up a site with `plan: webmaster`, you also need to
+# deploy the moduletest branch
+$ lagoon deploy branch -p core-test1 -b moduletest
 ```
 
 If you want to deploy a release to the site, continue to
