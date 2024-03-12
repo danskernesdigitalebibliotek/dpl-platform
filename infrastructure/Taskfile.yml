@@ -756,6 +756,72 @@ tasks:
       - sh: "[ ! -z {{.SITE}} ]"
         msg: "Env variable SITE is not set or empty."
 
+    sites:list-keys:
+      desc: List keys for sites in sites.yaml config
+      dir: "{{.dir_env}}"
+      cmds:
+        - cat sites.yaml | yq '.sites | keys | .[]'
+
+    sites:sync:
+      desc: Performs a full synchronization from sites.yaml to running state
+      dir: "{{.dir_env}}"
+      cmds:
+        - |
+          set -e
+          cat sites.yaml | yq '.sites | keys | .[]' | while read -r site; do
+            SITE="$site" task site:lagoon:project:ensure
+            SITE="$site" task site:lagoon:project:capture-deploy-key
+          done
+        - task: env_repos:provision
+        - |
+          echo "TODO: figure out which sites are newly created and require a first deploy\
+                and run lagoon deploy for them - and for plan:webmaster run deploy of\
+                moduletest, too"
+        - |
+          set -e
+          cat sites.yaml | yq '.sites | keys | .[]' | while read -r site; do
+            SITE="$site" task site:sync
+          done
+
+    site:lagoon:project:ensure:
+      # TODO: ensure github registry credentials are current known version on update case, too
+      #       - consider implementing in set:environment-variable so it updates if already set
+      desc: |
+        Ensures a lagoon project is set up and configured correctly for a
+        given site as specified by sites.yaml
+      deps: [lagoon:cli:config]
+      dir: "{{.dir_env}}"
+      env: # TODO: vars instead?
+        GIT_URL: "git@github.com:danishpubliclibraries/env-{{.SITE}}.git"
+      cmds:
+        - echo "hey ${GIT_URL}"
+        - |
+          if [ "$(lagoon get project --project "{{.SITE}}" --output-json | jq '.data[0].id' --raw-output)" = "0" ]; then
+            PROJECT_NAME="{{.SITE}}" GIT_URL="${GIT_URL}" task lagoon:project:add;
+            PROJECT_NAME="{{.SITE}}" task lagoon:project:set:github-registry-credentials
+          else
+            PROJECT_NAME="{{.SITE}}" GIT_URL="${GIT_URL}" task lagoon:project:update;
+          fi
+      preconditions:
+      - sh: "[ ! -z {{.SITE}} ]"
+        msg: "Env variable SITE is not set or empty."
+
+    site:lagoon:project:capture-deploy-key:
+      # TODO: print a big message if a deploy key is newly captured, so we know to commit changes!
+      desc: Gets the deploy key for a particular project from Lagoon and persists it in sites.yaml
+      deps: [lagoon:cli:config]
+      dir: "{{.dir_env}}"
+      env: # TODO: vars?
+        DEPLOY_KEY:
+          sh: lagoon get project-key --project "{{.SITE}}" --output-json | jq '.data[0].publickey' --raw-output
+        SITE: "{{.SITE}}"
+      cmds:
+        - echo "depl k ${DEPLOY_KEY}"
+        - yq -i e '.sites[env(SITE)].deploy_key |= env(DEPLOY_KEY)' sites.yaml
+      preconditions:
+      - sh: "[ ! -z {{.SITE}} ]"
+        msg: "Env variable SITE is not set or empty."
+
     ui-password:
       desc: Get the password to access a given user interface
       cmds:

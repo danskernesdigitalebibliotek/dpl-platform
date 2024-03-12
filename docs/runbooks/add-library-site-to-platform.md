@@ -112,22 +112,15 @@ The following describes a semi-automated version of "Add a Project" in
 ```sh
 # From within dplsh:
 
-# If your ssh-key is passphrase-projected we'll need to setup an ssh-agent
-# instance:
-$ eval $(ssh-agent); ssh-add
+# Run the sites:sync task to sync the site state in sites.yaml, creating your new site
+$ task sites:sync
 
-# 1. Add a project
-# PROJECT_NAME=<project name>  GIT_URL=<url> task lagoon:project:add
-$ PROJECT_NAME=core-test1 GIT_URL=git@github.com:danishpubliclibraries/env-core-test1.git\
-  task lagoon:project:add
+# You may be prompted to confirm Terraform plan execution and approve other critical steps.
+# Read and consider these messages carefully and ensure you are not needlessly changing
+# other sites.
 
-# The project is added, and a deployment key is printed, use it for the next step.
 
-# 2. Add the deployment key to sites.yaml under the key "deploy_key".
-$ vi environments/${DPLPLAT_ENV}/sites.yaml
-# Then update the repositories using Terraform
-$ task env_repos:provision
-
+#TODO: move first deploys to Taskfile
 # 3.a Trigger a deployment manually, this will fail as the repository is empty
 #    but will serve to prepare Lagoon for future deployments.
 # lagoon deploy branch -p <project-name> -b <branch>
