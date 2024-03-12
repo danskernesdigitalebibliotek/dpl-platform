@@ -23,6 +23,11 @@ environment for custom Drupal modules will also be synced appropriately.
 ## Procedure
 
 ```sh
+# 0. The easiest way to sync all sites is to run this single command:
+task sites:sync
+
+# Alternatively you can go through more granular sync'ing of individual sites...
+
 # 1. Make any changes to the sites entry sites.yml you need.
 # 2. (optional) diff the deployment
 DIFF=1 SITE=<sitename> task site:sync

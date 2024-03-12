@@ -118,17 +118,6 @@ $ task sites:sync
 # You may be prompted to confirm Terraform plan execution and approve other critical steps.
 # Read and consider these messages carefully and ensure you are not needlessly changing
 # other sites.
-
-
-#TODO: move first deploys to Taskfile
-# 3.a Trigger a deployment manually, this will fail as the repository is empty
-#    but will serve to prepare Lagoon for future deployments.
-# lagoon deploy branch -p <project-name> -b <branch>
-$ lagoon deploy branch -p core-test1 -b main
-
-# 3.b If you are setting up a site with `plan: webmaster`, you also need to
-# deploy the moduletest branch
-$ lagoon deploy branch -p core-test1 -b moduletest
 ```
 
 If you want to deploy a release to the site, continue to
