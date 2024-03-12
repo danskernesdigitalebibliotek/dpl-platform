@@ -113,28 +113,24 @@ The following describes a semi-automated version of "Add a Project" in
 # instance:
 $ eval $(ssh-agent); ssh-add
 
-# 1. Authenticate against the cluster and lagoon
-$ task cluster:auth
-$ task lagoon:cli:config
-
-# 2. Add a project
+# 1. Add a project
 # PROJECT_NAME=<project name>  GIT_URL=<url> task lagoon:project:add
 $ PROJECT_NAME=core-test1 GIT_URL=git@github.com:danishpubliclibraries/env-core-test1.git\
   task lagoon:project:add
 
 # The project is added, and a deployment key is printed, use it for the next step.
 
-# 3. Add the deployment key to sites.yaml under the key "deploy_key".
+# 2. Add the deployment key to sites.yaml under the key "deploy_key".
 $ vi environments/${DPLPLAT_ENV}/sites.yaml
 # Then update the repositories using Terraform
 $ task env_repos:provision
 
-# 4.a Trigger a deployment manually, this will fail as the repository is empty
+# 3.a Trigger a deployment manually, this will fail as the repository is empty
 #    but will serve to prepare Lagoon for future deployments.
 # lagoon deploy branch -p <project-name> -b <branch>
 $ lagoon deploy branch -p core-test1 -b main
 
-# 4.b If you are setting up a site with `plan: webmaster`, you also need to
+# 3.b If you are setting up a site with `plan: webmaster`, you also need to
 # deploy the moduletest branch
 $ lagoon deploy branch -p core-test1 -b moduletest
 ```
