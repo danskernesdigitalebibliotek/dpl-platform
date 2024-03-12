@@ -133,20 +133,13 @@ $ task env_repos:provision
 # Refresh your Lagoon token.
 $ lagoon login
 
-# Then export a github personal access-token with pull access.
-# We could pass this to task directly like the rest of the variables but we
-# opt for the export to keep the execution of task a bit shorter.
-$ export VARIABLE_VALUE=<github pat>
-
-# Then get the project id by listing your projects
+# Get the project id by listing your projects
 $ lagoon list projects
 
-# Finally, add the credentials
-$ VARIABLE_TYPE_ID=<project id> \
-  VARIABLE_TYPE=PROJECT \
-  VARIABLE_SCOPE=CONTAINER_REGISTRY \
-  VARIABLE_NAME=GITHUB_REGISTRY_CREDENTIALS \
-  task lagoon:set:environment-variable
+# Add github registry credentials that allow pulling github images to deploy
+# to the lagoon project
+$ PROJECT_ID=<project id> \
+  task lagoon:set:github-registry-credentials
 
 # If you get a "Invalid Auth Token" your token has probably expired, generated a
 # new with "lagoon login" and try again.
