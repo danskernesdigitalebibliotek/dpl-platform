@@ -604,6 +604,7 @@ tasks:
             --developmentEnvironmentsLimit 25 \
             --branches "^(main|develop|moduletest)$" \
             --project {{.PROJECT_NAME}}
+        - task: lagoon:project:set:github-registry-credentials
         - task: lagoon:project:deploykey
       preconditions:
       - sh: "[ ! -z {{.GIT_URL}} ]"

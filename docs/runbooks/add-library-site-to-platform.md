@@ -129,27 +129,12 @@ $ vi environments/${DPLPLAT_ENV}/sites.yaml
 # Then update the repositories using Terraform
 $ task env_repos:provision
 
-# 4. Configure image registry credentials Lagoon should use for the project:
-# Refresh your Lagoon token.
-$ lagoon login
-
-# Get the project id by listing your projects
-$ lagoon list projects
-
-# Add github registry credentials that allow pulling github images to deploy
-# to the lagoon project
-$ PROJECT_ID=<project id> \
-  task lagoon:set:github-registry-credentials
-
-# If you get a "Invalid Auth Token" your token has probably expired, generated a
-# new with "lagoon login" and try again.
-
-# 5.a Trigger a deployment manually, this will fail as the repository is empty
+# 4.a Trigger a deployment manually, this will fail as the repository is empty
 #    but will serve to prepare Lagoon for future deployments.
 # lagoon deploy branch -p <project-name> -b <branch>
 $ lagoon deploy branch -p core-test1 -b main
 
-# 5.b If you are setting up a site with `plan: webmaster`, you also need to
+# 4.b If you are setting up a site with `plan: webmaster`, you also need to
 # deploy the moduletest branch
 $ lagoon deploy branch -p core-test1 -b moduletest
 ```

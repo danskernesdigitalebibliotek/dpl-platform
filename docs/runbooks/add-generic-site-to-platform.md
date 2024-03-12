@@ -64,23 +64,6 @@ $ PROJECT_NAME=dpl-cms GIT_URL=git@github.com:danskernesdigitalebibliotek/dpl-cm
 # Referer to the official documentation linked above for an example on how to
 # set up webhooks in github.
 
-# 5. Configure image registry credentials Lagoon should use for the project
-#    IF your project references private images in repositories that requires
-#    authentication
-# Refresh your Lagoon token.
-$ lagoon login
-
-# Then get the project id by listing your projects
-$ lagoon list projects
-
-# Add github registry credentials that allow pulling github images to deploy
-# to the lagoon project
-$ PROJECT_ID=<project id> \
-  task lagoon:set:github-registry-credentials
-
-# If you get a "Invalid Auth Token" your token has probably expired, generated a
-# new with "lagoon login" and try again.
-
 # 5. Trigger a deployment manually, this will fail as the repository is empty
 #    but will serve to prepare Lagoon for future deployments.
 # lagoon deploy branch -p <project-name> -b <branch>
