@@ -82,4 +82,4 @@ backup-retention:
     hourly: 0
 # https://docs.lagoon.sh/lagoon/using-lagoon-the-basics/lagoon-yml#backup-schedule
 backup-schedule:
-  production: M 12,19 * * *
+  production: M H(12-14),H(19-21) * * *
