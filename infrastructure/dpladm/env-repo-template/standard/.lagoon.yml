@@ -74,9 +74,9 @@ container-registries:
 backup-retention:
   # Configure the number of monthly, weekly, daily and hourly backups to retain.
   production:
-    monthly: 1
-    weekly: 6
-    daily: 7
+    monthly: 2
+    weekly: 10
+    daily: 12
     # Be aware that hourly backups are only possible if the backup schedule is
     # adjusted to run every hour.
     hourly: 0
