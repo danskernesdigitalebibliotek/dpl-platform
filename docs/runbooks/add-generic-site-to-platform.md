@@ -38,23 +38,19 @@ $ export DPLPLAT_ENV=dplplat01
 # instance:
 $ eval $(ssh-agent); ssh-add
 
-# 1. Authenticate against the cluster and lagoon
-$ task cluster:auth
-$ task lagoon:cli:config
-
-# 2. Add a project
+# 1. Add a project
 # PROJECT_NAME=<project name>  GIT_URL=<url> task lagoon:project:add
 $ PROJECT_NAME=dpl-cms GIT_URL=git@github.com:danskernesdigitalebibliotek/dpl-cms.git\
   task lagoon:project:add
 
-# 2.b You can also run lagoon add project manually, consult the documentation linked
+# 1.b You can also run lagoon add project manually, consult the documentation linked
 #     in the beginning of this section for details.
 
-# 3. Deployment key
+# 2. Deployment key
 # The project is added, and a deployment key is printed. Copy it and configure
 # the GitHub repository. See the official documentation for examples.
 
-# 4. Webhook
+# 3. Webhook
 # Configure Github to post events to Lagoons webhook url.
 # The webhook url for the environment will be
 #  https://webhookhandler.lagoon.<environment>.dpl.reload.dk
@@ -64,31 +60,7 @@ $ PROJECT_NAME=dpl-cms GIT_URL=git@github.com:danskernesdigitalebibliotek/dpl-cm
 # Referer to the official documentation linked above for an example on how to
 # set up webhooks in github.
 
-# 5. Configure image registry credentials Lagoon should use for the project
-#    IF your project references private images in repositories that requires
-#    authentication
-# Refresh your Lagoon token.
-$ lagoon login
-
-# Then export a github personal access-token with pull access.
-# We could pass this to task directly like the rest of the variables but we
-# opt for the export to keep the execution of task a bit shorter.
-$ export VARIABLE_VALUE=<github pat>
-
-# Then get the project id by listing your projects
-$ lagoon list projects
-
-# Finally, add the credentials
-$ VARIABLE_TYPE_ID=<project id> \
-  VARIABLE_TYPE=PROJECT \
-  VARIABLE_SCOPE=CONTAINER_REGISTRY \
-  VARIABLE_NAME=GITHUB_REGISTRY_CREDENTIALS \
-  task lagoon:set:environment-variable
-
-# If you get a "Invalid Auth Token" your token has probably expired, generated a
-# new with "lagoon login" and try again.
-
-# 5. Trigger a deployment manually, this will fail as the repository is empty
+# 4. Trigger a deployment manually, this will fail as the repository is empty
 #    but will serve to prepare Lagoon for future deployments.
 # lagoon deploy branch -p <project-name> -b <branch>
 $ lagoon deploy branch -p dpl-cms -b main

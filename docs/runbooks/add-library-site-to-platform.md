@@ -66,11 +66,32 @@ sites:
 Be aware that the referenced images needs to be publicly available as Lagoon
 currently only authenticates against ghcr.io.
 
+Sites on the `webmaster` plan must have this specified as well, as this
+indicates that an environment for testing custom Drupal modules should be
+made available for the site. For example:
+
+```yaml
+sites:
+  bib-rb:
+    name: "Roskilde Bibliotek"
+    description: "Roskilde Bibliotek"
+    primary-domain: "www.roskildebib.dk"
+    secondary-domains: ["roskildebib.dk"]
+    dpl-cms-release: "1.2.3"
+    plan: webmaster
+    << : *default-release-image-source
+```
+
+The field `plan` defaults to `standard`.
+
 Then continue to provision the a Github repository for the site.
 
 ### Step 2: Provision a Github repository
 
 Run `task env_repos:provision` to create the repository.
+
+For sites with `plan: webmaster` this also creates a branch `moduletest` which
+represents the environment for testing custom Drupal modules.
 
 #### Create a Lagoon project and connect the GitHub repository
 
@@ -92,48 +113,26 @@ The following describes a semi-automated version of "Add a Project" in
 # instance:
 $ eval $(ssh-agent); ssh-add
 
-# 1. Authenticate against the cluster and lagoon
-$ task cluster:auth
-$ task lagoon:cli:config
-
-# 2. Add a project
+# 1. Add a project
 # PROJECT_NAME=<project name>  GIT_URL=<url> task lagoon:project:add
 $ PROJECT_NAME=core-test1 GIT_URL=git@github.com:danishpubliclibraries/env-core-test1.git\
   task lagoon:project:add
 
 # The project is added, and a deployment key is printed, use it for the next step.
 
-# 3. Add the deployment key to sites.yaml under the key "deploy_key".
+# 2. Add the deployment key to sites.yaml under the key "deploy_key".
 $ vi environments/${DPLPLAT_ENV}/sites.yaml
 # Then update the repositories using Terraform
 $ task env_repos:provision
 
-# 4. Configure image registry credentials Lagoon should use for the project:
-# Refresh your Lagoon token.
-$ lagoon login
-
-# Then export a github personal access-token with pull access.
-# We could pass this to task directly like the rest of the variables but we
-# opt for the export to keep the execution of task a bit shorter.
-$ export VARIABLE_VALUE=<github pat>
-
-# Then get the project id by listing your projects
-$ lagoon list projects
-
-# Finally, add the credentials
-$ VARIABLE_TYPE_ID=<project id> \
-  VARIABLE_TYPE=PROJECT \
-  VARIABLE_SCOPE=CONTAINER_REGISTRY \
-  VARIABLE_NAME=GITHUB_REGISTRY_CREDENTIALS \
-  task lagoon:set:environment-variable
-
-# If you get a "Invalid Auth Token" your token has probably expired, generated a
-# new with "lagoon login" and try again.
-
-# 5. Trigger a deployment manually, this will fail as the repository is empty
+# 3.a Trigger a deployment manually, this will fail as the repository is empty
 #    but will serve to prepare Lagoon for future deployments.
 # lagoon deploy branch -p <project-name> -b <branch>
 $ lagoon deploy branch -p core-test1 -b main
+
+# 3.b If you are setting up a site with `plan: webmaster`, you also need to
+# deploy the moduletest branch
+$ lagoon deploy branch -p core-test1 -b moduletest
 ```
 
 If you want to deploy a release to the site, continue to

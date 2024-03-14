@@ -164,7 +164,8 @@ function syncEnvRepo {
   # Fetch a clone of the environment repo.
   local repoPath="${ENVIRONMENT_REPO_ORG}/${repoName}"
   echo "** Cloning branch ${branchName} of env-repo ${repoPath} for ${siteName}"
-  git clone --depth 1 "git@github.com:${repoPath}.git" -b "${branchName}"
+  # TODO: consider adding --single-branch flag to make cloning faster
+  git clone --depth 1 "https://${GITHUB_TOKEN}@github.com/${repoPath}.git" -b "${branchName}"
 
   # Clear out any previous content and replace it with a unrendered template.
   mv "${repoName}/.git" ./
