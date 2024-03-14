@@ -498,6 +498,37 @@ tasks:
       - sh: "[ ! -z {{.VARIABLE_TYPE}} ]"
         msg: "Missing VARIABLE_TYPE"
 
+    lagoon:project:set:github-registry-credentials:
+      vars:
+        # VARIABLE_TYPE_ID is the PROJECT_ID. If we are given a PROJECT_NAME, lookup the ID
+        VARIABLE_TYPE_ID:
+          sh:
+            if [ ! -z {{.PROJECT_ID}} ]; then
+              echo "{{.PROJECT_ID}}";
+            else
+              lagoon get project --project "{{.PROJECT_NAME}}" --output-json | jq '.data[0].id' --raw-output;
+            fi
+        GITHUB_TOKEN:
+          sh: az keyvault secret show
+              --subscription "{{.AZURE_SUBSCRIPTION_ID}}"
+              --name github-infra-admin-pat
+              --vault-name
+                $(
+                  terraform -chdir={{.dir_infra}} output -json | jq --raw-output ".keyvault_name.value | select (.!=null)"
+                )
+              --query value -o tsv
+      cmds:
+      - task: lagoon:set:environment-variable
+        vars:
+          VARIABLE_TYPE: "PROJECT"
+          VARIABLE_SCOPE: "CONTAINER_REGISTRY"
+          VARIABLE_NAME: "GITHUB_REGISTRY_CREDENTIALS"
+          VARIABLE_TYPE_ID: "{{.VARIABLE_TYPE_ID}}"
+          VARIABLE_VALUE: "{{.GITHUB_TOKEN}}"
+      preconditions:
+      - sh: "[ ! -z {{.PROJECT_ID}} ] || [ ! -z {{.PROJECT_NAME}} ]"
+        msg: "Missing PROJECT_ID or PROJECT_NAME - at least one must be set"
+
     lagoon:add:cluster:
       deps: [cluster:auth]
       desc: Add a Kubernetes cluster (Lagoon Remote) to the Lagoon Core.
@@ -571,8 +602,9 @@ tasks:
             --openshift 1 \
             --productionEnvironment main \
             --developmentEnvironmentsLimit 25 \
-            --branches "^(main|develop)$" \
+            --branches "^(main|develop|moduletest)$" \
             --project {{.PROJECT_NAME}}
+        - task: lagoon:project:set:github-registry-credentials
         - task: lagoon:project:deploykey
       preconditions:
       - sh: "[ ! -z {{.GIT_URL}} ]"
@@ -684,6 +716,15 @@ tasks:
       env:
         SITES_CONFIG: "{{.dir_env}}/sites.yaml"
         SITE: "{{.SITE}}"
+        GITHUB_TOKEN:
+          sh: az keyvault secret show
+              --subscription "{{.AZURE_SUBSCRIPTION_ID}}"
+              --name github-infra-admin-pat
+              --vault-name
+                $(
+                  terraform -chdir={{.dir_infra}} output -json | jq --raw-output ".keyvault_name.value | select (.!=null)"
+                )
+              --query value -o tsv
       cmds:
         - dpladm/bin/sync-site.sh
       preconditions:

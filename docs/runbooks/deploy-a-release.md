@@ -8,6 +8,9 @@ or a fork to a single site.
 If you want to deploy to more than one site, simply repeat the procedure for each
 site.
 
+For sites with `plan: webmaster`, the branch `moduletest` for the test
+environment for custom Drupal modules will also be synced appropriately.
+
 ## Prerequisites
 
 * A [dplsh session](using-dplsh.md) with DPLPLAT_ENV exported and ssh-agent configured.
