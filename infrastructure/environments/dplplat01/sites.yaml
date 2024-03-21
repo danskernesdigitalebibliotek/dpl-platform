@@ -10,7 +10,7 @@ sites:
   # github project name. That is, alphanumeric and dashes.
   canary:
     name: "Canary"
-    description: "A site to test new releases on."
+    description: "A site to test new releases on"
     releaseImageRepository: ghcr.io/danskernesdigitalebibliotek
     releaseImageName: dpl-cms-source
     dpl-cms-release: "2024.12.0"
