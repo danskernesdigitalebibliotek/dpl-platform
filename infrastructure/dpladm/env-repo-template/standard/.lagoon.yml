@@ -45,6 +45,10 @@ tasks:
             drush locale-check
             drush locale-update
         service: cli
+    - run:
+        name: Import config translations
+        command: drush dpl_po:import-remote-config-po da https://danskernesdigitalebibliotek.github.io/dpl-cms/translations/da.config.po
+        service: cli
 
 environments:
   main:
