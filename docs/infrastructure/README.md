@@ -187,7 +187,7 @@ $ SECRET_KEY=github-infra-admin-ssh-key SECRET_VALUE=$(cat dplplatinfra01_id_ed2
 #    The token should
 #     - be named after the platform environment (eg. dplplat01-terraform-timestamp)
 #     - Have a fairly long expiration - do remember to renew it
-#     - Have the following permissions: admin:org, delete_repo, repo
+#     - Have the following permissions: admin:org, delete_repo, read:packages, repo
 # 5. Add the access token to Key Vault under the name "github-infra-admin-pat"
 # eg.
 $ SECRET_KEY=github-infra-admin-pat SECRET_VALUE=githubtokengoeshere task infra:keyvault:secret:set
@@ -215,7 +215,7 @@ $ export DPLPLAT_ENV=dplplat01
 #    The token should
 #     - be named after the platform environment (eg. dplplat01-terraform)
 #     - Have a fairly long expiration - do remember to renew it
-#     - Have the following permissions: admin:org, delete_repo, repo
+#     - Have the following permissions: admin:org, delete_repo, read:packages, repo
 # 2. Add the access token to Key Vault under the name "github-infra-admin-pat"
 # eg.
 $ SECRET_KEY=github-infra-admin-pat SECRET_VALUE=githubtokengoeshere \
