@@ -1,6 +1,6 @@
 # Alertmanager Setup
 
-The We use the [alertmanager](architecture/adr-003-system-alerts.md) automatically
+We use the [alertmanager](architecture/adr-003-system-alerts.md) which automatically
 ties to the metrics of Prometheus but in order to make it work the configuration
 and rules need to be setup.
 

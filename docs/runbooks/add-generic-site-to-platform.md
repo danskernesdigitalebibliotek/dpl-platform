@@ -15,8 +15,11 @@ which is used to develop the shared DPL install profile.
   permissions to the platforms azure infrastructure.
 * A running [dplsh](using-dplsh.md) with `DPLPLAT_ENV` set to the platform
   environment name.
-* A Lagoon account on the Lagoon core with your ssh-key associated
-* The git-url for the sites environment repository
+* A Lagoon account on the Lagoon core with your ssh-key associated (created through
+  the Lagoon UI, on the Settings page)
+* The git-url for the sites environment repository (you don't need to create this
+  repository - it will be created by the task below - but the URL must match the
+  Github repository that will be created)
 * A personal access-token that is allowed to pull images from the image-registry
   that hosts our images.
 * The platform environment name (Consult the [platform environment documentation](https://github.com/danskernesdigitalebibliotek/dpl-platform/wiki/Platform-Environments))
