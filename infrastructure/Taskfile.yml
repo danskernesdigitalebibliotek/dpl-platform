@@ -589,10 +589,12 @@ tasks:
     lagoon:project:add:
       desc: Add a project to a lagoon remote
       deps: [lagoon:cli:config]
+      vars:
+        BRANCHES: '{{ .BRANCHES | default "main" }}'
       cmds:
         # - We assume that there will only be a single remote pr core, so we
         #   hardcode --openshift (aka remote) to 1.
-        # - We deploy the main and develop branch
+        # - We deploy the relevant (default: main) branches
         # - We configure the main branch to be the production environment,
         #   This primarily means that develop will auto-idle
         # - We bump the max allowed dev environments (default is 5)
@@ -602,7 +604,7 @@ tasks:
             --openshift 1 \
             --productionEnvironment main \
             --developmentEnvironmentsLimit 25 \
-            --branches "^(main|develop|moduletest)$" \
+            --branches "^({{ .BRANCHES }})$" \
             --project {{.PROJECT_NAME}}
         - task: lagoon:project:set:github-registry-credentials
         - task: lagoon:project:deploykey
@@ -622,12 +624,15 @@ tasks:
         msg: "Env variable PROJECT_NAME is not set or empty."
 
     lagoon:project:update:
+      # TODO: deduplicate with lagoon:project:add!
       desc: Add a project to a lagoon remote
       deps: [lagoon:cli:config]
+      vars:
+        BRANCHES: '{{ .BRANCHES | default "main" }}'
       cmds:
         # - We assume that there will only be a single remote pr core, so we
         #   hardcode --openshift (aka remote) to 1.
-        # - We deploy the main and develop branch
+        # - We deploy the relevant (default: main) branches
         # - We configure the main branch to be the production environment,
         #   This primarily means that develop will auto-idle
         # - We bump the max allowed dev environments (default is 5)
@@ -637,7 +642,7 @@ tasks:
             --openshift 1 \
             --productionEnvironment main \
             --developmentEnvironmentsLimit 25 \
-            --branches "^(main|develop)$" \
+            --branches "^({{ .BRANCHES }})$" \
             --project {{.PROJECT_NAME}}
         - task: lagoon:project:deploykey
       preconditions:
@@ -769,7 +774,9 @@ tasks:
         - |
           set -e
           cat sites.yaml | yq '.sites | keys | .[]' | while read -r site; do
-            SITE="$site" task site:lagoon:project:ensure
+            export site_plan=`cat sites.yaml | yq ".sites[\"$site\"].plan"`
+            export branches=`if [ "$site_plan" = "webmaster" ]; then echo "main|moduletest"; else echo "main"; fi`
+            SITE="$site" BRANCHES="$branches" task site:lagoon:project:ensure
             SITE="$site" task site:lagoon:project:capture-deploy-key
           done
         - task: env_repos:provision
@@ -783,21 +790,23 @@ tasks:
     site:lagoon:project:ensure:
       # TODO: ensure github registry credentials are current known version on update case, too
       #       - consider implementing in set:environment-variable so it updates if already set
+      # TODO: derive branches list from sites.yaml plan field: main for most,
+      #       main|moduletest for plan:webmaster.
       desc: |
         Ensures a lagoon project is set up and configured correctly for a
         given site as specified by sites.yaml
       deps: [lagoon:cli:config]
       dir: "{{.dir_env}}"
-      env: # TODO: vars instead?
+      vars:
         GIT_URL: "git@github.com:danishpubliclibraries/env-{{.SITE}}.git"
+        BRANCHES: '{{ .BRANCHES | default "main" }}'
       cmds:
-        - echo "hey ${GIT_URL}"
         - |
           if [ "$(lagoon get project --project "{{.SITE}}" --output-json | jq '.data[0].id' --raw-output)" = "0" ]; then
-            PROJECT_NAME="{{.SITE}}" GIT_URL="${GIT_URL}" task lagoon:project:add;
-            PROJECT_NAME="{{.SITE}}" task lagoon:project:set:github-registry-credentials
+            PROJECT_NAME="{{.SITE}}" GIT_URL="{{.GIT_URL}}" BRANCHES="{{.BRANCHES}}" task lagoon:project:add;
+            PROJECT_NAME="{{.SITE}}" task lagoon:project:set:github-registry-credentials;
           else
-            PROJECT_NAME="{{.SITE}}" GIT_URL="${GIT_URL}" task lagoon:project:update;
+            PROJECT_NAME="{{.SITE}}" GIT_URL="{{.GIT_URL}}" BRANCHES="{{.BRANCHES}}" task lagoon:project:update;
           fi
       preconditions:
       - sh: "[ ! -z {{.SITE}} ]"
