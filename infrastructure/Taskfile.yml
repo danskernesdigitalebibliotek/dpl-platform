@@ -608,8 +608,8 @@ tasks:
       - sh: "[ ! -z {{.USER_TOKEN}} ]"
         msg: "Missing USER_TOKEN"
 
-    lagoon:project:add:
-      desc: Add a project to a lagoon remote
+    lagoon:project:set:
+      desc: Set a project state in lagoon using a command, either "add" or "update"
       deps: [lagoon:cli:config]
       vars:
         BRANCHES: '{{ .BRANCHES | default "main" }}'
@@ -621,7 +621,7 @@ tasks:
         #   This primarily means that develop will auto-idle
         # - We bump the max allowed dev environments (default is 5)
         - |
-            lagoon add project \
+            lagoon {{.COMMAND}} project \
             --gitUrl {{.GIT_URL}} \
             --openshift 1 \
             --productionEnvironment main \
@@ -635,6 +635,18 @@ tasks:
         msg: "Env variable GIT_URL is not set or empty."
       - sh: "[ ! -z {{.PROJECT_NAME}} ]"
         msg: "Env variable PROJECT_NAME is not set or empty."
+      - sh: "[ {{.COMMAND}} = 'add' ] || [ {{.COMMAND}} = 'update' ]"
+        msg: "Variable COMMAND must be set to 'add' or 'update'"
+
+    lagoon:project:add:
+      desc: Add a project to a lagoon remote
+      cmds:
+        - task: lagoon:project:set
+          vars:
+            COMMAND: "add"
+            GIT_URL: "{{.GIT_URL}}"
+            PROJECT_NAME: "{{.PROJECT_NAME}}"
+            BRANCHES: "{{.BRANCHES}}"
 
     lagoon:project:deploykey:
       desc: Gets the deployment key for a project
@@ -646,33 +658,14 @@ tasks:
         msg: "Env variable PROJECT_NAME is not set or empty."
 
     lagoon:project:update:
-      # TODO: deduplicate with lagoon:project:add!
       desc: Add a project to a lagoon remote
-      deps: [lagoon:cli:config]
-      vars:
-        BRANCHES: '{{ .BRANCHES | default "main" }}'
       cmds:
-        # - We assume that there will only be a single remote pr core, so we
-        #   hardcode --openshift (aka remote) to 1.
-        # - We deploy the relevant (default: main) branches
-        # - We configure the main branch to be the production environment,
-        #   This primarily means that develop will auto-idle
-        # - We bump the max allowed dev environments (default is 5)
-        - |
-            lagoon update project \
-            --gitUrl {{.GIT_URL}} \
-            --openshift 1 \
-            --productionEnvironment main \
-            --developmentEnvironmentsLimit 25 \
-            --branches "^({{ .BRANCHES }})$" \
-            --project {{.PROJECT_NAME}}
-        - task: lagoon:project:ensure:github-registry-credentials
-        - task: lagoon:project:deploykey
-      preconditions:
-      - sh: "[ ! -z {{.GIT_URL}} ]"
-        msg: "Env variable GIT_URL is not set or empty."
-      - sh: "[ ! -z {{.PROJECT_NAME}} ]"
-        msg: "Env variable PROJECT_NAME is not set or empty."
+        - task: lagoon:project:set
+          vars:
+            COMMAND: "update"
+            GIT_URL: "{{.GIT_URL}}"
+            PROJECT_NAME: "{{.PROJECT_NAME}}"
+            BRANCHES: "{{.BRANCHES}}"
 
     support:provision:bulk-storage:
       deps: [cluster:auth]
