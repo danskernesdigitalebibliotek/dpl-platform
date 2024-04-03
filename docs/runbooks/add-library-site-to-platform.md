@@ -17,18 +17,17 @@ site to the platform.
 The following sections describes how to
 
 * Add the site to `sites.yaml`
-* Provision Github "environment" repository
-* Create a Lagoon project and connect it to the repository
-
-After these steps has been completed, you can continue to deploying to the
-site. See the [deploy-a-release.md](deploy-a-release.md) for details.
+* Using the `sites.yaml` specification to provision Github repositories,
+  create Lagoon projects, tie the two together, and deploy all the
+  relevant environments.
 
 ### Step 1, update sites.yaml
 
 Create an entry for the site in `sites.yaml`.
 
-For now specify an unique site key (its key in the map of sites), name and
-description. Leave out the deployment-key, you will add it in a later step.
+Specify a unique site key (its key in the map of sites), name and description.
+Leave out the deployment-key, it will be added automatically by the
+synchronization script.
 
 Sample entry (beware that this example be out of sync with the environment you
 are operating, so make sure to compare it with existing entries from the
@@ -66,9 +65,9 @@ sites:
 Be aware that the referenced images needs to be publicly available as Lagoon
 currently only authenticates against ghcr.io.
 
-Sites on the `webmaster` plan must have this specified as well, as this
-indicates that an environment for testing custom Drupal modules should be
-made available for the site. For example:
+Sites on the "webmaster" plan must have the field `plan` set to `"webmaster"`
+as this indicates that an environment for testing custom Drupal modules should
+also be deployed. For example:
 
 ```yaml
 sites:
@@ -84,41 +83,42 @@ sites:
 
 The field `plan` defaults to `standard`.
 
-Then continue to provision the a Github repository for the site.
+Now you are ready to sync the site state.
 
-### Step 2: Provision a Github repository
+### Synchronize site state for all sites
 
-Run `task env_repos:provision` to create the repository.
+You have made a single additive change to the `sites.yaml` file. It is
+important to ensure that your branch is otherwise up-to-date with `main`,
+as the state you currently have in `sites.yaml` is what will be ensured exists
+in the platform.
 
-For sites with `plan: webmaster` this also creates a branch `moduletest` which
-represents the environment for testing custom Drupal modules.
-
-#### Create a Lagoon project and connect the GitHub repository
+You may end up undoing changes that other people have done, if you don't have
+their changes to `sites.yaml` in your branch.
 
 Prerequisites:
 
 * A Lagoon account on the Lagoon core with your ssh-key associated (created through
   the Lagoon UI, on the Settings page)
-* The git-url for the sites environment repository (you don't need to create this
-  repository - it will be created by the task below - but the URL must match the
-  Github repository that will be created)
-* A personal access-token that is allowed to pull images from the image-registry
-  that hosts our images.
-* The platform environment name (Consult the [platform environment documentation](https://github.com/danskernesdigitalebibliotek/dpl-platform/wiki/Platform-Environments))
 
-The following describes a semi-automated version of "Add a Project" in
-[the official documentation](https://docs.lagoon.sh/installing-lagoon/add-project/).
+From within `dplsh` run the `sites:sync` task to sync the site state in
+sites.yaml, creating your new site
 
 ```sh
-# From within dplsh:
-
-# Run the sites:sync task to sync the site state in sites.yaml, creating your new site
 $ task sites:sync
-
-# You may be prompted to confirm Terraform plan execution and approve other critical steps.
-# Read and consider these messages carefully and ensure you are not needlessly changing
-# other sites.
 ```
 
-If you want to deploy a release to the site, continue to
-[Deploying a release](deploy-a-release.md).
+You may be prompted to confirm Terraform plan execution and approve other
+critical steps. Read and consider these messages carefully and ensure you are
+not needlessly changing other sites.
+
+The synchronization process:
+- ensures a Github repo is provisioned for each site
+- creates a Lagoon configuration for each site and pushes it to the relevant
+  branches in the repo (for example, sites with `plan: "webmaster"` also get
+  a `moduletest` branch for testing custom Drupal modules)
+- ensures a Lagoon project is created for each site
+- configures Lagoon to track and deploy all the relevant branches for each site
+  as environments
+
+If no other changes have been made to `sites.yaml`, the result is that your new
+site is created and deployed to all relevant environments.
