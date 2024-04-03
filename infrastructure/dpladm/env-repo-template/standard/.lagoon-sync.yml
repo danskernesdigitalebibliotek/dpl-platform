@@ -1,0 +1,16 @@
+lagoon-sync:
+  mariadb:
+    config:
+      hostname: "$SQL_HOSTNAME"
+      username: "$SQL_USER"
+      password: "$SQL_PASSWORD"
+      port: "3306"
+      database: "$SQL_SERVERNAME"
+      ignore-table:
+        - "table_to_ignore"
+      ignore-table-data:
+        - "cache_data"
+        - "cache_menu"
+  ssh:
+    host: "20.238.147.183"
+    port: "22"

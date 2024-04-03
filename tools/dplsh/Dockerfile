@@ -7,6 +7,7 @@ FROM alpine/helm:3.14.1 as helm
 # https://hub.docker.com/r/hashicorp/terraform/tags?page=1&ordering=last_updated
 FROM hashicorp/terraform:1.7.3 as terraform
 
+FROM lagoonp2p:local as lagoonsync
 # We use the official azure cli as a base-image. It is itself based on alpine
 # and is quite minimal.
 # https://mcr.microsoft.com/v2/azure-cli/tags/list
@@ -68,6 +69,12 @@ RUN curl -Lo /usr/local/bin/lagoon https://github.com/uselagoon/lagoon-cli/relea
   && chmod +x /usr/local/bin/lagoon
 WORKDIR /tmp
 
+# Add lagoon-sync tool https://github.com/uselagoon/lagoon-sync
+RUN ( \
+  curl -Lo /usr/local/bin/lagoon-sync "https://github.com/uselagoon/lagoon-sync/releases/download/v0.7.1/lagoon-sync_0.7.1_linux_amd64" && \
+  chmod a+x /usr/local/bin/lagoon-sync \
+)
+# on
 # Add Terraform
 COPY --from=terraform /bin/terraform /bin/
 
@@ -110,6 +117,7 @@ RUN ( \
     ./"${KREW}" install krew  \
   )
 ENV PATH=/home/dplsh/.krew/bin::$PATH
+
 
 # Install a plugin for viewing secrets
 RUN kubectl krew install view-secret
