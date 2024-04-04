@@ -136,8 +136,7 @@ file shared by all sites on the platform.
 
 Consult the following runbooks to see the procedures for:
 
-* [Adding a site to the platform](../runbooks/add-site-to-platform.md)
-* [Deploying to a site](../runbooks/deploy-a-release.md)
+* [Adding a site to the platform](../runbooks/add-library-site-to-platform.md)
 * [Removing a site](../runbooks/remove-site-from-platform.md)
 
 ### sites.yaml
