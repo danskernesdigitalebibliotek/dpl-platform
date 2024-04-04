@@ -104,7 +104,7 @@ From within `dplsh` run the `sites:sync` task to sync the site state in
 sites.yaml, creating your new site
 
 ```sh
-$ task sites:sync
+task sites:sync
 ```
 
 You may be prompted to confirm Terraform plan execution and approve other
@@ -112,12 +112,13 @@ critical steps. Read and consider these messages carefully and ensure you are
 not needlessly changing other sites.
 
 The synchronization process:
-- ensures a Github repo is provisioned for each site
-- creates a Lagoon configuration for each site and pushes it to the relevant
+
+* ensures a Github repo is provisioned for each site
+* creates a Lagoon configuration for each site and pushes it to the relevant
   branches in the repo (for example, sites with `plan: "webmaster"` also get
   a `moduletest` branch for testing custom Drupal modules)
-- ensures a Lagoon project is created for each site
-- configures Lagoon to track and deploy all the relevant branches for each site
+* ensures a Lagoon project is created for each site
+* configures Lagoon to track and deploy all the relevant branches for each site
   as environments
 
 If no other changes have been made to `sites.yaml`, the result is that your new
