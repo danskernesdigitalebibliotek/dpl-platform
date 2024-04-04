@@ -337,7 +337,7 @@ tasks:
         the core and must be available to ssh eg via "eval $(ssh-agent); ssh-add"
       vars:
         ssh_loadbalancer_ip:
-          sh: kubectl get -o jsonpath='{.status.loadBalancer.ingress[0].ip}' -n lagoon-core service lagoon-core-ssh
+          sh: task cluster:auth && kubectl get -o jsonpath='{.status.loadBalancer.ingress[0].ip}' -n lagoon-core service lagoon-core-ssh
       status:
         - test -f {{.HOME}}/.lagoon.yml
 
@@ -503,6 +503,14 @@ tasks:
       desc: |
         Ensures (creates or updates) the state of a particular environment variable.
         Based on this mutation resolver: https://github.com/uselagoon/lagoon/blob/1ef8e57ffbc969a308e9a16bb53929edac562a4d/services/api/src/resources/env-variables/resolvers.ts#L300
+      vars:
+        ENVIRONMENT_NAME_INPUT:
+          sh: |
+            if [ -z "{{.ENVIRONMENT_NAME}}" ]; then
+              echo -n "";
+            else
+              echo -n 'environment: \"{{.ENVIRONMENT_NAME}}\",';
+            fi
       cmds:
         - task: lagoon:run-mutation
           vars:
@@ -510,7 +518,7 @@ tasks:
               mutation ensureEnvironmentVariable {
                 addOrUpdateEnvVariableByName(
                   input:{
-                    project:\"{{.PROJECT_NAME}}\",
+                    project:\"{{.PROJECT_NAME}}\",{{.ENVIRONMENT_NAME_INPUT}}
                     scope:{{.VARIABLE_SCOPE}},
                     name:\"{{.VARIABLE_NAME}}\",
                     value:\"{{.VARIABLE_VALUE}}\"
