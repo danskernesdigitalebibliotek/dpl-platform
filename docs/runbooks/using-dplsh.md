@@ -1,7 +1,7 @@
 # Using the DPL Shell
 
-The Danish Public Libraries Shell is a container-based shell used by platform-
-operators for all cli operations.
+The Danish Public Libraries Shell (dplsh) is a container-based shell used by
+platform-operators for all cli operations.
 
 ## When to use
 
