@@ -17,11 +17,11 @@ in a Redis key/value store.
    serves any requests for static assets.
 4. If the request is for a dynamic page the request is forwarded to the Drupal-
    installation hosted by PHP-FPM.
-5. Drupal bootstraps, and produces the requested response.
-6. During this process it will either populate or reuse it cache which is stored
-   in Redis.
-7. Depending on the request Drupal will execute a number of queries against
-   MariaDB and a search index.
+5. Drupal bootstraps, and produces the requested response.  
+    - During this process it will either populate or reuse it cache which is
+      stored in Redis.  
+    - Depending on the request Drupal will execute a number of queries against
+      MariaDB and a search index.
 
 ## Caching of http responses
 
