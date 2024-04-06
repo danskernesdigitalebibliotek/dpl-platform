@@ -15,6 +15,11 @@ sites:
     releaseImageName: dpl-cms-source
     dpl-cms-release: "2024.12.0"
     deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFcUB4bJlX+B7upLuiOzT/3eju6l8zvor6VVmPz4n8Hp"
+  cms-school:
+    name: "CMS-skole"
+    description: "Et site til undervisning i CMSet"
+    deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJ6SzfPFf/XeLeqI342kxuJAlATpDMtgAfqlrLTTbW2m"
+    << : *default-release-image-source
   kobenhavn:
     name: "Københavns Biblioteker"
     description: "The main library site for København"
