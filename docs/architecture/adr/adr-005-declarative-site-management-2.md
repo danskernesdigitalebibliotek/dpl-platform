@@ -20,7 +20,7 @@ Every time we run a command that is not documented in the source code in the
 platform `main` branch, it becomes less clear what the state of the platform is.
 
 Conversely, every time a change is made in the `main` branch that has not yet
-been execute, it becomes less clear what the state of the platform is.
+been executed, it becomes less clear what the state of the platform is.
 
 ## Decision
 

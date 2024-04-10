@@ -29,6 +29,13 @@ vars:
   # A file we can write environment variables in we want to persist for this
   # instance of the shell.
   instance_vars_file: "/tmp/instance-vars.env"
+  # the name of the plan "webmaster"
+  webmaster_plan_name: webmaster
+  # the branch used for production environments
+  production_branch: main
+  # the branch used for moduletest environments
+  moduletest_branch: moduletest
+
 
 tasks:
     default:
@@ -632,7 +639,7 @@ tasks:
             lagoon {{.COMMAND}} project \
             --gitUrl {{.GIT_URL}} \
             --openshift 1 \
-            --productionEnvironment main \
+            --productionEnvironment {{.production_branch}} \
             --developmentEnvironmentsLimit 25 \
             --branches "^({{ .BRANCHES }})$" \
             --project {{.PROJECT_NAME}}
@@ -799,7 +806,7 @@ tasks:
           set -e
           cat sites.yaml | yq '.sites | keys | .[]' | while read -r site; do
             export site_plan=`cat sites.yaml | yq ".sites[\"$site\"].plan"`
-            export branches=`if [ "$site_plan" = "webmaster" ]; then echo "main|moduletest"; else echo "main"; fi`
+            export branches=`if [ "$site_plan" = "{{.webmaster_plan_name}}" ]; then echo "{{.production_branch}}|{{.moduletest_branch}}"; else echo "{{.production_branch}}"; fi`
             SITE="$site" BRANCHES="$branches" task site:lagoon:project:ensure
             SITE="$site" task site:lagoon:project:capture-deploy-key
           done
@@ -854,12 +861,12 @@ tasks:
         SITE: "{{.SITE}}"
       cmds:
         - |
-          if [ "$(lagoon list deployments --project "{{.SITE}}" --environment main --output-json | jq '.data | length')" = "0" ]; then
-            lagoon deploy branch --project "{{.SITE}}" --branch "main";
+          if [ "$(lagoon list deployments --project "{{.SITE}}" --environment {{.production_branch}} --output-json | jq '.data | length')" = "0" ]; then
+            lagoon deploy branch --project "{{.SITE}}" --branch "{{.production_branch}}";
           fi
         - |
-          if [ "$(yq '.sites[env(SITE)].plan' sites.yaml)" = "webmaster" -a "$(lagoon list deployments --project "{{.SITE}}" --environment moduletest --output-json | jq '.data | length')" = "0" ]; then
-            lagoon deploy branch --project "{{.SITE}}" --branch "moduletest";
+          if [ "$(yq '.sites[env(SITE)].plan' sites.yaml)" = "{{.webmaster_plan_name}}" -a "$(lagoon list deployments --project "{{.SITE}}" --environment {{.moduletest_branch}} --output-json | jq '.data | length')" = "0" ]; then
+            lagoon deploy branch --project "{{.SITE}}" --branch "{{.moduletest_branch}}";
           fi
       preconditions:
       - sh: "[ ! -z {{.SITE}} ]"
