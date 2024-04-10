@@ -1,10 +1,8 @@
 # Configure the source we default to when looking for release images.
-x-defaults:
-  &default-release-image-source
-    releaseImageRepository: ghcr.io/danskernesdigitalebibliotek
-    releaseImageName: dpl-cms-source
-    dpl-cms-release: "2024.12.0"
-
+x-defaults: &default-release-image-source
+  releaseImageRepository: ghcr.io/danskernesdigitalebibliotek
+  releaseImageName: dpl-cms-source
+  dpl-cms-release: "2024.12.0"
 sites:
   # Site objects are indexed by a unique key that must be a valid lagoon, and
   # github project name. That is, alphanumeric and dashes.
@@ -14,50 +12,50 @@ sites:
     releaseImageRepository: ghcr.io/danskernesdigitalebibliotek
     releaseImageName: dpl-cms-source
     dpl-cms-release: "2024.15.0"
-    deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFcUB4bJlX+B7upLuiOzT/3eju6l8zvor6VVmPz4n8Hp"
+    deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIIhuA0K7CNvRoe+Xx7RaXG4+a8KcSpzuWn+G4sUPzNWx"
   cms-school:
     name: "CMS-skole"
     description: "Et site til undervisning i CMSet"
     deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJ6SzfPFf/XeLeqI342kxuJAlATpDMtgAfqlrLTTbW2m"
-    << : *default-release-image-source
+    <<: *default-release-image-source
   kobenhavn:
     name: "Københavns Biblioteker"
     description: "The main library site for København"
     deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHaTkDvjLW/b2qVj8FIvtX9x3TxFFZTENn+w2CFELeoC"
-    << : *default-release-image-source
+    <<: *default-release-image-source
   herning:
     name: "Herning Bibliotekerne"
     description: "The main library site for Herning"
     deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIA4LZWJFrRQQD65WohscqcmX0uqx7/zXFsK/o2tVY/9B"
-    << : *default-release-image-source
+    <<: *default-release-image-source
   aalborg:
     name: "Aalborg Bibliotekerne"
     description: "The main library site for Aalborg"
     deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIE8+vj/1goR+Y42JMD/NbL4PXM4N6DifKbRZjJdyAURp"
-    << : *default-release-image-source
+    <<: *default-release-image-source
   struer:
     name: "Struer Bibliotek"
     description: "The library site for Struer"
     deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIAcZDg9Veyvl3u/TGG0lIw6Z8osrEZwd4HhcXvbABAsH"
-    << : *default-release-image-source
+    <<: *default-release-image-source
   herlev:
     name: "Herlev Bibliotek"
     description: "The library site for Herlev"
     deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAICsQ7blUGjtlSdPU4AV7PR21o2Eqg5IMKTCFX3PV/2Mf"
-    << : *default-release-image-source
+    <<: *default-release-image-source
   billund:
     name: "Billund Bibliotekerne og Borgerservice"
     description: "The main library site for Billund"
     deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOsUy+dVkL+KxOYz8zSel7mNkcKrEnqDZPHmsU4sfMv/"
-    << : *default-release-image-source
+    <<: *default-release-image-source
   faxe:
     name: "Faxe Kommunes Bibliotek & Borgerservice"
     description: "The library site for Faxe"
     deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBkdxUoBx0ZAXfMfA0rRUNo2EcUK39fp0M/zKJPOcYx2"
-    << : *default-release-image-source
+    <<: *default-release-image-source
   customizable-canary:
     name: "Customizable bibliotek - eksempel"
     description: "Eksempel på bibliotek der kører på 'webmaster' plan, og derfor har et modultest-miljø"
     deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAILj8lXv7C/7s7te9sEpwcHQhgDWfzsCkAN7rqQ4sdTzk"
     plan: webmaster
-    << : *default-release-image-source
+    <<: *default-release-image-source
