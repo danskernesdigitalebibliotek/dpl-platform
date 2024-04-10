@@ -29,6 +29,13 @@ vars:
   # A file we can write environment variables in we want to persist for this
   # instance of the shell.
   instance_vars_file: "/tmp/instance-vars.env"
+  # the name of the plan "webmaster"
+  webmaster_plan_name: webmaster
+  # the branch used for production environments
+  production_branch: main
+  # the branch used for moduletest environments
+  moduletest_branch: moduletest
+
 
 tasks:
     default:
@@ -337,7 +344,7 @@ tasks:
         the core and must be available to ssh eg via "eval $(ssh-agent); ssh-add"
       vars:
         ssh_loadbalancer_ip:
-          sh: kubectl get -o jsonpath='{.status.loadBalancer.ingress[0].ip}' -n lagoon-core service lagoon-core-ssh
+          sh: task cluster:auth && kubectl get -o jsonpath='{.status.loadBalancer.ingress[0].ip}' -n lagoon-core service lagoon-core-ssh
       status:
         - test -f {{.HOME}}/.lagoon.yml
 
@@ -394,9 +401,9 @@ tasks:
       env:
         # Fetch a number of variables we'll need to add to a values-file.
         SSH_LOADBALANCER_IP:
-          sh: kubectl get -o jsonpath='{.status.loadBalancer.ingress[0].ip}' -n lagoon-core service lagoon-core-ssh
+          sh: task cluster:auth && kubectl get -o jsonpath='{.status.loadBalancer.ingress[0].ip}' -n lagoon-core service lagoon-core-ssh
         RABBITMQ_PASS:
-          sh: kubectl -n lagoon-core get secret lagoon-core-broker -o jsonpath="{.data.RABBITMQ_PASSWORD}" | base64 -d
+          sh: task cluster:auth && kubectl -n lagoon-core get secret lagoon-core-broker -o jsonpath="{.data.RABBITMQ_PASSWORD}" | base64 -d
         HARBOR_ADMIN_PASS:
           sh: az keyvault secret show --subscription "{{.AZURE_SUBSCRIPTION_ID}}" --name $(terraform -chdir={{.dir_infra}} output -json | jq --raw-output ".harbor_admin_pass_key_name.value | select (.!=null)") --vault-name $(terraform -chdir={{.dir_infra}} output -json | jq --raw-output ".keyvault_name.value | select (.!=null)") --query value -o tsv
         SQL_HOSTNAME:
@@ -436,10 +443,9 @@ tasks:
       - sh: "[ ! -z ${HARBOR_ADMIN_PASS} ]"
         msg: "Could not extract the password for the Harbor admin from keyvault."
 
-    lagoon:set:environment-variable:
+    lagoon:run-mutation:
       deps: [lagoon:cli:config]
-      desc: Sets an environment variable on a lagoon site. This task automates the instructions from https://docs.lagoon.sh/lagoon/using-lagoon-advanced/environment-variables
-
+      desc: Executes a specified mutation against the Lagoon GraphQL API
       vars:
         # Collect the values we'll need for a graphql invocation.
         lagoon_hostname_api:
@@ -450,26 +456,6 @@ tasks:
           sh: terraform -chdir={{.dir_infra}} output -json | jq --raw-output ".lagoon_domain_base.value | select (.!=null)"
         user_token:
           sh: lagoon login > /dev/null && yq eval ".lagoons.{{.platform_env}}.token" - < ~/.lagoon.yml
-
-        # Prepare the mutation.
-        mutation: |
-          {
-            "query": "
-            mutation addContainerRegistryEnv {
-              addEnvVariable(
-                input:{
-                  type:{{.VARIABLE_TYPE}},
-                  typeId:{{.VARIABLE_TYPE_ID}},
-                  scope:{{.VARIABLE_SCOPE}},
-                  name:\"{{.VARIABLE_NAME}}\",
-                  value:\"{{.VARIABLE_VALUE}}\"
-                }
-              ) {
-                id
-              }
-            }
-          "}
-
       # Send the mutation request against graphql, using the bearer token passed
       # by the user.
       cmds:
@@ -477,9 +463,8 @@ tasks:
           curl \
             -H 'Content-Type: application/json' \
             -H "Authorization: Bearer {{.user_token}}" \
-            -d '{{.mutation | replace "\n" ""}}' \
+            -d '{"query":"{{.MUTATION | replace "\n" ""}}"}' \
             https://{{.lagoon_hostname_api}}/graphql
-
       preconditions:
       - sh: "[ ! -z {{.lagoon_hostname_api}} ]"
         msg: "Could not determine the api hostname for Lagoon from Kubernetes"
@@ -487,6 +472,29 @@ tasks:
         msg: "Could not determine the hostname for the Kubernetes API"
       - sh: "[ ! -z {{.lagoon_domain_base}} ]"
         msg: "Could not determine the Lagoon base domain"
+      - sh: "[ ! -z '{{.MUTATION}}' ]"
+        msg: "Missing mutation to execute"
+
+    lagoon:set:environment-variable:
+      desc: Sets an environment variable on a lagoon site. This task automates the instructions from https://docs.lagoon.sh/lagoon/using-lagoon-advanced/environment-variables
+      cmds:
+        - task: lagoon:run-mutation
+          vars:
+            MUTATION: |
+              mutation addEnvironmentVariable {
+                addEnvVariable(
+                  input:{
+                    type:{{.VARIABLE_TYPE}},
+                    typeId:{{.VARIABLE_TYPE_ID}},
+                    scope:{{.VARIABLE_SCOPE}},
+                    name:\"{{.VARIABLE_NAME}}\",
+                    value:\"{{.VARIABLE_VALUE}}\"
+                  }
+                ) {
+                  id
+                }
+              }
+      preconditions:
       - sh: "[ ! -z {{.VARIABLE_VALUE}} ]"
         msg: "Missing VARIABLE_VALUE"
       - sh: "[ ! -z {{.VARIABLE_TYPE_ID}} ]"
@@ -498,16 +506,46 @@ tasks:
       - sh: "[ ! -z {{.VARIABLE_TYPE}} ]"
         msg: "Missing VARIABLE_TYPE"
 
-    lagoon:project:set:github-registry-credentials:
+    lagoon:ensure:environment-variable:
+      desc: |
+        Ensures (creates or updates) the state of a particular environment variable.
+        Based on this mutation resolver: https://github.com/uselagoon/lagoon/blob/1ef8e57ffbc969a308e9a16bb53929edac562a4d/services/api/src/resources/env-variables/resolvers.ts#L300
       vars:
-        # VARIABLE_TYPE_ID is the PROJECT_ID. If we are given a PROJECT_NAME, lookup the ID
-        VARIABLE_TYPE_ID:
-          sh:
-            if [ ! -z {{.PROJECT_ID}} ]; then
-              echo "{{.PROJECT_ID}}";
+        ENVIRONMENT_NAME_INPUT:
+          sh: |
+            if [ -z \"{{.ENVIRONMENT_NAME}}\" ]; then
+              echo -n "";
             else
-              lagoon get project --project "{{.PROJECT_NAME}}" --output-json | jq '.data[0].id' --raw-output;
+              echo -n 'environment: \"{{.ENVIRONMENT_NAME}}\",';
             fi
+      cmds:
+        - task: lagoon:run-mutation
+          vars:
+            MUTATION: |
+              mutation ensureEnvironmentVariable {
+                addOrUpdateEnvVariableByName(
+                  input:{
+                    project:\"{{.PROJECT_NAME}}\",{{.ENVIRONMENT_NAME_INPUT}}
+                    scope:{{.VARIABLE_SCOPE}},
+                    name:\"{{.VARIABLE_NAME}}\",
+                    value:\"{{.VARIABLE_VALUE}}\"
+                  }
+                ) {
+                  id
+                }
+              }
+      preconditions:
+      - sh: "[ ! -z {{.VARIABLE_VALUE}} ]"
+        msg: "Missing VARIABLE_VALUE"
+      - sh: "[ ! -z {{.VARIABLE_NAME}} ]"
+        msg: "Missing VARIABLE_NAME"
+      - sh: "[ ! -z {{.VARIABLE_SCOPE}} ]"
+        msg: "Missing VARIABLE_SCOPE"
+      - sh: "[ ! -z {{.PROJECT_NAME}} ]"
+        msg: "Missing PROJECT_NAME"
+
+    lagoon:project:ensure:github-registry-credentials:
+      vars:
         GITHUB_TOKEN:
           sh: az keyvault secret show
               --subscription "{{.AZURE_SUBSCRIPTION_ID}}"
@@ -518,15 +556,14 @@ tasks:
                 )
               --query value -o tsv
       cmds:
-      - task: lagoon:set:environment-variable
+      - task: lagoon:ensure:environment-variable
         vars:
-          VARIABLE_TYPE: "PROJECT"
           VARIABLE_SCOPE: "CONTAINER_REGISTRY"
           VARIABLE_NAME: "GITHUB_REGISTRY_CREDENTIALS"
-          VARIABLE_TYPE_ID: "{{.VARIABLE_TYPE_ID}}"
           VARIABLE_VALUE: "{{.GITHUB_TOKEN}}"
+          PROJECT_NAME: "{{.PROJECT_NAME}}"
       preconditions:
-      - sh: "[ ! -z {{.PROJECT_ID}} ] || [ ! -z {{.PROJECT_NAME}} ]"
+      - sh: "[ ! -z \"{{.PROJECT_NAME}}\" ]"
         msg: "Missing PROJECT_ID or PROJECT_NAME - at least one must be set"
 
     lagoon:add:cluster:
@@ -586,31 +623,45 @@ tasks:
       - sh: "[ ! -z {{.USER_TOKEN}} ]"
         msg: "Missing USER_TOKEN"
 
-    lagoon:project:add:
-      desc: Add a project to a lagoon remote
+    lagoon:project:set:
+      desc: Set a project state in lagoon using a command, either "add" or "update"
       deps: [lagoon:cli:config]
+      vars:
+        BRANCHES: '{{ .BRANCHES | default "main" }}'
       cmds:
         # - We assume that there will only be a single remote pr core, so we
         #   hardcode --openshift (aka remote) to 1.
-        # - We deploy the main and develop branch
+        # - We deploy the relevant (default: main) branches
         # - We configure the main branch to be the production environment,
         #   This primarily means that develop will auto-idle
         # - We bump the max allowed dev environments (default is 5)
         - |
-            lagoon add project \
+            lagoon {{.COMMAND}} project \
             --gitUrl {{.GIT_URL}} \
             --openshift 1 \
-            --productionEnvironment main \
+            --productionEnvironment {{.production_branch}} \
             --developmentEnvironmentsLimit 25 \
-            --branches "^(main|develop|moduletest)$" \
+            --branches "^({{ .BRANCHES }})$" \
             --project {{.PROJECT_NAME}}
-        - task: lagoon:project:set:github-registry-credentials
+        - task: lagoon:project:ensure:github-registry-credentials
         - task: lagoon:project:deploykey
       preconditions:
       - sh: "[ ! -z {{.GIT_URL}} ]"
         msg: "Env variable GIT_URL is not set or empty."
       - sh: "[ ! -z {{.PROJECT_NAME}} ]"
         msg: "Env variable PROJECT_NAME is not set or empty."
+      - sh: "[ {{.COMMAND}} = 'add' ] || [ {{.COMMAND}} = 'update' ]"
+        msg: "Variable COMMAND must be set to 'add' or 'update'"
+
+    lagoon:project:add:
+      desc: Add a project to a lagoon remote
+      cmds:
+        - task: lagoon:project:set
+          vars:
+            COMMAND: "add"
+            GIT_URL: "{{.GIT_URL}}"
+            PROJECT_NAME: "{{.PROJECT_NAME}}"
+            BRANCHES: "{{.BRANCHES}}"
 
     lagoon:project:deploykey:
       desc: Gets the deployment key for a project
@@ -623,28 +674,13 @@ tasks:
 
     lagoon:project:update:
       desc: Add a project to a lagoon remote
-      deps: [lagoon:cli:config]
       cmds:
-        # - We assume that there will only be a single remote pr core, so we
-        #   hardcode --openshift (aka remote) to 1.
-        # - We deploy the main and develop branch
-        # - We configure the main branch to be the production environment,
-        #   This primarily means that develop will auto-idle
-        # - We bump the max allowed dev environments (default is 5)
-        - |
-            lagoon update project \
-            --gitUrl {{.GIT_URL}} \
-            --openshift 1 \
-            --productionEnvironment main \
-            --developmentEnvironmentsLimit 25 \
-            --branches "^(main|develop)$" \
-            --project {{.PROJECT_NAME}}
-        - task: lagoon:project:deploykey
-      preconditions:
-      - sh: "[ ! -z {{.GIT_URL}} ]"
-        msg: "Env variable GIT_URL is not set or empty."
-      - sh: "[ ! -z {{.PROJECT_NAME}} ]"
-        msg: "Env variable PROJECT_NAME is not set or empty."
+        - task: lagoon:project:set
+          vars:
+            COMMAND: "update"
+            GIT_URL: "{{.GIT_URL}}"
+            PROJECT_NAME: "{{.PROJECT_NAME}}"
+            BRANCHES: "{{.BRANCHES}}"
 
     support:provision:bulk-storage:
       deps: [cluster:auth]
@@ -752,6 +788,88 @@ tasks:
               --query value -o tsv
       cmds:
         - dpladm/bin/sync-site.sh
+      preconditions:
+      - sh: "[ ! -z {{.SITE}} ]"
+        msg: "Env variable SITE is not set or empty."
+
+    sites:list-keys:
+      desc: List keys for sites in sites.yaml config
+      dir: "{{.dir_env}}"
+      cmds:
+        - cat sites.yaml | yq '.sites | keys | .[]'
+
+    sites:sync:
+      desc: Performs a full synchronization from sites.yaml to running state
+      dir: "{{.dir_env}}"
+      cmds:
+        - |
+          set -e
+          cat sites.yaml | yq '.sites | keys | .[]' | while read -r site; do
+            export site_plan=`cat sites.yaml | yq ".sites[\"$site\"].plan"`
+            export branches=`if [ "$site_plan" = "{{.webmaster_plan_name}}" ]; then echo "{{.production_branch}}|{{.moduletest_branch}}"; else echo "{{.production_branch}}"; fi`
+            SITE="$site" BRANCHES="$branches" task site:lagoon:project:ensure
+            SITE="$site" task site:lagoon:project:capture-deploy-key
+          done
+        # TODO: We currenly hide all errors from provisioning because of state alignment issues to be fixed in: https://reload.atlassian.net/browse/DDFDRIFT-58
+        # Once this is fixed, remove `|| true` from the line below, consider changing syntax, so it just says `task: env_repos:provision`
+        - task env_repos:provision || true
+        - |
+          set -e
+          cat sites.yaml | yq '.sites | keys | .[]' | while read -r site; do
+            SITE="$site" task site:lagoon:ensure-first-deployment
+            SITE="$site" task site:sync
+          done
+
+    site:lagoon:project:ensure:
+      desc: |
+        Ensures a lagoon project is set up and configured correctly for a
+        given site as specified by sites.yaml
+      deps: [lagoon:cli:config]
+      dir: "{{.dir_env}}"
+      vars:
+        GIT_URL: "git@github.com:danishpubliclibraries/env-{{.SITE}}.git"
+        BRANCHES: '{{ .BRANCHES | default "main" }}'
+      cmds:
+        - |
+          if [ "$(lagoon get project --project "{{.SITE}}" --output-json | jq '.data[0].id' --raw-output)" = "0" ]; then
+            PROJECT_NAME="{{.SITE}}" GIT_URL="{{.GIT_URL}}" BRANCHES="{{.BRANCHES}}" task lagoon:project:add;
+          else
+            PROJECT_NAME="{{.SITE}}" GIT_URL="{{.GIT_URL}}" BRANCHES="{{.BRANCHES}}" task lagoon:project:update;
+          fi
+      preconditions:
+      - sh: "[ ! -z {{.SITE}} ]"
+        msg: "Env variable SITE is not set or empty."
+
+    site:lagoon:project:capture-deploy-key:
+      # TODO: print a big message if a deploy key is newly captured, so we know to commit changes!
+      desc: Gets the deploy key for a particular project from Lagoon and persists it in sites.yaml
+      deps: [lagoon:cli:config]
+      dir: "{{.dir_env}}"
+      vars:
+        DEPLOY_KEY:
+          sh: lagoon get project-key --project "{{.SITE}}" --output-json | jq '.data[0].publickey' --raw-output
+        SITE: "{{.SITE}}"
+      cmds:
+        - yq -i e '.sites["{{.SITE}}"].deploy_key |= "{{.DEPLOY_KEY}}" | (... | select(tag == "!!merge")) tag = ""' sites.yaml
+      preconditions:
+      - sh: "[ ! -z {{.SITE}} ]"
+        msg: "Env variable SITE is not set or empty."
+
+    site:lagoon:ensure-first-deployment:
+      desc: Ensures that a site has at least one deployment on required branches, so they are tracked by Lagoon
+      deps: [lagoon:cli:config]
+      dir: "{{.dir_env}}"
+      env:
+        SITE: "{{.SITE}}"
+      cmds:
+        - |
+          if [ "$(lagoon list deployments --project "{{.SITE}}" --environment {{.production_branch}} --output-json | jq '.data | length')" = "0" ]; then
+            lagoon deploy branch --project "{{.SITE}}" --branch "{{.production_branch}}";
+          fi
+        - |
+          if [ "$(yq '.sites[env(SITE)].plan' sites.yaml)" = "{{.webmaster_plan_name}}" -a "$(lagoon list deployments --project "{{.SITE}}" --environment {{.moduletest_branch}} --output-json | jq '.data | length')" = "0" ]; then
+            lagoon deploy branch --project "{{.SITE}}" --branch "{{.moduletest_branch}}";
+          fi
       preconditions:
       - sh: "[ ! -z {{.SITE}} ]"
         msg: "Env variable SITE is not set or empty."
