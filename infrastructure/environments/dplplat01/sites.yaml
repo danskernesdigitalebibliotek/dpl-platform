@@ -13,7 +13,7 @@ sites:
     description: "A site to test new releases on"
     releaseImageRepository: ghcr.io/danskernesdigitalebibliotek
     releaseImageName: dpl-cms-source
-    dpl-cms-release: "2024.12.0"
+    dpl-cms-release: "2024.15.0"
     deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFcUB4bJlX+B7upLuiOzT/3eju6l8zvor6VVmPz4n8Hp"
   cms-school:
     name: "CMS-skole"
