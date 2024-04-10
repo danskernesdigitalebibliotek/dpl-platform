@@ -513,7 +513,7 @@ tasks:
       vars:
         ENVIRONMENT_NAME_INPUT:
           sh: |
-            if [ -z "{{.ENVIRONMENT_NAME}}" ]; then
+            if [ -z \"{{.ENVIRONMENT_NAME}}\" ]; then
               echo -n "";
             else
               echo -n 'environment: \"{{.ENVIRONMENT_NAME}}\",';
@@ -563,7 +563,7 @@ tasks:
           VARIABLE_VALUE: "{{.GITHUB_TOKEN}}"
           PROJECT_NAME: "{{.PROJECT_NAME}}"
       preconditions:
-      - sh: "[ ! -z {{.PROJECT_NAME}} ]"
+      - sh: "[ ! -z \"{{.PROJECT_NAME}}\" ]"
         msg: "Missing PROJECT_ID or PROJECT_NAME - at least one must be set"
 
     lagoon:add:cluster:
