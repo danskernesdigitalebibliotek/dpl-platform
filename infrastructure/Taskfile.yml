@@ -401,9 +401,9 @@ tasks:
       env:
         # Fetch a number of variables we'll need to add to a values-file.
         SSH_LOADBALANCER_IP:
-          sh: kubectl get -o jsonpath='{.status.loadBalancer.ingress[0].ip}' -n lagoon-core service lagoon-core-ssh
+          sh: task cluster:auth && kubectl get -o jsonpath='{.status.loadBalancer.ingress[0].ip}' -n lagoon-core service lagoon-core-ssh
         RABBITMQ_PASS:
-          sh: kubectl -n lagoon-core get secret lagoon-core-broker -o jsonpath="{.data.RABBITMQ_PASSWORD}" | base64 -d
+          sh: task cluster:auth && kubectl -n lagoon-core get secret lagoon-core-broker -o jsonpath="{.data.RABBITMQ_PASSWORD}" | base64 -d
         HARBOR_ADMIN_PASS:
           sh: az keyvault secret show --subscription "{{.AZURE_SUBSCRIPTION_ID}}" --name $(terraform -chdir={{.dir_infra}} output -json | jq --raw-output ".harbor_admin_pass_key_name.value | select (.!=null)") --vault-name $(terraform -chdir={{.dir_infra}} output -json | jq --raw-output ".keyvault_name.value | select (.!=null)") --query value -o tsv
         SQL_HOSTNAME:
