@@ -848,7 +848,7 @@ tasks:
           sh: lagoon get project-key --project "{{.SITE}}" --output-json | jq '.data[0].publickey' --raw-output
         SITE: "{{.SITE}}"
       cmds:
-        - yq -i e '.sites["{{.SITE}}"].deploy_key |= "{{.DEPLOY_KEY}}"' sites.yaml
+        - yq -i e '.sites["{{.SITE}}"].deploy_key |= "{{.DEPLOY_KEY}}" | (... | select(tag == "!!merge")) tag = ""' sites.yaml
       preconditions:
       - sh: "[ ! -z {{.SITE}} ]"
         msg: "Env variable SITE is not set or empty."
