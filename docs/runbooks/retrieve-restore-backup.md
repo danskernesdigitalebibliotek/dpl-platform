@@ -36,8 +36,8 @@ folder.
 
  1. Log in to the environments Lagoon UI (consult the
  [environment documentation](../platform-environments.md) for the url)
- 2. Access the sites project
- 3. Access the sites environment ("Main" for production)
+ 2. Access the site's project
+ 3. Access the site's environment ("main" for production)
  4. Click on the "Backups" tab
  5. Click on the "Retrieve" button for the backups you wish to download and/or
     restore. Use to "Source" column to differentiate the types of backups.

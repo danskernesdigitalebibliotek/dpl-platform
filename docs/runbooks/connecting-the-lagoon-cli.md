@@ -2,11 +2,11 @@
 
 ## When to use
 
-When you want to use the Lagoon API vha. the CLI. You can connect from the DPL
+When you want to use the Lagoon API via the CLI. You can connect from the DPL
 Shell, or from a local installation of the CLI.
 
 Using the DPL Shell requires administrative privileges to the infrastructure while
-a local cli may connect using only the ssh-key associated to a Lagoon user.
+a local CLI may connect using only the ssh-key associated to a Lagoon user.
 
 This runbook documents both cases, as well as how an administrator can extract the
 basic connection details a standard user needs to connect to the Lagoon installation.
@@ -83,7 +83,7 @@ $ lagoon config add \
     --lagoon dplplat01
 ```
 
-Then log in
+Then log in:
 
 ```shell
 # Set the configuration as default.

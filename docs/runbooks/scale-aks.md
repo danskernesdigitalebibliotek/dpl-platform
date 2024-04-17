@@ -24,9 +24,9 @@ minimum configuration for the autoscaler.
 ### Adjusting the autoscaler
 
 Edit the infrastructure configuration for your environment. Eg for `dplplat01`
-edit `dpl-platform/dpl-platform/infrastructure/environments/dplplat01/infrastructure/main.tf`.
+edit `infrastructure/environments/dplplat01/infrastructure/main.tf`.
 
-Adjust the `*_count_min` / `*_count_min` corrospodning to the node-pool you
+Adjust the `..._count_min` / `..._count_min` corresponding to the node-pool you
 want to grow/shrink.
 
 Then run `infra:provision` to have terraform effect the change.

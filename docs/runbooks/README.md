@@ -14,7 +14,8 @@ Most runbooks has the following layout.
 * **Procedure** - Stepwise description of the procedure, sometimes these will
   be whole subheadings, sometimes just a single section with lists.
 
-The runbooks should focus on the "How", and avoid explaining any.
+The runbooks should focus on the "How", and avoid explaining any unnecessary
+details.
 
 <!--
 Template:
