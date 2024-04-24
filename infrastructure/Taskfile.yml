@@ -475,6 +475,11 @@ tasks:
           sh: terraform -chdir={{.dir_infra}} output -json | jq --raw-output ".lagoon_domain_base.value | select (.!=null)"
         user_token:
           sh: lagoon login > /dev/null && yq eval ".lagoons.{{.platform_env}}.token" - < ~/.lagoon.yml
+        VARIABLES_JSON:
+          sh: |
+            if [ ! -z "{{.VARIABLES}}" ]; then
+              echo -n ",\"variables\":{{.VARIABLES | default "" | replace "\n" ""}}"
+            fi
       # Send the mutation request against graphql, using the bearer token passed
       # by the user.
       cmds:
@@ -482,7 +487,7 @@ tasks:
           curl \
             -H 'Content-Type: application/json' \
             -H "Authorization: Bearer {{.user_token}}" \
-            -d '{"query":"{{.MUTATION | replace "\n" ""}}"}' \
+            -d '{"query":"{{.MUTATION | replace "\n" ""}}"{{.VARIABLES_JSON}} }' \
             https://{{.lagoon_hostname_api}}/graphql
       preconditions:
       - sh: "[ ! -z {{.lagoon_hostname_api}} ]"
@@ -493,6 +498,19 @@ tasks:
         msg: "Could not determine the Lagoon base domain"
       - sh: "[ ! -z '{{.MUTATION}}' ]"
         msg: "Missing mutation to execute"
+
+    lagoon:delete-user-by-id:
+      desc: Deletes a user with a given ID
+      cmds:
+        - task: lagoon:run-mutation
+          vars:
+            MUTATION: |
+              mutation deleteUser($id: String!) { deleteUser(input: {user: {id: $id}}) }
+            VARIABLES: |
+              {"id":"{{.ID}}"}
+      preconditions:
+      - sh: "[ ! -z '{{.ID}}' ]"
+        msg: "Missing ID of user to delete"
 
     lagoon:set:environment-variable:
       desc: Sets an environment variable on a lagoon site. This task automates the instructions from https://docs.lagoon.sh/lagoon/using-lagoon-advanced/environment-variables
