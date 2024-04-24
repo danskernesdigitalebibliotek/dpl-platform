@@ -844,7 +844,6 @@ tasks:
       dir: "{{.dir_env}}"
       cmds:
         - |
-          set -e
           cat sites.yaml | yq '.sites | keys | .[]' | while read -r site; do
             export site_plan=`cat sites.yaml | yq ".sites[\"$site\"].plan"`
             export branches=`if [ "$site_plan" = "{{.webmaster_plan_name}}" ]; then echo "{{.production_branch}}|{{.moduletest_branch}}"; else echo "{{.production_branch}}"; fi`
@@ -855,7 +854,6 @@ tasks:
         # Once this is fixed, remove `|| true` from the line below, consider changing syntax, so it just says `task: env_repos:provision`
         - task env_repos:provision || true
         - |
-          set -e
           cat sites.yaml | yq '.sites | keys | .[]' | while read -r site; do
             SITE="$site" task site:lagoon:ensure-first-deployment
             SITE="$site" task site:sync
