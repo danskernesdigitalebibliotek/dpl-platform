@@ -914,6 +914,7 @@ tasks:
         msg: "Env variable SITE is not set or empty."
 
     ui-password:
+      deps: [cluster:auth]
       desc: Get the password to access a given user interface
       cmds:
       - task/scripts/ui-password.sh
