@@ -867,7 +867,10 @@ tasks:
       dir: "{{.dir_env}}"
       vars:
         GIT_URL: "git@github.com:danishpubliclibraries/env-{{.SITE}}.git"
-        BRANCHES: '{{ .BRANCHES | default "main" }}'
+        SITE_PLAN:
+          sh: cat {{.dir_env}}/sites.yaml | yq ".sites[\"{{.SITE}}\"].plan"
+        BRANCHES:
+          sh: if [ "{{.SITE_PLAN}}" = "{{.webmaster_plan_name}}" ]; then echo "{{.production_branch}}|{{.moduletest_branch}}"; else echo "{{.production_branch}}"; fi
       cmds:
         - |
           if [ "$(lagoon get project --project "{{.SITE}}" --output-json | jq '.data[0].id' --raw-output)" = "0" ]; then
