@@ -844,20 +844,27 @@ tasks:
     sites:sync:
       desc: Performs a full synchronization from sites.yaml to running state
       dir: "{{.dir_env}}"
+      vars:
+        sites:
+          sh: cat {{.dir_env}}/sites.yaml | yq '.sites | keys | .[]'
       cmds:
-        - |
-          cat sites.yaml | yq '.sites | keys | .[]' | while read -r site; do
-            export site_plan=`cat sites.yaml | yq ".sites[\"$site\"].plan"`
-            export branches=`if [ "$site_plan" = "{{.webmaster_plan_name}}" ]; then echo "{{.production_branch}}|{{.moduletest_branch}}"; else echo "{{.production_branch}}"; fi`
-            SITE="$site" BRANCHES="$branches" task site:lagoon:project:ensure
-            SITE="$site" task site:lagoon:project:capture-deploy-key
-          done
+        - for: { var: sites }
+          task: site:lagoon:project:ensure
+          vars:
+            SITE: "{{.ITEM}}"
+        - for: { var: sites }
+          task: site:lagoon:project:capture-deploy-key
+          vars:
+            SITE: "{{.ITEM}}"
         - task: env_repos:provision
-        - |
-          cat sites.yaml | yq '.sites | keys | .[]' | while read -r site; do
-            SITE="$site" task site:lagoon:ensure-first-deployment
-            SITE="$site" task site:sync
-          done
+        - for: { var: sites }
+          task: site:lagoon:ensure-first-deployment
+          vars:
+            SITE: "{{.ITEM}}"
+        - for: { var: sites }
+          task: site:sync
+          vars:
+            SITE: "{{.ITEM}}"
 
     site:lagoon:project:ensure:
       desc: |
