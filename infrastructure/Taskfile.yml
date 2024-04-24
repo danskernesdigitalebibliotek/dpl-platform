@@ -852,9 +852,7 @@ tasks:
             SITE="$site" BRANCHES="$branches" task site:lagoon:project:ensure
             SITE="$site" task site:lagoon:project:capture-deploy-key
           done
-        # TODO: We currenly hide all errors from provisioning because of state alignment issues to be fixed in: https://reload.atlassian.net/browse/DDFDRIFT-58
-        # Once this is fixed, remove `|| true` from the line below, consider changing syntax, so it just says `task: env_repos:provision`
-        - task env_repos:provision || true
+        - task: env_repos:provision
         - |
           cat sites.yaml | yq '.sites | keys | .[]' | while read -r site; do
             SITE="$site" task site:lagoon:ensure-first-deployment
