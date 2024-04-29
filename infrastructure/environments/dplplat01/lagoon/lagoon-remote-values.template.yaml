@@ -22,9 +22,6 @@ sshCore:
 dbaas-operator:
   enabled: true
 
-azureEmailService:
-  connectionString: "$ACS_CONNECTION_STRING"
-
   mariadbProviders:
     production:
       environment: "production"
