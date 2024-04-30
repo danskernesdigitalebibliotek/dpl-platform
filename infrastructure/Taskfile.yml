@@ -865,6 +865,24 @@ tasks:
       cmds:
         - cat sites.yaml | yq '.sites | keys | .[]'
 
+    sites:check:
+      desc: Simply checks that all sites defined in sites.yaml are running and responding
+      dir: "{{.dir_env}}"
+      vars:
+        sites:
+          sh: cat {{.dir_env}}/sites.yaml | yq '.sites | keys | .[]'
+      cmds:
+        - touch statusnow.txt
+        - for: { var: sites }
+          cmd: |
+            if [[ "$(curl -I https://varnish.main.{{.ITEM}}.dplplat01.dpl.reload.dk | head -1)" == "HTTP/2 200"* ]]; then
+              echo "{{.ITEM}}: OK" >> statusnow.txt;
+            else
+              echo "{{.ITEM}}: ERROR! Not up." >> statusnow.txt;
+            fi
+        - cat statusnow.txt
+        - rm statusnow.txt
+
     sites:sync:
       desc: Performs a full synchronization from sites.yaml to running state
       dir: "{{.dir_env}}"
