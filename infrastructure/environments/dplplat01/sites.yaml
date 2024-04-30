@@ -29,7 +29,7 @@ sites:
   aabenraa:
     name: "Aabenraa Biblioteker og Kulturhuse"
     description: "The library site for Aabenraa"
-    deploy_key: ""
+    deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIEMyXdV9INXfJeWlvQAke7jOtWWHTokbPoQ/0vjZ0S1D"
     <<: *default-release-image-source
   aalborg:
     name: "Aalborg Bibliotekerne"
@@ -39,32 +39,32 @@ sites:
   aarhus:
     name: "Aarhus Kommunes Biblioteker"
     description: "The library site for Aarhus"
-    deploy_key: ""
+    deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFL+uMeEfsaHEzbNxOmBB8dX32OLo63CTomG8VZvuiN2"
     <<: *default-release-image-source
   aero:
     name: "Ærø Folkebibliotek"
     description: "The library site for Ærø"
-    deploy_key: ""
+    deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDJNI7OU7O3X0AYNJSyZ9VkdSGaD5mAQmhcRMW72TpKi"
     <<: *default-release-image-source
   albertslund:
     name: "Albertslund Bibliotek"
     description: "The library site for Albertslund"
-    deploy_key: ""
+    deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOpbJ5Duz6d8xqIF6CMOGrJxkpcwwAeAmP2OPnuXwAQe"
     <<: *default-release-image-source
   allerod:
     name: "Allerød Biblioteker"
     description: "The library site for Allerød"
-    deploy_key: ""
+    deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOlK4u+5C8Y+euVj0Q+s7ZsNWMeUqSKgVg+845d3XX1s"
     <<: *default-release-image-source
   assens:
     name: "AssensBibliotekerne"
     description: "The library site for Assens"
-    deploy_key: ""
+    deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDrdA9FWa+mpmJ+uyMO6H3O+xIVYpdjcbodE/zS790Ee"
     <<: *default-release-image-source
   ballerup:
     name: "Ballerup Bibliotekerne"
     description: "The library site for Ballerup"
-    deploy_key: ""
+    deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKnoDa5OsU/7RESGoGwvRv/piSndDnLShEyaBDP2pW1r"
     <<: *default-release-image-source
   billund:
     name: "Billund Bibliotekerne og Borgerservice"
@@ -74,42 +74,42 @@ sites:
   bornholm:
     name: "Bornholms Folkebiblioteker"
     description: "The library site for Bornholm"
-    deploy_key: ""
+    deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIApUNh71neiuKAsO3OL4jEzxnPCXt9gvl66gDRiYLnLw"
     <<: *default-release-image-source
   brondby:
     name: "Brøndby-Bibliotekerne"
     description: "The library site for Brøndby"
-    deploy_key: ""
+    deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAICyvaCXo55aJOmlSTDQr+GXCIihWMJHhUiw4XpDrbVID"
     <<: *default-release-image-source
   bronderslev:
     name: "Brønderslev Bibliotek"
     description: "The library site for Brønderslev"
-    deploy_key: ""
+    deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPocm02vNblShmSFlQqWsIszR/AXsbT5Jmwj8fDwjSwO"
     <<: *default-release-image-source
   dragor:
     name: "Dragør Bibliotek"
     description: "The library site for Dragør"
-    deploy_key: ""
+    deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIAwkmlUnVYpnRLKQDohUcg58fFYn+UdPGDU2AUWoTybo"
     <<: *default-release-image-source
   egedal:
     name: "Egedal Bibliotekerne"
     description: "The library site for Egedal"
-    deploy_key: ""
+    deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDCT5ZJIKWlbAYV5Fnr9Qq5WaVIuZKfcLucqTebUpXyz"
     <<: *default-release-image-source
   esbjerg:
     name: "Esbjerg Kommunes Biblioteker"
     description: "The library site for Esbjerg"
-    deploy_key: ""
+    deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBQFAh4UeSmcPTFtXj5W/ZKhelJcAornaFYIYJUP0hH9"
     <<: *default-release-image-source
   faaborg-midtfyn:
     name: "Faaborg-Midtfyn Bibliotekerne"
     description: "The library site for Faaborg-Midtfyn"
-    deploy_key: ""
+    deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAILKo6SAhtuZy4z708mYP3vyc6YDMmTxwme3kg+kyQoTM"
     <<: *default-release-image-source
   favrskov:
     name: "Favrskov Bibliotekerne"
     description: "The library site for Favrskov"
-    deploy_key: ""
+    deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINqAkzzI+VgHhM7NpOQaEe7XSUo2iWU/cVXvt8rq88uK"
     <<: *default-release-image-source
   faxe:
     name: "Faxe Kommunes Bibliotek & Borgerservice"
@@ -119,57 +119,57 @@ sites:
   fredensborg:
     name: "Fredensborg Bibliotekerne"
     description: "The library site for Fredensborg"
-    deploy_key: ""
+    deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKxoe8V6eyofhPOEe18qZACQAoWjfgCjN3yxcTWVjyxV"
     <<: *default-release-image-source
   fredericia:
     name: "Fredericia Bibliotek"
     description: "The library site for Fredericia"
-    deploy_key: ""
+    deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIA2SgYgOoWn6jbg+U91/PcxmfRIxoSWbTANKP++LKanO"
     <<: *default-release-image-source
   frederiksberg:
     name: "Biblioteket Frederiksberg"
     description: "The library site for Frederiksberg"
-    deploy_key: ""
+    deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIGatN86NGcfXHefEFAACwDVkDxob2SW+N8R+8/rANnvF"
     <<: *default-release-image-source
   frederikshavn:
     name: "Frederikshavn Kommunes Biblioteker"
     description: "The library site for Frederikshavn"
-    deploy_key: ""
+    deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAICZcYBGIGrw0aei4UFmWcNMiQ4ZbJbBR7OU7q5Bsu/lz"
     <<: *default-release-image-source
   frederikssund:
     name: "Frederikssund Bibliotekerne"
     description: "The library site for Frederikssund"
-    deploy_key: ""
+    deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOSWh56XpMvlK6CMz2bi3RZoUXUWFUVw7eo/cfaxmE/1"
     <<: *default-release-image-source
   fureso:
     name: "Furesø Bibliotek & Borgerservice"
     description: "The library site for Furesø"
-    deploy_key: ""
+    deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIB+OntBSayMdg22NU1xDnoMsuW1E69uNwvcmeEgt8wlQ"
     <<: *default-release-image-source
   gentofte:
     name: "Gentofte Bibliotekerne"
     description: "The library site for Gentofte"
-    deploy_key: ""
+    deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIP3Gh74TPbjSiKTz/cJQeH3l0gLsPtgzGVpC1YezMi+D"
     <<: *default-release-image-source
   gladsaxe:
     name: "Gladsaxe Bibliotekerne"
     description: "The library site for Gladsaxe"
-    deploy_key: ""
+    deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAICAQZr2pUtpsYarlI31+J/EXr3QHomuiG5TwQJDhquYF"
     <<: *default-release-image-source
   glostrup:
     name: "Glostrup Bibliotek"
     description: "The library site for Glostrup"
-    deploy_key: ""
+    deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBMV2GongJbNSRKHl2OUNd2Md5Y9PxKMLxyU8BprGV1L"
     <<: *default-release-image-source
   greve:
     name: "Greve Bibliotek"
     description: "The library site for Greve"
-    deploy_key: ""
+    deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMjwn5wHT3u7AIfYN0FMPtxidi+vUmcE1cZpWeg1pPm9"
     <<: *default-release-image-source
   gribskov:
     name: "Gribskov Biblioteker"
     description: "The library site for Gribskov"
-    deploy_key: ""
+    deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIIK40x6Y/UvhxDaW+McgqIeY2phSuuadNxuG/FGnSY70"
     <<: *default-release-image-source
   guldborgsund:
     name: "Guldborgsund-bibliotekerne"
