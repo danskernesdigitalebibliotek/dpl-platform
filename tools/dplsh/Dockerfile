@@ -13,7 +13,7 @@ FROM hashicorp/terraform:1.7.3 as terraform
 FROM mcr.microsoft.com/azure-cli:2.57.0
 
 # See https://github.com/go-task/task/releases
-ARG TASK_VERSION=v3.32.0
+ARG TASK_VERSION=v3.36.0
 # See https://github.com/stern/stern/releases
 ARG STERN_RELEASE=1.27.0
 # See https://github.com/uselagoon/lagoon-cli/releases

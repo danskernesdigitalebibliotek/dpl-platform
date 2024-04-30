@@ -477,6 +477,11 @@ tasks:
           sh: terraform -chdir={{.dir_infra}} output -json | jq --raw-output ".lagoon_domain_base.value | select (.!=null)"
         user_token:
           sh: lagoon login > /dev/null && yq eval ".lagoons.{{.platform_env}}.token" - < ~/.lagoon.yml
+        VARIABLES_JSON:
+          sh: |
+            if [ ! -z "{{.VARIABLES}}" ]; then
+              echo -n ",\"variables\":{{.VARIABLES | default "" | replace "\n" ""}}"
+            fi
       # Send the mutation request against graphql, using the bearer token passed
       # by the user.
       cmds:
@@ -484,7 +489,7 @@ tasks:
           curl \
             -H 'Content-Type: application/json' \
             -H "Authorization: Bearer {{.user_token}}" \
-            -d '{"query":"{{.MUTATION | replace "\n" ""}}"}' \
+            -d '{"query":"{{.MUTATION | replace "\n" ""}}"{{.VARIABLES_JSON}} }' \
             https://{{.lagoon_hostname_api}}/graphql
       preconditions:
       - sh: "[ ! -z {{.lagoon_hostname_api}} ]"
@@ -495,6 +500,19 @@ tasks:
         msg: "Could not determine the Lagoon base domain"
       - sh: "[ ! -z '{{.MUTATION}}' ]"
         msg: "Missing mutation to execute"
+
+    lagoon:delete-user-by-id:
+      desc: Deletes a user with a given ID
+      cmds:
+        - task: lagoon:run-mutation
+          vars:
+            MUTATION: |
+              mutation deleteUser($id: String!) { deleteUser(input: {user: {id: $id}}) }
+            VARIABLES: |
+              {"id":"{{.ID}}"}
+      preconditions:
+      - sh: "[ ! -z '{{.ID}}' ]"
+        msg: "Missing ID of user to delete"
 
     lagoon:set:environment-variable:
       desc: Sets an environment variable on a lagoon site. This task automates the instructions from https://docs.lagoon.sh/lagoon/using-lagoon-advanced/environment-variables
@@ -687,7 +705,11 @@ tasks:
             --branches "^({{ .BRANCHES }})$" \
             --project {{.PROJECT_NAME}}
         - task: lagoon:project:ensure:github-registry-credentials
+          vars:
+            PROJECT_NAME: "{{.PROJECT_NAME}}"
         - task: lagoon:project:deploykey
+          vars:
+            PROJECT_NAME: "{{.PROJECT_NAME}}"
       preconditions:
       - sh: "[ ! -z {{.GIT_URL}} ]"
         msg: "Env variable GIT_URL is not set or empty."
@@ -832,8 +854,10 @@ tasks:
       cmds:
         - dpladm/bin/sync-site.sh
       preconditions:
-      - sh: "[ ! -z {{.SITE}} ]"
-        msg: "Env variable SITE is not set or empty."
+      - &require_site {
+          sh: "[ ! -z \"{{.SITE}}\" ]",
+          msg: "Variable SITE is not set or empty."
+        }
 
     sites:list-keys:
       desc: List keys for sites in sites.yaml config
@@ -844,24 +868,34 @@ tasks:
     sites:sync:
       desc: Performs a full synchronization from sites.yaml to running state
       dir: "{{.dir_env}}"
+      vars:
+        sites:
+          sh: cat {{.dir_env}}/sites.yaml | yq '.sites | keys | .[]'
       cmds:
-        - |
-          set -e
-          cat sites.yaml | yq '.sites | keys | .[]' | while read -r site; do
-            export site_plan=`cat sites.yaml | yq ".sites[\"$site\"].plan"`
-            export branches=`if [ "$site_plan" = "{{.webmaster_plan_name}}" ]; then echo "{{.production_branch}}|{{.moduletest_branch}}"; else echo "{{.production_branch}}"; fi`
-            SITE="$site" BRANCHES="$branches" task site:lagoon:project:ensure
-            SITE="$site" task site:lagoon:project:capture-deploy-key
-          done
-        # TODO: We currenly hide all errors from provisioning because of state alignment issues to be fixed in: https://reload.atlassian.net/browse/DDFDRIFT-58
-        # Once this is fixed, remove `|| true` from the line below, consider changing syntax, so it just says `task: env_repos:provision`
-        - task env_repos:provision || true
-        - |
-          set -e
-          cat sites.yaml | yq '.sites | keys | .[]' | while read -r site; do
-            SITE="$site" task site:lagoon:ensure-first-deployment
-            SITE="$site" task site:sync
-          done
+        - for: { var: sites }
+          task: site:full-sync
+          vars:
+            SITE: "{{.ITEM}}"
+
+    site:full-sync:
+      desc: Performs a full syncrhonization from sites.yaml for a single site to running state
+      dir: "{{.dir_env}}"
+      cmds:
+        - task: site:lagoon:project:ensure
+          vars:
+            SITE: "{{.SITE}}"
+        - task: site:lagoon:project:capture-deploy-key
+          vars:
+            SITE: "{{.SITE}}"
+        - task: env_repos:provision
+        - task: site:lagoon:ensure-first-deployment
+          vars:
+            SITE: "{{.SITE}}"
+        - task: site:sync
+          vars:
+            SITE: "{{.SITE}}"
+      preconditions:
+      - *require_site
 
     site:lagoon:project:ensure:
       desc: |
@@ -871,7 +905,10 @@ tasks:
       dir: "{{.dir_env}}"
       vars:
         GIT_URL: "git@github.com:danishpubliclibraries/env-{{.SITE}}.git"
-        BRANCHES: '{{ .BRANCHES | default "main" }}'
+        SITE_PLAN:
+          sh: cat {{.dir_env}}/sites.yaml | yq ".sites[\"{{.SITE}}\"].plan"
+        BRANCHES:
+          sh: if [ "{{.SITE_PLAN}}" = "{{.webmaster_plan_name}}" ]; then echo "{{.production_branch}}|{{.moduletest_branch}}"; else echo "{{.production_branch}}"; fi
       cmds:
         - |
           if [ "$(lagoon get project --project "{{.SITE}}" --output-json | jq '.data[0].id' --raw-output)" = "0" ]; then
@@ -880,8 +917,7 @@ tasks:
             PROJECT_NAME="{{.SITE}}" GIT_URL="{{.GIT_URL}}" BRANCHES="{{.BRANCHES}}" task lagoon:project:update;
           fi
       preconditions:
-      - sh: "[ ! -z {{.SITE}} ]"
-        msg: "Env variable SITE is not set or empty."
+      - *require_site
 
     site:lagoon:project:capture-deploy-key:
       # TODO: print a big message if a deploy key is newly captured, so we know to commit changes!
@@ -895,8 +931,7 @@ tasks:
       cmds:
         - yq -i e '.sites["{{.SITE}}"].deploy_key |= "{{.DEPLOY_KEY}}" | (... | select(tag == "!!merge")) tag = ""' sites.yaml
       preconditions:
-      - sh: "[ ! -z {{.SITE}} ]"
-        msg: "Env variable SITE is not set or empty."
+      - *require_site
 
     site:lagoon:ensure-first-deployment:
       desc: Ensures that a site has at least one deployment on required branches, so they are tracked by Lagoon
@@ -914,10 +949,10 @@ tasks:
             lagoon deploy branch --project "{{.SITE}}" --branch "{{.moduletest_branch}}";
           fi
       preconditions:
-      - sh: "[ ! -z {{.SITE}} ]"
-        msg: "Env variable SITE is not set or empty."
+      - *require_site
 
     ui-password:
+      deps: [cluster:auth]
       desc: Get the password to access a given user interface
       cmds:
       - task/scripts/ui-password.sh
