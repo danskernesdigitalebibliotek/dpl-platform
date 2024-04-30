@@ -228,3 +228,9 @@ output "harbor_secondary_access_key_name" {
   description = "Name under which the secondary harbor storage account key is stored in keyvault"
   value       = azurerm_key_vault_secret.harbor_secondary_access_key.name
 }
+
+output "acs_connection_string" {
+  description = "The conneciton string for Azure Communication Service"
+  value       = azurerm_communication_service.communications-services.primary_connection_string
+  sensitive   = true
+}
