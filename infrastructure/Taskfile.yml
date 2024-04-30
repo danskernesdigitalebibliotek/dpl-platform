@@ -707,9 +707,6 @@ tasks:
         - task: lagoon:project:ensure:github-registry-credentials
           vars:
             PROJECT_NAME: "{{.PROJECT_NAME}}"
-        - task: lagoon:project:deploykey
-          vars:
-            PROJECT_NAME: "{{.PROJECT_NAME}}"
       preconditions:
       - sh: "[ ! -z {{.GIT_URL}} ]"
         msg: "Env variable GIT_URL is not set or empty."
