@@ -174,27 +174,27 @@ sites:
   guldborgsund:
     name: "Guldborgsund-bibliotekerne"
     description: "The library site for Guldborgsund"
-    deploy_key: ""
+    deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFwCP4jEJTjUyPTNlOJd7dHaT63C1iox9PPWl/Ck7IJH"
     <<: *default-release-image-source
   haderslev:
     name: "Haderslev Bibliotekerne"
     description: "The library site for Haderslev"
-    deploy_key: ""
+    deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAICsEjJ7Yqh8JPF1UglkMDQbksKwAeZLSZeqWRCWFXMkR"
     <<: *default-release-image-source
   halsnaes:
     name: "Halsnæs Bibliotekerne"
     description: "The library site for Halsnæs"
-    deploy_key: ""
+    deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMB+INXad3Fl3fbnPVnDJcMq1L907fu5J4S7rL3nUv84"
     <<: *default-release-image-source
   hedensted:
     name: "Hedensted Bibliotekerne"
     description: "The library site for Hedensted"
-    deploy_key: ""
+    deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAID34dCc953IPi1leCQyIOo4XMOvuRz84qam4P1r9Dzuh"
     <<: *default-release-image-source
   helsingor:
     name: "Helsingør Kommunes Biblioteker"
     description: "The library site for Helsingør"
-    deploy_key: ""
+    deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMjjzFRg91rY4Bsr1I8yxysk/aCk374S2rpgixONAP7a"
     <<: *default-release-image-source
   herlev:
     name: "Herlev Bibliotek"
@@ -209,27 +209,27 @@ sites:
   hillerod:
     name: "Hillerød Bibliotekerne"
     description: "The library site for Hillerød"
-    deploy_key: ""
+    deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMpZ969v19pbZ6ILz1krcNBccZMkUK3ok5S1HjF7u5Y1"
     <<: *default-release-image-source
   hjorring:
     name: "Hjørring Bibliotekerne"
     description: "The library site for Hjørring"
-    deploy_key: ""
+    deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJw8nFZITPe1eVE9BUmtxWWuJUKNezmJgRa3QS1T0nWI"
     <<: *default-release-image-source
   hoje-taastrup:
     name: "Høje-Taastrup Kommunes Biblioteker"
     description: "The library site for Høje-Taastrup"
-    deploy_key: ""
+    deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAILiVBegVlQMb0OfQCfJAv87mLMe37xAaGCQc42i0j+2H"
     <<: *default-release-image-source
   holbaek:
     name: "Holbæk Bibliotekerne"
     description: "The library site for Holbæk"
-    deploy_key: ""
+    deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIL6uSbRiMzeDVejoPx5+YlAPCHebnY0XwF/zDd3YZtQ+"
     <<: *default-release-image-source
   holstebro:
     name: "Holstebro Bibliotek"
     description: "The library site for Holstebro"
-    deploy_key: ""
+    deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINQNXpvIAg6/lHe/RVocj2losQ6Q2TIN/S5IFdY17g0Y"
     <<: *default-release-image-source
   horsens:
     name: "Horsens Bibliotek"
