@@ -123,7 +123,7 @@ tasks:
                 )
               --query value -o tsv
       cmds:
-        - cmd: terraform -chdir={{.dir_env_repos}} apply
+        - cmd: terraform -chdir={{.dir_env_repos}} apply {{.OPTIONS}}
 
 
     terraform:import:
@@ -872,6 +872,9 @@ tasks:
         sites:
           sh: cat {{.dir_env}}/sites.yaml | yq '.sites | keys | .[]'
       cmds:
+        - task: env_repos:provision
+          vars:
+            OPTIONS: "{{.INITIAL_TERRAFORM_OPTIONS}}"
         - for: { var: sites }
           task: site:full-sync
           vars:
@@ -888,6 +891,8 @@ tasks:
           vars:
             SITE: "{{.SITE}}"
         - task: env_repos:provision
+          vars:
+            OPTIONS: -refresh=false
         - task: site:lagoon:ensure-first-deployment
           vars:
             SITE: "{{.SITE}}"
