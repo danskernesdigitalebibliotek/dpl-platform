@@ -261,7 +261,7 @@ sites:
     description: "The library site for Jammerbugt"
     deploy_key: ""
     <<: *default-release-image-source
-  kallundborg:
+  kalundborg:
     name: "Kalundborg Biblioteker"
     description: "The library site for Kallundborg"
     deploy_key: ""
