@@ -41,6 +41,11 @@ sites:
     description: "The library site for Aarhus"
     deploy_key: ""
     <<: *default-release-image-source
+  aero:
+    name: "Ærø Folkebibliotek"
+    description: "The library site for Ærø"
+    deploy_key: ""
+    <<: *default-release-image-source
   albertslund:
     name: "Albertslund Bibliotek"
     description: "The library site for Albertslund"
@@ -509,10 +514,5 @@ sites:
   vordingborg:
     name: "Vordingborg Bibliotekerne"
     description: "The library site for Vordingborg"
-    deploy_key: ""
-    <<: *default-release-image-source
-  æro:
-    name: "Ærø Folkebibliotek"
-    description: "The library site for Ærø"
     deploy_key: ""
     <<: *default-release-image-source
