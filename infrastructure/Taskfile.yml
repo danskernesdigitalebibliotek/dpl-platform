@@ -1122,3 +1122,18 @@ tasks:
               --output tsv
       cmds:
         - az communication email send --sender "DoNotReply@folkebibliotekernescms.dk" --subject "{{.SUBJECT}}" --to "{{.RECIPIENT}}" --text "{{.CONTENT}}" --connection-string "{{.CONNECTION_STRING}}"
+
+    site:admins:credentials:mail:
+      desc: Sent email with credentials and site info to admin user on a library site
+      deps: [cluster:auth, lagoon:cli:config]
+      dir: "{{.dir_env}}"
+      vars:
+        siteadmins:
+          sh: cat {{.dir_env}}/contacts-and-their-sites.yaml | yq '.sites | keys | .[]'
+      cmds:
+        - for: { var: siteadmins }
+          task: site:admin:password:set
+          vars:
+            PROJECT: "{{.ITEM}}"
+            PASSWORD:
+              sh: $RANDOM  | md5sum | head -c 20
