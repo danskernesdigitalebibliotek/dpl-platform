@@ -81,11 +81,6 @@ sites:
     description: "The library site for Brønderslev"
     deploy_key: ""
     <<: *default-release-image-source
-  sydslesvig:
-    name: "Dansk Centralbibliotek for Sydslesvig e.V."
-    description: "The library site for Dansk Centralbibliotek for Sydslesvig e.V."
-    deploy_key: ""
-    <<: *default-release-image-source
   dragor:
     name: "Dragør Bibliotek"
     description: "The library site for Dragør"
@@ -450,6 +445,11 @@ sites:
     name: "Struer Bibliotek"
     description: "The library site for Struer"
     deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIAcZDg9Veyvl3u/TGG0lIw6Z8osrEZwd4HhcXvbABAsH"
+    <<: *default-release-image-source
+  sydslesvig:
+    name: "Dansk Centralbibliotek for Sydslesvig e.V."
+    description: "The library site for Dansk Centralbibliotek for Sydslesvig e.V."
+    deploy_key: ""
     <<: *default-release-image-source
   svendborg:
     name: "Svendborg Bibliotek"
