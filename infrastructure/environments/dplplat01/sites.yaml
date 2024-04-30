@@ -81,7 +81,7 @@ sites:
     description: "The library site for Brønderslev"
     deploy_key: ""
     <<: *default-release-image-source
-  dansk centralbibliotek for sydslesvig e.v.:
+  sydslesvig:
     name: "Dansk Centralbibliotek for Sydslesvig e.V."
     description: "The library site for Dansk Centralbibliotek for Sydslesvig e.V."
     deploy_key: ""
@@ -329,16 +329,6 @@ sites:
   morso:
     name: "Morsø Folkebibliotek"
     description: "The library site for Morsø"
-    deploy_key: ""
-    <<: *default-release-image-source
-  na:
-    name: "Ja"
-    description: "The library site for undefined"
-    deploy_key: ""
-    <<: *default-release-image-source
-  na:
-    name: "Nej"
-    description: "The library site for undefined"
     deploy_key: ""
     <<: *default-release-image-source
   naestved:
