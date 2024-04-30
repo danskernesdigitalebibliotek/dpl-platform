@@ -1082,3 +1082,13 @@ tasks:
         msg: "Could not find directory {{.dir_infra}}"
       - sh: "[ -d {{.dir_configuration}} ]"
         msg: "Could not find directory {{.dir_configuration}}"
+
+    site:admin:password:set:
+      desc: Sets the password for the admin of the selected site
+      deps: [lagoon:cli:config, cluster:auth]
+      dir: "{{.dir_env}}"
+      vars:
+        PROJECT: "{{.PROJECT}}"
+        PASSWORD: "{{.PASSWORD}}"
+      cmds:
+        - lagoon ssh --project {{.PROJECT}} --environment main -C "drush user:password admin '{{.PASSWORD}}'"
