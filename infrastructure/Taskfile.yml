@@ -142,7 +142,17 @@ tasks:
                 )
               --query value -o tsv
       cmds:
-        - cmd: terraform -chdir={{.dir_env_repos}} import "{{.OPTIONS}}" "{{.ADDRESS_ID}}"
+        - cmd: terraform -chdir={{.dir_env_repos}} import '{{.OPTIONS}}' '{{.ADDRESS_ID}}'
+
+    terraform:import:repo:
+      desc: Imports a Github repository for a site by passing the site name
+      cmds:
+        - task: terraform:import
+          vars:
+            OPTIONS: module.env_repos.github_repository.site["{{.SITE}}"]
+            ADDRESS_ID: env-{{.SITE}}
+      preconditions:
+      - *require_site
 
     cluster:auth:
         deps: [_req_env, _infra:terraform:init]
