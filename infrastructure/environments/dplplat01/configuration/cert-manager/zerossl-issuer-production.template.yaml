@@ -14,7 +14,7 @@ spec:
 
     # for each cert-manager new EAB credencials are required
     externalAccountBinding:
-      keyID: ZEROSSL_EAB_SECRET_KEY_ID
+      keyID: $ZEROSSL_EAB_SECRET_KEY_ID
       keySecretRef:
         name: zerossl-eabsecret
         key: secret
