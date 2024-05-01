@@ -24,6 +24,8 @@ source "$(getVersionsEnv)"
 
 # These variables are either pulled in via the environment or versions.env.
 verifyVariable "VERSION_CERT_MANAGER"
+verifyVariable "ZEROSSL_EAB_SECRET"
+verifyVariable "ZEROSSL_EAB_SECRET_KEY_ID"
 
 # Setup values well use troughout the scripts
 diff_or_nothing=$(ifDiffTernary "diff")
@@ -78,7 +80,23 @@ isDiffing || kubectl wait \
 isDiffing || echo " > Applying staging and production issuers"
 isDiffing && echo " > Diffing issuers"
 
+# shellcheck disable=SC2016
+envsubst '$ZEROSSL_EAB_SECRET' \
+  < "${configuration_dir}/cert-manager/zerossl-eabsecret.template.yaml" \
+  > "${configuration_dir}/cert-manager/zerossl-eabsecret.yaml"
+
+# shellcheck disable=SC2016
+envsubst '$ZEROSSL_EAB_SECRET_KEY_ID' \
+  < "${configuration_dir}/cert-manager/zerossl-issuer-production.template.yaml" \
+  > "${configuration_dir}/cert-manager/zerossl-issuer-production.yaml"
+
 set +e
+kubectl "${apply_or_diff}" -f "${configuration_dir}/cert-manager/zerossl-eabsecret.yaml"
+handleApplyDiffExit $?
+
+kubectl "${apply_or_diff}" -f "${configuration_dir}/cert-manager/zerossl-issuer-production.yaml"
+handleApplyDiffExit $?
+
 kubectl "${apply_or_diff}" -f "${configuration_dir}/cert-manager/issuer-production.yaml"
 handleApplyDiffExit $?
 

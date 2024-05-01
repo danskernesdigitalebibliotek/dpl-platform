@@ -1,5 +1,5 @@
 installCRDs: true
 ingressShim:
-  defaultIssuerName: letsencrypt-prod
+  defaultIssuerName: zerossl-production
   defaultIssuerKind: ClusterIssuer
   defaultIssuerGroup: cert-manager.io
