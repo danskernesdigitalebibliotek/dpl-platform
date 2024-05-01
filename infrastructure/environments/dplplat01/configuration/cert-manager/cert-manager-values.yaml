@@ -1,5 +1,9 @@
+global:
+  logLevel: 5
+
 installCRDs: true
 ingressShim:
   defaultIssuerName: zerossl-production
   defaultIssuerKind: ClusterIssuer
   defaultIssuerGroup: cert-manager.io
+maxConcurrentChallenges: 10
