@@ -1,0 +1,3 @@
+# Ignore rendered templates
+zerossl-eabsecret.yaml
+zerossl-issuer-production.yaml
