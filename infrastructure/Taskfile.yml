@@ -123,7 +123,12 @@ tasks:
                 )
               --query value -o tsv
       cmds:
-        - cmd: terraform -chdir={{.dir_env_repos}} apply {{.OPTIONS}}
+        - cmd: |
+            if [ -z "{{.SKIP}}" ]; then
+              terraform -chdir={{.dir_env_repos}} apply {{.OPTIONS}}
+            else
+              echo "Skipped provisioning."
+            fi
 
 
     terraform:import:
@@ -884,7 +889,12 @@ tasks:
                 )
               --query value -o tsv
       cmds:
-        - dpladm/bin/sync-site.sh
+        - |
+          if [ -z "{{.SKIP}}" ]; then
+            ./dpladm/bin/sync-site.sh
+          else
+            echo "Skipped repo sync."
+          fi
       preconditions:
       - *require_site
 
@@ -934,10 +944,16 @@ tasks:
         - task: env_repos:provision
           vars:
             OPTIONS: "{{.INITIAL_TERRAFORM_OPTIONS}}"
+            SKIP: "{{.SKIP_PROVISION}}"
         - for: { var: sites }
           task: site:full-sync
           vars:
             SITE: "{{.ITEM}}"
+            SKIP_ENSURE_PROJECT: "{{.SKIP_ENSURE_PROJECT}}"
+            SKIP_CAPTURE_DEPLOY_KEY: "{{.SKIP_CAPTURE_DEPLOY_KEY}}"
+            SKIP_PROVISION: "{{.SKIP_PROVISION}}"
+            SKIP_FIRST_DEPLOYMENT: "{{.SKIP_FIRST_DEPLOYMENT}}"
+            SKIP_REPO_SYNC: "{{.SKIP_REPO_SYNC}}"
         - for: { var: sites }
           task: site:autoscaler
           vars:
@@ -950,18 +966,23 @@ tasks:
         - task: site:lagoon:project:ensure
           vars:
             SITE: "{{.SITE}}"
+            SKIP: "{{.SKIP_ENSURE_PROJECT}}"
         - task: site:lagoon:project:capture-deploy-key
           vars:
             SITE: "{{.SITE}}"
+            SKIP: "{{.SKIP_CAPTURE_DEPLOY_KEY}}"
         - task: env_repos:provision
           vars:
             OPTIONS: -refresh=false
+            SKIP: "{{.SKIP_PROVISION}}"
         - task: site:lagoon:ensure-first-deployment
           vars:
             SITE: "{{.SITE}}"
+            SKIP: "{{.SKIP_FIRST_DEPLOYMENT}}"
         - task: site:sync
           vars:
             SITE: "{{.SITE}}"
+            SKIP: "{{.SKIP_REPO_SYNC}}"
       preconditions:
       - *require_site
 
@@ -979,10 +1000,14 @@ tasks:
           sh: if [ "{{.SITE_PLAN}}" = "{{.webmaster_plan_name}}" ]; then echo "{{.production_branch}}|{{.moduletest_branch}}"; else echo "{{.production_branch}}"; fi
       cmds:
         - |
-          if [ "$(lagoon get project --project "{{.SITE}}" --output-json | jq '.data[0].id' --raw-output)" = "0" ]; then
-            PROJECT_NAME="{{.SITE}}" GIT_URL="{{.GIT_URL}}" BRANCHES="{{.BRANCHES}}" task lagoon:project:add;
+          if [ -z "{{.SKIP}}" ]; then
+            if [ "$(lagoon get project --project "{{.SITE}}" --output-json | jq '.data[0].id' --raw-output)" = "0" ]; then
+              PROJECT_NAME="{{.SITE}}" GIT_URL="{{.GIT_URL}}" BRANCHES="{{.BRANCHES}}" task lagoon:project:add;
+            else
+              PROJECT_NAME="{{.SITE}}" GIT_URL="{{.GIT_URL}}" BRANCHES="{{.BRANCHES}}" task lagoon:project:update;
+            fi
           else
-            PROJECT_NAME="{{.SITE}}" GIT_URL="{{.GIT_URL}}" BRANCHES="{{.BRANCHES}}" task lagoon:project:update;
+            echo "Skipped project ensure."
           fi
       preconditions:
       - *require_site
@@ -1032,7 +1057,12 @@ tasks:
           sh: lagoon get project-key --project "{{.SITE}}" --output-json | jq '.data[0].publickey' --raw-output
         SITE: "{{.SITE}}"
       cmds:
-        - yq -i e '.sites["{{.SITE}}"].deploy_key |= "{{.DEPLOY_KEY}}" | (... | select(tag == "!!merge")) tag = ""' sites.yaml
+        - |
+          if [ -z "{{.SKIP}}" ]; then
+            yq -i e '.sites["{{.SITE}}"].deploy_key |= "{{.DEPLOY_KEY}}" | (... | select(tag == "!!merge")) tag = ""' sites.yaml
+          else
+            echo "Skipped capture deploy key."
+          fi
       preconditions:
       - *require_site
 
@@ -1044,12 +1074,18 @@ tasks:
         SITE: "{{.SITE}}"
       cmds:
         - |
-          if [ "$(lagoon list deployments --project "{{.SITE}}" --environment {{.production_branch}} --output-json | jq '.data | length')" = "0" ]; then
-            lagoon deploy branch --project "{{.SITE}}" --branch "{{.production_branch}}";
+          if [ -z "{{.SKIP}}" ]; then
+            if [ "$(lagoon list deployments --project "{{.SITE}}" --environment {{.production_branch}} --output-json | jq '.data | length')" = "0" ]; then
+              lagoon deploy branch --project "{{.SITE}}" --branch "{{.production_branch}}";
+            fi
+          else
+            echo "Skipped deploying branch."
           fi
         - |
-          if [ "$(yq '.sites[env(SITE)].plan' sites.yaml)" = "{{.webmaster_plan_name}}" -a "$(lagoon list deployments --project "{{.SITE}}" --environment {{.moduletest_branch}} --output-json | jq '.data | length')" = "0" ]; then
-            lagoon deploy branch --project "{{.SITE}}" --branch "{{.moduletest_branch}}";
+          if [ -z "{{.SKIP}}" ]; then
+            if [ "$(yq '.sites[env(SITE)].plan' sites.yaml)" = "{{.webmaster_plan_name}}" -a "$(lagoon list deployments --project "{{.SITE}}" --environment {{.moduletest_branch}} --output-json | jq '.data | length')" = "0" ]; then
+              lagoon deploy branch --project "{{.SITE}}" --branch "{{.moduletest_branch}}";
+            fi
           fi
       preconditions:
       - *require_site
