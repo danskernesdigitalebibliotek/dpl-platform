@@ -7,6 +7,8 @@ lagoon-build-deploy:
     - "--harbor-api=https://harbor.lagoon.dplplat01.dpl.reload.dk/api/"
     - "--harbor-username=admin"
     - "--harbor-password=$HARBOR_ADMIN_PASS"
+    - "--enable-qos"
+    - "--qos-max-builds=15"
   rabbitMQUsername: "lagoon"
   rabbitMQPassword: "$RABBITMQ_PASS"
   rabbitMQHostname: "lagoon-core-broker.lagoon-core.svc.cluster.local"
