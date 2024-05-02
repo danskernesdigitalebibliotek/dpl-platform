@@ -152,7 +152,10 @@ tasks:
             OPTIONS: module.env_repos.github_repository.site["{{.SITE}}"]
             ADDRESS_ID: env-{{.SITE}}
       preconditions:
-      - *require_site
+      - &require_site {
+          sh: "[ ! -z \"{{.SITE}}\" ]",
+          msg: "Variable SITE is not set or empty."
+        }
 
     cluster:auth:
         deps: [_req_env, _infra:terraform:init]
@@ -883,10 +886,7 @@ tasks:
       cmds:
         - dpladm/bin/sync-site.sh
       preconditions:
-      - &require_site {
-          sh: "[ ! -z \"{{.SITE}}\" ]",
-          msg: "Variable SITE is not set or empty."
-        }
+      - *require_site
 
     sites:list-keys:
       desc: List keys for sites in sites.yaml config
