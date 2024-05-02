@@ -3,6 +3,10 @@ x-defaults: &default-release-image-source
   releaseImageRepository: ghcr.io/danskernesdigitalebibliotek
   releaseImageName: dpl-cms-source
   dpl-cms-release: "2024.18.0"
+x-early-movers: &early-movers-release-image-source
+  releaseImageRepository: ghcr.io/danskernesdigitalebibliotek
+  releaseImageName: dpl-cms-source
+  dpl-cms-release: "2024.18.2"
 sites:
   # Site objects are indexed by a unique key that must be a valid lagoon, and
   # github project name. That is, alphanumeric and dashes.
@@ -35,7 +39,7 @@ sites:
     name: "Aalborg Bibliotekerne"
     description: "The main library site for Aalborg"
     deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIE8+vj/1goR+Y42JMD/NbL4PXM4N6DifKbRZjJdyAURp"
-    <<: *default-release-image-source
+    <<: *early-movers-release-image-source
   aarhus:
     name: "Aarhus Kommunes Biblioteker"
     description: "The library site for Aarhus"
@@ -205,7 +209,7 @@ sites:
     name: "Herning Bibliotekerne"
     description: "The main library site for Herning"
     deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIA4LZWJFrRQQD65WohscqcmX0uqx7/zXFsK/o2tVY/9B"
-    <<: *default-release-image-source
+    <<: *early-movers-release-image-source
   hillerod:
     name: "Hillerød Bibliotekerne"
     description: "The library site for Hillerød"
@@ -430,7 +434,7 @@ sites:
     name: "Solrød Bibliotek og Kulturhus"
     description: "The library site for Solrød"
     deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIF1GwZ4r8QZ7Vebdqiz/mtkifrLU+ZSvlAJshdXjCh5J"
-    <<: *default-release-image-source
+    <<: *early-movers-release-image-source
   sonderborg:
     name: "Biblioteket Sønderborg"
     description: "The library site for Sønderborg"
