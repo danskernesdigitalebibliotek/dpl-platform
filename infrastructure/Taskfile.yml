@@ -606,13 +606,13 @@ tasks:
                 }
               }
       preconditions:
-      - sh: "[ ! -z {{.VARIABLE_VALUE}} ]"
+      - sh: "[ ! -z \"{{.VARIABLE_VALUE}}\" ]"
         msg: "Missing VARIABLE_VALUE"
-      - sh: "[ ! -z {{.VARIABLE_NAME}} ]"
+      - sh: "[ ! -z \"{{.VARIABLE_NAME}}\" ]"
         msg: "Missing VARIABLE_NAME"
-      - sh: "[ ! -z {{.VARIABLE_SCOPE}} ]"
+      - sh: "[ ! -z \"{{.VARIABLE_SCOPE}}\" ]"
         msg: "Missing VARIABLE_SCOPE"
-      - sh: "[ ! -z {{.PROJECT_NAME}} ]"
+      - sh: "[ ! -z \"{{.PROJECT_NAME}}\" ]"
         msg: "Missing PROJECT_NAME"
 
     lagoon:project:ensure:github-registry-credentials:
