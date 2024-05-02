@@ -16,8 +16,12 @@ controller:
   replicaCount: 2
   autoscaling:
     enabled: true
-    minReplicas: 2
-    maxReplicas: 10
+    minReplicas: 5
+    maxReplicas: 15
+  resources:
+    requests:
+      cpu: 500m
+      memory: 500Mi
   service:
     loadBalancerIP: "${INGRESS_IP}"
     externalTrafficPolicy: "Local"
