@@ -14,6 +14,10 @@ controller:
     # and https://github.com/uselagoon/lagoon-images/blob/main/images/nginx/nginx.conf#L81
     proxy-body-size: "2048m"
   replicaCount: 2
+  autoscaling:
+    enabled: true
+    minReplicas: 2
+    maxReplicas: 10
   service:
     loadBalancerIP: "${INGRESS_IP}"
     externalTrafficPolicy: "Local"
