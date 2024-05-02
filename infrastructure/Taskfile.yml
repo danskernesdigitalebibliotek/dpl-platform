@@ -1173,8 +1173,13 @@ tasks:
                 )
               --query "primaryConnectionString"
               --output tsv
-      cmds:
-        - az communication email send --sender "DoNotReply@folkebibliotekernescms.dk" --subject "{{.SUBJECT}}" --to "{{.RECIPIENT}}" --text "{{.CONTENT}}" --connection-string "{{.CONNECTION_STRING}}"
+      cmd:
+        -|
+          az communication email send --sender "DoNotReply@folkebibliotekernescms.dk"
+          --subject "{{.SUBJECT}}"
+          --to "{{.RECIPIENT}}"
+          --text "{{.CONTENT}}"
+          --connection-string "{{.CONNECTION_STRING}}"
 
     site:admins:credentials:mail:
       desc: Sent email with credentials and site info to admin user on a library site
