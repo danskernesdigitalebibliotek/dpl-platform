@@ -118,9 +118,14 @@ drushAlias:
           - drushalias.lagoon.dplplat01.dpl.reload.dk
 
 ssh:
+  replicaCount: 4
   service:
     type: LoadBalancer
     port: 22
+  resources:
+    requests:
+      memory: 32Mi
+      cpu: 50m
 
 
 broker:
