@@ -648,7 +648,7 @@ tasks:
       cmds:
       - task: lagoon:ensure:environment-variable
         vars:
-          VARIABLE_SCOPE: "CONTAINER_REGISTRY"
+          VARIABLE_SCOPE: "RUNTIME"
           VARIABLE_NAME: "AZURE_MAIL_CONNECTION_STRING"
           VARIABLE_VALUE: "{{.ACS_CONNECTION_STRING}}"
           PROJECT_NAME: "{{.PROJECT_NAME}}"
