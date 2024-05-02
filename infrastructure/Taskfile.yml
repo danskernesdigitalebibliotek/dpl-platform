@@ -1090,19 +1090,20 @@ tasks:
       vars:
         PROJECT: "{{.PROJECT}}"
         PASSWORD: "{{.PASSWORD}}"
+        contacts:
+          sh: yq '.sites.{{.PROJECT}}.contacts[] | path | .[-1]' "{{.dir_env}}/contacts-and-their-sites.yaml"
       cmds:
         - lagoon ssh --project {{.PROJECT}} --environment main -C "drush user:password admin '{{.PASSWORD}}'"
-        - task: mail:sent
+        - for: { var: contacts, as: INDEX}
+          task: mail:sent
           vars:
             SUBJECT: "Logininformation til jeres nye bibliotekssite"
             RECIPIENT:
-              sh: cat {{.dir_env}}/contacts-and-their-sites.yaml | yq ".sites[\"{{.PROJECT}}\"].contact"
-            CONTENT: |
-                      Dette er en automatisk mail med adgangsinformation til jeres nye biblioteks website.
-
-                      Gå til varnish.main."{{.PROJECT}}".dplplat01.dpl.reload.dk
-                      Her kan du logge ind med brugernavn: admin
-                      og password: "{{.PASSWORD}}"
+              sh: yq '.sites.{{.PROJECT}}.contacts[{{.INDEX}}].email' "{{.dir_env}}/contacts-and-their-sites.yaml"
+            CONTACTNAME:
+              sh: yq '.sites.{{.PROJECT}}.contacts[{{.INDEX}}].name' "{{.dir_env}}/contacts-and-their-sites.yaml"
+            PASSWORD: "{{.PASSWORD}}"
+            PROJECT: "{{.PROJECT}}"
 
     mail:sent:
       desc: Sends an email from DoNotReply@folkebibliotekernescms.dk
