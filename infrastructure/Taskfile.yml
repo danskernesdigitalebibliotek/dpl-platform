@@ -657,7 +657,7 @@ tasks:
           PROJECT_NAME: "{{.PROJECT_NAME}}"
       preconditions:
       - sh: "[ ! -z \"{{.PROJECT_NAME}}\" ]"
-        msg: "Missing PROJECT_ID or PROJECT_NAME - at least one must be set"
+        msg: "Missing PROJECT_NAME"
 
     lagoon:add:cluster:
       deps: [cluster:auth]
