@@ -142,7 +142,17 @@ tasks:
                 )
               --query value -o tsv
       cmds:
-        - cmd: terraform -chdir={{.dir_env_repos}} import "{{.OPTIONS}}" "{{.ADDRESS_ID}}"
+        - cmd: terraform -chdir={{.dir_env_repos}} import '{{.OPTIONS}}' '{{.ADDRESS_ID}}'
+
+    terraform:import:repo:
+      desc: Imports a Github repository for a site by passing the site name
+      cmds:
+        - task: terraform:import
+          vars:
+            OPTIONS: module.env_repos.github_repository.site["{{.SITE}}"]
+            ADDRESS_ID: env-{{.SITE}}
+      preconditions:
+      - *require_site
 
     cluster:auth:
         deps: [_req_env, _infra:terraform:init]
@@ -726,9 +736,6 @@ tasks:
         - task: lagoon:project:ensure:github-registry-credentials
           vars:
             PROJECT_NAME: "{{.PROJECT_NAME}}"
-        - task: lagoon:project:deploykey
-          vars:
-            PROJECT_NAME: "{{.PROJECT_NAME}}"
       preconditions:
       - sh: "[ ! -z {{.GIT_URL}} ]"
         msg: "Env variable GIT_URL is not set or empty."
@@ -883,6 +890,24 @@ tasks:
       dir: "{{.dir_env}}"
       cmds:
         - cat sites.yaml | yq '.sites | keys | .[]'
+
+    sites:check:
+      desc: Simply checks that all sites defined in sites.yaml are running and responding
+      dir: "{{.dir_env}}"
+      vars:
+        sites:
+          sh: cat {{.dir_env}}/sites.yaml | yq '.sites | keys | .[]'
+      cmds:
+        - touch statusnow.txt
+        - for: { var: sites }
+          cmd: |
+            if [[ "$(curl -I https://varnish.main.{{.ITEM}}.dplplat01.dpl.reload.dk | head -1)" == "HTTP/2 200"* ]]; then
+              echo "{{.ITEM}}: OK" >> statusnow.txt;
+            else
+              echo "{{.ITEM}}: ERROR! Not up." >> statusnow.txt;
+            fi
+        - cat statusnow.txt
+        - rm statusnow.txt
 
     sites:sync:
       desc: Performs a full synchronization from sites.yaml to running state
