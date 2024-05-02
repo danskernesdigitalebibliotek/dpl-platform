@@ -24,7 +24,17 @@ trivy:
 jobservice:
   jobLogger: stdout
 registry:
-  replicas: 1
+  replicas: 3
+  resources:
+    requests:
+      memory: 1Gi
+      cpu: 500m
+core:
+  replicas: 2
+  resources:
+    requests:
+      memory: 1Gi
+      cpu: 500m
 
 # Use Azure blob storage for persistence
 persistence:
