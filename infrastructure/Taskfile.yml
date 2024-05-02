@@ -152,7 +152,10 @@ tasks:
             OPTIONS: module.env_repos.github_repository.site["{{.SITE}}"]
             ADDRESS_ID: env-{{.SITE}}
       preconditions:
-      - *require_site
+      - &require_site {
+          sh: "[ ! -z \"{{.SITE}}\" ]",
+          msg: "Variable SITE is not set or empty."
+        }
 
     cluster:auth:
         deps: [_req_env, _infra:terraform:init]
@@ -603,13 +606,13 @@ tasks:
                 }
               }
       preconditions:
-      - sh: "[ ! -z {{.VARIABLE_VALUE}} ]"
+      - sh: "[ ! -z \"{{.VARIABLE_VALUE}}\" ]"
         msg: "Missing VARIABLE_VALUE"
-      - sh: "[ ! -z {{.VARIABLE_NAME}} ]"
+      - sh: "[ ! -z \"{{.VARIABLE_NAME}}\" ]"
         msg: "Missing VARIABLE_NAME"
-      - sh: "[ ! -z {{.VARIABLE_SCOPE}} ]"
+      - sh: "[ ! -z \"{{.VARIABLE_SCOPE}}\" ]"
         msg: "Missing VARIABLE_SCOPE"
-      - sh: "[ ! -z {{.PROJECT_NAME}} ]"
+      - sh: "[ ! -z \"{{.PROJECT_NAME}}\" ]"
         msg: "Missing PROJECT_NAME"
 
     lagoon:project:ensure:github-registry-credentials:
@@ -637,18 +640,18 @@ tasks:
     lagoon:project:ensure:azure-mail-connection-string:
       vars:
         ACS_CONNECTION_STRING:
-          sh: az communication list-key
-              --name communication-servicesa5e3
-              --resource-group
+          sh: az keyvault secret show
+              --subscription "{{.AZURE_SUBSCRIPTION_ID}}"
+              --name azure-communications-connection-string
+              --vault-name
                 $(
-                  terraform -chdir={{.dir_infra}} output -json | jq --raw-output ".resourcegroup_name.value | select (.!=null)"
+                  terraform -chdir={{.dir_infra}} output -json | jq --raw-output ".keyvault_name.value | select (.!=null)"
                 )
-              --query "primaryConnectionString"
-              --output tsv
+              --query value -o tsv
       cmds:
       - task: lagoon:ensure:environment-variable
         vars:
-          VARIABLE_SCOPE: "CONTAINER_REGISTRY"
+          VARIABLE_SCOPE: "RUNTIME"
           VARIABLE_NAME: "AZURE_MAIL_CONNECTION_STRING"
           VARIABLE_VALUE: "{{.ACS_CONNECTION_STRING}}"
           PROJECT_NAME: "{{.PROJECT_NAME}}"
@@ -734,6 +737,9 @@ tasks:
             --branches "^({{ .BRANCHES }})$" \
             --project {{.PROJECT_NAME}}
         - task: lagoon:project:ensure:github-registry-credentials
+          vars:
+            PROJECT_NAME: "{{.PROJECT_NAME}}"
+        - task: lagoon:project:ensure:azure-mail-connection-string
           vars:
             PROJECT_NAME: "{{.PROJECT_NAME}}"
       preconditions:
@@ -880,10 +886,7 @@ tasks:
       cmds:
         - dpladm/bin/sync-site.sh
       preconditions:
-      - &require_site {
-          sh: "[ ! -z \"{{.SITE}}\" ]",
-          msg: "Variable SITE is not set or empty."
-        }
+      - *require_site
 
     sites:list-keys:
       desc: List keys for sites in sites.yaml config
