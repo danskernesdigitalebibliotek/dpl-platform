@@ -16,13 +16,15 @@ sites:
     description: "A site to test new releases on"
     releaseImageRepository: ghcr.io/danskernesdigitalebibliotek
     releaseImageName: dpl-cms-source
-    dpl-cms-release: "2024.18.2"
+    dpl-cms-release: "2024.18.3"
     deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIIhuA0K7CNvRoe+Xx7RaXG4+a8KcSpzuWn+G4sUPzNWx"
   cms-school:
     name: "CMS-skole"
     description: "Et site til undervisning i CMSet"
+    releaseImageRepository: ghcr.io/danskernesdigitalebibliotek
+    releaseImageName: dpl-cms-source
+    dpl-cms-release: "2024.18.3"
     deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJ6SzfPFf/XeLeqI342kxuJAlATpDMtgAfqlrLTTbW2m"
-    <<: *default-release-image-source
   customizable-canary:
     name: "Customizable bibliotek - eksempel"
     description: "Eksempel på bibliotek der kører på 'webmaster' plan, og derfor har et modultest-miljø"
