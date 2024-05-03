@@ -113,6 +113,19 @@ function getSiteSecondaryDomains {
     return
 }
 
+function getSiteImportTranslationsCron {
+    local importTranslationsCron
+    importTranslationsCron=$(yq eval ".sites.${1}.importTranslationsCron" "${2}")
+
+    if [[ "${importTranslationsCron}" == "null" ]]; then
+        echo "M H(2-5) * * *"
+        return
+    fi
+
+    echo "${importTranslationsCron}"
+    return
+}
+
 if [[ -z "${SITES_CONFIG:-}" ]]; then
     print_usage "SITES_CONFIG"
 fi
@@ -148,11 +161,12 @@ failOnErr $? "${siteImageRepository}"
 siteReleaseImageName=$(getSiteReleaseImageName "${SITE}" "${SITES_CONFIG}")
 failOnErr $? "${siteReleaseImageName}"
 plan=$(getSitePlan "${SITE}" "${SITES_CONFIG}")
+importTranslationsCron=$(getSiteImportTranslationsCron "${SITE}" "${SITES_CONFIG}")
 set -o errexit
 
 # Synchronise the sites environment repository.
-syncEnvRepo "${SITE}" "${releaseTag}" "${BRANCH}" "${siteImageRepository}" "${siteReleaseImageName}" "${primaryDomain}" "${secondaryDomains}"
+syncEnvRepo "${SITE}" "${releaseTag}" "${BRANCH}" "${siteImageRepository}" "${siteReleaseImageName}" "${importTranslationsCron}" "${primaryDomain}" "${secondaryDomains}"
 
 if [ "${plan}" = "webmaster" ] && [ "${BRANCH}" = "main" ]; then
-    syncEnvRepo "${SITE}" "${releaseTag}" "moduletest" "${siteImageRepository}" "${siteReleaseImageName}"
+    syncEnvRepo "${SITE}" "${releaseTag}" "moduletest" "${siteImageRepository}" "${siteReleaseImageName}" "${importTranslationsCron}"
 fi
