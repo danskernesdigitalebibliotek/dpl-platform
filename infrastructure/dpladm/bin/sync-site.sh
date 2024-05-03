@@ -10,23 +10,6 @@ IFS=$'\n\t'
 SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 source "${SCRIPT_DIR}/dpladm-shared.source"
 
-function print_usage {
-    # Start with a more specific error-message if we're passed the name of a
-    # variable that was missing.
-    if [[ -n "${1:-}" ]]; then
-        echo "Could not find the variable ${1}"
-    fi
-    echo
-    echo "Set the following environment variables before running the script."
-    echo "  SITES_CONFIG: path to the sites.yaml that should be used for site configuration"
-    echo "  SITE:         the sites key in sites.yaml"
-    echo ""
-    echo "  FORCE:  Push even if there is no diff in which case an empty"
-    echo "          commit will be pushed."
-
-    exit 1
-}
-
 function getSiteConfig {
     local config
     config=$(yq eval ".sites.${1}" "${2}")
@@ -74,18 +57,6 @@ function getSiteReleaseImageName {
     fi
 
     echo "${imageName}"
-    return
-}
-
-function getSitePlan {
-    local plan
-    plan=$(yq eval ".sites.${1}.plan" "${2}")
-    if [[ "${plan}" == "null" ]]; then
-        echo "standard"
-        return
-    fi
-
-    echo "${plan}"
     return
 }
 
