@@ -64,11 +64,11 @@ $SECONDARY_DOMAINS
         command: drush cron
         service: cli
       - name: import translations
-        schedule: "M H(2-5) * * *"
+        schedule: "${IMPORT_TRANSLATIONS_CRON}"
         command: drush locale-check && drush locale-update
         service: cli
       - name: import danish config translations
-        schedule: "M H(2-5) * * *"
+        schedule: "${IMPORT_TRANSLATIONS_CRON}"
         command: drush dpl_po:import-remote-config-po da https://danskernesdigitalebibliotek.github.io/dpl-cms/translations/da.config.po
         service: cli
 
