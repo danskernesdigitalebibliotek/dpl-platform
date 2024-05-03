@@ -20,8 +20,8 @@ controller:
     maxReplicas: 15
   resources:
     requests:
-      cpu: 500m
-      memory: 500Mi
+      cpu: 300m
+      memory: 1100Mi
   service:
     loadBalancerIP: "${INGRESS_IP}"
     externalTrafficPolicy: "Local"
