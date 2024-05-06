@@ -56,3 +56,9 @@ prometheus:
            requests:
            # Setup a 100Gigabyte disk for holding the metrics.
              storage: 100Gi
+
+defaultRules:
+  disabled:
+    KubeControllerManagerDown: true
+    KubeProxyDown: true
+    KubeSchedulerDown: true
