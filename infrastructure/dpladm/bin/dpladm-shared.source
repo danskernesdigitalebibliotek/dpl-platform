@@ -82,7 +82,7 @@ function renderProfileTemplate {
   if [[ -n "${primaryDomain}" ]]; then
     ENABLE_ROUTES+=$(cat << EndOfMessage
 ${routesIndent}routes:
-${routesIndent}  - nginx:
+${routesIndent}  - varnish:
 EndOfMessage
 )
     PRIMARY_DOMAIN="${singleRouteIndent}- \"${primaryDomain}\""

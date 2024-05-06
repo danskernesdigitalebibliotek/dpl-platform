@@ -76,6 +76,11 @@ sites:
   billund:
     name: "Billund Bibliotekerne og Borgerservice"
     description: "The main library site for Billund"
+    primary-domain: billundbib.dk
+    secondary-domains:
+      - www.billundbib.dk
+      - billundbibliotek.dk
+      - www.billundbibliotek.dk
     deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOsUy+dVkL+KxOYz8zSel7mNkcKrEnqDZPHmsU4sfMv/"
     <<: *default-release-image-source
   bornholm:
@@ -206,6 +211,9 @@ sites:
   herlev:
     name: "Herlev Bibliotek"
     description: "The library site for Herlev"
+    primary-domain: www.herlevbibliotek.dk
+    secondary-domains:
+      - herlevbibliotek.dk
     deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAICsQ7blUGjtlSdPU4AV7PR21o2Eqg5IMKTCFX3PV/2Mf"
     <<: *default-release-image-source
   herning:
@@ -281,6 +289,9 @@ sites:
   kobenhavn:
     name: "Københavns Biblioteker"
     description: "The main library site for København"
+    primary-domain: bibliotek.kk.dk
+    secondary-domains:
+      - www.bibliotek.kk.dk
     deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHaTkDvjLW/b2qVj8FIvtX9x3TxFFZTENn+w2CFELeoC"
     <<: *default-release-image-source
   koge:
