@@ -81,6 +81,7 @@ function renderProfileTemplate {
   local singleRouteIndent="${routesIndent}    "
   if [[ -n "${primaryDomain}" ]]; then
     ENABLE_ROUTES+=$(cat << EndOfMessage
+${routesIndent}autogenerateRoutes: false
 ${routesIndent}routes:
 ${routesIndent}  - varnish:
 EndOfMessage
