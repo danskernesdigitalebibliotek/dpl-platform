@@ -55,7 +55,7 @@ prometheus:
          resources:
            requests:
            # Setup a 100Gigabyte disk for holding the metrics.
-             storage: 100Gi
+             storage: 500Gi
 
 defaultRules:
   disabled:
