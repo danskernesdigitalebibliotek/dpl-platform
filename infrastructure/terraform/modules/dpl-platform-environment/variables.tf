@@ -33,13 +33,13 @@ variable "location" {
 
 variable "node_pool_admin_count_max" {
   description = "The maximum number of pods to autoscale the administration nodepool to"
-  default     = 3
+  default     = 6
   type        = number
 }
 
 variable "node_pool_admin_count_min" {
   description = "The minimum number of pods to autoscale the administration nodepool to, also used as the initial count for the nodepool"
-  default     = 1
+  default     = 3
   type        = number
 }
 
