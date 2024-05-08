@@ -25,7 +25,7 @@ ARG KREW_VERSION=v0.4.4
 ARG CERT_MANAGER_VERIFIER_VERSION=0.3.0
 
 # The kubectl version can be bumped as we upgrade the cluster minor version.
-ARG KUBECTL_VERSION=v1.26.10
+ARG KUBECTL_VERSION=v1.27.9
 # kubelogin is a client-go credential plugin implementing azure authentication.
 # https://github.com/Azure/kubelogin/releases
 ARG KUBELOGIN_VERSION=v0.0.34
