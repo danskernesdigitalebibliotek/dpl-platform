@@ -2,11 +2,11 @@
 x-defaults: &default-release-image-source
   releaseImageRepository: ghcr.io/danskernesdigitalebibliotek
   releaseImageName: dpl-cms-source
-  dpl-cms-release: "2024.18.2"
+  dpl-cms-release: "2024.18.3"
 x-early-movers: &early-movers-release-image-source
   releaseImageRepository: ghcr.io/danskernesdigitalebibliotek
   releaseImageName: dpl-cms-source
-  dpl-cms-release: "2024.18.3"
+  dpl-cms-release: "2024.19.0"
 sites:
   # Site objects are indexed by a unique key that must be a valid lagoon, and
   # github project name. That is, alphanumeric and dashes.
@@ -16,7 +16,7 @@ sites:
     description: "A site to test new releases on"
     releaseImageRepository: ghcr.io/danskernesdigitalebibliotek
     releaseImageName: dpl-cms-source
-    dpl-cms-release: "2024.18.3"
+    dpl-cms-release: "2024.19.0"
     primary-domain: bibliotest.deranged.dk
     secondary-domains:
       - www.bibliotest.deranged.dk
@@ -45,7 +45,7 @@ sites:
     name: "Aalborg Bibliotekerne"
     description: "The main library site for Aalborg"
     deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIE8+vj/1goR+Y42JMD/NbL4PXM4N6DifKbRZjJdyAURp"
-    <<: *default-release-image-source
+    <<: *early-movers-release-image-source
   aarhus:
     name: "Aarhus Kommunes Biblioteker"
     description: "The library site for Aarhus"
@@ -296,11 +296,11 @@ sites:
   kobenhavn:
     name: "Københavns Biblioteker"
     description: "The main library site for København"
-    primary-domain: bibliotek.kk.dk
-    secondary-domains:
-      - www.bibliotek.kk.dk
-      - nginx.main.kobenhavn.dplplat01.dpl.reload.dk
-      - varnish.main.kobenhavn.dplplat01.dpl.reload.dk
+    # primary-domain: bibliotek.kk.dk
+    # secondary-domains:
+    #   - www.bibliotek.kk.dk
+    #   - nginx.main.kobenhavn.dplplat01.dpl.reload.dk
+    #   - varnish.main.kobenhavn.dplplat01.dpl.reload.dk
     deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHaTkDvjLW/b2qVj8FIvtX9x3TxFFZTENn+w2CFELeoC"
     <<: *default-release-image-source
   koge:
