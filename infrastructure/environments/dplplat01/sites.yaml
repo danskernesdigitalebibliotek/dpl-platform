@@ -319,11 +319,6 @@ sites:
     description: "The library site for Lejre"
     deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJUCoDJmWFsXa3nZe7XBa/v1nahzl2GeoT46XAW7ZVQG"
     <<: *default-release-image-source
-  lemvig:
-    name: "Lemvig Bibliotek"
-    description: "The library site for Lemvig"
-    deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINLPu/T7RI4zFZ5+JYJqttf2IAU2GIcUOyRfqA3PlB9W"
-    <<: *default-release-image-source
   lolland:
     name: "LollandBibliotekerne"
     description: "The library site for Lolland"
@@ -439,11 +434,6 @@ sites:
     description: "The library site for Skive"
     deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIGpJAKCBMKM9G0qvUGeCRSvz8QNg27r7sDedj15HP7Hh"
     <<: *default-release-image-source
-  slagelse:
-    name: "Slagelse Biblioteker og Borgerservice"
-    description: "The library site for Slagelse"
-    deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIAQdh4Doe9DRLdCMApkRLmApfudvVgcVBr27fSG9gwHm"
-    <<: *default-release-image-source
   solrod:
     name: "Solrød Bibliotek og Kulturhus"
     description: "The library site for Solrød"
@@ -493,11 +483,6 @@ sites:
     name: "Biblioteket i Thy"
     description: "The library site for Thisted"
     deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAII8zoNSiwkKmOSHvtKxSMJiDC9EWbTzhkAUd1+csvnne"
-    <<: *default-release-image-source
-  tonder:
-    name: "Tønder Kommunes Biblioteker"
-    description: "The library site for Tønder"
-    deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDUpgNIeuCbzprGnyr+TKcWCvS1aYS49unqhNNVYQGNf"
     <<: *default-release-image-source
   vallensbaek:
     name: "Vallensbæk Bibliotek"
