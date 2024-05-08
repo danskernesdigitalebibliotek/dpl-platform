@@ -54,8 +54,8 @@ prometheus:
          accessModes: ["ReadWriteOnce"]
          resources:
            requests:
-           # Setup a 100Gigabyte disk for holding the metrics.
-             storage: 100Gi
+           # Setup a disk for holding the metrics.
+             storage: 500Gi
 
 defaultRules:
   disabled:
