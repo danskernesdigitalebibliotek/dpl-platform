@@ -938,6 +938,10 @@ tasks:
           task: site:full-sync
           vars:
             SITE: "{{.ITEM}}"
+        - for: { var: sites }
+          task: site:autoscaler
+          vars:
+            SITE: "{{.ITEM}}"
 
     site:full-sync:
       desc: Performs a full syncrhonization from sites.yaml for a single site to running state
