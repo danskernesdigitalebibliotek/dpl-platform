@@ -20,6 +20,8 @@ sites:
     primary-domain: bibliotest.deranged.dk
     secondary-domains:
       - www.bibliotest.deranged.dk
+      - nginx.main.canary.dplplat01.dpl.reload.dk
+      - varnish.main.canary.dplplat01.dpl.reload.dk
     deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIIhuA0K7CNvRoe+Xx7RaXG4+a8KcSpzuWn+G4sUPzNWx"
   cms-school:
     name: "CMS-skole"
@@ -82,6 +84,8 @@ sites:
       - www.billundbib.dk
       - billundbibliotek.dk
       - www.billundbibliotek.dk
+      - nginx.main.billund.dplplat01.dpl.reload.dk
+      - varnish.main.billund.dplplat01.dpl.reload.dk
     deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOsUy+dVkL+KxOYz8zSel7mNkcKrEnqDZPHmsU4sfMv/"
     <<: *early-movers-release-image-source
   bornholm:
@@ -215,6 +219,8 @@ sites:
     primary-domain: www.herlevbibliotek.dk
     secondary-domains:
       - herlevbibliotek.dk
+      - nginx.main.herlev.dplplat01.dpl.reload.dk
+      - varnish.main.herlev.dplplat01.dpl.reload.dk
     deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAICsQ7blUGjtlSdPU4AV7PR21o2Eqg5IMKTCFX3PV/2Mf"
     <<: *early-movers-release-image-source
   herning:
@@ -293,6 +299,8 @@ sites:
     primary-domain: bibliotek.kk.dk
     secondary-domains:
       - www.bibliotek.kk.dk
+      - nginx.main.kobenhavn.dplplat01.dpl.reload.dk
+      - varnish.main.kobenhavn.dplplat01.dpl.reload.dk
     deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHaTkDvjLW/b2qVj8FIvtX9x3TxFFZTENn+w2CFELeoC"
     <<: *default-release-image-source
   koge:
