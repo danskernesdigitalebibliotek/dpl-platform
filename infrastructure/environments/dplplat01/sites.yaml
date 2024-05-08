@@ -2,7 +2,7 @@
 x-defaults: &default-release-image-source
   releaseImageRepository: ghcr.io/danskernesdigitalebibliotek
   releaseImageName: dpl-cms-source
-  dpl-cms-release: "2024.18.2"
+  dpl-cms-release: "2024.18.3"
 x-early-movers: &early-movers-release-image-source
   releaseImageRepository: ghcr.io/danskernesdigitalebibliotek
   releaseImageName: dpl-cms-source
