@@ -37,42 +37,6 @@ variable "node_pools" {
   type        = map
 }
 
-variable "node_pool_admin_count_max" {
-  description = "The maximum number of pods to autoscale the administration nodepool to"
-  default     = 6
-  type        = number
-}
-
-variable "node_pool_admin_count_min" {
-  description = "The minimum number of pods to autoscale the administration nodepool to, also used as the initial count for the nodepool"
-  default     = 3
-  type        = number
-}
-
-variable "node_pool_admin_vm_sku" {
-  description = "The SKU of the virtual machines used for the administration nodepool"
-  default     = "Standard_B4ms"
-  type        = string
-}
-
-variable "node_pool_app_default_count_max" {
-  description = "The maximum number of pods to autoscale the default application nodepool to"
-  default     = 3
-  type        = number
-}
-
-variable "node_pool_app_default_count_min" {
-  description = "The minimum number of pods to autoscale the default application nodepool to, also used as the initial count for the nodepool"
-  default     = 1
-  type        = number
-}
-
-variable "node_pool_app_default_vm_sku" {
-  description = "The SKU of the virtual machines used for the default application nodepool"
-  default     = "Standard_B4ms"
-  type        = string
-}
-
 variable "node_pool_system_count" {
   description = "The number of nodes in the system node-pool"
   default     = 1
