@@ -9,7 +9,9 @@ module "environment" {
   random_seed                     = "LahYegheePhohGeew9Fa"
   node_pools = {
     "appdefault": { min: 8, max: 40, vm: "Standard_B4ms" },
-    "admin": { min: 3, max: 6, vm: "Standard_B4ms", role: "admin" }
+    "admin": { min: 0, max: 2, vm: "Standard_B4ms", role: "admin" },
+    "app2": { min: 0, max: 20, vm: "Standard_B8ms", max_pods: 100 },
+    "admin2": { min: 1, max: 1, vm: "Standard_B8ms", role: "admin", max_pods: 100 }
   }
   node_pool_system_count          = 2
   # We've increased this quite a bit to test performance. The ideal starting-
