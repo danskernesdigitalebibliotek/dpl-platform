@@ -64,6 +64,7 @@ resource "azurerm_kubernetes_cluster" "cluster" {
 resource "azurerm_kubernetes_cluster_node_pool" "pool" {
   for_each              = var.node_pools
   name                  = each.key
+  orchestrator_version  = var.control_plane_version
   kubernetes_cluster_id = azurerm_kubernetes_cluster.cluster.id
   vnet_subnet_id        = azurerm_subnet.aks.id
   node_labels = {
