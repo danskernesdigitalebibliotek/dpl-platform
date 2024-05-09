@@ -10,7 +10,7 @@ module "environment" {
   node_pools = {
     "appdefault" : { count : 0, vm : "Standard_B4ms" },
     "admin" : { count : 0, vm : "Standard_B4ms", role : "admin" },
-    "app2" : { min : 0, max : 20, vm : "Standard_B8ms", max_pods : 100 },
+    "app2" : { min : 6, max : 15, vm : "Standard_B8ms", max_pods : 100 },
     "admin2" : { min : 1, max : 1, vm : "Standard_B8ms", role : "admin", max_pods : 100 }
   }
   node_pool_system_count = 2
