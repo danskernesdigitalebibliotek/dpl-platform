@@ -60,38 +60,10 @@ resource "azurerm_kubernetes_cluster" "cluster" {
   }
 }
 
-# Add a nodepool for administrative workloads
-resource "azurerm_kubernetes_cluster_node_pool" "admin" {
-  name                  = "admin"
-  kubernetes_cluster_id = azurerm_kubernetes_cluster.cluster.id
-  vnet_subnet_id        = azurerm_subnet.aks.id
-  node_labels = {
-    "noderole.dplplatform" : "admin"
-  }
-  zones = [
-    "1",
-  ]
-
-  vm_size = var.node_pool_admin_vm_sku
-
-  # Enable autoscaling.
-  enable_auto_scaling = true
-  min_count           = var.node_pool_admin_count_min
-  max_count           = var.node_pool_admin_count_max
-  node_count          = var.node_pool_admin_count_min
-
-  lifecycle {
-    ignore_changes = [
-      # Changed by the autoscaler, so we need to ignore it.
-      node_count
-    ]
-  }
-}
-
-
 # Add a application default nodepool.
-resource "azurerm_kubernetes_cluster_node_pool" "app_default" {
-  name                  = "appdefault"
+resource "azurerm_kubernetes_cluster_node_pool" "pool" {
+  for_each = var.node_pools
+  name                  = each.key
   kubernetes_cluster_id = azurerm_kubernetes_cluster.cluster.id
   vnet_subnet_id        = azurerm_subnet.aks.id
   node_labels = {
@@ -106,15 +78,15 @@ resource "azurerm_kubernetes_cluster_node_pool" "app_default" {
   # low resource requests, we're keeping the number of pods on a node low to
   # avoid running the nodes too hot.
   # Be aware that changing this value will destroy and recreate the nodepool.
-  max_pods = 30
+  max_pods = try(each.value.max_pods, 30)
 
-  vm_size = var.node_pool_app_default_vm_sku
+  vm_size = each.value.vm
 
   # Enable autoscaling.
   enable_auto_scaling = true
-  min_count           = var.node_pool_app_default_count_min
-  max_count           = var.node_pool_app_default_count_max
-  node_count          = var.node_pool_app_default_count_min
+  min_count           = each.value.min
+  max_count           = each.value.max
+  #node_count          = each.value.min
 
   lifecycle {
     ignore_changes = [

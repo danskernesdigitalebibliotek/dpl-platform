@@ -31,6 +31,12 @@ variable "location" {
   default     = "West Europe"
 }
 
+variable "node_pools" {
+  description = "The node pools (other than the system one) used for the cluster"
+  default     = {}
+  type        = map
+}
+
 variable "node_pool_admin_count_max" {
   description = "The maximum number of pods to autoscale the administration nodepool to"
   default     = 6
