@@ -18,6 +18,9 @@ resource "azurerm_kubernetes_cluster" "cluster" {
     node_count = var.node_pool_system_count
     vm_size    = var.node_pool_system_vm_sku
 
+    # Sync node version with control plane version of k8s
+    orchestrator_version  = var.control_plane_version
+
     # Attach the cluster to our private network.
     vnet_subnet_id = azurerm_subnet.aks.id
 
