@@ -87,15 +87,8 @@ resource "azurerm_kubernetes_cluster_node_pool" "pool" {
   vm_size = each.value.vm
 
   # Enable autoscaling.
-  enable_auto_scaling = true
-  min_count           = each.value.min
-  max_count           = each.value.max
-  #node_count          = each.value.min
-
-  lifecycle {
-    ignore_changes = [
-      # Changed by the autoscaler, so we need to ignore it.
-      node_count
-    ]
-  }
+  enable_auto_scaling = try(each.value.min, try(each.value.max, null)) != null ? true : false
+  min_count           = try(each.value.min, null)
+  max_count           = try(each.value.max, null)
+  node_count          = try(each.value.count, null)
 }
