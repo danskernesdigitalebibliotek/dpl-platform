@@ -67,7 +67,7 @@ resource "azurerm_kubernetes_cluster_node_pool" "pool" {
   kubernetes_cluster_id = azurerm_kubernetes_cluster.cluster.id
   vnet_subnet_id        = azurerm_subnet.aks.id
   node_labels = {
-    "noderole.dplplatform" : "application"
+    "noderole.dplplatform" : try(each.value.role, "application")
   }
   zones = [
     "1",
