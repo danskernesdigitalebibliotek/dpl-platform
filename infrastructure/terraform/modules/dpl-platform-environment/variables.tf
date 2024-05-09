@@ -34,7 +34,7 @@ variable "location" {
 variable "node_pools" {
   description = "The node pools (other than the system one) used for the cluster"
   default     = {}
-  type        = map
+  type        = map(any)
 }
 
 variable "node_pool_system_count" {

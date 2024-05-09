@@ -62,7 +62,7 @@ resource "azurerm_kubernetes_cluster" "cluster" {
 
 # Add a application default nodepool.
 resource "azurerm_kubernetes_cluster_node_pool" "pool" {
-  for_each = var.node_pools
+  for_each              = var.node_pools
   name                  = each.key
   kubernetes_cluster_id = azurerm_kubernetes_cluster.cluster.id
   vnet_subnet_id        = azurerm_subnet.aks.id
