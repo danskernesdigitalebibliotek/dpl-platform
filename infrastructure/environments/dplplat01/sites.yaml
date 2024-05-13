@@ -45,6 +45,11 @@ sites:
     name: "Aalborg Bibliotekerne"
     description: "The main library site for Aalborg"
     deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIE8+vj/1goR+Y42JMD/NbL4PXM4N6DifKbRZjJdyAURp"
+    primary-domain: www.aalborgbibliotekerne.dk
+    secondary-domains:
+      - aalborgbibliotekerne.dk
+      - nginx.main.aalborg.dplplat01.dpl.reload.dk
+      - varnish.main.aalborg.dplplat01.dpl.reload.dk
     <<: *default-release-image-source
   aarhus:
     name: "Aarhus Kommunes Biblioteker"
