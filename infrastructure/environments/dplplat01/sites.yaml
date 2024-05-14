@@ -16,7 +16,7 @@ sites:
     description: "A site to test new releases on"
     releaseImageRepository: ghcr.io/danskernesdigitalebibliotek
     releaseImageName: dpl-cms-source
-    dpl-cms-release: "2024.19.0"
+    dpl-cms-release: "2024.20.1"
     primary-domain: bibliotest.deranged.dk
     secondary-domains:
       - www.bibliotest.deranged.dk
