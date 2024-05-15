@@ -47,7 +47,8 @@ RUN apk add --no-cache \
   shadow \
   vim \
   yq \
-  openssh
+  openssh \
+  bind-tools
 
 # Add task, a modern Make equivalent.
 RUN curl -sL https://taskfile.dev/install.sh | bash -s -- -b /usr/local/bin ${TASK_VERSION}

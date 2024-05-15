@@ -987,6 +987,16 @@ tasks:
       preconditions:
       - *require_site
 
+    sites:check-caa:
+      desc: |
+        Checks if a site's primary and secondary domains have CAA records registered, and if they do report it.
+        If a site has these records they must be updated to allow zerossl to provision certificates for the site.
+      cmds:
+        - |
+          cat {{.dir_env}}/sites.yaml \
+            | yq '.sites[] | [ .primary-domain ] + .secondary-domains | .[] | select(. | contains("dplplat01.dpl.reload.dk") | not)' \
+            | xargs -I % -n 1 bash -c 'if (( $(dig % CAA | grep issue | wc -l) > 0 )); then echo "There are CAAs for domain %"; fi'
+
     site:lagoon:project:capture-deploy-key:
       # TODO: print a big message if a deploy key is newly captured, so we know to commit changes!
       desc: Gets the deploy key for a particular project from Lagoon and persists it in sites.yaml
