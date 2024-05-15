@@ -68,20 +68,27 @@ function renderProfileTemplate {
   local releaseImageName=$4
   # Cron schedule for importing translations
   local importTranslationsCron=$5
+  # Flag for whether or not to autogenerate routes
+  local autogenerateRoutes=${6:-}
   # The primary domain of the site (optional)
-  local primaryDomain=${6:-}
+  local primaryDomain=${7:-}
   # A space-seperated list of secondary domains (optional)
-  local secondaryDomainsString=${7:-}
+  local secondaryDomainsString=${8:-}
 
   PRIMARY_DOMAIN=""
-  ENABLE_ROUTES=""
+
   # This is a little bit terrible. As we're injecting this into a yaml-
   # document we need to maintain the indentation
   local routesIndent="    "
   local singleRouteIndent="${routesIndent}    "
+
+  ENABLE_ROUTES=$(cat << EndOfMessage
+${routesIndent}autogenerateRoutes: ${autogenerateRoutes:-true}
+EndOfMessage
+)
   if [[ -n "${primaryDomain}" ]]; then
-    ENABLE_ROUTES+=$(cat << EndOfMessage
-${routesIndent}autogenerateRoutes: false
+    ENABLE_ROUTES=$(cat << EndOfMessage
+${routesIndent}autogenerateRoutes: ${autogenerateRoutes:-false}
 ${routesIndent}routes:
 ${routesIndent}  - varnish:
 EndOfMessage
@@ -147,8 +154,9 @@ function syncEnvRepo {
   local releaseImageRepository=$4
   local releaseImageName=$5
   local importTranslationsCron=$6
-  local primaryDomain="${7:-}"
-  local secondaryDomains="${8:-}"
+  local autogenerateRoutes="${7:-}"
+  local primaryDomain="${8:-}"
+  local secondaryDomains="${9:-}"
 
   # TODO, preflight checks that verifies this repository looks good to go.
   # makes most sense to do when we're doing more complicated things inside
@@ -181,7 +189,7 @@ function syncEnvRepo {
 
   # Enter the template and rendered it
   cd "${repoName}"
-  renderProfileTemplate "${siteName}" "${releaseTag}" "${releaseImageRepository}" "${releaseImageName}" "${importTranslationsCron}" "${primaryDomain}" "${secondaryDomains}"
+  renderProfileTemplate "${siteName}" "${releaseTag}" "${releaseImageRepository}" "${releaseImageName}" "${importTranslationsCron}" "${autogenerateRoutes}" "${primaryDomain}" "${secondaryDomains}"
 
   # Detect changes
   local changedFiles
