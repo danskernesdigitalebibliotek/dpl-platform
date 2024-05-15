@@ -1029,6 +1029,15 @@ tasks:
       preconditions:
       - *require_site
 
+    sites:report-is-set-up:
+      desc: |
+        Loops through all the sites in sites.yaml and reports whether their logo or logotext has been changed.
+        We use this as an indication for whether the site owners have startet setting up the site.
+      cmds:
+        - |
+          cat {{.dir_env}}/sites.yaml | yq '.sites | keys | .[]' \
+          | xargs -n 1 -I % bash -c 'set -e; if (( $(curl -s https://varnish.main.%.dplplat01.dpl.reload.dk/ | grep "\"header__logo-desktop-link\"" -A 8 | grep "\"logo-fallback\s*\"" -A 4 | grep "Logo title (bold)" | wc -l) > 0 )); then echo "% not yet set up"; fi'
+
     ui-password:
       deps: [cluster:auth]
       desc: Get the password to access a given user interface
