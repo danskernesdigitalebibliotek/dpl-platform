@@ -2,11 +2,7 @@
 x-defaults: &default-release-image-source
   releaseImageRepository: ghcr.io/danskernesdigitalebibliotek
   releaseImageName: dpl-cms-source
-  dpl-cms-release: "2024.19.0"
-x-early-movers: &early-movers-release-image-source
-  releaseImageRepository: ghcr.io/danskernesdigitalebibliotek
-  releaseImageName: dpl-cms-source
-  dpl-cms-release: "2024.19.0"
+  dpl-cms-release: "2024.20.2"
 sites:
   # Site objects are indexed by a unique key that must be a valid lagoon, and
   # github project name. That is, alphanumeric and dashes.
@@ -16,7 +12,7 @@ sites:
     description: "A site to test new releases on"
     releaseImageRepository: ghcr.io/danskernesdigitalebibliotek
     releaseImageName: dpl-cms-source
-    dpl-cms-release: "2024.20.1"
+    dpl-cms-release: "2024.20.2"
     primary-domain: bibliotest.deranged.dk
     secondary-domains:
       - www.bibliotest.deranged.dk
