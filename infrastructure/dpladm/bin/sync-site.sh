@@ -84,6 +84,16 @@ function getSiteSecondaryDomains {
     return
 }
 
+function getSiteAutogenerateRoutes {
+    local autogenerateRoutes
+    autogenerateRoutes=$(yq eval ".sites.${1}.autogenerateRoutes" "${2}")
+    if [[ "${autogenerateRoutes}" == "null" ]]; then
+        echo ""
+        return
+    fi
+    echo "${autogenerateRoutes}"
+}
+
 function getSiteImportTranslationsCron {
     local importTranslationsCron
     importTranslationsCron=$(yq eval ".sites.${1}.importTranslationsCron" "${2}")
@@ -126,6 +136,7 @@ set +o errexit
 # Get the primary and secondary domains from site.yml.
 primaryDomain=$(getSitePrimaryDomain "${SITE}" "${SITES_CONFIG}")
 secondaryDomains=$(getSiteSecondaryDomains "${SITE}" "${SITES_CONFIG}")
+autogenerateRoutes=$(getSiteAutogenerateRoutes "${SITE}" "${SITES_CONFIG}")
 releaseTag=$(getSiteDplCmsRelease "${SITE}" "${SITES_CONFIG}")
 siteImageRepository=$(getSiteReleaseImageRepository "${SITE}" "${SITES_CONFIG}" || exit 1)
 failOnErr $? "${siteImageRepository}"
@@ -136,7 +147,7 @@ importTranslationsCron=$(getSiteImportTranslationsCron "${SITE}" "${SITES_CONFIG
 set -o errexit
 
 # Synchronise the sites environment repository.
-syncEnvRepo "${SITE}" "${releaseTag}" "${BRANCH}" "${siteImageRepository}" "${siteReleaseImageName}" "${importTranslationsCron}" "${primaryDomain}" "${secondaryDomains}"
+syncEnvRepo "${SITE}" "${releaseTag}" "${BRANCH}" "${siteImageRepository}" "${siteReleaseImageName}" "${importTranslationsCron}" "${autogenerateRoutes}" "${primaryDomain}" "${secondaryDomains}"
 
 if [ "${plan}" = "webmaster" ] && [ "${BRANCH}" = "main" ]; then
     syncEnvRepo "${SITE}" "${releaseTag}" "moduletest" "${siteImageRepository}" "${siteReleaseImageName}" "${importTranslationsCron}"

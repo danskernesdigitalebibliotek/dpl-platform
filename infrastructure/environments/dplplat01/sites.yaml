@@ -20,8 +20,7 @@ sites:
     primary-domain: bibliotest.deranged.dk
     secondary-domains:
       - www.bibliotest.deranged.dk
-      - nginx.main.canary.dplplat01.dpl.reload.dk
-      - varnish.main.canary.dplplat01.dpl.reload.dk
+    autogenerateRoutes: true
     deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIIhuA0K7CNvRoe+Xx7RaXG4+a8KcSpzuWn+G4sUPzNWx"
   cms-school:
     name: "CMS-skole"
