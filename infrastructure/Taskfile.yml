@@ -997,6 +997,31 @@ tasks:
             | yq '.sites[] | [ .primary-domain ] + .secondary-domains | .[] | select(. | contains("dplplat01.dpl.reload.dk") | not)' \
             | xargs -I % -n 1 bash -c 'if (( $(dig % CAA | grep issue | wc -l) > 0 )); then echo "There are CAAs for domain %"; fi'
 
+    sites:incomplete-deployments:
+      desc: |
+        Gets the latest deployment for each production environment and prints its status if it is *not* complete.
+      cmds:
+        - |
+          lagoon list projects --output-json \
+            | jq -r '.data[].projectname'  \
+            | while read -r projectname; do echo "$projectname: $(lagoon list deployments -e main -p $projectname --output-json | jq '.data[0].status')"; done \
+            | grep -v "complete"
+
+    sites:grep-in-deploy-log:
+      desc: |
+        Given a needle `NEEDLE` this task finds all sites whose *latest* deployment log contains a given string
+      cmds:
+        - |
+          set -e
+          lagoon list projects --output-json \
+            | jq -r '.data[].projectname'  \
+            | while read -r projectname; do \
+                buildname=$(lagoon list deployments -e main -p $projectname --output-json | jq '.data[0].name' --raw-output)
+                echo "$projectname: $(lagoon get deployment -e main -p $projectname --name $buildname --logs | grep -E '{{ .NEEDLE }}' | wc -l) matches"
+              done \
+            | grep -v ": 0 matches"
+          echo "done"
+
     site:lagoon:project:capture-deploy-key:
       # TODO: print a big message if a deploy key is newly captured, so we know to commit changes!
       desc: Gets the deploy key for a particular project from Lagoon and persists it in sites.yaml
