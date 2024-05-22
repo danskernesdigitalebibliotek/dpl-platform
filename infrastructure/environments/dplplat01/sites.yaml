@@ -93,6 +93,9 @@ sites:
     name: "AssensBibliotekerne"
     description: "The library site for Assens"
     deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDrdA9FWa+mpmJ+uyMO6H3O+xIVYpdjcbodE/zS790Ee"
+    primary-domain: "www.assensbib.dk"
+    secondary-domains:
+      - "assensbib.dk"
     <<: *default-release-image-source
   ballerup:
     name: "Ballerup Bibliotekerne"
@@ -306,7 +309,7 @@ sites:
     <<: *default-release-image-source
     primary-domain: "www.guldbib.dk"
     secondary-domains:
-      - "www.www.guldbib.dk"
+      - "guldbib.dk"
     autogenerateRoutes: true
   haderslev:
     name: "Haderslev Bibliotekerne"
@@ -477,6 +480,9 @@ sites:
     name: "Kerteminde Bibliotekerne"
     description: "The library site for Kerteminde"
     deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBeh/ST+IzZySTeQZcFF/W17U4X4JZDLSptHNlGU6IOJ"
+    primary-domain: "kertemindebibliotekerne.dk"
+    sedondary-domains:
+      - "www.kertemindebibliotekerne.dk"
     <<: *default-release-image-source
   kobenhavn:
     name: "Københavns Biblioteker"
@@ -520,6 +526,9 @@ sites:
     name: "Langeland Bibliotek"
     description: "The library site for Langeland"
     deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIGRQJKuvPilMa2QiqPNzHf1EIa3epkJ6m0STYTLE1MaW"
+    primary-domain: "langelandbibliotek.dk"
+    secondary-domains:
+      - "www.langelandbibliotek.dk"
     <<: *default-release-image-source
   lejre:
     name: "Lejre Bibliotek & Arkiv"
@@ -599,6 +608,9 @@ sites:
     name: "Bibliotek og Borgerservice Nordfyns Kommune"
     description: "The library site for Nordfyn"
     deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIN7dIiOkzwJ2CVJFl2GMPWuxa4mzJvSi3q80twgvHTki"
+    primary-domain: "www.nordfynsbib.dk"
+    secondary-domains:
+      - "nordfynsbib.dk"
     <<: *default-release-image-source
   nyborg:
     name: "Nyborg Bibliotek"
@@ -622,6 +634,9 @@ sites:
     name: "Odense Biblioteker og Borgerservice"
     description: "The library site for Odense"
     deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIEQ6nngmgVZXTNpPzhMTvJyx4tUPjHxoLSNL/jJPaNQ0"
+    primary-domain: "www.odensebib.dk"
+    secondary-domains:
+      - "odensebib.dk"
     <<: *default-release-image-source
   odsherred:
     name: "Odsherred Bibliotek og Kulturhuse"
@@ -789,6 +804,9 @@ sites:
     name: "Svendborg Bibliotek"
     description: "The library site for Svendborg"
     deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKi6cflBrH2UZZSW9P3mWCMV2T7TUbfDSgAWBUWaIaPQ"
+    primary-domain: "svendborgbibliotek.dk"
+    secondary-domains:
+      - "www.svendborgbibliotek.dk"
     <<: *default-release-image-source
   syddjurs:
     name: "Syddjurs Bibliotek"
