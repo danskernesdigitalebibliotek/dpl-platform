@@ -47,6 +47,7 @@ sites:
     primary-domain: www.aalborgbibliotekerne.dk
     secondary-domains:
       - aalborgbibliotekerne.dk
+    autogenerateRoutes: true
     <<: *default-release-image-source
   aarhus:
     name: "Aarhus Kommunes Biblioteker"
