@@ -191,6 +191,10 @@ sites:
     name: "Faxe Kommunes Bibliotek & Borgerservice"
     description: "The library site for Faxe"
     deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBkdxUoBx0ZAXfMfA0rRUNo2EcUK39fp0M/zKJPOcYx2"
+    primary-domain: "www.faxebibliotek.dk"
+    secondary-domains:
+      - "www.faxebibliotek.dk"
+    autogenerateRoutes: true
     <<: *default-release-image-source
   fredensborg:
     name: "Fredensborg Bibliotekerne"
@@ -356,6 +360,10 @@ sites:
     name: "Herning Bibliotekerne"
     description: "The main library site for Herning"
     deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIA4LZWJFrRQQD65WohscqcmX0uqx7/zXFsK/o2tVY/9B"
+    primary-domain: "www.herningbib.dk"
+    secondary-domain:
+      - "herningbib.dk"
+    autogenerateRoutes: true
     <<: *patch-release-image-source
   hillerod:
     name: "Hillerød Bibliotekerne"
@@ -473,11 +481,6 @@ sites:
   kobenhavn:
     name: "Københavns Biblioteker"
     description: "The main library site for København"
-    # primary-domain: bibliotek.kk.dk
-    # secondary-domains:
-    #   - www.bibliotek.kk.dk
-    #   - nginx.main.kobenhavn.dplplat01.dpl.reload.dk
-    #   - varnish.main.kobenhavn.dplplat01.dpl.reload.dk
     deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHaTkDvjLW/b2qVj8FIvtX9x3TxFFZTENn+w2CFELeoC"
     <<: *default-release-image-source
     primary-domain: "bibliotek.kk.dk"
@@ -768,6 +771,10 @@ sites:
     name: "Struer Bibliotek"
     description: "The library site for Struer"
     deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIAcZDg9Veyvl3u/TGG0lIw6Z8osrEZwd4HhcXvbABAsH"
+    primary-domain: "www.struerbibliotek.dk"
+    secondary-domain:
+      - "struerbibliotek.dk"
+    autogenerateRoutes: true
     <<: *default-release-image-source
   sydslesvig:
     name: "Dansk Centralbibliotek for Sydslesvig e.V."
