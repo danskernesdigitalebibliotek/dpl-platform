@@ -553,11 +553,11 @@ sites:
     description: "The library site for Mariagerfjord"
     deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFeTDNC6HBZrpSy73UadgOdr8sjxpsKZkwGARuJ3X8rC"
     <<: *default-release-image-source
-    primary-domain: "mfbib.dk"
+    primary-domain: "www.mariagerfjordbibliotekerne.dk"
     secondary-domains:
       - "www.mfbib.dk"
       - "mariagerfjordbibliotekerne.dk"
-      - "www.mariagerfjordbibliotekerne.dk"
+      - "mfbib.dk"
     autogenerateRoutes: true
   middelfart:
     name: "Middelfart Bibliotek"
