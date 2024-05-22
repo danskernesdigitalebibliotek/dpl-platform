@@ -242,26 +242,26 @@ sites:
     primary-domain: "bibliotekerne.frederikssund.dk"
     secondary-domains:
       - "www.bibliotekerne.frederikssund.dk"
-      - "redirectfrafrsundbib.dk"
-      - "www.redirectfrafrsundbib.dk"
+      - "frsundbib.dk"
+      - "www.frsundbib.dk"
     autogenerateRoutes: true
   fureso:
     name: "Furesø Bibliotek & Borgerservice"
     description: "The library site for Furesø"
     deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIB+OntBSayMdg22NU1xDnoMsuW1E69uNwvcmeEgt8wlQ"
     <<: *default-release-image-source
-    primary-domain: "furbib"
+    primary-domain: "furbib.dk"
     secondary-domains:
-      - "www.furbib"
+      - "www.furbib.dk"
     autogenerateRoutes: true
   gentofte:
     name: "Gentofte Bibliotekerne"
     description: "The library site for Gentofte"
     deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIP3Gh74TPbjSiKTz/cJQeH3l0gLsPtgzGVpC1YezMi+D"
     <<: *default-release-image-source
-    primary-domain: "https://genbib.dk"
+    primary-domain: "genbib.dk"
     secondary-domains:
-      - "www.https://genbib.dk"
+      - "www.genbib.dk"
     autogenerateRoutes: true
   gladsaxe:
     name: "Gladsaxe Bibliotekerne"
