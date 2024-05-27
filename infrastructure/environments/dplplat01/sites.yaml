@@ -52,7 +52,7 @@ sites:
     secondary-domains:
       - aalborgbibliotekerne.dk
     autogenerateRoutes: true
-    <<: *default-release-image-source
+    <<: *next-release-image-source
   aarhus:
     name: "Aarhus Kommunes Biblioteker"
     description: "The library site for Aarhus"
@@ -94,7 +94,7 @@ sites:
       - nginx.main.billund.dplplat01.dpl.reload.dk
       - varnish.main.billund.dplplat01.dpl.reload.dk
     deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOsUy+dVkL+KxOYz8zSel7mNkcKrEnqDZPHmsU4sfMv/"
-    <<: *default-release-image-source
+    <<: *next-release-image-source
   bornholm:
     name: "Bornholms Folkebiblioteker"
     description: "The library site for Bornholm"
@@ -229,7 +229,7 @@ sites:
       - nginx.main.herlev.dplplat01.dpl.reload.dk
       - varnish.main.herlev.dplplat01.dpl.reload.dk
     deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAICsQ7blUGjtlSdPU4AV7PR21o2Eqg5IMKTCFX3PV/2Mf"
-    <<: *default-release-image-source
+    <<: *next-release-image-source
   herning:
     name: "Herning Bibliotekerne"
     description: "The main library site for Herning"
