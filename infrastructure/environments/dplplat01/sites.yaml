@@ -7,6 +7,10 @@ x-patch: &patch-release-image-source
   releaseImageRepository: ghcr.io/danskernesdigitalebibliotek
   releaseImageName: dpl-cms-source
   dpl-cms-release: "2024.19.0"
+x-next: &next-release-image-source
+  releaseImageRepository: ghcr.io/danskernesdigitalebibliotek
+  releaseImageName: dpl-cms-source
+  dpl-cms-release: "2024.22.0"
 sites:
   # Site objects are indexed by a unique key that must be a valid lagoon, and
   # github project name. That is, alphanumeric and dashes.
@@ -16,7 +20,7 @@ sites:
     description: "A site to test new releases on"
     releaseImageRepository: ghcr.io/danskernesdigitalebibliotek
     releaseImageName: dpl-cms-source
-    dpl-cms-release: "2024.20.2"
+    dpl-cms-release: "2024.22.0"
     primary-domain: bibliotest.deranged.dk
     secondary-domains:
       - www.bibliotest.deranged.dk
@@ -27,7 +31,7 @@ sites:
     description: "Et site til undervisning i CMSet"
     importTranslationsCron: "0 * * * *"
     deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJ6SzfPFf/XeLeqI342kxuJAlATpDMtgAfqlrLTTbW2m"
-    <<: *default-release-image-source
+    <<: *next-release-image-source
   customizable-canary:
     name: "Customizable bibliotek - eksempel"
     description: "Eksempel på bibliotek der kører på 'webmaster' plan, og derfor har et modultest-miljø"
@@ -48,7 +52,7 @@ sites:
     secondary-domains:
       - aalborgbibliotekerne.dk
     autogenerateRoutes: true
-    <<: *default-release-image-source
+    <<: *next-release-image-source
   aarhus:
     name: "Aarhus Kommunes Biblioteker"
     description: "The library site for Aarhus"
@@ -90,7 +94,7 @@ sites:
       - nginx.main.billund.dplplat01.dpl.reload.dk
       - varnish.main.billund.dplplat01.dpl.reload.dk
     deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOsUy+dVkL+KxOYz8zSel7mNkcKrEnqDZPHmsU4sfMv/"
-    <<: *default-release-image-source
+    <<: *next-release-image-source
   bornholm:
     name: "Bornholms Folkebiblioteker"
     description: "The library site for Bornholm"
@@ -225,7 +229,7 @@ sites:
       - nginx.main.herlev.dplplat01.dpl.reload.dk
       - varnish.main.herlev.dplplat01.dpl.reload.dk
     deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAICsQ7blUGjtlSdPU4AV7PR21o2Eqg5IMKTCFX3PV/2Mf"
-    <<: *default-release-image-source
+    <<: *next-release-image-source
   herning:
     name: "Herning Bibliotekerne"
     description: "The main library site for Herning"
