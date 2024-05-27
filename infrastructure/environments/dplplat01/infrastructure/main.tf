@@ -8,8 +8,8 @@ module "environment" {
   lagoon_domain_base = "dplplat01.dpl.reload.dk"
   random_seed        = "LahYegheePhohGeew9Fa"
   node_pools = {
-    "app2" : { min : 6, max : 15, vm : "Standard_B8ms", max_pods : 100 },
-    "admin2" : { min : 1, max : 1, vm : "Standard_B8ms", role : "admin", max_pods : 100 }
+    "app3" : { min : 7, max : 15, vm: "Standard_B8ms", max_pods : 85 },
+    "admin3" : { min : 1, max : 1, vm : "Standard_B8ms", role : "admin", max_pods : 85 },
   }
   node_pool_system_count = 2
   # We've increased this quite a bit to test performance. The ideal starting-
