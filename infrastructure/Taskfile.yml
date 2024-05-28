@@ -1160,6 +1160,28 @@ tasks:
             PASSWORD: "{{.PASSWORD}}"
             PROJECT: "{{.PROJECT}}"
 
+
+    site:local-admin:password:create-and-notify:
+      desc: Sets the password for the admin of the selected site
+      deps: [lagoon:cli:config, cluster:auth]
+      dir: "{{.dir_env}}"
+      vars:
+        PROJECT: "{{.PROJECT}}"
+        PASSWORD: "{{.PASSWORD}}"
+        MAIL: "{{.MAIL}}"
+        USERNAME: "{{.USERNAME}}"
+        CONTACTNAME: "{{.CONTACTNAME}}"
+      cmds:
+        - lagoon ssh --project {{.PROJECT}} --environment main -C "drush user:create '{{.USERNAME}}' --mail='{{.MAIL}}' --password='{{.PASSWORD}}'"
+        - lagoon ssh --project {{.PROJECT}} --environment main -C "drush user:role:add 'local_administrator' '{{.USERNAME}}'"
+        - task: mail:sent
+          vars:
+            SUBJECT: "Logininformation til jeres nye bibliotekssite"
+            RECIPIENT: "{{.MAIL}}"
+            CONTACTNAME: "{{.CONTACTNAME}}"
+            PASSWORD: "{{.PASSWORD}}"
+            PROJECT: "{{.PROJECT}}"
+
     mail:sent:
       desc: Sends an email from DoNotReply@folkebibliotekernescms.dk
       deps: [cluster:auth]
@@ -1196,7 +1218,7 @@ tasks:
 
                 Loginoplysninger:
 
-                Brugernavn: admin
+                Brugernavn: {{.USERNAME}}
                 Password: {{.PASSWORD}}
 
                 Disse login-oplysninger kan bruges på følgende web-addresse: https://varnish.main.{{.PROJECT}}.dplplat01.dpl.reload.dk
