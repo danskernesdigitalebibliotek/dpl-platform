@@ -1295,6 +1295,34 @@ tasks:
 
                 Med venlig hilsen
                 Det Digitale Folkebibliotek
+
+
+    site:local-admin:password:reset:
+      desc: Resets the password for the local admin of a site
+      deps: [cluster:auth, lagoon:cli:config]
+      dir: "{{.dir_env}}"
+      vars:
+        PROJECT: "{{.PROJECT}}"
+        USERNAME: "{{.USERNAME}}"
+        EMAIL: "{{.EMAIL}}"
+        PASSWORD:
+          sh: $RANDOM  | md5sum | head -c 20
+      cmds:
+        - lagoon ssh --project {{.PROJECT}} --environment main -C "drush user:password {{.USERNAME}} '{{.PASSWORD}}'"
+        - task: mail:sent
+          vars:
+            SUBJECT: "Nulstilling af bibliotekssite password"
+            RECIPIENT: "{{.EMAIL}}"
+            PASSWORD: "{{.PASSWORD}}"
+            CONTENT: |
+              Hej,
+              Du har bedt om at få nulstillet dit password til jeres bibliotekssite.
+              Dit nye password er: {{.PASSWORD}}
+              Vi anbefaler at du ændrer passwordet til noget du selv kan huske.
+
+              Med venlig hilsen
+              Det Digitale Folkebibliotek
+
     mail:sent:
       desc: Sends an email from DoNotReply@folkebibliotekernescms.dk
       deps: [cluster:auth]
