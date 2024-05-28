@@ -657,7 +657,7 @@ tasks:
           PROJECT_NAME: "{{.PROJECT_NAME}}"
       preconditions:
       - sh: "[ ! -z \"{{.PROJECT_NAME}}\" ]"
-        msg: "Missing PROJECT_ID or PROJECT_NAME - at least one must be set"
+        msg: "Missing PROJECT_NAME"
 
     lagoon:add:cluster:
       deps: [cluster:auth]
@@ -1082,3 +1082,116 @@ tasks:
         msg: "Could not find directory {{.dir_infra}}"
       - sh: "[ -d {{.dir_configuration}} ]"
         msg: "Could not find directory {{.dir_configuration}}"
+
+    site:admin:password:set:
+      desc: Sets the password for the admin of the selected site
+      deps: [lagoon:cli:config, cluster:auth]
+      dir: "{{.dir_env}}"
+      vars:
+        PROJECT: "{{.PROJECT}}"
+        PASSWORD: "{{.PASSWORD}}"
+        contacts:
+          sh: yq '.sites.{{.PROJECT}}.contacts[] | path | .[-1]' "{{.dir_env}}/contacts-and-their-sites.yaml"
+      cmds:
+        - lagoon ssh --project {{.PROJECT}} --environment main -C "drush user:password admin '{{.PASSWORD}}'"
+        - for: { var: contacts, as: INDEX}
+          task: mail:sent
+          vars:
+            SUBJECT: "Logininformation til jeres nye bibliotekssite"
+            RECIPIENT:
+              sh: yq '.sites.{{.PROJECT}}.contacts[{{.INDEX}}].email' "{{.dir_env}}/contacts-and-their-sites.yaml"
+            CONTACTNAME:
+              sh: yq '.sites.{{.PROJECT}}.contacts[{{.INDEX}}].name' "{{.dir_env}}/contacts-and-their-sites.yaml"
+            PASSWORD: "{{.PASSWORD}}"
+            PROJECT: "{{.PROJECT}}"
+
+    mail:sent:
+      desc: Sends an email from DoNotReply@folkebibliotekernescms.dk
+      deps: [cluster:auth]
+      vars:
+        RECIPIENT: "{{.RECIPIENT}}"
+        SUBJECT: "{{.SUBJECT}}"
+        CONTENT: |
+                Kære {{.CONTACTNAME}}
+
+                Læs venligst hele mailen før du går i gang. Den indeholder 3 afsnit:
+
+                1. Instruktion om opsætning af brugere
+                2. Loginoplysninger
+                3. En note om certifikatfejl der kan opleves i starten
+
+
+
+                Instruktion om opsætning af brugere:
+
+                Du får hermed adgang til jeres nyt bibliotekssite. Bemærk at medsendte bruger er ens for begge jer, der er kontaktpersoner. Så den første af jer der går ind på sitet skal skifte kodeord og oprette den anden som bruger. Det er vigtigt, at I vælger egne kodeord, så det kun er jer selv der kender det.
+
+                Den brugerkonto der følger med denne mail er af typen Admin, og dermed den brugertype der har flest rettigheder i løsningen (se manualen for beskrivelse af de forskellige brugertyper). Overvej grundigt hvilke brugertyper I giver andre brugere. Af sikkerhedshensyn er det bedre at starte med færre rettigheder for den enkelte, og så "opgradere" dem hvis det bliver nødvendigt.
+
+                Så helt kort:
+
+                - Nulstil kodeord så snart du er logget ind, så det kun er dig der kender det
+
+                - Brug admin-brugeren til at oprette andre brugere, men begræns deres muligheder
+
+                Du kan se mere omkring dette i manualen her:
+                https://www.folkebibliotekernescms.dk/main/startopsaetning/systembrugere/
+
+
+
+                Loginoplysninger:
+
+                Brugernavn: admin
+                Password: {{.PASSWORD}}
+
+                Disse login-oplysninger kan bruges på følgende web-addresse: https://varnish.main.{{.PROJECT}}.dplplat01.dpl.reload.dk
+
+
+
+                En note om certifikatfejl der kan opleves i starten:
+
+                Vi har desværre nogle fejl med certifikater til test-siderne. Det betyder at I kan opleve fejl i jeres browsere når I forsøger at tilgå jeres nye site.
+
+                Hvis I oplever denne fejl kan I i stedet tilgå en web-addresse der starter med "http", i jeres tilfælde http://varnish.main.{{.PROJECT}}.dplplat01.dpl.reload.dk
+
+                Her kan I logge ind og bruge redigeringsmodulerne. Desværre vil login gennem DBC ikke fungere fra denne version af siden.
+
+                Vi arbejder på hurtigst muligt at få sat fungerende certifikater op til alle siderne, og beklager de problemer det måtte skabe for jer!
+
+
+
+                Vi håber I kommer godt igang med vores nye løsning.
+
+                Med venlig hilsen
+                Det Digitale Folkebibliotek
+        CONNECTION_STRING:
+          sh: az communication list-key
+              --name communication-servicesa5e3
+              --resource-group
+                $(
+                  terraform -chdir={{.dir_infra}} output -json | jq --raw-output ".resourcegroup_name.value | select (.!=null)"
+                )
+              --query "primaryConnectionString"
+              --output tsv
+      cmd:
+        -|
+          az communication email send --sender "DoNotReply@folkebibliotekernescms.dk"
+          --subject "{{.SUBJECT}}"
+          --to "{{.RECIPIENT}}"
+          --text "{{.CONTENT}}"
+          --connection-string "{{.CONNECTION_STRING}}"
+
+    site:admins:credentials:mail:
+      desc: Sent email with credentials and site info to admin user on a library site
+      deps: [cluster:auth, lagoon:cli:config]
+      dir: "{{.dir_env}}"
+      vars:
+        siteadmins:
+          sh: cat {{.dir_env}}/contacts-and-their-sites.yaml | yq '.sites | keys | .[]'
+      cmds:
+        - for: { var: siteadmins }
+          task: site:admin:password:set
+          vars:
+            PROJECT: "{{.ITEM}}"
+            PASSWORD:
+              sh: $RANDOM  | md5sum | head -c 20
