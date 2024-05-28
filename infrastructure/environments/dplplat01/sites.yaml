@@ -501,8 +501,8 @@ sites:
     primary-domain: "koegebib.dk"
     secondary-domains:
       - "www.koegebib.dk"
-      - "køgebib.dk"
-      - "www.køgebib.dk"
+      - "xn--kgebib-bya.dk.dk"
+      - "www.xn--kgebib-bya.dk"
     autogenerateRoutes: true
   kolding:
     name: "Koldingbibliotekerne"
