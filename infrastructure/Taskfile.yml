@@ -940,6 +940,7 @@ tasks:
       vars:
         sites:
           sh: cat {{.dir_env}}/sites.yaml | yq '.sites | keys | .[]'
+        START_FROM_SITE: "{{.START_FROM_SITE}}"
       cmds:
         - task: env_repos:provision
           vars:
@@ -954,6 +955,24 @@ tasks:
             SKIP_PROVISION: "{{.SKIP_PROVISION}}"
             SKIP_FIRST_DEPLOYMENT: "{{.SKIP_FIRST_DEPLOYMENT}}"
             SKIP_REPO_SYNC: "{{.SKIP_REPO_SYNC}}"
+            SKIP:
+              sh: |
+                if [ -z "{{.START_FROM_SITE}}" ]; then
+                  exit 0
+                fi
+                pos_startfrom=$(echo "{{.sites}}" | awk -v item="{{.START_FROM_SITE}}" '{if($0 == item) print NR}')
+                pos_currentsite=$(echo "{{.sites}}" | awk -v item="{{.ITEM}}" '{if($0 == item) print NR}')
+
+                if [ -z "$pos_startfrom" ] || [ -z "$pos_currentsite" ]; then
+                  exit 0
+                fi
+
+                if [ "$pos_startfrom" -lt "$pos_currentsite" ]; then
+                  exit 0
+                else
+                  echo -n "true"
+                  exit 0
+                fi
         - for: { var: sites }
           task: site:autoscaler
           vars:
