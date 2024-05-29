@@ -1174,28 +1174,20 @@ tasks:
       cmds:
         - lagoon ssh --project {{.PROJECT}} --environment main -C "drush user:create '{{.USERNAME}}' --mail='{{.MAIL}}' --password='{{.PASSWORD}}'"
         - lagoon ssh --project {{.PROJECT}} --environment main -C "drush user:role:add 'local_administrator' '{{.USERNAME}}'"
-        - task: mail:sent
+        - task: mail:send
           vars:
             SUBJECT: "Logininformation til jeres nye bibliotekssite"
             RECIPIENT: "{{.MAIL}}"
             CONTACTNAME: "{{.CONTACTNAME}}"
             PASSWORD: "{{.PASSWORD}}"
             PROJECT: "{{.PROJECT}}"
-
-    mail:send:
-      desc: Sends an email from DoNotReply@folkebibliotekernescms.dk
-      deps: [cluster:auth]
-      vars:
-        RECIPIENT: "{{.RECIPIENT}}"
-        SUBJECT: "{{.SUBJECT}}"
-        CONTENT: |
+            CONTENT: |
                 Kære {{.CONTACTNAME}}
 
-                Læs venligst hele mailen før du går i gang. Den indeholder 3 afsnit:
+                Læs venligst hele mailen før du går i gang. Den indeholder 2 afsnit:
 
                 1. Instruktion om opsætning af brugere
                 2. Loginoplysninger
-                3. En note om certifikatfejl der kan opleves i starten
 
 
 
@@ -1224,23 +1216,45 @@ tasks:
                 Disse login-oplysninger kan bruges på følgende web-addresse: https://varnish.main.{{.PROJECT}}.dplplat01.dpl.reload.dk
 
 
-
-                En note om certifikatfejl der kan opleves i starten:
-
-                Vi har desværre nogle fejl med certifikater til test-siderne. Det betyder at I kan opleve fejl i jeres browsere når I forsøger at tilgå jeres nye site.
-
-                Hvis I oplever denne fejl kan I i stedet tilgå en web-addresse der starter med "http", i jeres tilfælde http://varnish.main.{{.PROJECT}}.dplplat01.dpl.reload.dk
-
-                Her kan I logge ind og bruge redigeringsmodulerne. Desværre vil login gennem DBC ikke fungere fra denne version af siden.
-
-                Vi arbejder på hurtigst muligt at få sat fungerende certifikater op til alle siderne, og beklager de problemer det måtte skabe for jer!
-
-
-
                 Vi håber I kommer godt igang med vores nye løsning.
 
                 Med venlig hilsen
                 Det Digitale Folkebibliotek
+
+    site:local-admin:password:reset:
+      desc: Resets the password for the local admin of a site
+      deps: [cluster:auth, lagoon:cli:config]
+      dir: "{{.dir_env}}"
+      vars:
+        PROJECT: "{{.PROJECT}}"
+        USERNAME: "{{.USERNAME}}"
+        EMAIL: "{{.EMAIL}}"
+        PASSWORD:
+          sh: $RANDOM  | md5sum | head -c 20
+      cmds:
+        - lagoon ssh --project {{.PROJECT}} --environment main -C "drush user:password {{.USERNAME}} '{{.PASSWORD}}'"
+        - task: mail:send
+          vars:
+            SUBJECT: "Nulstilling af bibliotekssite password"
+            RECIPIENT: "{{.EMAIL}}"
+            PASSWORD: "{{.PASSWORD}}"
+            CONTENT: |
+              Hej,
+
+              Du har bedt om at få nulstillet dit password til jeres bibliotekssite.
+              Dit nye password er: {{.PASSWORD}}
+              Vi anbefaler at du ændrer passwordet til noget du selv kan huske.
+
+              Med venlig hilsen
+              Det Digitale Folkebibliotek
+
+    mail:send:
+      desc: Sends an email from DoNotReply@folkebibliotekernescms.dk
+      deps: [cluster:auth]
+      vars:
+        RECIPIENT: "{{.RECIPIENT}}"
+        SUBJECT: "{{.SUBJECT}}"
+        CONTENT: "{{.CONTENT}}"
         CONNECTION_STRING:
           sh: az communication list-key
               --name communication-servicesa5e3
