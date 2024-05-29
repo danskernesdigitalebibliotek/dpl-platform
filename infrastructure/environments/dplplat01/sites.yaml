@@ -2,15 +2,7 @@
 x-defaults: &default-release-image-source
   releaseImageRepository: ghcr.io/danskernesdigitalebibliotek
   releaseImageName: dpl-cms-source
-  dpl-cms-release: "2024.20.2"
-x-patch: &patch-release-image-source
-  releaseImageRepository: ghcr.io/danskernesdigitalebibliotek
-  releaseImageName: dpl-cms-source
-  dpl-cms-release: "2024.19.0"
-x-next: &next-release-image-source
-  releaseImageRepository: ghcr.io/danskernesdigitalebibliotek
-  releaseImageName: dpl-cms-source
-  dpl-cms-release: "2024.22.0"
+  dpl-cms-release: "2024.22.1"
 sites:
   # Site objects are indexed by a unique key that must be a valid lagoon, and
   # github project name. That is, alphanumeric and dashes.
@@ -27,7 +19,7 @@ sites:
     description: "Et site til undervisning i CMSet"
     importTranslationsCron: "0 * * * *"
     deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJ6SzfPFf/XeLeqI342kxuJAlATpDMtgAfqlrLTTbW2m"
-    <<: *next-release-image-source
+    <<: *default-release-image-source
   customizable-canary:
     name: "Customizable bibliotek - eksempel"
     description: "Eksempel på bibliotek der kører på 'webmaster' plan, og derfor har et modultest-miljø"
@@ -47,8 +39,9 @@ sites:
     primary-domain: www.aalborgbibliotekerne.dk
     secondary-domains:
       - aalborgbibliotekerne.dk
-    autogenerateRoutes: true
-    <<: *next-release-image-source
+      - nginx.main.aalborg.dplplat01.dpl.reload.dk
+      - varnish.main.aalborg.dplplat01.dpl.reload.dk
+    <<: *default-release-image-source
   aarhus:
     name: "Aarhus Kommunes Biblioteker"
     description: "The library site for Aarhus"
@@ -90,7 +83,7 @@ sites:
       - nginx.main.billund.dplplat01.dpl.reload.dk
       - varnish.main.billund.dplplat01.dpl.reload.dk
     deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOsUy+dVkL+KxOYz8zSel7mNkcKrEnqDZPHmsU4sfMv/"
-    <<: *next-release-image-source
+    <<: *default-release-image-source
   bornholm:
     name: "Bornholms Folkebiblioteker"
     description: "The library site for Bornholm"
@@ -225,12 +218,12 @@ sites:
       - nginx.main.herlev.dplplat01.dpl.reload.dk
       - varnish.main.herlev.dplplat01.dpl.reload.dk
     deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAICsQ7blUGjtlSdPU4AV7PR21o2Eqg5IMKTCFX3PV/2Mf"
-    <<: *next-release-image-source
+    <<: *default-release-image-source
   herning:
     name: "Herning Bibliotekerne"
     description: "The main library site for Herning"
     deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIA4LZWJFrRQQD65WohscqcmX0uqx7/zXFsK/o2tVY/9B"
-    <<: *patch-release-image-source
+    <<: *default-release-image-source
   hillerod:
     name: "Hillerød Bibliotekerne"
     description: "The library site for Hillerød"
@@ -520,6 +513,10 @@ sites:
     name: "Vesthimmerlands Biblioteker"
     description: "The library site for Vesthimmerland"
     deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKNqMIGZql1EAivzzOPpcq2DmC5tPnA1KvLgtnJBqd1F"
+    primary-domain: "www.vhbib.dk"
+    secondary-domains:
+      - "vhbib.dk"
+    autogenerateRoutes: true
     <<: *default-release-image-source
   viborg:
     name: "Viborg Bibliotekerne"
