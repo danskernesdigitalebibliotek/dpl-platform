@@ -128,6 +128,10 @@ sites:
     name: "Faxe Kommunes Bibliotek & Borgerservice"
     description: "The library site for Faxe"
     deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBkdxUoBx0ZAXfMfA0rRUNo2EcUK39fp0M/zKJPOcYx2"
+    primary-domain: "www.faxebibliotek.dk"
+    secondary-domains:
+      - "faxebibliotek.dk"
+    autogenerateRoutes: true
     <<: *default-release-image-source
   fredensborg:
     name: "Fredensborg Bibliotekerne"
@@ -463,6 +467,10 @@ sites:
     name: "Struer Bibliotek"
     description: "The library site for Struer"
     deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIAcZDg9Veyvl3u/TGG0lIw6Z8osrEZwd4HhcXvbABAsH"
+    primary-domain: "www.struerbibliotek.dk"
+    secondary-domain:
+      - "struerbibliotek.dk"
+    autogenerateRoutes: true
     <<: *default-release-image-source
   sydslesvig:
     name: "Dansk Centralbibliotek for Sydslesvig e.V."
