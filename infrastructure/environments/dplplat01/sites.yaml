@@ -39,7 +39,8 @@ sites:
     primary-domain: www.aalborgbibliotekerne.dk
     secondary-domains:
       - aalborgbibliotekerne.dk
-    autogenerateRoutes: true
+      - nginx.main.aalborg.dplplat01.dpl.reload.dk
+      - varnish.main.aalborg.dplplat01.dpl.reload.dk
     <<: *default-release-image-source
   aarhus:
     name: "Aarhus Kommunes Biblioteker"
@@ -512,9 +513,9 @@ sites:
     name: "Vesthimmerlands Biblioteker"
     description: "The library site for Vesthimmerland"
     deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKNqMIGZql1EAivzzOPpcq2DmC5tPnA1KvLgtnJBqd1F"
-    primary-domain: "vhbib.dk"
+    primary-domain: "www.vhbib.dk"
     secondary-domains:
-      - "www.vhbib.dk"
+      - "vhbib.dk"
     autogenerateRoutes: true
     <<: *default-release-image-source
   viborg:
