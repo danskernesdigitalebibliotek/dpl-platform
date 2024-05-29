@@ -985,23 +985,23 @@ tasks:
         - task: site:lagoon:project:ensure
           vars:
             SITE: "{{.SITE}}"
-            SKIP: "{{.SKIP_ENSURE_PROJECT}}"
+            SKIP: "{{.SKIP_ENSURE_PROJECT}}{{.SKIP}}"
         - task: site:lagoon:project:capture-deploy-key
           vars:
             SITE: "{{.SITE}}"
-            SKIP: "{{.SKIP_CAPTURE_DEPLOY_KEY}}"
+            SKIP: "{{.SKIP_CAPTURE_DEPLOY_KEY}}{{.SKIP}}"
         - task: env_repos:provision
           vars:
             OPTIONS: -refresh=false
-            SKIP: "{{.SKIP_PROVISION}}"
+            SKIP: "{{.SKIP_PROVISION}}{{.SKIP}}"
         - task: site:lagoon:ensure-first-deployment
           vars:
             SITE: "{{.SITE}}"
-            SKIP: "{{.SKIP_FIRST_DEPLOYMENT}}"
+            SKIP: "{{.SKIP_FIRST_DEPLOYMENT}}{{.SKIP}}"
         - task: site:sync
           vars:
             SITE: "{{.SITE}}"
-            SKIP: "{{.SKIP_REPO_SYNC}}"
+            SKIP: "{{.SKIP_REPO_SYNC}}{{.SKIP}}"
       preconditions:
       - *require_site
 
