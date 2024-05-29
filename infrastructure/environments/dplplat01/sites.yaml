@@ -512,6 +512,10 @@ sites:
     name: "Vesthimmerlands Biblioteker"
     description: "The library site for Vesthimmerland"
     deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKNqMIGZql1EAivzzOPpcq2DmC5tPnA1KvLgtnJBqd1F"
+    primary-domain: "vhbib.dk"
+    secondary-domains:
+      - "www.vhbib.dk"
+    autogenerateRoutes: true
     <<: *default-release-image-source
   viborg:
     name: "Viborg Bibliotekerne"
