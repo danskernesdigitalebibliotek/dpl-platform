@@ -5,20 +5,20 @@ ingress:
   enabled: false
 
 # Back the loki instances with storage as a buffer
-persistence:
-  enabled: true
-  accessModes:
-  - ReadWriteOnce
-  size: 16Gi
-
-compactor:
-  retention_enabled: true
-limits_config:
-  # We keep logs for 3 months.
-  retention_period: 93d
+backend:
+  persistence:
+    enabled: true
+    accessModes:
+    - ReadWriteOnce
+    size: 32Gi
 
 loki:
   auth_enabled: false
+  compactor:
+    retention_enabled: true
+  limits_config:
+    # We keep logs for 1 month.
+    retention_period: 30d
   structuredConfig:
     # Setup our index and the azure blob-storage as the storage backend.
     storage_config:
@@ -47,7 +47,6 @@ loki:
         index:
           prefix: loki_index_
           period: 24h
-
 
 write:
   replicas: 2
