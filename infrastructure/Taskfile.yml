@@ -967,7 +967,7 @@ tasks:
                   exit 0
                 fi
 
-                if [ "$pos_startfrom" -lt "$pos_currentsite" ]; then
+                if [ "$pos_startfrom" -le "$pos_currentsite" ]; then
                   exit 0
                 else
                   echo -n "true"
