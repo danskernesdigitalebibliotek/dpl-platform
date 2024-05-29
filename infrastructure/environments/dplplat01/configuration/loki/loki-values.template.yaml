@@ -6,6 +6,12 @@ ingress:
 
 # Back the loki instances with storage as a buffer
 backend:
+  autoscaling:
+    enabled: true
+    minReplicas: 3
+    maxReplicas: 6
+    targetCPUUtilizationPercentage: 70
+    targetMemoryUtilizationPercentage: 70
   persistence:
     enabled: true
     accessModes:
