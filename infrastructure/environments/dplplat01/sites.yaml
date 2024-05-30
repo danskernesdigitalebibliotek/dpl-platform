@@ -498,7 +498,7 @@ sites:
     primary-domain: "www.struerbibliotek.dk"
     secondary-domains:
       - "struerbibliotek.dk"
-    autogenerateRoutes: true
+    autogenerateRoutes: "redirect"
     <<: *default-release-image-source
   sydslesvig:
     name: "Dansk Centralbibliotek for Sydslesvig e.V."
@@ -553,7 +553,7 @@ sites:
     primary-domain: "www.vhbib.dk"
     secondary-domains:
       - "vhbib.dk"
-    autogenerateRoutes: true
+    autogenerateRoutes: "redirect"
     <<: *default-release-image-source
   viborg:
     name: "Viborg Bibliotekerne"
