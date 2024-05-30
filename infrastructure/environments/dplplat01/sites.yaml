@@ -468,7 +468,7 @@ sites:
     description: "The library site for Struer"
     deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIAcZDg9Veyvl3u/TGG0lIw6Z8osrEZwd4HhcXvbABAsH"
     primary-domain: "www.struerbibliotek.dk"
-    secondary-domain:
+    secondary-domains:
       - "struerbibliotek.dk"
     autogenerateRoutes: true
     <<: *default-release-image-source
