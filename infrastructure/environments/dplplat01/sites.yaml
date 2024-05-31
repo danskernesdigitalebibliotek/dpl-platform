@@ -391,6 +391,10 @@ sites:
     name: "Nyborg Bibliotek"
     description: "The library site for Nyborg"
     deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMpG7Br//TQnc3LRdkXCR80mD0C6vsZg36ZVibTUfdyS"
+    primary-domain: www.nyborgbibliotek.dk
+    secondary-domains:
+      - nyborgbibliotek.dk
+    autogenerateRoutes: true
     <<: *default-release-image-source
   odder:
     name: "Odder Bibliotek"
