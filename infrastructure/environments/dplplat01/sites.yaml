@@ -65,9 +65,9 @@ sites:
     name: "Allerød Biblioteker"
     description: "The library site for Allerød"
     deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOlK4u+5C8Y+euVj0Q+s7ZsNWMeUqSKgVg+845d3XX1s"
-    primary-domain: www.alleroedbibs.dk
+    primary-domain: www.bibliotek.alleroed.dk
     secondary-domains:
-      - www.bibliotek.alleroed.dk
+      - bibliotek.alleroed.dk
     autoGenerateRoutes: true
     <<: *default-release-image-source
   assens:
