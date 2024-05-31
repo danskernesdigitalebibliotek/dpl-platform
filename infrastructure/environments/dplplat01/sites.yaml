@@ -102,6 +102,10 @@ sites:
     name: "Brønderslev Bibliotek"
     description: "The library site for Brønderslev"
     deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPocm02vNblShmSFlQqWsIszR/AXsbT5Jmwj8fDwjSwO"
+    primary-domain: www.bronderslevbib.dk
+    secondary-domains:
+      - www.bronderslevbib.dk
+    autoGenerateRoutes: true
     <<: *default-release-image-source
   dragor:
     name: "Dragør Bibliotek"
