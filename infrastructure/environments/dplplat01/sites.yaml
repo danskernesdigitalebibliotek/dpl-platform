@@ -362,6 +362,10 @@ sites:
     name: "Middelfart Bibliotek"
     description: "The library site for Middelfart"
     deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIL+cnxhliA+siikDk40SlviShSK6MmC3g/3spAVey0ht"
+    primary-domain: www.middelfartbibliotek.dk
+    secondary-domains:
+      - middelfartbibliotek.dk
+    autogenerateRoutes: true
     <<: *default-release-image-source
   morso:
     name: "Morsø Folkebibliotek"
