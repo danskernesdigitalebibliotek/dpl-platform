@@ -68,7 +68,7 @@ sites:
     primary-domain: www.bibliotek.alleroed.dk
     secondary-domains:
       - bibliotek.alleroed.dk
-    autoGenerateRoutes: true
+    autogenerateRoutes: true
     <<: *default-release-image-source
   assens:
     name: "AssensBibliotekerne"
