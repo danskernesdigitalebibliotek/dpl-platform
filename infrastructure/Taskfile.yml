@@ -1286,3 +1286,14 @@ tasks:
             PROJECT: "{{.ITEM}}"
             PASSWORD:
               sh: $RANDOM  | md5sum | head -c 20
+
+    site:local-admin:admin:
+      desc: Switches the local admin user to an admin user
+      deps: [cluster:auth, lagoon:cli:config]
+      dir: "{{.dir_env}}"
+      vars:
+        PROJECT: "{{.PROJECT}}"
+        ENVIRONMENT: "{{.ENVIRONMENT}}"
+        USERNAME: "{{.USERNAME}}"
+      cmds:
+        - lagoon ssh --project {{.PROJECT}} --environment {{.ENVIRONMENT}} -C "drush user:role:add 'administrator' '{{.USERNAME}}'; drush user:role:remove 'local_administrator' '{{.USERNAME}}'"
