@@ -1301,5 +1301,15 @@ tasks:
           task: site:local-admin:admin:execute
           vars:
             ADMINID: "{{.ITEM}}"
+
+    site:local-admin:admin:execute:
+      desc: Switches the local admin user to an admin user
+      dir: "{{.dir_env}}"
+      vars:
+        PROJECT: "{{.PROJECT}}"
+        ENVIRONMENT: "{{.ENVIRONMENT}}"
+        ADMIN:
+          sh: lagoon ssh -p canary -e main -C "drush uinf --field='name' --uid={{.ADMINID}}"
       cmds:
-        - lagoon ssh --project {{.PROJECT}} --environment {{.ENVIRONMENT}} -C "drush user:role:add 'administrator' '{{.USERNAME}}'; drush user:role:remove 'local_administrator' '{{.USERNAME}}'"
+        - echo {{.ADMINID}}
+        - lagoon ssh --project {{.PROJECT}} --environment {{.ENVIRONMENT}} -C "drush user:role:add 'administrator' '{{.ADMIN}}'"
