@@ -1294,6 +1294,12 @@ tasks:
       vars:
         PROJECT: "{{.PROJECT}}"
         ENVIRONMENT: "{{.ENVIRONMENT}}"
-        USERNAME: "{{.USERNAME}}"
+        ADMINS:
+          sh: lagoon ssh -p canary -e main -C "drush sqlq 'SELECT GROUP_CONCAT(entity_id) FROM user__roles WHERE roles_target_id=\"administrator\"'" | sed 's/,/\n/g'
+      cmds:
+        - for: { var: ADMINS, as: ITEM }
+          task: site:local-admin:admin:execute
+          vars:
+            ADMINID: "{{.ITEM}}"
       cmds:
         - lagoon ssh --project {{.PROJECT}} --environment {{.ENVIRONMENT}} -C "drush user:role:add 'administrator' '{{.USERNAME}}'; drush user:role:remove 'local_administrator' '{{.USERNAME}}'"
