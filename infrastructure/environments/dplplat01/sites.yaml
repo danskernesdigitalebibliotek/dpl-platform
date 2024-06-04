@@ -46,13 +46,13 @@ sites:
       - aalborgbibliotekerne.dk
       - nginx.main.aalborg.dplplat01.dpl.reload.dk
       - varnish.main.aalborg.dplplat01.dpl.reload.dk
-    plan: webmaster
+    # plan: webmaster
     <<: *default-release-image-source
   aarhus:
     name: "Aarhus Kommunes Biblioteker"
     description: "The library site for Aarhus"
     deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFL+uMeEfsaHEzbNxOmBB8dX32OLo63CTomG8VZvuiN2"
-    plan: webmaster
+    # plan: webmaster
     <<: *default-release-image-source
   aero:
     name: "Ærø Folkebibliotek"
@@ -139,7 +139,7 @@ sites:
     secondary-domains:
       - "faxebibliotek.dk"
     autogenerateRoutes: true
-    plan: webmaster
+    # plan: webmaster
     <<: *default-release-image-source
   fredensborg:
     name: "Fredensborg Bibliotekerne"
@@ -235,7 +235,7 @@ sites:
     name: "Herning Bibliotekerne"
     description: "The main library site for Herning"
     deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIA4LZWJFrRQQD65WohscqcmX0uqx7/zXFsK/o2tVY/9B"
-    plan: webmaster
+    # plan: webmaster
     <<: *default-release-image-source
   hillerod:
     name: "Hillerød Bibliotekerne"
@@ -310,7 +310,7 @@ sites:
     #   - www.bibliotek.kk.dk
     #   - nginx.main.kobenhavn.dplplat01.dpl.reload.dk
     #   - varnish.main.kobenhavn.dplplat01.dpl.reload.dk
-    plan: webmaster
+    # plan: webmaster
     deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHaTkDvjLW/b2qVj8FIvtX9x3TxFFZTENn+w2CFELeoC"
     <<: *default-release-image-source
   koge:
@@ -501,7 +501,7 @@ sites:
     name: "Tårnby Kommunebiblioteker"
     description: "The library site for Tårnby"
     deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIF0F5bqQwdmAdMcDHVT8xxK0tOEGZYp21WIZ1zydr28O"
-    plan: webmaster
+    # plan: webmaster
     <<: *default-release-image-source
   thisted:
     name: "Biblioteket i Thy"
