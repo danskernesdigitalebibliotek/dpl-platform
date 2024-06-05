@@ -1286,3 +1286,30 @@ tasks:
             PROJECT: "{{.ITEM}}"
             PASSWORD:
               sh: $RANDOM  | md5sum | head -c 20
+
+    site:local-admin:admin:
+      desc: Switches the local admin user to an admin user
+      deps: [cluster:auth, lagoon:cli:config]
+      dir: "{{.dir_env}}"
+      vars:
+        PROJECT: "{{.PROJECT}}"
+        ENVIRONMENT: "{{.ENVIRONMENT}}"
+        ADMINS:
+          sh: lagoon ssh -p canary -e main -C "drush sqlq 'SELECT GROUP_CONCAT(entity_id) FROM user__roles WHERE roles_target_id=\"local_administrator\"'" | sed 's/,/\n/g'
+      cmds:
+        - for: { var: ADMINS, as: ITEM }
+          task: site:local-admin:admin:execute
+          vars:
+            ADMINID: "{{.ITEM}}"
+
+    site:local-admin:admin:execute:
+      desc: Switches the local admin user to an admin user
+      dir: "{{.dir_env}}"
+      vars:
+        PROJECT: "{{.PROJECT}}"
+        ENVIRONMENT: "{{.ENVIRONMENT}}"
+        ADMIN:
+          sh: lagoon ssh -p canary -e main -C "drush uinf --field='name' --uid='{{.ADMINID}}'"
+      cmds:
+        - lagoon ssh --project {{.PROJECT}} --environment {{.ENVIRONMENT}} -C "drush user:role:add 'administrator' '{{.ADMIN}}'"
+        - lagoon ssh --project {{.PROJECT}} --environment {{.ENVIRONMENT}} -C "drush user:role:remove 'local_administrator' '{{.ADMIN}}'"
