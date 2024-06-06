@@ -438,6 +438,10 @@ sites:
     name: "Samsø Bibliotek"
     description: "The library site for Samsø"
     deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFZcxFuzVNn72t0dnDsnEX60NZ0OJ5ce4HxgI1PtIKFp"
+    primary-domain: "bibliotek.samsoe.dk"
+    secondary-domains:
+      - "www.bibliotek.samsoe.dk"
+    autogenerateRoutes: true
     <<: *default-release-image-source
   silkeborg:
     name: "Silkeborg Bibliotekerne"
