@@ -235,6 +235,10 @@ sites:
     name: "Herning Bibliotekerne"
     description: "The main library site for Herning"
     deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIA4LZWJFrRQQD65WohscqcmX0uqx7/zXFsK/o2tVY/9B"
+    primary-domain: www.herningbib.dk
+    secondary-domains:
+      - herningbib.dk
+    autoGenerateRoutes: true
     plan: webmaster
     <<: *default-release-image-source
   hillerod:
