@@ -97,8 +97,8 @@ EndOfMessage
   fi
 
   # Only render secondary domains if we have a primary domain.
+  SECONDARY_DOMAINS=""
   if [[ -n "${primaryDomain}" && -n "${secondaryDomainsString}" ]]; then
-    SECONDARY_DOMAINS=""
     IFS=' '
     for secondaryDomain in ${secondaryDomainsString}; do
       SECONDARY_DOMAINS+=$(cat << EndOfMessage
