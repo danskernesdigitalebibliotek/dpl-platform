@@ -20,6 +20,7 @@ sites:
     description: "Et site til undervisning i CMSet"
     importTranslationsCron: "0 * * * *"
     deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJ6SzfPFf/XeLeqI342kxuJAlATpDMtgAfqlrLTTbW2m"
+    plan: webmaster
     <<: *default-release-image-source
   customizable-canary:
     name: "Customizable bibliotek - eksempel"
