@@ -86,4 +86,4 @@ Monitor via eg.
 ```shell
 watch -n 5 kubectl get nodes
 ```
-5. Go to `dplsh's` Dockerfile and update the `kubectl` version to match that of the upgraded AKS version
+5. Go to `dplsh's` Dockerfile and update the `KUBECTL_VERSION` version to match that of the upgraded AKS version
