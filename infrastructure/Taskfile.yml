@@ -1311,6 +1311,5 @@ tasks:
         ADMIN:
           sh: lagoon ssh -p {{.PROJECT}} -e {{.ENVIRONMENT}} -C "drush uinf --field='name' --uid='{{.ADMINID}}'"
       cmds:
-        - echo {{.ADMINID}}
         - lagoon ssh --project {{.PROJECT}} --environment {{.ENVIRONMENT}} -C "drush user:role:add 'administrator' '{{.ADMIN}}'"
         - lagoon ssh --project {{.PROJECT}} --environment {{.ENVIRONMENT}} -C "drush user:role:remove 'local_administrator' '{{.ADMIN}}'"
