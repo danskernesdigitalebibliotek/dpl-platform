@@ -102,6 +102,10 @@ sites:
     name: "Brønderslev Bibliotek"
     description: "The library site for Brønderslev"
     deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPocm02vNblShmSFlQqWsIszR/AXsbT5Jmwj8fDwjSwO"
+    primary-domain: www.bronderslevbib.dk
+    secondary-domains:
+      - bronderslevbib.dk
+    autogenerateRoutes: true
     <<: *default-release-image-source
   dragor:
     name: "Dragør Bibliotek"
@@ -358,6 +362,10 @@ sites:
     name: "Middelfart Bibliotek"
     description: "The library site for Middelfart"
     deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIL+cnxhliA+siikDk40SlviShSK6MmC3g/3spAVey0ht"
+    primary-domain: www.middelfartbibliotek.dk
+    secondary-domains:
+      - middelfartbibliotek.dk
+    autogenerateRoutes: true
     <<: *default-release-image-source
   morso:
     name: "Morsø Folkebibliotek"
@@ -383,6 +391,10 @@ sites:
     name: "Nyborg Bibliotek"
     description: "The library site for Nyborg"
     deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMpG7Br//TQnc3LRdkXCR80mD0C6vsZg36ZVibTUfdyS"
+    primary-domain: www.nyborgbibliotek.dk
+    secondary-domains:
+      - nyborgbibliotek.dk
+    autogenerateRoutes: true
     <<: *default-release-image-source
   odder:
     name: "Odder Bibliotek"
