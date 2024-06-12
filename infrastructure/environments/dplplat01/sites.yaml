@@ -41,8 +41,7 @@ sites:
     primary-domain: www.aalborgbibliotekerne.dk
     secondary-domains:
       - aalborgbibliotekerne.dk
-      - nginx.main.aalborg.dplplat01.dpl.reload.dk
-      - varnish.main.aalborg.dplplat01.dpl.reload.dk
+    autogenerateRoutes: "redirect"
     plan: webmaster
     <<: *default-release-image-source
   aarhus:
@@ -88,8 +87,7 @@ sites:
       - www.billundbib.dk
       - billundbibliotek.dk
       - www.billundbibliotek.dk
-      - nginx.main.billund.dplplat01.dpl.reload.dk
-      - varnish.main.billund.dplplat01.dpl.reload.dk
+    autogenerateRoutes: "redirect"
     deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOsUy+dVkL+KxOYz8zSel7mNkcKrEnqDZPHmsU4sfMv/"
     <<: *default-release-image-source
   bornholm:
@@ -232,8 +230,7 @@ sites:
     primary-domain: www.herlevbibliotek.dk
     secondary-domains:
       - herlevbibliotek.dk
-      - nginx.main.herlev.dplplat01.dpl.reload.dk
-      - varnish.main.herlev.dplplat01.dpl.reload.dk
+    autogenerateRoutes: "redirect"
     deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAICsQ7blUGjtlSdPU4AV7PR21o2Eqg5IMKTCFX3PV/2Mf"
     <<: *default-release-image-source
   herning:
@@ -501,7 +498,7 @@ sites:
     primary-domain: "www.struerbibliotek.dk"
     secondary-domains:
       - "struerbibliotek.dk"
-    autogenerateRoutes: true
+    autogenerateRoutes: "redirect"
     <<: *default-release-image-source
   sydslesvig:
     name: "Dansk Centralbibliotek for Sydslesvig e.V."
@@ -556,7 +553,7 @@ sites:
     primary-domain: "www.vhbib.dk"
     secondary-domains:
       - "vhbib.dk"
-    autogenerateRoutes: true
+    autogenerateRoutes: "redirect"
     <<: *default-release-image-source
   viborg:
     name: "Viborg Bibliotekerne"

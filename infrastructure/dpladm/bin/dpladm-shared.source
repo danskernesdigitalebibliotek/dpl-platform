@@ -77,18 +77,31 @@ function renderProfileTemplate {
 
   PRIMARY_DOMAIN=""
 
+  if [[ "${autogenerateRoutes}" == "redirect" ]]; then
+    autogenerateRoutes="false"
+    secondaryDomainsString="${secondaryDomainsString} varnish.main.${siteName}.dplplat01.dpl.reload.dk nginx.main.${siteName}.dplplat01.dpl.reload.dk"
+  fi
+
+  if [[ -z "${autogenerateRoutes}" && -n "${primaryDomain}" ]]; then
+    autogenerateRoutes="false"
+  fi
+
+  if [[ -z "${autogenerateRoutes}" ]]; then
+    autogenerateRoutes="true"
+  fi
+
   # This is a little bit terrible. As we're injecting this into a yaml-
   # document we need to maintain the indentation
   local routesIndent="    "
   local singleRouteIndent="${routesIndent}    "
 
   ENABLE_ROUTES=$(cat << EndOfMessage
-${routesIndent}autogenerateRoutes: ${autogenerateRoutes:-true}
+${routesIndent}autogenerateRoutes: ${autogenerateRoutes}
 EndOfMessage
 )
   if [[ -n "${primaryDomain}" ]]; then
     ENABLE_ROUTES=$(cat << EndOfMessage
-${routesIndent}autogenerateRoutes: ${autogenerateRoutes:-false}
+${routesIndent}autogenerateRoutes: ${autogenerateRoutes}
 ${routesIndent}routes:
 ${routesIndent}  - varnish:
 EndOfMessage
