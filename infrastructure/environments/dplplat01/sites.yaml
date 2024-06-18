@@ -172,10 +172,6 @@ sites:
     name: "Frederikssund Bibliotekerne"
     description: "The library site for Frederikssund"
     deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOSWh56XpMvlK6CMz2bi3RZoUXUWFUVw7eo/cfaxmE/1"
-    primary-domain: www.bibliotekerne.frederikssund.dk
-    secondary-domains:
-      - bibliotekerne.frederikssund.dk
-    autogenerateRoutes: redirect
     <<: *default-release-image-source
   fureso:
     name: "Furesø Bibliotek & Borgerservice"
