@@ -582,6 +582,10 @@ sites:
     name: "Vejen Kommunes Biblioteker"
     description: "The library site for Vejen"
     deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKEKCWFJdpWpxSXpP0fXHBkZG6v0mENmOEsyJEDIqnoQ"
+    primary-domain: vejbib.dk
+    secondary-domains:
+      - www.vejbib.dk
+    autogenerateRoutes: redirect
     <<: *default-release-image-source
   vejle:
     name: "Vejle Bibliotekerne"
