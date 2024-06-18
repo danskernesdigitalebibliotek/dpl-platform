@@ -153,6 +153,10 @@ sites:
     name: "Fredericia Bibliotek"
     description: "The library site for Fredericia"
     deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIA2SgYgOoWn6jbg+U91/PcxmfRIxoSWbTANKP++LKanO"
+    primary-domain: fredericiabib.dk
+    secondary-domains:
+      - www.fredericiabib.dk
+    autogenerateRoutes: redirect
     <<: *default-release-image-source
   frederiksberg:
     name: "Biblioteket Frederiksberg"
