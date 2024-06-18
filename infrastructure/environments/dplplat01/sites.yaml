@@ -170,7 +170,7 @@ sites:
     primary-domain: bibl.frederikshavn.dk
     secondary-domains:
       - www.bibl.frederikshavn.dk
-    autoGenerateRoutes: redirect
+    autoGenerateRoutes: true
     <<: *default-release-image-source
   frederikssund:
     name: "Frederikssund Bibliotekerne"
