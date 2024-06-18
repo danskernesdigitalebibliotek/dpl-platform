@@ -564,6 +564,10 @@ sites:
     name: "Vallensbæk Bibliotek"
     description: "The library site for Vallensbæk"
     deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIM1BwEGpOF6YrjToeH8iD2cALRjCdk1XOrHl7Yj9NPUE"
+    primary-domain: kulturogborgerhus.vallensbaek.dk
+    secondary-domains:
+      - www.kulturogborgerhus.vallensbaek.dk
+    autogenerateRoutes: redirect
     <<: *default-release-image-source
   varde:
     name: "Varde Bibliotek"
