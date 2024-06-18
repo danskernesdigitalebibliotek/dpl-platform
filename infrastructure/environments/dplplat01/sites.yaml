@@ -267,6 +267,10 @@ sites:
     name: "Høje-Taastrup Kommunes Biblioteker"
     description: "The library site for Høje-Taastrup"
     deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAILiVBegVlQMb0OfQCfJAv87mLMe37xAaGCQc42i0j+2H"
+    primary-domain: bibliotek.htk.dk
+    secondary-domains:
+      - www.bibliotek.htk.dk
+    autogenerateRoutes: redirect
     <<: *default-release-image-source
   holbaek:
     name: "Holbæk Bibliotekerne"
