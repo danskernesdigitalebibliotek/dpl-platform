@@ -179,6 +179,10 @@ sites:
     name: "Furesø Bibliotek & Borgerservice"
     description: "The library site for Furesø"
     deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIB+OntBSayMdg22NU1xDnoMsuW1E69uNwvcmeEgt8wlQ"
+    primary-domain: furbib.dk
+    secondary-domains:
+      - www.furbib.dk
+    autogenerateRoutes: redirect
     <<: *default-release-image-source
   gentofte:
     name: "Gentofte Bibliotekerne"
