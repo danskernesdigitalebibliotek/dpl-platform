@@ -277,6 +277,10 @@ sites:
     name: "Hørsholm Bibliotek"
     description: "The library site for Hørsholm"
     deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDAyQTTt/8Wnhyz03LUWjVrAuhohatAUuBx3dtmM8wa8"
+    primary-domain: biblioteket.horsholm.dk
+    secondary-domains:
+      - www.biblioteket.horsholm.dk
+    autogenerateRoutes: redirect
     <<: *default-release-image-source
   hvidovre:
     name: "HvidovreBibliotekerne"
