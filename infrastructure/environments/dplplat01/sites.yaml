@@ -167,6 +167,8 @@ sites:
     name: "Frederikshavn Kommunes Biblioteker"
     description: "The library site for Frederikshavn"
     deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAICZcYBGIGrw0aei4UFmWcNMiQ4ZbJbBR7OU7q5Bsu/lz"
+    primary-domain: bibl.frederikshavn.dk
+    autoGenerateRoutes: redirect
     <<: *default-release-image-source
   frederikssund:
     name: "Frederikssund Bibliotekerne"
