@@ -156,7 +156,7 @@ sites:
     primary-domain: fredericiabib.dk
     secondary-domains:
       - www.fredericiabib.dk
-    autogenerateRoutes: redirect
+    autogenerateRoutes: true
     <<: *default-release-image-source
   frederiksberg:
     name: "Biblioteket Frederiksberg"
@@ -168,7 +168,7 @@ sites:
     description: "The library site for Frederikshavn"
     deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAICZcYBGIGrw0aei4UFmWcNMiQ4ZbJbBR7OU7q5Bsu/lz"
     primary-domain: bibl.frederikshavn.dk
-    autoGenerateRoutes: true
+    autogenerateRoutes: true
     <<: *default-release-image-source
   frederikssund:
     name: "Frederikssund Bibliotekerne"
@@ -182,7 +182,7 @@ sites:
     primary-domain: furbib.dk
     secondary-domains:
       - www.furbib.dk
-    autogenerateRoutes: redirect
+    autogenerateRoutes: true
     <<: *default-release-image-source
   gentofte:
     name: "Gentofte Bibliotekerne"
@@ -250,7 +250,7 @@ sites:
     primary-domain: www.herningbib.dk
     secondary-domains:
       - herningbib.dk
-    autoGenerateRoutes: true
+    autogenerateRoutes: true
     plan: webmaster
     <<: *default-release-image-source
   hillerod:
@@ -270,7 +270,7 @@ sites:
     primary-domain: bibliotek.htk.dk
     secondary-domains:
       - www.bibliotek.htk.dk
-    autogenerateRoutes: redirect
+    autogenerateRoutes: true
     <<: *default-release-image-source
   holbaek:
     name: "Holbæk Bibliotekerne"
@@ -284,7 +284,7 @@ sites:
     primary-domain: www.holstebrobibliotek.dk
     secondary-domains:
       - holstebrobibliotek.dk
-    autogenerateRoutes: redirect
+    autogenerateRoutes: true
     <<: *default-release-image-source
   horsens:
     name: "Horsens Bibliotek"
@@ -378,7 +378,7 @@ sites:
     primary-domain: www.lyngbybib.dk
     secondary-domains:
       - lyngbybib.dk
-    autogenerateRoutes: redirect
+    autogenerateRoutes: true
     <<: *default-release-image-source
   mariagerfjord:
     name: "Mariagerfjord Bibliotekerne"
@@ -401,7 +401,7 @@ sites:
     primary-domain: www.bibliotekmorsoe.dk
     secondary-domains:
       - bibliotekmorsoe.dk
-    autogenerateRoutes: redirect
+    autogenerateRoutes: true
     <<: *default-release-image-source
   naestved:
     name: "Næstved Bibliotek og Borgerservice"
@@ -503,7 +503,7 @@ sites:
     primary-domain: www.skivebibliotek.dk
     secondary-domains:
       - skivebibliotek.dk
-    autogenerateRoutes: redirect
+    autogenerateRoutes: true
     <<: *default-release-image-source
   solrod:
     name: "Solrød Bibliotek og Kulturhus"
@@ -567,7 +567,7 @@ sites:
     primary-domain: kulturogborgerhus.vallensbaek.dk
     secondary-domains:
       - www.kulturogborgerhus.vallensbaek.dk
-    autogenerateRoutes: redirect
+    autogenerateRoutes: true
     <<: *default-release-image-source
   varde:
     name: "Varde Bibliotek"
@@ -576,7 +576,7 @@ sites:
     primary-domain: www.vardebib.dk
     secondary-domains:
       - vardebib.dk
-    autogenerateRoutes: redirect
+    autogenerateRoutes: true
     <<: *default-release-image-source
   vejen:
     name: "Vejen Kommunes Biblioteker"
@@ -585,7 +585,7 @@ sites:
     primary-domain: vejbib.dk
     secondary-domains:
       - www.vejbib.dk
-    autogenerateRoutes: redirect
+    autogenerateRoutes: true
     <<: *default-release-image-source
   vejle:
     name: "Vejle Bibliotekerne"
