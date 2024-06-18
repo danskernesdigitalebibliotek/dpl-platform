@@ -375,6 +375,10 @@ sites:
     name: "Lyngby-Taarbæk Bibliotekerne"
     description: "The library site for Lyngby-Taarbæk"
     deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOeXHvVXTlOXtrK8kSR12qZQH1YHto+PpWx0rac/1QMe"
+    primary-domain: www.lyngbybib.dk
+    secondary-domains:
+      - lyngbybib.dk
+    autogenerateRoutes: redirect
     <<: *default-release-image-source
   mariagerfjord:
     name: "Mariagerfjord Bibliotekerne"
