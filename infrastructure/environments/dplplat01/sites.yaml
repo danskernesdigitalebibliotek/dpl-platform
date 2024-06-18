@@ -398,6 +398,10 @@ sites:
     name: "Morsø Folkebibliotek"
     description: "The library site for Morsø"
     deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIAVce9r/E16lOPiiZEcjzEW40nuxCCt7ahv5NYUPwU8P"
+    primary-domain: www.bibliotekmorsoe.dk
+    secondary-domains:
+      - bibliotekmorsoe.dk
+    autogenerateRoutes: redirect
     <<: *default-release-image-source
   naestved:
     name: "Næstved Bibliotek og Borgerservice"
