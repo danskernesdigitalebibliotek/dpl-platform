@@ -573,6 +573,10 @@ sites:
     name: "Varde Bibliotek"
     description: "The library site for Varde"
     deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINk4ZKSj49vjmu9/wQAuK/LC8B7Q7dF7B+0N4JIRcGCp"
+    primary-domain: www.vardebib.dk
+    secondary-domains:
+      - vardebib.dk
+    autogenerateRoutes: redirect
     <<: *default-release-image-source
   vejen:
     name: "Vejen Kommunes Biblioteker"
