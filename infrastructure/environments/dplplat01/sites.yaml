@@ -277,6 +277,10 @@ sites:
     name: "Holstebro Bibliotek"
     description: "The library site for Holstebro"
     deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINQNXpvIAg6/lHe/RVocj2losQ6Q2TIN/S5IFdY17g0Y"
+    primary-domain: www.holstebrobibliotek.dk
+    secondary-domains:
+      - holstebrobibliotek.dk
+    autogenerateRoutes: redirect
     <<: *default-release-image-source
   horsens:
     name: "Horsens Bibliotek"
