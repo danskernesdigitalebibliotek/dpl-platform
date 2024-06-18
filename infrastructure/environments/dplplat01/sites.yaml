@@ -500,6 +500,10 @@ sites:
     name: "Skive Bibliotek"
     description: "The library site for Skive"
     deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIGpJAKCBMKM9G0qvUGeCRSvz8QNg27r7sDedj15HP7Hh"
+    primary-domain: www.skivebibliotek.dk
+    secondary-domains:
+      - skivebibliotek.dk
+    autogenerateRoutes: redirect
     <<: *default-release-image-source
   solrod:
     name: "Solrød Bibliotek og Kulturhus"
