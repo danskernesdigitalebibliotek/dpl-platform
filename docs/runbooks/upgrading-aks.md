@@ -81,9 +81,9 @@ for background info on this operation.
    aware that the admin node-pool where harbor runs has a tendency to take a
    long time as the harbor pvcs are slow to migrate to the new node.
 
-Monitor via eg.
+    Monitor via eg.
 
-```shell
-watch -n 5 kubectl get nodes
-```
+    ```shell
+    watch -n 5 kubectl get nodes
+    ```
 5. Go to `dplsh's` Dockerfile and update the `KUBECTL_VERSION` version to match that of the upgraded AKS version
