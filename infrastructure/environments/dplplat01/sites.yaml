@@ -153,6 +153,10 @@ sites:
     name: "Fredericia Bibliotek"
     description: "The library site for Fredericia"
     deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIA2SgYgOoWn6jbg+U91/PcxmfRIxoSWbTANKP++LKanO"
+    primary-domain: fredericiabib.dk
+    secondary-domains:
+      - www.fredericiabib.dk
+    autogenerateRoutes: true
     <<: *default-release-image-source
   frederiksberg:
     name: "Biblioteket Frederiksberg"
@@ -163,6 +167,8 @@ sites:
     name: "Frederikshavn Kommunes Biblioteker"
     description: "The library site for Frederikshavn"
     deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAICZcYBGIGrw0aei4UFmWcNMiQ4ZbJbBR7OU7q5Bsu/lz"
+    primary-domain: bibl.frederikshavn.dk
+    autogenerateRoutes: true
     <<: *default-release-image-source
   frederikssund:
     name: "Frederikssund Bibliotekerne"
@@ -173,6 +179,10 @@ sites:
     name: "Furesø Bibliotek & Borgerservice"
     description: "The library site for Furesø"
     deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIB+OntBSayMdg22NU1xDnoMsuW1E69uNwvcmeEgt8wlQ"
+    primary-domain: furbib.dk
+    secondary-domains:
+      - www.furbib.dk
+    autogenerateRoutes: true
     <<: *default-release-image-source
   gentofte:
     name: "Gentofte Bibliotekerne"
@@ -240,7 +250,7 @@ sites:
     primary-domain: www.herningbib.dk
     secondary-domains:
       - herningbib.dk
-    autoGenerateRoutes: true
+    autogenerateRoutes: true
     plan: webmaster
     <<: *default-release-image-source
   hillerod:
@@ -257,6 +267,10 @@ sites:
     name: "Høje-Taastrup Kommunes Biblioteker"
     description: "The library site for Høje-Taastrup"
     deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAILiVBegVlQMb0OfQCfJAv87mLMe37xAaGCQc42i0j+2H"
+    primary-domain: bibliotek.htk.dk
+    secondary-domains:
+      - www.bibliotek.htk.dk
+    autogenerateRoutes: true
     <<: *default-release-image-source
   holbaek:
     name: "Holbæk Bibliotekerne"
@@ -267,6 +281,10 @@ sites:
     name: "Holstebro Bibliotek"
     description: "The library site for Holstebro"
     deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINQNXpvIAg6/lHe/RVocj2losQ6Q2TIN/S5IFdY17g0Y"
+    primary-domain: www.holstebrobibliotek.dk
+    secondary-domains:
+      - holstebrobibliotek.dk
+    autogenerateRoutes: true
     <<: *default-release-image-source
   horsens:
     name: "Horsens Bibliotek"
@@ -357,6 +375,10 @@ sites:
     name: "Lyngby-Taarbæk Bibliotekerne"
     description: "The library site for Lyngby-Taarbæk"
     deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOeXHvVXTlOXtrK8kSR12qZQH1YHto+PpWx0rac/1QMe"
+    primary-domain: www.lyngbybib.dk
+    secondary-domains:
+      - lyngbybib.dk
+    autogenerateRoutes: true
     <<: *default-release-image-source
   mariagerfjord:
     name: "Mariagerfjord Bibliotekerne"
@@ -376,6 +398,10 @@ sites:
     name: "Morsø Folkebibliotek"
     description: "The library site for Morsø"
     deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIAVce9r/E16lOPiiZEcjzEW40nuxCCt7ahv5NYUPwU8P"
+    primary-domain: www.bibliotekmorsoe.dk
+    secondary-domains:
+      - bibliotekmorsoe.dk
+    autogenerateRoutes: true
     <<: *default-release-image-source
   naestved:
     name: "Næstved Bibliotek og Borgerservice"
@@ -474,6 +500,10 @@ sites:
     name: "Skive Bibliotek"
     description: "The library site for Skive"
     deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIGpJAKCBMKM9G0qvUGeCRSvz8QNg27r7sDedj15HP7Hh"
+    primary-domain: www.skivebibliotek.dk
+    secondary-domains:
+      - skivebibliotek.dk
+    autogenerateRoutes: true
     <<: *default-release-image-source
   solrod:
     name: "Solrød Bibliotek og Kulturhus"
@@ -534,16 +564,28 @@ sites:
     name: "Vallensbæk Bibliotek"
     description: "The library site for Vallensbæk"
     deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIM1BwEGpOF6YrjToeH8iD2cALRjCdk1XOrHl7Yj9NPUE"
+    primary-domain: kulturogborgerhus.vallensbaek.dk
+    secondary-domains:
+      - www.kulturogborgerhus.vallensbaek.dk
+    autogenerateRoutes: true
     <<: *default-release-image-source
   varde:
     name: "Varde Bibliotek"
     description: "The library site for Varde"
     deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINk4ZKSj49vjmu9/wQAuK/LC8B7Q7dF7B+0N4JIRcGCp"
+    primary-domain: www.vardebib.dk
+    secondary-domains:
+      - vardebib.dk
+    autogenerateRoutes: true
     <<: *default-release-image-source
   vejen:
     name: "Vejen Kommunes Biblioteker"
     description: "The library site for Vejen"
     deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKEKCWFJdpWpxSXpP0fXHBkZG6v0mENmOEsyJEDIqnoQ"
+    primary-domain: vejbib.dk
+    secondary-domains:
+      - www.vejbib.dk
+    autogenerateRoutes: true
     <<: *default-release-image-source
   vejle:
     name: "Vejle Bibliotekerne"
