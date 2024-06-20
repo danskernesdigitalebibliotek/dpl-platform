@@ -257,6 +257,10 @@ sites:
     name: "Hillerød Bibliotekerne"
     description: "The library site for Hillerød"
     deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMpZ969v19pbZ6ILz1krcNBccZMkUK3ok5S1HjF7u5Y1"
+    primary-domain: hilbib.dk
+    secondary-domains:
+      - www.hilbib.dk
+    autogenerateRoutes: true
     <<: *default-release-image-source
   hjorring:
     name: "Hjørring Bibliotekerne"
