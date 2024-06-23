@@ -127,6 +127,10 @@ sites:
     name: "Esbjerg Kommunes Biblioteker"
     description: "The library site for Esbjerg"
     deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBQFAh4UeSmcPTFtXj5W/ZKhelJcAornaFYIYJUP0hH9"
+    primary-domain: www.esbjergbibliotek.dk
+    secondary-domains:
+      - esbjergbibliotek.dk
+    autogenerateRoutes: true
     <<: *default-release-image-source
   faaborg-midtfyn:
     name: "Faaborg-Midtfyn Bibliotekerne"
@@ -137,6 +141,12 @@ sites:
     name: "Favrskov Bibliotekerne"
     description: "The library site for Favrskov"
     deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINqAkzzI+VgHhM7NpOQaEe7XSUo2iWU/cVXvt8rq88uK"
+    primary-domain: favrskovbib.dk
+    secondary-domains:
+      - www.favrskovbib.dk
+      - favrskovbibliotekerne.dk
+      - www.favrskovbibliotekerne.dk
+    autogenerateRoutes: true
     <<: *default-release-image-source
   faxe:
     name: "Faxe Kommunes Bibliotek & Borgerservice"
@@ -227,11 +237,19 @@ sites:
     name: "Halsnæs Bibliotekerne"
     description: "The library site for Halsnæs"
     deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMB+INXad3Fl3fbnPVnDJcMq1L907fu5J4S7rL3nUv84"
+    primary-domain: bibliotekerne.halsnaes.dk
+    secondary-domains:
+      - www.bibliotekerne.halsnaes.dk
+    autogenerateRoutes: true
     <<: *default-release-image-source
   hedensted:
     name: "Hedensted Bibliotekerne"
     description: "The library site for Hedensted"
     deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAID34dCc953IPi1leCQyIOo4XMOvuRz84qam4P1r9Dzuh"
+    primary-domain: hedenstedbib.dk
+    secondary-domains:
+      - www.hedenstedbib.dk
+    autogenerateRoutes: true
     <<: *default-release-image-source
   helsingor:
     name: "Helsingør Kommunes Biblioteker"
@@ -378,6 +396,10 @@ sites:
     name: "LollandBibliotekerne"
     description: "The library site for Lolland"
     deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDHoX6Huapt+Rjz1pgyyYRLAHpgsgctmi+Fs37tVIbjN"
+    primary-domain: lollandbib.dk
+    secondary-domains:
+      - www.lollandbib.dk
+    autogenerateRoutes: true
     <<: *default-release-image-source
   lyngby-taarbaek:
     name: "Lyngby-Taarbæk Bibliotekerne"
@@ -498,6 +520,10 @@ sites:
     name: "Silkeborg Bibliotekerne"
     description: "The library site for Silkeborg"
     deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHudvU3HuWcnnCOFlQU5Tvgkb/v6b2DttwUTN7Vl0sQV"
+    primary-domain: silkeborgbib.dk
+    secondary-domains:
+      - www.silkeborgbib.dk
+    autogenerateRoutes: true
     <<: *default-release-image-source
   skanderborg:
     name: "Skanderborg Bibliotek"
@@ -618,4 +644,8 @@ sites:
     name: "Vordingborg Bibliotekerne"
     description: "The library site for Vordingborg"
     deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAICeMmI9ufAPgkQvdcFEg0EAMNNuLbXHxw2MXhVdtPT3w"
+    primary-domain: www.vordingborgbibliotekerne.dk
+    secondary-domains:
+      - vordingborgbibliotekerne.dk
+    autogenerateRoutes: true
     <<: *default-release-image-source
