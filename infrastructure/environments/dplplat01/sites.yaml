@@ -2,11 +2,7 @@
 x-defaults: &default-release-image-source
   releaseImageRepository: ghcr.io/danskernesdigitalebibliotek
   releaseImageName: dpl-cms-source
-  dpl-cms-release: "2024.25.1"
-x-next: &next-release-image-source
-  releaseImageRepository: ghcr.io/danskernesdigitalebibliotek
-  releaseImageName: dpl-cms-source
-  dpl-cms-release: "2024.25.2"
+  dpl-cms-release: "2024.26.0"
 sites:
   # Site objects are indexed by a unique key that must be a valid lagoon, and
   # github project name. That is, alphanumeric and dashes.
@@ -37,7 +33,7 @@ sites:
     name: "Aabenraa Biblioteker og Kulturhuse"
     description: "The library site for Aabenraa"
     deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIEMyXdV9INXfJeWlvQAke7jOtWWHTokbPoQ/0vjZ0S1D"
-    <<: *next-release-image-source
+    <<: *default-release-image-source
   aalborg:
     name: "Aalborg Bibliotekerne"
     description: "The main library site for Aalborg"
@@ -201,7 +197,7 @@ sites:
     secondary-domains:
       - www.furbib.dk
     autogenerateRoutes: true
-    <<: *next-release-image-source
+    <<: *default-release-image-source
   gentofte:
     name: "Gentofte Bibliotekerne"
     description: "The library site for Gentofte"
@@ -268,7 +264,7 @@ sites:
       - herlevbibliotek.dk
     autogenerateRoutes: "redirect"
     deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAICsQ7blUGjtlSdPU4AV7PR21o2Eqg5IMKTCFX3PV/2Mf"
-    <<: *next-release-image-source
+    <<: *default-release-image-source
   herning:
     name: "Herning Bibliotekerne"
     description: "The main library site for Herning"
@@ -427,7 +423,7 @@ sites:
     secondary-domains:
       - middelfartbibliotek.dk
     autogenerateRoutes: true
-    <<: *next-release-image-source
+    <<: *default-release-image-source
   morso:
     name: "Morsø Folkebibliotek"
     description: "The library site for Morsø"
@@ -510,7 +506,7 @@ sites:
     name: "Rudersdal Bibliotekerne"
     description: "The library site for Rudersdal"
     deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMS9z1DqqOV7+ycLji2x8PYZeBgpUKvZLPlBu5/8IPDy"
-    <<: *next-release-image-source
+    <<: *default-release-image-source
   samso:
     name: "Samsø Bibliotek"
     description: "The library site for Samsø"
