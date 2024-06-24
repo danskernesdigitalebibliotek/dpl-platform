@@ -130,6 +130,10 @@ sites:
     primary-domain: www.esbjergbibliotek.dk
     secondary-domains:
       - esbjergbibliotek.dk
+      - ekb.dk
+      - www.ekb.dk
+      - esbbib.dk
+      - www.esbbib.dk
     autogenerateRoutes: true
     <<: *default-release-image-source
   faaborg-midtfyn:
