@@ -232,6 +232,10 @@ sites:
     name: "Haderslev Bibliotekerne"
     description: "The library site for Haderslev"
     deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAICsEjJ7Yqh8JPF1UglkMDQbksKwAeZLSZeqWRCWFXMkR"
+    primary-domain: haderslevbibliotekerne.dk
+    secondary-domains:
+      - www.haderslevbibliotekerne.dk
+    autogenerateRoutes: true
     <<: *default-release-image-source
   halsnaes:
     name: "Halsnæs Bibliotekerne"
@@ -316,6 +320,10 @@ sites:
     name: "Horsens Bibliotek"
     description: "The library site for Horsens"
     deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFR0Fs3s0SyO3kSWPJd2flAItMWSvN0elpWrqHuJSjjz"
+    primary-domain: horsensbibliotek.dk
+    secondary-domains:
+      - www.horsensbibliotek.dk
+    autogenerateRoutes: true
     <<: *default-release-image-source
   horsholm:
     name: "Hørsholm Bibliotek"
@@ -330,6 +338,12 @@ sites:
     name: "HvidovreBibliotekerne"
     description: "The library site for Hvidovre"
     deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINf+6OcOZOpd8hdtNcBm7wA8jYe6CtdYbW8iUrDjWapZ"
+    primary-domain: www.hvidovrebib.dk
+    secondary-domains:
+      - hvidovrebib.dk
+      - www.hvidovrebibliotekerne.dk
+      - hvidovrebibliotekerne.dk
+    autogenerateRoutes: true
     <<: *default-release-image-source
   ikast-brande:
     name: "Ikast-Brande Bibliotek"
@@ -442,6 +456,10 @@ sites:
     name: "Norddjurs Biblioteker"
     description: "The library site for Norddjurs"
     deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAICgrEOr/QVP8FkakoeoFwqqYMMroLzUEu2ieyLLWGmsB"
+    primary-domain: norddjursbib.dk
+    secondary-domains:
+      - www.norddjursbib.dk
+    autogenerateRoutes: true
     <<: *default-release-image-source
   nordfyn:
     name: "Bibliotek og Borgerservice Nordfyns Kommune"
@@ -476,6 +494,12 @@ sites:
     name: "Randers Bibliotek"
     description: "The library site for Randers"
     deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIEmOBUxVFYKHM8QNQ3od1a8e7+w+oFlE871SxH1+FN4R"
+    primary-domain: www.randersbib.dk
+    secondary-domains:
+      - randersbib.dk
+      - randersbibliotek.dk
+      - www.randersbibliotek.dk
+    autogenerateRoutes: true
     <<: *default-release-image-source
   rebild:
     name: "Rebild Bibliotekerne"
@@ -625,6 +649,10 @@ sites:
     name: "Vejle Bibliotekerne"
     description: "The library site for Vejle"
     deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAILj79u24Ev3uo0WLgNVyMT+V0921M7a8qdM7Q/GyOdZl"
+    primary-domain: vejlebib.dk
+    secondary-domains:
+      - www.vejlebib.dk
+    autogenerateRoutes: true
     <<: *default-release-image-source
   vesthimmerland:
     name: "Vesthimmerlands Biblioteker"
@@ -639,6 +667,10 @@ sites:
     name: "Viborg Bibliotekerne"
     description: "The library site for Viborg"
     deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINOTdXuLPGfLvqVJYmsF06Bdgmrff2tKl4PS7pRg4fFx"
+    primary-domain: www.viborgbib.dk
+    secondary-domains:
+      - viborgbib.dk
+    autogenerateRoutes: true
     <<: *default-release-image-source
   vordingborg:
     name: "Vordingborg Bibliotekerne"

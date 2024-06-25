@@ -1118,6 +1118,17 @@ tasks:
           cat {{.dir_env}}/sites.yaml | yq '.sites | keys | .[]' \
           | xargs -n 1 -I % bash -c 'set -e; if (( $(curl -s https://varnish.main.%.dplplat01.dpl.reload.dk/ | grep "\"header__logo-desktop-link\"" -A 8 | grep "\"logo-fallback\s*\"" -A 4 | grep "Logo title (bold)" | wc -l) > 0 )); then echo "% not yet set up"; fi'
 
+    certs:clear-queue:
+      desc: |
+        Because cert-manager sometimes hangs while provisioning certificates it helps to clear the whole queue
+        of uncompleted certificates. This command removes any certificate that has an order not in either
+        valid (certificate is good!) or ready (almost ready, will be provisioned in seconds) state.
+      cmds:
+        - |
+          kubectl get order -A -o yaml | \
+          yq '.items | filter(.status.state != "valid" and .status.state != "ready") | .[].metadata | .namespace + " " + .name' | \
+          xargs -n 2 bash -c 'kubectl delete certificate -n $0 $(echo "$1" | sed -r "s/^([0-9a-z\.\-]+-tls)-[a-z0-9]+-[a-z0-9]+$/\1/i")'
+
     ui-password:
       deps: [cluster:auth]
       desc: Get the password to access a given user interface
