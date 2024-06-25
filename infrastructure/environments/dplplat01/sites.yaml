@@ -701,6 +701,8 @@ sites:
     name: "Biblioteket i Thy"
     description: "The library site for Thisted"
     deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAII8zoNSiwkKmOSHvtKxSMJiDC9EWbTzhkAUd1+csvnne"
+    primary-domain: bib.kulturrummet.dk
+    autogenerateRoutes: true
     <<: *default-release-image-source
   vallensbaek:
     name: "Vallensbæk Bibliotek"
