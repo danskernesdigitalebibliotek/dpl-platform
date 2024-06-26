@@ -60,20 +60,22 @@ function getCleanWorkspacePath {
 function renderProfileTemplate {
   # Name of the site
   local siteName=$1
+  # Env of the site
+  local siteEnv=$2
   # Which dpl-cms release to use.
-  local releaseTag=$2
+  local releaseTag=$3
   # Image registry to pull the release from
-  local releaseImageRepository=$3
+  local releaseImageRepository=$4
   # Name of the container-image that contains the built release
-  local releaseImageName=$4
+  local releaseImageName=$5
   # Cron schedule for importing translations
-  local importTranslationsCron=$5
+  local importTranslationsCron=$6
   # Flag for whether or not to autogenerate routes
-  local autogenerateRoutes=${6:-}
+  local autogenerateRoutes=${7:-}
   # The primary domain of the site (optional)
-  local primaryDomain=${7:-}
+  local primaryDomain=${8:-}
   # A space-seperated list of secondary domains (optional)
-  local secondaryDomainsString=${8:-}
+  local secondaryDomainsString=${9:-}
 
   PRIMARY_DOMAIN=""
 
@@ -132,6 +134,7 @@ EndOfMessage
   export RELEASE_TAG="${releaseTag}"
   export ENABLE_ROUTES
   export LAGOON_PROJECT_NAME="${siteName}"
+  export LAGOON_ENVIRONMENT="${siteEnv}"
   export LAGOON_IMAGES_RELEASE_TAG
   export PRIMARY_DOMAIN
   export SECONDARY_DOMAINS
@@ -141,7 +144,7 @@ EndOfMessage
   # Tell envsubst which variables to replace. This allows other variables to
   # remain untouched.
   # shellcheck disable=SC2016
-  local variablesToSubst='$RELEASE_IMAGE_REPOSITORY $RELEASE_IMAGE_NAME $RELEASE_TAG $ENABLE_ROUTES $LAGOON_IMAGES_RELEASE_TAG $LAGOON_PROJECT_NAME $PRIMARY_DOMAIN $SECONDARY_DOMAINS $IMPORT_TRANSLATIONS_CRON'
+  local variablesToSubst='$RELEASE_IMAGE_REPOSITORY $RELEASE_IMAGE_NAME $RELEASE_TAG $ENABLE_ROUTES $LAGOON_IMAGES_RELEASE_TAG $LAGOON_PROJECT_NAME $LAGOON_ENVIRONMENT $PRIMARY_DOMAIN $SECONDARY_DOMAINS $IMPORT_TRANSLATIONS_CRON'
 
   # Loop through the files we know to contain variables that needs replacing.
   local templateFiles=(
@@ -149,6 +152,8 @@ EndOfMessage
     "lagoon/cli.dockerfile"
     "lagoon/nginx.dockerfile"
     "lagoon/php.dockerfile"
+    "lagoon/conf/nginx/metrics/version.txt"
+    "lagoon/conf/nginx/metrics/version.json"
     "README.md"
   )
   for templateFile in "${templateFiles[@]}"
@@ -202,7 +207,7 @@ function syncEnvRepo {
 
   # Enter the template and rendered it
   cd "${repoName}"
-  renderProfileTemplate "${siteName}" "${releaseTag}" "${releaseImageRepository}" "${releaseImageName}" "${importTranslationsCron}" "${autogenerateRoutes}" "${primaryDomain}" "${secondaryDomains}"
+  renderProfileTemplate "${siteName}" "${branchName}" "${releaseTag}" "${releaseImageRepository}" "${releaseImageName}" "${importTranslationsCron}" "${autogenerateRoutes}" "${primaryDomain}" "${secondaryDomains}"
 
   # Detect changes
   local changedFiles
