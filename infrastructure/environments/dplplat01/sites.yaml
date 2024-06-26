@@ -178,6 +178,10 @@ sites:
     name: "Fredensborg Bibliotekerne"
     description: "The library site for Fredensborg"
     deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKxoe8V6eyofhPOEe18qZACQAoWjfgCjN3yxcTWVjyxV"
+    primary-domain: www.fredensborgbibliotekerne.dk
+    secondary-domains:
+      - fredensborgbibliotekerne.dk
+    autogenerateRoutes: true
     <<: *default-release-image-source
   fredericia:
     name: "Fredericia Bibliotek"
@@ -232,11 +236,21 @@ sites:
     name: "Glostrup Bibliotek"
     description: "The library site for Glostrup"
     deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBMV2GongJbNSRKHl2OUNd2Md5Y9PxKMLxyU8BprGV1L"
+    primary-domain: www.glostrupbib.dk
+    secondary-domains:
+      - glostrupbib.dk
+    autogenerateRoutes: true
     <<: *default-release-image-source
   greve:
     name: "Greve Bibliotek"
     description: "The library site for Greve"
     deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMjwn5wHT3u7AIfYN0FMPtxidi+vUmcE1cZpWeg1pPm9"
+    primary-domain: www.grevebibliotek.dk
+    secondary-domains:
+      - grevebibliotek.dk
+      - grevebib.dk
+      - www.grevebib.dk
+    autogenerateRoutes: true
     <<: *default-release-image-source
   gribskov:
     name: "Gribskov Biblioteker"
@@ -382,6 +396,10 @@ sites:
     name: "Ishøj Bibliotek"
     description: "The library site for Ishøj"
     deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAILAwD4x4QUSQlylgELoKuxBwP7PqHke5gbv4mkog82GK"
+    primary-domain: www.ishojbib.dk
+    secondary-domains:
+      - ishojbib.dk
+    autogenerateRoutes: true
     <<: *default-release-image-source
   jammerbugt:
     name: "Jammerbugt Bibliotekerne"
@@ -392,6 +410,10 @@ sites:
     name: "Kalundborg Biblioteker"
     description: "The library site for Kallundborg"
     deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIB+tCuK/9Ywp8AizLtg+GflsiGcB8QVDWNbXBwznxHkw"
+    primary-domain: www.kalundborgbib.dk
+    secondary-domains:
+      - kalundborgbib.dk
+    autogenerateRoutes: true
     <<: *default-release-image-source
   kerteminde:
     name: "Kerteminde Bibliotekerne"
@@ -549,6 +571,10 @@ sites:
     name: "Odsherred Bibliotek og Kulturhuse"
     description: "The library site for Odsherred"
     deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKO7a1/SEglnKZ3RJpSYKSaadeeVXr6xb5b5MJIEeYmc"
+    primary-domain: odsbib.dk
+    secondary-domains:
+      - www.odsbib.dk
+    autogenerateRoutes: true
     <<: *default-release-image-source
   randers:
     name: "Randers Bibliotek"
@@ -565,6 +591,10 @@ sites:
     name: "Rebild Bibliotekerne"
     description: "The library site for Rebild"
     deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJ7BXhw6xig5W2AjtX7eqnnrWHKnavFqHdgc+5vY2U3T"
+    primary-domain: www.rebildbib.dk
+    secondary-domains:
+      - rebildbib.dk
+    autogenerateRoutes: true
     <<: *default-release-image-source
   ringkobing-skjern:
     name: "Ringkøbing-Skjern Bibliotekerne"
@@ -650,6 +680,10 @@ sites:
     name: "Biblioteket Sønderborg"
     description: "The library site for Sønderborg"
     deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJKta0DYtcxlP5VNCAQFVtRSbzJRSEs1YY3zsSxVQgfi"
+    primary-domain: biblioteket.sonderborg.dk
+    secondary-domains:
+      - www.biblioteket.sonderborg.dk
+    autogenerateRoutes: true
     <<: *default-release-image-source
   soro:
     name: "Sorø Bibliotek"
@@ -660,6 +694,10 @@ sites:
     name: "Stevns Bibliotekerne"
     description: "The library site for Stevns"
     deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINmstZ41PSBjLAxu8cE4Oi7G1oktlH1FFJBNbLT1GAez"
+    primary-domain: www.stevnsbib.dk
+    secondary-domains:
+      - stevnsbib.dk
+    autogenerateRoutes: true
     <<: *default-release-image-source
   struer:
     name: "Struer Bibliotek"
@@ -688,6 +726,10 @@ sites:
     name: "Syddjurs Bibliotek"
     description: "The library site for Syddjurs"
     deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINhp6QNrL71jlzbhSPRoTcRQS6b8Ztpx+JLZVxUhNSVK"
+    primary-domain: syddjursbibliotek.dk
+    secondary-domains:
+      - syddjursbibliotek.dk
+    autogenerateRoutes: true
     <<: *default-release-image-source
   taarnby:
     name: "Tårnby Kommunebiblioteker"
