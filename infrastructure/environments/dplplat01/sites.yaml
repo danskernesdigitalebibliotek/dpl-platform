@@ -478,9 +478,11 @@ sites:
     name: "Mariagerfjord Bibliotekerne"
     description: "The library site for Mariagerfjord"
     deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFeTDNC6HBZrpSy73UadgOdr8sjxpsKZkwGARuJ3X8rC"
-    primary-domain: www.mariagerfjordbibliotekerne.dk
+    primary-domain: mfbib.dk
     secondary-domains:
+      - www.mfbib.dk
       - mariagerfjordbibliotekerne.dk
+      - www.mariagerfjordbibliotekerne.dk
     autogenerateRoutes: true
     <<: *default-release-image-source
   middelfart:
