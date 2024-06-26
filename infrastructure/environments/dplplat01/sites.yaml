@@ -33,6 +33,10 @@ sites:
     name: "Aabenraa Biblioteker og Kulturhuse"
     description: "The library site for Aabenraa"
     deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIEMyXdV9INXfJeWlvQAke7jOtWWHTokbPoQ/0vjZ0S1D"
+    primary-domain: www.aabenraabib.dk
+    secondary-domains:
+      - aabenraabib.dk
+    autogenerateRoutes: true
     <<: *default-release-image-source
   aalborg:
     name: "Aalborg Bibliotekerne"
@@ -54,6 +58,10 @@ sites:
     name: "Ærø Folkebibliotek"
     description: "The library site for Ærø"
     deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDJNI7OU7O3X0AYNJSyZ9VkdSGaD5mAQmhcRMW72TpKi"
+    primary-domain: www.arrebib.dk
+    secondary-domains:
+      - arrebib.dk
+    autogenerateRoutes: true
     <<: *default-release-image-source
   albertslund:
     name: "Albertslund Bibliotek"
@@ -78,6 +86,10 @@ sites:
     name: "Ballerup Bibliotekerne"
     description: "The library site for Ballerup"
     deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKnoDa5OsU/7RESGoGwvRv/piSndDnLShEyaBDP2pW1r"
+    primary-domain: bib.ballerup.dk
+    secondary-domains:
+      - www.bib.ballerup.dk
+    autogenerateRoutes: true
     <<: *default-release-image-source
   billund:
     name: "Billund Bibliotekerne og Borgerservice"
@@ -113,6 +125,10 @@ sites:
     name: "Dragør Bibliotek"
     description: "The library site for Dragør"
     deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIAwkmlUnVYpnRLKQDohUcg58fFYn+UdPGDU2AUWoTybo"
+    primary-domain: www.drabib.dk
+    secondary-domains:
+      - drabib.dk
+    autogenerateRoutes: true
     <<: *default-release-image-source
   egedal:
     name: "Egedal Bibliotekerne"
@@ -188,6 +204,10 @@ sites:
     name: "Frederikssund Bibliotekerne"
     description: "The library site for Frederikssund"
     deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOSWh56XpMvlK6CMz2bi3RZoUXUWFUVw7eo/cfaxmE/1"
+    primary-domain: www.bibliotekerne.frederikssund.dk
+    secondary-domains:
+      - bibliotekerne.frederikssund.dk
+    autogenerateRoutes: true
     <<: *default-release-image-source
   fureso:
     name: "Furesø Bibliotek & Borgerservice"
@@ -292,6 +312,10 @@ sites:
     name: "Hjørring Bibliotekerne"
     description: "The library site for Hjørring"
     deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJw8nFZITPe1eVE9BUmtxWWuJUKNezmJgRa3QS1T0nWI"
+    primary-domain: hjbib.dk
+    secondary-domains:
+      - www.hjbib.dk
+    autogenerateRoutes: true
     <<: *default-release-image-source
   hoje-taastrup:
     name: "Høje-Taastrup Kommunes Biblioteker"
@@ -349,6 +373,10 @@ sites:
     name: "Ikast-Brande Bibliotek"
     description: "The library site for Ikast-Brande"
     deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKpSICadbqfwDoZgxSro2QlhWCNKMfN4Juhpg+S+57Jg"
+    primary-domain: www.ikast-brandebibliotek.dk
+    secondary-domains:
+      - ikast-brandebibliotek.dk
+    autogenerateRoutes: true
     <<: *default-release-image-source
   ishoj:
     name: "Ishøj Bibliotek"
@@ -385,16 +413,30 @@ sites:
     name: "KøgeBibliotekerne"
     description: "The library site for Køge"
     deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMRB54Z7o6Vt3qOucjvE7No6LN2NdBNtfRi2f4y+UQdA"
+    primary-domain: www.koegebib.dk
+    secondary-domains:
+      - koegebib.dk
+      - www.koegebibliotekerne.dk
+      - koegebibliotekerne.dk
+    autogenerateRoutes: true
     <<: *default-release-image-source
   kolding:
     name: "Koldingbibliotekerne"
     description: "The library site for Kolding"
     deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBIP5Rlg98TBW8mdIbqcksbxpT0epIbAe56iAcEmi2z6"
+    primary-domain: koldingbib.dk
+    secondary-domains:
+      - www.koldingbib.dk
+      - koldingbibliotekerne.dk
+      - www.koldingbibliotekerne.dk
+    autogenerateRoutes: true
     <<: *default-release-image-source
   laeso:
     name: "Læsø Bibliotek"
     description: "The library site for Læsø"
     deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIGBAqZWP02LnFU7Iwlj9ebWeX3efwl9tkRzidSIjo6FF"
+    primary-domain: biblioteket.laesoe.dk
+    autogenerateRoutes: true
     <<: *default-release-image-source
   langeland:
     name: "Langeland Bibliotek"
@@ -405,6 +447,14 @@ sites:
     name: "Lejre Bibliotek & Arkiv"
     description: "The library site for Lejre"
     deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJUCoDJmWFsXa3nZe7XBa/v1nahzl2GeoT46XAW7ZVQG"
+    primary-domain: lejrebib.dk
+    secondary-domains:
+      - www.lejrebib.dk
+      - lejrebibliotek.dk
+      - www.lejrebibliotek.dk
+      - lejre.ddbcms.dk
+      - www.lejre.ddbcms.dk
+    autogenerateRoutes: true
     <<: *default-release-image-source
   lolland:
     name: "LollandBibliotekerne"
@@ -428,6 +478,12 @@ sites:
     name: "Mariagerfjord Bibliotekerne"
     description: "The library site for Mariagerfjord"
     deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFeTDNC6HBZrpSy73UadgOdr8sjxpsKZkwGARuJ3X8rC"
+    primary-domain: mfbib.dk
+    secondary-domains:
+      - www.mfbib.dk
+      - mariagerfjordbibliotekerne.dk
+      - www.mariagerfjordbibliotekerne.dk
+    autogenerateRoutes: true
     <<: *default-release-image-source
   middelfart:
     name: "Middelfart Bibliotek"
@@ -479,6 +535,10 @@ sites:
     name: "Odder Bibliotek"
     description: "The library site for Odder"
     deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHppEy2QVzOCwuLSQqf4OOMxiVtfbuxMQzatS4HBXXYB"
+    primary-domain: www.bibliotek.odder.dk
+    secondary-domains:
+      - bibliotek.odder.dk
+    autogenerateRoutes: true
     <<: *default-release-image-source
   odense:
     name: "Odense Biblioteker og Borgerservice"
@@ -510,11 +570,19 @@ sites:
     name: "Ringkøbing-Skjern Bibliotekerne"
     description: "The library site for Ringkøbing-Skjern"
     deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFDaximGZYZQWR0IX2sP/e94hfbHQrKVD5mTqiCvpIW2"
+    primary-domain: riskbib.dk
+    secondary-domains:
+      - www.riskbib.dk
+    autogenerateRoutes: true
     <<: *default-release-image-source
   ringsted:
     name: "Ringsted Bibliotek & Borgerservice"
     description: "The library site for Ringsted"
     deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIGimIWKuDZGYhgEmh26pImLTGtIHvh9xEw1lHfxxplJz"
+    primary-domain: ringstedbib.dk
+    secondary-domains:
+      - www.ringstedbib.dk
+    autogenerateRoutes: true
     <<: *default-release-image-source
   rodovre:
     name: "Rødovre Bibliotek"
@@ -530,6 +598,12 @@ sites:
     name: "Rudersdal Bibliotekerne"
     description: "The library site for Rudersdal"
     deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMS9z1DqqOV7+ycLji2x8PYZeBgpUKvZLPlBu5/8IPDy"
+    primary-domain: rudbib.dk
+    secondary-domains:
+      - www.rudbib.dk
+      - rudersdalbibliotekerne.dk
+      - www.rudersdalbibliotekerne.dk
+    autogenerateRoutes: true
     <<: *default-release-image-source
   samso:
     name: "Samsø Bibliotek"
@@ -553,6 +627,10 @@ sites:
     name: "Skanderborg Bibliotek"
     description: "The library site for Skanderborg"
     deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJ3uD7iCaZUa5HRmzs9esYCFoVnmPp5KKee+q5FPyR+Z"
+    primary-domain: www.bibliotek.skanderborg.dk
+    secondary-domains:
+      - bibliotek.skanderborg.dk
+    autogenerateRoutes: true
     <<: *default-release-image-source
   skive:
     name: "Skive Bibliotek"
@@ -596,6 +674,10 @@ sites:
     name: "Dansk Centralbibliotek for Sydslesvig e.V."
     description: "The library site for Dansk Centralbibliotek for Sydslesvig e.V."
     deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIH5J5WxZ7j+tCGTPOt36J6r1Vnth7PXXcdvYzP2TPph0"
+    primary-domain: www.dcbib.dk
+    secondary-domains:
+      - dcbib.dk
+    autogenerateRoutes: true
     <<: *default-release-image-source
   svendborg:
     name: "Svendborg Bibliotek"
@@ -612,11 +694,17 @@ sites:
     description: "The library site for Tårnby"
     deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIF0F5bqQwdmAdMcDHVT8xxK0tOEGZYp21WIZ1zydr28O"
     plan: webmaster
+    primary-domain: taarnbybib.dk
+    secondary-domains:
+      - www.taarnbybib.dk
+    autogenerateRoutes: true
     <<: *default-release-image-source
   thisted:
     name: "Biblioteket i Thy"
     description: "The library site for Thisted"
     deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAII8zoNSiwkKmOSHvtKxSMJiDC9EWbTzhkAUd1+csvnne"
+    primary-domain: bib.kulturrummet.dk
+    autogenerateRoutes: true
     <<: *default-release-image-source
   vallensbaek:
     name: "Vallensbæk Bibliotek"
