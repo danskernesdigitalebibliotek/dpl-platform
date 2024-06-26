@@ -1066,6 +1066,18 @@ tasks:
             | grep -v ": 0 matches"
           echo "done"
 
+    sites:latest-backup:
+      desc: Show the timestamp for the last successful backup for each site
+      vars:
+        SITES:
+          sh: lagoon list projects --output-json | jq -r ".data[].projectname"
+      cmds:
+        - for: { var: SITES }
+          cmd: |
+            DATE=$(lagoon list backups -p {{.ITEM}} -e main --output-json | jq -r '.data[0].created')
+            echo "{{.ITEM}}: ${DATE}"
+          silent: true
+
     site:lagoon:project:capture-deploy-key:
       # TODO: print a big message if a deploy key is newly captured, so we know to commit changes!
       desc: Gets the deploy key for a particular project from Lagoon and persists it in sites.yaml
