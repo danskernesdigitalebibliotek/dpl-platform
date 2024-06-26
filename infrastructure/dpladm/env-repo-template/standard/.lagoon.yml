@@ -10,6 +10,7 @@ tasks:
     - run:
         name: If drupal is not installed
         command: |
+            set -e
             if tables=$(drush sqlq "show tables like 'node';") && [ -z "$tables" ]; then
                 drush si --existing-config -y
             fi
@@ -18,6 +19,7 @@ tasks:
     - run:
         name: drush deploy
         command: |
+            set -e
             if [[ -f config/sync/system.site.yml ]]; then
                 echo "Config detected, doing a drush deploy"
                 drush deploy
@@ -37,6 +39,7 @@ tasks:
         # it will be gone.
         name: Create module upload directory in public files
         command: |
+            set -e
             if [[ ! -d "web/sites/default/files/modules_local" ]]; then
                 echo "Creating directory for module uploads"
                 mkdir web/sites/default/files/modules_local
@@ -45,6 +48,7 @@ tasks:
     - run:
         name: Import translations
         command: |
+            set -e;
             drush locale-check
             drush locale-update
         service: cli
