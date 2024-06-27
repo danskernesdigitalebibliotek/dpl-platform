@@ -474,8 +474,6 @@ sites:
       - www.lejrebib.dk
       - lejrebibliotek.dk
       - www.lejrebibliotek.dk
-      - lejre.ddbcms.dk
-      - www.lejre.ddbcms.dk
     autogenerateRoutes: true
     <<: *default-release-image-source
   lolland:
