@@ -728,7 +728,7 @@ sites:
     deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINhp6QNrL71jlzbhSPRoTcRQS6b8Ztpx+JLZVxUhNSVK"
     primary-domain: syddjursbibliotek.dk
     secondary-domains:
-      - syddjursbibliotek.dk
+      - www.syddjursbibliotek.dk
     autogenerateRoutes: true
     <<: *default-release-image-source
   taarnby:
