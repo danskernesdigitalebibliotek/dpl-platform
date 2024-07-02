@@ -8,9 +8,9 @@ module "environment" {
   lagoon_domain_base = "dplplat01.dpl.reload.dk"
   random_seed        = "LahYegheePhohGeew9Fa"
   node_pools = {
-    "app3" : { count: 7, vm: "Standard_B8ms", max_pods : 85 },
+    "app3" : { count: 8, vm: "Standard_B8ms", max_pods : 85 },
     "admin3" : { count: 1, vm : "Standard_B8ms", role : "admin", max_pods : 85 },
-    "app4" : { min : 4, max : 15, vm: "Standard_E4s_v3", max_pods : 70 },
+    "app4" : { min : 4, max : 4, vm: "Standard_E4s_v3", max_pods : 70 },
     "admin4" : { min : 1, max : 1, vm : "Standard_B8ms", role : "admin", max_pods : 70 },
   }
   node_pool_system_count = 2
