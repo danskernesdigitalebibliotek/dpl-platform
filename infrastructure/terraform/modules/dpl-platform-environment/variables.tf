@@ -57,7 +57,7 @@ variable "random_seed" {
 variable "sql_sku" {
   description = "The SKU used for MariaDB"
   type        = string
-  default     = "GP_Gen5_2"
+  default     = "GP_Gen5_4"
 }
 
 variable "sql_version" {
