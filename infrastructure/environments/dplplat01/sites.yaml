@@ -2,7 +2,7 @@
 x-defaults: &default-release-image-source
   releaseImageRepository: ghcr.io/danskernesdigitalebibliotek
   releaseImageName: dpl-cms-source
-  dpl-cms-release: "2024.26.0"
+  dpl-cms-release: "2024.27.1"
 sites:
   # Site objects are indexed by a unique key that must be a valid lagoon, and
   # github project name. That is, alphanumeric and dashes.
@@ -20,6 +20,12 @@ sites:
     description: "Et site til undervisning i CMSet"
     importTranslationsCron: "0 * * * *"
     deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJ6SzfPFf/XeLeqI342kxuJAlATpDMtgAfqlrLTTbW2m"
+    plan: webmaster
+    <<: *default-release-image-source
+  bibliotek-test:
+    name: "Bibliotekstest"
+    description: "Et site hvor bibliotekerne kan teste"
+    importTranslationsCron: "0 * * * *"
     plan: webmaster
     <<: *default-release-image-source
   customizable-canary:
