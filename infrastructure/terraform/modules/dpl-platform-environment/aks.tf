@@ -1,6 +1,7 @@
 # Setup a single cluster in a single availabillity zone.
 resource "azurerm_kubernetes_cluster" "cluster" {
   name                = "aks-${var.environment_name}-01"
+  sku_tier            = "Standard"
   location            = var.location
   resource_group_name = azurerm_resource_group.rg.name
   dns_prefix          = var.environment_name

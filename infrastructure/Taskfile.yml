@@ -78,7 +78,7 @@ tasks:
         Use Terraform to provision the infrastructure for an environment.
       dir: "{{.dir_infra}}"
       cmds:
-        - terraform apply
+        - terraform apply {{.OPTIONS}}
 
     infra:keyvault:secret:set:
       deps: [_req_env, _infra:terraform:init]
