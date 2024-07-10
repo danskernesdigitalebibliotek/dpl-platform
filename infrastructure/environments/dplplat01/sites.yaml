@@ -27,6 +27,7 @@ sites:
     description: "Et site hvor bibliotekerne kan teste"
     importTranslationsCron: "0 * * * *"
     plan: webmaster
+    deploy_key: ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHvhy79hHjLcQJCcMNwci1Q/P/O2LwD4IzBVfkmRGKom
     <<: *default-release-image-source
   customizable-canary:
     name: "Customizable bibliotek - eksempel"
@@ -253,7 +254,6 @@ sites:
     deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMjwn5wHT3u7AIfYN0FMPtxidi+vUmcE1cZpWeg1pPm9"
     primary-domain: www.grevebibliotek.dk
     secondary-domains:
-      - grevebibliotek.dk
       - grevebib.dk
       - www.grevebib.dk
     autogenerateRoutes: true
