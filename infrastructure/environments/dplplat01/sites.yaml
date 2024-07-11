@@ -3,6 +3,10 @@ x-defaults: &default-release-image-source
   releaseImageRepository: ghcr.io/danskernesdigitalebibliotek
   releaseImageName: dpl-cms-source
   dpl-cms-release: "2024.27.1"
+x-webmaster: &webmaster-release-image-source
+  releaseImageRepository: ghcr.io/danskernesdigitalebibliotek
+  releaseImageName: dpl-cms-source
+  dpl-cms-release: "2024.27.1"
 x-next: &next-release-image-source
   releaseImageRepository: ghcr.io/danskernesdigitalebibliotek
   releaseImageName: dpl-cms-source
@@ -58,13 +62,13 @@ sites:
       - aalborgbibliotekerne.dk
     autogenerateRoutes: "redirect"
     plan: webmaster
-    <<: *default-release-image-source
+    <<: *webmaster-release-image-source
   aarhus:
     name: "Aarhus Kommunes Biblioteker"
     description: "The library site for Aarhus"
     deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFL+uMeEfsaHEzbNxOmBB8dX32OLo63CTomG8VZvuiN2"
     plan: webmaster
-    <<: *default-release-image-source
+    <<: *webmaster-release-image-source
   aero:
     name: "Ærø Folkebibliotek"
     description: "The library site for Ærø"
@@ -184,7 +188,7 @@ sites:
       - "faxebibliotek.dk"
     autogenerateRoutes: true
     plan: webmaster
-    <<: *default-release-image-source
+    <<: *webmaster-release-image-source
   fredensborg:
     name: "Fredensborg Bibliotekerne"
     description: "The library site for Fredensborg"
@@ -322,7 +326,7 @@ sites:
       - herningbib.dk
     autogenerateRoutes: true
     plan: webmaster
-    <<: *default-release-image-source
+    <<: *webmaster-release-image-source
   hillerod:
     name: "Hillerød Bibliotekerne"
     description: "The library site for Hillerød"
@@ -440,7 +444,7 @@ sites:
       - varnish.main.kobenhavn.dplplat01.dpl.reload.dk
     plan: webmaster
     deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHaTkDvjLW/b2qVj8FIvtX9x3TxFFZTENn+w2CFELeoC"
-    <<: *default-release-image-source
+    <<: *webmaster-release-image-source
   koge:
     name: "KøgeBibliotekerne"
     description: "The library site for Køge"
@@ -748,7 +752,7 @@ sites:
     secondary-domains:
       - www.taarnbybib.dk
     autogenerateRoutes: true
-    <<: *default-release-image-source
+    <<: *webmaster-release-image-source
   thisted:
     name: "Biblioteket i Thy"
     description: "The library site for Thisted"
