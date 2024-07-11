@@ -3,6 +3,10 @@ x-defaults: &default-release-image-source
   releaseImageRepository: ghcr.io/danskernesdigitalebibliotek
   releaseImageName: dpl-cms-source
   dpl-cms-release: "2024.27.1"
+x-next: &next-release-image-source
+  releaseImageRepository: ghcr.io/danskernesdigitalebibliotek
+  releaseImageName: dpl-cms-source
+  dpl-cms-release: "2024.28.0"
 sites:
   # Site objects are indexed by a unique key that must be a valid lagoon, and
   # github project name. That is, alphanumeric and dashes.
@@ -778,7 +782,7 @@ sites:
     secondary-domains:
       - www.vejbib.dk
     autogenerateRoutes: true
-    <<: *default-release-image-source
+    <<: *next-release-image-source
   vejle:
     name: "Vejle Bibliotekerne"
     description: "The library site for Vejle"
@@ -787,7 +791,7 @@ sites:
     secondary-domains:
       - www.vejlebib.dk
     autogenerateRoutes: true
-    <<: *default-release-image-source
+    <<: *next-release-image-source
   vesthimmerland:
     name: "Vesthimmerlands Biblioteker"
     description: "The library site for Vesthimmerland"
@@ -796,7 +800,7 @@ sites:
     secondary-domains:
       - "vhbib.dk"
     autogenerateRoutes: "redirect"
-    <<: *default-release-image-source
+    <<: *next-release-image-source
   viborg:
     name: "Viborg Bibliotekerne"
     description: "The library site for Viborg"
@@ -805,7 +809,7 @@ sites:
     secondary-domains:
       - www.viborgbib.dk
     autogenerateRoutes: true
-    <<: *default-release-image-source
+    <<: *next-release-image-source
   vordingborg:
     name: "Vordingborg Bibliotekerne"
     description: "The library site for Vordingborg"
@@ -814,4 +818,4 @@ sites:
     secondary-domains:
       - vordingborgbibliotekerne.dk
     autogenerateRoutes: true
-    <<: *default-release-image-source
+    <<: *next-release-image-source
