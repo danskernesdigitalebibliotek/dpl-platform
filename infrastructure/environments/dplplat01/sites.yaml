@@ -38,6 +38,7 @@ sites:
     description: "Eksempel på bibliotek der kører på 'webmaster' plan, og derfor har et modultest-miljø"
     deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAILj8lXv7C/7s7te9sEpwcHQhgDWfzsCkAN7rqQ4sdTzk"
     plan: webmaster
+    webmaster-cms-version: "2024.27.1"
     <<: *default-release-image-source
   # Production sites
   aabenraa:
@@ -461,7 +462,6 @@ sites:
       - nginx.main.kobenhavn.dplplat01.dpl.reload.dk
       - varnish.main.kobenhavn.dplplat01.dpl.reload.dk
     plan: webmaster
-    webmaster-cms-version: 2024.27.1
     deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHaTkDvjLW/b2qVj8FIvtX9x3TxFFZTENn+w2CFELeoC"
     <<: *webmaster-release-image-source
   koge:
