@@ -1,6 +1,6 @@
 # Make changes to DPLSH
 ## When to use
-When for example the `kubectl` version need updating
+When for example the `kubectl` or other dependencies needs updating
 
 ## Make the change
 
