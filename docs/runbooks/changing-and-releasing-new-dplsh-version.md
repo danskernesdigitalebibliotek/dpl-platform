@@ -3,7 +3,6 @@
 When for example the `kubectl` or other dependencies needs updating
 
 ## Make the change
-
 1. Go to the DPLSH directory and make the necessary changes on a new branch
 2. Build DPLSH locally by running `IMAGE_URL=dplsh IMAGE_TAG=someTagName task build`
 3. Test that it works by running `DPLSH_IMAGE=dplsh:local ./dplsh` and running what ever commands need to be run to test that the change has the desired effect
