@@ -56,13 +56,7 @@ tasks:
         name: Import config translations
         command: drush dpl_po:import-remote-config-po da https://danskernesdigitalebibliotek.github.io/dpl-cms/translations/da.config.po
         service: cli
-    - run:
-        name: Set Pod resource requests and limits
-        command: |
-            set -e;
-            echo "setting resource requests for cli"
-            kubernetes patch deployment cli -n ${LAGOON_PROJECT_NAME} -p '{"spec":{"template":{"spec":{"containers":[{"name":"cli","resources":{"requests":{"memory":"20Mi"}}}]}}}'
-        service: cli
+
 environments:
   main:
 $ENABLE_ROUTES
