@@ -1046,10 +1046,18 @@ tasks:
         Gets the latest deployment for each production environment and prints its status if it is *not* complete.
       cmds:
         - |
-          lagoon list projects --output-json \
-            | jq -r '.data[].projectname'  \
-            | while read -r projectname; do echo "$projectname: $(lagoon list deployments -e main -p $projectname --output-json | jq '.data[0].status')"; done \
-            | grep -v "complete"
+          lagoon raw --raw "query allProjects {
+            allProjects {
+            name
+              environments(type: PRODUCTION) {
+                name
+                deployments(limit: 1) {
+                  status
+                  created
+                }
+              }
+            }
+          }" | jq -r '.allProjects[] | .name as $name | .environments[].deployments[] | select(.status != "complete") | ($name) + ": " + (.status)' 
 
     sites:grep-in-deploy-log:
       desc: |
