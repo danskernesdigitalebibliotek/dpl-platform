@@ -66,7 +66,7 @@ jobs:
       # run som tests on the image, while still avoiding to have to rebuild the
       # image when we do the final build.
       - name: Build and export to Docker
-        uses: docker/build-push-action@v5
+        uses: docker/build-push-action@v6
         with:
           context: tools/dplsh
           load: true
@@ -80,7 +80,7 @@ jobs:
         working-directory: tools/dplsh
 
       - name: Build and push
-        uses: docker/build-push-action@v5
+        uses: docker/build-push-action@v6
         with:
           context: tools/dplsh
           platforms: linux/amd64,linux/arm64
