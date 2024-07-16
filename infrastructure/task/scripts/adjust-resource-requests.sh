@@ -7,7 +7,7 @@
 
 # Namespace
 NAMESPACES_RAW=$(kubectl get ns -o jsonpath='{.items[*].metadata.name}')
-NAMESPACES=($NAMESPACES_RAW)
+NAMESPACES=("$NAMESPACES_RAW")
 
 SYSTEM_NAMESPACES=(
   "calico-system"
@@ -34,7 +34,7 @@ SYSTEM_NAMESPACES=(
 echo "Adjusting resource requests in the cluster"
 for NS in "${NAMESPACES[@]}"; do
   # Skip system namespaces - those we have enough controll over
-  if [[ " ${SYSTEM_NAMESPACES[@]} " =~ " ${NS} " ]]; then
+  if [[ " ${SYSTEM_NAMESPACES[*]} " =~ " ${NS} " ]]; then
     continue
   fi
   echo "##   $NS    ##"
@@ -46,7 +46,7 @@ for NS in "${NAMESPACES[@]}"; do
 
   for DEPLOYMENT in "${DEPLOYMENTS[@]}"; do
     # Patch the deployments resource request
-    kubectl patch deployments.apps -n $NS $DEPLOYMENT --type="json" -p='[
+    kubectl patch deployments.apps -n "$NS" "$DEPLOYMENT" --type="json" -p='[
       {
         "op": "replace",
         "path": "/spec/template/spec/containers/0/resources/requests/memory",
