@@ -17,7 +17,7 @@ ARG TASK_VERSION=v3.36.0
 # See https://github.com/stern/stern/releases
 ARG STERN_RELEASE=1.27.0
 # See https://github.com/uselagoon/lagoon-cli/releases
-ARG LAGOON_CLI_RELEASE=v0.23.1
+ARG LAGOON_CLI_RELEASE=v0.21.3
 # See https://github.com/kubernetes-sigs/krew/releases
 ARG KREW_VERSION=v0.4.4
 # https://github.com/alenkacz/cert-manager-verifier/releases
