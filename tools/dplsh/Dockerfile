@@ -2,15 +2,15 @@ ARG DPLSH_BUILD_VERSION=latest
 
 # Use an intermediate images as a way to have dependabot track our dependency
 # https://hub.docker.com/r/alpine/helm/tags?page=1&ordering=last_updated
-FROM alpine/helm:3.14.1 as helm
+FROM alpine/helm:3.15.3 as helm
 
 # https://hub.docker.com/r/hashicorp/terraform/tags?page=1&ordering=last_updated
-FROM hashicorp/terraform:1.7.3 as terraform
+FROM hashicorp/terraform:1.9.2 as terraform
 
 # We use the official azure cli as a base-image. It is itself based on alpine
 # and is quite minimal.
 # https://mcr.microsoft.com/v2/azure-cli/tags/list
-FROM mcr.microsoft.com/azure-cli:2.57.0
+FROM mcr.microsoft.com/azure-cli:2.62.0
 
 # See https://github.com/go-task/task/releases
 ARG TASK_VERSION=v3.36.0
@@ -25,7 +25,7 @@ ARG KREW_VERSION=v0.4.4
 ARG CERT_MANAGER_VERIFIER_VERSION=0.3.0
 
 # The kubectl version can be bumped as we upgrade the cluster minor version.
-ARG KUBECTL_VERSION=v1.26.10
+ARG KUBECTL_VERSION=v1.27.9
 # kubelogin is a client-go credential plugin implementing azure authentication.
 # https://github.com/Azure/kubelogin/releases
 ARG KUBELOGIN_VERSION=v0.0.34
@@ -47,7 +47,8 @@ RUN apk add --no-cache \
   shadow \
   vim \
   yq \
-  openssh
+  openssh \
+  bind-tools
 
 # Add task, a modern Make equivalent.
 RUN curl -sL https://taskfile.dev/install.sh | bash -s -- -b /usr/local/bin ${TASK_VERSION}

@@ -1,0 +1,9 @@
+{
+    "site": "${LAGOON_PROJECT_NAME}",
+    "env": "${LAGOON_ENVIRONMENT}",
+    "imageVersion": {
+        "repository": "${RELEASE_IMAGE_REPOSITORY}",
+        "image": "${RELEASE_IMAGE_NAME}",
+        "tag": "${RELEASE_TAG}"
+    }
+}
