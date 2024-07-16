@@ -2,15 +2,11 @@
 x-defaults: &default-release-image-source
   releaseImageRepository: ghcr.io/danskernesdigitalebibliotek
   releaseImageName: dpl-cms-source
-  dpl-cms-release: "2024.28.0"
-x-next: &next-release-image-source
-  releaseImageRepository: ghcr.io/danskernesdigitalebibliotek
-  releaseImageName: dpl-cms-source
   dpl-cms-release: "2024.29.1"
 x-webmaster: &webmaster-release-image-source
   releaseImageRepository: ghcr.io/danskernesdigitalebibliotek
   releaseImageName: dpl-cms-source
-  dpl-cms-release: "2024.28.0"
+  dpl-cms-release: "2024.29.1"
 sites:
   # Site objects are indexed by a unique key that must be a valid lagoon, and
   # github project name. That is, alphanumeric and dashes.
@@ -29,20 +25,20 @@ sites:
     importTranslationsCron: "0 * * * *"
     deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJ6SzfPFf/XeLeqI342kxuJAlATpDMtgAfqlrLTTbW2m"
     plan: webmaster
-    <<: *next-release-image-source
+    <<: *default-release-image-source
   bibliotek-test:
     name: "Bibliotekstest"
     description: "Et site hvor bibliotekerne kan teste"
     importTranslationsCron: "0 * * * *"
     plan: webmaster
     deploy_key: ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHvhy79hHjLcQJCcMNwci1Q/P/O2LwD4IzBVfkmRGKom
-    <<: *next-release-image-source
+    <<: *default-release-image-source
   customizable-canary:
     name: "Customizable bibliotek - eksempel"
     description: "Eksempel på bibliotek der kører på 'webmaster' plan, og derfor har et modultest-miljø"
     deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAILj8lXv7C/7s7te9sEpwcHQhgDWfzsCkAN7rqQ4sdTzk"
     plan: webmaster
-    <<: *next-release-image-source
+    <<: *default-release-image-source
   # Production sites
   aabenraa:
     name: "Aabenraa Biblioteker og Kulturhuse"
@@ -52,7 +48,7 @@ sites:
     secondary-domains:
       - aabenraabib.dk
     autogenerateRoutes: true
-    <<: *next-release-image-source
+    <<: *default-release-image-source
   aalborg:
     name: "Aalborg Bibliotekerne"
     description: "The main library site for Aalborg"
@@ -77,12 +73,12 @@ sites:
     secondary-domains:
       - arrebib.dk
     autogenerateRoutes: true
-    <<: *next-release-image-source
+    <<: *default-release-image-source
   albertslund:
     name: "Albertslund Bibliotek"
     description: "The library site for Albertslund"
     deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOpbJ5Duz6d8xqIF6CMOGrJxkpcwwAeAmP2OPnuXwAQe"
-    <<: *next-release-image-source
+    <<: *default-release-image-source
   allerod:
     name: "Allerød Biblioteker"
     description: "The library site for Allerød"
@@ -91,12 +87,12 @@ sites:
     secondary-domains:
       - bibliotek.alleroed.dk
     autogenerateRoutes: true
-    <<: *next-release-image-source
+    <<: *default-release-image-source
   assens:
     name: "AssensBibliotekerne"
     description: "The library site for Assens"
     deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDrdA9FWa+mpmJ+uyMO6H3O+xIVYpdjcbodE/zS790Ee"
-    <<: *next-release-image-source
+    <<: *default-release-image-source
   ballerup:
     name: "Ballerup Bibliotekerne"
     description: "The library site for Ballerup"
@@ -105,7 +101,7 @@ sites:
     secondary-domains:
       - www.bib.ballerup.dk
     autogenerateRoutes: true
-    <<: *next-release-image-source
+    <<: *default-release-image-source
   billund:
     name: "Billund Bibliotekerne og Borgerservice"
     description: "The main library site for Billund"
@@ -116,17 +112,17 @@ sites:
       - www.billundbibliotek.dk
     autogenerateRoutes: "redirect"
     deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOsUy+dVkL+KxOYz8zSel7mNkcKrEnqDZPHmsU4sfMv/"
-    <<: *next-release-image-source
+    <<: *default-release-image-source
   bornholm:
     name: "Bornholms Folkebiblioteker"
     description: "The library site for Bornholm"
     deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIApUNh71neiuKAsO3OL4jEzxnPCXt9gvl66gDRiYLnLw"
-    <<: *next-release-image-source
+    <<: *default-release-image-source
   brondby:
     name: "Brøndby-Bibliotekerne"
     description: "The library site for Brøndby"
     deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAICyvaCXo55aJOmlSTDQr+GXCIihWMJHhUiw4XpDrbVID"
-    <<: *next-release-image-source
+    <<: *default-release-image-source
   bronderslev:
     name: "Brønderslev Bibliotek"
     description: "The library site for Brønderslev"
@@ -135,7 +131,7 @@ sites:
     secondary-domains:
       - bronderslevbib.dk
     autogenerateRoutes: true
-    <<: *next-release-image-source
+    <<: *default-release-image-source
   dragor:
     name: "Dragør Bibliotek"
     description: "The library site for Dragør"
@@ -144,12 +140,12 @@ sites:
     secondary-domains:
       - drabib.dk
     autogenerateRoutes: true
-    <<: *next-release-image-source
+    <<: *default-release-image-source
   egedal:
     name: "Egedal Bibliotekerne"
     description: "The library site for Egedal"
     deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDCT5ZJIKWlbAYV5Fnr9Qq5WaVIuZKfcLucqTebUpXyz"
-    <<: *next-release-image-source
+    <<: *default-release-image-source
   esbjerg:
     name: "Esbjerg Kommunes Biblioteker"
     description: "The library site for Esbjerg"
@@ -162,12 +158,12 @@ sites:
       - esbbib.dk
       - www.esbbib.dk
     autogenerateRoutes: true
-    <<: *next-release-image-source
+    <<: *default-release-image-source
   faaborg-midtfyn:
     name: "Faaborg-Midtfyn Bibliotekerne"
     description: "The library site for Faaborg-Midtfyn"
     deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAILKo6SAhtuZy4z708mYP3vyc6YDMmTxwme3kg+kyQoTM"
-    <<: *next-release-image-source
+    <<: *default-release-image-source
   favrskov:
     name: "Favrskov Bibliotekerne"
     description: "The library site for Favrskov"
@@ -178,7 +174,7 @@ sites:
       - favrskovbibliotekerne.dk
       - www.favrskovbibliotekerne.dk
     autogenerateRoutes: true
-    <<: *next-release-image-source
+    <<: *default-release-image-source
   faxe:
     name: "Faxe Kommunes Bibliotek & Borgerservice"
     description: "The library site for Faxe"
@@ -197,7 +193,7 @@ sites:
     secondary-domains:
       - fredensborgbibliotekerne.dk
     autogenerateRoutes: true
-    <<: *next-release-image-source
+    <<: *default-release-image-source
   fredericia:
     name: "Fredericia Bibliotek"
     description: "The library site for Fredericia"
@@ -206,19 +202,19 @@ sites:
     secondary-domains:
       - www.fredericiabib.dk
     autogenerateRoutes: true
-    <<: *next-release-image-source
+    <<: *default-release-image-source
   frederiksberg:
     name: "Biblioteket Frederiksberg"
     description: "The library site for Frederiksberg"
     deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIGatN86NGcfXHefEFAACwDVkDxob2SW+N8R+8/rANnvF"
-    <<: *next-release-image-source
+    <<: *default-release-image-source
   frederikshavn:
     name: "Frederikshavn Kommunes Biblioteker"
     description: "The library site for Frederikshavn"
     deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAICZcYBGIGrw0aei4UFmWcNMiQ4ZbJbBR7OU7q5Bsu/lz"
     primary-domain: bibl.frederikshavn.dk
     autogenerateRoutes: true
-    <<: *next-release-image-source
+    <<: *default-release-image-source
   frederikssund:
     name: "Frederikssund Bibliotekerne"
     description: "The library site for Frederikssund"
@@ -227,7 +223,7 @@ sites:
     secondary-domains:
       - bibliotekerne.frederikssund.dk
     autogenerateRoutes: true
-    <<: *next-release-image-source
+    <<: *default-release-image-source
   fureso:
     name: "Furesø Bibliotek & Borgerservice"
     description: "The library site for Furesø"
@@ -236,17 +232,17 @@ sites:
     secondary-domains:
       - www.furbib.dk
     autogenerateRoutes: true
-    <<: *next-release-image-source
+    <<: *default-release-image-source
   gentofte:
     name: "Gentofte Bibliotekerne"
     description: "The library site for Gentofte"
     deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIP3Gh74TPbjSiKTz/cJQeH3l0gLsPtgzGVpC1YezMi+D"
-    <<: *next-release-image-source
+    <<: *default-release-image-source
   gladsaxe:
     name: "Gladsaxe Bibliotekerne"
     description: "The library site for Gladsaxe"
     deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAICAQZr2pUtpsYarlI31+J/EXr3QHomuiG5TwQJDhquYF"
-    <<: *next-release-image-source
+    <<: *default-release-image-source
   glostrup:
     name: "Glostrup Bibliotek"
     description: "The library site for Glostrup"
@@ -255,7 +251,7 @@ sites:
     secondary-domains:
       - glostrupbib.dk
     autogenerateRoutes: true
-    <<: *next-release-image-source
+    <<: *default-release-image-source
   greve:
     name: "Greve Bibliotek"
     description: "The library site for Greve"
@@ -265,17 +261,17 @@ sites:
       - grevebib.dk
       - www.grevebib.dk
     autogenerateRoutes: true
-    <<: *next-release-image-source
+    <<: *default-release-image-source
   gribskov:
     name: "Gribskov Biblioteker"
     description: "The library site for Gribskov"
     deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIIK40x6Y/UvhxDaW+McgqIeY2phSuuadNxuG/FGnSY70"
-    <<: *next-release-image-source
+    <<: *default-release-image-source
   guldborgsund:
     name: "Guldborgsund-bibliotekerne"
     description: "The library site for Guldborgsund"
     deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFwCP4jEJTjUyPTNlOJd7dHaT63C1iox9PPWl/Ck7IJH"
-    <<: *next-release-image-source
+    <<: *default-release-image-source
   haderslev:
     name: "Haderslev Bibliotekerne"
     description: "The library site for Haderslev"
@@ -284,7 +280,7 @@ sites:
     secondary-domains:
       - www.haderslevbibliotekerne.dk
     autogenerateRoutes: true
-    <<: *next-release-image-source
+    <<: *default-release-image-source
   halsnaes:
     name: "Halsnæs Bibliotekerne"
     description: "The library site for Halsnæs"
@@ -293,7 +289,7 @@ sites:
     secondary-domains:
       - www.bibliotekerne.halsnaes.dk
     autogenerateRoutes: true
-    <<: *next-release-image-source
+    <<: *default-release-image-source
   hedensted:
     name: "Hedensted Bibliotekerne"
     description: "The library site for Hedensted"
@@ -302,12 +298,12 @@ sites:
     secondary-domains:
       - www.hedenstedbib.dk
     autogenerateRoutes: true
-    <<: *next-release-image-source
+    <<: *default-release-image-source
   helsingor:
     name: "Helsingør Kommunes Biblioteker"
     description: "The library site for Helsingør"
     deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMjjzFRg91rY4Bsr1I8yxysk/aCk374S2rpgixONAP7a"
-    <<: *next-release-image-source
+    <<: *default-release-image-source
   herlev:
     name: "Herlev Bibliotek"
     description: "The library site for Herlev"
@@ -316,7 +312,7 @@ sites:
       - herlevbibliotek.dk
     autogenerateRoutes: "redirect"
     deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAICsQ7blUGjtlSdPU4AV7PR21o2Eqg5IMKTCFX3PV/2Mf"
-    <<: *next-release-image-source
+    <<: *default-release-image-source
   herning:
     name: "Herning Bibliotekerne"
     description: "The main library site for Herning"
