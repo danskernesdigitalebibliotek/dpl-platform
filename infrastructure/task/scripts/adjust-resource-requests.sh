@@ -7,6 +7,7 @@
 
 # Namespace
 NAMESPACES_RAW=$(kubectl get ns -o jsonpath='{.items[*].metadata.name}')
+# shellcheck disable=SC2206
 NAMESPACES=($NAMESPACES_RAW)
 
 SYSTEM_NAMESPACES=(
