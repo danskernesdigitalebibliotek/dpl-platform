@@ -78,6 +78,7 @@ sites:
     name: "Albertslund Bibliotek"
     description: "The library site for Albertslund"
     deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOpbJ5Duz6d8xqIF6CMOGrJxkpcwwAeAmP2OPnuXwAQe"
+    plan: webmaster
     <<: *default-release-image-source
   allerod:
     name: "Allerød Biblioteker"
@@ -101,6 +102,7 @@ sites:
     secondary-domains:
       - www.bib.ballerup.dk
     autogenerateRoutes: true
+    plan: webmaster
     <<: *default-release-image-source
   billund:
     name: "Billund Bibliotekerne og Borgerservice"
@@ -660,6 +662,7 @@ sites:
     secondary-domains:
       - www.silkeborgbib.dk
     autogenerateRoutes: true
+    plan: webmaster
     <<: *default-release-image-source
   skanderborg:
     name: "Skanderborg Bibliotek"
@@ -692,6 +695,7 @@ sites:
     secondary-domains:
       - www.biblioteket.sonderborg.dk
     autogenerateRoutes: true
+    plan: webmaster
     <<: *default-release-image-source
   soro:
     name: "Sorø Bibliotek"
@@ -724,6 +728,7 @@ sites:
     secondary-domains:
       - dcbib.dk
     autogenerateRoutes: true
+    plan: webmaster
     <<: *default-release-image-source
   svendborg:
     name: "Svendborg Bibliotek"
