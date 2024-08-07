@@ -576,6 +576,7 @@ sites:
     name: "Odense Biblioteker og Borgerservice"
     description: "The library site for Odense"
     deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIEQ6nngmgVZXTNpPzhMTvJyx4tUPjHxoLSNL/jJPaNQ0"
+    plan: webmaster
     <<: *default-release-image-source
   odsherred:
     name: "Odsherred Bibliotek og Kulturhuse"
