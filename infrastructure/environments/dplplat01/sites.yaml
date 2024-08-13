@@ -239,6 +239,10 @@ sites:
     name: "Gentofte Bibliotekerne"
     description: "The library site for Gentofte"
     deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIP3Gh74TPbjSiKTz/cJQeH3l0gLsPtgzGVpC1YezMi+D"
+    primary-domain: genbib.dk
+    secondary-domains:
+      - www.genbib.dk
+    autogenerateRoutes: true
     <<: *default-release-image-source
   gladsaxe:
     name: "Gladsaxe Bibliotekerne"
