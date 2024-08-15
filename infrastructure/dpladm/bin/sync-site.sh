@@ -34,19 +34,6 @@ function getSiteDplCmsRelease {
     return
 }
 
-
-function getWebmasterDplCmsRelease {
-    local wmRelease
-    wmRelease=$(yq eval ".sites.${1}.webmaster-cms-version" "${2}")
-    if [[ "${wmRelease}" == "null" ]]; then
-        echo ""
-        return
-    fi
-
-    echo "${wmRelease}"
-    return
-}
-
 function getSiteReleaseImageRepository {
     local repository
     repository=$(yq eval ".sites.${1}.releaseImageRepository" "${2}")
