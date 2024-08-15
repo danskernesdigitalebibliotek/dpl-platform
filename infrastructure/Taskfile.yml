@@ -205,6 +205,12 @@ tasks:
           - sh: "[ ! -z {{.AZURE_SUBSCRIPTION_ID}} ]"
             msg: "Env variable AZURE_SUBSCRIPTION_ID is not set or empty."
 
+    cluster:adjust:resource-request:
+      deps: [cluster:auth, lagoon:cli:config]
+      desc: "Adjust resource requests for a every pod inside a library namespace"
+      cmds:
+        - task/scripts/adjust-resource-requests.sh
+
     support:provision:cert-manager:
       deps: [cluster:auth]
       summary: Set the DIFF environment variable to any value to switch to diffing instead of an actual upgrade.

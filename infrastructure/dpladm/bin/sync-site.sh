@@ -138,6 +138,7 @@ primaryDomain=$(getSitePrimaryDomain "${SITE}" "${SITES_CONFIG}")
 secondaryDomains=$(getSiteSecondaryDomains "${SITE}" "${SITES_CONFIG}")
 autogenerateRoutes=$(getSiteAutogenerateRoutes "${SITE}" "${SITES_CONFIG}")
 releaseTag=$(getSiteDplCmsRelease "${SITE}" "${SITES_CONFIG}")
+wmReleaseTag=$(getWebmasterDplCmsRelease "${SITE}" "${SITES_CONFIG}")
 siteImageRepository=$(getSiteReleaseImageRepository "${SITE}" "${SITES_CONFIG}" || exit 1)
 failOnErr $? "${siteImageRepository}"
 siteReleaseImageName=$(getSiteReleaseImageName "${SITE}" "${SITES_CONFIG}")
@@ -150,5 +151,5 @@ set -o errexit
 syncEnvRepo "${SITE}" "${releaseTag}" "${BRANCH}" "${siteImageRepository}" "${siteReleaseImageName}" "${importTranslationsCron}" "${autogenerateRoutes}" "${primaryDomain}" "${secondaryDomains}"
 
 if [ "${plan}" = "webmaster" ] && [ "${BRANCH}" = "main" ]; then
-    syncEnvRepo "${SITE}" "${releaseTag}" "moduletest" "${siteImageRepository}" "${siteReleaseImageName}" "${importTranslationsCron}" "${autogenerateRoutes}" "${primaryDomain}" "${secondaryDomains}"
+    syncEnvRepo "${SITE}" "${wmReleaseTag}" "moduletest" "${siteImageRepository}" "${siteReleaseImageName}" "${importTranslationsCron}" "${autogenerateRoutes}" "${primaryDomain}" "${secondaryDomains}"
 fi
