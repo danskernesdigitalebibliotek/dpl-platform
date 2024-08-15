@@ -4,6 +4,9 @@
 # if found.
 set -eu
 
+# Array to hold namespaces with errors
+error_namespaces=()
+
 # Function to check if kubectl is authenticated and connected to a cluster
 check_kubectl_authentication() {
     if ! kubectl cluster-info > /dev/null 2>&1; then
@@ -22,6 +25,11 @@ check_and_restart() {
         echo "$namespace, $pod: ERROR"
         echo "Running rollout restart for nginx deployment in namespace $namespace..."
         kubectl -n "$namespace" rollout restart deploy/nginx
+
+        # Add namespace to the error list if not already in the array
+        if [[ ! " ${error_namespaces[@]} " =~ " ${namespace} " ]]; then
+            error_namespaces+=("$namespace")
+        fi
     else
         echo "$namespace, $pod: OK"
     fi
@@ -34,3 +42,13 @@ check_kubectl_authentication
 kubectl get pods --all-namespaces -l lagoon.sh/service=nginx -o custom-columns=NS:.metadata.namespace,NAME:.metadata.name --no-headers | while read -r namespace pod; do
     check_and_restart "$namespace" "$pod"
 done
+
+# Output summary of namespaces that had errors
+if [ ${#error_namespaces[@]} -ne 0 ]; then
+    echo "Summary of namespaces with errors:"
+    for ns in "${error_namespaces[@]}"; do
+        echo "- $ns"
+    done
+else
+    echo "No errors found in any namespace."
+fi
