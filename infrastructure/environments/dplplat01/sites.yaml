@@ -18,6 +18,7 @@ sites:
     releaseImageName: dpl-cms-source
     dpl-cms-release: "2024.35.1"
     plan: webmaster
+    moduletest-dpl-cms-release: "2024.32.1"
     deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIIhuA0K7CNvRoe+Xx7RaXG4+a8KcSpzuWn+G4sUPzNWx"
   cms-school:
     name: "CMS-skole"

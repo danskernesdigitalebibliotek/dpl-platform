@@ -37,7 +37,7 @@ function getSiteDplCmsRelease {
 
 function getWebmasterDplCmsRelease {
     local wmRelease
-    wmRelease=$(yq eval ".sites.${1}.webmaster-cms-version" "${2}")
+    wmRelease=$(yq eval ".sites.${1}.moduletest-dpl-cms-release" "${2}")
     if [[ "${wmRelease}" == "null" ]]; then
         echo ""
         return
