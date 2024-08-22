@@ -1,0 +1,31 @@
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  annotations:
+    pv.kubernetes.io/provisioned-by: file.csi.azure.com
+  name: new-pvc-5fb0f9d8-a67c-44a6-a11b-a38112e679a3
+spec:
+  capacity:
+    storage: 5Gi
+  accessModes:
+    - ReadWriteMany
+  persistentVolumeReclaimPolicy: Retain
+  storageClassName: new-bulk
+  csi:
+    driver: file.csi.azure.com
+    readOnly: false
+    volumeHandle: /subscriptions/8ac8a259-5bb3-4799-bd1e-455145b12550/resourceGroups/rg-env-dplplat01/providers/Microsoft.Storage/storageAccounts/stdpldplplat01585708af/ # make sure volumeid is unique for every identical share in the cluster
+    volumeAttributes:
+      resourceGroup: rg-env-dplplat01 # optional, only set this when storage account is not in the same resource group as the cluster nodes
+      shareName: new-pvc-5fb0f9d8-a67c-44a6-a11b-a38112e679a3
+    nodeStageSecretRef:
+      name: azure-storage-account-stdpldplplat01585708af-secret
+      namespace: canary-main
+  mountOptions:
+    - dir_mode=0777
+    - file_mode=0777
+    - uid=0
+    - gid=0
+    - mfsymlinks
+    - nosharesock
+    - nobrl # disable sending byte range lock requests to the server and for applications which have challenges with posix locks
