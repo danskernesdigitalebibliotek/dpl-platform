@@ -5,6 +5,11 @@
 
 set -euo pipefail
 
+source ./deleteOldPvAndPvc.sh
+
+# Test the entered namespace for good measure
+kubectl get ns $1
+
 echo "Adding new PVC and PV to $1"
 
 #Get the volume name of the PV
