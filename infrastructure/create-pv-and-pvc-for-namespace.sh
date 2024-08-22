@@ -38,6 +38,8 @@ kubectl patch deployments.apps -n $1 nginx -p '{"spec":{"template":{"spec": {"vo
 
 echo "$1 is now using the intermediary SC via it's new PVC and PV. The Nginx has been patched and new pods spun up"
 
+echo "Proceeding to remove the now obsolete PV and PVC from the namespace $1"
 
+deleteOldPvAndPvc $1 $NEW_VOLUME_NAME "new-nginx"
 
 echo ######## Done ########
