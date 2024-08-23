@@ -28,4 +28,4 @@ spec:
       storage: 5Gi
   storageClassName: new-bulk
   volumeMode: Filesystem
-  volumeName: "new-pvc-5fb0f9d8-a67c-44a6-a11b-a38112e679a3"
+  volumeName: "new-pvc-0ed5e577-08bf-4488-9974-ea0aea26938f"

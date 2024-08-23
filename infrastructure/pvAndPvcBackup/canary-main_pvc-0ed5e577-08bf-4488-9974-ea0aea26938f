@@ -1,0 +1,36 @@
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  annotations:
+    kubernetes.io/azure-file-resource-group: rg-env-dplplat01
+    pv.kubernetes.io/migrated-to: file.csi.azure.com
+    pv.kubernetes.io/provisioned-by: kubernetes.io/azure-file
+    volume.kubernetes.io/provisioner-deletion-secret-name: ""
+    volume.kubernetes.io/provisioner-deletion-secret-namespace: ""
+  creationTimestamp: "2024-08-23T08:43:21Z"
+  finalizers:
+  - kubernetes.io/pv-protection
+  name: pvc-0ed5e577-08bf-4488-9974-ea0aea26938f
+  resourceVersion: "582249916"
+  uid: 0ab40124-9f5a-4710-ac0e-0e1c8b71c747
+spec:
+  accessModes:
+  - ReadWriteMany
+  azureFile:
+    secretName: azure-storage-account-stdpldplplat01585708af-secret
+    secretNamespace: canary-main
+    shareName: pvc-0ed5e577-08bf-4488-9974-ea0aea26938f
+  capacity:
+    storage: 5Gi
+  claimRef:
+    apiVersion: v1
+    kind: PersistentVolumeClaim
+    name: nginx
+    namespace: canary-main
+    resourceVersion: "582249506"
+    uid: 0ed5e577-08bf-4488-9974-ea0aea26938f
+  persistentVolumeReclaimPolicy: Retain
+  storageClassName: bulk
+  volumeMode: Filesystem
+status:
+  phase: Bound

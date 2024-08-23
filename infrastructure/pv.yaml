@@ -3,7 +3,7 @@ kind: PersistentVolume
 metadata:
   annotations:
     pv.kubernetes.io/provisioned-by: file.csi.azure.com
-  name: new-pvc-5fb0f9d8-a67c-44a6-a11b-a38112e679a3
+  name: new-pvc-0ed5e577-08bf-4488-9974-ea0aea26938f
 spec:
   capacity:
     storage: 5Gi
@@ -17,7 +17,7 @@ spec:
     volumeHandle: /subscriptions/8ac8a259-5bb3-4799-bd1e-455145b12550/resourceGroups/rg-env-dplplat01/providers/Microsoft.Storage/storageAccounts/stdpldplplat01585708af/ # make sure volumeid is unique for every identical share in the cluster
     volumeAttributes:
       resourceGroup: rg-env-dplplat01 # optional, only set this when storage account is not in the same resource group as the cluster nodes
-      shareName: new-pvc-5fb0f9d8-a67c-44a6-a11b-a38112e679a3
+      shareName: pvc-0ed5e577-08bf-4488-9974-ea0aea26938f
     nodeStageSecretRef:
       name: azure-storage-account-stdpldplplat01585708af-secret
       namespace: canary-main

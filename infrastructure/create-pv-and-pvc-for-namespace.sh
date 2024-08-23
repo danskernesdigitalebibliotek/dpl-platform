@@ -23,10 +23,13 @@ echo $NEW_VOLUME_NAME
 volumeName=$NEW_VOLUME_NAME yq -i '.spec.volumeName = strenv(volumeName)' pvc.yaml
 namespace=$1 yq -i '.metadata.namespace = strenv(namespace)' pvc.yaml
 
-# Set the PV's name and sharename to the new volume name
+# Set the PV's name  to the new volume name
 volumeName=$NEW_VOLUME_NAME yq -i '
   .metadata.name = strenv(volumeName) |
-  .spec.csi.volumeAttributes.shareName = strenv(volumeName)
+  ' pv.yaml
+# The sharename is the same as we are doing a logical deletion and not a real one
+shareName=$VOLUME_NAME yq -i '
+  .spec.csi.volumeAttributes.shareName = strenv(shareName)
   ' pv.yaml
 
 # Apply the new PV and PVC to the cluster
@@ -40,6 +43,6 @@ echo "$1 is now using the intermediary SC via it's new PVC and PV. The Nginx has
 
 echo "Proceeding to remove the now obsolete PV and PVC from the namespace $1"
 
-backupAndDeleteOldPvAndPvc $1 $NEW_VOLUME_NAME "new-nginx"
+backupAndDeleteOldPvAndPvc $1 $VOLUME_NAME "nginx"
 
 echo ######## Done ########
