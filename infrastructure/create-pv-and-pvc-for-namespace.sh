@@ -33,7 +33,7 @@ kubectl apply -f pv.yaml
 kubectl apply -f pvc.yaml
 
 # Switch the nginx deployments nginx volume to use the new PVC
-kubectl patch deployments.apps -n $1 nginx -p '{"spec":{"template":{"spec": {"volumes": [{"name": "nginx", "persistentVolumeClaim": { "claimName": "nginx"}}]}}}}'
+kubectl patch deployments.apps -n $1 nginx -p '{"spec":{"template":{"spec": {"volumes": [{"name": "nginx", "persistentVolumeClaim": { "claimName": "new-nginx"}}]}}}}'
 
 echo "$1 is now using the intermediary SC via it's new PVC and PV. The Nginx has been patched and new pods spun up"
 
