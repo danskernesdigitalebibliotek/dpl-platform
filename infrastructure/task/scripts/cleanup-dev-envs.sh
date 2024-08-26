@@ -44,8 +44,7 @@ echo "$DEV_ENVS" | while read -r environment; do
     if [ "$DRY_RUN" = true ]; then
       echo "Dry-run: lagoon delete environment -p \"$LAGOON_PROJECT\" -e \"$ENV_NAME\""
     else
-      echo "foo"
-      #lagoon delete environment -p "$LAGOON_PROJECT" -e "$ENV_NAME"
+      lagoon delete environment -p "$LAGOON_PROJECT" -e "$ENV_NAME"
     fi
   fi
 done;
