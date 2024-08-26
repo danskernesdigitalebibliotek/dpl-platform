@@ -639,6 +639,7 @@ sites:
     name: "Roskilde Bibliotekerne"
     description: "The library site for Roskilde"
     deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPfCXTAe50+d/RUIu8JSctoCSzfJoEMtZ2OY0AUQdZgo"
+    plan: webmaster
     <<: *default-release-image-source
   rudersdal:
     name: "Rudersdal Bibliotekerne"
