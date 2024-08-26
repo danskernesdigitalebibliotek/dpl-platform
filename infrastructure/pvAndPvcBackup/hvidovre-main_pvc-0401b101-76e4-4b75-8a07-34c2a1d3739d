@@ -1,0 +1,36 @@
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  annotations:
+    kubernetes.io/azure-file-resource-group: rg-env-dplplat01
+    pv.kubernetes.io/migrated-to: file.csi.azure.com
+    pv.kubernetes.io/provisioned-by: kubernetes.io/azure-file
+    volume.kubernetes.io/provisioner-deletion-secret-name: ""
+    volume.kubernetes.io/provisioner-deletion-secret-namespace: ""
+  creationTimestamp: "2024-04-30T17:40:46Z"
+  finalizers:
+  - kubernetes.io/pv-protection
+  name: pvc-0401b101-76e4-4b75-8a07-34c2a1d3739d
+  resourceVersion: "442548296"
+  uid: 6dc923f9-5857-4034-8113-1e088f02f261
+spec:
+  accessModes:
+  - ReadWriteMany
+  azureFile:
+    secretName: azure-storage-account-stdpldplplat01585708af-secret
+    secretNamespace: hvidovre-main
+    shareName: pvc-0401b101-76e4-4b75-8a07-34c2a1d3739d
+  capacity:
+    storage: 5Gi
+  claimRef:
+    apiVersion: v1
+    kind: PersistentVolumeClaim
+    name: nginx
+    namespace: hvidovre-main
+    resourceVersion: "442548241"
+    uid: 0401b101-76e4-4b75-8a07-34c2a1d3739d
+  persistentVolumeReclaimPolicy: Retain
+  storageClassName: bulk
+  volumeMode: Filesystem
+status:
+  phase: Bound
