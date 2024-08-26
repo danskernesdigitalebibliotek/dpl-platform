@@ -24,13 +24,9 @@ volumeName=$NEW_VOLUME_NAME yq -i '.spec.volumeName = strenv(volumeName)' pvc.ya
 namespace=$1 yq -i '.metadata.namespace = strenv(namespace)' pvc.yaml
 
 # Set the PV's name  to the new volume name
-volumeName=$NEW_VOLUME_NAME yq -i '
-  .metadata.name = strenv(volumeName) |
-  ' pv.yaml
+volumeName=$NEW_VOLUME_NAME yq -i '.metadata.name = strenv(volumeName)' pv.yaml
 # The sharename is the same as we are doing a logical deletion and not a real one
-shareName=$VOLUME_NAME yq -i '
-  .spec.csi.volumeAttributes.shareName = strenv(shareName)
-  ' pv.yaml
+shareName=$VOLUME_NAME yq -i '.spec.csi.volumeAttributes.shareName = strenv(shareName)' pv.yaml
 
 # Apply the new PV and PVC to the cluster
 kubectl apply -f pv.yaml
