@@ -14,6 +14,11 @@
 LAGOON_PROJECT="dpl-cms"
 REPO="danskernesdigitalebibliotek/dpl-cms"
 
+if ! gh auth status >/dev/null 2>&1; then
+  echo "Error: You are not logged into GitHub. Please log in using 'gh auth login' and try again."
+  exit 1
+fi
+
 DRY_RUN=false
 if [ "$1" == "--dry-run" ]; then
   DRY_RUN=true
