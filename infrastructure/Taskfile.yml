@@ -898,18 +898,7 @@ tasks:
       preconditions:
       - *require_site
       - &require_clean_state {
-          sh: "[
-            current_branch=$(git branch --show-current)
-            if [ 'current_branch' != 'main' ]; then
-              echo 'Can't deploy if not on main branch'
-              exit 1
-            fi
-            if ! git diff-index --quiet HEAD --; then
-              echo 'Can't deploy if there's changes on the branch'
-              exit 1
-            fi
-            exit 0
-          ]",
+          sh: "[./dpladm/bin/require-clean-state.sh]",
           msg: "############################################################ \n
                 \n
                 It's not possible to deploy from other branches than main.\n
