@@ -30,7 +30,7 @@ DEV_ENVS=$(lagoon raw --raw "query dplCmsEnvs {
 
 echo "$DEV_ENVS" | while read -r environment; do
   ENV_NAME=$(echo "$environment" | jq -r '.name')
-  # Lagoon development environments are named after the number or their
+  # Lagoon development environments are named after the number of their
   # corresponding pull request.
   PR_NUMBER=$(echo "$environment" | jq -r '.name | gsub("^pr-"; "") | tonumber')
 
