@@ -10,7 +10,7 @@ spec:
   accessModes:
     - ReadWriteMany
   persistentVolumeReclaimPolicy: Retain
-  storageClassName: new-bulk
+  storageClassName: bulk
   csi:
     driver: file.csi.azure.com
     readOnly: false

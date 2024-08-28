@@ -26,6 +26,6 @@ spec:
   resources:
     requests:
       storage: 5Gi
-  storageClassName: new-bulk
+  storageClassName: bulk
   volumeMode: Filesystem
   volumeName: "new-pvc-0ed5e577-08bf-4488-9974-ea0aea26938f"
