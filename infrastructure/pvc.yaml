@@ -15,11 +15,11 @@ metadata:
     lagoon.sh/buildType: branch
     lagoon.sh/environment: main
     lagoon.sh/environmentType: production
-    lagoon.sh/project: canary
+    lagoon.sh/project: vordingborg
     lagoon.sh/service: nginx
     lagoon.sh/service-type: nginx-php-persistent
-  name: new-nginx
-  namespace: "canary-main"
+  name: nginx
+  namespace: "vordingborg-main"
 spec:
   accessModes:
     - ReadWriteMany
@@ -28,4 +28,4 @@ spec:
       storage: 5Gi
   storageClassName: bulk
   volumeMode: Filesystem
-  volumeName: "new-pvc-0ed5e577-08bf-4488-9974-ea0aea26938f"
+  volumeName: "pvc-5e5d8491-5ed5-4f92-ad51-598e507a9826"

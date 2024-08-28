@@ -3,7 +3,8 @@ kind: PersistentVolume
 metadata:
   annotations:
     pv.kubernetes.io/provisioned-by: file.csi.azure.com
-  name: new-pvc-0ed5e577-08bf-4488-9974-ea0aea26938f
+  name: pvc-5e5d8491-5ed5-4f92-ad51-598e507a9826
+  namespace: vordingborg-main
 spec:
   capacity:
     storage: 5Gi
@@ -14,13 +15,13 @@ spec:
   csi:
     driver: file.csi.azure.com
     readOnly: false
-    volumeHandle: /subscriptions/8ac8a259-5bb3-4799-bd1e-455145b12550/resourceGroups/rg-env-dplplat01/providers/Microsoft.Storage/storageAccounts/stdpldplplat01585708af/ # make sure volumeid is unique for every identical share in the cluster
+    volumeHandle: /subscriptions/8ac8a259-5bb3-4799-bd1e-455145b12550/resourceGroups/rg-env-dplplat01/providers/Microsoft.Storage/storageAccounts/stdpldplplat01585708af/pvc-5e5d8491-5ed5-4f92-ad51-598e507a9826 # make sure volumeid is unique for every identical share in the cluster
     volumeAttributes:
       resourceGroup: rg-env-dplplat01 # optional, only set this when storage account is not in the same resource group as the cluster nodes
-      shareName: pvc-0ed5e577-08bf-4488-9974-ea0aea26938f
+      shareName: pvc-5e5d8491-5ed5-4f92-ad51-598e507a9826
     nodeStageSecretRef:
       name: azure-storage-account-stdpldplplat01585708af-secret
-      namespace: canary-main
+      namespace: vordingborg-main
   mountOptions:
     - dir_mode=0777
     - file_mode=0777
