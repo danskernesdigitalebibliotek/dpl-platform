@@ -642,6 +642,10 @@ sites:
     name: "Rødovre Bibliotek"
     description: "The library site for Rødovre"
     deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOLyDhYdpnunBj8EZNR4fE6lN4vc/+RVVB5n2ei/40xt"
+    primary-domain: www.rdb.dk
+    secondary-domains:
+      - rdb.dk
+    autogenerateRoutes: true
     <<: *default-release-image-source
   roskilde:
     name: "Roskilde Bibliotekerne"
