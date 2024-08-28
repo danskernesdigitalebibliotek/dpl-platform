@@ -78,6 +78,10 @@ sites:
     name: "Albertslund Bibliotek"
     description: "The library site for Albertslund"
     deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOpbJ5Duz6d8xqIF6CMOGrJxkpcwwAeAmP2OPnuXwAQe"
+    primary-domain: albertslundbibliotek.dk
+    secondary-domains:
+      - www.albertslundbibliotek.dk
+    autogenerateRoutes: true
     plan: webmaster
     <<: *default-release-image-source
   allerod:
