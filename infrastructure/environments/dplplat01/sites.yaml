@@ -280,6 +280,10 @@ sites:
     name: "Gribskov Biblioteker"
     description: "The library site for Gribskov"
     deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIIK40x6Y/UvhxDaW+McgqIeY2phSuuadNxuG/FGnSY70"
+    primary-domain: www.gribskovbib.dk
+    secondary-domains:
+      - gribskovbib.dk
+    autogenerateRoutes: true
     <<: *default-release-image-source
   guldborgsund:
     name: "Guldborgsund-bibliotekerne"
