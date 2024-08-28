@@ -78,6 +78,10 @@ sites:
     name: "Albertslund Bibliotek"
     description: "The library site for Albertslund"
     deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOpbJ5Duz6d8xqIF6CMOGrJxkpcwwAeAmP2OPnuXwAQe"
+    primary-domain: albertslundbibliotek.dk
+    secondary-domains:
+      - www.albertslundbibliotek.dk
+    autogenerateRoutes: true
     plan: webmaster
     <<: *default-release-image-source
   allerod:
@@ -248,6 +252,10 @@ sites:
     name: "Gladsaxe Bibliotekerne"
     description: "The library site for Gladsaxe"
     deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAICAQZr2pUtpsYarlI31+J/EXr3QHomuiG5TwQJDhquYF"
+    primary-domain: gladbib.dk
+    secondary-domains:
+      - www.gladbib.dk
+    autogenerateRoutes: true
     <<: *default-release-image-source
   glostrup:
     name: "Glostrup Bibliotek"
@@ -272,6 +280,10 @@ sites:
     name: "Gribskov Biblioteker"
     description: "The library site for Gribskov"
     deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIIK40x6Y/UvhxDaW+McgqIeY2phSuuadNxuG/FGnSY70"
+    primary-domain: www.gribskovbib.dk
+    secondary-domains:
+      - gribskovbib.dk
+    autogenerateRoutes: true
     <<: *default-release-image-source
   guldborgsund:
     name: "Guldborgsund-bibliotekerne"
@@ -309,6 +321,10 @@ sites:
     name: "Helsingør Kommunes Biblioteker"
     description: "The library site for Helsingør"
     deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMjjzFRg91rY4Bsr1I8yxysk/aCk374S2rpgixONAP7a"
+    primary-domain: helsbib.dk
+    secondary-domains:
+      - www.helsbib.dk
+    autogenerateRoutes: true
     <<: *default-release-image-source
   herlev:
     name: "Herlev Bibliotek"
@@ -634,6 +650,10 @@ sites:
     name: "Rødovre Bibliotek"
     description: "The library site for Rødovre"
     deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOLyDhYdpnunBj8EZNR4fE6lN4vc/+RVVB5n2ei/40xt"
+    primary-domain: www.rdb.dk
+    secondary-domains:
+      - rdb.dk
+    autogenerateRoutes: true
     <<: *default-release-image-source
   roskilde:
     name: "Roskilde Bibliotekerne"
@@ -693,6 +713,10 @@ sites:
     name: "Solrød Bibliotek og Kulturhus"
     description: "The library site for Solrød"
     deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIF1GwZ4r8QZ7Vebdqiz/mtkifrLU+ZSvlAJshdXjCh5J"
+    primary-domain: solbib.dk
+    secondary-domains:
+      - www.solbib.dk
+    autogenerateRoutes: true
     <<: *default-release-image-source
   sonderborg:
     name: "Biblioteket Sønderborg"
