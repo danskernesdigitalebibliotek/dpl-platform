@@ -313,6 +313,10 @@ sites:
     name: "Helsingør Kommunes Biblioteker"
     description: "The library site for Helsingør"
     deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMjjzFRg91rY4Bsr1I8yxysk/aCk374S2rpgixONAP7a"
+    primary-domain: helsbib.dk
+    secondary-domains:
+      - www.helsbib.dk
+    autogenerateRoutes: true
     <<: *default-release-image-source
   herlev:
     name: "Herlev Bibliotek"
