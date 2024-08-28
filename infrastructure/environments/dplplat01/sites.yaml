@@ -248,6 +248,10 @@ sites:
     name: "Gladsaxe Bibliotekerne"
     description: "The library site for Gladsaxe"
     deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAICAQZr2pUtpsYarlI31+J/EXr3QHomuiG5TwQJDhquYF"
+    primary-domain: gladbib.dk
+    secondary-domains:
+      - www.gladbib.dk
+    autogenerateRoutes: true
     <<: *default-release-image-source
   glostrup:
     name: "Glostrup Bibliotek"
