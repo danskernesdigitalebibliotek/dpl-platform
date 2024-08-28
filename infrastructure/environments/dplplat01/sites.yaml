@@ -705,6 +705,10 @@ sites:
     name: "Solrød Bibliotek og Kulturhus"
     description: "The library site for Solrød"
     deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIF1GwZ4r8QZ7Vebdqiz/mtkifrLU+ZSvlAJshdXjCh5J"
+    primary-domain: solbib.dk
+    secondary-domains:
+      - www.solbib.dk
+    autogenerateRoutes: true
     <<: *default-release-image-source
   sonderborg:
     name: "Biblioteket Sønderborg"
