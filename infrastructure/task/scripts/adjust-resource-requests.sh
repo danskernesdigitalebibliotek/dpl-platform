@@ -38,6 +38,10 @@ for NS in "${NAMESPACES[@]}"; do
   if [[ " ${SYSTEM_NAMESPACES[*]} " =~ ${NS} ]]; then
     continue
   fi
+# We also dont want to adjust for DPL-CMS
+  if [[ "$NS" = *"dpl-cms"* ]]; then
+    continue
+  fi
   echo "##   $NS    ##"
   # Pod to be adjusted
   DEPLOYMENTS=("cli" "nginx" "varnish" "redis")
