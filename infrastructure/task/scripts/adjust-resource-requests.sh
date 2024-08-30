@@ -38,10 +38,6 @@ for NS in "${NAMESPACES[@]}"; do
   if [[ " ${SYSTEM_NAMESPACES[*]} " =~ ${NS} ]]; then
     continue
   fi
-# We also dont want to adjust for DPL-CMS
-  if [[ "$NS" = *"dpl-cms"* ]]; then
-    continue
-  fi
   echo "##   $NS    ##"
   # Pod to be adjusted
   DEPLOYMENTS=("cli" "nginx" "varnish" "redis")
@@ -67,6 +63,24 @@ for NS in "${NAMESPACES[@]}"; do
     fi
     if [ "$DEPLOYMENT" = "varnish" ]; then
       MEMORY_REQUEST=$VARNISH_MEMORY
+    fi
+    # If the Namespace is DPL-CMS PR site set it lower
+    if [[ "$NS" = *"dpl-cms"* ]]; then
+      if [ "$DEPLOYMENT" = "cli" ]; then
+        MEMORY_REQUEST="20Mi"
+        echo $MEMORY_REQUEST
+      fi
+      if [ "$DEPLOYMENT" = "nginx" ]; then
+        MEMORY_REQUEST="80Mi"
+        echo $MEMORY_REQUEST
+      fi
+      if [ "$DEPLOYMENT" = "redis" ]; then
+        MEMORY_REQUEST="100Mi"
+        echo $MEMORY_REQUEST
+      fi
+      if [ "$DEPLOYMENT" = "varnish" ]; then
+        MEMORY_REQUEST="100Mi"
+      fi
     fi
     # Patch the deployments resource request
     kubectl patch deployments.apps -n "$NS" "$DEPLOYMENT" --type="json" -p='[
