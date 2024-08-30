@@ -176,6 +176,31 @@ function syncEnvRepo {
   local primaryDomain="${8:-}"
   local secondaryDomains="${9:-}"
 
+  if [[ -z $siteName ]]; then
+      echo "Missing site name"
+      exit 1
+  fi
+
+  if [[ -z $releaseTag ]]; then
+      echo "Missing release tag"
+      exit 1
+  fi
+
+  if [[ -z $branchName ]]; then
+      echo "Missing branch name"
+      exit 1
+  fi
+
+  if [[ -z $releaseImageRepository ]]; then
+      echo "Missing release image repository"
+      exit 1
+  fi
+
+  if [[ -z $releaseImageName ]]; then
+      echo "Missing release image name"
+      exit 1
+  fi
+
   # TODO, preflight checks that verifies this repository looks good to go.
   # makes most sense to do when we're doing more complicated things inside
   # the repository. At the very least we should verify that this actually
