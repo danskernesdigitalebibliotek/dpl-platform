@@ -47,9 +47,9 @@ echo "$DEV_ENVS" | while read -r environment; do
     echo "PR #$PR_NUMBER is $PR_STATUS. Closing development environment: $ENV_NAME."
 
     if [ "$DRY_RUN" = true ]; then
-      echo "Dry-run: lagoon delete environment -p \"$LAGOON_PROJECT\" -e \"$ENV_NAME\""
+      echo "Dry-run: lagoon delete environment -p \"$LAGOON_PROJECT\" -e \"$ENV_NAME\" --force"
     else
-      lagoon delete environment -p "$LAGOON_PROJECT" -e "$ENV_NAME"
+      lagoon delete environment -p "$LAGOON_PROJECT" -e "$ENV_NAME" --force
     fi
   fi
 done;
