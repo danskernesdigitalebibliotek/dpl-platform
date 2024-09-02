@@ -27,7 +27,7 @@ check_and_restart() {
         kubectl -n "$namespace" rollout restart deploy/nginx
 
         # Add namespace to the error list if not already in the array
-        if [[ ! " ${error_namespaces[@]} " =~ " ${namespace} " ]]; then
+        if [[ ! " ${error_namespaces[*]} " =~ ${namespace} ]]; then
             error_namespaces+=("$namespace")
         fi
     else
@@ -39,16 +39,21 @@ check_and_restart() {
 check_kubectl_authentication
 
 # Get the list of relevant pods across all namespaces
-kubectl get pods --all-namespaces -l lagoon.sh/service=nginx -o custom-columns=NS:.metadata.namespace,NAME:.metadata.name --no-headers | while read -r namespace pod; do
+while IFS= read -r line; do
+    namespace=$(echo "$line" | awk '{print $1}')
+    pod=$(echo "$line" | awk '{print $2}')
     check_and_restart "$namespace" "$pod"
-done
+done < <(kubectl get pods --all-namespaces -l lagoon.sh/service=nginx -o custom-columns=NS:.metadata.namespace,NAME:.metadata.name --no-headers)
 
 # Output summary of namespaces that had errors
 if [ ${#error_namespaces[@]} -ne 0 ]; then
-    echo "Summary of namespaces with errors:"
+    echo -e "\nDisse sites blev fixet:"
     for ns in "${error_namespaces[@]}"; do
-        echo "- $ns"
+        # Remove "-main" from the namespace name if it exists
+        cleaned_ns=${ns//-main/}
+        echo "- $cleaned_ns"
     done
+    echo -e "\n"
 else
     echo "No errors found in any namespace."
 fi
