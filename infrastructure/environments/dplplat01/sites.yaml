@@ -70,6 +70,7 @@ sites:
     description: "The library site for Aarhus"
     deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFL+uMeEfsaHEzbNxOmBB8dX32OLo63CTomG8VZvuiN2"
     plan: webmaster
+    moduletest-dpl-cms-release: "2024.35.1"
     <<: *webmaster-release-image-source
   aero:
     name: "Ærø Folkebibliotek"
@@ -88,6 +89,7 @@ sites:
     secondary-domains:
       - www.albertslundbibliotek.dk
     autogenerateRoutes: true
+    moduletest-dpl-cms-release: "2024.35.1"
     plan: webmaster
     <<: *stay-on-33
   allerod:
@@ -113,6 +115,7 @@ sites:
       - www.bib.ballerup.dk
     autogenerateRoutes: true
     plan: webmaster
+    moduletest-dpl-cms-release: "2024.35.1"
     <<: *default-release-image-source
   billund:
     name: "Billund Bibliotekerne og Borgerservice"
@@ -196,6 +199,7 @@ sites:
       - "faxebibliotek.dk"
     autogenerateRoutes: true
     plan: webmaster
+    moduletest-dpl-cms-release: "2024.35.1"
     <<: *webmaster-release-image-source
   fredensborg:
     name: "Fredensborg Bibliotekerne"
@@ -350,6 +354,7 @@ sites:
       - herningbib.dk
     autogenerateRoutes: true
     plan: webmaster
+    moduletest-dpl-cms-release: "2024.35.1"
     <<: *webmaster-release-image-source
   hillerod:
     name: "Hillerød Bibliotekerne"
@@ -467,6 +472,7 @@ sites:
       - nginx.main.kobenhavn.dplplat01.dpl.reload.dk
       - varnish.main.kobenhavn.dplplat01.dpl.reload.dk
     plan: webmaster
+    moduletest-dpl-cms-release: "2024.35.1"
     deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHaTkDvjLW/b2qVj8FIvtX9x3TxFFZTENn+w2CFELeoC"
     <<: *webmaster-release-image-source
   koge:
@@ -601,6 +607,7 @@ sites:
     description: "The library site for Odense"
     deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIEQ6nngmgVZXTNpPzhMTvJyx4tUPjHxoLSNL/jJPaNQ0"
     plan: webmaster
+    moduletest-dpl-cms-release: "2024.35.1"
     <<: *default-release-image-source
   odsherred:
     name: "Odsherred Bibliotek og Kulturhuse"
@@ -663,7 +670,8 @@ sites:
     description: "The library site for Roskilde"
     deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPfCXTAe50+d/RUIu8JSctoCSzfJoEMtZ2OY0AUQdZgo"
     plan: webmaster
-    <<: *stay-on-33
+    moduletest-dpl-cms-release: "2024.35.1"
+    <<: *default-release-image-source
   rudersdal:
     name: "Rudersdal Bibliotekerne"
     description: "The library site for Rudersdal"
@@ -693,7 +701,8 @@ sites:
       - www.silkeborgbib.dk
     autogenerateRoutes: true
     plan: webmaster
-    <<: *stay-on-33
+    moduletest-dpl-cms-release: "2024.35.1"
+    <<: *default-release-image-source
   skanderborg:
     name: "Skanderborg Bibliotek"
     description: "The library site for Skanderborg"
@@ -730,6 +739,7 @@ sites:
       - www.biblioteket.sonderborg.dk
     autogenerateRoutes: true
     plan: webmaster
+    moduletest-dpl-cms-release: "2024.35.1"
     <<: *default-release-image-source
   soro:
     name: "Sorø Bibliotek"
@@ -763,6 +773,7 @@ sites:
       - dcbib.dk
     autogenerateRoutes: true
     plan: webmaster
+    moduletest-dpl-cms-release: "2024.35.1"
     <<: *default-release-image-source
   svendborg:
     name: "Svendborg Bibliotek"
@@ -783,6 +794,7 @@ sites:
     description: "The library site for Tårnby"
     deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIF0F5bqQwdmAdMcDHVT8xxK0tOEGZYp21WIZ1zydr28O"
     plan: webmaster
+    moduletest-dpl-cms-release: "2024.35.1"
     primary-domain: taarnbybib.dk
     secondary-domains:
       - www.taarnbybib.dk
