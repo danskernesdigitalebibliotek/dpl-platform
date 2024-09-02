@@ -43,6 +43,7 @@ RUN apk add --no-cache \
   docker-cli \
   gettext \
   git \
+  github-cli \
   rsync \
   shadow \
   vim \
