@@ -21,6 +21,10 @@ RUN fix-permissions /etc/nginx/conf.d/drupal/server_append_drupal_modules_local.
 COPY lagoon/conf/nginx/server_append_drupal_rewrite_registration.conf /etc/nginx/conf.d/drupal/server_append_drupal_rewrite_registration.conf
 RUN fix-permissions /etc/nginx/conf.d/drupal/server_append_drupal_rewrite_registration.conf
 
+COPY lagoon/conf/nginx/server_append_drupal_rewrite_legacy_search_works.conf /etc/nginx/conf.d/drupal/server_append_drupal_rewrite_legacy_search_works.conf
+RUN fix-permissions /etc/nginx/conf.d/drupal/server_append_drupal_rewrite_legacy_search_works.conf
+
+# Configuration targeted for non-local development.
 COPY lagoon/conf/nginx/metrics /app/web/_metrics
 COPY lagoon/conf/nginx/server_append_drupal_serve_metrics.conf /etc/nginx/conf.d/drupal/server_append_drupal_serve_metrics.conf
 RUN fix-permissions /etc/nginx/conf.d/drupal/server_append_drupal_serve_metrics.conf
