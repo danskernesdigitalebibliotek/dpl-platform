@@ -476,8 +476,6 @@ sites:
     primary-domain: www.koegebib.dk
     secondary-domains:
       - koegebib.dk
-      - www.koegebibliotekerne.dk
-      - koegebibliotekerne.dk
     autogenerateRoutes: true
     <<: *default-release-image-source
   kolding:
