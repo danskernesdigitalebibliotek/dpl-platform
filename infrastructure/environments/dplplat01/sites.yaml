@@ -7,10 +7,6 @@ x-webmaster: &webmaster-release-image-source
   releaseImageRepository: ghcr.io/danskernesdigitalebibliotek
   releaseImageName: dpl-cms-source
   dpl-cms-release: "2024.35.1"
-x-stay-on-33: &stay-on-33
-  releaseImageRepository: ghcr.io/danskernesdigitalebibliotek
-  releaseImageName: dpl-cms-source
-  dpl-cms-release: "2024.33.0"
 sites:
   # Site objects are indexed by a unique key that must be a valid lagoon, and
   # github project name. That is, alphanumeric and dashes.
@@ -91,7 +87,7 @@ sites:
     autogenerateRoutes: true
     moduletest-dpl-cms-release: "2024.35.1"
     plan: webmaster
-    <<: *stay-on-33
+    <<: *webmaster-release-image-source
   allerod:
     name: "Allerød Biblioteker"
     description: "The library site for Allerød"
@@ -671,7 +667,7 @@ sites:
     deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPfCXTAe50+d/RUIu8JSctoCSzfJoEMtZ2OY0AUQdZgo"
     plan: webmaster
     moduletest-dpl-cms-release: "2024.35.1"
-    <<: *default-release-image-source
+    <<: *webmaster-release-image-source
   rudersdal:
     name: "Rudersdal Bibliotekerne"
     description: "The library site for Rudersdal"
