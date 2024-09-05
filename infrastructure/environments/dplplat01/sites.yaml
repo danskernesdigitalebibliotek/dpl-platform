@@ -2,15 +2,12 @@
 x-defaults: &default-release-image-source
   releaseImageRepository: ghcr.io/danskernesdigitalebibliotek
   releaseImageName: dpl-cms-source
-  dpl-cms-release: "2024.35.1"
+  dpl-cms-release: "2024.36.0"
 x-webmaster: &webmaster-release-image-source
   releaseImageRepository: ghcr.io/danskernesdigitalebibliotek
   releaseImageName: dpl-cms-source
   dpl-cms-release: "2024.35.1"
-x-stay-on-33: &stay-on-33
-  releaseImageRepository: ghcr.io/danskernesdigitalebibliotek
-  releaseImageName: dpl-cms-source
-  dpl-cms-release: "2024.33.0"
+  moduletest-dpl-cms-release: "2024.36.0"
 sites:
   # Site objects are indexed by a unique key that must be a valid lagoon, and
   # github project name. That is, alphanumeric and dashes.
@@ -30,21 +27,20 @@ sites:
     importTranslationsCron: "0 * * * *"
     deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJ6SzfPFf/XeLeqI342kxuJAlATpDMtgAfqlrLTTbW2m"
     plan: webmaster
-    <<: *default-release-image-source
+    <<: *webmaster-release-image-source
   bibliotek-test:
     name: "Bibliotekstest"
     description: "Et site hvor bibliotekerne kan teste"
     importTranslationsCron: "0 * * * *"
     plan: webmaster
     deploy_key: ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHvhy79hHjLcQJCcMNwci1Q/P/O2LwD4IzBVfkmRGKom
-    <<: *default-release-image-source
+    <<: *webmaster-release-image-source
   customizable-canary:
     name: "Customizable bibliotek - eksempel"
     description: "Eksempel på bibliotek der kører på 'webmaster' plan, og derfor har et modultest-miljø"
     deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAILj8lXv7C/7s7te9sEpwcHQhgDWfzsCkAN7rqQ4sdTzk"
     plan: webmaster
-    moduletest-dpl-cms-release: "2024.35.1"
-    <<: *default-release-image-source
+    <<: *webmaster-release-image-source
   # Production sites
   aabenraa:
     name: "Aabenraa Biblioteker og Kulturhuse"
@@ -70,7 +66,6 @@ sites:
     description: "The library site for Aarhus"
     deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFL+uMeEfsaHEzbNxOmBB8dX32OLo63CTomG8VZvuiN2"
     plan: webmaster
-    moduletest-dpl-cms-release: "2024.35.1"
     <<: *webmaster-release-image-source
   aero:
     name: "Ærø Folkebibliotek"
@@ -89,9 +84,8 @@ sites:
     secondary-domains:
       - www.albertslundbibliotek.dk
     autogenerateRoutes: true
-    moduletest-dpl-cms-release: "2024.35.1"
     plan: webmaster
-    <<: *stay-on-33
+    <<: *webmaster-release-image-source
   allerod:
     name: "Allerød Biblioteker"
     description: "The library site for Allerød"
@@ -115,8 +109,7 @@ sites:
       - www.bib.ballerup.dk
     autogenerateRoutes: true
     plan: webmaster
-    moduletest-dpl-cms-release: "2024.35.1"
-    <<: *default-release-image-source
+    <<: *webmaster-release-image-source
   billund:
     name: "Billund Bibliotekerne og Borgerservice"
     description: "The main library site for Billund"
@@ -199,7 +192,6 @@ sites:
       - "faxebibliotek.dk"
     autogenerateRoutes: true
     plan: webmaster
-    moduletest-dpl-cms-release: "2024.35.1"
     <<: *webmaster-release-image-source
   fredensborg:
     name: "Fredensborg Bibliotekerne"
@@ -354,7 +346,6 @@ sites:
       - herningbib.dk
     autogenerateRoutes: true
     plan: webmaster
-    moduletest-dpl-cms-release: "2024.35.1"
     <<: *webmaster-release-image-source
   hillerod:
     name: "Hillerød Bibliotekerne"
@@ -472,7 +463,6 @@ sites:
       - nginx.main.kobenhavn.dplplat01.dpl.reload.dk
       - varnish.main.kobenhavn.dplplat01.dpl.reload.dk
     plan: webmaster
-    moduletest-dpl-cms-release: "2024.35.1"
     deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHaTkDvjLW/b2qVj8FIvtX9x3TxFFZTENn+w2CFELeoC"
     <<: *webmaster-release-image-source
   koge:
@@ -607,8 +597,7 @@ sites:
     description: "The library site for Odense"
     deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIEQ6nngmgVZXTNpPzhMTvJyx4tUPjHxoLSNL/jJPaNQ0"
     plan: webmaster
-    moduletest-dpl-cms-release: "2024.35.1"
-    <<: *default-release-image-source
+    <<: *webmaster-release-image-source
   odsherred:
     name: "Odsherred Bibliotek og Kulturhuse"
     description: "The library site for Odsherred"
@@ -670,8 +659,7 @@ sites:
     description: "The library site for Roskilde"
     deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPfCXTAe50+d/RUIu8JSctoCSzfJoEMtZ2OY0AUQdZgo"
     plan: webmaster
-    moduletest-dpl-cms-release: "2024.35.1"
-    <<: *default-release-image-source
+    <<: *webmaster-release-image-source
   rudersdal:
     name: "Rudersdal Bibliotekerne"
     description: "The library site for Rudersdal"
@@ -701,8 +689,7 @@ sites:
       - www.silkeborgbib.dk
     autogenerateRoutes: true
     plan: webmaster
-    moduletest-dpl-cms-release: "2024.35.1"
-    <<: *default-release-image-source
+    <<: *webmaster-release-image-source
   skanderborg:
     name: "Skanderborg Bibliotek"
     description: "The library site for Skanderborg"
@@ -739,8 +726,7 @@ sites:
       - www.biblioteket.sonderborg.dk
     autogenerateRoutes: true
     plan: webmaster
-    moduletest-dpl-cms-release: "2024.35.1"
-    <<: *default-release-image-source
+    <<: *webmaster-release-image-source
   soro:
     name: "Sorø Bibliotek"
     description: "The library site for Sorø"
@@ -773,8 +759,7 @@ sites:
       - dcbib.dk
     autogenerateRoutes: true
     plan: webmaster
-    moduletest-dpl-cms-release: "2024.35.1"
-    <<: *default-release-image-source
+    <<: *webmaster-release-image-source
   svendborg:
     name: "Svendborg Bibliotek"
     description: "The library site for Svendborg"
@@ -794,7 +779,6 @@ sites:
     description: "The library site for Tårnby"
     deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIF0F5bqQwdmAdMcDHVT8xxK0tOEGZYp21WIZ1zydr28O"
     plan: webmaster
-    moduletest-dpl-cms-release: "2024.35.1"
     primary-domain: taarnbybib.dk
     secondary-domains:
       - www.taarnbybib.dk
