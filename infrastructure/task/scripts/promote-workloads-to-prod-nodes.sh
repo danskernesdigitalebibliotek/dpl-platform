@@ -5,7 +5,37 @@
 # can gradually promote workloads to the production nodes by adding them to the
 # below list of namespaces.
 
-PROMOTED_NAMESPACES=("canary-main")
+PROMOTED_NAMESPACES=(
+  "aabenraa-main"
+  "aalborg-main"
+  "aalborg-moduletest"
+  "aarhus-main"
+  "aarhus-moduletest"
+  "aero-main"
+  "albertslund-main"
+  "albertslund-moduletest"
+  "allerod-main"
+  "assens-main"
+  "ballerup-main"
+  "ballerup-moduletest"
+  "bibliotek-test-main"
+  "bibliotek-test-moduletest"
+  "billund-main"
+  "bornholm-main"
+  "brondby-main"
+  "bronderslev-main"
+  "canary-main"
+  "canary-moduletest"
+  "cms-school-main"
+  "cms-school-moduletest"
+  "customizable-canary-main"
+  "customizable-canary-moduletest"
+  "dragor-main"
+  "egedal-main"
+  "esbjerg-main"
+  "faaborg-midtfyn-main"
+  "favrskov-main"
+)
 
 DEPLOYMENTS=("cli" "nginx" "varnish" "redis")
 
