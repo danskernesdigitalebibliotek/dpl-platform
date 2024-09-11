@@ -43,7 +43,7 @@ for NS in "${NAMESPACES[@]}"; do
   DEPLOYMENTS=("cli" "nginx" "varnish" "redis")
 
   # Desired memory request
-  VARNISH_MEMORY="1000Mi"
+  VARNISH_MEMORY="1500Mi"
   REDIS_MEMORY="100Mi"
   NGINX_MEMORY="150Mi"
   CLI_MEMORY="20Mi"
