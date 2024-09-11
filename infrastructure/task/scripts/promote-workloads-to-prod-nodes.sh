@@ -21,7 +21,39 @@ for NS in "${NAMESPACES[@]}"; do
     echo "## Namespace: $NS"
 
     for DEPLOYMENT in "${DEPLOYMENTS[@]}"; do
-      kubectl patch deployments.apps -n "$NS" "$DEPLOYMENT" -p '{"spec": {"template": {"spec": {"tolerations": [{ "key": "noderole.dplplatform", "operator": "Equal", "value": "prod", "effect": "NoSchedule" }]}}}}'
+      kubectl patch deployments.apps -n "$NS" "$DEPLOYMENT" -p '{
+        "spec": {
+          "template": {
+            "spec": {
+              "tolerations": [
+                {
+                  "key": "noderole.dplplatform",
+                  "operator": "Equal",
+                  "value": "prod",
+                  "effect": "NoSchedule"
+                }
+              ],
+              "affinity": {
+                "nodeAffinity": {
+                  "requiredDuringSchedulingIgnoredDuringExecution": {
+                    "nodeSelectorTerms": [
+                      {
+                        "matchExpressions": [
+                          {
+                            "key": "noderole.dplplatform",
+                            "operator": "In",
+                            "values": [ "prod" ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        }
+      }'
     done
   fi
 done
