@@ -14,13 +14,19 @@ sites:
   # Testing and instructional sites
   canary:
     name: "Canary"
-    description: "A site to test new releases on"
+    description: "A site for developers and operators to test on"
     releaseImageRepository: ghcr.io/danskernesdigitalebibliotek
     releaseImageName: dpl-cms-source
     dpl-cms-release: "2024.36.0"
     plan: webmaster
     moduletest-dpl-cms-release: "2024.36.0"
     deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIIhuA0K7CNvRoe+Xx7RaXG4+a8KcSpzuWn+G4sUPzNWx"
+  staging:
+    name: "Staging"
+    description: "A site to test new releases on"
+    deploy_key: ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBLUrrxfwsfwz4nkn/WCbMUbLHkTFvyYB2uusHLA7NlH
+    plan: webmaster
+    <<: *webmaster-release-image-source
   cms-school:
     name: "CMS-skole"
     description: "Et site til undervisning i CMSet"
