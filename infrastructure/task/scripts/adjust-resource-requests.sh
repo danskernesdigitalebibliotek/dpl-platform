@@ -43,9 +43,45 @@ for NS in "${NAMESPACES[@]}"; do
   DEPLOYMENTS=("cli" "nginx" "varnish" "redis")
 
   # Desired memory request
-  MEMORY_REQUEST="150Mi"
+  VARNISH_MEMORY="1000Mi"
+  REDIS_MEMORY="100Mi"
+  NGINX_MEMORY="150Mi"
+  CLI_MEMORY="20Mi"
 
   for DEPLOYMENT in "${DEPLOYMENTS[@]}"; do
+    if [ "$DEPLOYMENT" = "cli" ]; then
+      MEMORY_REQUEST=$CLI_MEMORY
+      echo $MEMORY_REQUEST
+    fi
+    if [ "$DEPLOYMENT" = "nginx" ]; then
+      MEMORY_REQUEST=$NGINX_MEMORY
+      echo $MEMORY_REQUEST
+    fi
+    if [ "$DEPLOYMENT" = "redis" ]; then
+      MEMORY_REQUEST=$REDIS_MEMORY
+      echo $MEMORY_REQUEST
+    fi
+    if [ "$DEPLOYMENT" = "varnish" ]; then
+      MEMORY_REQUEST=$VARNISH_MEMORY
+    fi
+    # If the Namespace is DPL-CMS PR site set it lower
+    if [[ "$NS" = *"dpl-cms"* ]]; then
+      if [ "$DEPLOYMENT" = "cli" ]; then
+        MEMORY_REQUEST="20Mi"
+        echo $MEMORY_REQUEST
+      fi
+      if [ "$DEPLOYMENT" = "nginx" ]; then
+        MEMORY_REQUEST="80Mi"
+        echo $MEMORY_REQUEST
+      fi
+      if [ "$DEPLOYMENT" = "redis" ]; then
+        MEMORY_REQUEST="100Mi"
+        echo $MEMORY_REQUEST
+      fi
+      if [ "$DEPLOYMENT" = "varnish" ]; then
+        MEMORY_REQUEST="100Mi"
+      fi
+    fi
     # Patch the deployments resource request
     kubectl patch deployments.apps -n "$NS" "$DEPLOYMENT" --type="json" -p='[
       {
