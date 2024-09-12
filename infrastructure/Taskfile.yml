@@ -211,6 +211,18 @@ tasks:
       cmds:
         - task/scripts/adjust-resource-requests.sh
 
+    cluster:delete-all-completed-pods:
+      deps: [cluster:auth, lagoon:cli:config]
+      desc: "Deletes all pods in completed state to clear room on nodes"
+      cmds:
+        - task/scripts/delete-all-completed-pods.sh
+
+    cluster:promote-workloads-to-prod:
+      deps: [cluster:auth, lagoon:cli:config]
+      desc: "Promotes selected workloads to production node pool"
+      cmds:
+        - task/scripts/promote-workloads-to-prod-nodes.sh
+
     support:provision:cert-manager:
       deps: [cluster:auth]
       summary: Set the DIFF environment variable to any value to switch to diffing instead of an actual upgrade.
