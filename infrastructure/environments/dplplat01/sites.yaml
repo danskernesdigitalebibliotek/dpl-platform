@@ -33,14 +33,14 @@ sites:
     description: "A site to test new releases on"
     deploy_key: ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBLUrrxfwsfwz4nkn/WCbMUbLHkTFvyYB2uusHLA7NlH
     plan: webmaster
-    <<: *webmaster-release-image-source
+    <<: *webmaster-with-defaults-release-image-source
   cms-school:
     name: "CMS-skole"
     description: "Et site til undervisning i CMSet"
     importTranslationsCron: "0 * * * *"
     deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJ6SzfPFf/XeLeqI342kxuJAlATpDMtgAfqlrLTTbW2m"
     plan: webmaster
-    <<: *webmaster-release-image-source
+    <<: *webmaster-with-defaults-release-image-source
   bibliotek-test:
     name: "Bibliotekstest"
     description: "Et site hvor bibliotekerne kan teste"
@@ -702,7 +702,7 @@ sites:
       - www.silkeborgbib.dk
     autogenerateRoutes: true
     plan: webmaster
-    <<: *webmaster-release-image-source
+    <<: *webmaster-with-defaults-release-image-source
   skanderborg:
     name: "Skanderborg Bibliotek"
     description: "The library site for Skanderborg"
