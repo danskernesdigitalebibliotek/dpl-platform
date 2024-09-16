@@ -43,7 +43,7 @@ for NS in "${NAMESPACES[@]}"; do
   DEPLOYMENTS=("cli" "nginx" "varnish" "redis")
 
   # Desired memory request
-  VARNISH_MEMORY="1000Mi"
+  VARNISH_MEMORY="1500Mi"
   REDIS_MEMORY="100Mi"
   NGINX_MEMORY="150Mi"
   CLI_MEMORY="20Mi"
@@ -63,6 +63,7 @@ for NS in "${NAMESPACES[@]}"; do
     fi
     if [ "$DEPLOYMENT" = "varnish" ]; then
       MEMORY_REQUEST=$VARNISH_MEMORY
+      echo $MEMORY_REQUEST
     fi
     # If the Namespace is DPL-CMS PR site set it lower
     if [[ "$NS" = *"dpl-cms"* ]]; then
@@ -80,6 +81,7 @@ for NS in "${NAMESPACES[@]}"; do
       fi
       if [ "$DEPLOYMENT" = "varnish" ]; then
         MEMORY_REQUEST="100Mi"
+        echo $MEMORY_REQUEST
       fi
     fi
     # Patch the deployments resource request
