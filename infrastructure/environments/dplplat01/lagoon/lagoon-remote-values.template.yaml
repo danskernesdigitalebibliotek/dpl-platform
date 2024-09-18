@@ -18,14 +18,8 @@ lagoon-build-deploy:
   taskAPIHost: "api.lagoon.dplplat01.dpl.reload.dk"
   lagoonFeatureFlagDefaultRootlessWorkload: "enabled"
   tolerations:
-    - key: noderole.dplplatform
-      operator: Equal
-      value: system
-      effect: PreferNoSchedule
-    - key: noderole.dplplatform
-      operator: Equal
-      value: system
-      effect: NoSchedule
+    - key: CriticalAddonsOnly
+      operator: Exists
   affinity:
     nodeAffinity:
       requiredDuringSchedulingIgnoredDuringExecution:
@@ -64,14 +58,8 @@ dbaas-operator:
       port: "3306"
       user: "$SQL_USER@$SQL_HOSTNAME"
   tolerations:
-    - key: noderole.dplplatform
-      operator: Equal
-      value: system
-      effect: PreferNoSchedule
-    - key: noderole.dplplatform
-      operator: Equal
-      value: system
-      effect: NoSchedule
+    - key: CriticalAddonsOnly
+      operator: Exists
   affinity:
     nodeAffinity:
       requiredDuringSchedulingIgnoredDuringExecution:
@@ -100,14 +88,8 @@ dockerHost:
 
 dioscuri:
   tolerations:
-    - key: noderole.dplplatform
-      operator: Equal
-      value: system
-      effect: PreferNoSchedule
-    - key: noderole.dplplatform
-      operator: Equal
-      value: system
-      effect: NoSchedule
+    - key: CriticalAddonsOnly
+      operator: Exists
   affinity:
     nodeAffinity:
       requiredDuringSchedulingIgnoredDuringExecution:
