@@ -149,18 +149,3 @@ broker:
       - secretName: broker-tls
         hosts:
           - broker.lagoon.dplplat01.dpl.reload.dk
-
-webhookHandler:
-  ingress:
-    enabled: true
-    annotations:
-      kubernetes.io/tls-acme: "true"
-      kubernetes.io/ingress.class: "nginx"
-    hosts:
-    - host: webhookhandler.lagoon.dplplat01.dpl.reload.dk
-      paths:
-      - /
-    tls:
-      - secretName: webhookhandler-tls
-        hosts:
-          - webhookhandler.lagoon.dplplat01.dpl.reload.dk
