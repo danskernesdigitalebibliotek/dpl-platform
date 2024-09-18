@@ -61,3 +61,10 @@ persistence:
       accountname: "$STORAGE_ACCOUNT_NAME"
       accountkey: "$STORAGE_ACCOUNT_KEY"
       container: "$STORAGE_CONTAINER_NAME"
+
+# Use tolerations
+tolerations:
+  - key: noderole.dplplatform
+    effect: NoSchedule
+    operator: Equal
+    value: system
