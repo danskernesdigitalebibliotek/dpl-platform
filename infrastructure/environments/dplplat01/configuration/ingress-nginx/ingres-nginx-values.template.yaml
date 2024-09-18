@@ -18,10 +18,12 @@ controller:
     enabled: true
     minReplicas: 5
     maxReplicas: 15
+    targetCPUUtilizationPercentage: null
+    targetMemoryUtilizationPercentage: 80
   resources:
     requests:
-      cpu: 300m
-      memory: 1100Mi
+      cpu: null # lets not worry about CPU for now
+      memory: 500Mi
   service:
     loadBalancerIP: "${INGRESS_IP}"
     externalTrafficPolicy: "Local"
@@ -29,16 +31,27 @@ controller:
       service.beta.kubernetes.io/azure-load-balancer-internal: "false"
       service.beta.kubernetes.io/azure-load-balancer-resource-group: "${RESOURCE_GROUP}"
   nodeSelector:
-    beta.kubernetes.io/os: linux
+    kubernetes.io/os: linux
   admissionWebhooks:
     patch.nodeSelector:
-      beta.kubernetes.io/os: linux
+      kubernetes.io/os: linux
   # Since v1.9.0, Nginx server snippets are disabled by default. However, Lagoon
   # relies on them to be available for ingress definitions in order to prohibit
   # dev environments from being indexed by search engines. See:
   # https://kubernetes.github.io/ingress-nginx/user-guide/nginx-configuration/configmap/#allow-snippet-annotations
   # https://docs.lagoon.sh/using-lagoon-the-basics/going-live/#production-environment
   allowSnippetAnnotations: true
-defaultBackend:
-  nodeSelector:
-    beta.kubernetes.io/os: linux
+  tolerations:
+    - key: noderole.dplplatform
+      operator: Equal
+      value: prod
+      effect: NoSchedule
+  affinity:
+    nodeAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+        nodeSelectorTerms:
+          - matchExpressions:
+              - key: noderole.dplplatform
+                operator: In
+                values:
+                  - prod
