@@ -17,6 +17,21 @@ lagoon-build-deploy:
   taskSSHPort: "22"
   taskAPIHost: "api.lagoon.dplplat01.dpl.reload.dk"
   lagoonFeatureFlagDefaultRootlessWorkload: "enabled"
+  tolerations:
+    - key: noderole.dplplatform
+      operator: Equal
+      value: system
+      effect: PreferNoSchedule
+  affinity:
+    nodeAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+        nodeSelectorTerms:
+          - matchExpressions:
+              - key: noderole.dplplatform
+                operator: In
+                values:
+                  - system
+
 
 sshCore:
   enabled: true
@@ -44,6 +59,20 @@ dbaas-operator:
       password: "$SQL_PASSWORD"
       port: "3306"
       user: "$SQL_USER@$SQL_HOSTNAME"
+  tolerations:
+    - key: noderole.dplplatform
+      operator: Equal
+      value: system
+      effect: PreferNoSchedule
+  affinity:
+    nodeAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+        nodeSelectorTerms:
+          - matchExpressions:
+              - key: noderole.dplplatform
+                operator: In
+                values:
+                  - system
 
 dockerHost:
   tolerations:
@@ -60,3 +89,19 @@ dockerHost:
               operator: In
               values:
                 - build
+
+dioscuri:
+  tolerations:
+    - key: noderole.dplplatform
+      operator: Equal
+      value: system
+      effect: PreferNoSchedule
+  affinity:
+    nodeAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+        nodeSelectorTerms:
+          - matchExpressions:
+              - key: noderole.dplplatform
+                operator: In
+                values:
+                  - system
