@@ -68,3 +68,13 @@ tolerations:
     effect: NoSchedule
     operator: Equal
     value: system
+
+affinity:
+  nodeAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+        nodeSelectorTerms:
+        - matchExpressions:
+          - key: noderole.dplplatform
+            operator: In
+            values:
+            - system
