@@ -67,7 +67,7 @@ tolerations:
   - key: noderole.dplplatform
     effect: NoSchedule
     operator: Equal
-    value: system
+    value: admin
 
 affinity:
   nodeAffinity:
@@ -77,4 +77,4 @@ affinity:
           - key: noderole.dplplatform
             operator: In
             values:
-            - system
+            - admin
