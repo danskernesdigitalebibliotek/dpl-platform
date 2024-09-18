@@ -22,6 +22,10 @@ lagoon-build-deploy:
       operator: Equal
       value: system
       effect: PreferNoSchedule
+    - key: noderole.dplplatform
+      operator: Equal
+      value: system
+      effect: NoSchedule
   affinity:
     nodeAffinity:
       requiredDuringSchedulingIgnoredDuringExecution:
@@ -64,6 +68,10 @@ dbaas-operator:
       operator: Equal
       value: system
       effect: PreferNoSchedule
+    - key: noderole.dplplatform
+      operator: Equal
+      value: system
+      effect: NoSchedule
   affinity:
     nodeAffinity:
       requiredDuringSchedulingIgnoredDuringExecution:
@@ -96,6 +104,10 @@ dioscuri:
       operator: Equal
       value: system
       effect: PreferNoSchedule
+    - key: noderole.dplplatform
+      operator: Equal
+      value: system
+      effect: NoSchedule
   affinity:
     nodeAffinity:
       requiredDuringSchedulingIgnoredDuringExecution:
