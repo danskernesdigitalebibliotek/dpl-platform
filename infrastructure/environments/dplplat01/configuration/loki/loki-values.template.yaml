@@ -67,3 +67,11 @@ read:
     # Size of persistent disk, make sure to match a azure disk size or you will
     # just provision a larger disk capped to a smaller size.
     size: 16Gi
+
+monitoring:
+  lokiCanary:
+    tolerations:
+      - key: CriticalAddonsOnly
+        operator: Exists
+      - key: noderole.dplplatform
+        operator: Exists

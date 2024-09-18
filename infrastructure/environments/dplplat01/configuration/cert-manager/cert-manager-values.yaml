@@ -7,3 +7,44 @@ ingressShim:
   defaultIssuerKind: ClusterIssuer
   defaultIssuerGroup: cert-manager.io
 maxConcurrentChallenges: 50
+
+tolerations:
+  - key: CriticalAddonsOnly
+    operator: Exists
+affinity:
+  nodeAffinity:
+    requiredDuringSchedulingIgnoredDuringExecution:
+      nodeSelectorTerms:
+        - matchExpressions:
+            - key: noderole.dplplatform
+              operator: In
+              values:
+                - system
+
+webhook:
+  tolerations:
+    - key: CriticalAddonsOnly
+      operator: Exists
+  affinity:
+    nodeAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+        nodeSelectorTerms:
+          - matchExpressions:
+              - key: noderole.dplplatform
+                operator: In
+                values:
+                  - system
+
+cainjector:
+  tolerations:
+    - key: CriticalAddonsOnly
+      operator: Exists
+  affinity:
+    nodeAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+        nodeSelectorTerms:
+          - matchExpressions:
+              - key: noderole.dplplatform
+                operator: In
+                values:
+                  - system
