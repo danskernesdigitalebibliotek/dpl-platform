@@ -28,3 +28,16 @@ k8up:
   # Empty value defaults to the timezone in which Kubernetes is deployed.
   # Accepts `tz database` compatible entries, e.g. `Europe/Zurich`
   timezone: "Europe/Copenhagen"
+
+tolerations:
+  - key: CriticalAddonsOnly
+    operator: Exists
+affinity:
+  nodeAffinity:
+    requiredDuringSchedulingIgnoredDuringExecution:
+      nodeSelectorTerms:
+        - matchExpressions:
+            - key: noderole.dplplatform
+              operator: In
+              values:
+                - system
