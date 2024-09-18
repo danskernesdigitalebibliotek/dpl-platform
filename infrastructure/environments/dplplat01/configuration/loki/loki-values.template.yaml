@@ -17,6 +17,26 @@ backend:
     accessModes:
     - ReadWriteOnce
     size: 32Gi
+  tolerations:
+    - key: CriticalAddonsOnly
+      operator: Exists
+  affinity: |
+    podAntiAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+        - labelSelector:
+            matchLabels:
+              app.kubernetes.io/name: loki
+              app.kubernetes.io/instance: loki
+              app.kubernetes.io/component: backend
+          topologyKey: kubernetes.io/hostname
+    nodeAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+        nodeSelectorTerms:
+          - matchExpressions:
+              - key: noderole.dplplatform
+                operator: In
+                values:
+                  - system
 
 loki:
   auth_enabled: false
@@ -60,6 +80,26 @@ write:
     # Size of persistent disk, make sure to match a azure disk size or you will
     # just provision a larger disk capped to a smaller size.
     size: 16Gi
+  tolerations:
+    - key: CriticalAddonsOnly
+      operator: Exists
+  affinity: |
+    podAntiAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+        - labelSelector:
+            matchLabels:
+              app.kubernetes.io/name: loki
+              app.kubernetes.io/instance: loki
+              app.kubernetes.io/component: write
+          topologyKey: kubernetes.io/hostname
+    nodeAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+        nodeSelectorTerms:
+          - matchExpressions:
+              - key: noderole.dplplatform
+                operator: In
+                values:
+                  - system
 
 read:
   replicas: 2
@@ -67,6 +107,47 @@ read:
     # Size of persistent disk, make sure to match a azure disk size or you will
     # just provision a larger disk capped to a smaller size.
     size: 16Gi
+  tolerations:
+    - key: CriticalAddonsOnly
+      operator: Exists
+  affinity: |
+    podAntiAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+        - labelSelector:
+            matchLabels:
+              app.kubernetes.io/name: loki
+              app.kubernetes.io/instance: loki
+              app.kubernetes.io/component: read
+          topologyKey: kubernetes.io/hostname
+    nodeAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+        nodeSelectorTerms:
+          - matchExpressions:
+              - key: noderole.dplplatform
+                operator: In
+                values:
+                  - system
+gateway:
+  tolerations:
+    - key: CriticalAddonsOnly
+      operator: Exists
+  affinity: |
+    podAntiAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+        - labelSelector:
+            matchLabels:
+              app.kubernetes.io/name: loki
+              app.kubernetes.io/instance: loki
+              app.kubernetes.io/component: gateway
+          topologyKey: kubernetes.io/hostname
+    nodeAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+        nodeSelectorTerms:
+          - matchExpressions:
+              - key: noderole.dplplatform
+                operator: In
+                values:
+                  - system
 
 monitoring:
   lokiCanary:
@@ -75,3 +156,26 @@ monitoring:
         operator: Exists
       - key: noderole.dplplatform
         operator: Exists
+  selfMonitoring:
+    grafanaAgent:
+      tolerations:
+        - key: CriticalAddonsOnly
+          operator: Exists
+      # grafana operator agent does not support affinity in this version of the chart - should be fixed later
+      # affinity: |
+      #   podAntiAffinity:
+      #     requiredDuringSchedulingIgnoredDuringExecution:
+      #       - labelSelector:
+      #           matchLabels:
+      #             app.kubernetes.io/name: loki
+      #             app.kubernetes.io/instance: loki
+      #             app.kubernetes.io/component: write
+      #         topologyKey: kubernetes.io/hostname
+      #   nodeAffinity:
+      #     requiredDuringSchedulingIgnoredDuringExecution:
+      #       nodeSelectorTerms:
+      #         - matchExpressions:
+      #             - key: noderole.dplplatform
+      #               operator: In
+      #               values:
+      #                 - system
