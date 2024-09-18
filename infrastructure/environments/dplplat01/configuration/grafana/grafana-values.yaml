@@ -77,3 +77,16 @@ grafana.ini:
     mode: console
   grafana_net:
     url: https://grafana.net
+
+tolerations:
+  - key: CriticalAddonsOnly
+    operator: Exists
+affinity:
+  nodeAffinity:
+    requiredDuringSchedulingIgnoredDuringExecution:
+      nodeSelectorTerms:
+        - matchExpressions:
+            - key: noderole.dplplatform
+              operator: In
+              values:
+                - system
