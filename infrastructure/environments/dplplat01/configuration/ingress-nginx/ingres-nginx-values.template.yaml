@@ -18,10 +18,11 @@ controller:
     enabled: true
     minReplicas: 5
     maxReplicas: 15
+    targetCPUUtilizationPercentage: null
   resources:
     requests:
-      cpu: 300m
-      memory: 1100Mi
+      cpu: null # lets not worry about CPU for now
+      memory: 500Mi
   service:
     loadBalancerIP: "${INGRESS_IP}"
     externalTrafficPolicy: "Local"
