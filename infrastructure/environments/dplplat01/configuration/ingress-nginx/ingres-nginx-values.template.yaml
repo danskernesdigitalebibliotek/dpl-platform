@@ -30,10 +30,10 @@ controller:
       service.beta.kubernetes.io/azure-load-balancer-internal: "false"
       service.beta.kubernetes.io/azure-load-balancer-resource-group: "${RESOURCE_GROUP}"
   nodeSelector:
-    beta.kubernetes.io/os: linux
+    kubernetes.io/os: linux
   admissionWebhooks:
     patch.nodeSelector:
-      beta.kubernetes.io/os: linux
+      kubernetes.io/os: linux
   # Since v1.9.0, Nginx server snippets are disabled by default. However, Lagoon
   # relies on them to be available for ingress definitions in order to prohibit
   # dev environments from being indexed by search engines. See:
