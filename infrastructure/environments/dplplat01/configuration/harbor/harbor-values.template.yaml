@@ -65,7 +65,7 @@ persistence:
 # Use tolerations
 tolerations:
   - key: noderole.dplplatform
-    effect: NoSchedule
+    effect: PreferNoSchedule
     operator: Equal
     value: admin
 
