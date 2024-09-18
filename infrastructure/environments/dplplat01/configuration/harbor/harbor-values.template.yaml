@@ -88,33 +88,35 @@ portal:
                 values:
                   - system
 database:
-  # Use tolerations
-  tolerations:
-    - key: CriticalAddonsOnly
-      operator: Exists
-  affinity:
-    nodeAffinity:
-      requiredDuringSchedulingIgnoredDuringExecution:
-        nodeSelectorTerms:
-          - matchExpressions:
-              - key: noderole.dplplatform
-                operator: In
-                values:
-                  - system
+  internal:
+    # Use tolerations
+    tolerations:
+      - key: CriticalAddonsOnly
+        operator: Exists
+    affinity:
+      nodeAffinity:
+        requiredDuringSchedulingIgnoredDuringExecution:
+          nodeSelectorTerms:
+            - matchExpressions:
+                - key: noderole.dplplatform
+                  operator: In
+                  values:
+                    - system
 redis:
-  # Use tolerations
-  tolerations:
-    - key: CriticalAddonsOnly
-      operator: Exists
-  affinity:
-    nodeAffinity:
-      requiredDuringSchedulingIgnoredDuringExecution:
-        nodeSelectorTerms:
-          - matchExpressions:
-              - key: noderole.dplplatform
-                operator: In
-                values:
-                  - system
+  internal:
+    # Use tolerations
+    tolerations:
+      - key: CriticalAddonsOnly
+        operator: Exists
+    affinity:
+      nodeAffinity:
+        requiredDuringSchedulingIgnoredDuringExecution:
+          nodeSelectorTerms:
+            - matchExpressions:
+                - key: noderole.dplplatform
+                  operator: In
+                  values:
+                    - system
 
 # Use Azure blob storage for persistence
 persistence:
