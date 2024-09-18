@@ -19,6 +19,7 @@ controller:
     minReplicas: 5
     maxReplicas: 15
     targetCPUUtilizationPercentage: null
+    targetMemoryUtilizationPercentage: 80
   resources:
     requests:
       cpu: null # lets not worry about CPU for now
