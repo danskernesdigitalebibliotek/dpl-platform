@@ -24,6 +24,7 @@ logs2slack:
 logs2webhook:
   enabled: false
 
+#Deployments
 actionsHandler:
   tolerations:
     - key: CriticalAddonsOnly
@@ -274,6 +275,34 @@ ssh:
                 values:
                   - system
 
+workflows:
+  tolerations:
+    - key: CriticalAddonsOnly
+      operator: Exists
+  affinity:
+    nodeAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+        nodeSelectorTerms:
+          - matchExpressions:
+              - key: noderole.dplplatform
+                operator: In
+                values:
+                  - system
+
+# Statfulsets
+apiDB:
+  tolerations:
+    - key: CriticalAddonsOnly
+      operator: Exists
+  affinity:
+    nodeAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+        nodeSelectorTerms:
+          - matchExpressions:
+              - key: noderole.dplplatform
+                operator: In
+                values:
+                  - system
 
 broker:
   serviceMonitor:
@@ -305,34 +334,6 @@ broker:
                   - system
 
 keycloakDB:
-  tolerations:
-    - key: CriticalAddonsOnly
-      operator: Exists
-  affinity:
-    nodeAffinity:
-      requiredDuringSchedulingIgnoredDuringExecution:
-        nodeSelectorTerms:
-          - matchExpressions:
-              - key: noderole.dplplatform
-                operator: In
-                values:
-                  - system
-
-workflows:
-  tolerations:
-    - key: CriticalAddonsOnly
-      operator: Exists
-  affinity:
-    nodeAffinity:
-      requiredDuringSchedulingIgnoredDuringExecution:
-        nodeSelectorTerms:
-          - matchExpressions:
-              - key: noderole.dplplatform
-                operator: In
-                values:
-                  - system
-
-apiDB:
   tolerations:
     - key: CriticalAddonsOnly
       operator: Exists
