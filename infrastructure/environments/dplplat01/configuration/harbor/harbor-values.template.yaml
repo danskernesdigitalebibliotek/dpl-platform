@@ -23,18 +23,100 @@ trivy:
   enabled: false
 jobservice:
   jobLogger: stdout
+  # Use tolerations
+  tolerations:
+    - key: CriticalAddonsOnly
+      operator: Exists
+  affinity:
+    nodeAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+        nodeSelectorTerms:
+          - matchExpressions:
+              - key: noderole.dplplatform
+                operator: In
+                values:
+                  - system
 registry:
   replicas: 3
   resources:
     requests:
       memory: 1Gi
       cpu: 500m
+  # Use tolerations
+  tolerations:
+    - key: CriticalAddonsOnly
+      operator: Exists
+  affinity:
+    nodeAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+        nodeSelectorTerms:
+          - matchExpressions:
+              - key: noderole.dplplatform
+                operator: In
+                values:
+                  - system
 core:
   replicas: 2
   resources:
     requests:
       memory: 1Gi
       cpu: 500m
+  tolerations:
+    - key: CriticalAddonsOnly
+      operator: Exists
+  affinity:
+    nodeAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+        nodeSelectorTerms:
+          - matchExpressions:
+              - key: noderole.dplplatform
+                operator: In
+                values:
+                  - system
+portal:
+  # Use tolerations
+  tolerations:
+    - key: CriticalAddonsOnly
+      operator: Exists
+  affinity:
+    nodeAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+        nodeSelectorTerms:
+          - matchExpressions:
+              - key: noderole.dplplatform
+                operator: In
+                values:
+                  - system
+database:
+  internal:
+    # Use tolerations
+    tolerations:
+      - key: CriticalAddonsOnly
+        operator: Exists
+    affinity:
+      nodeAffinity:
+        requiredDuringSchedulingIgnoredDuringExecution:
+          nodeSelectorTerms:
+            - matchExpressions:
+                - key: noderole.dplplatform
+                  operator: In
+                  values:
+                    - system
+redis:
+  internal:
+    # Use tolerations
+    tolerations:
+      - key: CriticalAddonsOnly
+        operator: Exists
+    affinity:
+      nodeAffinity:
+        requiredDuringSchedulingIgnoredDuringExecution:
+          nodeSelectorTerms:
+            - matchExpressions:
+                - key: noderole.dplplatform
+                  operator: In
+                  values:
+                    - system
 
 # Use Azure blob storage for persistence
 persistence:
@@ -61,3 +143,4 @@ persistence:
       accountname: "$STORAGE_ACCOUNT_NAME"
       accountkey: "$STORAGE_ACCOUNT_KEY"
       container: "$STORAGE_CONTAINER_NAME"
+

@@ -5,20 +5,46 @@ ingress:
   enabled: false
 
 # Back the loki instances with storage as a buffer
-persistence:
-  enabled: true
-  accessModes:
-  - ReadWriteOnce
-  size: 16Gi
-
-compactor:
-  retention_enabled: true
-limits_config:
-  # We keep logs for 3 months.
-  retention_period: 93d
+backend:
+  autoscaling:
+    enabled: true
+    minReplicas: 3
+    maxReplicas: 6
+    targetCPUUtilizationPercentage: 70
+    targetMemoryUtilizationPercentage: 70
+  persistence:
+    enabled: true
+    accessModes:
+    - ReadWriteOnce
+    size: 32Gi
+  tolerations:
+    - key: CriticalAddonsOnly
+      operator: Exists
+  affinity: |
+    podAntiAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+        - labelSelector:
+            matchLabels:
+              app.kubernetes.io/name: loki
+              app.kubernetes.io/instance: loki
+              app.kubernetes.io/component: backend
+          topologyKey: kubernetes.io/hostname
+    nodeAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+        nodeSelectorTerms:
+          - matchExpressions:
+              - key: noderole.dplplatform
+                operator: In
+                values:
+                  - system
 
 loki:
   auth_enabled: false
+  compactor:
+    retention_enabled: true
+  limits_config:
+    # We keep logs for 1 month.
+    retention_period: 30d
   structuredConfig:
     # Setup our index and the azure blob-storage as the storage backend.
     storage_config:
@@ -48,13 +74,32 @@ loki:
           prefix: loki_index_
           period: 24h
 
-
 write:
   replicas: 2
   persistence:
     # Size of persistent disk, make sure to match a azure disk size or you will
     # just provision a larger disk capped to a smaller size.
     size: 16Gi
+  tolerations:
+    - key: CriticalAddonsOnly
+      operator: Exists
+  affinity: |
+    podAntiAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+        - labelSelector:
+            matchLabels:
+              app.kubernetes.io/name: loki
+              app.kubernetes.io/instance: loki
+              app.kubernetes.io/component: write
+          topologyKey: kubernetes.io/hostname
+    nodeAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+        nodeSelectorTerms:
+          - matchExpressions:
+              - key: noderole.dplplatform
+                operator: In
+                values:
+                  - system
 
 read:
   replicas: 2
@@ -62,3 +107,75 @@ read:
     # Size of persistent disk, make sure to match a azure disk size or you will
     # just provision a larger disk capped to a smaller size.
     size: 16Gi
+  tolerations:
+    - key: CriticalAddonsOnly
+      operator: Exists
+  affinity: |
+    podAntiAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+        - labelSelector:
+            matchLabels:
+              app.kubernetes.io/name: loki
+              app.kubernetes.io/instance: loki
+              app.kubernetes.io/component: read
+          topologyKey: kubernetes.io/hostname
+    nodeAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+        nodeSelectorTerms:
+          - matchExpressions:
+              - key: noderole.dplplatform
+                operator: In
+                values:
+                  - system
+gateway:
+  tolerations:
+    - key: CriticalAddonsOnly
+      operator: Exists
+  affinity: |
+    podAntiAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+        - labelSelector:
+            matchLabels:
+              app.kubernetes.io/name: loki
+              app.kubernetes.io/instance: loki
+              app.kubernetes.io/component: gateway
+          topologyKey: kubernetes.io/hostname
+    nodeAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+        nodeSelectorTerms:
+          - matchExpressions:
+              - key: noderole.dplplatform
+                operator: In
+                values:
+                  - system
+
+monitoring:
+  lokiCanary:
+    tolerations:
+      - key: CriticalAddonsOnly
+        operator: Exists
+      - key: noderole.dplplatform
+        operator: Exists
+  selfMonitoring:
+    grafanaAgent:
+      tolerations:
+        - key: CriticalAddonsOnly
+          operator: Exists
+      # grafana operator agent does not support affinity in this version of the chart - should be fixed later
+      # affinity: |
+      #   podAntiAffinity:
+      #     requiredDuringSchedulingIgnoredDuringExecution:
+      #       - labelSelector:
+      #           matchLabels:
+      #             app.kubernetes.io/name: loki
+      #             app.kubernetes.io/instance: loki
+      #             app.kubernetes.io/component: write
+      #         topologyKey: kubernetes.io/hostname
+      #   nodeAffinity:
+      #     requiredDuringSchedulingIgnoredDuringExecution:
+      #       nodeSelectorTerms:
+      #         - matchExpressions:
+      #             - key: noderole.dplplatform
+      #               operator: In
+      #               values:
+      #                 - system

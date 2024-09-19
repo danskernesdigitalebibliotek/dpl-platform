@@ -78,7 +78,7 @@ tasks:
         Use Terraform to provision the infrastructure for an environment.
       dir: "{{.dir_infra}}"
       cmds:
-        - terraform apply
+        - terraform apply {{.OPTIONS}}
 
     infra:keyvault:secret:set:
       deps: [_req_env, _infra:terraform:init]
@@ -123,7 +123,12 @@ tasks:
                 )
               --query value -o tsv
       cmds:
-        - cmd: terraform -chdir={{.dir_env_repos}} apply {{.OPTIONS}}
+        - cmd: |
+            if [ -z "{{.SKIP}}" ]; then
+              terraform -chdir={{.dir_env_repos}} apply {{.OPTIONS}}
+            else
+              echo "Skipped provisioning."
+            fi
 
 
     terraform:import:
@@ -142,7 +147,20 @@ tasks:
                 )
               --query value -o tsv
       cmds:
-        - cmd: terraform -chdir={{.dir_env_repos}} import "{{.OPTIONS}}" "{{.ADDRESS_ID}}"
+        - cmd: terraform -chdir={{.dir_env_repos}} import '{{.OPTIONS}}' '{{.ADDRESS_ID}}'
+
+    terraform:import:repo:
+      desc: Imports a Github repository for a site by passing the site name
+      cmds:
+        - task: terraform:import
+          vars:
+            OPTIONS: module.env_repos.github_repository.site["{{.SITE}}"]
+            ADDRESS_ID: env-{{.SITE}}
+      preconditions:
+      - &require_site {
+          sh: "[ ! -z \"{{.SITE}}\" ]",
+          msg: "Variable SITE is not set or empty."
+        }
 
     cluster:auth:
         deps: [_req_env, _infra:terraform:init]
@@ -186,6 +204,24 @@ tasks:
         preconditions:
           - sh: "[ ! -z {{.AZURE_SUBSCRIPTION_ID}} ]"
             msg: "Env variable AZURE_SUBSCRIPTION_ID is not set or empty."
+
+    cluster:adjust:resource-request:
+      deps: [cluster:auth, lagoon:cli:config]
+      desc: "Adjust resource requests for a every pod inside a library namespace"
+      cmds:
+        - task/scripts/adjust-resource-requests.sh
+
+    cluster:delete-all-completed-pods:
+      deps: [cluster:auth, lagoon:cli:config]
+      desc: "Deletes all pods in completed state to clear room on nodes"
+      cmds:
+        - task/scripts/delete-all-completed-pods.sh
+
+    cluster:promote-workloads-to-prod:
+      deps: [cluster:auth, lagoon:cli:config]
+      desc: "Promotes selected workloads to production node pool"
+      cmds:
+        - task/scripts/promote-workloads-to-prod-nodes.sh
 
     support:provision:cert-manager:
       deps: [cluster:auth]
@@ -593,13 +629,13 @@ tasks:
                 }
               }
       preconditions:
-      - sh: "[ ! -z {{.VARIABLE_VALUE}} ]"
+      - sh: "[ ! -z \"{{.VARIABLE_VALUE}}\" ]"
         msg: "Missing VARIABLE_VALUE"
-      - sh: "[ ! -z {{.VARIABLE_NAME}} ]"
+      - sh: "[ ! -z \"{{.VARIABLE_NAME}}\" ]"
         msg: "Missing VARIABLE_NAME"
-      - sh: "[ ! -z {{.VARIABLE_SCOPE}} ]"
+      - sh: "[ ! -z \"{{.VARIABLE_SCOPE}}\" ]"
         msg: "Missing VARIABLE_SCOPE"
-      - sh: "[ ! -z {{.PROJECT_NAME}} ]"
+      - sh: "[ ! -z \"{{.PROJECT_NAME}}\" ]"
         msg: "Missing PROJECT_NAME"
 
     lagoon:project:ensure:github-registry-credentials:
@@ -627,24 +663,24 @@ tasks:
     lagoon:project:ensure:azure-mail-connection-string:
       vars:
         ACS_CONNECTION_STRING:
-          sh: az communication list-key
-              --name communication-servicesa5e3
-              --resource-group
+          sh: az keyvault secret show
+              --subscription "{{.AZURE_SUBSCRIPTION_ID}}"
+              --name azure-communications-connection-string
+              --vault-name
                 $(
-                  terraform -chdir={{.dir_infra}} output -json | jq --raw-output ".resourcegroup_name.value | select (.!=null)"
+                  terraform -chdir={{.dir_infra}} output -json | jq --raw-output ".keyvault_name.value | select (.!=null)"
                 )
-              --query "primaryConnectionString"
-              --output tsv
+              --query value -o tsv
       cmds:
       - task: lagoon:ensure:environment-variable
         vars:
-          VARIABLE_SCOPE: "CONTAINER_REGISTRY"
+          VARIABLE_SCOPE: "RUNTIME"
           VARIABLE_NAME: "AZURE_MAIL_CONNECTION_STRING"
           VARIABLE_VALUE: "{{.ACS_CONNECTION_STRING}}"
           PROJECT_NAME: "{{.PROJECT_NAME}}"
       preconditions:
       - sh: "[ ! -z \"{{.PROJECT_NAME}}\" ]"
-        msg: "Missing PROJECT_ID or PROJECT_NAME - at least one must be set"
+        msg: "Missing PROJECT_NAME"
 
     lagoon:add:cluster:
       deps: [cluster:auth]
@@ -726,7 +762,7 @@ tasks:
         - task: lagoon:project:ensure:github-registry-credentials
           vars:
             PROJECT_NAME: "{{.PROJECT_NAME}}"
-        - task: lagoon:project:deploykey
+        - task: lagoon:project:ensure:azure-mail-connection-string
           vars:
             PROJECT_NAME: "{{.PROJECT_NAME}}"
       preconditions:
@@ -871,12 +907,26 @@ tasks:
                 )
               --query value -o tsv
       cmds:
-        - dpladm/bin/sync-site.sh
+        - |
+          if [ -z "{{.SKIP}}" ]; then
+            ./dpladm/bin/sync-site.sh
+          else
+            echo "Skipped repo sync."
+          fi
       preconditions:
-      - &require_site {
-          sh: "[ ! -z \"{{.SITE}}\" ]",
-          msg: "Variable SITE is not set or empty."
-        }
+      - *require_site
+
+    site:autoscaler:
+      desc: Runs the a dpladm setup of horizontal autoscaler, making sure the site has an autoscaler configured
+      deps: [cluster:auth]
+      summary: Run the task without additional variables to see required arguments
+      env:
+        SITES_CONFIG: "{{.dir_env}}/sites.yaml"
+        SITE: "{{.SITE}}"
+      cmds:
+        - dpladm/bin/set-up-horizontal-autoscaler.sh
+      preconditions:
+      - *require_site
 
     sites:list-keys:
       desc: List keys for sites in sites.yaml config
@@ -884,18 +934,65 @@ tasks:
       cmds:
         - cat sites.yaml | yq '.sites | keys | .[]'
 
+    sites:check:
+      desc: Simply checks that all sites defined in sites.yaml are running and responding
+      dir: "{{.dir_env}}"
+      vars:
+        sites:
+          sh: cat {{.dir_env}}/sites.yaml | yq '.sites | keys | .[]'
+      cmds:
+        - touch statusnow.txt
+        - for: { var: sites }
+          cmd: |
+            if [[ "$(curl -I https://varnish.main.{{.ITEM}}.dplplat01.dpl.reload.dk | head -1)" == "HTTP/2 200"* ]]; then
+              echo "{{.ITEM}}: OK" >> statusnow.txt;
+            else
+              echo "{{.ITEM}}: ERROR! Not up." >> statusnow.txt;
+            fi
+        - cat statusnow.txt
+        - rm statusnow.txt
+
     sites:sync:
       desc: Performs a full synchronization from sites.yaml to running state
       dir: "{{.dir_env}}"
       vars:
         sites:
           sh: cat {{.dir_env}}/sites.yaml | yq '.sites | keys | .[]'
+        START_FROM_SITE: "{{.START_FROM_SITE}}"
       cmds:
         - task: env_repos:provision
           vars:
             OPTIONS: "{{.INITIAL_TERRAFORM_OPTIONS}}"
+            SKIP: "{{.SKIP_PROVISION}}"
         - for: { var: sites }
           task: site:full-sync
+          vars:
+            SITE: "{{.ITEM}}"
+            SKIP_ENSURE_PROJECT: "{{.SKIP_ENSURE_PROJECT}}"
+            SKIP_CAPTURE_DEPLOY_KEY: "{{.SKIP_CAPTURE_DEPLOY_KEY}}"
+            SKIP_PROVISION: "{{.SKIP_PROVISION}}"
+            SKIP_FIRST_DEPLOYMENT: "{{.SKIP_FIRST_DEPLOYMENT}}"
+            SKIP_REPO_SYNC: "{{.SKIP_REPO_SYNC}}"
+            SKIP:
+              sh: |
+                if [ -z "{{.START_FROM_SITE}}" ]; then
+                  exit 0
+                fi
+                pos_startfrom=$(echo "{{.sites}}" | awk -v item="{{.START_FROM_SITE}}" '{if($0 == item) print NR}')
+                pos_currentsite=$(echo "{{.sites}}" | awk -v item="{{.ITEM}}" '{if($0 == item) print NR}')
+
+                if [ -z "$pos_startfrom" ] || [ -z "$pos_currentsite" ]; then
+                  exit 0
+                fi
+
+                if [ "$pos_startfrom" -le "$pos_currentsite" ]; then
+                  exit 0
+                else
+                  echo -n "true"
+                  exit 0
+                fi
+        - for: { var: sites }
+          task: site:autoscaler
           vars:
             SITE: "{{.ITEM}}"
 
@@ -906,18 +1003,23 @@ tasks:
         - task: site:lagoon:project:ensure
           vars:
             SITE: "{{.SITE}}"
+            SKIP: "{{.SKIP_ENSURE_PROJECT}}{{.SKIP}}"
         - task: site:lagoon:project:capture-deploy-key
           vars:
             SITE: "{{.SITE}}"
+            SKIP: "{{.SKIP_CAPTURE_DEPLOY_KEY}}{{.SKIP}}"
         - task: env_repos:provision
           vars:
             OPTIONS: -refresh=false
+            SKIP: "{{.SKIP_PROVISION}}{{.SKIP}}"
         - task: site:lagoon:ensure-first-deployment
           vars:
             SITE: "{{.SITE}}"
+            SKIP: "{{.SKIP_FIRST_DEPLOYMENT}}{{.SKIP}}"
         - task: site:sync
           vars:
             SITE: "{{.SITE}}"
+            SKIP: "{{.SKIP_REPO_SYNC}}{{.SKIP}}"
       preconditions:
       - *require_site
 
@@ -935,13 +1037,72 @@ tasks:
           sh: if [ "{{.SITE_PLAN}}" = "{{.webmaster_plan_name}}" ]; then echo "{{.production_branch}}|{{.moduletest_branch}}"; else echo "{{.production_branch}}"; fi
       cmds:
         - |
-          if [ "$(lagoon get project --project "{{.SITE}}" --output-json | jq '.data[0].id' --raw-output)" = "0" ]; then
-            PROJECT_NAME="{{.SITE}}" GIT_URL="{{.GIT_URL}}" BRANCHES="{{.BRANCHES}}" task lagoon:project:add;
+          if [ -z "{{.SKIP}}" ]; then
+            if [ "$(lagoon get project --project "{{.SITE}}" --output-json | jq '.data[0].id' --raw-output)" = "0" ]; then
+              PROJECT_NAME="{{.SITE}}" GIT_URL="{{.GIT_URL}}" BRANCHES="{{.BRANCHES}}" task lagoon:project:add;
+            else
+              PROJECT_NAME="{{.SITE}}" GIT_URL="{{.GIT_URL}}" BRANCHES="{{.BRANCHES}}" task lagoon:project:update;
+            fi
           else
-            PROJECT_NAME="{{.SITE}}" GIT_URL="{{.GIT_URL}}" BRANCHES="{{.BRANCHES}}" task lagoon:project:update;
+            echo "Skipped project ensure."
           fi
       preconditions:
       - *require_site
+
+    sites:check-caa:
+      desc: |
+        Checks if a site's primary and secondary domains have CAA records registered, and if they do report it.
+        If a site has these records they must be updated to allow zerossl to provision certificates for the site.
+      cmds:
+        - |
+          cat {{.dir_env}}/sites.yaml \
+            | yq '.sites[] | [ .primary-domain ] + .secondary-domains | .[] | select(. | contains("dplplat01.dpl.reload.dk") | not)' \
+            | xargs -I % -n 1 bash -c 'if (( $(dig % CAA | grep issue | wc -l) > 0 )); then echo "There are CAAs for domain %"; fi'
+
+    sites:incomplete-deployments:
+      desc: |
+        Gets the latest deployment for each production environment and prints its status if it is *not* complete.
+      cmds:
+        - |
+          lagoon raw --raw "query allProjects {
+            allProjects {
+            name
+              environments(type: PRODUCTION) {
+                name
+                deployments(limit: 1) {
+                  status
+                  created
+                }
+              }
+            }
+          }" | jq -r '.allProjects[] | .name as $name | .environments[].deployments[] | select(.status != "complete") | ($name) + ": " + (.status)' 
+
+    sites:grep-in-deploy-log:
+      desc: |
+        Given a needle `NEEDLE` this task finds all sites whose *latest* deployment log contains a given string
+      cmds:
+        - |
+          set -e
+          lagoon list projects --output-json \
+            | jq -r '.data[].projectname'  \
+            | while read -r projectname; do \
+                buildname=$(lagoon list deployments -e main -p $projectname --output-json | jq '.data[0].name' --raw-output)
+                echo "$projectname: $(lagoon get deployment -e main -p $projectname --name $buildname --logs | grep -E '{{ .NEEDLE }}' | wc -l) matches"
+              done \
+            | grep -v ": 0 matches"
+          echo "done"
+
+    sites:latest-backup:
+      desc: Show the timestamp for the last successful backup for each site
+      vars:
+        SITES:
+          sh: lagoon list projects --output-json | jq -r ".data[].projectname"
+      cmds:
+        - for: { var: SITES }
+          cmd: |
+            DATE=$(lagoon list backups -p {{.ITEM}} -e main --output-json | jq -r '.data[0].created')
+            echo "{{.ITEM}}: ${DATE}"
+          silent: true
 
     site:lagoon:project:capture-deploy-key:
       # TODO: print a big message if a deploy key is newly captured, so we know to commit changes!
@@ -953,7 +1114,12 @@ tasks:
           sh: lagoon get project-key --project "{{.SITE}}" --output-json | jq '.data[0].publickey' --raw-output
         SITE: "{{.SITE}}"
       cmds:
-        - yq -i e '.sites["{{.SITE}}"].deploy_key |= "{{.DEPLOY_KEY}}" | (... | select(tag == "!!merge")) tag = ""' sites.yaml
+        - |
+          if [ -z "{{.SKIP}}" ]; then
+            yq -i e '.sites["{{.SITE}}"].deploy_key |= "{{.DEPLOY_KEY}}" | (... | select(tag == "!!merge")) tag = ""' sites.yaml
+          else
+            echo "Skipped capture deploy key."
+          fi
       preconditions:
       - *require_site
 
@@ -965,15 +1131,41 @@ tasks:
         SITE: "{{.SITE}}"
       cmds:
         - |
-          if [ "$(lagoon list deployments --project "{{.SITE}}" --environment {{.production_branch}} --output-json | jq '.data | length')" = "0" ]; then
-            lagoon deploy branch --project "{{.SITE}}" --branch "{{.production_branch}}";
+          if [ -z "{{.SKIP}}" ]; then
+            if [ "$(lagoon list deployments --project "{{.SITE}}" --environment {{.production_branch}} --output-json | jq '.data | length')" = "0" ]; then
+              lagoon deploy branch --project "{{.SITE}}" --branch "{{.production_branch}}";
+            fi
+          else
+            echo "Skipped deploying branch."
           fi
         - |
-          if [ "$(yq '.sites[env(SITE)].plan' sites.yaml)" = "{{.webmaster_plan_name}}" -a "$(lagoon list deployments --project "{{.SITE}}" --environment {{.moduletest_branch}} --output-json | jq '.data | length')" = "0" ]; then
-            lagoon deploy branch --project "{{.SITE}}" --branch "{{.moduletest_branch}}";
+          if [ -z "{{.SKIP}}" ]; then
+            if [ "$(yq '.sites[env(SITE)].plan' sites.yaml)" = "{{.webmaster_plan_name}}" -a "$(lagoon list deployments --project "{{.SITE}}" --environment {{.moduletest_branch}} --output-json | jq '.data | length')" = "0" ]; then
+              lagoon deploy branch --project "{{.SITE}}" --branch "{{.moduletest_branch}}";
+            fi
           fi
       preconditions:
       - *require_site
+
+    sites:report-is-set-up:
+      desc: |
+        Loops through all the sites in sites.yaml and reports whether their logo or logotext has been changed.
+        We use this as an indication for whether the site owners have startet setting up the site.
+      cmds:
+        - |
+          cat {{.dir_env}}/sites.yaml | yq '.sites | keys | .[]' \
+          | xargs -n 1 -I % bash -c 'set -e; if (( $(curl -s https://varnish.main.%.dplplat01.dpl.reload.dk/ | grep "\"header__logo-desktop-link\"" -A 8 | grep "\"logo-fallback\s*\"" -A 4 | grep "Logo title (bold)" | wc -l) > 0 )); then echo "% not yet set up"; fi'
+
+    certs:clear-queue:
+      desc: |
+        Because cert-manager sometimes hangs while provisioning certificates it helps to clear the whole queue
+        of uncompleted certificates. This command removes any certificate that has an order not in either
+        valid (certificate is good!) or ready (almost ready, will be provisioned in seconds) state.
+      cmds:
+        - |
+          kubectl get order -A -o yaml | \
+          yq '.items | filter(.status.state != "valid" and .status.state != "ready") | .[].metadata | .namespace + " " + .name' | \
+          xargs -n 2 bash -c 'kubectl delete certificate -n $0 $(echo "$1" | sed -r "s/^([0-9a-z\.\-]+-tls)-[a-z0-9]+-[a-z0-9]+$/\1/i")'
 
     ui-password:
       deps: [cluster:auth]
@@ -994,3 +1186,179 @@ tasks:
         msg: "Could not find directory {{.dir_infra}}"
       - sh: "[ -d {{.dir_configuration}} ]"
         msg: "Could not find directory {{.dir_configuration}}"
+
+    site:admin:password:set:
+      desc: Sets the password for the admin of the selected site
+      deps: [lagoon:cli:config, cluster:auth]
+      dir: "{{.dir_env}}"
+      vars:
+        PROJECT: "{{.PROJECT}}"
+        PASSWORD: "{{.PASSWORD}}"
+        contacts:
+          sh: yq '.sites.{{.PROJECT}}.contacts[] | path | .[-1]' "{{.dir_env}}/contacts-and-their-sites.yaml"
+      cmds:
+        - lagoon ssh --project {{.PROJECT}} --environment main -C "drush user:password admin '{{.PASSWORD}}'"
+        - for: { var: contacts, as: INDEX}
+          task: mail:send
+          vars:
+            SUBJECT: "Logininformation til jeres nye bibliotekssite"
+            RECIPIENT:
+              sh: yq '.sites.{{.PROJECT}}.contacts[{{.INDEX}}].email' "{{.dir_env}}/contacts-and-their-sites.yaml"
+            CONTACTNAME:
+              sh: yq '.sites.{{.PROJECT}}.contacts[{{.INDEX}}].name' "{{.dir_env}}/contacts-and-their-sites.yaml"
+            PASSWORD: "{{.PASSWORD}}"
+            PROJECT: "{{.PROJECT}}"
+
+
+    site:local-admin:password:create-and-notify:
+      desc: Sets the password for the admin of the selected site
+      deps: [lagoon:cli:config, cluster:auth]
+      dir: "{{.dir_env}}"
+      vars:
+        PROJECT: "{{.PROJECT}}"
+        PASSWORD: "{{.PASSWORD}}"
+        MAIL: "{{.MAIL}}"
+        USERNAME: "{{.USERNAME}}"
+        CONTACTNAME: "{{.CONTACTNAME}}"
+      cmds:
+        - lagoon ssh --project {{.PROJECT}} --environment main -C "drush user:create '{{.USERNAME}}' --mail='{{.MAIL}}' --password='{{.PASSWORD}}'"
+        - lagoon ssh --project {{.PROJECT}} --environment main -C "drush user:role:add 'local_administrator' '{{.USERNAME}}'"
+        - task: mail:send
+          vars:
+            SUBJECT: "Logininformation til jeres nye bibliotekssite"
+            RECIPIENT: "{{.MAIL}}"
+            CONTACTNAME: "{{.CONTACTNAME}}"
+            PASSWORD: "{{.PASSWORD}}"
+            PROJECT: "{{.PROJECT}}"
+            CONTENT: |
+                Kære {{.CONTACTNAME}}
+
+                Læs venligst hele mailen før du går i gang. Den indeholder 2 afsnit:
+
+                1. Instruktion om opsætning af brugere
+                2. Loginoplysninger
+
+
+
+                Instruktion om opsætning af brugere:
+
+                Du får hermed adgang til jeres nyt bibliotekssite. Bemærk at medsendte bruger er ens for begge jer, der er kontaktpersoner. Så den første af jer der går ind på sitet skal skifte kodeord og oprette den anden som bruger. Det er vigtigt, at I vælger egne kodeord, så det kun er jer selv der kender det.
+
+                Den brugerkonto der følger med denne mail er af typen Admin, og dermed den brugertype der har flest rettigheder i løsningen (se manualen for beskrivelse af de forskellige brugertyper). Overvej grundigt hvilke brugertyper I giver andre brugere. Af sikkerhedshensyn er det bedre at starte med færre rettigheder for den enkelte, og så "opgradere" dem hvis det bliver nødvendigt.
+
+                Så helt kort:
+
+                - Nulstil kodeord så snart du er logget ind, så det kun er dig der kender det
+
+                - Brug admin-brugeren til at oprette andre brugere, men begræns deres muligheder
+
+                Du kan se mere omkring dette i manualen her:
+                https://www.folkebibliotekernescms.dk/main/startopsaetning/systembrugere/
+
+
+
+                Loginoplysninger:
+
+                Brugernavn: {{.USERNAME}}
+                Password: {{.PASSWORD}}
+
+                Disse login-oplysninger kan bruges på følgende web-addresse: https://varnish.main.{{.PROJECT}}.dplplat01.dpl.reload.dk
+
+
+                Vi håber I kommer godt igang med vores nye løsning.
+
+                Med venlig hilsen
+                Det Digitale Folkebibliotek
+
+    site:local-admin:password:reset:
+      desc: Resets the password for the local admin of a site
+      deps: [cluster:auth, lagoon:cli:config]
+      dir: "{{.dir_env}}"
+      vars:
+        PROJECT: "{{.PROJECT}}"
+        USERNAME: "{{.USERNAME}}"
+        EMAIL: "{{.EMAIL}}"
+        PASSWORD:
+          sh: $RANDOM  | md5sum | head -c 20
+      cmds:
+        - lagoon ssh --project {{.PROJECT}} --environment main -C "drush user:password {{.USERNAME}} '{{.PASSWORD}}'"
+        - task: mail:send
+          vars:
+            SUBJECT: "Nulstilling af bibliotekssite password"
+            RECIPIENT: "{{.EMAIL}}"
+            PASSWORD: "{{.PASSWORD}}"
+            CONTENT: |
+              Hej,
+
+              Du har bedt om at få nulstillet dit password til jeres bibliotekssite.
+              Dit nye password er: {{.PASSWORD}}
+              Vi anbefaler at du ændrer passwordet til noget du selv kan huske.
+
+              Med venlig hilsen
+              Det Digitale Folkebibliotek
+
+    mail:send:
+      desc: Sends an email from DoNotReply@folkebibliotekernescms.dk
+      deps: [cluster:auth]
+      vars:
+        RECIPIENT: "{{.RECIPIENT}}"
+        SUBJECT: "{{.SUBJECT}}"
+        CONTENT: "{{.CONTENT}}"
+        CONNECTION_STRING:
+          sh: az communication list-key
+              --name communication-servicesa5e3
+              --resource-group
+                $(
+                  terraform -chdir={{.dir_infra}} output -json | jq --raw-output ".resourcegroup_name.value | select (.!=null)"
+                )
+              --query "primaryConnectionString"
+              --output tsv
+      cmd:
+        -|
+          az communication email send --sender "DoNotReply@folkebibliotekernescms.dk"
+          --subject "{{.SUBJECT}}"
+          --to "{{.RECIPIENT}}"
+          --text "{{.CONTENT}}"
+          --connection-string "{{.CONNECTION_STRING}}"
+
+    site:admins:credentials:mail:
+      desc: Sent email with credentials and site info to admin user on a library site
+      deps: [cluster:auth, lagoon:cli:config]
+      dir: "{{.dir_env}}"
+      vars:
+        siteadmins:
+          sh: cat {{.dir_env}}/contacts-and-their-sites.yaml | yq '.sites | keys | .[]'
+      cmds:
+        - for: { var: siteadmins }
+          task: site:admin:password:set
+          vars:
+            PROJECT: "{{.ITEM}}"
+            PASSWORD:
+              sh: $RANDOM  | md5sum | head -c 20
+
+    site:local-admin:admin:
+      desc: Switches the local admin user to an admin user
+      deps: [cluster:auth, lagoon:cli:config]
+      dir: "{{.dir_env}}"
+      vars:
+        PROJECT: "{{.PROJECT}}"
+        ENVIRONMENT: "{{.ENVIRONMENT}}"
+        ADMINS:
+          sh: lagoon ssh -p {{.PROJECT}} -e {{.ENVIRONMENT}} -C "drush sqlq 'SELECT GROUP_CONCAT(entity_id) FROM user__roles WHERE roles_target_id=\"local_administrator\"'" | sed 's/,/\n/g'
+      cmds:
+        - for: { var: ADMINS, as: ITEM }
+          task: site:local-admin:admin:execute
+          vars:
+            ADMINID: "{{.ITEM}}"
+
+    site:local-admin:admin:execute:
+      desc: Switches the local admin user to an admin user
+      dir: "{{.dir_env}}"
+      vars:
+        PROJECT: "{{.PROJECT}}"
+        ENVIRONMENT: "{{.ENVIRONMENT}}"
+        ADMIN:
+          sh: lagoon ssh -p {{.PROJECT}} -e {{.ENVIRONMENT}} -C "drush uinf --field='name' --uid='{{.ADMINID}}'"
+      cmds:
+        - lagoon ssh --project {{.PROJECT}} --environment {{.ENVIRONMENT}} -C "drush user:role:add 'administrator' '{{.ADMIN}}'"
+        - lagoon ssh --project {{.PROJECT}} --environment {{.ENVIRONMENT}} -C "drush user:role:remove 'local_administrator' '{{.ADMIN}}'"

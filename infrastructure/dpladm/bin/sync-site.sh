@@ -10,23 +10,6 @@ IFS=$'\n\t'
 SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 source "${SCRIPT_DIR}/dpladm-shared.source"
 
-function print_usage {
-    # Start with a more specific error-message if we're passed the name of a
-    # variable that was missing.
-    if [[ -n "${1:-}" ]]; then
-        echo "Could not find the variable ${1}"
-    fi
-    echo
-    echo "Set the following environment variables before running the script."
-    echo "  SITES_CONFIG: path to the sites.yaml that should be used for site configuration"
-    echo "  SITE:         the sites key in sites.yaml"
-    echo ""
-    echo "  FORCE:  Push even if there is no diff in which case an empty"
-    echo "          commit will be pushed."
-
-    exit 1
-}
-
 function getSiteConfig {
     local config
     config=$(yq eval ".sites.${1}" "${2}")
@@ -48,6 +31,19 @@ function getSiteDplCmsRelease {
     fi
 
     echo "${release}"
+    return
+}
+
+
+function getWebmasterDplCmsRelease {
+    local wmRelease
+    wmRelease=$(yq eval ".sites.${1}.moduletest-dpl-cms-release" "${2}")
+    if [[ "${wmRelease}" == "null" ]]; then
+        echo ""
+        return
+    fi
+
+    echo "${wmRelease}"
     return
 }
 
@@ -77,18 +73,6 @@ function getSiteReleaseImageName {
     return
 }
 
-function getSitePlan {
-    local plan
-    plan=$(yq eval ".sites.${1}.plan" "${2}")
-    if [[ "${plan}" == "null" ]]; then
-        echo "standard"
-        return
-    fi
-
-    echo "${plan}"
-    return
-}
-
 function getSitePrimaryDomain {
     local domain
     domain=$(yq eval ".sites.${1}.primary-domain" "${2}")
@@ -110,6 +94,29 @@ function getSiteSecondaryDomains {
     fi
 
     echo "${domains}" | yq eval "join(\" \")" -
+    return
+}
+
+function getSiteAutogenerateRoutes {
+    local autogenerateRoutes
+    autogenerateRoutes=$(yq eval ".sites.${1}.autogenerateRoutes" "${2}")
+    if [[ "${autogenerateRoutes}" == "null" ]]; then
+        echo ""
+        return
+    fi
+    echo "${autogenerateRoutes}"
+}
+
+function getSiteImportTranslationsCron {
+    local importTranslationsCron
+    importTranslationsCron=$(yq eval ".sites.${1}.importTranslationsCron" "${2}")
+
+    if [[ "${importTranslationsCron}" == "null" ]]; then
+        echo "M H(2-5) * * *"
+        return
+    fi
+
+    echo "${importTranslationsCron}"
     return
 }
 
@@ -142,17 +149,20 @@ set +o errexit
 # Get the primary and secondary domains from site.yml.
 primaryDomain=$(getSitePrimaryDomain "${SITE}" "${SITES_CONFIG}")
 secondaryDomains=$(getSiteSecondaryDomains "${SITE}" "${SITES_CONFIG}")
+autogenerateRoutes=$(getSiteAutogenerateRoutes "${SITE}" "${SITES_CONFIG}")
 releaseTag=$(getSiteDplCmsRelease "${SITE}" "${SITES_CONFIG}")
+wmReleaseTag=$(getWebmasterDplCmsRelease "${SITE}" "${SITES_CONFIG}")
 siteImageRepository=$(getSiteReleaseImageRepository "${SITE}" "${SITES_CONFIG}" || exit 1)
 failOnErr $? "${siteImageRepository}"
 siteReleaseImageName=$(getSiteReleaseImageName "${SITE}" "${SITES_CONFIG}")
 failOnErr $? "${siteReleaseImageName}"
 plan=$(getSitePlan "${SITE}" "${SITES_CONFIG}")
+importTranslationsCron=$(getSiteImportTranslationsCron "${SITE}" "${SITES_CONFIG}")
 set -o errexit
 
 # Synchronise the sites environment repository.
-syncEnvRepo "${SITE}" "${releaseTag}" "${BRANCH}" "${siteImageRepository}" "${siteReleaseImageName}" "${primaryDomain}" "${secondaryDomains}"
+syncEnvRepo "${SITE}" "${releaseTag}" "${BRANCH}" "${siteImageRepository}" "${siteReleaseImageName}" "${importTranslationsCron}" "${autogenerateRoutes}" "${primaryDomain}" "${secondaryDomains}"
 
 if [ "${plan}" = "webmaster" ] && [ "${BRANCH}" = "main" ]; then
-    syncEnvRepo "${SITE}" "${releaseTag}" "moduletest" "${siteImageRepository}" "${siteReleaseImageName}"
+    syncEnvRepo "${SITE}" "${wmReleaseTag}" "moduletest" "${siteImageRepository}" "${siteReleaseImageName}" "${importTranslationsCron}" "${autogenerateRoutes}" "${primaryDomain}" "${secondaryDomains}"
 fi

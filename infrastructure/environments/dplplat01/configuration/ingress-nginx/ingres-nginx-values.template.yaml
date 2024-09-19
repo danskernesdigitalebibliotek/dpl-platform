@@ -7,7 +7,7 @@ controller:
     log-format-upstream: '{"time": "$time_iso8601", "remote_addr": "$proxy_add_x_forwarded_for", "x-forward-for": "$proxy_add_x_forwarded_for", "request_id": "$req_id",
       "bytes_sent": $bytes_sent, "request_time": $request_time, "status":$status, "vhost": "$host", "request_proto": "$server_protocol",
       "path": "$uri", "request_query": "$args", "request_length": $request_length, "duration": $request_time,"method": "$request_method", "http_referrer": "$http_referer",
-      "http_user_agent": "$http_user_agent" }'
+      "http_user_agent": "$http_user_agent", "proxy_upstream_name": "$proxy_upstream_name" }'
     # Default client_max_body_size is 1m, which is too small for our needs.
     # We align this with the value in Lagoon itself.
     # See https://kubernetes.github.io/ingress-nginx/user-guide/nginx-configuration/annotations/#custom-max-body-size
@@ -16,8 +16,14 @@ controller:
   replicaCount: 2
   autoscaling:
     enabled: true
-    minReplicas: 2
-    maxReplicas: 10
+    minReplicas: 5
+    maxReplicas: 15
+    targetCPUUtilizationPercentage: null
+    targetMemoryUtilizationPercentage: 80
+  resources:
+    requests:
+      cpu: null # lets not worry about CPU for now
+      memory: 500Mi
   service:
     loadBalancerIP: "${INGRESS_IP}"
     externalTrafficPolicy: "Local"
@@ -25,7 +31,7 @@ controller:
       service.beta.kubernetes.io/azure-load-balancer-internal: "false"
       service.beta.kubernetes.io/azure-load-balancer-resource-group: "${RESOURCE_GROUP}"
   nodeSelector:
-    beta.kubernetes.io/os: linux
+    kubernetes.io/os: linux
   # Enable metrics for Prometheus
   # See https://kubernetes.github.io/ingress-nginx/user-guide/monitoring/#re-configure-ingress-nginx-controller
   metrics:
@@ -36,13 +42,24 @@ controller:
         release: "prometheus"
   admissionWebhooks:
     patch.nodeSelector:
-      beta.kubernetes.io/os: linux
+      kubernetes.io/os: linux
   # Since v1.9.0, Nginx server snippets are disabled by default. However, Lagoon
   # relies on them to be available for ingress definitions in order to prohibit
   # dev environments from being indexed by search engines. See:
   # https://kubernetes.github.io/ingress-nginx/user-guide/nginx-configuration/configmap/#allow-snippet-annotations
   # https://docs.lagoon.sh/using-lagoon-the-basics/going-live/#production-environment
   allowSnippetAnnotations: true
-defaultBackend:
-  nodeSelector:
-    beta.kubernetes.io/os: linux
+  tolerations:
+    - key: noderole.dplplatform
+      operator: Equal
+      value: prod
+      effect: NoSchedule
+  affinity:
+    nodeAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+        nodeSelectorTerms:
+          - matchExpressions:
+              - key: noderole.dplplatform
+                operator: In
+                values:
+                  - prod

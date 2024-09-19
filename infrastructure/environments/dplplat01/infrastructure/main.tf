@@ -5,18 +5,20 @@ module "environment" {
   environment_name = "dplplat01"
   # This variable current _has_ to match the pattern
   # <environment_name>.dpl.reload.dk
-  lagoon_domain_base              = "dplplat01.dpl.reload.dk"
-  random_seed                     = "LahYegheePhohGeew9Fa"
-  node_pool_system_count          = 1
-  node_pool_app_default_count_min = 2
-  node_pool_app_default_count_max = 7
+  lagoon_domain_base = "dplplat01.dpl.reload.dk"
+  random_seed        = "LahYegheePhohGeew9Fa"
+  node_pools = {
+    "app4" : { min : 11, max : 20, vm : "Standard_E4s_v3", max_pods : 70 },
+    "admin6": { count : 1, vm : "Standard_E4s_v3", role : "admin", max_pods : 60, },
+  }
+  node_pool_system_count = 3
   # We've increased this quite a bit to test performance. The ideal starting-
   # point seems to be in the range 102400 - 204800 to get enough IOPS to
   # maintain performance during a Drupal site-install.
   # When copying this value, consider leaving it out and falling back to the
   # default of 102400.
-  sql_storage_mb          = 409600
-  control_plane_version   = "1.26.10"
+  sql_storage_mb        = 409600
+  control_plane_version = "1.28.9"
 }
 
 # Outputs, for values that comes straight from the dpl-platform-environment

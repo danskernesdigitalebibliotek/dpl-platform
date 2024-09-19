@@ -1,0 +1,7 @@
+sites:
+  somesitename:
+    contacts:
+      - name: "some nam"
+        email: "some@email.tld"
+      - name: "another name"
+        email: "another@email.tld"

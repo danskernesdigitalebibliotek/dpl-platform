@@ -14,6 +14,19 @@ kubeStateMetrics:
 
 alertmanager:
   enabled: true
+  alertmanagerSpec:
+    tolerations:
+      - key: CriticalAddonsOnly
+        operator: Exists
+    affinity:
+      nodeAffinity:
+        requiredDuringSchedulingIgnoredDuringExecution:
+          nodeSelectorTerms:
+            - matchExpressions:
+                - key: noderole.dplplatform
+                  operator: In
+                  values:
+                    - system
 
 prometheus-node-exporter:
   podLabels:
@@ -22,7 +35,18 @@ prometheus-node-exporter:
 
 prometheusOperator:
   enabled: true
-
+  tolerations:
+    - key: CriticalAddonsOnly
+      operator: Exists
+  affinity:
+    nodeAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+        nodeSelectorTerms:
+          - matchExpressions:
+              - key: noderole.dplplatform
+                operator: In
+                values:
+                  - system
 ## Deploy a Prometheus instance
 ##
 prometheus:
@@ -54,5 +78,24 @@ prometheus:
          accessModes: ["ReadWriteOnce"]
          resources:
            requests:
-           # Setup a 100Gigabyte disk for holding the metrics.
-             storage: 100Gi
+           # Setup a disk for holding the metrics.
+             storage: 500Gi
+
+    tolerations:
+      - key: CriticalAddonsOnly
+        operator: Exists
+    affinity:
+      nodeAffinity:
+        requiredDuringSchedulingIgnoredDuringExecution:
+          nodeSelectorTerms:
+            - matchExpressions:
+                - key: noderole.dplplatform
+                  operator: In
+                  values:
+                    - system
+
+defaultRules:
+  disabled:
+    KubeControllerManagerDown: true
+    KubeProxyDown: true
+    KubeSchedulerDown: true

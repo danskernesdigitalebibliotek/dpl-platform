@@ -35,7 +35,7 @@ jobs:
       image-url: ghcr.io/danskernesdigitalebibliotek/dpl-platform/dplsh
     steps:
       - name: Checkout
-        uses: actions/checkout@v4.1.1
+        uses: actions/checkout@v4.1.7
       - name: Install Task
         uses: arduino/setup-task@v2
       - name: Log in to the Container registry
@@ -66,7 +66,7 @@ jobs:
       # run som tests on the image, while still avoiding to have to rebuild the
       # image when we do the final build.
       - name: Build and export to Docker
-        uses: docker/build-push-action@v5
+        uses: docker/build-push-action@v6
         with:
           context: tools/dplsh
           load: true
@@ -80,7 +80,7 @@ jobs:
         working-directory: tools/dplsh
 
       - name: Build and push
-        uses: docker/build-push-action@v5
+        uses: docker/build-push-action@v6
         with:
           context: tools/dplsh
           platforms: linux/amd64,linux/arm64
@@ -91,7 +91,7 @@ jobs:
 
       # Create a github release if this was a tag.
       - name: Create release
-        uses: softprops/action-gh-release@v1
+        uses: softprops/action-gh-release@v2
         if: startsWith(github.ref, 'refs/tags/')
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

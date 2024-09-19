@@ -8,7 +8,7 @@ lagoon-build-deploy:
     - "--harbor-username=admin"
     - "--harbor-password=$HARBOR_ADMIN_PASS"
     - "--enable-qos"
-    - "--qos-max-builds=15"
+    - "--qos-max-builds=10"
   rabbitMQUsername: "lagoon"
   rabbitMQPassword: "$RABBITMQ_PASS"
   rabbitMQHostname: "lagoon-core-broker.lagoon-core.svc.cluster.local"
@@ -17,6 +17,19 @@ lagoon-build-deploy:
   taskSSHPort: "22"
   taskAPIHost: "api.lagoon.dplplat01.dpl.reload.dk"
   lagoonFeatureFlagDefaultRootlessWorkload: "enabled"
+  tolerations:
+    - key: CriticalAddonsOnly
+      operator: Exists
+  affinity:
+    nodeAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+        nodeSelectorTerms:
+          - matchExpressions:
+              - key: noderole.dplplatform
+                operator: In
+                values:
+                  - system
+
 
 sshCore:
   enabled: true
@@ -44,3 +57,45 @@ dbaas-operator:
       password: "$SQL_PASSWORD"
       port: "3306"
       user: "$SQL_USER@$SQL_HOSTNAME"
+  tolerations:
+    - key: CriticalAddonsOnly
+      operator: Exists
+  affinity:
+    nodeAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+        nodeSelectorTerms:
+          - matchExpressions:
+              - key: noderole.dplplatform
+                operator: In
+                values:
+                  - system
+
+dockerHost:
+  tolerations:
+  - key: noderole.dplplatform
+    operator: Equal
+    value: build
+    effect: NoSchedule
+  affinity:
+    nodeAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+        nodeSelectorTerms:
+          - matchExpressions:
+            - key: noderole.dplplatform
+              operator: In
+              values:
+                - build
+
+dioscuri:
+  tolerations:
+    - key: CriticalAddonsOnly
+      operator: Exists
+  affinity:
+    nodeAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+        nodeSelectorTerms:
+          - matchExpressions:
+              - key: noderole.dplplatform
+                operator: In
+                values:
+                  - system
