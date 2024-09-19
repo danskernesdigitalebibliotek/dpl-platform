@@ -14,7 +14,7 @@ x-webmaster-with-defaults: &webmaster-with-defaults-release-image-source
   # Reference default before webmaster anchor as YAML references will not
   # override existing keys.
   <<: *default-release-image-source
-  <<: *webmaster-release-image-source
+  moduletest-dpl-cms-release: "2024.38.1"
 sites:
   # Site objects are indexed by a unique key that must be a valid lagoon, and
   # github project name. That is, alphanumeric and dashes.
