@@ -32,7 +32,7 @@ sites:
     name: "Customizable bibliotek - eksempel"
     description: "Eksempel på bibliotek der kører på 'webmaster' plan, og derfor har et modultest-miljø"
     plan: webmaster
-    dpl-cms-release: "2024.35.1"
+    dpl-cms-release: "2024.35.2"
     moduletest-dpl-cms-release: "2024.38.1"
     deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAILj8lXv7C/7s7te9sEpwcHQhgDWfzsCkAN7rqQ4sdTzk"
   staging:
