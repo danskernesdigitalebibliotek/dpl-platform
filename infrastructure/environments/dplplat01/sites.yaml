@@ -28,6 +28,13 @@ sites:
     plan: webmaster
     moduletest-dpl-cms-release: "2024.38.1"
     deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIIhuA0K7CNvRoe+Xx7RaXG4+a8KcSpzuWn+G4sUPzNWx"
+  customizable-canary:
+    name: "Customizable bibliotek - eksempel"
+    description: "Eksempel på bibliotek der kører på 'webmaster' plan, og derfor har et modultest-miljø"
+    plan: webmaster
+    dpl-cms-release: "2024.35.1"
+    moduletest-dpl-cms-release: "2024.38.1"
+    deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAILj8lXv7C/7s7te9sEpwcHQhgDWfzsCkAN7rqQ4sdTzk"
   staging:
     name: "Staging"
     description: "A site to test new releases on"
@@ -47,12 +54,6 @@ sites:
     importTranslationsCron: "0 * * * *"
     plan: webmaster
     deploy_key: ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHvhy79hHjLcQJCcMNwci1Q/P/O2LwD4IzBVfkmRGKom
-    <<: *webmaster-release-image-source
-  customizable-canary:
-    name: "Customizable bibliotek - eksempel"
-    description: "Eksempel på bibliotek der kører på 'webmaster' plan, og derfor har et modultest-miljø"
-    deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAILj8lXv7C/7s7te9sEpwcHQhgDWfzsCkAN7rqQ4sdTzk"
-    plan: webmaster
     <<: *webmaster-release-image-source
   # Production sites
   aabenraa:
