@@ -24,9 +24,22 @@ logs2slack:
 logs2webhook:
   enabled: false
 
+#Deployments
+actionsHandler:
+  tolerations:
+    - key: CriticalAddonsOnly
+      operator: Exists
+  affinity:
+    nodeAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+        nodeSelectorTerms:
+          - matchExpressions:
+              - key: noderole.dplplatform
+                operator: In
+                values:
+                  - system
+
 api:
-  nodeSelector:
-    noderole.dplplatform: admin
   ingress:
     enabled: true
     annotations:
@@ -41,6 +54,60 @@ api:
       - secretName: api-tls
         hosts:
           - api.lagoon.dplplat01.dpl.reload.dk
+  tolerations:
+    - key: CriticalAddonsOnly
+      operator: Exists
+  affinity:
+    nodeAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+        nodeSelectorTerms:
+          - matchExpressions:
+              - key: noderole.dplplatform
+                operator: In
+                values:
+                  - system
+
+apiRedis:
+  tolerations:
+    - key: CriticalAddonsOnly
+      operator: Exists
+  affinity:
+    nodeAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+        nodeSelectorTerms:
+          - matchExpressions:
+              - key: noderole.dplplatform
+                operator: In
+                values:
+                  - system
+
+authServer:
+  tolerations:
+    - key: CriticalAddonsOnly
+      operator: Exists
+  affinity:
+    nodeAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+        nodeSelectorTerms:
+          - matchExpressions:
+              - key: noderole.dplplatform
+                operator: In
+                values:
+                  - system
+
+logs2notifications:
+  tolerations:
+    - key: CriticalAddonsOnly
+      operator: Exists
+  affinity:
+    nodeAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+        nodeSelectorTerms:
+          - matchExpressions:
+              - key: noderole.dplplatform
+                operator: In
+                values:
+                  - system
 
 keycloak:
   ingress:
@@ -56,6 +123,18 @@ keycloak:
       - secretName: keycloak-tls
         hosts:
           - keycloak.lagoon.dplplat01.dpl.reload.dk
+  tolerations:
+    - key: CriticalAddonsOnly
+      operator: Exists
+  affinity:
+    nodeAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+        nodeSelectorTerms:
+          - matchExpressions:
+              - key: noderole.dplplatform
+                operator: In
+                values:
+                  - system
 
 webhookHandler:
   ingress:
@@ -71,6 +150,32 @@ webhookHandler:
       - secretName: webhookhandler-tls
         hosts:
           - webhookhandler.lagoon.dplplat01.dpl.reload.dk
+  tolerations:
+    - key: CriticalAddonsOnly
+      operator: Exists
+  affinity:
+    nodeAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+        nodeSelectorTerms:
+          - matchExpressions:
+              - key: noderole.dplplatform
+                operator: In
+                values:
+                  - system
+
+webhooks2tasks:
+  tolerations:
+    - key: CriticalAddonsOnly
+      operator: Exists
+  affinity:
+    nodeAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+        nodeSelectorTerms:
+          - matchExpressions:
+              - key: noderole.dplplatform
+                operator: In
+                values:
+                  - system
 
 ui:
   ingress:
@@ -86,6 +191,18 @@ ui:
       - secretName: ui-tls
         hosts:
           - ui.lagoon.dplplat01.dpl.reload.dk
+  tolerations:
+    - key: CriticalAddonsOnly
+      operator: Exists
+  affinity:
+    nodeAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+        nodeSelectorTerms:
+          - matchExpressions:
+              - key: noderole.dplplatform
+                operator: In
+                values:
+                  - system
 
 backupHandler:
   ingress:
@@ -101,6 +218,18 @@ backupHandler:
       - secretName: backuphandler-tls
         hosts:
           - backuphandler.lagoon.dplplat01.dpl.reload.dk
+  tolerations:
+    - key: CriticalAddonsOnly
+      operator: Exists
+  affinity:
+    nodeAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+        nodeSelectorTerms:
+          - matchExpressions:
+              - key: noderole.dplplatform
+                operator: In
+                values:
+                  - system
 
 drushAlias:
   ingress:
@@ -116,12 +245,64 @@ drushAlias:
       - secretName: drushalias-tls
         hosts:
           - drushalias.lagoon.dplplat01.dpl.reload.dk
+  tolerations:
+    - key: CriticalAddonsOnly
+      operator: Exists
+  affinity:
+    nodeAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+        nodeSelectorTerms:
+          - matchExpressions:
+              - key: noderole.dplplatform
+                operator: In
+                values:
+                  - system
 
 ssh:
   service:
     type: LoadBalancer
     port: 22
+  tolerations:
+    - key: CriticalAddonsOnly
+      operator: Exists
+  affinity:
+    nodeAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+        nodeSelectorTerms:
+          - matchExpressions:
+              - key: noderole.dplplatform
+                operator: In
+                values:
+                  - system
 
+workflows:
+  tolerations:
+    - key: CriticalAddonsOnly
+      operator: Exists
+  affinity:
+    nodeAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+        nodeSelectorTerms:
+          - matchExpressions:
+              - key: noderole.dplplatform
+                operator: In
+                values:
+                  - system
+
+# Statfulsets
+apiDB:
+  tolerations:
+    - key: CriticalAddonsOnly
+      operator: Exists
+  affinity:
+    nodeAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+        nodeSelectorTerms:
+          - matchExpressions:
+              - key: noderole.dplplatform
+                operator: In
+                values:
+                  - system
 
 broker:
   serviceMonitor:
@@ -139,18 +320,29 @@ broker:
       - secretName: broker-tls
         hosts:
           - broker.lagoon.dplplat01.dpl.reload.dk
+  tolerations:
+    - key: CriticalAddonsOnly
+      operator: Exists
+  affinity:
+    nodeAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+        nodeSelectorTerms:
+          - matchExpressions:
+              - key: noderole.dplplatform
+                operator: In
+                values:
+                  - system
 
-webhookHandler:
-  ingress:
-    enabled: true
-    annotations:
-      kubernetes.io/tls-acme: "true"
-      kubernetes.io/ingress.class: "nginx"
-    hosts:
-    - host: webhookhandler.lagoon.dplplat01.dpl.reload.dk
-      paths:
-      - /
-    tls:
-      - secretName: webhookhandler-tls
-        hosts:
-          - webhookhandler.lagoon.dplplat01.dpl.reload.dk
+keycloakDB:
+  tolerations:
+    - key: CriticalAddonsOnly
+      operator: Exists
+  affinity:
+    nodeAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+        nodeSelectorTerms:
+          - matchExpressions:
+              - key: noderole.dplplatform
+                operator: In
+                values:
+                  - system
