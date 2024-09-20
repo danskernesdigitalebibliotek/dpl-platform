@@ -1060,6 +1060,7 @@ tasks:
             | xargs -I % -n 1 bash -c 'if (( $(dig % CAA | grep issue | wc -l) > 0 )); then echo "There are CAAs for domain %"; fi'
 
     sites:incomplete-deployments:
+      deps: [lagoon:cli:config]
       desc: |
         Gets the latest deployment for each production environment and prints its status if it is *not* complete.
       cmds:
