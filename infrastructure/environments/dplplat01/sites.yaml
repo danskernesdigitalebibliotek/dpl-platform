@@ -31,6 +31,8 @@ sites:
   customizable-canary:
     name: "Customizable bibliotek - eksempel"
     description: "Eksempel på bibliotek der kører på 'webmaster' plan, og derfor har et modultest-miljø"
+    releaseImageRepository: ghcr.io/danskernesdigitalebibliotek
+    releaseImageName: dpl-cms-source
     plan: webmaster
     dpl-cms-release: "2024.35.2"
     moduletest-dpl-cms-release: "2024.38.2"
