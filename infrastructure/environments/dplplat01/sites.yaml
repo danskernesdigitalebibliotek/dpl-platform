@@ -6,7 +6,7 @@ x-defaults: &default-release-image-source
 x-webmaster: &webmaster-release-image-source
   releaseImageRepository: ghcr.io/danskernesdigitalebibliotek
   releaseImageName: dpl-cms-source
-  dpl-cms-release: "2024.35.2"
+  dpl-cms-release: "2024.39.1"
   moduletest-dpl-cms-release: "2024.39.1"
 # Some sites on the webmaster plan wish to track the same release as
 # sites do per default in dpl-cms-release.
@@ -34,7 +34,7 @@ sites:
     releaseImageRepository: ghcr.io/danskernesdigitalebibliotek
     releaseImageName: dpl-cms-source
     plan: webmaster
-    dpl-cms-release: "2024.35.2"
+    dpl-cms-release: "2024.39.1"
     moduletest-dpl-cms-release: "2024.39.1"
     deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAILj8lXv7C/7s7te9sEpwcHQhgDWfzsCkAN7rqQ4sdTzk"
   staging:
