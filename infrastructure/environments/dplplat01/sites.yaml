@@ -230,6 +230,9 @@ sites:
   frederiksberg:
     name: "Biblioteket Frederiksberg"
     description: "The library site for Frederiksberg"
+    primary-domain: fkb.dk
+    secondary-domains:
+      - www.fkb.dk
     deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIGatN86NGcfXHefEFAACwDVkDxob2SW+N8R+8/rANnvF"
     <<: *default-release-image-source
   frederikshavn:
