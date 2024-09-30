@@ -578,6 +578,9 @@ sites:
     name: "Næstved Bibliotek og Borgerservice"
     description: "The library site for Næstved"
     deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOBkIsTxho/rrVQvPwmByNSae/PtdymCDlVtMBstG3BK"
+    primary-domain: www.naesbib.dk
+    secondary-domains:
+      - naesbib.dk
     <<: *default-release-image-source
   norddjurs:
     name: "Norddjurs Biblioteker"
@@ -678,6 +681,9 @@ sites:
     description: "The library site for Roskilde"
     deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPfCXTAe50+d/RUIu8JSctoCSzfJoEMtZ2OY0AUQdZgo"
     plan: webmaster
+    primary-domain: www.roskildebib.dk
+    secondary-domains:
+      - roskildebib.dk
     <<: *webmaster-release-image-source
   rudersdal:
     name: "Rudersdal Bibliotekerne"
