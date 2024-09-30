@@ -10,7 +10,7 @@ which have been added to the platform](add-library-site-to-platform.md).
 * A local checkout of the [`dpl-platform` repository](https://github.com/danskernesdigitalebibliotek/dpl-platform)
 * A running [dplsh](using-dplsh.md) with `DPLPLAT_ENV` set to the platform
   environment name.
-* The name of the version you want to deploy. This must correspond to a
+* The version tag you want to deploy. This must correspond to a
   tagged version of the [`dpl-cms-source` image](https://github.com/danskernesdigitalebibliotek/dpl-cms/pkgs/container/dpl-cms-source).
 
 ### Procedure: New version for testing
