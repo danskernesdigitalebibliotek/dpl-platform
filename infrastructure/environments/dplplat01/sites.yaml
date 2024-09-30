@@ -581,6 +581,7 @@ sites:
     primary-domain: www.naesbib.dk
     secondary-domains:
       - naesbib.dk
+    autogenerateRoutes: true
     <<: *default-release-image-source
   norddjurs:
     name: "Norddjurs Biblioteker"
@@ -684,6 +685,7 @@ sites:
     primary-domain: www.roskildebib.dk
     secondary-domains:
       - roskildebib.dk
+    autogenerateRoutes: true
     <<: *webmaster-release-image-source
   rudersdal:
     name: "Rudersdal Bibliotekerne"
