@@ -76,7 +76,7 @@ sites:
       - aalborgbibliotekerne.dk
     autogenerateRoutes: "redirect"
     plan: webmaster
-    <<: *webmaster-release-image-source
+    <<: *webmaster-with-defaults-release-image-source
   aarhus:
     name: "Aarhus Kommunes Biblioteker"
     description: "The library site for Aarhus"
