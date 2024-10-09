@@ -16,7 +16,7 @@ Notes:
 ## AKS
 
 Update interval: monthly
-Release URL: <https://kubernetes.io/releases/>
+Release URL: <https://learn.microsoft.com/en-us/azure/aks/supported-kubernetes-versions?tabs=azure-cli>
 Upgrade Docs URL:
   <https://learn.microsoft.com/en-us/azure/aks/upgrade-aks-cluster?tabs=azure-portal>
 Expect downtime: yes, there'll be a very short outage alike to releases
