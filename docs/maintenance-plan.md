@@ -24,46 +24,192 @@ Time to do: 2-6 hours
 Runbook: [Update AKS](./runbooks/upgrading-aks.md)
 Notes:
 
-## Actions/checkout
+## Support Workloads
 
-## Helm charts
-
-We have some Helm charts that requires upgrades.
+We have a number of support workloads. Which at the time of writing is all
+Helm Charts.
 Information on Helm upgrades can be found
 on the [Helm website](https://helm.sh/docs/helm/helm_upgrade/)
 
 ### Cert-manager
 
+Update interval:
+Release URL:
+Upgrade Docs URL:
+  <https:
+Expect downtime:
+Time to do:
+Runbook:
+Notes:
+
 ### Grafana
+
+Update interval:
+Release URL:
+Upgrade Docs URL:
+  <https:
+Expect downtime:
+Time to do:
+Runbook:
+Notes:
 
 ### Harbor
 
+Update interval:
+Release URL:
+Upgrade Docs URL:
+  <https:
+Expect downtime:
+Time to do:
+Runbook:
+Notes:
+
 ### Ingress Nginx
 
-### Lagoon Remote
+Update interval:
+Release URL:
+Upgrade Docs URL:
+  <https:
+Expect downtime:
+Time to do:
+Runbook:
+Notes:
 
-### Lagoon Core
+### K8up
+
+Update interval:
+Release URL:
+Upgrade Docs URL:
+  <https:
+Expect downtime:
+Time to do:
+Runbook:
+Notes:
 
 ### Loki
 
-### Promstack
+Update interval:
+Release URL:
+Upgrade Docs URL:
+  <https:
+Expect downtime:
+Time to do:
+Runbook:
+Notes:
+
+### Minio
+
+Update interval:
+Release URL:
+Upgrade Docs URL:
+  <https:
+Expect downtime:
+Time to do:
+Runbook:
+Notes:
+
+### Prometheus
+
+Update interval:
+Release URL:
+Upgrade Docs URL:
+  <https:
+Expect downtime:
+Time to do:
+Runbook:
+Notes:
 
 ### Promtail
 
-### K8Up
+Update interval:
+Release URL:
+Upgrade Docs URL:
+  <https:
+Expect downtime:
+Time to do:
+Runbook:
+Notes:
 
 ## DPL Shell parts
 
+The DPL Shell integrates our day to day tools. The ones, that are not upgraded
+automatically when a new version of DPL Shell is created, are listed below.
+Most of these, if not all, are watched by dependabot on GitHub, so we
+are notified about updates pretty quickly.
+
 ### Terraform
+
+Update interval:
+Release URL:
+Upgrade Docs URL:
+  <https:
+Expect downtime:
+Time to do:
+Runbook:
+Notes:
 
 ### Azure CLI
 
+Update interval:
+Release URL:
+Upgrade Docs URL:
+  <https:
+Expect downtime:
+Time to do:
+Runbook:
+Notes:
+
 ### KubeCTL
+
+Update interval:
+Release URL:
+Upgrade Docs URL:
+  <https:
+Expect downtime:
+Time to do:
+Runbook:
+Notes:
 
 ### Krew
 
+Update interval:
+Release URL:
+Upgrade Docs URL:
+  <https:
+Expect downtime:
+Time to do:
+Runbook:
+Notes:
+
 ### Task
+
+Update interval:
+Release URL:
+Upgrade Docs URL:
+  <https:
+Expect downtime:
+Time to do:
+Runbook:
+Notes:
 
 ### Lagoon CLI
 
+Update interval:
+Release URL:
+Upgrade Docs URL:
+  <https:
+Expect downtime:
+Time to do:
+Runbook:
+Notes:
+
 ### Helm
+
+Update interval:
+Release URL:
+Upgrade Docs URL:
+  <https:
+Expect downtime:
+Time to do:
+Runbook:
+Notes:
