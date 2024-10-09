@@ -52,11 +52,9 @@ on the [Helm website](https://helm.sh/docs/helm/helm_upgrade/)
 
 ### K8Up
 
-
 ## DPL Shell parts
 
 ### Terraform
-
 
 ### Azure CLI
 
