@@ -35,13 +35,12 @@ There's a general runbook for upgrading the support workloads here:
 
 ### Cert-manager
 
-Update interval:
-Release URL:
-Upgrade Docs URL:
-  <https:
-Expect downtime:
-Time to do:
-Runbook:
+Update interval: weekly-monthly
+Release URL: <https://github.com/cert-manager/cert-manager/releases>
+Upgrade Docs URL: <https://cert-manager.io/docs/installation/upgrade/>
+Expect downtime: Unknown, but likely none
+Time to do: Unknown, but likely < 1 hour
+Runbook: [Upgrade Cert-manager](./runbooks/upgrading-support-workloads.md#cert-manager).
 Notes:
 
 ### Grafana
