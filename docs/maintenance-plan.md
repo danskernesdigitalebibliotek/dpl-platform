@@ -62,12 +62,8 @@ on the [Helm website](https://helm.sh/docs/helm/helm_upgrade/)
 
 ### Krew
 
-### Terraform
-
 ### Task
 
 ### Lagoon CLI
 
 ### Helm
-
-
