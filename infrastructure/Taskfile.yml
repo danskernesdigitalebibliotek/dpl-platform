@@ -223,6 +223,21 @@ tasks:
       cmds:
         - task/scripts/promote-workloads-to-prod-nodes.sh
 
+    cluster:mode:release:
+      deps: [cluster:auth , lagoon:cli:config]
+      desc: "Set the cluster in release mode by adding additional nodes to release critical node pools"
+      cmds:
+        - az aks nodepool scale
+          --cluster-name aks-dplplat01-01
+          --nodepool-name app6
+          --resource-group rg-env-dplplat01
+          --node-count 4
+        - az aks nodepool scale
+          --cluster-name aks-dplplat01-01
+          --nodepool-name system2
+          --resource-group rg-env-dplplat01
+          --node-count 5
+
     support:provision:cert-manager:
       deps: [cluster:auth]
       summary: Set the DIFF environment variable to any value to switch to diffing instead of an actual upgrade.
