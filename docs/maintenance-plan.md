@@ -29,7 +29,9 @@ Notes:
 We have a number of support workloads. Which at the time of writing is all
 Helm Charts.
 Information on Helm upgrades can be found
-on the [Helm website](https://helm.sh/docs/helm/helm_upgrade/)
+on the [Helm website](https://helm.sh/docs/helm/helm_upgrade/).
+There's a general runbook for upgrading the support workloads here:
+[Upgrade Support Workloads](./runbooks/upgrading-support-workloads.md).
 
 ### Cert-manager
 
