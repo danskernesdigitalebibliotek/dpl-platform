@@ -6,7 +6,7 @@ updating.
 ## Lagoon
 
 Update interval: 1-4 months
-Release URL: https://github.com/uselagoon/lagoon/releases
+Release URL: <https://github.com/uselagoon/lagoon/releases>
 Upgrade Docs URL:
 Expect downtime: Highly likely
 Time to do: Unknown at the time of writing (most likely a day the first time)
@@ -16,9 +16,9 @@ Notes:
 ## AKS
 
 Update interval: monthly
-Release URL: https://kubernetes.io/releases/
+Release URL: <https://kubernetes.io/releases/>
 Upgrade Docs URL:
-  https://learn.microsoft.com/en-us/azure/aks/upgrade-aks-cluster?tabs=azure-portal
+  <https://learn.microsoft.com/en-us/azure/aks/upgrade-aks-cluster?tabs=azure-portal>
 Expect downtime: yes, there'll be a very short outage alike to releases
 Time to do: 2-6 hours
 Runbook: [Update AKS](./runbooks/upgrading-aks.md)
