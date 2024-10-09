@@ -49,7 +49,6 @@ Notes:
 Update interval:
 Release URL:
 Upgrade Docs URL:
-  <https:
 Expect downtime:
 Time to do:
 Runbook:
@@ -60,7 +59,6 @@ Notes:
 Update interval:
 Release URL:
 Upgrade Docs URL:
-  <https:
 Expect downtime:
 Time to do:
 Runbook:
@@ -71,7 +69,6 @@ Notes:
 Update interval:
 Release URL:
 Upgrade Docs URL:
-  <https:
 Expect downtime:
 Time to do:
 Runbook:
@@ -82,7 +79,6 @@ Notes:
 Update interval:
 Release URL:
 Upgrade Docs URL:
-  <https:
 Expect downtime:
 Time to do:
 Runbook:
@@ -93,7 +89,6 @@ Notes:
 Update interval:
 Release URL:
 Upgrade Docs URL:
-  <https:
 Expect downtime:
 Time to do:
 Runbook:
@@ -104,7 +99,6 @@ Notes:
 Update interval:
 Release URL:
 Upgrade Docs URL:
-  <https:
 Expect downtime:
 Time to do:
 Runbook:
@@ -115,7 +109,6 @@ Notes:
 Update interval:
 Release URL:
 Upgrade Docs URL:
-  <https:
 Expect downtime:
 Time to do:
 Runbook:
@@ -126,7 +119,6 @@ Notes:
 Update interval:
 Release URL:
 Upgrade Docs URL:
-  <https:
 Expect downtime:
 Time to do:
 Runbook:
@@ -144,7 +136,6 @@ are notified about updates pretty quickly.
 Update interval:
 Release URL:
 Upgrade Docs URL:
-  <https:
 Expect downtime:
 Time to do:
 Runbook:
@@ -155,7 +146,6 @@ Notes:
 Update interval:
 Release URL:
 Upgrade Docs URL:
-  <https:
 Expect downtime:
 Time to do:
 Runbook:
@@ -166,7 +156,6 @@ Notes:
 Update interval:
 Release URL:
 Upgrade Docs URL:
-  <https:
 Expect downtime:
 Time to do:
 Runbook:
@@ -177,7 +166,6 @@ Notes:
 Update interval:
 Release URL:
 Upgrade Docs URL:
-  <https:
 Expect downtime:
 Time to do:
 Runbook:
@@ -188,7 +176,6 @@ Notes:
 Update interval:
 Release URL:
 Upgrade Docs URL:
-  <https:
 Expect downtime:
 Time to do:
 Runbook:
@@ -199,7 +186,6 @@ Notes:
 Update interval:
 Release URL:
 Upgrade Docs URL:
-  <https:
 Expect downtime:
 Time to do:
 Runbook:
@@ -210,7 +196,6 @@ Notes:
 Update interval:
 Release URL:
 Upgrade Docs URL:
-  <https:
 Expect downtime:
 Time to do:
 Runbook:
