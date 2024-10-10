@@ -10,7 +10,7 @@ Release URL: <https://github.com/uselagoon/lagoon/releases>
 Upgrade Docs URL:
 Expect downtime: Highly likely
 Time to do: Unknown at the time of writing (most likely a day the first time)
-Runbook:
+Runbook: [Upgrading Lagoon](./runbooks/upgrading-lagoon.md)
 Notes:
 
 ## AKS
