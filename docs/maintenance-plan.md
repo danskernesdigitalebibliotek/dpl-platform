@@ -45,12 +45,13 @@ Notes:
 
 ### Grafana
 
-Update interval:
-Release URL:
+Update interval: weekly
+Release URL: <https://github.com/grafana/grafana/releases>
 Upgrade Docs URL:
-Expect downtime:
-Time to do:
-Runbook:
+Expect downtime: No, maybe a little for Grafana, but nothing that affects the
+  libraries.
+Time to do: Unknown
+Runbook: [Upgrade Grafana](./runbooks/upgrading-support-workloads.md#grafana)
 Notes:
 
 ### Harbor
