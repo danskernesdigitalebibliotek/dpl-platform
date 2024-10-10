@@ -235,7 +235,10 @@ tasks:
         - az aks nodepool scale
           --cluster-name aks-dplplat01-01
           --nodepool-name system2
-          --resource-group rg-env-dplplat01
+          --resource-group
+            $(
+              terraform -chdir={{.dir_infra}} output -json | jq --raw-output ".resourcegroup_name.value | select (.!=null)"
+            )
           --node-count 5
 
     cluster:mode:reset:
@@ -250,7 +253,10 @@ tasks:
         - az aks nodepool scale
           --cluster-name aks-dplplat01-01
           --nodepool-name system2
-          --resource-group rg-env-dplplat01
+          --resource-group
+            $(
+              terraform -chdir={{.dir_infra}} output -json | jq --raw-output ".resourcegroup_name.value | select (.!=null)"
+            )
           --node-count 3
 
     support:provision:cert-manager:
