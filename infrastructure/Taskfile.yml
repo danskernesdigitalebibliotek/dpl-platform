@@ -238,9 +238,9 @@ tasks:
           --resource-group rg-env-dplplat01
           --node-count 5
 
-    cluster:mode:business:
+    cluster:mode:reset:
       deps: [cluster:auth , lagoon:cli:config]
-      desc: "Set the cluster in release mode by adding additional nodes to release critical node pools"
+      desc: "Reset changes to the cluster mode returning it to standard operations."
       cmds:
         - az aks nodepool scale
           --cluster-name aks-dplplat01-01
