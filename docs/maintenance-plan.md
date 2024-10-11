@@ -67,12 +67,12 @@ Notes:
 
 ### Ingress Nginx
 
-Update interval:
-Release URL:
-Upgrade Docs URL:
-Expect downtime:
-Time to do:
-Runbook:
+Update interval: Monthly
+Release URL: <https://github.com/kubernetes/ingress-nginx/releases>
+Upgrade Docs URL: <https://kubernetes.github.io/ingress-nginx/deploy/upgrade/#with-helm>
+Expect downtime: Highly likely
+Time to do: Unkonwn
+Runbook: [Upgrading Nginx-ingresss](./runbooks/upgrading-support-workloads#ingress-nginx)
 Notes:
 
 ### K8up
