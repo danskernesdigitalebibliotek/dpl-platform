@@ -129,7 +129,7 @@ are notified about updates pretty quickly.
 Update interval:
 Release URL: <https://hub.docker.com/r/hashicorp/terraform/tags?page=1&ordering=last_updated>
 Upgrade Docs URL:
-Expect downtime:
+Expect downtime: None
 Time to do:
 Runbook:
 Notes:
@@ -139,7 +139,7 @@ Notes:
 Update interval:
 Release URL: <https://mcr.microsoft.com/v2/azure-cli/tags/list>
 Upgrade Docs URL:
-Expect downtime:
+Expect downtime: None
 Time to do:
 Runbook:
 Notes:
@@ -149,7 +149,7 @@ Notes:
 Update interval:
 Release URL: <https://github.com/Azure/kubelogin/releases>
 Upgrade Docs URL:
-Expect downtime:
+Expect downtime: None
 Time to do:
 Runbook:
 Notes:
@@ -159,7 +159,7 @@ Notes:
 Update interval:
 Release URL: <https://github.com/alenkacz/cert-manager-verifier/releases>
 Upgrade Docs URL:
-Expect downtime:
+Expect downtime: None
 Time to do:
 Runbook:
 Notes:
@@ -169,7 +169,7 @@ Notes:
 Update interval:
 Release URL: <https://github.com/go-task/task/releases>
 Upgrade Docs URL:
-Expect downtime:
+Expect downtime: None
 Time to do:
 Runbook:
 Notes:
@@ -189,7 +189,7 @@ Notes: Dependabot has not as of yet notified us of any available updates,
 Update interval:
 Release URL: <https://hub.docker.com/r/alpine/helm/tags?page=1&ordering=last_updated>
 Upgrade Docs URL:
-Expect downtime:
+Expect downtime: None
 Time to do:
 Runbook:
 Notes:
