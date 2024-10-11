@@ -99,12 +99,12 @@ As we're replacing Minio, we will have to do a section on what ever tool
 
 ### Prometheus
 
-Update interval:
-Release URL:
-Upgrade Docs URL:
-Expect downtime:
-Time to do:
-Runbook:
+Update interval: Weekly
+Release URL: <https://github.com/prometheus-community/helm-charts/releases?q=kube-prometheus-stack&expanded=true>
+Upgrade Docs URL: <https://artifacthub.io/packages/helm/prometheus-community/kube-prometheus-stack#upgrading-chart>
+Expect downtime: Probably, but nothing the libraries will be affected by
+Time to do: Unkown
+Runbook: [Upgrading Prometheus](./runbooks/upgrading-support-workloads.md#prometheus)
 Notes:
 
 ### Promtail
