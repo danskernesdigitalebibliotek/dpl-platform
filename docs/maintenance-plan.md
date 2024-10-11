@@ -176,13 +176,13 @@ Notes:
 
 ### Lagoon CLI
 
-Update interval:
-Release URL:
-Upgrade Docs URL:
-Expect downtime:
-Time to do:
+Update interval: Quaterly
+Release URL: <https://github.com/uselagoon/lagoon-cli/releases>
+Expect downtime: None
+Time to do: 1 hour
 Runbook:
-Notes:
+Notes: Dependabot has not as of yet notified us of any available updates,
+  so we have to check manually.
 
 ### Helm
 
