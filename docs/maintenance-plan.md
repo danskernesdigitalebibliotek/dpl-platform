@@ -109,12 +109,12 @@ Notes:
 
 ### Promtail
 
-Update interval:
-Release URL:
-Upgrade Docs URL:
-Expect downtime:
-Time to do:
-Runbook:
+Update interval: monthly-quarterly
+Release URL: <https://github.com/grafana/helm-charts/releases?q=promtail&expanded=true>
+Upgrade Docs URL: <https://github.com/grafana/helm-charts/blob/main/charts/promtail/README.md#upgrading>
+Expect downtime: Probably, but nothing that concerns the libraries.
+Time to do: Unknown
+Runbook: [Upgrading Promtail](./runbooks/upgrading-support-workloads.md#upgrade-promtail)
 Notes:
 
 ## DPL Shell parts
