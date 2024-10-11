@@ -127,7 +127,7 @@ are notified about updates pretty quickly.
 ### Terraform
 
 Update interval:
-Release URL:
+Release URL: <https://hub.docker.com/r/hashicorp/terraform/tags?page=1&ordering=last_updated>
 Upgrade Docs URL:
 Expect downtime:
 Time to do:
@@ -137,7 +137,7 @@ Notes:
 ### Azure CLI
 
 Update interval:
-Release URL:
+Release URL: <https://mcr.microsoft.com/v2/azure-cli/tags/list>
 Upgrade Docs URL:
 Expect downtime:
 Time to do:
@@ -147,7 +147,7 @@ Notes:
 ### KubeCTL
 
 Update interval:
-Release URL:
+Release URL: <https://github.com/Azure/kubelogin/releases>
 Upgrade Docs URL:
 Expect downtime:
 Time to do:
@@ -157,7 +157,7 @@ Notes:
 ### Krew
 
 Update interval:
-Release URL:
+Release URL: <https://github.com/alenkacz/cert-manager-verifier/releases>
 Upgrade Docs URL:
 Expect downtime:
 Time to do:
@@ -167,7 +167,7 @@ Notes:
 ### Task
 
 Update interval:
-Release URL:
+Release URL: <https://github.com/go-task/task/releases>
 Upgrade Docs URL:
 Expect downtime:
 Time to do:
@@ -187,7 +187,7 @@ Notes: Dependabot has not as of yet notified us of any available updates,
 ### Helm
 
 Update interval:
-Release URL:
+Release URL: <https://hub.docker.com/r/alpine/helm/tags?page=1&ordering=last_updated>
 Upgrade Docs URL:
 Expect downtime:
 Time to do:
