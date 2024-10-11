@@ -84,23 +84,18 @@ to a later version than version 1.x.x
 
 ### Loki
 
-Update interval:
-Release URL:
-Upgrade Docs URL:
-Expect downtime:
-Time to do:
-Runbook:
+Update interval: somewhat monthly
+Release URL: <https://artifacthub.io/packages/helm/grafana/loki>
+Upgrade Docs URL: <https://grafana.com/docs/loki/latest/setup/upgrade/>
+Expect downtime: Might be some, but nothing that will hit the libraries
+Time to do: Unkown
+Runbook: [Upgrade Loki](./runbooks/upgrading-support-workloads.md#loki)
 Notes:
 
 ### Minio
 
-Update interval:
-Release URL:
-Upgrade Docs URL:
-Expect downtime:
-Time to do:
-Runbook:
-Notes:
+As we're replacing Minio, we will have to do a section on what ever tool
+  we're replacing it with.
 
 ### Prometheus
 
