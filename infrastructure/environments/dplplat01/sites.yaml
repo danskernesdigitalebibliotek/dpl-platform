@@ -2,19 +2,19 @@
 x-defaults: &default-release-image-source
   releaseImageRepository: ghcr.io/danskernesdigitalebibliotek
   releaseImageName: dpl-cms-source
-  dpl-cms-release: "2024.41.1"
+  dpl-cms-release: "2024.43.1"
 x-webmaster: &webmaster-release-image-source
   releaseImageRepository: ghcr.io/danskernesdigitalebibliotek
   releaseImageName: dpl-cms-source
   dpl-cms-release: "2024.39.1"
-  moduletest-dpl-cms-release: "2024.41.1"
+  moduletest-dpl-cms-release: "2024.43.1"
 # Some sites on the webmaster plan wish to track the same release as
 # sites do per default in dpl-cms-release.
 x-webmaster-with-defaults: &webmaster-with-defaults-release-image-source
   # Reference default before webmaster anchor as YAML references will not
   # override existing keys.
   <<: *default-release-image-source
-  moduletest-dpl-cms-release: "2024.41.1"
+  moduletest-dpl-cms-release: "2024.43.1"
 sites:
   # Site objects are indexed by a unique key that must be a valid lagoon, and
   # github project name. That is, alphanumeric and dashes.
@@ -24,9 +24,9 @@ sites:
     description: "A site for developers and operators to test on"
     releaseImageRepository: ghcr.io/danskernesdigitalebibliotek
     releaseImageName: dpl-cms-source
-    dpl-cms-release: "2024.43.0"
+    dpl-cms-release: "2024.43.1"
     plan: webmaster
-    moduletest-dpl-cms-release: "2024.43.0"
+    moduletest-dpl-cms-release: "2024.43.1"
     deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIIhuA0K7CNvRoe+Xx7RaXG4+a8KcSpzuWn+G4sUPzNWx"
   customizable-canary:
     name: "Customizable bibliotek - eksempel"
