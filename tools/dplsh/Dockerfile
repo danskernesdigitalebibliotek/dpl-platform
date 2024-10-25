@@ -2,7 +2,7 @@ ARG DPLSH_BUILD_VERSION=latest
 
 # Use an intermediate images as a way to have dependabot track our dependency
 # https://hub.docker.com/r/alpine/helm/tags?page=1&ordering=last_updated
-FROM alpine/helm:3.16.2 as helm
+FROM alpine/helm:3.15.4 as helm
 
 # https://hub.docker.com/r/hashicorp/terraform/tags?page=1&ordering=last_updated
 FROM hashicorp/terraform:1.9.5 as terraform
@@ -10,7 +10,7 @@ FROM hashicorp/terraform:1.9.5 as terraform
 # We use the official azure cli as a base-image. It is itself based on alpine
 # and is quite minimal.
 # https://mcr.microsoft.com/v2/azure-cli/tags/list
-FROM mcr.microsoft.com/azure-cli:2.65.0
+FROM mcr.microsoft.com/azure-cli:2.63.0
 
 # See https://github.com/go-task/task/releases
 ARG TASK_VERSION=v3.36.0
@@ -25,7 +25,7 @@ ARG KREW_VERSION=v0.4.4
 ARG CERT_MANAGER_VERIFIER_VERSION=0.3.0
 
 # The kubectl version can be bumped as we upgrade the cluster minor version.
-ARG KUBECTL_VERSION=v1.27.9
+ARG KUBECTL_VERSION=v1.29.5
 # kubelogin is a client-go credential plugin implementing azure authentication.
 # https://github.com/Azure/kubelogin/releases
 ARG KUBELOGIN_VERSION=v0.0.34
@@ -34,6 +34,9 @@ LABEL org.opencontainers.image.source https://github.com/danskernesdigitalebibli
 
 SHELL ["/bin/bash", "-ox", "pipefail", "-c"]
 WORKDIR /tmp
+
+RUN wget http://dl-cdn.alpinelinux.org/alpine/v3.5/main/x86_64/apk-tools-static-2.6.8-r1.apk
+RUN tar -zxvf apk-tools-static-2.6.8-r1.apk
 
 RUN az aks install-cli --kubelogin-version ${KUBELOGIN_VERSION} --client-version ${KUBECTL_VERSION}
 RUN apk add --no-cache \
