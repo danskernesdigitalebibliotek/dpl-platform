@@ -35,9 +35,6 @@ LABEL org.opencontainers.image.source https://github.com/danskernesdigitalebibli
 SHELL ["/bin/bash", "-ox", "pipefail", "-c"]
 WORKDIR /tmp
 
-RUN wget http://dl-cdn.alpinelinux.org/alpine/v3.5/main/x86_64/apk-tools-static-2.6.8-r1.apk
-RUN tar -zxvf apk-tools-static-2.6.8-r1.apk
-
 RUN az aks install-cli --kubelogin-version ${KUBELOGIN_VERSION} --client-version ${KUBECTL_VERSION}
 RUN apk add --no-cache \
   bash-completion \
