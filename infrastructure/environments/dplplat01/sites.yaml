@@ -320,8 +320,8 @@ sites:
     deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFwCP4jEJTjUyPTNlOJd7dHaT63C1iox9PPWl/Ck7IJH"
     primary-domain: guldbib.dk
     secondary-domains:
-    autogenerateRoutes: true
       - www.guldbib.dk
+    autogenerateRoutes: true
     <<: *default-release-image-source
   haderslev:
     name: "Haderslev Bibliotekerne"
