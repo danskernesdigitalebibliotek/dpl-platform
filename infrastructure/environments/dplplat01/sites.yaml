@@ -146,6 +146,9 @@ sites:
     name: "Brøndby-Bibliotekerne"
     description: "The library site for Brøndby"
     deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAICyvaCXo55aJOmlSTDQr+GXCIihWMJHhUiw4XpDrbVID"
+    primary-domain: www.brondby-bibliotekerne.dk
+    secondary-domains:
+      - brondby-bibliotekerne.dk
     <<: *default-release-image-source
   bronderslev:
     name: "Brønderslev Bibliotek"
@@ -169,6 +172,9 @@ sites:
     name: "Egedal Bibliotekerne"
     description: "The library site for Egedal"
     deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDCT5ZJIKWlbAYV5Fnr9Qq5WaVIuZKfcLucqTebUpXyz"
+    primary-domain: egedalbibliotekerne.dk
+    secondary-domains:
+      - www.egedalbibliotekerne.dk
     <<: *default-release-image-source
   esbjerg:
     name: "Esbjerg Kommunes Biblioteker"
@@ -310,6 +316,9 @@ sites:
     name: "Guldborgsund-bibliotekerne"
     description: "The library site for Guldborgsund"
     deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFwCP4jEJTjUyPTNlOJd7dHaT63C1iox9PPWl/Ck7IJH"
+    primary-domain: guldbib.dk
+    secondary-domains:
+      - www.guldbib.dk
     <<: *default-release-image-source
   haderslev:
     name: "Haderslev Bibliotekerne"
@@ -758,6 +767,9 @@ sites:
     name: "Sorø Bibliotek"
     description: "The library site for Sorø"
     deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHmUt7ZK7IAXv9t8rDAfnrdYdBdPDy63rMDnHCW1E+xZ"
+    primary-domain: www.soroebib.dk
+    secondary-domains:
+      - soroebib.dk
     <<: *default-release-image-source
   stevns:
     name: "Stevns Bibliotekerne"
