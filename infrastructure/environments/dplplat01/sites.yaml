@@ -149,6 +149,7 @@ sites:
     primary-domain: www.brondby-bibliotekerne.dk
     secondary-domains:
       - brondby-bibliotekerne.dk
+    autogenerateRoutes: true
     <<: *default-release-image-source
   bronderslev:
     name: "Brønderslev Bibliotek"
@@ -175,6 +176,7 @@ sites:
     primary-domain: egedalbibliotekerne.dk
     secondary-domains:
       - www.egedalbibliotekerne.dk
+    autogenerateRoutes: true
     <<: *default-release-image-source
   esbjerg:
     name: "Esbjerg Kommunes Biblioteker"
@@ -318,6 +320,7 @@ sites:
     deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFwCP4jEJTjUyPTNlOJd7dHaT63C1iox9PPWl/Ck7IJH"
     primary-domain: guldbib.dk
     secondary-domains:
+    autogenerateRoutes: true
       - www.guldbib.dk
     <<: *default-release-image-source
   haderslev:
@@ -770,6 +773,7 @@ sites:
     primary-domain: www.soroebib.dk
     secondary-domains:
       - soroebib.dk
+    autogenerateRoutes: true
     <<: *default-release-image-source
   stevns:
     name: "Stevns Bibliotekerne"
