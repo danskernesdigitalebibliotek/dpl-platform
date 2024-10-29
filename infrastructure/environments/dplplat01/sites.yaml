@@ -40,9 +40,12 @@ sites:
   staging:
     name: "Staging"
     description: "A site to test new releases on"
-    deploy_key: ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBLUrrxfwsfwz4nkn/WCbMUbLHkTFvyYB2uusHLA7NlH
+    releaseImageRepository: ghcr.io/danskernesdigitalebibliotek
+    releaseImageName: dpl-cms-source
+    dpl-cms-release: "2024.43.1"
     plan: webmaster
-    <<: *webmaster-with-defaults-release-image-source
+    moduletest-dpl-cms-release: "2024.43.1"
+    deploy_key: ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBLUrrxfwsfwz4nkn/WCbMUbLHkTFvyYB2uusHLA7NlH
   cms-school:
     name: "CMS-skole"
     description: "Et site til undervisning i CMSet"
