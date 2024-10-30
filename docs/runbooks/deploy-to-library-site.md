@@ -32,7 +32,8 @@ production library sites.
 9. Wait for the deployment to complete.
 10. If the deployment does not complete determine if the error relates to the
     platform or the application.
-11. If it is a platform-related error then try to redeploy the environment.
+11. If it is a platform-related error then try to redeploy the environment from
+    the Lagoon UI.
 12. Merge the pull request once the deployment completes.
 
 ### Procedure: New version to library sites
