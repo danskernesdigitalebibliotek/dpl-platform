@@ -21,17 +21,16 @@ production library sites.
 1. In your local environment ensure that your checkout of the `main` branch for
    `dpl-platform` is up to date.
 2. Create a new branch from `main`.
-3. Update `infrastructure/environments/dplplat01/sites.yaml` by setting the
-   value for `dpl-cms-release` for the site `canary` to the new version to use
-   for the site to update.
+3. Open `infrastructure/environments/dplplat01/sites.yaml`, find `staging`, 
+   then update the value of `dpl-cms-release` for `staging` to the version
 4. Commit the change and push your branch to GitHub and create a pull request.
 5. Request a review for the change and wait for approval.
 6. Start `dplsh` from the `/infrastructure` directory of your local
    environment.
-7. Run `SITE=canary task site:full-sync` to deploy the changes.
+7. Run `SITE=staging task site:full-sync` to deploy the changes.
 8. If there are any Terraform changes then do not apply them, abort the
    deployment and consult the platform team.
-9. Open the deployment section for the `canary` project in the Lagoon UI.
+9. Open the deployment section for the `staging` project in the Lagoon UI.
 10. Wait for the deployment to complete.
 11. If the deployment does not complete determine if the error relates to the
     platform or the application.
