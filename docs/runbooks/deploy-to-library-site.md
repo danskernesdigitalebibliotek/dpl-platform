@@ -26,7 +26,7 @@ production library sites.
 4. Commit the change and push your branch to GitHub and create a pull request.
 5. Request a review for the change and wait for approval.
 6. Start `dplsh` from the `/infrastructure` directory of your local
-   environment.
+   environment by running `../tools/dplsh/dplsh.sh`.
 7. Run `SITE=staging task sites:sync` to deploy the changes.
 8. Open the deployment section for the `staging` project in the Lagoon UI.
 9. Wait for the deployment to complete.
@@ -46,7 +46,7 @@ production library sites.
 4. Commit the change and push your branch to GitHub and create a pull request.
 5. Request a review for the change and wait for approval.
 6. Start `dplsh` from the `/infrastructure` directory of your local
-   environment.
+   environment by running `../tools/dplsh/dplsh.sh`
 7. Run `task sites:sync` from `dplsh` to deploy the changes.
 8. If there are any Terraform changes then do not apply them, abort the
    deployment and consult the platform team.
