@@ -27,15 +27,13 @@ production library sites.
 5. Request a review for the change and wait for approval.
 6. Start `dplsh` from the `/infrastructure` directory of your local
    environment.
-7. Run `SITE=staging task site:full-sync` to deploy the changes.
-8. If there are any Terraform changes then do not apply them, abort the
-   deployment and consult the platform team.
-9. Open the deployment section for the `staging` project in the Lagoon UI.
-10. Wait for the deployment to complete.
-11. If the deployment does not complete determine if the error relates to the
+7. Run `SITE=staging task sites:sync` to deploy the changes.
+8. Open the deployment section for the `staging` project in the Lagoon UI.
+9. Wait for the deployment to complete.
+10. If the deployment does not complete determine if the error relates to the
     platform or the application.
-12. If it is a platform-related error then try to redeploy the environment.
-13. Merge the pull request once the deployment completes.
+11. If it is a platform-related error then try to redeploy the environment.
+12. Merge the pull request once the deployment completes.
 
 ### Procedure: New version to library sites
 
