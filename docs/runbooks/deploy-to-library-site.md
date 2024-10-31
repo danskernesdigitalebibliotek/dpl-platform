@@ -21,7 +21,7 @@ production library sites.
 1. In your local environment ensure that your checkout of the `main` branch for
    `dpl-platform` is up to date.
 2. Create a new branch from `main`.
-3. Open `infrastructure/environments/dplplat01/sites.yaml`, find `staging`, 
+3. Open `infrastructure/environments/dplplat01/sites.yaml`, find `staging`,
    then update the value of `dpl-cms-release` for `staging` to the version
 4. Commit the change and push your branch to GitHub and create a pull request.
 5. Request a review for the change and wait for approval.
