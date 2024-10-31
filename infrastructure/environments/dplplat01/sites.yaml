@@ -15,6 +15,11 @@ x-webmaster-with-defaults: &webmaster-with-defaults-release-image-source
   # override existing keys.
   <<: *default-release-image-source
   moduletest-dpl-cms-release: "2024.44.0"
+x-webmasters-skipping-update-44.0: &webmaster-skipping-44
+  releaseImageRepository: ghcr.io/danskernesdigitalebibliotek
+  releaseImageName: dpl-cms-source
+  dpl-cms-release: "2024.39.1"
+  moduletest-dpl-cms-release: "2024.44.0"
 sites:
   # Site objects are indexed by a unique key that must be a valid lagoon, and
   # github project name. That is, alphanumeric and dashes.
