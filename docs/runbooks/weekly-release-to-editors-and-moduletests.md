@@ -44,3 +44,8 @@ the production environments of webmasters.
 16. Run `task cluster:adjust:resource-request` from `dplsh`.
 17. Run `task cluster:promote-workloads-to-prod` from `dplsh`.
 18. Run 'task cluster:mode:reset' from `dplsh`.
+
+## Procedure: a some sites fails to deploy
+
+We have experience this quite a lot. We have gathered a list of known
+issues and how to solve them a troubleshoot [runbook](troubleshoot-release-deployment.md)

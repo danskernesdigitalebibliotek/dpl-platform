@@ -34,3 +34,8 @@ production library sites.
 11. If it is a platform-related error then try to redeploy the environment from
     the Lagoon UI.
 12. Merge the pull request once the deployment completes.
+
+## Procedure: a some sites fails to deploy
+
+We have experience this quite a lot. We have gathered a list of known
+issues and how to solve them a troubleshoot [runbook](troubleshoot-release-deployment.md)
