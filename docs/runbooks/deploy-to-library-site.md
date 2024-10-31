@@ -13,33 +13,6 @@ which have been added to the platform](add-library-site-to-platform.md).
 * The version tag you want to deploy. This must correspond to a
   tagged version of the [`dpl-cms-source` image](https://github.com/danskernesdigitalebibliotek/dpl-cms/pkgs/container/dpl-cms-source).
 
-## Procedure: New version to library sites
-
-1. In your local environment ensure that your checkout of the `main` branch for
-   `dpl-platform` is up to date.
-2. Create a new branch from `main`.
-3. Update `infrastructure/environments/dplplat01/sites.yaml` by setting the
-   value for `dpl-cms-release` and `moduletest-dpl-cms-release` for [appropriate
-   anchors](#deploy-to-a-subset-of-sites).
-4. Commit the change and push your branch to GitHub and create a pull request.
-5. Request a review for the change and wait for approval.
-6. Start `dplsh` from the `/infrastructure` directory of your local
-   environment by running `../tools/dplsh/dplsh.sh`
-7. Run `task sites:sync` from `dplsh` to deploy the changes.
-8. If there are any Terraform changes then do not apply them, abort the
-   deployment and consult the platform team.
-9. Open the Deployments list page within the Lagoon UI to see all running and
-   queued deployments.
-10. Wait for all the deployment to complete.
-11. Run `task sites:incomplete-deployments` to identify any failed deployments.
-12. If some deployments do not complete determine if the error relates to the
-    platform or the application.
-13. For all platform-related errors then try to redeploy the environment from
-    the Lagoon UI.
-14. Merge the pull request once the deployment completes.
-15. Run `task cluster:adjust:resource-request` from `dplsh`.
-16. Run `task cluster:promote-workloads-to-prod` from `dplsh`.
-
 ## Deploy to a subset of sites
 
 When deploying a new version you will usually deploy it to a subset of all
