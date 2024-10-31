@@ -385,7 +385,7 @@ sites:
       - herningbib.dk
     autogenerateRoutes: true
     plan: webmaster
-    <<: *webmaster-release-image-source
+    <<: *webmaster-skipping-44
   hillerod:
     name: "Hillerød Bibliotekerne"
     description: "The library site for Hillerød"
