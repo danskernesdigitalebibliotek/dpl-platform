@@ -57,7 +57,7 @@ production library sites.
 11. Run `task sites:incomplete-deployments` to identify any failed deployments.
 12. If some deployments do not complete determine if the error relates to the
     platform or the application.
-13. For all platform-related errors then try to redeploy the environment from 
+13. For all platform-related errors then try to redeploy the environment from
     the Lagoon UI.
 14. Merge the pull request once the deployment completes.
 15. Run `task cluster:adjust:resource-request` from `dplsh`.
