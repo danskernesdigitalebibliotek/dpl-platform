@@ -13,7 +13,7 @@ which have been added to the platform](add-library-site-to-platform.md).
 * The version tag you want to deploy. This must correspond to a
   tagged version of the [`dpl-cms-source` image](https://github.com/danskernesdigitalebibliotek/dpl-cms/pkgs/container/dpl-cms-source).
 
-### Procedure: New version for testing
+## Procedure: New version for testing
 
 Use this procedure to deploy a new version for testing before it is released to
 production library sites.
@@ -36,7 +36,7 @@ production library sites.
     the Lagoon UI.
 12. Merge the pull request once the deployment completes.
 
-### Procedure: New version to library sites
+## Procedure: New version to library sites
 
 1. In your local environment ensure that your checkout of the `main` branch for
    `dpl-platform` is up to date.
@@ -63,7 +63,7 @@ production library sites.
 15. Run `task cluster:adjust:resource-request` from `dplsh`.
 16. Run `task cluster:promote-workloads-to-prod` from `dplsh`.
 
-#### Deploy to a subset of sites
+## Deploy to a subset of sites
 
 When deploying a new version you will usually deploy it to a subset of all
 the available sites and environments. The commonly used subsets correspond to a
