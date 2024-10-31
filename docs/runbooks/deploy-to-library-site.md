@@ -132,7 +132,7 @@ If log output for the deployment contains the following during the *Post-Rollout
 drush deploy* stage of the deployment then redeploy the environment from the
 Lagoon UI:
 
-`Drupal\Core\Database\DatabaseExceptionWrapper: SQLSTATE[HY000]: General error: 
+`Drupal\Core\Database\DatabaseExceptionWrapper: SQLSTATE[HY000]: General error:
 2006 MySQL server has gone away`
 
 This may be caused by intermittent database problems caused by spike in load
