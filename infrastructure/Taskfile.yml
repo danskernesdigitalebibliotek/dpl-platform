@@ -1085,6 +1085,20 @@ tasks:
       preconditions:
       - *require_site
 
+    site:environment:sync:
+      desc: |
+        Synchonizes all file and database tables from environment
+        to another on make on environment a complete copy of the source.
+      deps: [lagoon:cli:config]
+      dir: "{{.dir_env}}"
+      vars:
+        SOURCE_PROJECT: "{{.SOURCE_PROJECT}}"
+        SOURCE_ENV: "{{.SOURCE_ENV}}"
+        TARGET_PROJECT: "{{.TARGET_PROJECT}}"
+        TARGET_ENV: "{{.TARGET_ENV}}"
+      cmds:
+        - lagoon ssh --project {{.TARGET_PROJECT}} --environment {{.TARGET_ENV}} -C "drush -y rsync @lagoon.{{.SOURCE_PROJECT}}-{{.SOURCE_ENV}}:%files @self:%files -- --omit-dir-times --no-perms --no-group --no-owner --no-times --chmod=ugo=rwX --delete; drush -y sql-sync @lagoon.{{.SOURCE_PROJECT}}-{{.SOURCE_ENV}} @self; drush cr -y"
+
     sites:check-caa:
       desc: |
         Checks if a site's primary and secondary domains have CAA records registered, and if they do report it.
