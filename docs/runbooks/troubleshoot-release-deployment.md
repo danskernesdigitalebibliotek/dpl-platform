@@ -9,13 +9,13 @@ most likely responsible:
 * All deployment steps prefixed with *Post-Rollout*: Application developers
 * All other errors: Platform administrators
 
-### Platform-related errors
+## Platform-related errors
 
 A Lagoon deployment can end up with a *Failed* status. If this is the case then
 the following errors may show up in the log output shown for the deployment in
 the Lagoon UI.
 
-#### TLS handshake timeout
+### TLS handshake timeout
 
 If the log output of a deployment contains the following during various stages
 of the deployment then redeploy the environment from the Lagoon UI:
@@ -24,7 +24,7 @@ of the deployment then redeploy the environment from the Lagoon UI:
 
 This may be caused by a spike in load during deployment.
 
-#### Context deadline exceeded
+### Context deadline exceeded
 
 If the log output of a deployment contains the following then redeploy the
 environment from the Lagoon UI:
@@ -33,7 +33,7 @@ environment from the Lagoon UI:
 
 This may be caused by a spike in load during deployment.
 
-#### Harbor authentication failed
+### Harbor authentication failed
 
 If log output for the deployment contains the following during the *Image Push
 to Registry* stage of the deployment then redeploy the environment from the
@@ -46,7 +46,7 @@ sha256:[SHA] at destination: checking whether a blob sha256:[SHA] exists in
 This is caused by [a bug in Harbor](https://github.com/goharbor/harbor/issues/18971).
 It should be addressed in a future update of this part of the platform.
 
-#### MySQL server has gone away
+### MySQL server has gone away
 
 If log output for the deployment contains the following during the *Post-Rollout
 drush deploy* stage of the deployment then redeploy the environment from the
