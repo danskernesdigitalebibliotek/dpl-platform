@@ -57,3 +57,33 @@ Lagoon UI:
 
 This may be caused by intermittent database problems caused by spike in load
 during deployments.
+
+### Service deployment exceeded its progress deadline
+
+If log output for the deployment contains the following during the *Applying
+Deployments* stage of the deployment then redeploy the environment from the
+Lagoon UI:
+
+```shell
+Waiting for deployment "[Service]" rollout to finish: 1 old replicas are pending
+termination...
+error: deployment "varnish" exceeded its progress deadline`
+```
+
+This may be caused by a spike in load during deployment.
+
+### Drush bootstrap failed
+
+If log output for the deployment contains the following during the *Post-Rollout
+drush deploy* stage of the deployment then redeploy the environment from the
+Lagoon UI:
+
+```shell
+The command "/app/vendor/bin/drush updatedb --uri=https://[Domain]" failed.`
+Exit Code: 1(General error)
+[...]
+Bootstrap failed. [...]
+```
+
+This may be caused by intermittent database problems caused by spike in load
+during deployments.
