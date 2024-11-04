@@ -1099,6 +1099,16 @@ tasks:
       cmds:
         - lagoon ssh --project {{.TARGET_PROJECT}} --environment {{.TARGET_ENV}} -C "drush -y rsync @lagoon.{{.SOURCE_PROJECT}}-{{.SOURCE_ENV}}:%files @self:%files -- --omit-dir-times --no-perms --no-group --no-owner --no-times --chmod=ugo=rwX --delete; drush -y sql-sync @lagoon.{{.SOURCE_PROJECT}}-{{.SOURCE_ENV}} @self; drush cr -y"
 
+    sites:webmaster:reset-moduletests:
+      desc: Reset all webmaster moduletests. It is possible to exempt some.
+      deps: [lagoon:cli:config]
+      vars:
+        webmasters:
+          sh: yq '... comments="" | .sites | with_entries(select(.value | has("plan"))) | keys | .[]' {{.dir_env}}/sites.yaml
+      cmds:
+        - for: { var: webmasters }
+          cmd: echo "{{.ITEM}}"
+
     sites:check-caa:
       desc: |
         Checks if a site's primary and secondary domains have CAA records registered, and if they do report it.
