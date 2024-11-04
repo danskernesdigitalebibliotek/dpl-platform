@@ -1106,8 +1106,13 @@ tasks:
         webmasters:
           sh: yq '... comments="" | .sites | with_entries(select(.value | has("plan"))) | keys | .[]' {{.dir_env}}/sites.yaml
       cmds:
-        - for: { var: webmasters }
-          cmd: echo "{{.ITEM}}"
+        - for: ["canary", "customizable-canary"]
+          task: site:environment:sync
+          vars:
+            TARGET_PROJECT: "{{.ITEM}}"
+            TARGET_ENV: "moduletest"
+            SOURCE_PROJECT: "{{.ITEM}}"
+            SOURCE_ENV: "main"
 
     sites:check-caa:
       desc: |
