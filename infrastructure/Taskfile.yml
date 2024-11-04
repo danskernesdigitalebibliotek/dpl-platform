@@ -1106,7 +1106,7 @@ tasks:
         webmasters:
           sh: yq '... comments="" | .sites | with_entries(select(.value | has("plan"))) | keys | .[]' {{.dir_env}}/sites.yaml
       cmds:
-        - for: ["canary", "customizable-canary"]
+        - for: { var: webmasters }
           task: site:environment:sync
           vars:
             TARGET_PROJECT: "{{.ITEM}}"
