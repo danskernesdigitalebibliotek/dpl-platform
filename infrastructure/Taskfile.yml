@@ -1134,7 +1134,7 @@ tasks:
           lagoon raw --raw "query allProjects {
             allProjects {
             name
-              environments(type: PRODUCTION) {
+              environments(type: DEVELOPMENT) {
                 name
                 deployments(limit: 1) {
                   status
@@ -1143,6 +1143,12 @@ tasks:
               }
             }
           }" | jq -r '.allProjects[] | .name as $name | .environments[].deployments[] | select(.status != "complete") | ($name) + ": " + (.status)' 
+
+    sites:redeploy-failed-deployments:
+      deps: [lagoon:cli:config]
+      desc: redeployyes all failed deployments
+      cmds:
+        - task/scripts/redeploy-failed-deployments.sh
 
     sites:grep-in-deploy-log:
       desc: |
