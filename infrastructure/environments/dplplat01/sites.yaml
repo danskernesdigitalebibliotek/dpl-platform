@@ -417,6 +417,10 @@ sites:
     name: "Holbæk Bibliotekerne"
     description: "The library site for Holbæk"
     deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIL6uSbRiMzeDVejoPx5+YlAPCHebnY0XwF/zDd3YZtQ+"
+    primary-domain: bibliotek.holbaek.dk
+    secondary-domains:
+      - www.bibliotek.holbaek.dk
+    autogenerateRoutes: true
     <<: *default-release-image-source
   holstebro:
     name: "Holstebro Bibliotek"
