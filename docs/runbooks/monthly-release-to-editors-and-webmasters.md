@@ -48,8 +48,7 @@ release - 1. This usually mean last weeks release.
 17. Run `task cluster:promote-workloads-to-prod` from `dplsh`.
 18. Synchronize moduletest with main, so moduletest becomes an exact
     copy of main by running `task sites:webmaster:reset-moduletest`.
-19. Reset the webmaster moduletest environments.
-20. Run 'task cluster:mode:reset' from `dplsh`.
+19. Run 'task cluster:mode:reset' from `dplsh`.
 
 ## Procedure: a some sites fails to deploy
 
