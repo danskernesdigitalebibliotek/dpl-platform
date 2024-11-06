@@ -1224,6 +1224,7 @@ tasks:
           | xargs -n 1 -I % bash -c 'set -e; if (( $(curl -s https://varnish.main.%.dplplat01.dpl.reload.dk/ | grep "\"header__logo-desktop-link\"" -A 8 | grep "\"logo-fallback\s*\"" -A 4 | grep "Logo title (bold)" | wc -l) > 0 )); then echo "% not yet set up"; fi'
 
     certs:clear-queue:
+      deps: [cluster:auth]
       desc: |
         Because cert-manager sometimes hangs while provisioning certificates it helps to clear the whole queue
         of uncompleted certificates. This command removes any certificate that has an order not in either
