@@ -1100,7 +1100,7 @@ tasks:
         - lagoon ssh --project {{.TARGET_PROJECT}} --environment {{.TARGET_ENV}} -C "drush -y rsync @lagoon.{{.SOURCE_PROJECT}}-{{.SOURCE_ENV}}:%files @self:%files -- --omit-dir-times --no-perms --no-group --no-owner --no-times --chmod=ugo=rwX --delete; drush -y sql-sync @lagoon.{{.SOURCE_PROJECT}}-{{.SOURCE_ENV}} @self; drush cr -y"
 
     sites:webmaster:reset-moduletests:
-      desc: Reset all webmaster moduletests. It is possible to exempt some.
+      desc: Reset all webmaster moduletests
       deps: [lagoon:cli:config]
       vars:
         webmasters:
