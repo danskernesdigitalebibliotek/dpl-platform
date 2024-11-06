@@ -46,7 +46,8 @@ release - 1. This usually mean last weeks release.
 15. Merge the pull request once the deployment completes.
 16. Run `task cluster:adjust:resource-request` from `dplsh`.
 17. Run `task cluster:promote-workloads-to-prod` from `dplsh`.
-18. Reset the webmaster moduletest environments.
+18. Synchronize moduletest with main, so moduletest becomes an exact
+    copy of main by running `task sites:webmaster:reset-moduletest`.
 19. Run 'task cluster:mode:reset' from `dplsh`.
 
 ## Procedure: a some sites fails to deploy
