@@ -44,7 +44,7 @@ FAILED_DEVELOPMENT_DEPLOYMENTS=$(lagoon raw --raw "query allProjects {
   }
 }" | jq -r '.allProjects[] | .name as $name | .environments[].deployments[] | select(.status == "failed") | ($name)')
 
-echo "redeploying failed moduletest environments"
+echo "Redeploying failed moduletest environments"
 
 for deployment in $FAILED_DEVELOPMENT_DEPLOYMENTS; do
   if [[ $deployment =~ "dpl-cms" ]]; then
