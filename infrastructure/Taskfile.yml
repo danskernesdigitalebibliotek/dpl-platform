@@ -1134,7 +1134,7 @@ tasks:
           lagoon raw --raw "query allProjects {
             allProjects {
             name
-              environments(type: DEVELOPMENT) {
+              environments(type: PRODUCTION) {
                 name
                 deployments(limit: 1) {
                   status
