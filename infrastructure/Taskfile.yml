@@ -1146,7 +1146,7 @@ tasks:
 
     sites:redeploy-failed-deployments:
       deps: [lagoon:cli:config]
-      desc: redeployyes all failed deployments
+      desc: Redeploys all failed deployments
       cmds:
         - task/scripts/redeploy-failed-deployments.sh
 
