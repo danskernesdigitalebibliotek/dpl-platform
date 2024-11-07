@@ -3,7 +3,7 @@
 # 80% of failed deployments is fixed by redeploying the failed deployment.
 # This script will help make that easier to do.
 
-echo "Will now start to redeployg failed deployments"
+echo "Will now start to redeploying failed deployments"
 echo "Finding failed main environments"
 
 FAILED_PRODUCTION_DEPLOYMENTS=$(lagoon raw --raw "query allProjects {
