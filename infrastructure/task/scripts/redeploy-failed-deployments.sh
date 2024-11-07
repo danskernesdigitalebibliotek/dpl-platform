@@ -19,7 +19,7 @@ FAILED_PRODUCTION_DEPLOYMENTS=$(lagoon raw --raw "query allProjects {
   }
 }" | jq -r '.allProjects[] | .name as $name | .environments[].deployments[] | select(.status == "failed") | ($name)')
 
-echo "redeploying failed production environments"
+echo "Redeploying failed production environments"
 
 for deployment in $FAILED_PRODUCTION_DEPLOYMENTS; do
   if [[ $deployment =~ "dpl-cms" ]]; then
