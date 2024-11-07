@@ -1144,6 +1144,12 @@ tasks:
             }
           }" | jq -r '.allProjects[] | .name as $name | .environments[].deployments[] | select(.status != "complete") | ($name) + ": " + (.status)' 
 
+    sites:redeploy-failed-deployments:
+      deps: [lagoon:cli:config]
+      desc: Redeploys all failed deployments
+      cmds:
+        - task/scripts/redeploy-failed-deployments.sh
+
     sites:grep-in-deploy-log:
       desc: |
         Given a needle `NEEDLE` this task finds all sites whose *latest* deployment log contains a given string
