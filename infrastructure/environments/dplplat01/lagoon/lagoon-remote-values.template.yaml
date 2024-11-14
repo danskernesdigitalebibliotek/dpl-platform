@@ -8,7 +8,7 @@ lagoon-build-deploy:
     - "--harbor-username=admin"
     - "--harbor-password=$HARBOR_ADMIN_PASS"
     - "--enable-qos"
-    - "--qos-max-builds=8"
+    - "--qos-max-builds=4"
   rabbitMQUsername: "lagoon"
   rabbitMQPassword: "$RABBITMQ_PASS"
   rabbitMQHostname: "lagoon-core-broker.lagoon-core.svc.cluster.local"
