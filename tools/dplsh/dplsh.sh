@@ -216,13 +216,20 @@ if [[ -z "${DPLSH_NON_INTERACTIVE:-}" ]]; then
   ADDITIONAL_ARGS+=(-i)
 fi
 
+# Only mount in ${HOME}/.gitconfig if it exists. Otherwise docker will
+# create an empty, root owned {HOME}/.gitconfig which will make git
+# very unhappy.
+if [[ -f "${HOME}/.gitconfig" ]] ; then
+    GITCONFIG+=(-v "${HOME}/.gitconfig:/opt/.gitconfig-host:ro")
+fi
+
 docker run --hostname=dplsh \
     --rm \
     "${ADDITIONAL_ARGS[@]}" \
     -t \
     -e "HOST_UID=$(id -u)" \
     -v "${HOME}/.azure:/opt/.azure-host:ro" \
-    -v "${HOME}/.gitconfig:/opt/.gitconfig-host:ro" \
+    "${GITCONFIG[@]}" \
     -v "${HOME}/.ssh:/opt/.ssh-host:ro" \
     -v "${SHELL_ROOT}:/home/dplsh/host_mount" \
     -w "/home/dplsh/host_mount/${CHDIR}" \
