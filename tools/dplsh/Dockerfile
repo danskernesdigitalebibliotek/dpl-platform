@@ -13,11 +13,11 @@ FROM hashicorp/terraform:1.9.5 as terraform
 FROM mcr.microsoft.com/azure-cli:2.63.0
 
 # See https://github.com/go-task/task/releases
-ARG TASK_VERSION=v3.36.0
+ARG TASK_VERSION=v3.40.0
 # See https://github.com/stern/stern/releases
-ARG STERN_RELEASE=1.27.0
+ARG STERN_RELEASE=1.31.0
 # See https://github.com/uselagoon/lagoon-cli/releases
-ARG LAGOON_CLI_RELEASE=v0.21.3
+ARG LAGOON_CLI_RELEASE=v0.31.1
 # See https://github.com/kubernetes-sigs/krew/releases
 ARG KREW_VERSION=v0.4.4
 # https://github.com/alenkacz/cert-manager-verifier/releases
