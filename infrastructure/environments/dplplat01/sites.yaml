@@ -31,7 +31,7 @@ sites:
     releaseImageName: dpl-cms-source
     dpl-cms-release: "2024.43.1"
     plan: webmaster
-    moduletest-dpl-cms-release: "2024.44.0"
+    moduletest-dpl-cms-release: "2024.47.1"
     deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIIhuA0K7CNvRoe+Xx7RaXG4+a8KcSpzuWn+G4sUPzNWx"
   customizable-canary:
     name: "Customizable bibliotek - eksempel"
@@ -40,7 +40,7 @@ sites:
     releaseImageName: dpl-cms-source
     plan: webmaster
     dpl-cms-release: "2024.43.1"
-    moduletest-dpl-cms-release: "2024.43.1"
+    moduletest-dpl-cms-release: "2024.47.1"
     deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAILj8lXv7C/7s7te9sEpwcHQhgDWfzsCkAN7rqQ4sdTzk"
   staging:
     name: "Staging"
