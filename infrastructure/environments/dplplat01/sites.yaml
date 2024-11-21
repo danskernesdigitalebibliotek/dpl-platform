@@ -846,6 +846,11 @@ sites:
     primary-domain: bib.kulturrummet.dk
     autogenerateRoutes: true
     <<: *default-release-image-source
+  torshavn:
+    name: "Bibliotekerne i Torshavn kommune"
+    description: "The library site for Torshavn municipality"
+    deploy_key: ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKn1Sp3+OYALypBUk3qo9VLL3jl9vbKa/29/tzALzm7W
+    <<: *default-release-image-source
   vallensbaek:
     name: "Vallensbæk Bibliotek"
     description: "The library site for Vallensbæk"
