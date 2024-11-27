@@ -1,0 +1,28 @@
+apiVersion: autoscaling.k8s.io/v1
+kind: VerticalPodAutoscaler
+metadata:
+  name: nginx-vpa
+  namespace: ${SITE_NAME}-${SITE_ENV}
+spec:
+  targetRef:
+    apiVersion: "apps/v1"
+    kind: Deployment
+    name: nginx
+  updatePolicy:
+    updateMode: "Initial"
+  resourcePolicy:
+    containerPolicies:
+    - containerName: "nginx"
+      minAllowed:
+        cpu: "3m"
+        memory: "50Mi"
+      maxAllowed:
+        cpu: "500m"
+        memory: "3Gi"
+    - containerName: "php"
+      minAllowed:
+        cpu: "3m"
+        memory: "50Mi"
+      maxAllowed:
+        cpu: "400m"
+        memory: "3Gi"
