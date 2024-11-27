@@ -1,0 +1,21 @@
+apiVersion: autoscaling.k8s.io/v1
+kind: VerticalPodAutoscaler
+metadata:
+  name: cli-vpa
+  namespace: ${SITE_NAME}-${SITE_ENV}
+spec:
+  targetRef:
+    apiVersion: "apps/v1"
+    kind: Deployment
+    name: cli
+  updatePolicy:
+    updateMode: "Initial"
+  resourcePolicy:
+    containerPolicies:
+    - containerName: "cli"
+      minAllowed:
+        cpu: "4m"
+        memory: "20Mi"
+      maxAllowed:
+        cpu: "150m"
+        memory: "250Mi"
