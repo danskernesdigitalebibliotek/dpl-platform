@@ -336,5 +336,10 @@ function renderAutoscalers {
   for env in "${envs[@]}"; do
     export SITE_NAME="$siteName";
     export SITE_ENV="$env";
+    envsubst '$SITE_NAME $SITE_ENV' < "${scriptDir}/../php-nginx-hpa.template.yaml" > "autoscalers/$env-nginx-hpa.yaml";
+    envsubst '$SITE_NAME $SITE_ENV' < "${scriptDir}/../vpa-templates/nginx-vpa.template.yaml" > "autoscalers/$env-nginx-vpa.yaml";
+    envsubst '$SITE_NAME $SITE_ENV' < "${scriptDir}/../vpa-templates/cli-vpa.template.yaml" > "autoscalers/$env-cli-vpa.yaml";
+    envsubst '$SITE_NAME $SITE_ENV' < "${scriptDir}/../vpa-templates/redis-vpa.template.yaml" > "autoscalers/$env-redis-vpa.yaml";
+    envsubst '$SITE_NAME $SITE_ENV' < "${scriptDir}/../vpa-templates/varnish-vpa.template.yaml" > "autoscalers/$env-varnish-vpa.yaml";
   done
 }
