@@ -1,0 +1,3 @@
+updater:
+  # updater.enabled -- If true, the updater component will be deployed
+  enabled: false
