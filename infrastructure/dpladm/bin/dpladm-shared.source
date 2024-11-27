@@ -336,6 +336,5 @@ function renderAutoscalers {
   for env in "${envs[@]}"; do
     export SITE_NAME="$siteName";
     export SITE_ENV="$env";
-    envsubst '$SITE_NAME $SITE_ENV' < "${scriptDir}/../autoscaler.template.yaml" > "autoscalers/$env.yaml";
   done
 }
