@@ -203,6 +203,10 @@ sites:
     name: "Faaborg-Midtfyn Bibliotekerne"
     description: "The library site for Faaborg-Midtfyn"
     deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAILKo6SAhtuZy4z708mYP3vyc6YDMmTxwme3kg+kyQoTM"
+    primary-domain: fmbib.dk
+    secondary-domains:
+      - www.fmbib.dk
+    autogenerateRoutes: true
     <<: *default-release-image-source
   favrskov:
     name: "Favrskov Bibliotekerne"
