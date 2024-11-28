@@ -9,7 +9,7 @@ spec:
     kind: Deployment
     name: nginx
   updatePolicy:
-    updateMode: "Initial"
+    updateMode: "Off"
   resourcePolicy:
     containerPolicies:
     - containerName: "nginx"

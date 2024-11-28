@@ -9,7 +9,7 @@ spec:
     kind: Deployment
     name: varnish
   updatePolicy:
-    updateMode: "Initial"
+    updateMode: "Off"
   resourcePolicy:
     containerPolicies:
     - containerName: "varnish"

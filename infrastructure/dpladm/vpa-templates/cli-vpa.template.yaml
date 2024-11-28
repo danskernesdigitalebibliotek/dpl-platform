@@ -9,7 +9,7 @@ spec:
     kind: Deployment
     name: cli
   updatePolicy:
-    updateMode: "Initial"
+    updateMode: "Off"
   resourcePolicy:
     containerPolicies:
     - containerName: "cli"
