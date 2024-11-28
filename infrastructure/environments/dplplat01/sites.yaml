@@ -6,15 +6,14 @@ x-defaults: &default-release-image-source
 x-webmaster: &webmaster-release-image-source
   releaseImageRepository: ghcr.io/danskernesdigitalebibliotek
   releaseImageName: dpl-cms-source
-  moduletest-dpl-cms-release: "2024.47.2"
   dpl-cms-release: "2024.47.2"
+  moduletest-dpl-cms-release: "2024.48.2"
 # Some sites on the webmaster plan wish to track the same release as
 # sites do per default in dpl-cms-release.
 x-webmaster-with-defaults: &webmaster-with-defaults-release-image-source
   # Reference default before webmaster anchor as YAML references will not
   # override existing keys.
   <<: *default-release-image-source
-  moduletest-dpl-cms-release: "2024.47.2"
 x-webmasters-skipping-update-44.0: &webmaster-skipping-44
   releaseImageRepository: ghcr.io/danskernesdigitalebibliotek
   releaseImageName: dpl-cms-source
