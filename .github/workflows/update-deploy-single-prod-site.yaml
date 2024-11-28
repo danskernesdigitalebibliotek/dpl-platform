@@ -17,6 +17,6 @@ jobs:
     - name: Parse `sites.yaml` for New Version
       id: parse-version
       run: |
-        NEW_VERSION=$(yq '.version' sites.yaml) # Assuming 'version' key holds the new version
+        NEW_VERSION=$(yq '.sites.canary."dpl-cms-release"' infrastructure/environments/dplplat01/sites.yaml)
         echo "new-version=$NEW_VERSION"
 
