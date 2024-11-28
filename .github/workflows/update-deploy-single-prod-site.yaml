@@ -10,13 +10,17 @@ jobs:
 
     steps:
     # Step 1: Check out the repository containing `sites.yaml`
-    - name: Checkout Main Repo
+    - name: Checkout main
       uses: actions/checkout@v3
 
-    # Step 2: Parse `sites.yaml` to extract the new version
-    - name: Parse `sites.yaml` for New Version
+    - name: Get canary's version from `sites.yaml`
       id: parse-version
       run: |
         NEW_VERSION=$(yq '.sites.canary."dpl-cms-release"' infrastructure/environments/dplplat01/sites.yaml)
         echo "new-version=$NEW_VERSION"
 
+    - name: Clone Target Repository
+      run: |
+        git clone https://<token>@github.com/danishpubliclibraries/env-canary
+      env:
+        token: ${{ secrets.PAT_TOKEN }} # Personal Access Token stored in GitHub Secrets
