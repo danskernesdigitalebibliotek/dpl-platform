@@ -1,0 +1,22 @@
+name: Update and Deploy Site in Another Organization
+
+on:
+  workflow_dispatch: # Allows manual trigger
+
+jobs:
+  update-and-deploy:
+    name: Update Lagoon Dockerfile and Deploy
+    runs-on: ubuntu-latest
+
+    steps:
+    # Step 1: Check out the repository containing `sites.yaml`
+    - name: Checkout Main Repo
+      uses: actions/checkout@v3
+
+    # Step 2: Parse `sites.yaml` to extract the new version
+    - name: Parse `sites.yaml` for New Version
+      id: parse-version
+      run: |
+        NEW_VERSION=$(yq '.version' sites.yaml) # Assuming 'version' key holds the new version
+        echo "new-version=$NEW_VERSION"
+
