@@ -12,10 +12,10 @@ spec:
     updateMode: "Off"
   resourcePolicy:
     containerPolicies:
-    - containerName: "redis"
+    - containerName: redis
       minAllowed:
-        cpu: "5m"
-        memory: "40Mi"
+        cpu: 5m
+        memory: 40Mi
       maxAllowed:
-        cpu: "150m"
-        memory: "800Mi"
+        cpu: 150m
+        memory: 800Mi

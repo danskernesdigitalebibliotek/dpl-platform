@@ -12,17 +12,17 @@ spec:
     updateMode: "Off"
   resourcePolicy:
     containerPolicies:
-    - containerName: "nginx"
+    - containerName: nginx
       minAllowed:
-        cpu: "3m"
-        memory: "50Mi"
+        cpu: 3m
+        memory: 50Mi
       maxAllowed:
-        cpu: "500m"
-        memory: "3Gi"
-    - containerName: "php"
+        cpu: 500m
+        memory: 3Gi
+    - containerName: php
       minAllowed:
-        cpu: "3m"
-        memory: "50Mi"
+        cpu: 3m
+        memory: 50Mi
       maxAllowed:
-        cpu: "400m"
-        memory: "3Gi"
+        cpu: 400m
+        memory: 3Gi
