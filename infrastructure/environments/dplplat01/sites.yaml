@@ -14,11 +14,6 @@ x-webmaster-with-defaults: &webmaster-with-defaults-release-image-source
   # Reference default before webmaster anchor as YAML references will not
   # override existing keys.
   <<: *default-release-image-source
-x-webmasters-skipping-update-44.0: &webmaster-skipping-44
-  releaseImageRepository: ghcr.io/danskernesdigitalebibliotek
-  releaseImageName: dpl-cms-source
-  dpl-cms-release: "2024.46.0"
-  moduletest-dpl-cms-release: "2024.47.2"
 sites:
   # Site objects are indexed by a unique key that must be a valid lagoon, and
   # github project name. That is, alphanumeric and dashes.
@@ -388,7 +383,7 @@ sites:
       - herningbib.dk
     autogenerateRoutes: true
     plan: webmaster
-    <<: *webmaster-skipping-44
+    <<: *webmaster-release-image-source
   hillerod:
     name: "Hillerød Bibliotekerne"
     description: "The library site for Hillerød"
