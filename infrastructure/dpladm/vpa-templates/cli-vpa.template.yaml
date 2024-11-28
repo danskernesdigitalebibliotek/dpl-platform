@@ -12,10 +12,10 @@ spec:
     updateMode: "Off"
   resourcePolicy:
     containerPolicies:
-    - containerName: "cli"
+    - containerName: cli
       minAllowed:
-        cpu: "4m"
-        memory: "20Mi"
+        cpu: 4m
+        memory: 20Mi
       maxAllowed:
-        cpu: "150m"
-        memory: "250Mi"
+        cpu: 150m
+        memory: 250Mi

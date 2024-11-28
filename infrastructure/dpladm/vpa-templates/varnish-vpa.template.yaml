@@ -12,10 +12,10 @@ spec:
     updateMode: "Off"
   resourcePolicy:
     containerPolicies:
-    - containerName: "varnish"
+    - containerName: varnish
       minAllowed:
-        cpu: "2m"
-        memory: "90Mi"
+        cpu: 2m
+        memory: 90Mi
       maxAllowed:
-        cpu: "200m"
-        memory: "3Gi"
+        cpu: 200m
+        memory: 3Gi
