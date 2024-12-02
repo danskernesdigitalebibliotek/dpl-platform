@@ -44,5 +44,5 @@ jobs:
         cd env-canary
         git config user.name "GitHub Actions"
         git config user.email "actions@github.com"
-        git commit -am "Update dpl-cms-release to version $NEW_VERSION"
+        git commit -am "Update dpl-cms-release to version ${{ steps.parse-version.outputs.new-version }}"
         git push origin main
