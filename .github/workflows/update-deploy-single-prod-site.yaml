@@ -34,7 +34,7 @@ jobs:
           exit 0
         fi
         echo "Update needed. Current version is: $CURRENT_VERSION"
-        echo "::set-output name=update_needed::true"
+        echo "update_needed=true" >> $GITHUB_OUTPUT
 
     - name: Update version in cli.dockerfile
       if: steps.check-version.outputs.update_needed == 'true'
