@@ -39,8 +39,8 @@ jobs:
     - name: Update version in cli.dockerfile
       if: steps.check-version.outputs.update_needed == 'true'
       run: |
-        echo "The new version is going to be: $NEW_VERSION"
-        sed -i "s|FROM ghcr.io/danskernesdigitalebibliotek/dpl-cms-source:.* AS release|FROM ghcr.io/danskernesdigitalebibliotek/dpl-cms-source:$NEW_VERSION AS release|" env-canary/lagoon/cli.dockerfile
+        echo "The new version is going to be: ${{ steps.parse-version.outputs.new-version }}"
+        sed -i "s|FROM ghcr.io/danskernesdigitalebibliotek/dpl-cms-source:.* AS release|FROM ghcr.io/danskernesdigitalebibliotek/dpl-cms-source:${{ steps.parse-version.outputs.new-version }} AS release|" env-canary/lagoon/cli.dockerfile
         cd env-canary
         git config user.name "GitHub Actions"
         git config user.email "actions@github.com"
