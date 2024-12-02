@@ -23,6 +23,4 @@ jobs:
 
     - name: Clone Target Repository
       run: |
-        git clone https://<token>@github.com/danishpubliclibraries/env-canary
-      env:
-        token: ${{ secrets.PAT_TOKEN }} # Personal Access Token stored in GitHub Secrets
+        git clone https://${{ secrets.GITHUB_TOKEN }}@github.com/danishpubliclibraries/env-canary
