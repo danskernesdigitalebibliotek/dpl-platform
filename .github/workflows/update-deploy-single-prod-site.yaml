@@ -24,6 +24,7 @@ jobs:
     - name: Clone Target Repository
       run: |
         git clone https://${{ secrets.GITHUB_TOKEN }}@github.com/danishpubliclibraries/env-canary
+
     - name: Check if the dpl-cms-release version changed
       id: check-version
       run: |
