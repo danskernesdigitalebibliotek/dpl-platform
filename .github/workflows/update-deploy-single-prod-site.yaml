@@ -24,3 +24,14 @@ jobs:
     - name: Clone Target Repository
       run: |
         git clone https://${{ secrets.GITHUB_TOKEN }}@github.com/danishpubliclibraries/env-canary
+    - name: Check if the dpl-cms-release version changed
+      id: check-version
+      run: |
+        CURRENT_VERSION=$(sed -n 's/^FROM ghcr.io\/danskernesdigitalebibliotek\/dpl-cms-source:\([^ ]*\) .*/\1/p' env-canary/lagoon/cli.dockerfile)
+        echo "current-version=$CURRENT_VERSION" >> $GITHUB_ENV
+        if [ "$CURRENT_VERSION" == "$NEW_VERSION" ]; then
+          echo "Version is already up-to-date: $CURRENT_VERSION"
+          exit 0
+        fi
+        echo "Update needed. Current version is: $CURRENT_VERSION"
+        echo "::set-output name=update_needed::true"
