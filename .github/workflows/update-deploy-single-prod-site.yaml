@@ -28,8 +28,7 @@ jobs:
       id: check-version
       run: |
         CURRENT_VERSION=$(sed -n 's/^FROM ghcr.io\/danskernesdigitalebibliotek\/dpl-cms-source:\([^ ]*\) .*/\1/p' env-canary/lagoon/cli.dockerfile)
-        echo "current-version=$CURRENT_VERSION" >> $GITHUB_ENV
-        if [ "$CURRENT_VERSION" == "$NEW_VERSION" ]; then
+        echo "current-version=$CURRENT_VERSION" >> $GITHUB_OUTPUT
           echo "Version is already up-to-date: $CURRENT_VERSION"
           exit 0
         fi
