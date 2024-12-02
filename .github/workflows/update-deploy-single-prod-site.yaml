@@ -17,9 +17,8 @@ jobs:
       id: parse-version
       run: |
         NEW_VERSION=$(yq '.sites.canary."dpl-cms-release"' ./infrastructure/environments/dplplat01/sites.yaml)
-        echo "new-version=$NEW_VERSION" >> $GITHUB_ENV
+        echo "new-version=$NEW_VERSION" >> $GITHUB_OUTPUT
         echo "Version we're going to update to is: $NEW_VERSION"
-        echo "::set-output name=new_version::$NEW_VERSION"
 
     - name: Clone Target Repository
       run: |
