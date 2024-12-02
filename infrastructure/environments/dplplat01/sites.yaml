@@ -7,14 +7,23 @@ x-webmaster: &webmaster-release-image-source
   releaseImageRepository: ghcr.io/danskernesdigitalebibliotek
   releaseImageName: dpl-cms-source
   dpl-cms-release: "2024.47.2"
-  moduletest-dpl-cms-release: "2024.48.0"
+  moduletest-dpl-cms-release: "2024.48.1"
 # Some sites on the webmaster plan wish to track the same release as
 # sites do per default in dpl-cms-release.
 x-webmaster-with-defaults: &webmaster-with-defaults-release-image-source
   # Reference default before webmaster anchor as YAML references will not
   # override existing keys.
-  <<: *default-release-image-source
-  moduletest-dpl-cms-release: "2024.48.0"
+  #
+  # Normally we'd use this instead of the following 3 lines, but we
+  # need to deploy 2024.48.1 on these sites, so we have to inline it,
+  # this can be reverted when 2024.49 is released.
+  #
+  # <<: *default-release-image-source
+  #
+  releaseImageRepository: ghcr.io/danskernesdigitalebibliotek
+  releaseImageName: dpl-cms-source
+  dpl-cms-release: "2024.48.1"
+  moduletest-dpl-cms-release: "2024.48.1"
 sites:
   # Site objects are indexed by a unique key that must be a valid lagoon, and
   # github project name. That is, alphanumeric and dashes.
