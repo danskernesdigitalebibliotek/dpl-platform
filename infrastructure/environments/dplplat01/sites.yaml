@@ -94,6 +94,10 @@ sites:
     description: "The library site for Aarhus"
     deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFL+uMeEfsaHEzbNxOmBB8dX32OLo63CTomG8VZvuiN2"
     plan: webmaster
+    primary-domain: aakb.dk
+    secondary-domains:
+      - www.aakb.dk
+    autogenerateRoutes: true
     <<: *webmaster-release-image-source
   aero:
     name: "Ærø Folkebibliotek"
