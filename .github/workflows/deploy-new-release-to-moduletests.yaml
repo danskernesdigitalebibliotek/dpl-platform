@@ -1,0 +1,38 @@
+name: Deploy new release to moduletests
+
+on:
+  workflow_dispatch: # Allows manual trigger
+
+jobs:
+  find-all-moduletest-sites:
+    name: Get list of moduletest sites
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v3
+
+    - name: Install yq
+      run: |
+        sudo apt-get update && sudo apt-get install -y jq
+        wget https://github.com/mikefarah/yq/releases/latest/download/yq_linux_amd64 -O /usr/bin/yq
+        chmod +x /usr/bin/yq
+
+    - name: Extract site keys with "webmaster" plan
+      id: parse-sites
+      run: |
+        site_keys=$(yq '.sites | to_entries | map(select(.value.plan == "webmaster")) | map(.key) | join(",")' ./infrastructure/environments/dplplat01/sites.yaml)
+        echo "Webmaster site keys: $site_keys"
+        echo "webmasters=[$site_keys]"
+
+  deploy-new-release:
+    name: Deploy new release
+    needs: [ find-all-moduletest-sites ]
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        value: ${{fromJSON(needs.find-all-moduletest-sites.outputs.webmasters)}}
+
+    steps:
+    - run: |
+        echo "${{matrix.value}}"
