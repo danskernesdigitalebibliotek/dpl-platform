@@ -1,4 +1,4 @@
-name: Update and Deploy Site in Another Organization
+name: Deploy new release to production sites
 
 on:
   workflow_dispatch: # Allows manual trigger
@@ -25,19 +25,21 @@ jobs:
         git clone https://${{ secrets.GITHUB_TOKEN }}@github.com/danishpubliclibraries/env-canary
 
     - name: Check if the dpl-cms-release version changed
-      id: check-version
+      id: check-main-version
       run: |
         CURRENT_VERSION=$(sed -n 's/^FROM ghcr.io\/danskernesdigitalebibliotek\/dpl-cms-source:\([^ ]*\) .*/\1/p' env-canary/lagoon/cli.dockerfile)
         echo "current-version=$CURRENT_VERSION" >> $GITHUB_OUTPUT
         if [ "$CURRENT_VERSION" == "${{ steps.parse-version.outputs.new-version }}" ]; then
           echo "Version is already up-to-date: $CURRENT_VERSION"
-          exit 0
+          echo "update_needed=false" >> $GITHUB_OUTPUT
         fi
-        echo "Update needed. Current version is: $CURRENT_VERSION"
-        echo "update_needed=true" >> $GITHUB_OUTPUT
+        if [ "$CURRENT_VERSION" != "${{ steps.parse-version.outputs.new-version }}" ]; then
+          echo "Update needed. Current version is: $CURRENT_VERSION"
+          echo "update_needed=true" >> $GITHUB_OUTPUT
+        fi
 
     - name: Update version in cli.dockerfile
-      if: steps.check-version.outputs.update_needed == 'true'
+      if: steps.check-main-version.outputs.update_needed == 'true'
       run: |
         echo "The new version is going to be: ${{ steps.parse-version.outputs.new-version }}"
         sed -i "s|FROM ghcr.io/danskernesdigitalebibliotek/dpl-cms-source:.* AS release|FROM ghcr.io/danskernesdigitalebibliotek/dpl-cms-source:${{ steps.parse-version.outputs.new-version }} AS release|" env-canary/lagoon/cli.dockerfile
