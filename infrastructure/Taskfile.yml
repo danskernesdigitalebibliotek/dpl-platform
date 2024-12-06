@@ -110,6 +110,7 @@ tasks:
     env_repos:provision:
       deps: [_req_env, _env_repos:terraform:init]
       desc: Provision infrastructure for an environment
+      silent: true
       summary: |
         Use Terraform to provision the repositories for our environments.
       env:
@@ -967,6 +968,7 @@ tasks:
     site:sync:
       desc: Runs the a dpladm sync of a site which eg. can be used to deploy a new release
       summary: Run the task without additional variables to see required arguments
+      silent: true
       env:
         SITES_CONFIG: "{{.dir_env}}/sites.yaml"
         SITE: "{{.SITE}}"
@@ -1102,6 +1104,7 @@ tasks:
         given site as specified by sites.yaml
       deps: [lagoon:cli:config]
       dir: "{{.dir_env}}"
+      silent: true
       vars:
         GIT_URL: "git@github.com:danishpubliclibraries/env-{{.SITE}}.git"
         SITE_PLAN:
@@ -1229,6 +1232,7 @@ tasks:
       desc: Gets the deploy key for a particular project from Lagoon and persists it in sites.yaml
       deps: [lagoon:cli:config]
       dir: "{{.dir_env}}"
+      silent: true
       vars:
         DEPLOY_KEY:
           sh: lagoon get project-key --project "{{.SITE}}" --output-json | jq '.data[0].publickey' --raw-output
@@ -1247,6 +1251,7 @@ tasks:
       desc: Ensures that a site has at least one deployment on required branches, so they are tracked by Lagoon
       deps: [lagoon:cli:config]
       dir: "{{.dir_env}}"
+      silent: true
       env:
         SITE: "{{.SITE}}"
       cmds:
