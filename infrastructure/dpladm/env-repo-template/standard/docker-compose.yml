@@ -73,7 +73,7 @@ services:
   redis:
     image: uselagoon/redis-6:latest
     labels:
-      lagoon.type: redis
+      lagoon.type: redis-persistent
     << : *default-user # uses the defined user from top
     environment:
       << : *default-environment
