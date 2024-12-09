@@ -623,6 +623,10 @@ sites:
     name: "Bibliotek og Borgerservice Nordfyns Kommune"
     description: "The library site for Nordfyn"
     deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIN7dIiOkzwJ2CVJFl2GMPWuxa4mzJvSi3q80twgvHTki"
+    primary-domain: www.nordfynsbib.dk
+    secondary-domains:
+      - nordfynsbib.dk
+    autogenerateRoutes: true
     <<: *default-release-image-source
   nyborg:
     name: "Nyborg Bibliotek"
