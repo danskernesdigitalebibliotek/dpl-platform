@@ -146,6 +146,8 @@ sites:
     name: "Bornholms Folkebiblioteker"
     description: "The library site for Bornholm"
     deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIApUNh71neiuKAsO3OL4jEzxnPCXt9gvl66gDRiYLnLw"
+    primary-domain: bibliotek.brk.dk
+    autogenerateRoutes: true
     <<: *default-release-image-source
   brondby:
     name: "Brøndby-Bibliotekerne"
