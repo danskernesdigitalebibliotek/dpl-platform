@@ -499,6 +499,10 @@ sites:
     name: "Kerteminde Bibliotekerne"
     description: "The library site for Kerteminde"
     deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBeh/ST+IzZySTeQZcFF/W17U4X4JZDLSptHNlGU6IOJ"
+    primary-domain: kertemindebibliotekerne.dk
+    secondary-domains:
+      - www.kertemindebibliotekerne.dk
+    autogenerateRoutes: true
     <<: *default-release-image-source
   kobenhavn:
     name: "Københavns Biblioteker"
