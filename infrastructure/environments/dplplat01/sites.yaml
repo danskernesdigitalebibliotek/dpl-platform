@@ -485,10 +485,6 @@ sites:
     name: "Jammerbugt Bibliotekerne"
     description: "The library site for Jammerbugt"
     deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIAjNMzYEEzdjsgQlnh5TAJdDlIzmr1pG8s9S/M86gHjZ"
-    primary-domain: www.jammerbugtbibliotekerne.dk
-    secondary-domains:
-      - jammerbugtbibliotekerne.dk
-    autogenerateRoutes: true
     <<: *default-release-image-source
   kalundborg:
     name: "Kalundborg Biblioteker"
