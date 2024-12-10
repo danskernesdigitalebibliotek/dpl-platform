@@ -13,6 +13,10 @@ controller:
     # See https://kubernetes.github.io/ingress-nginx/user-guide/nginx-configuration/annotations/#custom-max-body-size
     # and https://github.com/uselagoon/lagoon-images/blob/main/images/nginx/nginx.conf#L81
     proxy-body-size: "2048m"
+    # Default client_header_buffer_size is 1k in nginx, which results in 502
+    # errors for some applications, eg. large cookie headers.
+    # See https://kubernetes.github.io/ingress-nginx/user-guide/nginx-configuration/configmap/#client-header-buffer-size
+    client-header-buffer-size: "8k"
   replicaCount: 2
   autoscaling:
     enabled: true
