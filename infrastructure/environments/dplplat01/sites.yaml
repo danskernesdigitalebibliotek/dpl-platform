@@ -2,17 +2,24 @@
 x-defaults: &default-release-image-source
   releaseImageRepository: ghcr.io/danskernesdigitalebibliotek
   releaseImageName: dpl-cms-source
-  dpl-cms-release: "2024.49.0"
+  dpl-cms-release: "2024.50.0"
 x-webmaster: &webmaster-release-image-source
   releaseImageRepository: ghcr.io/danskernesdigitalebibliotek
   releaseImageName: dpl-cms-source
-  dpl-cms-release: "2024.47.2"
-  moduletest-dpl-cms-release: "2024.49.0"
+  dpl-cms-release: "2024.49.0"
+  moduletest-dpl-cms-release: "2024.50.0"
 # Some sites on the webmaster plan wish to track the same release as
 # sites do per default in dpl-cms-release.
 x-webmaster-with-defaults: &webmaster-with-defaults-release-image-source
   <<: *default-release-image-source
-  moduletest-dpl-cms-release: "2024.49.0"
+  moduletest-dpl-cms-release: "2024.50.0"
+# Postponed 2024.12.12, they don't want 2024.49.0 on production,
+# postponing it to 2024.50.0.
+x-webmaster-postponed-until-2025-01-06: &webmaster-postponed-until-2025-01-06
+  releaseImageRepository: ghcr.io/danskernesdigitalebibliotek
+  releaseImageName: dpl-cms-source
+  dpl-cms-release: "2024.47.2"
+  moduletest-dpl-cms-release: "2024.50.0"
 sites:
   # Site objects are indexed by a unique key that must be a valid lagoon, and
   # github project name. That is, alphanumeric and dashes.
@@ -112,7 +119,7 @@ sites:
       - www.albertslundbibliotek.dk
     autogenerateRoutes: true
     plan: webmaster
-    <<: *webmaster-release-image-source
+    <<: *webmaster-postponed-until-2025-01-06
   allerod:
     name: "Allerød Biblioteker"
     description: "The library site for Allerød"
@@ -233,7 +240,7 @@ sites:
       - "faxebibliotek.dk"
     autogenerateRoutes: true
     plan: webmaster
-    <<: *webmaster-release-image-source
+    <<: *webmaster-postponed-until-2025-01-06
   fredensborg:
     name: "Fredensborg Bibliotekerne"
     description: "The library site for Fredensborg"
@@ -394,7 +401,7 @@ sites:
       - herningbib.dk
     autogenerateRoutes: true
     plan: webmaster
-    <<: *webmaster-release-image-source
+    <<: *webmaster-postponed-until-2025-01-06
   hillerod:
     name: "Hillerød Bibliotekerne"
     description: "The library site for Hillerød"
@@ -731,7 +738,7 @@ sites:
     secondary-domains:
       - roskildebib.dk
     autogenerateRoutes: true
-    <<: *webmaster-release-image-source
+    <<: *webmaster-postponed-until-2025-01-06
   rudersdal:
     name: "Rudersdal Bibliotekerne"
     description: "The library site for Rudersdal"
@@ -835,7 +842,7 @@ sites:
       - dcbib.dk
     autogenerateRoutes: true
     plan: webmaster
-    <<: *webmaster-release-image-source
+    <<: *webmaster-postponed-until-2025-01-06
   svendborg:
     name: "Svendborg Bibliotek"
     description: "The library site for Svendborg"
@@ -859,7 +866,7 @@ sites:
     secondary-domains:
       - www.taarnbybib.dk
     autogenerateRoutes: true
-    <<: *webmaster-release-image-source
+    <<: *webmaster-postponed-until-2025-01-06
   thisted:
     name: "Biblioteket i Thy"
     description: "The library site for Thisted"
