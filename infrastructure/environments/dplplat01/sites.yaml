@@ -58,6 +58,12 @@ sites:
     plan: webmaster
     deploy_key: ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHvhy79hHjLcQJCcMNwci1Q/P/O2LwD4IzBVfkmRGKom
     <<: *webmaster-release-image-source
+  # BNF site.
+  bnf:
+    name: "Bibliotekernes Nationale Formidling"
+    description: "The BNF content sharing site"
+    <<: *default-release-image-source
+    deploy_key: ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFu+8XqudqcSVmw66CeGy9cq/rtdGtp2onIEubYWcIug
   # Production sites
   aabenraa:
     name: "Aabenraa Biblioteker og Kulturhuse"
