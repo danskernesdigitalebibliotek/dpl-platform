@@ -6,7 +6,7 @@ x-defaults: &default-release-image-source
 x-webmaster: &webmaster-release-image-source
   releaseImageRepository: ghcr.io/danskernesdigitalebibliotek
   releaseImageName: dpl-cms-source
-  dpl-cms-release: "2024.47.2"
+  dpl-cms-release: "2024.49.0"
   moduletest-dpl-cms-release: "2024.50.0"
 # Some sites on the webmaster plan wish to track the same release as
 # sites do per default in dpl-cms-release.
