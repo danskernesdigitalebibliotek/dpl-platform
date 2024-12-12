@@ -52,6 +52,7 @@ $ PROJECT_NAME=dpl-cms GIT_URL=git@github.com:danskernesdigitalebibliotek/dpl-cm
 # 2. Deployment key
 # The project is added, and a deployment key is printed. Copy it and configure
 # the GitHub repository. See the official documentation for examples.
+$ PROJECT_NAME=dpl-cms task lagoon:project:deploykey
 
 # 3. Webhook
 # Configure Github to post events to Lagoons webhook url.
