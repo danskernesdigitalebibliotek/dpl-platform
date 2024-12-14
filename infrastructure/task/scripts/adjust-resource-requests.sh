@@ -76,7 +76,7 @@ for NS in "${NAMESPACES[@]}"; do
         echo $MEMORY_REQUEST
       fi
       if [ "$DEPLOYMENT" = "redis" ]; then
-        MEMORY_REQUEST="100Mi"
+        MEMORY_REQUEST="30Mi"
         echo $MEMORY_REQUEST
       fi
       if [ "$DEPLOYMENT" = "varnish" ]; then
