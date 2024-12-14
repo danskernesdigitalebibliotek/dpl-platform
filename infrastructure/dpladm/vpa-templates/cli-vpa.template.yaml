@@ -9,13 +9,13 @@ spec:
     kind: Deployment
     name: cli
   updatePolicy:
-    updateMode: "Off"
+    updateMode: "Initial"
   resourcePolicy:
     containerPolicies:
     - containerName: cli
       minAllowed:
         cpu: 4m
-        memory: 20Mi
+        memory: 2Mi
       maxAllowed:
         cpu: 150m
         memory: 250Mi

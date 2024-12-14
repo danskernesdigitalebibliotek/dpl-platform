@@ -9,13 +9,13 @@ spec:
     kind: Deployment
     name: redis
   updatePolicy:
-    updateMode: "Off"
+    updateMode: "Initial"
   resourcePolicy:
     containerPolicies:
     - containerName: redis
       minAllowed:
         cpu: 5m
-        memory: 40Mi
+        memory: 20Mi
       maxAllowed:
         cpu: 150m
         memory: 800Mi

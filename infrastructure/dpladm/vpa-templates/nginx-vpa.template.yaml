@@ -9,20 +9,20 @@ spec:
     kind: Deployment
     name: nginx
   updatePolicy:
-    updateMode: "Off"
+    updateMode: "Initial"
   resourcePolicy:
     containerPolicies:
     - containerName: nginx
       minAllowed:
         cpu: 3m
-        memory: 50Mi
+        memory: 5Mi
       maxAllowed:
         cpu: 500m
-        memory: 3Gi
+        memory: 40Mi
     - containerName: php
       minAllowed:
         cpu: 3m
-        memory: 50Mi
+        memory: 5Mi
       maxAllowed:
         cpu: 400m
-        memory: 3Gi
+        memory: 400Mi

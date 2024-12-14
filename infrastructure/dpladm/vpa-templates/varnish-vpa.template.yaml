@@ -9,13 +9,13 @@ spec:
     kind: Deployment
     name: varnish
   updatePolicy:
-    updateMode: "Off"
+    updateMode: "Initial"
   resourcePolicy:
     containerPolicies:
     - containerName: varnish
       minAllowed:
         cpu: 2m
-        memory: 90Mi
+        memory: 20Mi
       maxAllowed:
         cpu: 200m
         memory: 3Gi
