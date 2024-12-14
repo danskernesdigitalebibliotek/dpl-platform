@@ -5,5 +5,9 @@ updater:
 recommender:
   extraArgs:
     recommendation-lower-bound-memory-percentile: 0.2
-    target-memory-percentile: 0.5
+    target-memory-percentile: 0.6
     recommendation-upper-bound-memory-percentile: 0.9
+    target-cpu-percentile: 0.7
+    recommender-interval: 1*time.Minute
+    pod-recommendation-min-memory-mb: 2
+    recommendation-margin-fraction: 0.1
