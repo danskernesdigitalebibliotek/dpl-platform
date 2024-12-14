@@ -326,7 +326,7 @@ function renderAutoscalers {
     "main"
   )
 
-  if [ plan = "webmaster" ]; then
+  if [ "$plan" = "webmaster" ]; then
     local envs=(
       "main"
       "moduletest"
