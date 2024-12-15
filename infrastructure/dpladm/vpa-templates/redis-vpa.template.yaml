@@ -5,11 +5,11 @@ metadata:
   namespace: ${SITE_NAME}-${SITE_ENV}
 spec:
   targetRef:
-    apiVersion: "apps/v1"
+    apiVersion: apps/v1
     kind: Deployment
     name: redis
   updatePolicy:
-    updateMode: "Initial"
+    updateMode: Initial
   resourcePolicy:
     containerPolicies:
     - containerName: redis
