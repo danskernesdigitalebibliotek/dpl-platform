@@ -1,0 +1,11 @@
+updater:
+  # updater.enabled -- If true, the updater component will be deployed
+  enabled: false
+
+recommender:
+  extraArgs:
+    recommendation-lower-bound-memory-percentile: 0.4
+    target-memory-percentile: 0.87
+    target-cpu-percentile: 0.8
+    recommender-interval: 1*time.Minute
+    pod-recommendation-min-memory-mb: 2
