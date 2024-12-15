@@ -1,0 +1,88 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: patch-resource-requests
+  namespace: default
+spec:
+  schedule: "0 */6 * * *" # Every 6 hours
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+          - name: patch-resources
+            image: bitnami/kubectl:latest
+            command:
+            - /bin/sh
+            - -c
+            - |
+              #!/bin/sh
+              for ns in $(kubectl get ns --no-headers -o custom-columns=":metadata.name" | grep -E "dpl-cms-pr|dpl-bnf-pr"); do
+                for deploy in nginx redis varnish cli; do
+                  if kubectl get deployment $deploy -n $ns > /dev/null 2>&1; then
+                    echo "Patching deployment $deploy in namespace $ns"
+                    case $deploy in
+                      nginx)
+                        memory_request="160Mi"
+                        memory_limit="256Mi"
+                        ;;
+                      redis)
+                        memory_request="60Mi"
+                        memory_limit="256Mi"
+                        ;;
+                      varnish)
+                        memory_request="180Mi"
+                        memory_limit="256Mi"
+                        ;;
+                      cli)
+                        memory_request="25Mi"
+                        memory_limit="125Mi"
+                        ;;
+                      *)
+                        memory_request="150Mi"
+                        memory_limit="256Mi"
+                        ;;
+                    esac
+                    kubectl patch deployment $deploy -n $ns \
+                      --type=json \
+                      -p="[{\"op\": \"replace\", \"path\": \"/spec/template/spec/containers/0/resources\", \"value\": {\"requests\": {\"cpu\": \"15m\", \"memory\": \"$memory_request\"}, \"limits\": {\"cpu\": \"200m\", \"memory\": \"$memory_limit\"}}}]"
+                  else
+                    echo "Deployment $deploy not found in namespace $ns"
+                  fi
+                done
+                echo "sleeping for a minute to give the deployments time to get back up and not crash the database"
+                sleep 60
+              done
+          restartPolicy: OnFailure
+          serviceAccountName: pr-env-patcher-cronjob-sa
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: pr-env-patcher-cronjob-sa
+  namespace: default
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: namespace-lister
+rules:
+- apiGroups: [""]
+  resources: ["namespaces"]
+  verbs: ["list"]
+- apiGroups: ["apps"]
+  resources: ["deployments"]
+  verbs: ["get", "list", "patch"]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: namespace-lister-binding
+subjects:
+- kind: ServiceAccount
+  name: pr-env-patcher-cronjob-sa
+  namespace: default
+roleRef:
+  kind: ClusterRole
+  name: namespace-lister
+  apiGroup: rbac.authorization.k8s.io
