@@ -13,6 +13,13 @@
 * Grafana: <https://grafana.lagoon.dplplat01.dpl.reload.dk/>
 * Lagoon UI: <https://ui.lagoon.dplplat01.dpl.reload.dk/>
 
+### DNS setup for library sites
+
+IP: 20.86.109.250
+CNAME: cluster-1.folkebibliotekernescms.dk
+
+(See [DNS](./dns) for setup)
+
 ### Lagoon CLI configuration
 
 * Lagoon name: dplplat01
