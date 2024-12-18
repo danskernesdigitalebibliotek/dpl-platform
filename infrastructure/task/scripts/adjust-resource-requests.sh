@@ -93,4 +93,10 @@ for NS in "${NAMESPACES[@]}"; do
       }
     ]'
   done
+
+  # Adjusting resources may cause a deployment to be relocated within the
+  # cluster. This will flush all in-memory caches. Wait a bit between
+  # each namespace to the site to settle before proceeding to next one.
+  # This may avoid cache stampedes.
+  sleep 15
 done
