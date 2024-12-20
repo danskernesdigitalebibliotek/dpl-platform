@@ -5,3 +5,7 @@ ignores:
   - '.git'
   - './**/.terraform'
   - 'node_modules'
+
+config:
+  no-duplicate-heading:
+    siblings_only: true
