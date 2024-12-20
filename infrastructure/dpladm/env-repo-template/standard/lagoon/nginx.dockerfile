@@ -15,9 +15,6 @@ RUN fix-permissions /etc/nginx/conf.d/drupal/location_prepend_drupal_authorize.c
 COPY lagoon/conf/nginx/location_prepend_drupal_update.conf /etc/nginx/conf.d/drupal/location_prepend_drupal_update.conf
 RUN fix-permissions /etc/nginx/conf.d/drupal/location_prepend_drupal_update.conf
 
-COPY lagoon/conf/nginx/server_append_disable_varnish_static_files.conf /etc/nginx/conf.d/drupal/server_append_disable_varnish_static_files.conf
-RUN fix-permissions /etc/nginx/conf.d/drupal/server_append_disable_varnish_static_files.conf
-
 COPY lagoon/conf/nginx/server_append_drupal_authorize.conf /etc/nginx/conf.d/drupal/server_append_drupal_authorize.conf
 RUN fix-permissions /etc/nginx/conf.d/drupal/server_append_drupal_authorize.conf
 
