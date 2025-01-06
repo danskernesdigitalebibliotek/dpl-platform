@@ -31,6 +31,7 @@ services:
     labels:
       lagoon.type: nginx-php-persistent
       lagoon.persistent: /app/web/sites/default/files/ # define where the persistent storage should be mounted too
+      lagoon.persistent.size: 10Gi
     environment:
       << : *default-environment # loads the defined environment variables from the top
 
