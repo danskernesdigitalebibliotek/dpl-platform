@@ -789,10 +789,10 @@ tasks:
         # - We bump the max allowed dev environments (default is 5)
         - |
             lagoon {{.COMMAND}} project \
-            --gitUrl {{.GIT_URL}} \
-            --openshift 1 \
-            --productionEnvironment {{.production_branch}} \
-            --developmentEnvironmentsLimit 25 \
+            --git-url {{.GIT_URL}} \
+            --deploytarget 1 \
+            --production-environment {{.production_branch}} \
+            --development-environments-limit 25 \
             --branches "^({{ .BRANCHES }})$" \
             --project {{.PROJECT_NAME}}
         - task: lagoon:project:ensure:github-registry-credentials
