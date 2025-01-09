@@ -43,6 +43,7 @@ spec:
                         memory_limit=256Mi
                         ;;
                     esac
+                    # TODO: we could look into away of checking if the patching of a deployment went well, so we dont have to sleep
                     kubectl patch deployment $deploy -n $ns \
                       --type=json \
                       -p="[{\"op\": \"replace\", \"path\": \"/spec/template/spec/containers/0/resources\", \"value\": {\"requests\": {\"cpu\": \"15m\", \"memory\": \"$memory_request\"}, \"limits\": {\"cpu\": \"200m\", \"memory\": \"$memory_limit\"}}}]"
