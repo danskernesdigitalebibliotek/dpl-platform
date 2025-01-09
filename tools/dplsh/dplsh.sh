@@ -223,6 +223,13 @@ if [[ -f "${HOME}/.gitconfig" ]] ; then
     GITCONFIG+=(-v "${HOME}/.gitconfig:/opt/.gitconfig-host:ro")
 fi
 
+VERSION=$(docker inspect $CONTAINER_IMAGE | jq -r '.[0].Config.Labels["org.opencontainers.image.version"]')
+if [ -n "$VERSION" ]; then
+  echo
+  echo "DPLSH VERSION: $VERSION"
+  echo
+fi
+
 docker run --hostname=dplsh \
     --rm \
     "${ADDITIONAL_ARGS[@]}" \
