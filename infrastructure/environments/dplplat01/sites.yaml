@@ -70,7 +70,10 @@ sites:
     name: "Bibliotekernes Nationale Formidling"
     description: "The BNF content sharing site"
     <<: *default-release-image-source
-    deploy_key: ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFu+8XqudqcSVmw66CeGy9cq/rtdGtp2onIEubYWcIug
+    deploy_key: ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAICTmMC/cUI3U3QloX6aAdN7g0EU42J0fwA9aO7UJOzx9
+    primary-domain: bibliotekernesnationaleformidling.dk
+    secondary-domains:
+      - www.bibliotekernesnationaleformidling.dk
   # Production sites
   aabenraa:
     name: "Aabenraa Biblioteker og Kulturhuse"
