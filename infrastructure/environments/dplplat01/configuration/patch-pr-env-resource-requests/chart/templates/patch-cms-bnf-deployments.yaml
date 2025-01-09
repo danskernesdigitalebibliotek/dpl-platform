@@ -23,24 +23,24 @@ spec:
                     echo "Patching deployment $deploy in namespace $ns"
                     case $deploy in
                       nginx)
-                        memory_request="160Mi"
-                        memory_limit="256Mi"
+                        memory_request=160Mi
+                        memory_limit=256Mi
                         ;;
                       redis)
-                        memory_request="60Mi"
-                        memory_limit="256Mi"
+                        memory_request=60Mi
+                        memory_limit=256Mi
                         ;;
                       varnish)
-                        memory_request="180Mi"
-                        memory_limit="256Mi"
+                        memory_request=180Mi
+                        memory_limit=256Mi
                         ;;
                       cli)
-                        memory_request="25Mi"
-                        memory_limit="125Mi"
+                        memory_request=25Mi
+                        memory_limit=125Mi
                         ;;
                       *)
-                        memory_request="150Mi"
-                        memory_limit="256Mi"
+                        memory_request=150Mi
+                        memory_limit=256Mi
                         ;;
                     esac
                     kubectl patch deployment $deploy -n $ns \
