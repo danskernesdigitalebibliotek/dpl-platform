@@ -719,27 +719,35 @@ tasks:
         msg: "Missing PROJECT_NAME"
 
     lagoon:project:ensure:consumer-secrets-n-passwords:
-      vars:
-        VARIABLE_SCOPE: "RUNTIME"
-        # TODO: The variable values should be generated and stored in a secret manager.
-        VARIABLE_VALUE: "foo"
       cmds:
       - task: lagoon:ensure:environment-variable
         vars:
           VARIABLE_NAME: "BNF_GRAPHQL_CONSUMER_SECRET"
           PROJECT_NAME: "{{.PROJECT_NAME}}"
+          VARIABLE_SCOPE: "RUNTIME"
+          # TODO: The variable values should be generated and stored in a secret manager.
+          VARIABLE_VALUE: "foo"
       - task: lagoon:ensure:environment-variable
         vars:
           VARIABLE_NAME: "BNF_GRAPHQL_CONSUMER_USER_PASSWORD"
           PROJECT_NAME: "{{.PROJECT_NAME}}"
+          VARIABLE_SCOPE: "RUNTIME"
+          # TODO: The variable values should be generated and stored in a secret manager.
+          VARIABLE_VALUE: "foo"
       - task: lagoon:ensure:environment-variable
         vars:
           VARIABLE_NAME: "GO_GRAPHQL_CONSUMER_SECRET"
           PROJECT_NAME: "{{.PROJECT_NAME}}"
+          VARIABLE_SCOPE: "RUNTIME"
+          # TODO: The variable values should be generated and stored in a secret manager.
+          VARIABLE_VALUE: "foo"
       - task: lagoon:ensure:environment-variable
         vars:
           VARIABLE_NAME: "GO_GRAPHQL_CONSUMER_USER_PASSWORD"
           PROJECT_NAME: "{{.PROJECT_NAME}}"
+          VARIABLE_SCOPE: "RUNTIME"
+          # TODO: The variable values should be generated and stored in a secret manager.
+          VARIABLE_VALUE: "foo"
       preconditions:
       - sh: "[ ! -z \"{{.PROJECT_NAME}}\" ]"
         msg: "Missing PROJECT_NAME"
