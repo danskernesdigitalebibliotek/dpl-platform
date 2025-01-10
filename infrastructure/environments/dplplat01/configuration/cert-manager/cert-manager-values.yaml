@@ -6,7 +6,7 @@ ingressShim:
   defaultIssuerName: zerossl-production
   defaultIssuerKind: ClusterIssuer
   defaultIssuerGroup: cert-manager.io
-maxConcurrentChallenges: 50
+maxConcurrentChallenges: 90
 
 tolerations:
   - key: CriticalAddonsOnly
