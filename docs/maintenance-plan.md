@@ -154,7 +154,7 @@ Notes:
 ### Krew
 
 Update interval: Unkown, hasen't been updated since 2023
-Release URL: <https://github.com/alenkacz/cert-manager-verifier/releases>
+Release URL: <https://github.com/kubernetes-sigs/krew/releases>
 Expect downtime: None
 Time to do: 1 hour
 Runbook:
