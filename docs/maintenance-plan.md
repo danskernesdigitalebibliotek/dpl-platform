@@ -142,7 +142,7 @@ Time to do: 1 hour
 Runbook:
 Notes:
 
-### KubeCTL
+### kubectl
 
 Update interval: Quarterly
 Release URL: <https://github.com/Azure/kubelogin/releases>
