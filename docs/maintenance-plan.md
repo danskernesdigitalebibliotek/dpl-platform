@@ -65,7 +65,7 @@ Time to do: Unknown
 Runbook: [Upgrading Harboar](./runbooks/upgrading-support-workloads.md#harbor)
 Notes:
 
-### Ingress Nginx
+### Nginx Ingress Controller
 
 Update interval: Monthly
 Release URL: <https://github.com/kubernetes/ingress-nginx/releases>
