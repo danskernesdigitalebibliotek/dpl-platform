@@ -792,6 +792,11 @@ sites:
     name: "Solrød Bibliotek og Kulturhus"
     description: "The library site for Solrød"
     deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIF1GwZ4r8QZ7Vebdqiz/mtkifrLU+ZSvlAJshdXjCh5J"
+    <<: *default-release-image-source
+  solrod2:
+    name: "Solrød Bibliotek og Kulturhus"
+    description: "The library site for Solrød"
+    deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAII3HmqAMg/J80EG9JvAYAZZLn8xGOLsqDOG5eugUuOS1"
     primary-domain: solbib.dk
     secondary-domains:
       - www.solbib.dk
