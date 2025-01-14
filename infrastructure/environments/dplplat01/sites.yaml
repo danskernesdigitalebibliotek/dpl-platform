@@ -789,6 +789,7 @@ sites:
     autogenerateRoutes: true
     <<: *default-release-image-source
   solrod:
+    #This site is dead due to the following problem: https://reload.zulipchat.com/#narrow/channel/240325-DDF/topic/Hasteopgave.2013.2F01.2F25
     name: "Solrød Bibliotek og Kulturhus"
     description: "The library site for Solrød"
     deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIF1GwZ4r8QZ7Vebdqiz/mtkifrLU+ZSvlAJshdXjCh5J"
