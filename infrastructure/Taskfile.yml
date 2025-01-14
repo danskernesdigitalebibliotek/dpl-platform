@@ -470,7 +470,6 @@ tasks:
             --lagoon {{.platform_env}}
         - lagoon config default --lagoon {{.platform_env}}
         - lagoon login
-        - lagoon whoami
       preconditions:
       - sh: "[ ! -z {{.ssh_loadbalancer_ip}} ]"
         msg: "Could not determine IP of the ssh-endpoint for Lagoon. The Kubernetes lagoon-core/lagoon-core-ssh service may not have been provisioned yet."
