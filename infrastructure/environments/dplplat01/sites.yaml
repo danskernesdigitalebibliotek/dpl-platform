@@ -2,24 +2,20 @@
 x-defaults: &default-release-image-source
   releaseImageRepository: ghcr.io/danskernesdigitalebibliotek
   releaseImageName: dpl-cms-source
-  dpl-cms-release: "2024.50.0"
+  dpl-cms-release: "2025.3.2"
 x-webmaster: &webmaster-release-image-source
+  # This is the default release plan for webmasters. There's currently no webmasters on it.
+  # This is should be updated according with https://danskernesdigitalebibliotek.github.io/dpl-docs/DPL-Platform/runbooks/monthly-release-to-editors-and-webmasters/
   releaseImageRepository: ghcr.io/danskernesdigitalebibliotek
   releaseImageName: dpl-cms-source
-  dpl-cms-release: "2024.49.0"
-  moduletest-dpl-cms-release: "2024.50.0"
-# Some sites on the webmaster plan wish to track the same release as
-# sites do per default in dpl-cms-release.
-x-webmaster-with-defaults: &webmaster-with-defaults-release-image-source
-  <<: *default-release-image-source
-  moduletest-dpl-cms-release: "2024.50.0"
-# Postponed 2024.12.12, they don't want 2024.49.0 on production,
-# postponing it to 2024.50.0.
-x-webmaster-postponed-until-2025-01-06: &webmaster-postponed-until-2025-01-06
+  dpl-cms-release: "2024.50.0"
+  moduletest-dpl-cms-release: "2025.3.2"
+x-webmasters-on-weekly-release-cycle: &webmasters-on-weekly-release-cycle
+  #This release cycle releases the newest release, which has been tested on webmaster moduletests in the previous week, on to production
   releaseImageRepository: ghcr.io/danskernesdigitalebibliotek
   releaseImageName: dpl-cms-source
-  dpl-cms-release: "2024.47.2"
-  moduletest-dpl-cms-release: "2024.50.0"
+  dpl-cms-release: "2024.50.0"
+  moduletest-dpl-cms-release: "2025.3.2"
 sites:
   # Site objects are indexed by a unique key that must be a valid lagoon, and
   # github project name. That is, alphanumeric and dashes.
@@ -57,14 +53,14 @@ sites:
     importTranslationsCron: "0 * * * *"
     deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJ6SzfPFf/XeLeqI342kxuJAlATpDMtgAfqlrLTTbW2m"
     plan: webmaster
-    <<: *webmaster-with-defaults-release-image-source
+    <<: *webmasters-on-weekly-release-cycle
   bibliotek-test:
     name: "Bibliotekstest"
     description: "Et site hvor bibliotekerne kan teste"
     importTranslationsCron: "0 * * * *"
     plan: webmaster
     deploy_key: ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHvhy79hHjLcQJCcMNwci1Q/P/O2LwD4IzBVfkmRGKom
-    <<: *webmaster-release-image-source
+    <<: *webmasters-on-weekly-release-cycle
   # BNF site.
   bnf:
     name: "Bibliotekernes Nationale Formidling"
@@ -93,7 +89,7 @@ sites:
       - aalborgbibliotekerne.dk
     autogenerateRoutes: "redirect"
     plan: webmaster
-    <<: *webmaster-with-defaults-release-image-source
+    <<: *webmasters-on-weekly-release-cycle
   aarhus:
     name: "Aarhus Kommunes Biblioteker"
     description: "The library site for Aarhus"
@@ -103,7 +99,7 @@ sites:
     secondary-domains:
       - aakb.dk
     autogenerateRoutes: true
-    <<: *webmaster-release-image-source
+    <<: *webmasters-on-weekly-release-cycle
   aero:
     name: "Ærø Folkebibliotek"
     description: "The library site for Ærø"
@@ -122,7 +118,7 @@ sites:
       - www.albertslundbibliotek.dk
     autogenerateRoutes: true
     plan: webmaster
-    <<: *webmaster-postponed-until-2025-01-06
+    <<: *webmasters-on-weekly-release-cycle
   allerod:
     name: "Allerød Biblioteker"
     description: "The library site for Allerød"
@@ -146,7 +142,7 @@ sites:
       - www.bib.ballerup.dk
     autogenerateRoutes: true
     plan: webmaster
-    <<: *webmaster-release-image-source
+    <<: *webmasters-on-weekly-release-cycle
   billund:
     name: "Billund Bibliotekerne og Borgerservice"
     description: "The main library site for Billund"
@@ -243,7 +239,7 @@ sites:
       - "faxebibliotek.dk"
     autogenerateRoutes: true
     plan: webmaster
-    <<: *webmaster-postponed-until-2025-01-06
+    <<: *webmasters-on-weekly-release-cycle
   fredensborg:
     name: "Fredensborg Bibliotekerne"
     description: "The library site for Fredensborg"
@@ -404,7 +400,7 @@ sites:
       - herningbib.dk
     autogenerateRoutes: true
     plan: webmaster
-    <<: *webmaster-postponed-until-2025-01-06
+    <<: *webmasters-on-weekly-release-cycle
   hillerod:
     name: "Hillerød Bibliotekerne"
     description: "The library site for Hillerød"
@@ -528,7 +524,7 @@ sites:
       - varnish.main.kobenhavn.dplplat01.dpl.reload.dk
     plan: webmaster
     deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHaTkDvjLW/b2qVj8FIvtX9x3TxFFZTENn+w2CFELeoC"
-    <<: *webmaster-release-image-source
+    <<: *webmasters-on-weekly-release-cycle
   koge:
     name: "KøgeBibliotekerne"
     description: "The library site for Køge"
@@ -673,7 +669,7 @@ sites:
     secondary-domains:
       - odensebib.dk
     autogenerateRoutes: true
-    <<: *webmaster-release-image-source
+    <<: *webmasters-on-weekly-release-cycle
   odsherred:
     name: "Odsherred Bibliotek og Kulturhuse"
     description: "The library site for Odsherred"
@@ -739,7 +735,7 @@ sites:
     secondary-domains:
       - roskildebib.dk
     autogenerateRoutes: true
-    <<: *webmaster-postponed-until-2025-01-06
+    <<: *webmasters-on-weekly-release-cycle
   rudersdal:
     name: "Rudersdal Bibliotekerne"
     description: "The library site for Rudersdal"
@@ -769,7 +765,7 @@ sites:
       - www.silkeborgbib.dk
     autogenerateRoutes: true
     plan: webmaster
-    <<: *webmaster-with-defaults-release-image-source
+    <<: *webmasters-on-weekly-release-cycle
   skanderborg:
     name: "Skanderborg Bibliotek"
     description: "The library site for Skanderborg"
@@ -812,7 +808,7 @@ sites:
       - www.biblioteket.sonderborg.dk
     autogenerateRoutes: true
     plan: webmaster
-    <<: *webmaster-release-image-source
+    <<: *webmasters-on-weekly-release-cycle
   soro:
     name: "Sorø Bibliotek"
     description: "The library site for Sorø"
@@ -849,7 +845,7 @@ sites:
       - dcbib.dk
     autogenerateRoutes: true
     plan: webmaster
-    <<: *webmaster-postponed-until-2025-01-06
+    <<: *webmasters-on-weekly-release-cycle
   svendborg:
     name: "Svendborg Bibliotek"
     description: "The library site for Svendborg"
@@ -873,7 +869,7 @@ sites:
     secondary-domains:
       - www.taarnbybib.dk
     autogenerateRoutes: true
-    <<: *webmaster-postponed-until-2025-01-06
+    <<: *webmasters-on-weekly-release-cycle
   thisted:
     name: "Biblioteket i Thy"
     description: "The library site for Thisted"
