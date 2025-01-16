@@ -13,13 +13,6 @@ x-webmaster: &webmaster-release-image-source
 x-webmaster-with-defaults: &webmaster-with-defaults-release-image-source
   <<: *default-release-image-source
   moduletest-dpl-cms-release: "2024.50.0"
-# Postponed 2024.12.12, they don't want 2024.49.0 on production,
-# postponing it to 2024.50.0.
-x-webmaster-postponed-until-2025-01-06: &webmaster-postponed-until-2025-01-06
-  releaseImageRepository: ghcr.io/danskernesdigitalebibliotek
-  releaseImageName: dpl-cms-source
-  dpl-cms-release: "2024.47.2"
-  moduletest-dpl-cms-release: "2024.50.0"
 x-webmasters-on-weekly-release-cycle: &webmasters-on-weekly-release-cycle
   #This release cycle releases the newest release, which has been tested on webmaster moduletests in the previous week, on to production
   releaseImageRepository: ghcr.io/danskernesdigitalebibliotek
