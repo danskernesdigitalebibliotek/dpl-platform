@@ -47,7 +47,7 @@ sites:
     description: "A site to test new releases on"
     releaseImageRepository: ghcr.io/danskernesdigitalebibliotek
     releaseImageName: dpl-cms-source
-    dpl-cms-release: "2025.2.0"
+    dpl-cms-release: "2025.3.2"
     plan: webmaster
     moduletest-dpl-cms-release: "2024.50.0"
     deploy_key: ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBLUrrxfwsfwz4nkn/WCbMUbLHkTFvyYB2uusHLA7NlH
@@ -789,9 +789,15 @@ sites:
     autogenerateRoutes: true
     <<: *default-release-image-source
   solrod:
+    #This site is dead due to the following problem: https://reload.zulipchat.com/#narrow/channel/240325-DDF/topic/Hasteopgave.2013.2F01.2F25
     name: "Solrød Bibliotek og Kulturhus"
     description: "The library site for Solrød"
     deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIF1GwZ4r8QZ7Vebdqiz/mtkifrLU+ZSvlAJshdXjCh5J"
+    <<: *default-release-image-source
+  solrod2:
+    name: "Solrød Bibliotek og Kulturhus"
+    description: "The library site for Solrød"
+    deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAII3HmqAMg/J80EG9JvAYAZZLn8xGOLsqDOG5eugUuOS1"
     primary-domain: solbib.dk
     secondary-domains:
       - www.solbib.dk
