@@ -301,4 +301,4 @@ certController:
               - key: noderole.dplplatform
                 operator: In
                 values:
-                  - prod
+                  - system
