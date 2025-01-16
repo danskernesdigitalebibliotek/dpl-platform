@@ -32,7 +32,7 @@ ha:
   # If you enable it we recommend to set `affinity` and `pdb`
   enabled: false
   # -- Number of replicas
-  replicas: 3
+  replicas: 1
 
 metrics:
   # -- Enable operator internal metrics. Prometheus must be installed in the cluster
