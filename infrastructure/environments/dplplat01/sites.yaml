@@ -10,9 +10,6 @@ x-webmaster: &webmaster-release-image-source
   moduletest-dpl-cms-release: "2025.3.2"
 # Some sites on the webmaster plan wish to track the same release as
 # sites do per default in dpl-cms-release.
-x-webmaster-with-defaults: &webmaster-with-defaults-release-image-source
-  <<: *default-release-image-source
-  moduletest-dpl-cms-release: "2024.50.0"
 x-webmasters-on-weekly-release-cycle: &webmasters-on-weekly-release-cycle
   #This release cycle releases the newest release, which has been tested on webmaster moduletests in the previous week, on to production
   releaseImageRepository: ghcr.io/danskernesdigitalebibliotek
@@ -56,14 +53,14 @@ sites:
     importTranslationsCron: "0 * * * *"
     deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJ6SzfPFf/XeLeqI342kxuJAlATpDMtgAfqlrLTTbW2m"
     plan: webmaster
-    <<: *webmaster-with-defaults-release-image-source
+    <<: *webmasters-on-weekly-release-cycle
   bibliotek-test:
     name: "Bibliotekstest"
     description: "Et site hvor bibliotekerne kan teste"
     importTranslationsCron: "0 * * * *"
     plan: webmaster
     deploy_key: ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHvhy79hHjLcQJCcMNwci1Q/P/O2LwD4IzBVfkmRGKom
-    <<: *webmaster-release-image-source
+    <<: *webmasters-on-weekly-release-cycle
   # BNF site.
   bnf:
     name: "Bibliotekernes Nationale Formidling"
