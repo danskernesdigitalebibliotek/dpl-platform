@@ -104,10 +104,22 @@ resources: {}
 nodeSelector: {}
 
 # -- Tolerations to add to controller Pod
-tolerations: []
+tolerations:
+  - key: noderole.dplplatform
+    operator: Equal
+    value: prod
+    effect: NoSchedule
 
 # -- Affinity to add to controller Pod
-affinity: {}
+affinity:
+  nodeAffinity:
+    requiredDuringSchedulingIgnoredDuringExecution:
+      nodeSelectorTerms:
+        - matchExpressions:
+            - key: noderole.dplplatform
+              operator: In
+              values:
+                - system
   #  Sample on how to create an antiAffinity rule that place
   #  the pods on different nodes, to be used together with `ha.enabled: true`
   # podAntiAffinity:
@@ -287,18 +299,6 @@ certController:
   # -- Node selectors to add to controller Pod
   nodeSelector: {}
   # -- Tolerations to add to controller Pod
-  tolerations:
-    - key: noderole.dplplatform
-      operator: Equal
-      value: prod
-      effect: NoSchedule
+  tolerations: []
   # -- Affinity to add to controller Pod
-  affinity:
-    nodeAffinity:
-      requiredDuringSchedulingIgnoredDuringExecution:
-        nodeSelectorTerms:
-          - matchExpressions:
-              - key: noderole.dplplatform
-                operator: In
-                values:
-                  - system
+  affinity: {}
