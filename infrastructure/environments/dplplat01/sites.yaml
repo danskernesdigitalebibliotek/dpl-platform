@@ -20,6 +20,12 @@ x-webmaster-postponed-until-2025-01-06: &webmaster-postponed-until-2025-01-06
   releaseImageName: dpl-cms-source
   dpl-cms-release: "2024.47.2"
   moduletest-dpl-cms-release: "2024.50.0"
+x-webmasters-on-weekly-release-cycle: &webmasters-on-weekly-release-cycle
+  #This release cycle releases the newest release, which has been tested on webmaster moduletests in the previous week, on to production
+  releaseImageRepository: ghcr.io/danskernesdigitalebibliotek
+  releaseImageName: dpl-cms-source
+  dpl-cms-release: "2024.50.0"
+  moduletest-dpl-cms-release: "2025.3.2"
 sites:
   # Site objects are indexed by a unique key that must be a valid lagoon, and
   # github project name. That is, alphanumeric and dashes.
