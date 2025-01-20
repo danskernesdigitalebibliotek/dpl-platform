@@ -66,6 +66,8 @@ cause all sites to crash.
 - Databases will be located closer, logically as well as physically, to
 workloads relying on them = faster response time, which should be noticable for
 end-users.
+- We can right-size the databae, thereby getting the maximum performance for the
+buck.
 
 ## Decision
 
