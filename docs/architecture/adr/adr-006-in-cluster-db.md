@@ -89,6 +89,7 @@ Every step taken towards moving into in-cluster database shall done
 transparantly.
 
 The In-cluster database must:
+
 - have ressource monitoring setup
 - be able to have backups taken
 - Be able to be restored
