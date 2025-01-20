@@ -37,6 +37,7 @@ incorrect.
 - Will require a migration to a potentially as bad service
 
 ##### Pros
+
 - One-click setup
 - Minimal configuration needed from us
 - Azure support
