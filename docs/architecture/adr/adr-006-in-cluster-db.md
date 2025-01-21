@@ -128,6 +128,18 @@ end-users.
 - We can right-size the databae, thereby getting the maximum performance for the
 buck.
 
+### Recovery and database restores
+
+The in-cluser database will be deployed using MariaDB's operator.
+This gives us the following advantages:
+
+- Recovery is done by the operator, representing MariaDB's expertise on how to
+best recover a crashed DB
+- Database server splitting, enabling us to dividing the projects collective
+sites out over serveral database servers, so one server crashing only affect
+sites on that database server and not every site.
+- No changes to single-site database restores
+
 ## Decision
 
 We have made the decision to implement the In-cluster database due the
