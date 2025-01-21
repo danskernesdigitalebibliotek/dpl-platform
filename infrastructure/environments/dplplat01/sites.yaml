@@ -850,6 +850,10 @@ sites:
     name: "Svendborg Bibliotek"
     description: "The library site for Svendborg"
     deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKi6cflBrH2UZZSW9P3mWCMV2T7TUbfDSgAWBUWaIaPQ"
+    primary-domain: svendborgbibliotek.dk
+    secondary-domains:
+      - www.svendborgbibliotek.dk
+    autogenerateRoutes: true
     <<: *default-release-image-source
   syddjurs:
     name: "Syddjurs Bibliotek"
