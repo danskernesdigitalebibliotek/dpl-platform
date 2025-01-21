@@ -31,8 +31,7 @@ the sites as well as the ability to bring the sites backup faster.
 - Experienced to be poorly managed
 - Server logs is disproportionately priced = too expensive for this project
 - We don't have access to the server
-- The wait time for support can be long and very bothersome as well as
-incorrect.
+- The wait time for support can be long and incorrect.
 - Server might be (was in our case) misconfigured
 - Will require a migration to a potentially as bad service
 
@@ -43,7 +42,7 @@ incorrect.
 - Azure support
 - Azure can be blamed for downtime, they are directly or indirectly responsible
 for.
-- MySql, which is not set to be sunsettet, might have a noticably better service
+- MySql, which is not set to be sunset, might have a noticably better service
 as that is their chosen flavor to keep offering.
 
 #### In-Cluster DB
