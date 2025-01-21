@@ -78,27 +78,8 @@ By moving the database into the cluster, we gain:
 - a guarantee that no one but the platform team takes actions on the server
 - access to the server logs and thus insight into how to tweak the databaes to
 perform better
-
-
-We have had too much downtime due to the Azure MariaDB Database, which is
-managed by Azure. Azure is barring us access to the database server logs due
-to their disproportionate pricing of server logs. This results in an inability
-to investigate database slowness as well as what lead to a database crash.
-Instead we've had to wait for Azure support to allocate time and resources
-towards advising/assisting us.
-
-We have also experienced the Azure support taking unsanctioned action on the
-database, resulting in downtime for all sites, on serveral occasions.
-
-The sum of all this is an erroded trust in Azure ability to cater adequately
-to our needs.
-
-By moving the database into the cluster, we gain access to the database server
-logs, access to the server itself and a guarantee that no one but the platform
-team takes actions and thus.
-We have the experience running databases in cluster, and having the power and
-agency to do the things we know need doing, should result in less down time for
-the sites as well as the ability to bring the sites backup faster.
+- Agency
+- The ability to start recovering from a crash, should the need arise.
 
 ### Pros & Cons
 
