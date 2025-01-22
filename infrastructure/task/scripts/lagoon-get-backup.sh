@@ -10,7 +10,7 @@ if [[ -z "${LAGOON_PROJECT}" || -z "${BACKUP_TYPE}" || -z "${BACKUP_DESTINATION}
 fi
 
 BACKUPS=$(lagoon list backups -p "${LAGOON_PROJECT}" -e "${LAGOON_ENVIRONMENT}" --output-json);
-BACKUP_ID=$(echo "$BACKUPS" | jq -r ".data[] | select(.source == \"${BACKUP_TYPE}\") | .backupid" | head -n 1);
+BACKUP_ID=$(echo "$BACKUPS" | jq -r ".data | map(select(.source == \"${BACKUP_TYPE}\")) | nth(0) | .backupid");
 BACKUP_RESULT="Error";
 echo -e "\nRetrieving ${BACKUP_TYPE} backup from ${LAGOON_ENVIRONMENT} environment of ${LAGOON_PROJECT} project \n\n";
 # Wait a while we wait for the backup to become available.
