@@ -24,7 +24,7 @@ while [[ $BACKUP_RESULT == "Error"* ]]; do
   # This will return an message in the format "Error: [error message]" if the
   # backup is not available for download yet.
   BACKUP_RESULT=$(lagoon get backup -p "${LAGOON_PROJECT}" -e "${LAGOON_ENVIRONMENT}" --backup-id "${BACKUP_ID}" --output-json 2>&1) || true;
-  BACKUP_URL=$(echo "$BACKUP_RESULT" | jq -r ".result") || true
 done;
+BACKUP_URL=$(echo "$BACKUP_RESULT" | jq -r ".result")
 echo -e "\nDownloading backup from ${BACKUP_URL} to ${BACKUP_DESTINATION}\n\n";
 curl -o "${BACKUP_DESTINATION}" "${BACKUP_URL}";
