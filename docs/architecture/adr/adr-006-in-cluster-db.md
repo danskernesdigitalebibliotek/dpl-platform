@@ -24,13 +24,17 @@ Microsofts support is tiered and direct access to technical staff is prevented
 by Azure support policy.
 Microsofts support has made unsanctioned changes on the databse
 It is not possible to access the database server.
+
+Installing a MariaDB Sql operator in the cluster provides the following
+benefits:
+
 - access to the database server logs
 - access to the server itself
-- a guarantee that no one but the platform team takes actions on the server
-- access to the server logs and thus insight into how to tweak the databaes to
-perform better
-- Agency
-- The ability to start recovering from a crash, should the need arise.
+- a guarantee that no one but the platform team can take action on the server
+- ability to right-size the database
+- Running clusters of databases
+- Database recovery
+- The ability to start recovering from a crash immediately
 
 ### Pros & Cons
 
