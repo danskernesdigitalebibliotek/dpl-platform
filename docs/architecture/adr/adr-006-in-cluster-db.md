@@ -2,8 +2,8 @@
 
 ## Context
 
-Microsoft has decided to sunset Azure Database for MariaDB summer 2025.
-They recommend moving to their Azure Database for MySql instead.
+Microsoft is sunsetting Azure Database for MariaDB summer 2025.
+They recommend moving to Azure Database for MySql instead.
 
 The project has experienced project wide down time due to database crashes on
 multiple occasions:
@@ -18,11 +18,13 @@ Group team taking unsanctioned action
 - Summer 2024: Database was restarted by Azure for unscheduled and unnotified
 maintenance
 
-Microsofts datbase server logs are prohibitively expensive.
+Microsoft's database server logs are prohibitively expensive.
 Microsoft misconfigured the database provision-time.
-Microsofts support is tiered and direct access to technical staff is prevented
-by Azure support policy.
-Microsofts support has made unsanctioned changes on the databse
+The current Microsoft support tier is useless and useful support is
+prohibitively expensive.
+Microsoft support has made unsanctioned changes on the databse, such as
+maintenance work during business hours and restarts in attempts to fix support
+tickets.
 It is not possible to access the database server.
 
 Installing a MariaDB Sql operator in the cluster provides the following
