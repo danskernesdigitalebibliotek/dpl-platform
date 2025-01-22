@@ -1136,10 +1136,11 @@ tasks:
         TARGET_NAMESPACE: "{{.TARGET_PROJECT}}-{{.TARGET_ENV}}"
         LOCAL_BACKUP_DESTINATION: "/tmp/{{.SOURCE_PROJECT}}-mariadb-backup.tar.gz"
         REMOTE_BACKUP_DESTINATION: "/tmp/{{.SOURCE_PROJECT}}-{{.SOURCE_ENV}}-mariadb-prebackuppod.mariadb.sql"
+        BACKUP_ENTRY: '{{.BACKUP_ENTRY | default "1" }}'
       prompt:
-        - Restore latest database backup from {{.SOURCE_PROJECT}}-{{.SOURCE_ENV}} to {{.TARGET_PROJECT}}-{{.TARGET_ENV}}
+        - Restore {{.BACKUP_ENTRY}}. most recent database backup from {{.SOURCE_PROJECT}}-{{.SOURCE_ENV}} to {{.TARGET_PROJECT}}-{{.TARGET_ENV}}
       cmds:
-        - LAGOON_PROJECT={{.SOURCE_PROJECT}} BACKUP_TYPE=mariadb BACKUP_DESTINATION={{.LOCAL_BACKUP_DESTINATION}} ./task/scripts/lagoon-get-backup.sh
+        - LAGOON_PROJECT={{.SOURCE_PROJECT}} BACKUP_TYPE=mariadb BACKUP_ENTRY={{.BACKUP_ENTRY}} BACKUP_DESTINATION={{.LOCAL_BACKUP_DESTINATION}} ./task/scripts/lagoon-get-backup.sh
         - kubectl cp -n {{.TARGET_NAMESPACE}} $(tar -xvzf {{.LOCAL_BACKUP_DESTINATION}}) $(kubectl -n {{.TARGET_NAMESPACE}} get pod -l app.kubernetes.io/instance=cli -o jsonpath="{.items[0].metadata.name}"):{{.REMOTE_BACKUP_DESTINATION}}
         - kubectl exec -n {{.TARGET_NAMESPACE}} deployment/cli -- bash -c "echo Verifying file && test -s {{.REMOTE_BACKUP_DESTINATION}} || (echo {{.REMOTE_BACKUP_DESTINATION}} is missing or empty && exit 1) && echo Dropping database && drush sql-drop -y && echo Importing backup && drush sql:query --file={{.REMOTE_BACKUP_DESTINATION}} && echo Deleting backup && rm {{.REMOTE_BACKUP_DESTINATION}}"
         - lagoon deploy latest --project {{.TARGET_PROJECT}} --environment {{.TARGET_ENV}} --force
