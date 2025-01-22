@@ -1131,7 +1131,7 @@ tasks:
         PROJECT_ENV: '{{.PROJECT_ENV | default "main" }}'
         SOURCE_PROJECT: "{{.SOURCE_PROJECT | default .PROJECT }}"
         SOURCE_ENV: "{{.SOURCE_ENV | default .PROJECT_ENV }}"
-        TARGET_PROJECT: "{{.TARGET_PROJECT | default .PROJECT}}"
+        TARGET_PROJECT: "{{.TARGET_PROJECT | default .SOURCE_PROJECT }}"
         TARGET_ENV: "{{.TARGET_ENV | default .PROJECT_ENV }}"
         TARGET_NAMESPACE: "{{.TARGET_PROJECT}}-{{.TARGET_ENV}}"
         LOCAL_BACKUP_DESTINATION: "/tmp/{{.SOURCE_PROJECT}}-mariadb-backup.tar.gz"
