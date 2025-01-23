@@ -107,7 +107,7 @@ nodeSelector: {}
 tolerations:
   - key: noderole.dplplatform
     operator: Equal
-    value: prod
+    value: system
     effect: NoSchedule
 
 # -- Affinity to add to controller Pod
