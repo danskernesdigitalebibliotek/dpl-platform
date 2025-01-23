@@ -50,9 +50,9 @@ sites:
   cms-school:
     name: "CMS-skole"
     description: "Et site til undervisning i CMSet"
-    importTranslationsCron: "0 * * * *"
     deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJ6SzfPFf/XeLeqI342kxuJAlATpDMtgAfqlrLTTbW2m"
     plan: webmaster
+    autogenerateRoutes: true
     <<: *webmasters-on-weekly-release-cycle
   bibliotek-test:
     name: "Bibliotekstest"
