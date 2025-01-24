@@ -1102,7 +1102,6 @@ tasks:
         Ensures a lagoon project is set up and configured correctly for a
         given site as specified by sites.yaml
       deps: [lagoon:cli:config]
-      dir: "{{.dir_env}}"
       silent: true
       vars:
         GIT_URL: "git@github.com:danishpubliclibraries/env-{{.SITE}}.git"
