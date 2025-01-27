@@ -134,9 +134,9 @@ sites:
     name: "AssensBibliotekerne"
     description: "The library site for Assens"
     deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDrdA9FWa+mpmJ+uyMO6H3O+xIVYpdjcbodE/zS790Ee"
-    primary-domain: www.assensbib.dk
+    primary-domain: assensbib.dk
     secondary-domains:
-      - assensbib.dk
+      - www.assensbib.dk
     autogenerateRoutes: true
     <<: *default-release-image-source
   ballerup:
