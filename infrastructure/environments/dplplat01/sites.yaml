@@ -562,6 +562,10 @@ sites:
     name: "Langeland Bibliotek"
     description: "The library site for Langeland"
     deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIGRQJKuvPilMa2QiqPNzHf1EIa3epkJ6m0STYTLE1MaW"
+    primary-domain: langelandbibliotek.dk
+    secondary-domains:
+      - www.langelandbibliotek.dk
+    autogenerateRoutes: true
     <<: *default-release-image-source
   lejre:
     name: "Lejre Bibliotek & Arkiv"
