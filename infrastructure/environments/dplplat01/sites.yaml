@@ -51,7 +51,9 @@ sites:
     name: "CMS-skole"
     description: "Et site til undervisning i CMSet"
     deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJ6SzfPFf/XeLeqI342kxuJAlATpDMtgAfqlrLTTbW2m"
+    dpl-cms-release: "2025.4.0"
     plan: webmaster
+    moduletest-dpl-cms-release: "2025.4.0"
     autogenerateRoutes: true
     <<: *webmasters-on-weekly-release-cycle
   bibliotek-test:
@@ -132,6 +134,10 @@ sites:
     name: "AssensBibliotekerne"
     description: "The library site for Assens"
     deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDrdA9FWa+mpmJ+uyMO6H3O+xIVYpdjcbodE/zS790Ee"
+    primary-domain: www.assensbib.dk
+    secondary-domains:
+      - assensbib.dk
+    autogenerateRoutes: true
     <<: *default-release-image-source
   ballerup:
     name: "Ballerup Bibliotekerne"
