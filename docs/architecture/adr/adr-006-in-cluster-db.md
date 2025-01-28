@@ -2,7 +2,7 @@
 
 ## Context
 
-Microsoft is sunsetting Azure Database for MariaDB summer 2025.
+Microsoft is [sunsetting Azure Database for MariaDB by September 2025](https://azure.microsoft.com/en-us/updates?id=azure-database-for-mariadb-will-be-retired-on-19-september-2025-migrate-to-azure-database-for-mysql-flexible-server).
 They recommend moving to Azure Database for MySql instead.
 
 The project has experienced project wide down time due to database crashes on
