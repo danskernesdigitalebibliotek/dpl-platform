@@ -78,7 +78,7 @@ as that is their chosen flavor to keep offering.
 - A little cheaper on the face of it
 - Ability to split out databases such that one database having issues doesn't
 cause all sites to crash.
-- Support for high-availability if we decide to implement this.
+- Support for [high-availability](https://mariadb.com/docs/server/architecture/use-cases/high-availability/) if we decide to implement this.
 - Performance can be optimized and finetuned to our usecase
 - Databases will be located closer, logically as well as physically, to
 workloads relying on them = faster response time, which should be noticable for
