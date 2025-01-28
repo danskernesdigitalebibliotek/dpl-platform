@@ -40,9 +40,10 @@ In light of this, we have to consider options.
 ##### Cons
 
 - Negative experiences from management of Azure Database for MariaDB
-  - The project has experienced project wide down time due to database crashes on
+- The project has experienced project wide down time due to database crashes on
 multiple occasions:
-- Server logs are disproportionately priced. They are too expensive for this project. This prevents us from debugging many problems ourselves.
+- Server logs are disproportionately priced. They are too expensive for this
+  project. This prevents us from debugging many problems ourselves.
 - The wait time for support can be long and incorrect.
 - Server might be (was in our case) misconfigured
 - Potential data-mismatch, that must be handled migration time
@@ -75,8 +76,9 @@ as that is their chosen flavor to keep offering.
 - The server resources are cheaper and will allow us to have more powerful
   databases at a lower cost.
 - Ability to split out databases such that one database having issues doesn't
-cause all sites to crash.
-- Support for [high-availability](https://mariadb.com/docs/server/architecture/use-cases/high-availability/) if we decide to implement this.
+  cause all sites to crash.
+- Support for [high-availability](https://mariadb.com/docs/server/architecture/use-cases/high-availability/)
+  if we decide to implement this.
 - Performance can be optimized and finetuned to our usecase
 - Databases will be located closer, logically as well as physically, to
 workloads relying on them = faster response time, which should be noticable for
