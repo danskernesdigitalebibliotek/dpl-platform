@@ -105,6 +105,8 @@ nodeSelector: {}
 
 # -- Tolerations to add to controller Pod
 tolerations:
+  - key: CriticalAddonsOnly
+    operator: Exists
   - key: noderole.dplplatform
     operator: Equal
     value: system
