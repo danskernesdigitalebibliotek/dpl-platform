@@ -26,16 +26,12 @@ Microsoft support has made unsanctioned changes on the databse, such as
 maintenance work during business hours and restarts in attempts to fix support
 tickets.
 
-Installing a MariaDB Sql operator in the cluster provides the following
-benefits:
+In light of this, we have to consider options.
 
-- access to the database server logs
-- access to the server itself
-- a guarantee that no one but the platform team can take action on the server
-- ability to right-size the database
-- Running clusters of databases
-- Database recovery
-- The ability to start recovering from a crash immediately
+## Considered options
+
+- In-cluster MariaDB
+- Azure Database for MySql
 
 ### Pros & Cons
 
@@ -49,6 +45,7 @@ multiple occasions:
 - Server logs are disproportionately priced. They are too expensive for this project. This prevents us from debugging many problems ourselves.
 - The wait time for support can be long and incorrect.
 - Server might be (was in our case) misconfigured
+- Potential data-mismatch, that must be handled migration time
 
 ##### Pros
 
@@ -73,7 +70,8 @@ as that is their chosen flavor to keep offering.
 ##### Pros
 
 - Ability to investigate logs
-- Logging and monitoring can be set up to alert us to noteworthy changes
+- Troubleshooting can be done immeadiately
+- Logging and monitoring can be set up to alert us to noteworthy changes.
 - The server resources are cheaper and will allow us to have more powerful
   databases at a lower cost.
 - Ability to split out databases such that one database having issues doesn't
@@ -85,6 +83,7 @@ workloads relying on them = faster response time, which should be noticable for
 end-users.
 - We can right-size the database, thereby getting the maximum performance for the
 buck.
+- Direct access to the server itself.
 
 ## Decision
 
