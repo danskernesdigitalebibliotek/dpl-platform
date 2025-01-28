@@ -43,7 +43,9 @@ benefits:
 
 ##### Cons
 
-- Experienced to be poorly managed
+- Negative experiences from management of Azure Database for MariaDB
+  - The project has experienced project wide down time due to database crashes on
+multiple occasions:
 - Server logs are disproportionately priced. They are too expensive for this project. This prevents us from debugging many problems ourselves.
 - We don't have access to the server
 - The wait time for support can be long and incorrect.
