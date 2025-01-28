@@ -105,8 +105,8 @@ transparantly.
 
 The In-cluster database must:
 
-- have ressource monitoring setup
-- be able to have backups taken
+- Have ressource monitoring setup
+- Be able to have backups taken
 - Be able to be restored
 - Have log monitoring setup
 
