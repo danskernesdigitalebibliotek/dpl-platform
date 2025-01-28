@@ -57,7 +57,7 @@ multiple occasions:
 - Azure support
 - Azure can be blamed for downtime, they are directly or indirectly responsible
 for.
-- MySql, which is not set to be sunset, might have a noticably better service
+- MySql, which is not set to be sunset, might have a noticeably better service
 as that is their chosen flavor to keep offering.
 - Support for hight-availability with automatic failover to a replica
 
@@ -83,26 +83,27 @@ cause all sites to crash.
 - Databases will be located closer, logically as well as physically, to
 workloads relying on them = faster response time, which should be noticable for
 end-users.
-- We can right-size the databae, thereby getting the maximum performance for the
+- We can right-size the database, thereby getting the maximum performance for the
 buck.
 
 ## Decision
 
 We have made the decision to implement the In-cluster database due the
-afforemention pros and cons lists.
+aforemention pros and cons lists.
 Negative experiences with stability and management for Azure Database for MariaDB have reduced our trust in continual use of managed databases by Azure.
-By moving to an in-cluster database we take our agency for this critical part of the infrastructure back.
+By moving to an in-cluster database get control over a critical part of our
+infrastructure
 
 We will start by implementing a PoC, where we can test for a good setup of the in-cluster
 database before migrating all the databases to use the in-cluster databases.
-The PoC will also be used for testing mgiration against.
+The PoC will also be used for testing migration against.
 
 Every step taken towards moving into in-cluster database shall done
 transparantly.
 
 The In-cluster database must:
 
-- Have ressource monitoring setup
+- Have resource monitoring setup
 - Be able to have backups taken
 - Be able to be restored
 - Have log monitoring setup
