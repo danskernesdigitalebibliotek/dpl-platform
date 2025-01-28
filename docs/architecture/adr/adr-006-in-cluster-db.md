@@ -44,7 +44,7 @@ benefits:
 ##### Cons
 
 - Experienced to be poorly managed
-- Server logs is disproportionately priced = too expensive for this project
+- Server logs are disproportionately priced. They are too expensive for this project. This prevents us from debugging many problems ourselves.
 - We don't have access to the server
 - The wait time for support can be long and incorrect.
 - Server might be (was in our case) misconfigured
