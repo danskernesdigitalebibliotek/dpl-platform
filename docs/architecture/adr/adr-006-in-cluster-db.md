@@ -89,12 +89,8 @@ buck.
 
 We have made the decision to implement the In-cluster database due the
 afforemention pros and cons lists.
-We are tired of having a poorly managed database, with bad support.
-Additionally both, we and the DDF, as well as the libraries themselves are
-tired of having preventable downtime.
-This way we take our agency back and ensure that we will not have an incoming
-task of migrating the database later in the year, when Azure End-Of-Lifes
-Managed MariaDB's.
+Negative experiences with stability and management for Azure Database for MariaDB have reduced our trust in continual use of managed databases by Azure.
+By moving to an in-cluster database we take our agency for this critical part of the infrastructure back.
 
 We will start by implementing a PoC, where we can test for a good setup of the in-cluster
 database before migrating all the databases to use the in-cluster databases.
