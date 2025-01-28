@@ -25,7 +25,6 @@ prohibitively expensive.
 Microsoft support has made unsanctioned changes on the databse, such as
 maintenance work during business hours and restarts in attempts to fix support
 tickets.
-It is not possible to access the database server.
 
 Installing a MariaDB Sql operator in the cluster provides the following
 benefits:
