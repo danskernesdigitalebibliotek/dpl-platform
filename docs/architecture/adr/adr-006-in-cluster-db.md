@@ -49,7 +49,6 @@ multiple occasions:
 - Server logs are disproportionately priced. They are too expensive for this project. This prevents us from debugging many problems ourselves.
 - The wait time for support can be long and incorrect.
 - Server might be (was in our case) misconfigured
-- Will require a migration to a potentially as bad service
 
 ##### Pros
 
