@@ -39,7 +39,7 @@ benefits:
 
 ### Pros & Cons
 
-#### Azure Managed DB
+#### Azure Database for MySQL
 
 ##### Cons
 
