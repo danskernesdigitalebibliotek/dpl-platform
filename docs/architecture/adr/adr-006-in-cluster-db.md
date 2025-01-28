@@ -67,8 +67,8 @@ as that is their chosen flavor to keep offering.
 
 - We have no one but ourselves to blame if something goes awry
 - Logging and monitoring has to be set up manually
-- All configuration has to be done ourselves
 - [Point-in-time-recovery is not supported at the moment](https://github.com/mariadb-operator/mariadb-operator/issues/507)
+- All configurations and updates have to be done by us
 
 ##### Pros
 
