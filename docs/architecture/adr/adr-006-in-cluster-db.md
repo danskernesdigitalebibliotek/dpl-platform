@@ -47,7 +47,6 @@ benefits:
   - The project has experienced project wide down time due to database crashes on
 multiple occasions:
 - Server logs are disproportionately priced. They are too expensive for this project. This prevents us from debugging many problems ourselves.
-- We don't have access to the server
 - The wait time for support can be long and incorrect.
 - Server might be (was in our case) misconfigured
 - Will require a migration to a potentially as bad service
