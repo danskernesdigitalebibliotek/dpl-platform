@@ -66,7 +66,7 @@ as that is their chosen flavor to keep offering.
 ##### Cons
 
 - We have no one but ourselves to blame if something goes awry
-- Logging and Monitoring has to be set up manually
+- Logging and monitoring has to be set up manually
 - All configuration has to be done ourselves
 - Not possible to do PITR recovery at the moment.
 
