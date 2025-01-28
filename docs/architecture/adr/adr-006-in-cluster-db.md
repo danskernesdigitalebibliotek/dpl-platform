@@ -59,6 +59,7 @@ multiple occasions:
 for.
 - MySql, which is not set to be sunset, might have a noticably better service
 as that is their chosen flavor to keep offering.
+- Support for hight-availability with automatic failover to a replica
 
 #### In-Cluster DB
 
