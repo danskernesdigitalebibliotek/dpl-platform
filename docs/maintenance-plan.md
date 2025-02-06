@@ -45,7 +45,7 @@ Notes:
 
 ### Grafana
 
-Update interval: weekly
+Update interval: Quaterly
 Release URL: <https://github.com/grafana/grafana/releases>
 Upgrade Docs URL:
 Expect downtime: No, maybe a little for Grafana, but nothing that affects the
