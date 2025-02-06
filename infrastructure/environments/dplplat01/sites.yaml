@@ -2,7 +2,7 @@
 x-defaults: &default-release-image-source
   releaseImageRepository: ghcr.io/danskernesdigitalebibliotek
   releaseImageName: dpl-cms-source
-  dpl-cms-release: "2025.5.1"
+  dpl-cms-release: "2025.6.0"
 x-webmaster: &webmaster-release-image-source
   # This is the default release plan for webmasters. There's currently no webmasters on it.
   # This is should be updated according with https://danskernesdigitalebibliotek.github.io/dpl-docs/DPL-Platform/runbooks/monthly-release-to-editors-and-webmasters/
