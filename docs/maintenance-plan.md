@@ -85,7 +85,7 @@ Check every quarter.
 
 ### Loki
 
-Update interval: somewhat monthly
+Update interval: Half yearly
 Release URL: <https://artifacthub.io/packages/helm/grafana/loki>
 Upgrade Docs URL: <https://grafana.com/docs/loki/latest/setup/upgrade/>
 Expect downtime: Might be some, but nothing that will hit the libraries
@@ -100,7 +100,7 @@ As we're replacing Minio, we will have to do a section on what ever tool
 
 ### Prometheus
 
-Update interval: half yearly
+Update interval: Half yearly
 Release URL: <https://github.com/prometheus-community/helm-charts/releases?q=kube-prometheus-stack&expanded=true>
 Upgrade Docs URL: <https://artifacthub.io/packages/helm/prometheus-community/kube-prometheus-stack#upgrading-chart>
 Expect downtime: Probably, but nothing the libraries will be affected by
@@ -110,7 +110,7 @@ Notes:
 
 ### Promtail
 
-Update interval: monthly-quarterly
+Update interval: Half yearly
 Release URL: <https://github.com/grafana/helm-charts/releases?q=promtail&expanded=true>
 Upgrade Docs URL: <https://github.com/grafana/helm-charts/blob/main/charts/promtail/README.md#upgrading>
 Expect downtime: Probably, but nothing that concerns the libraries.
