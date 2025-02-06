@@ -81,6 +81,7 @@ DO NOT UPGRADE.
 From time to time we should checkin with this page [K8Up in lagoon](https://docs.lagoon.sh/installing-lagoon/lagoon-backups/#lagoon-backups)
 , where they'll hopefully give and update when it is possible to update K8Up
 to a later version than version 1.x.x
+Check every quarter.
 
 ### Loki
 
