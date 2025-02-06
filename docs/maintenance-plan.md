@@ -127,7 +127,7 @@ are notified about updates pretty quickly.
 
 ### Terraform
 
-Update interval: Monthly
+Update interval: Yearly
 Release URL: <https://hub.docker.com/r/hashicorp/terraform/tags?page=1&ordering=last_updated>
 Expect downtime: None
 Time to do: 1 hour
@@ -136,7 +136,7 @@ Notes:
 
 ### Azure CLI
 
-Update interval: Unknown
+Update interval: Half yearly
 Release URL: <https://mcr.microsoft.com/v2/azure-cli/tags/list>
 Expect downtime: None
 Time to do: 1 hour
@@ -154,7 +154,7 @@ Notes:
 
 ### Krew
 
-Update interval: Unkown, hasen't been updated since 2023
+Update interval: Half yearly
 Release URL: <https://github.com/kubernetes-sigs/krew/releases>
 Expect downtime: None
 Time to do: 1 hour
@@ -163,7 +163,7 @@ Notes:
 
 ### Task
 
-Update interval: Monthly
+Update interval: Half yearly
 Release URL: <https://github.com/go-task/task/releases>
 Expect downtime: None
 Time to do: 1 hour
@@ -172,7 +172,7 @@ Notes:
 
 ### Lagoon CLI
 
-Update interval: Quaterly
+Update interval: Quarterly
 Release URL: <https://github.com/uselagoon/lagoon-cli/releases>
 Expect downtime: None
 Time to do: 1 hour
@@ -182,7 +182,7 @@ Notes: Dependabot has not as of yet notified us of any available updates,
 
 ### Helm
 
-Update interval: Monthly
+Update interval: Quarterly
 Release URL: <https://hub.docker.com/r/alpine/helm/tags?page=1&ordering=last_updated>
 Expect downtime: None
 Time to do: 1 hour
