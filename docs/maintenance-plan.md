@@ -56,13 +56,13 @@ Notes:
 
 ### Harbor
 
-Update interval: somewhat monthly
+Update interval: Half yearly
 Release URL: <https://github.com/goharbor/harbor-helm/releases>
 Upgrade Docs URL: <https://github.com/goharbor/harbor-helm/blob/main/docs/Upgrade.md>
 Expect downtime: Harbor will have downtime, it will affect sites that need
   redeployment as well as developers who firing up and environment.
 Time to do: Unknown
-Runbook: [Upgrading Harboar](./runbooks/upgrading-support-workloads.md#harbor)
+Runbook: [Upgrading Harbor](./runbooks/upgrading-support-workloads.md#harbor)
 Notes:
 
 ### Nginx Ingress Controller
