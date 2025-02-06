@@ -35,7 +35,7 @@ There's a general runbook for upgrading the support workloads here:
 
 ### Cert-manager
 
-Update interval: weekly-monthly
+Update interval: every 6 months
 Release URL: <https://github.com/cert-manager/cert-manager/releases>
 Upgrade Docs URL: <https://cert-manager.io/docs/installation/upgrade/>
 Expect downtime: Unknown, but likely none
