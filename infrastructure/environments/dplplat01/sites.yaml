@@ -51,9 +51,9 @@ sites:
     name: "CMS-skole"
     description: "Et site til undervisning i CMSet"
     deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJ6SzfPFf/XeLeqI342kxuJAlATpDMtgAfqlrLTTbW2m"
-    dpl-cms-release: "2025.4.0"
+    dpl-cms-release: "2025.6.0"
     plan: webmaster
-    moduletest-dpl-cms-release: "2025.5.1"
+    moduletest-dpl-cms-release: "2025.6.0"
     autogenerateRoutes: true
     <<: *webmasters-on-weekly-release-cycle
   bibliotek-test:
