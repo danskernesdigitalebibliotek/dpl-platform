@@ -67,7 +67,7 @@ Notes:
 
 ### Nginx Ingress Controller
 
-Update interval: Monthly
+Update interval: Half yearly
 Release URL: <https://github.com/kubernetes/ingress-nginx/releases>
 Upgrade Docs URL: <https://kubernetes.github.io/ingress-nginx/deploy/upgrade/#with-helm>
 Expect downtime: Highly likely
