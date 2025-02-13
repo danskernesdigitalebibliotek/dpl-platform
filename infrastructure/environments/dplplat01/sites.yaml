@@ -16,7 +16,7 @@ x-webmasters-on-weekly-release-cycle: &webmasters-on-weekly-release-cycle
   releaseImageName: dpl-cms-source
   dpl-cms-release: "2025.6.0"
   moduletest-dpl-cms-release: "2025.7.1"
-x-&webmasters-prod-stying-on-0.6: &webmasters-prod-stying-on-0.6
+x-&webmasters-prod-stying-on-5.1: &webmasters-prod-stying-on-5.1
   #Herning wants to stay on their current version on production and have the newest release on moduletest
   releaseImageRepository: ghcr.io/danskernesdigitalebibliotek
   releaseImageName: dpl-cms-source
@@ -412,7 +412,7 @@ sites:
       - herningbib.dk
     autogenerateRoutes: true
     plan: webmaster
-    <<: *webmasters-prod-stying-on-0.6
+    <<: *webmasters-prod-stying-on-5.1
   hillerod:
     name: "Hillerød Bibliotekerne"
     description: "The library site for Hillerød"
