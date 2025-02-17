@@ -18,6 +18,20 @@ spec:
 
           chmod 600 /root/.ssh/id_rsa
 
+          wget -O jq https://github.com/stedolan/jq/releases/download/jq-1.5/jq-linux64
+          chmod +x ./jq
+          cp jq /usr/bin
+
+          /lagoon config add \
+            --graphql https://api.lagoon.dplplat01.dpl.reload.dk/graphql \
+            --force \
+            --ui https://ui.lagoon.dplplat01.dpl.reload.dk \
+            --hostname 20.238.147.183 \
+            --port 22 \
+            --lagoon dplplat01
+
+          /lagoon config default --lagoon dplplat01
+
           sleep 3600
       volumeMounts:
         - name: lagoon-known-hosts
