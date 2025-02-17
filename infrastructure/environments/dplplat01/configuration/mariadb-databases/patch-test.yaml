@@ -1,0 +1,81 @@
+apiVersion: k8s.mariadb.com/v1alpha1
+kind: Database
+metadata:
+  name: patch-test-database
+  namespace: dpl-cms-pr-2073
+spec:
+  # If you want the database to be created with a different name than the resource name
+  # name: test
+  mariaDbRef:
+    name: test-mariadb
+    namespace: mariadb-servers
+  characterSet: LATIN1
+  collate: LATIN1_SWEDISH_CI
+  # Delete the resource in the database whenever the CR gets deleted.
+  # Alternatively, you can specify Skip in order to omit deletion.
+  cleanupPolicy: Delete
+  requeueInterval: 30s
+  retryInterval: 5s
+
+---
+
+apiVersion: k8s.mariadb.com/v1alpha1
+kind: User
+metadata:
+  name: mariadb-user
+  namespace: dpl-cms-pr-2073
+spec:
+  # If you want the user to be created with a different name than the resource name
+  name: patch
+  mariaDbRef:
+    name: test-mariadb
+    namespace: mariadb-servers
+  passwordSecretKeyRef:
+    name: test-mariadb
+    key: root-password
+  # This field defaults to 10
+  maxUserConnections: 20
+  host: "%"
+  # Delete the resource in the database whenever the CR gets deleted.
+  # Alternatively, you can specify Skip in order to omit deletion.
+  cleanupPolicy: Delete
+  requeueInterval: 30s
+  retryInterval: 5s
+
+---
+
+apiVersion: v1
+kind: Secret
+metadata:
+  name: test-mariadb
+  namespace: dpl-cms-pr-2073
+  labels:
+    k8s.mariadb.com/watch: ""
+stringData:
+  password: MariaDB11!
+  root-password: MariaDB11!
+
+---
+
+apiVersion: k8s.mariadb.com/v1alpha1
+kind: Grant
+metadata:
+  name: mariadb-grant
+  namespace: dpl-cms-pr-2073
+spec:
+  mariaDbRef:
+    name: test-mariadb
+    namespace: mariadb-servers
+  privileges:
+    - "ALL PRIVILEGES"
+  database: patch-test-database
+  table: "*"
+  username: patch
+  grantOption: true
+  host: "%"
+  # Delete the resource in the database whenever the CR gets deleted.
+  # Alternatively, you can specify Skip in order to omit deletion.
+  cleanupPolicy: Delete
+  requeueInterval: 30s
+  retryInterval: 5s
+

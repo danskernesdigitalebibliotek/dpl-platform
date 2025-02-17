@@ -18,7 +18,7 @@ spec:
 
           chmod 600 /root/.ssh/id_rsa
 
-          sleep 3600  # Keeps container running for debugging
+          sleep 3600
       volumeMounts:
         - name: lagoon-known-hosts
           mountPath: /root/.ssh/known_hosts
