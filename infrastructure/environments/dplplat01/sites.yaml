@@ -75,9 +75,15 @@ sites:
     description: "The BNF content sharing site"
     <<: *default-release-image-source
     deploy_key: ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAICTmMC/cUI3U3QloX6aAdN7g0EU42J0fwA9aO7UJOzx9
-    primary-domain: bibliotekernesnationaleformidling.dk
+    primary-domain: delingstjenesten.dk
     secondary-domains:
+      - www.delingstjenesten.dk
+      - bibliotekernesnationaleformidling.dk
       - www.bibliotekernesnationaleformidling.dk
+      - bibliotekernesdelingstjeneste.dk
+      - www.bibliotekernesdelingstjeneste.dk
+      - delingstjeneste.dk
+      - www.delingstjeneste.dk
   # Production sites
   aabenraa:
     name: "Aabenraa Biblioteker og Kulturhuse"
