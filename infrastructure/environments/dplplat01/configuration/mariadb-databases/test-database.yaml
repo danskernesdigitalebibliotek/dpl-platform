@@ -24,7 +24,7 @@ metadata:
   name: test-mariadb
   namespace: mariadb-servers
 spec:
-  image: docker-registry1.mariadb.com/library/mariadb:10.11.11
+  image: docker-registry1.mariadb.com/library/mariadb:10.6
   rootPasswordSecretKeyRef:
     name: test-mariadb
     key: root-password
@@ -109,6 +109,9 @@ spec:
     innodb_table_locks=1
     innodb_buffer_pool_instances=1
     innodb_flush_log_at_trx_commit = 0
+
+    [galera]
+    wsrep_retry_autocommit=3
 
 
   myCnfConfigMapKeyRef:
