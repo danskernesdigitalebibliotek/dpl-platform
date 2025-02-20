@@ -18,10 +18,12 @@ spec:
 
           chmod 600 /root/.ssh/id_rsa
 
+          # Install jq
           wget -O jq https://github.com/stedolan/jq/releases/download/jq-1.5/jq-linux64
           chmod +x ./jq
           cp jq /usr/bin
 
+          # Add lagoon config
           /lagoon config add \
             --graphql https://api.lagoon.dplplat01.dpl.reload.dk/graphql \
             --force \
@@ -30,7 +32,43 @@ spec:
             --port 22 \
             --lagoon dplplat01
 
+          # Set dplplat01 as default config
           /lagoon config default --lagoon dplplat01
+
+          function redeployDeployments() {
+            FAILED_PRODUCTION_DEPLOYMENTS=$(lagoon raw --raw "query allProjects {
+              allProjects {
+              name
+                environments(type: PRODUCTION) {
+                  name
+                  deployments(limit: 1) {
+                    status
+                    created
+                  }
+                }
+              }
+            }" | jq -r '.allProjects[] | .name as $name | .environments[].deployments[] | select(.status == "failed") | ($name)')
+
+            echo "Redeploying failed production environments"
+
+            for deployment in $FAILED_PRODUCTION_DEPLOYMENTS; do
+              if [[ $deployment =~ "dpl-cms" ]]; then
+                continue
+              fi
+              if [[ $deployment =~ "dpl-bnf" ]]; then
+                continue
+              fi
+              echo "$deployment: deploying"
+              lagoon deploy latest -p "$deployment" -e "main" --force
+            done
+          }
+
+          redeploy = true;
+          while [redeploy]
+          do
+            redeployDeployments;
+            redeploy = false;
+          done
 
           sleep 3600
       volumeMounts:
