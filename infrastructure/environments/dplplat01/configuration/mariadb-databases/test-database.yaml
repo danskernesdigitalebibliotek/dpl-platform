@@ -28,22 +28,25 @@ spec:
   rootPasswordSecretKeyRef:
     name: test-mariadb
     key: root-password
-  replicas: 1
-  # galera:
-  #   enabled: true
-  #   config:
-  #     reuseStorageVolume: true
-  #   agent:
-  #     basicAuth:
-  #       enabled: true
-  #   recovery:
-  #     enabled: true
-  #     minClusterSize: 1
-  #     clusterMonitorInterval: 10s
-  #     clusterHealthyTimeout: 30s
-  #     clusterBootstrapTimeout: 10m
-  #     podRecoveryTimeout: 5m
-  #     podSyncTimeout: 5m
+  replicas: 3
+  galera:
+    enabled: true
+    config:
+      reuseStorageVolume: true
+    agent:
+      basicAuth:
+        enabled: true
+    replicaThreads: 1
+    providerOptions:
+      gcs.fc_limit: '64'
+    recovery:
+      enabled: true
+      minClusterSize: 1
+      clusterMonitorInterval: 10s
+      clusterHealthyTimeout: 30s
+      clusterBootstrapTimeout: 10m
+      podRecoveryTimeout: 5m
+      podSyncTimeout: 5m
 
   storage:
     size: 10Gi
@@ -63,55 +66,62 @@ spec:
     bind-address=*
     default_storage_engine=InnoDB
     binlog_format=row
-    max_allowed_packet=128M
-    collation_server=LATIN1_SWEDISH_CI
-    character_set_server=LATIN1
-    join_buffer_size=262144
-    interactive_timeout=1000
-    max_connect_errors=10
-    thread_pool_stall_limit=500
-    thread_pool_max_threads=1800
-    key_buffer_size = 16M
-    max_connections = 400
-    max_heap_table_size = 512M
-    myisam_recover_options = BACKUP
-    optimizer_search_depth = 0
-    skip_external_locking = 1
-    table_open_cache = 65498
-    thread_cache_size = 8
-    thread_stack = 256K
-    tmp_table_size = 512M
-    tmpdir = /tmp
-    autocommit=0
-    ignore_db_dirs=backup
-    optimizer_search_depth = 0
-    query_cache_size = 0
-    query_cache_type = 0
-    skip_external_locking = 1
-    skip_name_resolve = 1
-    socket = /run/mysqld/mysqld.sock
-    transaction_isolation="READ-COMMITTED"
-    wait_timeout=28000
+    innodb_autoinc_lock_mode=2
+    max_allowed_packet=256M
 
-    [innodb]
-    innodb_autoinc_lock_mode=1
-    innodb_buffer_pool_size=1024M
-    innodb_buffer_pool_size=1G
-    innodb_force_recovery=0
-    innodb_flush_log_at_trx_commit = 0
-    innodb_log_buffer_size = 32M
-    innodb_max_purge_lag=10000
-    innodb_deadlock_detect=1
-    innodb_lock_wait_timeout=50
-    innodb_sync_array_size=1
-    innodb_purge_batch_size=300
-    innodb_thread_sleep_delay=1000
-    innodb_table_locks=1
-    innodb_buffer_pool_instances=1
-    innodb_flush_log_at_trx_commit = 0
+    # [mariadb]
+    # bind-address=*
+    # default_storage_engine=InnoDB
+    # binlog_format=row
+    # max_allowed_packet=128M
+    # collation_server=LATIN1_SWEDISH_CI
+    # character_set_server=LATIN1
+    # join_buffer_size=262144
+    # interactive_timeout=1000
+    # max_connect_errors=10
+    # thread_pool_stall_limit=500
+    # thread_pool_max_threads=1800
+    # key_buffer_size = 16M
+    # max_connections = 400
+    # max_heap_table_size = 512M
+    # myisam_recover_options = BACKUP
+    # optimizer_search_depth = 0
+    # skip_external_locking = 1
+    # table_open_cache = 65498
+    # thread_cache_size = 8
+    # thread_stack = 256K
+    # tmp_table_size = 512M
+    # tmpdir = /tmp
+    # autocommit=0
+    # ignore_db_dirs=backup
+    # optimizer_search_depth = 0
+    # query_cache_size = 0
+    # query_cache_type = 0
+    # skip_external_locking = 1
+    # skip_name_resolve = 1
+    # socket = /run/mysqld/mysqld.sock
+    # transaction_isolation="READ-COMMITTED"
+    # wait_timeout=28000
 
-    [galera]
-    wsrep_retry_autocommit=3
+    # [innodb]
+    # innodb_autoinc_lock_mode=1
+    # innodb_buffer_pool_size=1024M
+    # innodb_buffer_pool_size=1G
+    # innodb_force_recovery=0
+    # innodb_flush_log_at_trx_commit = 0
+    # innodb_log_buffer_size = 32M
+    # innodb_max_purge_lag=10000
+    # innodb_deadlock_detect=1
+    # innodb_lock_wait_timeout=50
+    # innodb_sync_array_size=1
+    # innodb_purge_batch_size=300
+    # innodb_thread_sleep_delay=1000
+    # innodb_table_locks=1
+    # innodb_buffer_pool_instances=1
+    # innodb_flush_log_at_trx_commit = 0
+
+    # [galera]
+    # wsrep_retry_autocommit=3
 
 
   myCnfConfigMapKeyRef:
