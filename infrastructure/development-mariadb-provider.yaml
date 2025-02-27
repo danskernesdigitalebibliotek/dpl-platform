@@ -1,0 +1,30 @@
+apiVersion: mariadb.amazee.io/v1
+kind: MariaDBProvider
+metadata:
+  annotations:
+    meta.helm.sh/release-name: lagoon-remote
+    meta.helm.sh/release-namespace: lagoon
+  creationTimestamp: "2022-11-02T09:47:43Z"
+  finalizers:
+  - finalizer.provider.mariadb.amazee.io/v1
+  generation: 2
+  labels:
+    app.kubernetes.io/instance: lagoon-remote
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/name: dbaas-operator
+    app.kubernetes.io/version: v0.3.0
+    helm.sh/chart: dbaas-operator-0.3.0
+  name: lagoon-remote-dbaas-operator-development
+  namespace: lagoon
+  resourceVersion: "358834"
+  uid: 5cca4448-9fc7-4542-befb-b845b359205c
+spec:
+  environment: development
+  hostname: db-dplplat01-b828.mariadb.database.azure.com
+  password: H0CfcVZZtUvTs1ZM
+  port: "3306"
+  readReplicaHostnames:
+  - db-dplplat01-b828.mariadb.database.azure.com
+  type: azure
+  user: qiHfxOjkpJP@db-dplplat01-b828.mariadb.database.azure.com
+status: {}

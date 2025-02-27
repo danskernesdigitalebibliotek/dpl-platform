@@ -1,0 +1,38 @@
+apiVersion: mariadb.amazee.io/v1
+kind: MariaDBConsumer
+metadata:
+  annotations:
+    kubectl.kubernetes.io/last-applied-configuration: |
+      {"apiVersion":"mariadb.amazee.io/v1","kind":"MariaDBConsumer","metadata":{"annotations":{"lagoon.sh/branch":"main","lagoon.sh/version":"23.12.0"},"labels":{"app.kubernetes.io/instance":"mariadb","app.kubernetes.io/managed-by":"Helm","app.kubernetes.io/name":"mariadb-dbaas","helm.sh/chart":"mariadb-dbaas-0.1.0","lagoon.sh/buildType":"branch","lagoon.sh/environment":"production","lagoon.sh/environmentType":"production","lagoon.sh/project":"canary","lagoon.sh/service":"mariadb","lagoon.sh/service-type":"mariadb-dbaas"},"name":"mariadb","namespace":"canary-main"},"spec":{"environment":"production"}}
+    lagoon.sh/branch: main
+    lagoon.sh/version: 23.12.0
+  labels:
+    app.kubernetes.io/instance: mariadb
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/name: mariadb-dbaas
+    helm.sh/chart: mariadb-dbaas-0.1.0
+    lagoon.sh/buildType: branch
+    lagoon.sh/environment: production
+    lagoon.sh/environmentType: production
+    lagoon.sh/project: canary
+    lagoon.sh/service: mariadb
+    lagoon.sh/service-type: mariadb-dbaas
+  name: mariadb
+  namespace: canary-main
+spec:
+  consumer:
+    database: canary-main_IZGOq
+    password: 3SAkzhisPpfujYpODSc2egT1
+    services:
+      primary: mariadb-c0c85779-8ff6-45bc-acdc-3671d75b63e1
+      replicas:
+      - readreplica-mariadb-5cdbb4bd-9990-4689-854d-b39f44f1f6d3
+    username: canary-_z2DYi@db-dplplat01-b828
+  environment: production
+  provider:
+    hostname: db-dplplat01-b828.mariadb.database.azure.com
+    name: lagoon-remote-dbaas-operator-production
+    namespace: lagoon
+    port: "3306"
+    readReplicas:
+    - db-dplplat01-b828.mariadb.database.azure.com

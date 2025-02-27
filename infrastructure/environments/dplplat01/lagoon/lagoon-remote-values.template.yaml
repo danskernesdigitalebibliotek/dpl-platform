@@ -57,6 +57,15 @@ dbaas-operator:
       password: "$SQL_PASSWORD"
       port: "3306"
       user: "$SQL_USER@$SQL_HOSTNAME"
+    test:
+      environment: "development"
+      type: "in-cluster"
+      hostname: test-mariadb.mariadb-servers.svc.cluster.local
+      readReplicaHostnames:
+        - test-mariadb.mariadb-servers.svc.cluster.local
+      password: MariaDB11!
+      port: "3306"
+      user: test
   tolerations:
     - key: CriticalAddonsOnly
       operator: Exists
