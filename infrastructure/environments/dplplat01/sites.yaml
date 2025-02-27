@@ -25,9 +25,9 @@ sites:
     description: "A site for developers and operators to test on"
     releaseImageRepository: ghcr.io/danskernesdigitalebibliotek
     releaseImageName: dpl-cms-source
-    dpl-cms-release: "2025.7.1"
+    dpl-cms-release: "2025.8.1"
     plan: webmaster
-    moduletest-dpl-cms-release: "2025.7.1"
+    moduletest-dpl-cms-release: "2025.9.0"
     deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIIhuA0K7CNvRoe+Xx7RaXG4+a8KcSpzuWn+G4sUPzNWx"
   customizable-canary:
     name: "Customizable bibliotek - eksempel"
@@ -35,8 +35,8 @@ sites:
     releaseImageRepository: ghcr.io/danskernesdigitalebibliotek
     releaseImageName: dpl-cms-source
     plan: webmaster
-    dpl-cms-release: "2025.6.0"
-    moduletest-dpl-cms-release: "2025.7.1"
+    dpl-cms-release: "2025.8.1"
+    moduletest-dpl-cms-release: "2025.9.0"
     deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAILj8lXv7C/7s7te9sEpwcHQhgDWfzsCkAN7rqQ4sdTzk"
   staging:
     name: "Staging"
@@ -51,9 +51,9 @@ sites:
     name: "CMS-skole"
     description: "Et site til undervisning i CMSet"
     deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJ6SzfPFf/XeLeqI342kxuJAlATpDMtgAfqlrLTTbW2m"
-    dpl-cms-release: "2025.7.1"
+    dpl-cms-release: "2025.9.0"
     plan: webmaster
-    moduletest-dpl-cms-release: "2025.7.1"
+    moduletest-dpl-cms-release: "2025.9.0"
     autogenerateRoutes: true
     <<: *webmasters-on-weekly-release-cycle
   bibliotek-test:
