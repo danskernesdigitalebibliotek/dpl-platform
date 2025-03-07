@@ -91,7 +91,8 @@ buck.
 
 We have made the decision to implement the In-cluster database due the
 aforemention pros and cons lists.
-Negative experiences with stability and management for Azure Database for MariaDB have reduced our trust in continual use of managed databases by Azure.
+Negative experiences with stability and management for Azure Database for
+MariaDB have reduced our trust in continual use of managed databases by Azure.
 By moving to an in-cluster database get control over a critical part of our
 infrastructure
 
