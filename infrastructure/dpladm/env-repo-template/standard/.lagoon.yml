@@ -75,6 +75,10 @@ $SECONDARY_DOMAINS
         schedule: "${IMPORT_TRANSLATIONS_CRON}"
         command: drush dpl_po:import-remote-config-po da https://danskernesdigitalebibliotek.github.io/dpl-cms/translations/da.config.po
         service: cli
+      - name: drush err:purge
+        schedule: "M * * * *"
+        command: drush err:purge paragraph
+        service: cli
   moduletest:
     cronjobs:
       - name: drush cron
@@ -88,6 +92,10 @@ $SECONDARY_DOMAINS
       - name: import danish config translations
         schedule: "${IMPORT_TRANSLATIONS_CRON}"
         command: drush dpl_po:import-remote-config-po da https://danskernesdigitalebibliotek.github.io/dpl-cms/translations/da.config.po
+        service: cli
+      - name: drush err:purge
+        schedule: "M * * * *"
+        command: drush err:purge paragraph
         service: cli
 
 container-registries:
