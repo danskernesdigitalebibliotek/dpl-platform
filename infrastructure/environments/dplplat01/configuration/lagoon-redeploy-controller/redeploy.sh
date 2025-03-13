@@ -87,7 +87,7 @@ function redeployDeployments() {
 
 echo "start redeploying"
 
-while [ true ]
+while true
 do
   redeployDeployments
   echo "waiting for 5 minutes before checking for failed deployments again"
