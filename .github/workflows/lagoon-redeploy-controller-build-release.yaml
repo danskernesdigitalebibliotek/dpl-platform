@@ -20,7 +20,7 @@ on:
 
 name: Build, test and publish Lagoon Redeploy Controller image
 jobs:
-  dplsh_build:
+  lrc_build:
     name: Build, test and publish Lagoon Redeploy Controller image
     runs-on: ubuntu-latest
     permissions:
