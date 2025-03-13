@@ -23,7 +23,7 @@
 # Set dplplat01 as default config
 /lagoon config default --lagoon dplplat01
 
-function redeployDeployments() {
+redeployDeployments() {
   date '+%H:%M'
   FAILED_PRODUCTION_DEPLOYMENTS=$(/lagoon raw --raw "query allProjects {
     allProjects {
