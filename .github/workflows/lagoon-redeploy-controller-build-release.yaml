@@ -68,14 +68,14 @@ jobs:
       - name: Build and export to Docker
         uses: docker/build-push-action@v6
         with:
-          context: images/lagoon-redeploy-controller
+          context: infrastructure/images/lagoon-redeploy-controller
           load: true
           tags: working-image:0.0.0
 
       - name: Build and push
         uses: docker/build-push-action@v6
         with:
-          context: images/lagoon-redeploy-controller
+          context: infrastructure/images/lagoon-redeploy-controller
           platforms: linux/amd64,linux/arm64
           # push: github.event_name == 'push'
           push: true
