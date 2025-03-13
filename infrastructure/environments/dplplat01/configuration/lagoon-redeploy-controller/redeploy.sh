@@ -1,3 +1,5 @@
+#!/bin/sh
+
 # if [ -f /config/.lagoon.yml ]; then
 #   cp /config/.lagoon.yml /root/.lagoon.yml
 # fi
