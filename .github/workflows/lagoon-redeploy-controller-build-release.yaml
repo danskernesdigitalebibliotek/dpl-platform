@@ -1,0 +1,90 @@
+# Build the container image for the DPL shell on any modifications to the
+# workflow or the shell project.
+# The build is then tested, and if we where triggered by a tag, a tagged
+# version of the image is pushed to a public registry.
+
+on:
+  pull_request:
+    paths:
+      - "/infrastructure/environment/dplplat01/configuration/lagoon-redeploy-controller/**"
+      - ".github/workflows/lagoon-redeploy-controller-build-release.yaml"
+  push:
+    branches:
+      - main
+    # Limit pushes on main to only build if these files has changed.
+    paths:
+      - "/infrastructure/environment/dplplat01/configuration/lagoon-redeploy-controller/**"
+      - ".github/workflows/lagoon-redeploy-controller-build-release.yaml"
+    tags:
+      - "lrc-*"
+
+name: Build, test and publish Lagoon Redeploy Controller image
+jobs:
+  dplsh_build:
+    name: Build, test and publish Lagoon Redeploy Controller image
+    runs-on: ubuntu-latest
+    permissions:
+      # Allow push to ghcr
+      contents: write
+      packages: write
+    # Set some environment vars about the image and container registry.
+    env:
+      # Registry to push the image to.
+      repo: ghcr.io
+      # Complete registry url for image. (omitting image name).
+      image-url: ghcr.io/danskernesdigitalebibliotek/dpl-platform/lagoon-redeploy-controller
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4.2.2
+      - name: Install Task
+        uses: arduino/setup-task@v2
+      - name: Log in to the Container registry
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      # Setup QEMU and buildx so that we can build multiarch images.
+      # https://github.com/docker/setup-qemu-action
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v3
+      # https://github.com/docker/setup-buildx-action
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+      # Pickup metadata for tags and labels.
+      - name: Docker meta
+        id: meta
+        uses: docker/metadata-action@v5
+        with:
+          images: ${{env.image-url}}
+          labels: |
+            org.opencontainers.image.title=Lagoon Redeploy Controller
+            org.opencontainers.image.description=Danish Public Libraries Lagoon Redeploy Controller
+
+
+      # Do a first build and export it to the docker cache. This allows us to
+      # run som tests on the image, while still avoiding to have to rebuild the
+      # image when we do the final build.
+      - name: Build and export to Docker
+        uses: docker/build-push-action@v6
+        with:
+          context: infrastructure/environment/dplplat01/configuration/lagoon-redeploy-controller
+          load: true
+          tags: working-image:0.0.0
+
+      - name: Build and push
+        uses: docker/build-push-action@v6
+        with:
+          context: infrastructure/environment/dplplat01/configuration/lagoon-redeploy-controller
+          platforms: linux/amd64,linux/arm64
+          # push: github.event_name == 'push'
+          push: true
+          labels: ${{ steps.meta.outputs.labels }}
+          tags: ${{ steps.meta.outputs.tags }}
+
+      # Create a github release if this was a tag.
+      - name: Create release
+        uses: softprops/action-gh-release@v2
+        if: startsWith(github.ref, 'refs/tags/')
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
