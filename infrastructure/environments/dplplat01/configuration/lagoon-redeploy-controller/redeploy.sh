@@ -22,7 +22,7 @@
 /lagoon config default --lagoon dplplat01
 
 function redeployDeployments() {
-  echo "$(date '+%H:%M')"  
+  date '+%H:%M'
   FAILED_PRODUCTION_DEPLOYMENTS=$(/lagoon raw --raw "query allProjects {
     allProjects {
     name
