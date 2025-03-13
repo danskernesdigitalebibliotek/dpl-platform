@@ -16,7 +16,7 @@ x-webmasters-on-weekly-release-cycle: &webmasters-on-weekly-release-cycle
   releaseImageName: dpl-cms-source
   dpl-cms-release: "2025.10.0"
   moduletest-dpl-cms-release: "2025.11.0"
-x-webmasters-staying-on-9.0: &webmasters-staying-on-9.0
+x-webmasters-staying-on-9-0: &webmasters-staying-on-9-0
   releaseImageRepository: ghcr.io/danskernesdigitalebibliotek
   releaseImageName: dpl-cms-source
   dpl-cms-release: "2025.9.0"
@@ -418,7 +418,7 @@ sites:
       - herningbib.dk
     autogenerateRoutes: true
     plan: webmaster
-    <<: *webmasters-staying-on-9.0
+    <<: *webmasters-staying-on-9-0
   hillerod:
     name: "Hillerød Bibliotekerne"
     description: "The library site for Hillerød"
@@ -691,7 +691,7 @@ sites:
     secondary-domains:
       - odensebib.dk
     autogenerateRoutes: true
-    <<: *webmasters-staying-on-9.0
+    <<: *webmasters-staying-on-9-0
   odsherred:
     name: "Odsherred Bibliotek og Kulturhuse"
     description: "The library site for Odsherred"
