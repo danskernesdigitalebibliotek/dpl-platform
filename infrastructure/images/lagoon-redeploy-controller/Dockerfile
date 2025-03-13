@@ -6,6 +6,6 @@ RUN chmod +x ./jq
 RUN cp jq /usr/bin
 
 COPY ./redeploy.sh /redeploy.sh
-RUN chmod +x /usr/src/redeploy.sh
+RUN chmod +x /redeploy.sh
 
 ENTRYPOINT ["/bin/sh", "-c", "/redeploy.sh"]
