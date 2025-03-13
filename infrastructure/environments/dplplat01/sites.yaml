@@ -419,7 +419,7 @@ sites:
       - herningbib.dk
     autogenerateRoutes: true
     plan: webmaster
-    <<: *webmasters-on-weekly-release-cycle
+    <<: *webmasters-staying-on-9.0
   hillerod:
     name: "Hillerød Bibliotekerne"
     description: "The library site for Hillerød"
