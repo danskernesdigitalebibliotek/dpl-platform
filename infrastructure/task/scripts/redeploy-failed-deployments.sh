@@ -25,9 +25,6 @@ for deployment in $FAILED_PRODUCTION_DEPLOYMENTS; do
   if [[ $deployment =~ "dpl-cms" ]]; then
     continue
   fi
-  if [[ $deployment =~ "dpl-bnf" ]]; then
-    continue
-  fi
   echo "$deployment: deploying"
   lagoon deploy latest -p "$deployment" -e "main" --force
 done
@@ -51,9 +48,6 @@ echo "Redeploying failed moduletest environments"
 
 for deployment in $FAILED_DEVELOPMENT_DEPLOYMENTS; do
   if [[ $deployment =~ "dpl-cms" ]]; then
-    continue
-  fi
-  if [[ $deployment =~ "dpl-bnf" ]]; then
     continue
   fi
   echo "$deployment: deploying"
