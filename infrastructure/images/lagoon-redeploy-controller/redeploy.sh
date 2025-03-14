@@ -47,7 +47,7 @@ redeployDeployments() {
       if [[ $deployment =~ "dpl-cms" || $deployment =~ "dpl-bnf" ]]; then
         continue
       fi
-      echo "$deployment: deploying"
+      echo "$deployment-$environment_name: deploying"
       /lagoon deploy latest -p "$deployment" -e "$environment_name" --force
     done
   else
