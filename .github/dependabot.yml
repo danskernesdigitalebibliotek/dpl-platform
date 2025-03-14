@@ -19,3 +19,9 @@ updates:
       interval: daily
       time: "04:00"
     open-pull-requests-limit: 10
+  - package-ecosystem: docker
+    directory: "/infrastructure/images/lagoon-redeploy-controller"
+    schedule:
+      interval: daily
+      time: "04:00"
+    open-pull-requests-limit: 10
