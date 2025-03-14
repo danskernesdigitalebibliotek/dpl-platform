@@ -35,9 +35,12 @@ getFailedDeployments() {
   }" | jq -r '.allProjects[] | .name as $name | .environments[].deployments[] | select(.status == "failed") | ($name)'
 }
 
+decalre -A redeploy_attempts_array
+
 redeployDeployments() {
   local environment_type=$1
   local environment_name=$2
+  local allowed_attempts=$3
   local failed_deployments=$(getFailedDeployments $environment_type)
 
   if [ -n "$failed_deployments" ]; then
@@ -47,8 +50,10 @@ redeployDeployments() {
       if [[ $deployment =~ "dpl-cms" || $deployment =~ "dpl-bnf" ]]; then
         continue
       fi
+      # logic for finding out wether to redeploy or not - take into account map might not have value yet
       echo "$deployment-$environment_name: deploying"
       /lagoon deploy latest -p "$deployment" -e "$environment_name" --force
+      redeploy_attempts_array["$deployment-$environment_name"]+=1
     done
   else
     echo "No failed $environment_type deployments to redeploy"
@@ -59,8 +64,8 @@ echo "start redeploying"
 
 while true
 do
-  redeployDeployments "PRODUCTION" "main"
-  redeployDeployments "DEVELOPMENT" "moduletest"
+  redeployDeployments "PRODUCTION" "main" 6
+  redeployDeployments "DEVELOPMENT" "moduletest" 3
   echo "waiting for 5 minutes before checking for failed deployments again"
   sleep 300
 done
