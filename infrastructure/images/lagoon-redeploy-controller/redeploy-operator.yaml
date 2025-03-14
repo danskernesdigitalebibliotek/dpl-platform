@@ -9,13 +9,6 @@ spec:
   containers:
     - name: lagoon-cli-container
       image: ghcr.io/danskernesdigitalebibliotek/dpl-platform/lagoon-redeploy-controller:latest
-      command: ["/bin/sh", "-c"]
-      args:
-        - |
-          if [ -f /config/.lagoon.yml ]; then
-            cp /config/.lagoon.yml /root/.lagoon.yml
-          fi
-
       volumeMounts:
         - name: lagoon-known-hosts
           mountPath: /root/.ssh/known_hosts
