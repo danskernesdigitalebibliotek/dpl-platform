@@ -8,3 +8,4 @@ RUN cp jq /usr/bin
 COPY ./redeploy.sh /redeploy.sh
 
 ENTRYPOINT []
+CMD ["./redeploy.sh"]
