@@ -8,6 +8,8 @@ on:
     paths:
       - "/infrastructure/environment/dplplat01/configuration/lagoon-redeploy-controller/**"
       - ".github/workflows/lagoon-redeploy-controller-build-release.yaml"
+    tags:
+      - "lrc-*-rc"
   push:
     branches:
       - main
