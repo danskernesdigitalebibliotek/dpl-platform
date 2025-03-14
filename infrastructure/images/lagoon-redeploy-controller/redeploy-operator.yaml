@@ -8,15 +8,7 @@ metadata:
 spec:
   containers:
     - name: lagoon-cli-container
-      image: ghcr.io/danskernesdigitalebibliotek/lagoon-redeploy-controller:lrc-0.0.1
-      command: ["/bin/sh", "-c"]
-      args:
-        - |
-          if [ -f /config/.lagoon.yml ]; then
-            cp /config/.lagoon.yml /root/.lagoon.yml
-          fi
-
-          chmod 600 /root/.ssh/id_rsa
+      image: ghcr.io/danskernesdigitalebibliotek/dpl-platform/lagoon-redeploy-controller:latest
       volumeMounts:
         - name: lagoon-known-hosts
           mountPath: /root/.ssh/known_hosts
@@ -28,7 +20,7 @@ spec:
         - name: lagoon-ssh-key-volume
           mountPath: /root/.ssh/id_rsa
           subPath: id_rsa
-          readOnly: true
+          readOnly: false
   volumes:
     - name: lagoon-config-volume
       configMap:
