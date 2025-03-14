@@ -1,6 +1,5 @@
 FROM uselagoon/lagoon-cli:latest
 WORKDIR /
-RUN cp /config/.lagoon.yml /root/.lagoon.yml
 
 RUN wget -O jq https://github.com/stedolan/jq/releases/download/jq-1.5/jq-linux64
 RUN chmod +x ./jq
