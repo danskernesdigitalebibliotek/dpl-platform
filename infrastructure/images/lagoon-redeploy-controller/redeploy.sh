@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 # chmod 600 /root/.ssh/id_rsa
 
