@@ -47,9 +47,9 @@ redeployDeployments() {
     echo "Redeploying failed $environment_type environments"
 
     for deployment in $failed_deployments; do
-      if [[ $deployment =~ "dpl-cms" || $deployment =~ "dpl-bnf" ]]; then
-        continue
-      fi
+      # if [[ $deployment =~ "dpl-cms" || $deployment =~ "dpl-bnf" ]]; then
+      #   continue
+      # fi
       # logic for finding out wether to redeploy or not - take into account map might not have value yet
       if [[ "{$redeploy_attemps_array['$deployment-$environment_name']}" == "" ]]; then
         #if we have no value, set it to 0
