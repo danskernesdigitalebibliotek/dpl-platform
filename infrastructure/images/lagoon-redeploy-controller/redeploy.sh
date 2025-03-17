@@ -51,6 +51,14 @@ redeployDeployments() {
         continue
       fi
       # logic for finding out wether to redeploy or not - take into account map might not have value yet
+      if [[ "{$redeploy_attemps_array['$deployment-$environment_name']}" == "" ]]; then
+        #if we have no value, set it to 0
+        redeploy_attempts_array["$deployment-$environment_name"] = "0";
+      fi
+      if [[ "{$redeploy_attempts_array['$deployment-$environment_name']}" >= "$allowed_attempts" ]]; then
+        "$deployment-$environment_name has no redeploy attemps left - skipping"
+        continue
+      fi
       echo "$deployment-$environment_name: deploying"
       /lagoon deploy latest -p "$deployment" -e "$environment_name" --force
       redeploy_attempts_array["$deployment-$environment_name"]+=1
