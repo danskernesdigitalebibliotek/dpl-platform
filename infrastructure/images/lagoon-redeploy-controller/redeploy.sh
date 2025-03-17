@@ -35,7 +35,7 @@ getFailedDeployments() {
   }" | jq -r '.allProjects[] | .name as $name | .environments[].deployments[] | select(.status == "failed") | ($name)'
 }
 
-decalre -A redeploy_attempts_array
+declare -A redeploy_attempts_array
 
 redeployDeployments() {
   local environment_type=$1
