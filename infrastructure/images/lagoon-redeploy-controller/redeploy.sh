@@ -72,8 +72,8 @@ echo "start redeploying"
 
 while true
 do
-  redeployDeployments "PRODUCTION" "main" 6
-  redeployDeployments "DEVELOPMENT" "moduletest" 3
+  redeployDeployments "PRODUCTION" "main" "6"
+  redeployDeployments "DEVELOPMENT" "moduletest" "3"
   echo "waiting for 5 minutes before checking for failed deployments again"
   sleep 300
 done
