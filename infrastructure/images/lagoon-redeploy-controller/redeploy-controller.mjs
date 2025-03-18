@@ -31,7 +31,7 @@ function getFailedDeployments(environmentType) {
 
 function redeployDeployments(environmentType, environmentName, allowRedeployAttemps) {
   const failedDeployments = getFailedDeployments(environmentType);
-  console.log(failedDeployments);
+  console.log(Array.isArray(failedDeployments));
 }
 
 const wait = ms => new Promise(res => setTimeout(res, ms));
