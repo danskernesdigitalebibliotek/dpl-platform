@@ -15,7 +15,7 @@ await $`lagoon config default --lagoon dplplat01`
 echo(await $`lagoon config list`)
 
 function getFailedDeployments(environmentType) {
-  const deployments = $.sync`lagoon raw --raw "query allProjects {
+  return $.sync`lagoon raw --raw "query allProjects {
     allProjects {
       name
       environments(type: ${environmentType}) {
@@ -26,9 +26,7 @@ function getFailedDeployments(environmentType) {
         }
       }
     }
-  }"`;
-
-  return deployments.stdout;
+  }"` | jq -r '.allProjects[] | .name as $name | .environments[].deployments[] | select(.status == "failed") | ($name)';
 }
 
 function redeployDeployments(environmentType, environmentName, allowRedeployAttemps) {
