@@ -28,7 +28,7 @@ function getFailedDeployments(environmentType) {
     }
   }"`;
 
-  return deployments;
+  return deployments.stdout;
 }
 
 function redeployDeployments(environmentType, environmentName, allowRedeployAttemps) {
