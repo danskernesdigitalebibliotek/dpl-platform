@@ -1,14 +1,13 @@
 FROM alpine:3.21.3
 
-RUN apk add --no-cache nodejs npm
+# Install apk dependencies
+RUN apk add --no-cache nodejs npm curl bash && npm install -g zx
 
-RUN npm install -g zx
-
-RUN apk add curl
-
+# Install lagoon CLI
 RUN curl -L "https://github.com/uselagoon/lagoon-cli/releases/download/v0.31.5/lagoon-cli-v0.31.5-linux-amd64" -o /usr/local/bin/lagoon && chmod +x /usr/local/bin/lagoon
 
-RUN apk add bash
+# Install jq tool
+RUN wget -O jq https://github.com/stedolan/jq/releases/download/jq-1.5/jq-linux64 && chmod +x ./jq && cp jq /usr/bin
 
 WORKDIR /usr/src/app
 
