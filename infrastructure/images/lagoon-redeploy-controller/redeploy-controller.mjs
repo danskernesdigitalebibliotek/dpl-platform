@@ -1,8 +1,6 @@
 #!/usr/bin/env zx
 useBash();
 
-$.sync`chmod 600 /root/.ssh/id_rsa`
-
 await $`lagoon config add \
   --graphql https://api.lagoon.dplplat01.dpl.reload.dk/graphql \
   --force \
