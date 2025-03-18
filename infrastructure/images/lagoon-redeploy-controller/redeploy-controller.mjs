@@ -26,7 +26,7 @@ function getFailedDeployments(environmentType) {
         }
       }
     }
-  }" | jq -r '.allProjects[] | .name as $name | .environments[].deployments[] | select(.status == "failed") | ($name)'`;
+  }" | jq -r '.allProjects[] | .name as $name | .environments[].deployments[] | select(.status == "failed") | ($name)'`.valueOf();
 }
 
 function redeployDeployments(environmentType, environmentName, allowRedeployAttemps) {
