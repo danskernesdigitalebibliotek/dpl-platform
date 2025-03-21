@@ -40,6 +40,8 @@ const redeployBlackList = {};
 
 function redeployDeployments(environmentType, environmentName, allowedRedeployAttempts) {
   console.log(`${time()} - Checking for ${environmentType} envs for failed deployments`);
+  // We do not want to redeploy dpl-cms and dpl-bnf projects sites
+  const failedDeployments = getFailedDeployments(environmentType).filter(deployment => !deployment.startsWith("dpl-"))
 }
 
 const wait = ms => new Promise(res => setTimeout(res, ms));
