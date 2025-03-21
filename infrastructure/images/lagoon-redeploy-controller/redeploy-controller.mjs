@@ -81,8 +81,6 @@ while(true) {
   await $`lagoon login`;
   redeployDeployments("PRODUCTION", "main", 6);
   redeployDeployments("DEVELOPMENT", "moduletest", 3);
-  echo("sleeping for 5 minutes before redeploying again");
-  await wait(300000);
   if(Object.keys(redeployedDeployments).length) {
     console.log("Redeployed sites");
     console.log(redeployedDeployments);
@@ -91,4 +89,6 @@ while(true) {
     console.log("Sites that require manual intervention");
     console.log(redeployBlackList);
   }
+  echo(`${time()} - sleeping for 5 minutes before checking again`);
+  await wait(10000);
 }
