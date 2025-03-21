@@ -34,7 +34,6 @@ function getFailedDeployments(environmentType) {
   }" | jq -r '.allProjects[] | .name as $name | .environments[].deployments[] | select(.status != "complete") | ($name)'`.valueOf().split("\n");
 }
 
-  const failedDeployments = getFailedDeployments(environmentType);
 const redeployedDeployments = {};
 const redeployBlackList = {};
 
