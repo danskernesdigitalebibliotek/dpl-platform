@@ -87,4 +87,8 @@ while(true) {
     console.log("Redeployed sites");
     console.log(redeployedDeployments);
   }
+  if(Object.keys(redeployBlackList).length) {
+    console.log("Sites that require manual intervention");
+    console.log(redeployBlackList);
+  }
 }
