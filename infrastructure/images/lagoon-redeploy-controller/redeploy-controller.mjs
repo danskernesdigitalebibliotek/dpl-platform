@@ -42,6 +42,10 @@ function redeployDeployments(environmentType, environmentName, allowedRedeployAt
   console.log(`${time()} - Checking for ${environmentType} envs for failed deployments`);
   // We do not want to redeploy dpl-cms and dpl-bnf projects sites
   const failedDeployments = getFailedDeployments(environmentType).filter(deployment => !deployment.startsWith("dpl-"))
+  if(failedDeployments.length <= 0) {
+    console.log(`${time()} - No failed ${environmentType} deployments found - sleeping for 5 minutes`);
+    return;
+  }
 }
 
 const wait = ms => new Promise(res => setTimeout(res, ms));
