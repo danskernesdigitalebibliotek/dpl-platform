@@ -83,4 +83,8 @@ while(true) {
   redeployDeployments("DEVELOPMENT", "moduletest", 3);
   echo("sleeping for 5 minutes before redeploying again");
   await wait(300000);
+  if(Object.keys(redeployedDeployments).length) {
+    console.log("Redeployed sites");
+    console.log(redeployedDeployments);
+  }
 }
