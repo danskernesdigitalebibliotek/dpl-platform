@@ -34,12 +34,11 @@ function getFailedDeployments(environmentType) {
   }" | jq -r '.allProjects[] | .name as $name | .environments[].deployments[] | select(.status != "complete") | ($name)'`.valueOf().split("\n");
 }
 
-function redeployDeployments(environmentType, environmentName, allowRedeployAttemps) {
   const failedDeployments = getFailedDeployments(environmentType);
-  console.log(Array.isArray(failedDeployments));
 const redeployedDeployments = {};
 const redeployBlackList = {};
 
+function redeployDeployments(environmentType, environmentName, allowedRedeployAttempts) {
 }
 
 const wait = ms => new Promise(res => setTimeout(res, ms));
