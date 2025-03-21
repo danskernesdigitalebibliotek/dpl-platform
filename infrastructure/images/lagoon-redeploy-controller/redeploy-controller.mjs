@@ -35,7 +35,6 @@ function getFailedDeployments(environmentType) {
 }
 
   const failedDeployments = getFailedDeployments(environmentType);
-  console.log(Array.isArray(failedDeployments));
 const redeployedDeployments = {};
 const redeployBlackList = {};
 
