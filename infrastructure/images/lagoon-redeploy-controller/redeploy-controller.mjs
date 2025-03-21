@@ -71,13 +71,12 @@ function redeployDeployments(environmentType, environmentName, allowedRedeployAt
     $.sync`lagoon deploy latest -p "${deployment}" -e "${environmentName}" --force`;
     redeployedDeployments[`${deployment}-${environmentName}`] += 1;
   }
-
 }
 
 const wait = ms => new Promise(res => setTimeout(res, ms));
 
 while(true) {
-  await $`lagoon login`;
+  await $`lagoon login`
   redeployDeployments("PRODUCTION", "main", 6);
   redeployDeployments("DEVELOPMENT", "moduletest", 3);
   if(Object.keys(redeployedDeployments).length) {
