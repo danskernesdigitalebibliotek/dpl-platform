@@ -46,6 +46,17 @@ function redeployDeployments(environmentType, environmentName, allowedRedeployAt
     console.log(`${time()} - No failed ${environmentType} deployments found - sleeping for 5 minutes`);
     return;
   }
+
+  for(const deployment of failedDeployments) {
+    if(isNaN(redeployedDeployments[`${deployment}-${environmentName}`])) {
+      //First time through the redeployment loop we need to set the key with 0
+      redeployedDeployments[`${deployment}-${environmentName}`] = 0;
+    }
+    console.log(`${time()} - Deploying: ${deployment}-${environmentName}`);
+    $.sync`lagoon deploy latest -p "${deployment}" -e "${environmentName}" --force`;
+    redeployedDeployments[`${deployment}-${environmentName}`] += 1;
+  }
+
 }
 
 const wait = ms => new Promise(res => setTimeout(res, ms));
