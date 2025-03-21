@@ -1,3 +1,10 @@
+---
+
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: redeploy-operator
+
 apiVersion: v1
 kind: Pod
 metadata:
