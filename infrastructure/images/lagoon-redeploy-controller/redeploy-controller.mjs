@@ -1,6 +1,11 @@
 #!/usr/bin/env zx
 useBash();
 
+const time = function() {
+  return $.sync`date +%T`;
+}
+
+
 await $`lagoon config add \
   --graphql https://api.lagoon.dplplat01.dpl.reload.dk/graphql \
   --force \
@@ -9,7 +14,7 @@ await $`lagoon config add \
   --port 22 \
   --lagoon dplplat01`
 
-await $`lagoon config default --lagoon dplplat01`
+await $`lagoon config default --lagoon dplplat01`;
 
 // verify that dplplat01 is the active lagoon
 echo(await $`lagoon config list`)
