@@ -39,6 +39,7 @@ const redeployedDeployments = {};
 const redeployBlackList = {};
 
 function redeployDeployments(environmentType, environmentName, allowedRedeployAttempts) {
+  console.log(`${time()} - Checking for ${environmentType} envs for failed deployments`);
 }
 
 const wait = ms => new Promise(res => setTimeout(res, ms));
