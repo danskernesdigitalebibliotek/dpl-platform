@@ -1,3 +1,50 @@
+---
+
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: redeploy-operator
+
+---
+
+apiVersion: v1
+data:
+  .lagoon.yml: |
+    current: dplplat01
+    default: dplplat01
+    lagoons:
+        amazeeio:
+            graphql: https://api.lagoon.amazeeio.cloud/graphql
+            hostname: ssh.lagoon.amazeeio.cloud
+            ui: https://dashboard.amazeeio.cloud
+            kibana: https://logs.amazeeio.cloud/
+            port: "32222"
+            token: ""
+            version: ""
+            sshkey: ""
+            sshportal: false
+            publickeyidentities: ]
+        dplplat01:
+            graphql: https://api.lagoon.dplplat01.dpl.reload.dk/graphql
+            hostname: 20.238.147.183
+            ui: https://ui.lagoon.dplplat01.dpl.reload.dk
+            kibana: ""
+            port: "22"
+            token: eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJ3dmhieWZuQzVlYldTVjAtSDlHU095RVBFd0lYNG1kdERncWNMTVF3RWVnIn0.eyJleHAiOjE3Mzk0MDAzNjMsImlhdCI6MTczOTQwMDA2MywianRpIjoiNmFiYjE3NDctZWVhOS00ZTU3LWIzZmQtYWY2NmNjZTllNTY4IiwiaXNzIjoiaHR0cHM6Ly9rZXljbG9hay5sYWdvb24uZHBscGxhdDAxLmRwbC5yZWxvYWQuZGsvYXV0aC9yZWFsbXMvbGFnb29uIiwiYXVkIjoiYWNjb3VudCIsInN1YiI6IjBiMjBlMGJkLTUyYWUtNGY5MC05ZmFkLWNmMjJhMDEwZjFjMSIsInR5cCI6IkJlYXJlciIsImF6cCI6ImF1dGgtc2VydmVyIiwic2Vzc2lvbl9zdGF0ZSI6IjRhMDE5NjQzLTg0MTQtNGUzYy1iODEzLWM0OWZmNWVjNDgzZiIsImFjciI6IjEiLCJyZWFsbV9hY2Nlc3MiOnsicm9sZXMiOlsicGxhdGZvcm0tb3duZXIiLCJvZmZsaW5lX2FjY2VzcyIsImFkbWluIiwidW1hX2F1dGhvcml6YXRpb24iLCJkZWZhdWx0LXJvbGVzLWxhZ29vbiJdfSwicmVzb3VyY2VfYWNjZXNzIjp7ImFjY291bnQiOnsicm9sZXMiOlsibWFuYWdlLWFjY291bnQiLCJtYW5hZ2UtYWNjb3VudC1saW5rcyIsInZpZXctcHJvZmlsZSJdfX0sInNjb3BlIjoiZW1haWwgcHJvZmlsZSIsInNpZCI6IjRhMDE5NjQzLTg0MTQtNGUzYy1iODEzLWM0OWZmNWVjNDgzZiIsImVtYWlsX3ZlcmlmaWVkIjpmYWxzZSwicHJlZmVycmVkX3VzZXJuYW1lIjoibGFnb29uYWRtaW4ifQ.Ute8U4KaJVpaTnG1YfBLdKGcJs-fq61IX1Vq23T62-Qwgnhg7MfAKNtTdrgKuodFYMRiKnL0j-1KeLi-2UZhta509636mk6CZFk5l_FfJ1quWGPFgQ7vt2XS9XYLtWsGQaF1rGCMXB8xlyUEgAW921NfrMH7pv05WaYIu8454R5z3CsNihE-yhMr8xEAnBIujOT8p1s9j7_HVlyLCMzUefTmBKc7ih7ONOYMN_1iPlrJPo4Mn_dH6bWl_jWQ8ee6BoifUsGW2if-2VYogV9e80GNJTKKpqmsidX4XO5u6oIRp0Uq4-7Ma1LL938HAclOeQYcZhxZDq7su-Gnr1v5Vw
+            version: v2.17.0
+            sshkey: ""
+            sshportal: false
+            publickeyidentities: ]
+    updatecheckdisable: false
+    environmentfromdirectory: false
+    stricthostkeychecking: ""
+kind: ConfigMap
+metadata:
+  name: lagoon-config
+  namespace: redeploy-operator
+
+---
+
 apiVersion: v1
 kind: Pod
 metadata:
