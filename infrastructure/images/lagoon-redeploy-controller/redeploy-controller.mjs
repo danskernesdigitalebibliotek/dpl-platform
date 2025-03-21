@@ -52,6 +52,14 @@ function redeployDeployments(environmentType, environmentName, allowedRedeployAt
       //First time through the redeployment loop we need to set the key with 0
       redeployedDeployments[`${deployment}-${environmentName}`] = 0;
     }
+    if(redeployedDeployments[`${deployment}-${environmentName}`] >= allowedRedeployAttempts) {
+      console.log(`${time()} - ${deployment}-${environmentName}: No attempts left`);
+      const envUrl = $.sync`lagoon web -p ${deployment} -e ${environmentName}`.valueOf();
+      redeployBlackList[`${deployment}-${environmentName}`] = envUrl.slice(7);
+      console.log("url?",envUrl)
+      delete redeployedDeployments[`${deployment}-${environmentName}`];
+      continue;
+    }
     console.log(`${time()} - Deploying: ${deployment}-${environmentName}`);
     $.sync`lagoon deploy latest -p "${deployment}" -e "${environmentName}" --force`;
     redeployedDeployments[`${deployment}-${environmentName}`] += 1;
