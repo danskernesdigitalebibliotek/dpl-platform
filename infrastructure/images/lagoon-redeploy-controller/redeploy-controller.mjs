@@ -50,7 +50,8 @@ function redeployDeployments(environmentType, environmentName, allowedRedeployAt
         return false;
       }
       return true;
-    });
+    }
+  );
 
   if(failedDeployments.length <= 0) {
     console.log(`${time()} - No failed ${environmentType} deployments found - sleeping for 5 minutes`);
