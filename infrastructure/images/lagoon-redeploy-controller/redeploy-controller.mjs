@@ -90,5 +90,5 @@ while(true) {
     console.log(redeployBlackList);
   }
   echo(`${time()} - sleeping for 5 minutes before checking again`);
-  await wait(10000);
+  await wait(30000);
 }
