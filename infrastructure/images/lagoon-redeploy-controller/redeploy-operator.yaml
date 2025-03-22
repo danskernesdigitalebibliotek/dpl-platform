@@ -30,8 +30,8 @@ metadata:
     app: lagoon-cli
 spec:
   containers:
-    - name: lagoon-cli-container
       image: ghcr.io/danskernesdigitalebibliotek/dpl-platform/lagoon-redeploy-controller:latest
+    - name: lagoon-redeploy-controller-container
       volumeMounts:
         - name: lagoon-known-hosts
           mountPath: /root/.ssh/known_hosts
