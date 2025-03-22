@@ -5,7 +5,6 @@ const time = function() {
   return $.sync`date +%T`;
 }
 
-
 await $`lagoon config add \
   --graphql https://api.lagoon.dplplat01.dpl.reload.dk/graphql \
   --force \
