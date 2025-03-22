@@ -66,8 +66,7 @@ function redeployDeployments(environmentType, environmentName, allowedRedeployAt
     }
     if(redeployedDeployments[`${deployment}-${environmentName}`] >= allowedRedeployAttempts) {
       console.log(`${time()} - ${deployment}-${environmentName}: No attempts left`);
-      const envUrl = $.sync`lagoon web -p ${deployment} -e ${environmentName}`.valueOf();
-      redeployBlackList[`${deployment}-${environmentName}`] = envUrl.slice(7);
+      redeployBlackList[`${deployment}-${environmentName}`] = `https://ui.lagoon.dplplat01.dpl.reload.dk/projects/${deployment}/${deployment}-${environmentName}/deployments`;
       delete redeployedDeployments[`${deployment}-${environmentName}`];
       continue;
     }
