@@ -24,7 +24,7 @@ metadata:
 apiVersion: v1
 kind: Pod
 metadata:
-  name: lagoon-cli-pod
+  name: lagoon-redeploy-controller-pod
   namespace: redeploy-operator
   labels:
     app: lagoon-cli
