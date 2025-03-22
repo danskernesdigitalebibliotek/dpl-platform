@@ -1,7 +1,7 @@
 FROM alpine:3.21.3
 
 # Install apk dependencies
-RUN apk add --no-cache nodejs npm curl bash && npm install -g zx
+RUN apk add --no-cache nodejs npm curl bash openssh-client && npm install -g zx
 
 # Install lagoon CLI
 RUN curl -L "https://github.com/uselagoon/lagoon-cli/releases/download/v0.31.5/lagoon-cli-v0.31.5-linux-amd64" -o /usr/local/bin/lagoon && chmod +x /usr/local/bin/lagoon
