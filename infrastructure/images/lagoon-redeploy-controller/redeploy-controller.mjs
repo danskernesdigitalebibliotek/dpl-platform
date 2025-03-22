@@ -12,7 +12,8 @@ await $`lagoon config add \
   --ui https://ui.lagoon.dplplat01.dpl.reload.dk \
   --hostname 20.238.147.183 \
   --port 22 \
-  --lagoon dplplat01`
+  --lagoon dplplat01 \
+  --ssh-key /root/.ssh/id_rsa`
 
 await $`lagoon config default --lagoon dplplat01`;
 
