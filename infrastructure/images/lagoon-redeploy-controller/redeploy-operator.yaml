@@ -7,44 +7,6 @@ metadata:
 
 apiVersion: v1
 data:
-  .lagoon.yml: |
-    current: dplplat01
-    default: dplplat01
-    lagoons:
-        amazeeio:
-            graphql: https://api.lagoon.amazeeio.cloud/graphql
-            hostname: ssh.lagoon.amazeeio.cloud
-            ui: https://dashboard.amazeeio.cloud
-            kibana: https://logs.amazeeio.cloud/
-            port: "32222"
-            token: ""
-            version: ""
-            sshkey: ""
-            sshportal: false
-            publickeyidentities: ]
-        dplplat01:
-            graphql: https://api.lagoon.dplplat01.dpl.reload.dk/graphql
-            hostname: 20.238.147.183
-            ui: https://ui.lagoon.dplplat01.dpl.reload.dk
-            kibana: ""
-            port: "22"
-            token: eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJ3dmhieWZuQzVlYldTVjAtSDlHU095RVBFd0lYNG1kdERncWNMTVF3RWVnIn0.eyJleHAiOjE3Mzk0MDAzNjMsImlhdCI6MTczOTQwMDA2MywianRpIjoiNmFiYjE3NDctZWVhOS00ZTU3LWIzZmQtYWY2NmNjZTllNTY4IiwiaXNzIjoiaHR0cHM6Ly9rZXljbG9hay5sYWdvb24uZHBscGxhdDAxLmRwbC5yZWxvYWQuZGsvYXV0aC9yZWFsbXMvbGFnb29uIiwiYXVkIjoiYWNjb3VudCIsInN1YiI6IjBiMjBlMGJkLTUyYWUtNGY5MC05ZmFkLWNmMjJhMDEwZjFjMSIsInR5cCI6IkJlYXJlciIsImF6cCI6ImF1dGgtc2VydmVyIiwic2Vzc2lvbl9zdGF0ZSI6IjRhMDE5NjQzLTg0MTQtNGUzYy1iODEzLWM0OWZmNWVjNDgzZiIsImFjciI6IjEiLCJyZWFsbV9hY2Nlc3MiOnsicm9sZXMiOlsicGxhdGZvcm0tb3duZXIiLCJvZmZsaW5lX2FjY2VzcyIsImFkbWluIiwidW1hX2F1dGhvcml6YXRpb24iLCJkZWZhdWx0LXJvbGVzLWxhZ29vbiJdfSwicmVzb3VyY2VfYWNjZXNzIjp7ImFjY291bnQiOnsicm9sZXMiOlsibWFuYWdlLWFjY291bnQiLCJtYW5hZ2UtYWNjb3VudC1saW5rcyIsInZpZXctcHJvZmlsZSJdfX0sInNjb3BlIjoiZW1haWwgcHJvZmlsZSIsInNpZCI6IjRhMDE5NjQzLTg0MTQtNGUzYy1iODEzLWM0OWZmNWVjNDgzZiIsImVtYWlsX3ZlcmlmaWVkIjpmYWxzZSwicHJlZmVycmVkX3VzZXJuYW1lIjoibGFnb29uYWRtaW4ifQ.Ute8U4KaJVpaTnG1YfBLdKGcJs-fq61IX1Vq23T62-Qwgnhg7MfAKNtTdrgKuodFYMRiKnL0j-1KeLi-2UZhta509636mk6CZFk5l_FfJ1quWGPFgQ7vt2XS9XYLtWsGQaF1rGCMXB8xlyUEgAW921NfrMH7pv05WaYIu8454R5z3CsNihE-yhMr8xEAnBIujOT8p1s9j7_HVlyLCMzUefTmBKc7ih7ONOYMN_1iPlrJPo4Mn_dH6bWl_jWQ8ee6BoifUsGW2if-2VYogV9e80GNJTKKpqmsidX4XO5u6oIRp0Uq4-7Ma1LL938HAclOeQYcZhxZDq7su-Gnr1v5Vw
-            version: v2.17.0
-            sshkey: ""
-            sshportal: false
-            publickeyidentities: ]
-    updatecheckdisable: false
-    environmentfromdirectory: false
-    stricthostkeychecking: ""
-kind: ConfigMap
-metadata:
-  name: lagoon-config
-  namespace: redeploy-operator
-
----
-
-apiVersion: v1
-data:
   known_hosts: |
     |1|obGyX3p6asQEt6btzTd/b8fAkpQ=|u3s/vZULDe2ho90FtTTHam7zkZM= ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPbbI6Q54ms1mQIcXEAYec57BdHKA0wwU4b/4PuyeWPe
     |1|APyqOjSul6S92Tlv3g755cBfa1I=|wFixO2hXl0ZHm+HcU0DHe0voWK4= ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQDV4yeEOjhAajYz51aWUpc/gdq/xmPHuqKolyW9c6biaCERVeNJhEseBnA0cq1EWVoKk6VKc02Seh/a7kYBmDo/kA/sJ7wCEJDDaAbTVSZqz3QEki+oauwnQdrSHLlH9HKnHnTRKhP64RCkknFlDhdpl/AVgdlfp5oSh1Hn+74PzAKeUdgSni/o98bjHM9V+vsP/4/Ce0jCUg0msNwPjpilsKPN+tYEf63ockw4vx5tNa8ngFVO0L91PyrcIAglbQP8C4QSmbe+4ZqvqhDzwWFp4luz1PhuExv4EfxaGyz/NP6UdK2Bhr8lSwcvVw+w0bq07UQCF2JPjoBMEd8hLjtQjA74EHN0F1n/Vw54/uJXM6sjJeECuaoXBtG38nTglSGENF03TNMIWB739gA85VqrzQzn+be/f5Hu49XULABoAZkmLwxteF/kjNer/qCv/N7VoinXdBnLNc5qqImlp/4nS0lly89P79ZUcQGvpasB+LzDdOnfU17y+OtyK4q/4itmk3lg4r4Lf2F2TaVUF18V/js57KnnC4sGqIlFcpEsvLq10IzhQhgkbjVqlI4jhOaIWHCAp9PD4c4ufm2eM8Xei6eSOJIX2rjFH7riOypYOVHJHNc1jbl6phsgxvONVvrlsbJ4JTLVfDO1a/FxsyohDMsUjd5xTBpqlwb9leRlIw==
@@ -74,21 +36,11 @@ spec:
         - name: lagoon-known-hosts
           mountPath: /root/.ssh/known_hosts
           subPath: known_hosts
-        - name: lagoon-config-volume
-          mountPath: /config
-        - name: writable-lagoon-config
-          mountPath: /root/config
         - name: lagoon-ssh-key-volume
           mountPath: /root/.ssh/id_rsa
           subPath: id_rsa
           readOnly: false
   volumes:
-    - name: lagoon-config-volume
-      configMap:
-        name: lagoon-config
-    - name: writable-lagoon-config
-      emptyDir:
-        medium: Memory
     - name: lagoon-known-hosts
       configMap:
         name: lagoon-known-hosts
