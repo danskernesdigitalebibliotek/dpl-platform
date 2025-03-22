@@ -32,6 +32,13 @@ spec:
   containers:
       image: ghcr.io/danskernesdigitalebibliotek/dpl-platform/lagoon-redeploy-controller:latest
     - name: lagoon-redeploy-controller-container
+      command:
+        - /bin/bash
+        - -c
+        - |
+          eval "$(ssh-agent)" > /root/.ssh/agent.env
+          ssh-add ~/.ssh/id_rsa
+          ./redeploy-controller.mjs
       volumeMounts:
         - name: lagoon-known-hosts
           mountPath: /root/.ssh/known_hosts
