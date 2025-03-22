@@ -68,7 +68,6 @@ function redeployDeployments(environmentType, environmentName, allowedRedeployAt
       console.log(`${time()} - ${deployment}-${environmentName}: No attempts left`);
       const envUrl = $.sync`lagoon web -p ${deployment} -e ${environmentName}`.valueOf();
       redeployBlackList[`${deployment}-${environmentName}`] = envUrl.slice(7);
-      console.log("url?",envUrl)
       delete redeployedDeployments[`${deployment}-${environmentName}`];
       continue;
     }
