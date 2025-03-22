@@ -79,7 +79,6 @@ function redeployDeployments(environmentType, environmentName, allowedRedeployAt
 const wait = ms => new Promise(res => setTimeout(res, ms));
 
 while(true) {
-  await $`lagoon login`
   redeployDeployments("PRODUCTION", "main", 6);
   redeployDeployments("DEVELOPMENT", "moduletest", 3);
   if(Object.keys(redeployedDeployments).length) {
