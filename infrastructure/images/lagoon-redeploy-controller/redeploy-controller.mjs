@@ -15,6 +15,8 @@ await $`lagoon config add \
   --lagoon dplplat01 \
   --ssh-key /root/.ssh/id_rsa`
 
+await $`lagoon config feature --strict-host-key-checking "no"`
+
 await $`lagoon config default --lagoon dplplat01`;
 
 // verify that dplplat01 is the active lagoon
