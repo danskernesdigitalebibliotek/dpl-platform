@@ -39,7 +39,7 @@ spec:
         - name: lagoon-ssh-key-volume
           mountPath: /root/.ssh/id_rsa
           subPath: id_rsa
-          readOnly: false
+          readOnly: true
   volumes:
     - name: lagoon-known-hosts
       configMap:
