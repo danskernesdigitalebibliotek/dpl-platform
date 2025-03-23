@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: Namespace
 metadata:
-  name: redeploy-operator
+  name: lagoon-redeploy-controller
 
 ---
 
@@ -18,7 +18,7 @@ data:
 kind: ConfigMap
 metadata:
   name: lagoon-known-hosts
-  namespace: redeploy-operator
+  namespace: lagoon-redeploy-controller
 ---
 
 apiVersion: v1
@@ -28,7 +28,7 @@ kind: Secret
 type: kubernetes.io/ssh-auth
 metadata:
   name: lagoon-ssh-key
-  namespace: redeploy-operator
+  namespace: lagoon-redeploy-controller
 type: Opaque
 
 ---
@@ -37,7 +37,7 @@ apiVersion: v1
 kind: Pod
 metadata:
   name: lagoon-redeploy-controller-pod
-  namespace: redeploy-operator
+  namespace: lagoon-redeploy-controller
   labels:
     app: lagoon-cli
 spec:
