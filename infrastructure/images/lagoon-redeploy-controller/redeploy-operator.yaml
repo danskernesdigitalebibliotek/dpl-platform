@@ -47,6 +47,8 @@ spec:
           mountPath: /root/.ssh/id_rsa
           subPath: id_rsa
           readOnly: true
+      securityContext:
+          runAsUser: 0
   volumes:
     - name: lagoon-known-hosts
       configMap:
@@ -54,4 +56,5 @@ spec:
     - name: lagoon-ssh-key-volume
       secret:
         secretName: lagoon-ssh-key
+        defaultMode: 256
   restartPolicy: Never
