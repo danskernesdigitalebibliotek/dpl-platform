@@ -37,6 +37,7 @@ apiVersion: batch/v1
 kind: CronJob
 metadata:
   name: lagoon-redeploy-controller-job
+  namespace: lagoon-redeploy-controller
 spec:
   schedule: "0 7 * * 4" # Every thursday at 07.00
   ttlSecondsAfterFinished: 21600 # 6 hours
