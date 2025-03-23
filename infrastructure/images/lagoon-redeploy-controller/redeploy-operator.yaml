@@ -40,39 +40,41 @@ metadata:
   namespace: lagoon-redeploy-controller
 spec:
   schedule: "0 7 * * 4" # Every thursday at 07.00
-  ttlSecondsAfterFinished: 21600 # 6 hours
   jobTemplate:
     spec:
-      containers:
-        - name: lagoon-redeploy-controller-container
-          # image: registry.local.deranged.dk/lrc:rc
-          image: ghcr.io/danskernesdigitalebibliotek/dpl-platform/lagoon-redeploy-controller:lrc-1.0.1-rc
-          command:
-            - /bin/bash
-            - -c
-            - |
-              eval "$(ssh-agent)" > /root/.ssh/agent.env
-              ssh-add ~/.ssh/id_rsa
-              ./redeploy-controller.mjs
-          volumeMounts:
+      ttlSecondsAfterFinished: 21600 # 6 hours
+      template:
+        spec:
+          containers:
+            - name: lagoon-redeploy-controller-container
+              # image: registry.local.deranged.dk/lrc:rc
+              image: ghcr.io/danskernesdigitalebibliotek/dpl-platform/lagoon-redeploy-controller:lrc-1.0.1-rc
+              command:
+                - /bin/bash
+                - -c
+                - |
+                  eval "$(ssh-agent)" > /root/.ssh/agent.env
+                  ssh-add ~/.ssh/id_rsa
+                  ./redeploy-controller.mjs
+              volumeMounts:
+                - name: lagoon-known-hosts
+                  mountPath: /root/.ssh/known_hosts
+                  subPath: known_hosts
+                - name: lagoon-ssh-key-volume
+                  mountPath: /root/.ssh/id_rsa
+                  subPath: id_rsa
+                  readOnly: true
+              securityContext:
+                  runAsUser: 0
+          volumes:
             - name: lagoon-known-hosts
-              mountPath: /root/.ssh/known_hosts
-              subPath: known_hosts
+              configMap:
+                name: lagoon-known-hosts
             - name: lagoon-ssh-key-volume
-              mountPath: /root/.ssh/id_rsa
-              subPath: id_rsa
-              readOnly: true
-          securityContext:
-              runAsUser: 0
-      volumes:
-        - name: lagoon-known-hosts
-          configMap:
-            name: lagoon-known-hosts
-        - name: lagoon-ssh-key-volume
-          secret:
-            secretName: lagoon-ssh-key
-            defaultMode: 256
-      restartPolicy: OnFailure
+              secret:
+                secretName: lagoon-ssh-key
+                defaultMode: 256
+          restartPolicy: OnFailure
 
 # apiVersion: v1
 # kind: Pod
