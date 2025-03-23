@@ -22,6 +22,17 @@ metadata:
 ---
 
 apiVersion: v1
+data:
+  id_rsa:
+kind: Secret
+metadata:
+  name: lagoon-ssh-key
+  namespace: redeploy-operator
+type: Opaque
+
+---
+
+apiVersion: v1
 kind: Pod
 metadata:
   name: lagoon-redeploy-controller-pod
