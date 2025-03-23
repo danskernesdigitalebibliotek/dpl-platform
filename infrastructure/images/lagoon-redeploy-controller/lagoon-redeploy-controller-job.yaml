@@ -1,3 +1,7 @@
+# This manifest will fire up a custom Lagoon Redeploy Controller (abbr. LRC) Kubernetes Job
+# This manifest does not include the ssh-key-secret which is required to run the job.
+# You can add the secret manually with the following command: kubectl create secret -n lagoon-redeploy-controller generic ssh-secret --from-literal=id_rsa="$(cat ~/.ssh/id_rsa)"
+
 apiVersion: v1
 kind: Namespace
 metadata:
