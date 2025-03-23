@@ -19,17 +19,6 @@ kind: ConfigMap
 metadata:
   name: lagoon-known-hosts
   namespace: lagoon-redeploy-controller
----
-
-apiVersion: v1
-data:
-  id_rsa:
-kind: Secret
-type: kubernetes.io/ssh-auth
-metadata:
-  name: lagoon-ssh-key
-  namespace: lagoon-redeploy-controller
-type: Opaque
 
 ---
 
@@ -75,42 +64,3 @@ spec:
                 secretName: lagoon-ssh-key
                 defaultMode: 256
           restartPolicy: OnFailure
-
-# apiVersion: v1
-# kind: Pod
-# metadata:
-#   name: lagoon-redeploy-controller-pod
-#   namespace: lagoon-redeploy-controller
-#   labels:
-#     app: lagoon-cli
-# spec:
-#   containers:
-#     - name: lagoon-redeploy-controller-container
-#       # image: registry.local.deranged.dk/lrc:rc
-#       image: ghcr.io/danskernesdigitalebibliotek/dpl-platform/lagoon-redeploy-controller:lrc-1.0.1-rc
-#       command:
-#         - /bin/bash
-#         - -c
-#         - |
-#           eval "$(ssh-agent)" > /root/.ssh/agent.env
-#           ssh-add ~/.ssh/id_rsa
-#           ./redeploy-controller.mjs
-#       volumeMounts:
-#         - name: lagoon-known-hosts
-#           mountPath: /root/.ssh/known_hosts
-#           subPath: known_hosts
-#         - name: lagoon-ssh-key-volume
-#           mountPath: /root/.ssh/id_rsa
-#           subPath: id_rsa
-#           readOnly: true
-#       securityContext:
-#           runAsUser: 0
-#   volumes:
-#     - name: lagoon-known-hosts
-#       configMap:
-#         name: lagoon-known-hosts
-#     - name: lagoon-ssh-key-volume
-#       secret:
-#         secretName: lagoon-ssh-key
-#         defaultMode: 256
-#   restartPolicy: Never
