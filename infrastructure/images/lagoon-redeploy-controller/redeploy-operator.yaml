@@ -30,8 +30,8 @@ metadata:
     app: lagoon-cli
 spec:
   containers:
-      image: ghcr.io/danskernesdigitalebibliotek/dpl-platform/lagoon-redeploy-controller:latest
     - name: lagoon-redeploy-controller-container
+      image: ghcr.io/danskernesdigitalebibliotek/dpl-platform/lagoon-redeploy-controller:lrc-1.0.1-rc
       command:
         - /bin/bash
         - -c
