@@ -1,8 +1,8 @@
 namespace: mariadb-servers
 name: mariadb-10.6-01
 
-password: MariaDB1!!
-rootPassword: MariaDB1!!
+password: VerySecurePassword
+rootPassword: SomeSecurePassword
 
 mariadbVersion: 10.6
 replicas: 5
