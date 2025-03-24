@@ -86,7 +86,7 @@ while(true) {
     console.log(redeployedDeployments);
   }
   if(Object.keys(redeployBlackList).length) {
-    console.log("Sites that require manual intervention");
+    console.log("Sites that will not be redployed anymore as redeploying wont solve the deployment issue");
     console.log(redeployBlackList);
   }
   echo(`${time()} - sleeping for 5 minutes before checking again`);
