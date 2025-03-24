@@ -3,5 +3,5 @@
 .task
 
 # We sometimes might run a Kind cluster and use Skaffold to quickly build a Kubernetes thing, ignore these configs
-**/kdevconfig.yaml
-**/skaffold.yaml
+*/kdevconfig.yaml
+*/skaffold.yaml
