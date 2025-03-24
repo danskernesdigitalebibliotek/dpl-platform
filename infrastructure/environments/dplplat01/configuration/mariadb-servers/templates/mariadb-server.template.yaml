@@ -1,0 +1,134 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: {{ .Values.namespace }}
+
+---
+
+apiVersion: v1
+kind: Secret
+metadata:
+  name: {{ .Values.name }}-secret
+  namespace: {{ .Values.namespace }}
+  labels:
+    k8s.mariadb.com/watch: ""
+stringData:
+  password: {{ .Values.password }}
+  root-password: {{ .Values.rootPassword }}
+
+---
+
+apiVersion: k8s.mariadb.com/v1alpha1
+kind: MariaDB
+metadata:
+  name: {{ .Values.name }}
+  namespace: {{ .Values.namespace }}
+spec:
+  image: docker-registry1.mariadb.com/library/mariadb:{{ .Values.mariadbVersion }}
+  rootPasswordSecretKeyRef:
+    name: {{ .Values.name }}-secret
+    key: root-password
+  replicas: {{ .Values.replicas }}
+  galera:
+    enabled: true
+    config:
+      reuseStorageVolume: true
+    agent:
+      basicAuth:
+        enabled: true
+    replicaThreads: 1
+    providerOptions:
+      gcs.fc_limit: '64'
+    recovery:
+      enabled: true
+      minClusterSize: 1
+      clusterMonitorInterval: 10s
+      clusterHealthyTimeout: 30s
+      clusterBootstrapTimeout: 10m
+      podRecoveryTimeout: 5m
+      podSyncTimeout: 5m
+
+  storage:
+    size: {{ .Values.storageSize }}
+    storageClassName: default
+    resizeInUseVolumes: true
+    waitForVolumeResize: true
+  # volumes:
+  #   - name: mariabackup
+  #     persistentVolumeClaim:
+  #       claimName: mariabackup
+  # volumeMounts:
+  #   - name: mariabackup
+  #     mountPath: /var/mariadb/backup/
+
+  myCnf: |
+    [mariadb]
+    bind-address=*
+    default_storage_engine=InnoDB
+    binlog_format=row
+    innodb_autoinc_lock_mode=2
+    max_allowed_packet=256M
+
+  myCnfConfigMapKeyRef:
+    name: mariadb
+    key: my.cnf
+
+  timeZone: "UTC"
+
+  resources:
+    requests:
+      cpu: {{ .Values.resReqCpu }}
+      memory: {{ .Values.resReqMemory }}
+
+  env:
+    - name: TZ
+      value: SYSTEM
+
+  podSecurityContext:
+    runAsGroup: 999
+    runAsNonRoot: true
+    runAsUser: 999
+    fsGroup: 999
+
+  securityContext:
+    allowPrivilegeEscalation: false
+
+  livenessProbe:
+    exec:
+      command:
+        - bash
+        - -c
+        - mariadb -u root -p"${MARIADB_ROOT_PASSWORD}" -e "SELECT 1;"
+    initialDelaySeconds: 20
+    periodSeconds: 5
+    timeoutSeconds: 5
+
+  readinessProbe:
+    exec:
+      command:
+        - bash
+        - -c
+        - mariadb -u root -p"${MARIADB_ROOT_PASSWORD}" -e "SELECT 1;"
+    initialDelaySeconds: 20
+    periodSeconds: 5
+    timeoutSeconds: 5
+
+  podDisruptionBudget:
+    maxUnavailable: 50%
+
+  updatestrategy:
+    type: ReplicasFirstPrimaryLast
+
+  metrics:
+    enabled: true
+
+  suspend: false
+
+  service:
+    type: ClusterIP
+
+  primaryService:
+    type: ClusterIP
+
+  secondaryService:
+    type: ClusterIP

@@ -1,0 +1,11 @@
+namespace: mariadb-servers
+name: mariadb-10.6-01
+
+password: MariaDB1!!
+rootPassword: MariaDB1!!
+
+mariadbVersion: 10.6
+replicas: 5
+storageSize: 100Gi
+resReqMemory: 1Gi
+resReqCpu: 200m
