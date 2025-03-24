@@ -78,8 +78,6 @@ function redeployDeployments(environmentType, environmentName, allowedRedeployAt
   }
 }
 
-const wait = ms => new Promise(res => setTimeout(res, ms));
-
 while(true) {
   redeployDeployments("PRODUCTION", "main", 6);
   redeployDeployments("DEVELOPMENT", "moduletest", 3);
@@ -92,5 +90,5 @@ while(true) {
     console.log(redeployBlackList);
   }
   echo(`${time()} - sleeping for 5 minutes before checking again`);
-  await wait(300000);
+  await sleep(300000);
 }
