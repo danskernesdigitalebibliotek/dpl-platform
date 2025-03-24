@@ -1,11 +1,18 @@
-FROM uselagoon/lagoon-cli:latest
-WORKDIR /
+FROM alpine:3.21.3
 
-RUN wget -O jq https://github.com/stedolan/jq/releases/download/jq-1.5/jq-linux64
-RUN chmod +x ./jq
-RUN cp jq /usr/bin
+# Install apk dependencies
+RUN apk add --no-cache nodejs npm curl bash openssh-client && npm install -g zx
 
-COPY ./redeploy.sh /redeploy.sh
+# Install lagoon CLI
+RUN curl -L "https://github.com/uselagoon/lagoon-cli/releases/download/v0.31.5/lagoon-cli-v0.31.5-linux-amd64" -o /usr/local/bin/lagoon && chmod +x /usr/local/bin/lagoon
+
+# Install jq tool
+RUN wget -O jq https://github.com/stedolan/jq/releases/download/jq-1.5/jq-linux64 && chmod +x ./jq && cp jq /usr/bin
+
+WORKDIR /usr/src/app
+
+COPY redeploy-controller.mjs .
 
 ENTRYPOINT []
-CMD ["./redeploy.sh"]
+
+CMD ["./redeploy-controller.mjs"]
