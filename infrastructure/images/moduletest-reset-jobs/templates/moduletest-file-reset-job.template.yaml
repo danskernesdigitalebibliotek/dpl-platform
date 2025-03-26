@@ -1,0 +1,36 @@
+# This manifest will fire up a customer Kubernetes Job in moduletest namepaces.
+# It will synchronize all files from the corresponding main environment to the moduletest environment
+
+
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: moduletest-reset
+
+---
+
+{{- range .Values.projects }}
+
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: file-reset
+  labels:
+    app: moduletest-file-reset-job
+spec:
+  ttlSecondsAfterFinished: 36000 # 10 hours leaving time to investigate failed jobs
+  backoffLimit: 3
+  template:
+    spec:
+      restartPolicy: Never
+      containers:
+        - name: file-reset-container
+          image: registry.local.deranged.dk/file-reset:dev
+          # image: ghcr.io/danskernesdigitalebibliotek/dpl-platform/lagoon-redeploy-controller:lrc-1.0.1-rc
+          command:
+            - /bin/bash
+            - -c
+            - ./moduletest-files-reset-job.mjs {{ . }}
+            
+---
+{{- end }}
