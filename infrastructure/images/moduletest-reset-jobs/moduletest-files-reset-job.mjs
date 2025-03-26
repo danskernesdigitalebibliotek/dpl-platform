@@ -11,3 +11,15 @@ console.log(`Reseting files from ${projectName}-main to ${projectName}-moduletes
   \n
 `);
 
+try {
+  // This will throw as there's a long running PHP process that keeps using
+  // a file in a /php folder inside the CLI container
+  // Emptying the folder is however successfull and we should ensure the
+  // program doesn't exit;
+  await $`kubectl exec -n ${projectName}-moduletest deploy/cli -- bash -c rm -fr /app/web/sites/default/files`
+} catch(error) {
+  if(error.exitCode != 1) {
+    throw Error("unexpected error", error.stderr);
+  }
+  console.log("As expected, the deletion of all files and folders in '/app/web/default/files' threw an 'exit 1'", error);
+}
