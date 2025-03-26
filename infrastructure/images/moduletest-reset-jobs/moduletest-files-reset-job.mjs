@@ -31,3 +31,5 @@ try {
 } catch(error) {
   console.log("file move failed", error.stderr);
 }
+
+console.log(`File reset for ${projectName}-moduletest complete`);
