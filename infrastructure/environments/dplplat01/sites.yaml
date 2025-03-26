@@ -413,7 +413,7 @@ sites:
       - herningbib.dk
     autogenerateRoutes: true
     plan: webmaster
-    <<: *webmasters-staying-on-9-0
+    <<: *webmasters-on-weekly-release-cycle
   hillerod:
     name: "Hillerød Bibliotekerne"
     description: "The library site for Hillerød"
@@ -686,7 +686,7 @@ sites:
     secondary-domains:
       - odensebib.dk
     autogenerateRoutes: true
-    <<: *webmasters-staying-on-9-0
+    <<: *webmasters-on-weekly-release-cycle
   odsherred:
     name: "Odsherred Bibliotek og Kulturhuse"
     description: "The library site for Odsherred"
