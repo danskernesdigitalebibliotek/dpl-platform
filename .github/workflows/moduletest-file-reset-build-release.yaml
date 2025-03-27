@@ -9,7 +9,7 @@ on:
       - "/infrastructure/images/moduletest-file-reset-jobs/**"
       - ".github/workflows/moduletest-file-reset-build-release.yaml"
     tags:
-      - "mfr-*-rc"
+      - "mfr-*-rc" # pull_requst builds are release candidates mfr-[semver versioning]-rc
   push:
     branches:
       - main
