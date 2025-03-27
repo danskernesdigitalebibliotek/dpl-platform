@@ -1,7 +1,7 @@
-FROM alpine:3.21.3
+FROM node:22-alpine
 
 # Install apk dependencies
-RUN apk add --no-cache nodejs npm bash kubectl && npm install -g zx
+RUN apk add --no-cache bash kubectl && npm install -g zx
 
 WORKDIR /usr/src/app
 
