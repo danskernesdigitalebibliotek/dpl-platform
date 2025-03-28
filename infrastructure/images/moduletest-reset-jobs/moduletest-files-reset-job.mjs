@@ -29,7 +29,7 @@ echo(`Will now move files from ${projectName}-main to ${projectName}-moduletest`
 try {
   await $` kubectl exec -n ${projectName}-main deploy/cli -- tar cf - /app/web/sites/default/files | kubectl exec -i -n ${projectName}-moduletest deploy/cli -- tar xvf - -C /`;
 } catch(error) {
-  echo("file move failed", error.stderr);
+  throw Error("file move failed", error.stderr);
 }
 
 echo(`File reset for ${projectName}-moduletest complete`);
