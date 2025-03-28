@@ -15,12 +15,3 @@ tasks:
     summary: Tag can  be specified via the tag environment variable. If omitted the build will assume "latest".
     cmds:
       - docker build -t {{.image}} .
-
-  push:
-    desc: Push a build of the shell to {{.repository}}
-    vars:
-      latest: "{{.repository}}:latest"
-    cmds:
-      - docker tag {{.image}} {{.latest}}
-      - docker push {{.image}}
-      - docker push {{.latest}}
