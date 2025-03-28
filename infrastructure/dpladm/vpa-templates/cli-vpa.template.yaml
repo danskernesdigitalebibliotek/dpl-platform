@@ -14,8 +14,8 @@ spec:
     containerPolicies:
     - containerName: cli
       minAllowed:
-        cpu: 200m
-        memory: 200Mi
+        cpu: 4m
+        memory: 2Mi
       maxAllowed:
         cpu: 400m
         memory: 1.1Gi
