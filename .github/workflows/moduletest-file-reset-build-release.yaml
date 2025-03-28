@@ -63,17 +63,6 @@ jobs:
             org.opencontainers.image.title=Moduletest File Reset Job
             org.opencontainers.image.description=Danish Public Libraries Moduletest File Reset Job
 
-
-      # Do a first build and export it to the docker cache. This allows us to
-      # run som tests on the image, while still avoiding to have to rebuild the
-      # image when we do the final build.
-      - name: Build and export to Docker
-        uses: docker/build-push-action@v6
-        with:
-          context: infrastructure/images/moduletest-file-reset-job
-          load: true
-          tags: working-image:0.0.0
-
       - name: Build and push
         uses: docker/build-push-action@v6
         with:
