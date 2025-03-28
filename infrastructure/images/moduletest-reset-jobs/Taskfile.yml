@@ -1,6 +1,6 @@
-# Lagoon Redeploy Controller Taskfile (task.dev)
+# Moduletest File Reset Job Taskfile (task.dev)
 #
-# Builds, tests and pushes builds of container-images for the Lagoon Redeploy Controller
+# Builds, tests and pushes builds of container-images for the Moduletest File Reset Job
 
 version: '3'
 
