@@ -6,7 +6,7 @@
 on:
   pull_request:
     paths:
-      - "/infrastructure/environment/dplplat01/configuration/lagoon-redeploy-controller/**"
+      - "/infrastructure/images/lagoon-redeploy-controller/**"
       - ".github/workflows/lagoon-redeploy-controller-build-release.yaml"
     tags:
       - "lrc-*-rc"
@@ -15,7 +15,7 @@ on:
       - main
     # Limit pushes on main to only build if these files has changed.
     paths:
-      - "/infrastructure/environment/dplplat01/configuration/lagoon-redeploy-controller/**"
+      - "/infrastructure/images/lagoon-redeploy-controller/**"
       - ".github/workflows/lagoon-redeploy-controller-build-release.yaml"
     tags:
       - "lrc-*"
