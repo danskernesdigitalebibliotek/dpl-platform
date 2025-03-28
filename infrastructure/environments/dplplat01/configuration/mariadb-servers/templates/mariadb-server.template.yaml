@@ -5,19 +5,6 @@ metadata:
 
 ---
 
-apiVersion: v1
-kind: Secret
-metadata:
-  name: {{ .Values.name }}-secret
-  namespace: {{ .Values.namespace }}
-  labels:
-    k8s.mariadb.com/watch: ""
-stringData:
-  password: {{ .Values.password }}
-  root-password: {{ .Values.rootPassword }}
-
----
-
 apiVersion: k8s.mariadb.com/v1alpha1
 kind: MariaDB
 metadata:

@@ -1,9 +1,6 @@
 namespace: mariadb-servers
 name: mariadb-10.6-01
 
-password: VerySecurePassword
-rootPassword: SomeSecurePassword
-
 mariadbVersion: 10.6
 replicas: 5
 storageSize: 100Gi
