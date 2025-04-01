@@ -109,6 +109,23 @@ function getGoImageVersion {
     return
 }
 
+function calculatePrimaryGoSubdomain {
+    local goVersion=$(getGoImageVersion "${1}" "${2}")
+    if [[ -z "${goVersion}" ]]; then
+        echo ""
+        return
+    fi
+    local primaryDomain=$(getSitePrimaryDomain "${1}" "${2}")
+    local goSubDomain="go.";
+    # If primaryDomain uses www, then we want to put the go subdomain in there like this: www.go.restOfDomain.tld
+    if [[ $primaryDomain == www* ]]; then
+        echo "${primaryDomain/www./www.$goSubDomain}"
+        return
+    fi
+    echo "$goSubDomain$primaryDomain";
+    return
+}
+
 function getSiteAutogenerateRoutes {
     local autogenerateRoutes
     autogenerateRoutes=$(yq eval ".sites.${1}.autogenerateRoutes" "${2}")
