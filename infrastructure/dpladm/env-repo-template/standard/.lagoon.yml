@@ -62,6 +62,7 @@ environments:
 $ENABLE_ROUTES
 $PRIMARY_DOMAIN
 $SECONDARY_DOMAINS
+$PRIMARY_GO_SUBDOMAIN_AND_ANNOTATION
     cronjobs:
       - name: drush cron
         schedule: "M/15 * * * *"
