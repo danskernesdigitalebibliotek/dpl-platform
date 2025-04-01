@@ -76,6 +76,8 @@ function renderProfileTemplate {
   local primaryDomain=${8:-}
   # A space-seperated list of secondary domains (optional)
   local secondaryDomainsString=${9:-}
+  # The primary GO subdomain (optional)
+  local primaryGoSubDomain=${10:-}
 
   PRIMARY_DOMAIN=""
 
@@ -111,6 +113,7 @@ EndOfMessage
     PRIMARY_DOMAIN="${singleRouteIndent}- \"${primaryDomain}\""
   fi
 
+
   # Only render secondary domains if we have a primary domain.
   SECONDARY_DOMAINS=""
   if [[ -n "${primaryDomain}" && -n "${secondaryDomainsString}" ]]; then
@@ -124,6 +127,18 @@ ${singleRouteIndent}      nginx.ingress.kubernetes.io/permanent-redirect: https:
 EndOfMessage
 )
     done
+  fi
+
+  # Only if the project uses the GO module
+  PRIMARY_GO_SUBDOMAIN_AND_ANNOTATION=""
+  if [[ -n "${primaryGoSubDomain}" ]]; then
+    PRIMARY_GO_SUBDOMAIN_AND_ANNOTATION=$(cat << EndOfMessage
+${routesIndent}  - node:
+${singleRouteIndent}- "$primaryGoSubDomain"
+${singleRouteIndent}    annotations:
+${singleRouteIndent}      nginx.ingress.kubernetes.io/proxy-buffer-size: 32k
+EndOfMessage
+)
   fi
 
   # TODO, we could probably do with a repo-wide search replace of variables.
