@@ -97,6 +97,18 @@ function getSiteSecondaryDomains {
     return
 }
 
+function getGoImageVersion {
+    local goVersion
+    goVersion=$(yq eval ".sites.${1}.goVersion" "${2}")
+    if [[ -z "${goVersion}" ]]; then
+        echo ""
+        return  # Use 'exit' if not inside a function
+    fi
+
+    echo "${goVersion}"
+    return
+}
+
 function getSiteAutogenerateRoutes {
     local autogenerateRoutes
     autogenerateRoutes=$(yq eval ".sites.${1}.autogenerateRoutes" "${2}")
