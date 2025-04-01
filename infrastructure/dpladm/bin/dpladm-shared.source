@@ -138,6 +138,7 @@ EndOfMessage
   export LAGOON_IMAGES_RELEASE_TAG
   export PRIMARY_DOMAIN
   export SECONDARY_DOMAINS
+  export PRIMARY_GO_SUBDOMAIN_AND_ANNOTATION
   export IMPORT_TRANSLATIONS_CRON=${importTranslationsCron}
 
   # TODO this templating could be quite a bit more flexible.
