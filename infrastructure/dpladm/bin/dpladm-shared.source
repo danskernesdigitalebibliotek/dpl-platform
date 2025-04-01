@@ -131,7 +131,7 @@ EndOfMessage
 
   # Only if the project uses the GO module
   PRIMARY_GO_SUBDOMAIN_AND_ANNOTATION=""
-  if [[ -n "${primaryGoSubDomain}" ]]; then
+  if [[ -z "${primaryGoSubDomain}" ]]; then
     PRIMARY_GO_SUBDOMAIN_AND_ANNOTATION=$(cat << EndOfMessage
 ${routesIndent}  - node:
 ${singleRouteIndent}- "$primaryGoSubDomain"
