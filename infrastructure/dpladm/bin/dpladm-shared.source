@@ -191,6 +191,7 @@ function syncEnvRepo {
   local autogenerateRoutes="${7:-}"
   local primaryDomain="${8:-}"
   local secondaryDomains="${9:-}"
+  local primaryGoSubDomain="${10:-}"
 
   if [[ -z $siteName ]]; then
       echo "Missing site name"
@@ -248,7 +249,7 @@ function syncEnvRepo {
 
   # Enter the template and rendered it
   cd "${repoName}"
-  renderProfileTemplate "${siteName}" "${branchName}" "${releaseTag}" "${releaseImageRepository}" "${releaseImageName}" "${importTranslationsCron}" "${autogenerateRoutes}" "${primaryDomain}" "${secondaryDomains}"
+  renderProfileTemplate "${siteName}" "${branchName}" "${releaseTag}" "${releaseImageRepository}" "${releaseImageName}" "${importTranslationsCron}" "${autogenerateRoutes}" "${primaryDomain}" "${secondaryDomains}" "${primaryGoSubDomain}"
 
   # Detect changes
   local changedFiles
