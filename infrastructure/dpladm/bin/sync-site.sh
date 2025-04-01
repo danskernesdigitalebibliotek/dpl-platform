@@ -149,6 +149,7 @@ set +o errexit
 # Get the primary and secondary domains from site.yml.
 primaryDomain=$(getSitePrimaryDomain "${SITE}" "${SITES_CONFIG}")
 secondaryDomains=$(getSiteSecondaryDomains "${SITE}" "${SITES_CONFIG}")
+primaryGoSubDomain=$(calculatePrimaryGoSubdomain "${SITE}" "${SITES_CONFIG}")
 autogenerateRoutes=$(getSiteAutogenerateRoutes "${SITE}" "${SITES_CONFIG}")
 releaseTag=$(getSiteDplCmsRelease "${SITE}" "${SITES_CONFIG}")
 wmReleaseTag=$(getWebmasterDplCmsRelease "${SITE}" "${SITES_CONFIG}")
@@ -161,8 +162,8 @@ importTranslationsCron=$(getSiteImportTranslationsCron "${SITE}" "${SITES_CONFIG
 set -o errexit
 
 # Synchronise the sites environment repository.
-syncEnvRepo "${SITE}" "${releaseTag}" "${BRANCH}" "${siteImageRepository}" "${siteReleaseImageName}" "${importTranslationsCron}" "${autogenerateRoutes}" "${primaryDomain}" "${secondaryDomains}"
+syncEnvRepo "${SITE}" "${releaseTag}" "${BRANCH}" "${siteImageRepository}" "${siteReleaseImageName}" "${importTranslationsCron}" "${autogenerateRoutes}" "${primaryDomain}" "${secondaryDomains}" "${primaryGoSubDomain}"
 
 if [ "${plan}" = "webmaster" ] && [ "${BRANCH}" = "main" ]; then
-    syncEnvRepo "${SITE}" "${wmReleaseTag}" "moduletest" "${siteImageRepository}" "${siteReleaseImageName}" "${importTranslationsCron}" "${autogenerateRoutes}" "${primaryDomain}" "${secondaryDomains}"
+    syncEnvRepo "${SITE}" "${wmReleaseTag}" "moduletest" "${siteImageRepository}" "${siteReleaseImageName}" "${importTranslationsCron}" "${autogenerateRoutes}" "${primaryDomain}" "${secondaryDomains}" "${primaryGoSubDomain}"
 fi
