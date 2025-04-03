@@ -78,6 +78,8 @@ function renderProfileTemplate {
   local secondaryDomainsString=${9:-}
   # The primary GO subdomain (optional)
   local primaryGoSubDomain=${10:-}
+  # A space seperated list of secondary GO sub domains (optional)
+  local secondaryGoSubDomains=${11:-}
 
   PRIMARY_DOMAIN=""
 
