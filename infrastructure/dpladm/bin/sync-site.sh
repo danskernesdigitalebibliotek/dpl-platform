@@ -97,21 +97,21 @@ function getSiteSecondaryDomains {
     return
 }
 
-function getGoImageVersion {
-    local goVersion
-    goVersion=$(yq eval ".sites.${1}.goVersion" "${2}")
-    if [[ -z "${goVersion}" ]]; then
+function projectHasGo {
+    local hasGo
+    hasGo=$(yq eval ".sites.${1}.hasGo" "${2}")
+    if [[ -z "${hasGo}" ]]; then
         echo ""
         return  # Use 'exit' if not inside a function
     fi
 
-    echo "${goVersion}"
+    echo "${hasGo}"
     return
 }
 
 function calculatePrimaryGoSubdomain {
-    local goVersion=$(getGoImageVersion "${1}" "${2}")
-    if [[ "${goVersion}" == "null" ]]; then
+    local hasGo=$(projectHasGo "${1}" "${2}")
+    if [[ "${hasGo}" == "null" ]]; then
         echo ""
         return
     fi
@@ -127,8 +127,8 @@ function calculatePrimaryGoSubdomain {
 }
 
 function calcutelateSecondaryGoSubDomains {
-    local goVersion=$(getGoImageVersion "${1}" "${2}")
-    if [[ "${goVersion}" == "null" ]]; then
+    local hasGo=$(projectHasGo "${1}" "${2}")
+    if [[ "${hasGo}" == "null" ]]; then
         echo ""
         return
     fi
