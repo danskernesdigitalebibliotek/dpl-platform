@@ -111,7 +111,7 @@ function getGoImageVersion {
 
 function calculatePrimaryGoSubdomain {
     local goVersion=$(getGoImageVersion "${1}" "${2}")
-    if [[ -z "${goVersion}" ]]; then
+    if [[ "${goVersion}" == "null" ]]; then
         echo ""
         return
     fi
