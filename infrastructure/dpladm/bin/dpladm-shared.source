@@ -143,6 +143,21 @@ EndOfMessage
 )
   fi
 
+  SECONDARY_GO_SUBDOMAINS=""
+  if [[ -n "${primaryGoSubDomain}" && -n " ${secondaryGoSubDomains}" ]]; then
+    IFS=' '
+    for secondaryGoSubDomain in ${secondaryGoSubDomains}; do
+      SECONDARY_GO_SUBDOMAINS+=$(cat << EndOfMessage
+
+${singleRouteIndent}- "$secondaryGoSubDomain"
+${singleRouteIndent}    annotations:
+${singleRouteIndent}      nginx.ingress.kubernetes.io/permanent-redirect: https://${primaryGoSubDomain}\$request_uri
+EndOfMessage
+)
+    done
+  fi
+
+
   # TODO, we could probably do with a repo-wide search replace of variables.
   # Something https://github.com/kreuzwerker/envplate could do the trick
   # Export our globals and locals so that envubst can access them
@@ -156,6 +171,7 @@ EndOfMessage
   export PRIMARY_DOMAIN
   export SECONDARY_DOMAINS
   export PRIMARY_GO_SUBDOMAIN_AND_ANNOTATION
+  export SECONDARY_GO_SUBDOMAINS
   export IMPORT_TRANSLATIONS_CRON=${importTranslationsCron}
 
   # TODO this templating could be quite a bit more flexible.
