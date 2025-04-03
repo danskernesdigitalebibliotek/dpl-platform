@@ -207,6 +207,7 @@ set +o errexit
 primaryDomain=$(getSitePrimaryDomain "${SITE}" "${SITES_CONFIG}")
 secondaryDomains=$(getSiteSecondaryDomains "${SITE}" "${SITES_CONFIG}")
 primaryGoSubDomain=$(calculatePrimaryGoSubdomain "${SITE}" "${SITES_CONFIG}")
+secondaryGoSubDomains=$(calcutelateSecondaryGoSubDomains "${SITE}" "${SITES_CONFIG}")
 autogenerateRoutes=$(getSiteAutogenerateRoutes "${SITE}" "${SITES_CONFIG}")
 releaseTag=$(getSiteDplCmsRelease "${SITE}" "${SITES_CONFIG}")
 wmReleaseTag=$(getWebmasterDplCmsRelease "${SITE}" "${SITES_CONFIG}")
