@@ -101,17 +101,24 @@ function projectHasGo {
     local hasGo
     hasGo=$(yq eval ".sites.${1}.hasGo" "${2}")
     if [[ -z "${hasGo}" ]]; then
-        echo ""
+        echo "false"
         return  # Use 'exit' if not inside a function
     fi
-
-    echo "${hasGo}"
+    if [[ "${hasGo}" == "true" ]]; then
+        echo "true"
+        return
+    fi
+    if [[ "${hasGo}" == "false" ]]; then
+        echo "false"
+        return
+    fi
+    echo "false"
     return
 }
 
 function calculatePrimaryGoSubdomain {
     local hasGo=$(projectHasGo "${1}" "${2}")
-    if [[ "${hasGo}" == "null" ]]; then
+    if [[ "${hasGo}" = "false" ]]; then
         echo ""
         return
     fi
@@ -128,7 +135,7 @@ function calculatePrimaryGoSubdomain {
 
 function calcutelateSecondaryGoSubDomains {
     local hasGo=$(projectHasGo "${1}" "${2}")
-    if [[ "${hasGo}" == "null" ]]; then
+    if [[ "${hasGo}" = "false" ]]; then
         echo ""
         return
     fi
