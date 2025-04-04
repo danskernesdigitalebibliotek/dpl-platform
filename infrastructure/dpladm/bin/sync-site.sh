@@ -101,19 +101,19 @@ function projectHasGo {
     local hasGo
     hasGo=$(yq eval ".sites.${1}.hasGo" "${2}")
     if [[ -z "${hasGo}" ]]; then
-        echo "false"
-        return  # Use 'exit' if not inside a function
+        echo "Error: hasGo should have a boolean value"
+        exit 1
     fi
-    if [[ "${hasGo}" == "true" ]]; then
+    if [[ "${hasGo}" = "true" ]]; then
         echo "true"
         return
     fi
-    if [[ "${hasGo}" == "false" ]]; then
+    if [[ "${hasGo}" = "false" ]]; then
         echo "false"
         return
     fi
-    echo "false"
-    return
+    echo "Error: has should a boolean value"
+    exit 1
 }
 
 function calculatePrimaryGoSubdomain {
