@@ -97,6 +97,70 @@ function getSiteSecondaryDomains {
     return
 }
 
+function projectHasGo {
+    local hasGo
+    hasGo=$(yq eval ".sites.${1}.hasGo" "${2}")
+    if [[ -z "${hasGo}" ]]; then
+        echo "Error: hasGo should have a boolean value"
+        exit 1
+    fi
+    if [[ "${hasGo}" = "true" ]]; then
+        echo "true"
+        return
+    fi
+    if [[ "${hasGo}" = "false" ]]; then
+        echo "false"
+        return
+    fi
+    echo "Error: has should a boolean value"
+    exit 1
+}
+
+function calculatePrimaryGoSubdomain {
+    local hasGo=$(projectHasGo "${1}" "${2}")
+    if [[ "${hasGo}" = "false" ]]; then
+        echo ""
+        return
+    fi
+    local primaryDomain=$(getSitePrimaryDomain "${1}" "${2}")
+    local goSubDomain="go.";
+    # If primaryDomain uses www, then we want to put the go subdomain in there like this: www.go.restOfDomain.tld
+    if [[ $primaryDomain == www* ]]; then
+        echo "${primaryDomain/www./www.$goSubDomain}"
+        return
+    fi
+    echo "$goSubDomain$primaryDomain";
+    return
+}
+
+function calcutelateSecondaryGoSubDomains {
+    local hasGo=$(projectHasGo "${1}" "${2}")
+    if [[ "${hasGo}" = "false" ]]; then
+        echo ""
+        return
+    fi
+
+    local secondaryDomains=$(getSiteSecondaryDomains "${1}" "${2}")
+    if [[ "${secondaryDomains}" == "null" ]]; then
+        echo ""
+        return
+    fi
+
+    local secondaryGoSubDomains=""
+    local goSubDomain="go."
+    IFS=" "
+    for secondaryDomain in ${secondaryDomains}; do
+        # If secondaryDomain uses www, then we want to put the go subdomain in there like this: www.go.restOfDomain.tld
+        if [[ $secondaryDomain == www* ]]; then
+            secondaryGoSubDomains+="${secondaryDomain/www./www.$goSubDomain} "
+        else
+            secondaryGoSubDomains+="$goSubDomain$secondaryDomain ";
+        fi
+    done
+    echo "${secondaryGoSubDomains}"
+    return
+}
+
 function getSiteAutogenerateRoutes {
     local autogenerateRoutes
     autogenerateRoutes=$(yq eval ".sites.${1}.autogenerateRoutes" "${2}")
@@ -149,6 +213,8 @@ set +o errexit
 # Get the primary and secondary domains from site.yml.
 primaryDomain=$(getSitePrimaryDomain "${SITE}" "${SITES_CONFIG}")
 secondaryDomains=$(getSiteSecondaryDomains "${SITE}" "${SITES_CONFIG}")
+primaryGoSubDomain=$(calculatePrimaryGoSubdomain "${SITE}" "${SITES_CONFIG}")
+secondaryGoSubDomains=$(calcutelateSecondaryGoSubDomains "${SITE}" "${SITES_CONFIG}")
 autogenerateRoutes=$(getSiteAutogenerateRoutes "${SITE}" "${SITES_CONFIG}")
 releaseTag=$(getSiteDplCmsRelease "${SITE}" "${SITES_CONFIG}")
 wmReleaseTag=$(getWebmasterDplCmsRelease "${SITE}" "${SITES_CONFIG}")
@@ -161,8 +227,8 @@ importTranslationsCron=$(getSiteImportTranslationsCron "${SITE}" "${SITES_CONFIG
 set -o errexit
 
 # Synchronise the sites environment repository.
-syncEnvRepo "${SITE}" "${releaseTag}" "${BRANCH}" "${siteImageRepository}" "${siteReleaseImageName}" "${importTranslationsCron}" "${autogenerateRoutes}" "${primaryDomain}" "${secondaryDomains}"
+syncEnvRepo "${SITE}" "${releaseTag}" "${BRANCH}" "${siteImageRepository}" "${siteReleaseImageName}" "${importTranslationsCron}" "${autogenerateRoutes}" "${primaryDomain}" "${secondaryDomains}" "${primaryGoSubDomain}" "${secondaryGoSubDomains}"
 
 if [ "${plan}" = "webmaster" ] && [ "${BRANCH}" = "main" ]; then
-    syncEnvRepo "${SITE}" "${wmReleaseTag}" "moduletest" "${siteImageRepository}" "${siteReleaseImageName}" "${importTranslationsCron}" "${autogenerateRoutes}" "${primaryDomain}" "${secondaryDomains}"
+    syncEnvRepo "${SITE}" "${wmReleaseTag}" "moduletest" "${siteImageRepository}" "${siteReleaseImageName}" "${importTranslationsCron}" "${autogenerateRoutes}" "${primaryDomain}" "${secondaryDomains}" "${primaryGoSubDomain}" "${secondaryGoSubDomains}"
 fi

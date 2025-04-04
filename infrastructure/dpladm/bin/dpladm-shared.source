@@ -76,6 +76,10 @@ function renderProfileTemplate {
   local primaryDomain=${8:-}
   # A space-seperated list of secondary domains (optional)
   local secondaryDomainsString=${9:-}
+  # The primary GO subdomain (optional)
+  local primaryGoSubDomain=${10:-}
+  # A space seperated list of secondary GO sub domains (optional)
+  local secondaryGoSubDomains=${11:-}
 
   PRIMARY_DOMAIN=""
 
@@ -111,6 +115,7 @@ EndOfMessage
     PRIMARY_DOMAIN="${singleRouteIndent}- \"${primaryDomain}\""
   fi
 
+
   # Only render secondary domains if we have a primary domain.
   SECONDARY_DOMAINS=""
   if [[ -n "${primaryDomain}" && -n "${secondaryDomainsString}" ]]; then
@@ -126,6 +131,33 @@ EndOfMessage
     done
   fi
 
+  # Only if the project uses the GO module
+  PRIMARY_GO_SUBDOMAIN_AND_ANNOTATION=""
+  if [[ -n "${primaryGoSubDomain}" ]]; then
+    PRIMARY_GO_SUBDOMAIN_AND_ANNOTATION=$(cat << EndOfMessage
+${routesIndent}  - node:
+${singleRouteIndent}- "$primaryGoSubDomain"
+${singleRouteIndent}    annotations:
+${singleRouteIndent}      nginx.ingress.kubernetes.io/proxy-buffer-size: 32k
+EndOfMessage
+)
+  fi
+
+  SECONDARY_GO_SUBDOMAINS=""
+  if [[ -n "${primaryGoSubDomain}" && -n " ${secondaryGoSubDomains}" ]]; then
+    IFS=' '
+    for secondaryGoSubDomain in ${secondaryGoSubDomains}; do
+      SECONDARY_GO_SUBDOMAINS+=$(cat << EndOfMessage
+
+${singleRouteIndent}- "$secondaryGoSubDomain"
+${singleRouteIndent}    annotations:
+${singleRouteIndent}      nginx.ingress.kubernetes.io/permanent-redirect: https://${primaryGoSubDomain}\$request_uri
+EndOfMessage
+)
+    done
+  fi
+
+
   # TODO, we could probably do with a repo-wide search replace of variables.
   # Something https://github.com/kreuzwerker/envplate could do the trick
   # Export our globals and locals so that envubst can access them
@@ -138,13 +170,15 @@ EndOfMessage
   export LAGOON_IMAGES_RELEASE_TAG
   export PRIMARY_DOMAIN
   export SECONDARY_DOMAINS
+  export PRIMARY_GO_SUBDOMAIN_AND_ANNOTATION
+  export SECONDARY_GO_SUBDOMAINS
   export IMPORT_TRANSLATIONS_CRON=${importTranslationsCron}
 
   # TODO this templating could be quite a bit more flexible.
   # Tell envsubst which variables to replace. This allows other variables to
   # remain untouched.
   # shellcheck disable=SC2016
-  local variablesToSubst='$RELEASE_IMAGE_REPOSITORY $RELEASE_IMAGE_NAME $RELEASE_TAG $ENABLE_ROUTES $LAGOON_IMAGES_RELEASE_TAG $LAGOON_PROJECT_NAME $LAGOON_ENVIRONMENT $PRIMARY_DOMAIN $SECONDARY_DOMAINS $IMPORT_TRANSLATIONS_CRON'
+  local variablesToSubst='$RELEASE_IMAGE_REPOSITORY $RELEASE_IMAGE_NAME $RELEASE_TAG $ENABLE_ROUTES $LAGOON_IMAGES_RELEASE_TAG $LAGOON_PROJECT_NAME $LAGOON_ENVIRONMENT $PRIMARY_DOMAIN $SECONDARY_DOMAINS $IMPORT_TRANSLATIONS_CRON $PRIMARY_GO_SUBDOMAIN_AND_ANNOTATION $SECONDARY_GO_SUBDOMAINS'
 
   # Loop through the files we know to contain variables that needs replacing.
   local templateFiles=(
@@ -175,6 +209,8 @@ function syncEnvRepo {
   local autogenerateRoutes="${7:-}"
   local primaryDomain="${8:-}"
   local secondaryDomains="${9:-}"
+  local primaryGoSubDomain="${10:-}"
+  local secondaryGoSubDomains="${11:-}"
 
   if [[ -z $siteName ]]; then
       echo "Missing site name"
@@ -232,7 +268,7 @@ function syncEnvRepo {
 
   # Enter the template and rendered it
   cd "${repoName}"
-  renderProfileTemplate "${siteName}" "${branchName}" "${releaseTag}" "${releaseImageRepository}" "${releaseImageName}" "${importTranslationsCron}" "${autogenerateRoutes}" "${primaryDomain}" "${secondaryDomains}"
+  renderProfileTemplate "${siteName}" "${branchName}" "${releaseTag}" "${releaseImageRepository}" "${releaseImageName}" "${importTranslationsCron}" "${autogenerateRoutes}" "${primaryDomain}" "${secondaryDomains}" "${primaryGoSubDomain}" "${secondaryGoSubDomains}"
 
   # Detect changes
   local changedFiles
