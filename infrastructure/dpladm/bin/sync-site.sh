@@ -142,7 +142,7 @@ function calcutelateSecondaryGoSubDomains {
 
     local secondaryDomains=$(getSiteSecondaryDomains "${1}" "${2}")
     if [[ "${secondaryDomains}" == "null" ]]; then
-        echo "shit"
+        echo ""
         return
     fi
 
