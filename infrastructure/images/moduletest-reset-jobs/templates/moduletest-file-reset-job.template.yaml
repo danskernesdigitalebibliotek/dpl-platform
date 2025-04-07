@@ -32,8 +32,10 @@ spec:
             - -c
             - ./moduletest-files-reset-job.mjs {{ . }}
   tolerations:
-    - key: CriticalAddonsOnly
-      operator: Exists
+    - key: noderole.dplplatform,
+      operator: Equal
+      value: prod
+      effect: NoSchedule
   affinity:
     nodeAffinity:
       requiredDuringSchedulingIgnoredDuringExecution:
