@@ -24,7 +24,7 @@ try {
   echo("As expected, the deletion of all files and folders in '/app/web/default/files' threw an 'exit 1'", error);
 }
 
-echo(`Will now move files from ${projectName}-main to ${projectName}-moduletest`);
+echo(`Now moving files from ${projectName}-main to ${projectName}-moduletest`);
 
 try {
   await $`kubectl exec -n ${projectName}-moduletest deployment/cli -- bash -c "drush -y rsync @lagoon.${projectName}-main:%files @self:%files -- --omit-dir-times --no-perms --no-group --no-owner --no-times --chmod=ugo=rwX --delete --exclude=css/* --exclude=js/* --exclude=styles/* --delete-excluded"`
