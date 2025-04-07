@@ -1,0 +1,3 @@
+apiVersion: v2
+name: moduletest-file-reset
+version: 0.0.0 # We don't plan on publishing this Chart any where

@@ -1,0 +1,77 @@
+# Build the container image for the DPL shell on any modifications to the
+# workflow or the shell project.
+# The build is then tested, and if we where triggered by a tag, a tagged
+# version of the image is pushed to a public registry.
+
+on:
+  pull_request:
+    paths:
+      - "/infrastructure/images/moduletest-file-reset-jobs/**"
+      - ".github/workflows/moduletest-file-reset-build-release.yaml"
+    tags:
+      - "mfr-*-rc" # pull_requst builds are release candidates mfr-[semver versioning]-rc, and they are triggered when this format is used
+  push:
+    branches:
+      - main
+    # Limit pushes on main to only build if these files has changed.
+    paths:
+      - "/infrastructure/images/moduletest-file-reset-jobs/**"
+      - ".github/workflows/moduletest-file-reset-build-release.yaml"
+    tags:
+      - "mfr-*"
+
+name: Build, test and publish Moduletest File Reset Job image
+jobs:
+  lrc_build:
+    name: Build, test and publish Moduletest File Reset Job image
+    runs-on: ubuntu-latest
+    permissions:
+      # Allow push to ghcr
+      contents: write
+      packages: write
+    # Set some environment vars about the image and container registry.
+    env:
+      # Registry to push the image to.
+      repo: ghcr.io
+      # Complete registry url for image. (omitting image name).
+      image-url: ghcr.io/danskernesdigitalebibliotek/dpl-platform/moduletest-file-reset-job
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4.2.2
+      - name: Install Task
+        uses: arduino/setup-task@v2
+      - name: Log in to the Container registry
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      # https://github.com/docker/setup-buildx-action
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+      # Pickup metadata for tags and labels.
+      - name: Docker meta
+        id: meta
+        uses: docker/metadata-action@v5
+        with:
+          images: ${{env.image-url}}
+          labels: |
+            org.opencontainers.image.title=Moduletest File Reset Job
+            org.opencontainers.image.description=Danish Public Libraries Moduletest File Reset Job
+
+      - name: Build and push
+        uses: docker/build-push-action@v6
+        with:
+          context: infrastructure/images/moduletest-file-reset-job
+          platforms: linux/amd64,linux/arm64
+          # push: github.event_name == 'push'
+          push: true
+          labels: ${{ steps.meta.outputs.labels }}
+          tags: ${{ steps.meta.outputs.tags }}
+
+      # Create a github release if this was a tag.
+      - name: Create release
+        uses: softprops/action-gh-release@v2
+        if: startsWith(github.ref, 'refs/tags/')
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
