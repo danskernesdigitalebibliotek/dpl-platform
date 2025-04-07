@@ -5,6 +5,17 @@ if (!projectName) {
   throw Error("No 'projectName' provided");
 }
 
+echo(`Will now sync databases from ${projectName}-main to ${projectName}-moduletest`);
+
+try {
+  await $`kubectl exec -n ${projectName}-moduletest deployment/cli -- bash -c "drush sql-drop -y; drush -y sql-sync @lagoon.${projectName}-main @self --create-db"`
+} catch(error) {
+  echo("Database sync for ${projectName} moduletest failed", error.stderr);
+  throw Error("Database sync for ${projectName} moduletest failed", error.stderr);
+}
+
+echo(`Database reset for ${projectName} complete`);
+
 echo(`Reseting files from ${projectName}-main to ${projectName}-moduletest
   \n
   Will now delete all files and folder in '/app/web/sites/default/files'
