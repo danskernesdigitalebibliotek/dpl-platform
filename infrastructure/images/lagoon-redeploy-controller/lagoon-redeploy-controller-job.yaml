@@ -41,7 +41,7 @@ spec:
           containers:
             - name: lagoon-redeploy-controller-container
               # image: registry.local.deranged.dk/lrc:rc
-              image: ghcr.io/danskernesdigitalebibliotek/dpl-platform/lagoon-redeploy-controller:lrc-1.0.1-rc
+              image: ghcr.io/danskernesdigitalebibliotek/dpl-platform/lagoon-redeploy-controller:lrc-1.0.3
               command:
                 - /bin/bash
                 - -c
