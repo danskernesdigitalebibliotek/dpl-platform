@@ -1,15 +1,7 @@
-apiVersion: v1
-kind: Namespace
-metadata:
-  name: {{ .Values.namespace }}
-
----
-
 apiVersion: k8s.mariadb.com/v1alpha1
 kind: MariaDB
 metadata:
   name: {{ .Values.name }}
-  namespace: {{ .Values.namespace }}
 spec:
   image: docker-registry1.mariadb.com/library/mariadb:{{ .Values.mariadbVersion }}
   rootPasswordSecretKeyRef:
