@@ -35,8 +35,8 @@ spec:
                         memory_limit=256Mi
                         ;;
                       cli)
-                        memory_request=25Mi
-                        memory_limit=125Mi
+                        memory_request=250Mi
+                        memory_limit=1Gi
                         ;;
                       *)
                         memory_request=150Mi
