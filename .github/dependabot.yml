@@ -26,7 +26,7 @@ updates:
       time: "04:00"
     open-pull-requests-limit: 10
   - package-ecosystem: docker
-    directory: "/infrastructure/images/moduletest-file-reset-jobs"
+    directory: "/infrastructure/images/moduletest-file-reset-jobs/Dockerfile"
     schedule:
       interval: daily
       time: "04:00"
