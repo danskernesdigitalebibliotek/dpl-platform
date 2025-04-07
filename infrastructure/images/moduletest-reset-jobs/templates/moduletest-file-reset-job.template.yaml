@@ -31,6 +31,19 @@ spec:
             - /bin/bash
             - -c
             - ./moduletest-files-reset-job.mjs {{ . }}
+  tolerations:
+    - key: CriticalAddonsOnly
+      operator: Exists
+  affinity:
+    nodeAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+        nodeSelectorTerms:
+          - matchExpressions:
+              - key: noderole.dplplatform
+                operator: In
+                values:
+                  - prod
+
             
 ---
 {{- end }}
