@@ -16,7 +16,7 @@ try {
   // a file in a /php folder inside the CLI container
   // Emptying the folder is however successfull and we should ensure the
   // program doesn't exit;
-  await $`kubectl exec -n ${projectName}-moduletest deploy/cli -- bash -c rm -fr /app/web/sites/default/files`
+  await $`kubectl exec -n ${projectName}-moduletest deployment/cli -- bash -c rm -fr /app/web/sites/default/files`
 } catch(error) {
   if(error.exitCode != 1) {
     throw Error("unexpected error", error.stderr);
