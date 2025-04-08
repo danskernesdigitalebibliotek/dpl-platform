@@ -30,7 +30,7 @@ spec:
           command:
             - /bin/bash
             - -c
-            - ./moduletest-files-reset-job.mjs {{ . }}
+            - ./moduletest-reset-job.mjs {{ . }}
   tolerations:
     - key: noderole.dplplatform,
       operator: Equal
