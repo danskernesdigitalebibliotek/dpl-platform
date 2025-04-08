@@ -17,24 +17,24 @@ spec:
       restartPolicy: Never
       containers:
         - name: file-reset-container
-          image: ghcr.io/danskernesdigitalebibliotek/dpl-platform/moduletest-reset-job:mr-0.0.19-rc
+          image: ghcr.io/danskernesdigitalebibliotek/dpl-platform/moduletest-reset-job:mr-0.0.20-rc
           command:
             - /bin/bash
             - -c
             - ./moduletest-reset-job.mjs {{ . }}
-    tolerations:
-      - key: noderole.dplplatform,
-        operator: Equal
-        value: prod
-        effect: NoSchedule
-    affinity:
-      nodeAffinity:
-        requiredDuringSchedulingIgnoredDuringExecution:
-          nodeSelectorTerms:
-            - matchExpressions:
-                - key: noderole.dplplatform
-                  operator: In
-                  values:
-                    - prod
+      tolerations:
+        - key: noderole.dplplatform,
+          operator: Equal
+          value: prod
+          effect: NoSchedule
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+              - matchExpressions:
+                  - key: noderole.dplplatform
+                    operator: In
+                    values:
+                      - prod
 
 {{ end }}
