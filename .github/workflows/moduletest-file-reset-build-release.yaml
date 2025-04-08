@@ -22,7 +22,7 @@ on:
 
 name: Build, test and publish Moduletest File Reset Job image
 jobs:
-  lrc_build:
+  mfr_build:
     name: Build, test and publish Moduletest File Reset Job image
     runs-on: ubuntu-latest
     permissions:
