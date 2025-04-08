@@ -1,6 +1,8 @@
 #!/usr/bin/env zx
 
+console.log(argv);
 const projectName = $1;
+
 if (!projectName) {
   throw Error("No 'projectName' provided");
 }
