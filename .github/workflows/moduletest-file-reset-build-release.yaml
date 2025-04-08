@@ -59,10 +59,12 @@ jobs:
             org.opencontainers.image.title=Moduletest File Reset Job
             org.opencontainers.image.description=Danish Public Libraries Moduletest File Reset Job
 
+      - name: Checkout again
+        uses: actions/checkout@v4.2.2
       - name: Build and push
         uses: docker/build-push-action@v6
         with:
-          context: /infrastructure/images/moduletest-file-reset-job
+          context: infrastructure/images/moduletest-file-reset-job
           push: true
           labels: ${{ steps.meta.outputs.labels }}
           tags: ${{ steps.meta.outputs.tags }}
