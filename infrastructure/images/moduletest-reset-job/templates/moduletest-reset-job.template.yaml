@@ -17,7 +17,7 @@ spec:
       restartPolicy: Never
       containers:
         - name: file-reset-container
-          image: ghcr.io/danskernesdigitalebibliotek/dpl-platform/moduletest-reset-job:mr-0.0.20-rc
+          image: ghcr.io/danskernesdigitalebibliotek/dpl-platform/moduletest-reset-job:mr-0.0.21-rc
           command:
             - /bin/bash
             - -c
@@ -35,6 +35,6 @@ spec:
                   - key: noderole.dplplatform
                     operator: In
                     values:
-                      - prod
+                     - prod
 
 {{ end }}
