@@ -21,22 +21,22 @@ spec:
           command:
             - /bin/bash
             - -c
-            - ./moduletest-files-reset-job.mjs {{ . }}
-  tolerations:
-    - key: noderole.dplplatform,
-      operator: Equal
-      value: prod
-      effect: NoSchedule
-  affinity:
-    nodeAffinity:
-      requiredDuringSchedulingIgnoredDuringExecution:
-        nodeSelectorTerms:
-          - matchExpressions:
-              - key: noderole.dplplatform
-                operator: In
-                values:
-                  - prod
+            - ./moduletest-reset-job.mjs {{ . }}
+      serviceAccountName: moduletest-reset-serviceaccount
+      tolerations:
+        - key: noderole.dplplatform
+          operator: Equal
+          value: prod
+          effect: NoSchedule
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+              - matchExpressions:
+                  - key: noderole.dplplatform
+                    operator: In
+                    values:
+                      - prod
 
-            
 ---
 {{- end }}
