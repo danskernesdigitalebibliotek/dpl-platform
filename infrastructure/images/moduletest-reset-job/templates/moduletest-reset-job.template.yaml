@@ -38,6 +38,7 @@ spec:
                   values:
                    - prod
 
+---
 {{ end }}
 
 ---
