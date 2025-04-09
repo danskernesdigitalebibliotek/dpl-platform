@@ -6,24 +6,24 @@
 on:
   pull_request:
     paths:
-      - "/infrastructure/images/moduletest-file-reset-jobs/**"
-      - ".github/workflows/moduletest-file-reset-build-release.yaml"
+      - "/infrastructure/images/moduletest-reset-jobs/**"
+      - ".github/workflows/moduletest-reset-build-release.yaml"
     tags:
-      - "mfr-*-rc" # pull_requst builds are release candidates mfr-[semver versioning]-rc, and they are triggered when this format is used
+      - "mr-*-rc" # pull_requst builds are release candidates mfr-[semver versioning]-rc, and they are triggered when this format is used
   push:
     branches:
       - main
     # Limit pushes on main to only build if these files has changed.
     paths:
-      - "/infrastructure/images/moduletest-file-reset-jobs/**"
-      - ".github/workflows/moduletest-file-reset-build-release.yaml"
+      - "/infrastructure/images/moduletest-reset-jobs/**"
+      - ".github/workflows/moduletest-reset-build-release.yaml"
     tags:
-      - "mfr-*"
+      - "mr-*"
 
-name: Build, test and publish Moduletest File Reset Job image
+name: Build, test and publish Moduletest Reset Job image
 jobs:
   mfr_build:
-    name: Build, test and publish Moduletest File Reset Job image
+    name: Build, test and publish Moduletest Reset Job image
     runs-on: ubuntu-latest
     permissions:
       # Allow push to ghcr
@@ -34,7 +34,7 @@ jobs:
       # Registry to push the image to.
       repo: ghcr.io
       # Complete registry url for image. (omitting image name).
-      image-url: ghcr.io/danskernesdigitalebibliotek/dpl-platform/moduletest-file-reset-job
+      image-url: ghcr.io/danskernesdigitalebibliotek/dpl-platform/moduletest-reset-job
     steps:
       - name: Checkout
         uses: actions/checkout@v4.2.2
@@ -56,15 +56,16 @@ jobs:
         with:
           images: ${{env.image-url}}
           labels: |
-            org.opencontainers.image.title=Moduletest File Reset Job
-            org.opencontainers.image.description=Danish Public Libraries Moduletest File Reset Job
+            org.opencontainers.image.title=Moduletest Reset Job
+            org.opencontainers.image.description=Danish Public Libraries Moduletest Reset Job
 
+      - name: Checkout again
+        uses: actions/checkout@v4.2.2
       - name: Build and push
         uses: docker/build-push-action@v6
         with:
-          context: infrastructure/images/moduletest-file-reset-job
+          context: infrastructure/images/moduletest-reset-job
           platforms: linux/amd64,linux/arm64
-          # push: github.event_name == 'push'
           push: true
           labels: ${{ steps.meta.outputs.labels }}
           tags: ${{ steps.meta.outputs.tags }}
