@@ -79,7 +79,6 @@ jobs:
         with:
           context: infrastructure/images/lagoon-redeploy-controller
           platforms: linux/amd64,linux/arm64
-          # push: github.event_name == 'push'
           push: true
           labels: ${{ steps.meta.outputs.labels }}
           tags: ${{ steps.meta.outputs.tags }}
