@@ -6,9 +6,9 @@
 apiVersion: batch/v1
 kind: Job
 metadata:
-  name: file-reset-{{ . }}
+  name: moduletest-reset-{{ . }}
   labels:
-    app: moduletest-file-reset-job
+    app: moduletest-reset-job
 spec:
   ttlSecondsAfterFinished: 36000 # 10 hours leaving time to investigate failed jobs
   backoffLimit: 3
