@@ -22,6 +22,7 @@ spec:
             - /bin/bash
             - -c
             - ./moduletest-reset-job.mjs {{ . }}
+      serviceAccountName: moduletest-reset-serviceaccount
       tolerations:
         - key: noderole.dplplatform
           operator: Equal
@@ -38,3 +39,41 @@ spec:
                    - prod
 
 {{ end }}
+
+---
+
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: moduletest-reset-serviceaccount
+  namespace: moduletest-reset
+
+---
+
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: deployments-get-cluster-role
+  namespace: moduletest-reset
+rules:
+- apiGroups: [""]
+  resources: [ "namespaces", "pods", "pods/exec" ]
+  verbs: [ "get", "list", "create" ]
+- apiGroups: [ "apps" ]
+  resources: [ "deployments", "pods" ]
+  verbs: [ "get", "list" ]
+
+---
+
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: namespace-deployments-getter-binding
+subjects:
+- kind: ServiceAccount
+  name: moduletest-reset-serviceaccount
+  namespace: moduletest-reset
+roleRef:
+  kind: ClusterRole
+  name: deployments-get-cluster-role
+  apiGroup: rbac.authorization.k8s.io
