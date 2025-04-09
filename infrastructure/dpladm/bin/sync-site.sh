@@ -116,7 +116,7 @@ function projectHasGo {
         echo "false"
         return
     fi
-    echo "Error: has should a boolean value"
+    echo "Error: hasGo should a boolean value"
     exit 1
 }
 
