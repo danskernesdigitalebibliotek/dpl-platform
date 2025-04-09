@@ -1,5 +1,5 @@
 # This manifest will fire up a customer Kubernetes Job in moduletest namepaces.
-# It will synchronize all files from the corresponding main environment to the moduletest environment
+# It will synchronize all files as well as the database from the corresponding main environment to the moduletest environment
 
 {{ range .Values.projects }}
 
