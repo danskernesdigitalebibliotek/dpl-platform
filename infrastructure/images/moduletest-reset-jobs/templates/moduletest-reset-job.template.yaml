@@ -16,9 +16,8 @@ spec:
     spec:
       restartPolicy: Never
       containers:
-        - name: file-reset-container
-          image: registry.local.deranged.dk/file-reset:dev
-          # image: ghcr.io/danskernesdigitalebibliotek/dpl-platform/lagoon-redeploy-controller:lrc-1.0.1-rc
+        - name: moduletest-reset-container
+          image: ghcr.io/danskernesdigitalebibliotek/dpl-platform/moduletest-reset-job:mr-0.0.24-rc
           command:
             - /bin/bash
             - -c
