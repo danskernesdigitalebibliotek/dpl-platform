@@ -100,6 +100,10 @@ function getSiteSecondaryDomains {
 function projectHasGo {
     local hasGo
     hasGo=$(yq eval ".sites.${1}.hasGo" "${2}")
+     if [[ "${hasGo}" == "null" ]]; then
+        echo "false"
+        return
+    fi
     if [[ -z "${hasGo}" ]]; then
         echo "Error: hasGo should have a boolean value"
         exit 1
@@ -112,7 +116,7 @@ function projectHasGo {
         echo "false"
         return
     fi
-    echo "Error: has should a boolean value"
+    echo "Error: hasGo should a boolean value"
     exit 1
 }
 
