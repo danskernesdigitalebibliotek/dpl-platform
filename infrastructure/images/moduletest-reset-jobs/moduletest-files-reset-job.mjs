@@ -1,6 +1,6 @@
 #!/usr/bin/env zx
 
-const projectName = $1;
+const projectName = `${process.argv[3]}`
 if (!projectName) {
   throw Error("No 'projectName' provided");
 }
