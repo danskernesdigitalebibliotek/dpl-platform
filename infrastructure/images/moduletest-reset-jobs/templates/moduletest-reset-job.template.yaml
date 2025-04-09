@@ -1,13 +1,5 @@
-# This manifest will fire up a customer Kubernetes Job in moduletest namepaces.
-# It will synchronize all files from the corresponding main environment to the moduletest environment
-
-
-apiVersion: v1
-kind: Namespace
-metadata:
-  name: moduletest-reset
-
----
+# This manifest will fire up a custom Kubernetes Job in moduletest namepaces.
+# It will synchronize files and database from the corresponding main environment to the moduletest environment
 
 {{- range .Values.projects }}
 
