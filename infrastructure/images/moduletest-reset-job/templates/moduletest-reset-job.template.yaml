@@ -16,8 +16,8 @@ spec:
     spec:
       restartPolicy: Never
       containers:
-          image: ghcr.io/danskernesdigitalebibliotek/dpl-platform/moduletest-reset-job:mr-0.0.25-rc
         - name: moduletest-reset-container
+          image: ghcr.io/danskernesdigitalebibliotek/dpl-platform/moduletest-reset-job:mr-1.0.1
           command:
             - /bin/bash
             - -c
