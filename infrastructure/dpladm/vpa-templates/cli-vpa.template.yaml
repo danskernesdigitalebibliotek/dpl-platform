@@ -18,4 +18,25 @@ spec:
         memory: 2Mi
       maxAllowed:
         cpu: 150m
-        memory: 250Mi
+        memory: 400Mi
+    - containerName: cronjob-cli-drush-err-purge
+      minAllowed:
+        cpu: 4m
+        memory: 10Mi
+      maxAllowed:
+        cpu: 250m
+        memory: 210Mi
+    - containerName: cronjob-cli-import-danish-config-translations
+      minAllowed:
+        cpu: 70m
+        memory: 90Mi
+      maxAllowed:
+        cpu: 250m
+        memory: 220Mi
+    - containerName: cronjob-cli-import-translations
+      minAllowed:
+        cpu: 70m
+        memory: 50Mi
+      maxAllowed:
+        cpu: 350m
+        memory: 200Mi
