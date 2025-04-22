@@ -20,8 +20,10 @@ production library sites.
 1. In your local environment ensure that your checkout of the `main` branch for
    `dpl-platform` is up to date.
 2. Create a new branch from `main`.
-3. Open `infrastructure/environments/dplplat01/sites.yaml` and bump
-   `x-next-version` anchor to the new version.
+3. Open `infrastructure/environments/dplplat01/sites.yaml`
+   1. Set the value of `dpl-cms-release` and `moduletest-dpl-cms-release` for
+      `staging` to the new version
+   2. Set the value of `moduletest-dpl-cms-release` for `bnf` to the new version
 4. Commit the change and push your branch to GitHub and create a pull request.
 5. Request a review for the change and wait for approval.
 6. Start `dplsh` from the `/infrastructure` directory of your local
