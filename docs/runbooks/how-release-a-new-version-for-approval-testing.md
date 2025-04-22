@@ -26,16 +26,17 @@ production library sites.
 5. Request a review for the change and wait for approval.
 6. Start `dplsh` from the `/infrastructure` directory of your local
    environment by running `../tools/dplsh/dplsh.sh`.
-7. Run `SITE=staging task site:sync` to deploy the changes.
-8. Open the deployment section for the `staging` project in the Lagoon UI.
-9. Wait for the deployment to complete.
-10. If the deployment does not complete determine if the error relates to the
-    platform or the application.
-11. If it is a platform-related error then try to redeploy the environment from
+7. Deploy the changes
+   1. Run `SITE=staging task site:sync`
+   2. Run `SITE=bnf task site:sync`
+8. Wait for the deployments for `staging` and `bnf` to complete using Lagoon UI
+9. If a deployment does not complete determine if the error relates to the
+   platform or the application.
+10. If it is a platform-related error then try to redeploy the environment from
     the Lagoon UI.
-12. Merge the pull request once the deployment completes.
+11. Merge the pull request once the deployment completes.
 
-## Procedure: a some sites fails to deploy
+## Procedure: A site fails to deploy
 
 We have experience this quite a lot. We have gathered a list of known
 issues and how to solve them a troubleshoot [runbook](troubleshoot-release-deployment.md)
