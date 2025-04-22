@@ -19,11 +19,8 @@ the production environments of webmasters.
 1. In your local environment ensure that your checkout of the `main`
    branch for `dpl-platform` is up to date.
 2. Create a new branch from `main`.
-3. Now update `infrastructure/environments/dplplat01/sites.yaml`. The
-    `x-defaults` anchors' `dpl-cms-release` tag should be bumped to
-    the new version. Then update the `moduletest-dpl-cms-release` of
-    `x-webmaster` to the same version. Update the same property for
-    the `x-webmaster-with-defaults` anchor.
+3. Now update `infrastructure/environments/dplplat01/sites.yaml`. Bump
+   `x-latest-version` anchor to the new version.
 4. Commit the change and push your branch to GitHub and create a pull
    request.
 5. Request a review for the change and wait for approval.
