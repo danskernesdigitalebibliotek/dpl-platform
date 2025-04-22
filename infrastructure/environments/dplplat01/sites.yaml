@@ -49,7 +49,7 @@ sites:
     releaseImageName: dpl-cms-source
     dpl-cms-release: *next-release
     plan: webmaster
-    moduletest-dpl-cms-release: *latest-release
+    moduletest-dpl-cms-release: *next-release
     deploy_key: ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBLUrrxfwsfwz4nkn/WCbMUbLHkTFvyYB2uusHLA7NlH
   cms-school:
     name: "CMS-skole"
