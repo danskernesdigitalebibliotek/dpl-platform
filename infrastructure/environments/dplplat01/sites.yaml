@@ -1,5 +1,6 @@
 # Configure the usual versions we are working with for release cycles and sites.
 x-latest-release: &latest-release "2025.15.1"
+x-next-release: &next-release "2025.15.1"
 x-previous-release: &previous-release "2025.14.3"
 # Configure the source we default to when looking for release images.
 x-defaults: &default-release-image-source
@@ -46,7 +47,7 @@ sites:
     description: "A site to test new releases on"
     releaseImageRepository: ghcr.io/danskernesdigitalebibliotek
     releaseImageName: dpl-cms-source
-    dpl-cms-release: *latest-release
+    dpl-cms-release: *next-release
     plan: webmaster
     moduletest-dpl-cms-release: *latest-release
     deploy_key: ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBLUrrxfwsfwz4nkn/WCbMUbLHkTFvyYB2uusHLA7NlH
