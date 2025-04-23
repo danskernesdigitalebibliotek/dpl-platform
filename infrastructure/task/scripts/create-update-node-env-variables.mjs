@@ -1,6 +1,8 @@
 #!/usr/bin/env zx
 // This script set variables with secrets for the node service to use
 
+import * as crypto from "crypto";
+
 echo("Creating og updating node service reliant variables for all environments");
 echo("");
 const sites = await $`cat ../host_mount/environments/dplplat01/sites.yaml | yq '.sites | ... comments="" | keys | .[]'`;
@@ -45,3 +47,5 @@ for await (const site of sites) {
   }
 }
 
+echo("done");
+echo("")
