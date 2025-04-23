@@ -21,3 +21,12 @@ const lagoonVariableName = [
   "UNLILOGIN_SERVICES_WS_USER"
 ];
 
+
+for await (const site of sites) {
+  await setVariablesForProject(site);
+  if (await isWebmaster(site)) {
+  // Also set it for the moduletest project
+    setVariablesForProject(site, "moduletest");
+  }
+}
+
