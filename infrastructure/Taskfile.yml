@@ -718,6 +718,10 @@ tasks:
       - sh: "[ ! -z \"{{.PROJECT_NAME}}\" ]"
         msg: "Missing PROJECT_NAME"
 
+    lagoon:projects:ensure:consumer-secrets-n-passwords:
+      cmds:
+        - |
+          ./task/scripts/create-go-and-bnf-consumer-and-secrets.mjs
     lagoon:project:ensure:consumer-secrets-n-passwords:
       cmds:
       - task: lagoon:ensure:environment-variable
