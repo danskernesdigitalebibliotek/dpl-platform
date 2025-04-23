@@ -18,6 +18,15 @@ const lagoonVariableName = [
 
 const lagoonVariableValues = lagoonVariableName.map((_, i) => crypto.randomBytes(64).toString("base64"));
 
+async function setVariablesForProject(project, environment = "main") {
+  for (const [index, value] of lagoonVariableName.entries()) {
+    try {
+      await $`lagoon add variable --project ${project} --environment ${environment} --name ${value} --scope global --value ${lagoonVariableValues[index]}`;
+    } catch (error) {
+      throw Error("failed to create or update variables for BNF and GO secrets", { cause: error });
+    }
+  }
+}
 
 async function isWebmaster(project) {
    const result = await $`cat ../host_mount/environments/dplplat01/sites.yaml | yq '.sites.${project}.plan'`;
