@@ -4,3 +4,5 @@
 
 echo("Setting BNF and GO consumer secrets and passwords on all environments across projects");
 echo("");
+const sites = await $`cat ../host_mount/environments/dplplat01/sites.yaml | yq '.sites | ... comments="" | keys | .[]'`;
+
