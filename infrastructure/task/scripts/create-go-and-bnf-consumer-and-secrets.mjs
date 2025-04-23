@@ -41,3 +41,5 @@ for await (const site of sites) {
   }
 }
 
+echo("done");
+echo("")
