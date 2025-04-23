@@ -49,8 +49,12 @@ RUN apk add --no-cache \
   vim \
   yq \
   openssh \
-  bind-tools
+  bind-tools \
+  nodejs \
+  npm
 
+# Install zx
+RUN npm install -g zx
 # Add task, a modern Make equivalent.
 RUN curl -sL https://taskfile.dev/install.sh | bash -s -- -b /usr/local/bin ${TASK_VERSION}
 
