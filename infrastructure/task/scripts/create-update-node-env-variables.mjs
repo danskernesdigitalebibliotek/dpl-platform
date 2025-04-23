@@ -21,6 +21,16 @@ const lagoonVariableName = [
   "UNLILOGIN_SERVICES_WS_USER"
 ];
 
+async function setVariablesForProject(project, environment = "main") {
+  for (const variableName of lagoonVariableName) {
+    const secret = crypto.randomBytes(64).toString("base64");
+    try {
+      await $`lagoon add variable --project ${project} --environment ${environment} --name ${variableName} --scope global --value ${secret}`;
+    } catch (error) {
+      throw Error("failed to create or update variables for BNF and GO secrets", { cause: error });
+    }
+  }
+}
 
 async function isWebmaster(project) {
    const result = await $`cat ../host_mount/environments/dplplat01/sites.yaml | yq '.sites.${project}.plan'`;
