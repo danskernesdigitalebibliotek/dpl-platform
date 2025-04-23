@@ -19,6 +19,10 @@ const lagoonVariableName = [
 const lagoonVariableValues = lagoonVariableName.map((_, i) => crypto.randomBytes(64).toString("base64"));
 
 
+async function isWebmaster(project) {
+   const result = await $`cat ../host_mount/environments/dplplat01/sites.yaml | yq '.sites.${project}.plan'`;
+   return result.stdout === "webmaster\n" ? true : false;
+}
 
 for await (const site of sites) {
   await setVariablesForProject(site);
