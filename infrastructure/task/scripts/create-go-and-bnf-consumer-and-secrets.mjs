@@ -18,3 +18,13 @@ const lagoonVariableName = [
 
 const lagoonVariableValues = lagoonVariableName.map((_, i) => crypto.randomBytes(64).toString("base64"));
 
+
+
+for await (const site of sites) {
+  await setVariablesForProject(site);
+  if (await isWebmaster(site)) {
+  // Also set it for the moduletest project
+    setVariablesForProject(site, "moduletest");
+  }
+}
+
