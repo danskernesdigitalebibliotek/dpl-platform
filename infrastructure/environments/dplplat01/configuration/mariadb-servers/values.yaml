@@ -1,4 +1,4 @@
-name: mariadb-10.6-01
+name: mariadb-10-6-01
 
 mariadbVersion: 10.6
 replicas: 5
