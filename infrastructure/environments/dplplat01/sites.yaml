@@ -14,8 +14,8 @@ x-webmasters-on-weekly-release-cycle: &webmasters-on-weekly-release-cycle
   #This release cycle releases the newest release, which has been tested on webmaster moduletests in the previous week, on to production
   releaseImageRepository: ghcr.io/danskernesdigitalebibliotek
   releaseImageName: dpl-cms-source
-  dpl-cms-release: "2025.14.3"
-  moduletest-dpl-cms-release: "2025.15.1"
+  dpl-cms-release: "2025.15.1"
+  moduletest-dpl-cms-release: "2025.17.0"
 sites:
   # Site objects are indexed by a unique key that must be a valid lagoon, and
   # github project name. That is, alphanumeric and dashes.
