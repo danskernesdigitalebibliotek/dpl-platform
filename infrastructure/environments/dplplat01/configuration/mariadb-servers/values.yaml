@@ -2,6 +2,6 @@ name: mariadb-10-6-01
 
 mariadbVersion: 10.6
 replicas: 5
-storageSize: 100Gi
+storageSize: 60Gi
 resReqMemory: 1Gi
 resReqCpu: 200m
