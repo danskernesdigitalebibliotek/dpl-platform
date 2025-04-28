@@ -22,6 +22,15 @@ const password = crypto.randomBytes(32).toString("base64");
 await createDatabaseGrantUserSecret(project, environment, password, dryRun);
 sleep(3000)
 await dumpCurrentDatabaseIntoTmp(project, environment);
+await importDumpIntoInclusterDatabase(project, environment, password);
+
+
+
+async function importDumpIntoInclusterDatabase(project, environment, password) {
+  echo(`Importing ${project}-${environment} database into incluster database`);
+  await $`kubectl exec -n mariadb-servers mariadb-10-6-01-0 -- bash -c "mariadb -uuser-database-${project}-${environment} -p${password} --database database-${project}-${environment} --verbose < /tmp/dump.sql"`
+}
+
 async function dumpCurrentDatabaseIntoTmp(project, environment) {
   echo(`Dumping ${project}-${environment} database to /tmp/dump.sql`);
   const databaseConnectionDetails = await getCurrentDatabaseConnectionDetails(project, environment)
