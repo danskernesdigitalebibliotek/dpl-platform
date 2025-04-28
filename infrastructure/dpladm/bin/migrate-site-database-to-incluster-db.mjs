@@ -20,6 +20,7 @@ if (typeof `${process.argv[5]}` === "undefined") {
 const password = crypto.randomBytes(32).toString("base64");
 
 await createDatabaseGrantUserSecret(project, environment, password, dryRun);
+sleep(3000)
 async function createDatabaseGrantUserSecret(project, environment, password, dryRun) {
   echo(`Now migrating ${project}-${environment} database to incluser database`)
 
