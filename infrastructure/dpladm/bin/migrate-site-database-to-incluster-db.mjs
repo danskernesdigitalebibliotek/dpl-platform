@@ -21,6 +21,24 @@ const password = crypto.randomBytes(32).toString("base64");
 
 await createDatabaseGrantUserSecret(project, environment, password, dryRun);
 sleep(3000)
+await dumpCurrentDatabaseIntoTmp(project, environment);
+async function dumpCurrentDatabaseIntoTmp(project, environment) {
+  echo(`Dumping ${project}-${environment} database to /tmp/dump.sql`);
+  const databaseConnectionDetails = await getCurrentDatabaseConnectionDetails(project, environment)
+  await $`kubectl exec -n mariadb-servers mariadb-10-6-01-0 -- bash -c "mariadb-dump --user=${databaseConnectionDetails.user} --host=${databaseConnectionDetails.host}.${project}-${environment}.svc.cluster.local --password=${databaseConnectionDetails.password} --ssl=false --skip-add-locks --single-transaction ${databaseConnectionDetails.databaseName} --verbose > /tmp/dump.sql"`
+}
+
+async function getCurrentDatabaseConnectionDetails(project, environment) {
+  const lagoonEnvConfigJson = await $`kubectl get configmap lagoon-env -n ${project}-${environment} --output=jsonpath='{.data}'`;
+  const lagoonEnvConfig = JSON.parse(lagoonEnvConfigJson);
+  return {
+    user: lagoonEnvConfig.MARIADB_USERNAME,
+    host: lagoonEnvConfig.MARIADB_HOST,
+    password: lagoonEnvConfig.MARIADB_PASSWORD,
+    databaseName: lagoonEnvConfig.MARIADB_DATABASE
+  };
+}
+
 async function createDatabaseGrantUserSecret(project, environment, password, dryRun) {
   echo(`Now migrating ${project}-${environment} database to incluser database`)
 
