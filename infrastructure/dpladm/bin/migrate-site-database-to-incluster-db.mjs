@@ -24,6 +24,8 @@ sleep(3000)
 await dumpCurrentDatabaseIntoTmp(project, environment);
 await importDumpIntoInclusterDatabase(project, environment, password);
 await createOverrideVariables(project, environment, password);
+// we need to redeploy the environment for it to take effect ("force" forces yes to prompts)
+await $`lagoon deploy latest --project ${project} --environment ${environment} --force`
 
 
 async function createOverrideVariables(project, environment, password) {
