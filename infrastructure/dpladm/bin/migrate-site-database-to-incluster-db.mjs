@@ -1,5 +1,6 @@
 #!/usr/bin/env zx
 
+import * as crypto from "crypto";
 
 const project = `${process.argv[3]}`;
 if (!project) {
@@ -15,4 +16,6 @@ let dryRun = `${process.argv[5]}`;
 if (typeof `${process.argv[5]}` === "undefined") {
   dryRun = false;
 }
+
+const password = crypto.randomBytes(32).toString("base64");
 
