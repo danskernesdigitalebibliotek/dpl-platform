@@ -23,8 +23,41 @@ await createDatabaseGrantUserSecret(project, environment, password, dryRun);
 sleep(3000)
 await dumpCurrentDatabaseIntoTmp(project, environment);
 await importDumpIntoInclusterDatabase(project, environment, password);
+await createOverrideVariables(project, environment, password);
 
 
+async function createOverrideVariables(project, environment, password) {
+  const overrideVariables = [
+    {
+      name: "MARIADB_DATABASE_OVERRIDE",
+      value: `database-${project}-${environment}`,
+    },
+    {
+      name: "MARIADB_USERNAME_OVERRIDE",
+      value: `user-database-${project}-${environment}`,
+    },
+    {
+      name: "MARIADB_PASSWORD_OVERRIDE",
+      value: `${password}`,
+    },
+    {
+      name: "MARIADB_HOST_OVERRIDE",
+      value: "mariadb-10-6-01-primary.mariadb-servers.svc.cluster.local",
+    },
+    {
+      name: "MARIADB_PORT_OVERRIDE",
+      value: "3306",
+    }
+  ];
+
+  for (const variable of overrideVariables) {
+    try {
+      await $`lagoon add variable --project ${project} --environment ${environment} --name ${variable.name} --scope global --value ${variable.value}`;
+    } catch (error) {
+      throw Error("failed to create or update variables for BNF and GO secrets", { cause: error });
+    }
+  }
+}
 
 async function importDumpIntoInclusterDatabase(project, environment, password) {
   echo(`Importing ${project}-${environment} database into incluster database`);
