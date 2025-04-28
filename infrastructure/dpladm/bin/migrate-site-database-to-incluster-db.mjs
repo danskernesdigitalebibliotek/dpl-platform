@@ -11,3 +11,8 @@ if (!environment) {
   throw Error("No 'environment' provided");
 }
 
+let dryRun = `${process.argv[5]}`;
+if (typeof `${process.argv[5]}` === "undefined") {
+  dryRun = false;
+}
+
