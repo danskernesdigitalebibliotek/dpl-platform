@@ -80,7 +80,7 @@ spec:
         - bash
         - -c
         - mariadb -u root -p"${MARIADB_ROOT_PASSWORD}" -e "SELECT 1;"
-    initialDelaySeconds: 20
+    initialDelaySeconds: 300
     periodSeconds: 5
     timeoutSeconds: 5
 
@@ -90,12 +90,12 @@ spec:
         - bash
         - -c
         - mariadb -u root -p"${MARIADB_ROOT_PASSWORD}" -e "SELECT 1;"
-    initialDelaySeconds: 20
+    initialDelaySeconds: 300
     periodSeconds: 5
     timeoutSeconds: 5
 
   podDisruptionBudget:
-    maxUnavailable: 50%
+    maxUnavailable: 40%
 
   updatestrategy:
     type: ReplicasFirstPrimaryLast
