@@ -48,6 +48,7 @@ spec:
     innodb_autoinc_lock_mode=2
     binlog_format=row
     max_allowed_packet=1GB
+    max_connections=300
 
   myCnfConfigMapKeyRef:
     name: mariadb
