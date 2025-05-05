@@ -46,8 +46,8 @@ spec:
     default_storage_engine=InnoDB
     innodb_buffer_pool_size=3200MB
     innodb_autoinc_lock_mode=2
-    max_allowed_packet=256M
     binlog_format=row
+    max_allowed_packet=1GB
 
   myCnfConfigMapKeyRef:
     name: mariadb
