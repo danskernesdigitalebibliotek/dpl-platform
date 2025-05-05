@@ -722,6 +722,12 @@ tasks:
       cmds:
         - |
           ./task/scripts/create-go-and-bnf-consumer-and-secrets.mjs
+
+    lagoon:projects:ensure:node-env-vars:
+      cmds:
+        - |
+          ./task/scripts/create-update-node-env-variables.mjs
+
     lagoon:project:ensure:consumer-secrets-n-passwords:
       cmds:
       - task: lagoon:ensure:environment-variable
