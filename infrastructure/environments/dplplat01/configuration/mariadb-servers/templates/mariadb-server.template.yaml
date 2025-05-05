@@ -113,3 +113,21 @@ spec:
 
   secondaryService:
     type: ClusterIP
+
+  priorityClassName: system-node-critical
+
+  tolerations:
+    - effect: NoSchedule
+      key: noderole.dplplatform
+      operator: Equal
+      value: prod
+
+  affinity:
+    nodeAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+        nodeSelectorTerms:
+        - matchExpressions:
+          - key: noderole.dplplatform
+            operator: In
+            values:
+            - prod
