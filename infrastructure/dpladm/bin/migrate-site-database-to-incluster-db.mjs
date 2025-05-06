@@ -20,7 +20,8 @@ if (typeof `${process.argv[5]}` === "undefined") {
 const password = crypto.randomBytes(32).toString("base64");
 
 await createDatabaseGrantUserSecret(project, environment, password, dryRun);
-sleep(3000)
+// wait for database, user and secret to have been created, it takes a little bit of time
+await sleep(3000)
 await dumpCurrentDatabaseIntoTmp(project, environment);
 await importDumpIntoInclusterDatabase(project, environment, password);
 await createOverrideVariables(project, environment, password);
