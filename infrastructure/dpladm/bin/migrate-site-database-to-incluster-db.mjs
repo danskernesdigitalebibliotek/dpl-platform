@@ -89,7 +89,7 @@ async function createDatabaseGrantUserSecret(project, environment, password, dry
 
   echo(await $`helm upgrade --install --namespace ${project}-${environment}  --set password=${password}  mariadb-database ./dpladm/mariadb-database/ --dry-run`);
 
-  if (dryRun === false) {
+  if (dryRun) {
     echo("done")
     await $`exit 1`;
   }
