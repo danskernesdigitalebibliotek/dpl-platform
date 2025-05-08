@@ -80,7 +80,7 @@ spec:
         - bash
         - -c
         - mariadb -u root -p"${MARIADB_ROOT_PASSWORD}" -e "SELECT 1;"
-    initialDelaySeconds: 300
+    initialDelaySeconds: 30
     periodSeconds: 5
     timeoutSeconds: 5
 
@@ -90,7 +90,7 @@ spec:
         - bash
         - -c
         - mariadb -u root -p"${MARIADB_ROOT_PASSWORD}" -e "SELECT 1;"
-    initialDelaySeconds: 300
+    initialDelaySeconds: 30
     periodSeconds: 5
     timeoutSeconds: 5
 
@@ -113,8 +113,6 @@ spec:
 
   secondaryService:
     type: ClusterIP
-
-  priorityClassName: system-node-critical
 
   tolerations:
     - effect: NoSchedule
