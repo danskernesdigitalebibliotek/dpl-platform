@@ -47,7 +47,7 @@ spec:
     innodb_buffer_pool_size=3200MB
     innodb_autoinc_lock_mode=2
     binlog_format=row
-    max_connections=300
+    max_connections=100
 
   myCnfConfigMapKeyRef:
     name: mariadb
