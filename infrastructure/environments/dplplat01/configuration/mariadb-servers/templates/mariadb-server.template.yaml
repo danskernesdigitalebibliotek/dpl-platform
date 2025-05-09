@@ -49,6 +49,7 @@ spec:
     binlog_format=row
     max_connections=125
     wait_timeout=180
+    transaction_isolation="READ-COMMITTED"
 
   myCnfConfigMapKeyRef:
     name: mariadb
