@@ -48,6 +48,7 @@ spec:
     innodb_autoinc_lock_mode=2
     binlog_format=row
     max_connections=125
+    wait_timeout=180
 
   myCnfConfigMapKeyRef:
     name: mariadb
