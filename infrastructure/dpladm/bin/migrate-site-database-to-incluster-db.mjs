@@ -45,7 +45,7 @@ async function createOverrideVariables(project, environment, password) {
     },
     {
       name: "MARIADB_HOST_OVERRIDE",
-      value: "mariadb-10-6-01-primary.mariadb-servers.svc.cluster.local",
+      value: "mariadb-10-6-01.mariadb-servers.svc.cluster.local",
     },
     {
       name: "MARIADB_PORT_OVERRIDE",
