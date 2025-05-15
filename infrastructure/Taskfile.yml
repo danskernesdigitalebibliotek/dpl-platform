@@ -718,12 +718,14 @@ tasks:
       - sh: "[ ! -z \"{{.PROJECT_NAME}}\" ]"
         msg: "Missing PROJECT_NAME"
 
-    lagoon:projects:ensure:consumer-secrets-n-passwords:
+    #These are secrets which are identical across prjects, so ie. Copenhagen has the same value as Ballerup
+    lagoon:projects:env-variables:ensure:identical-across-projects:
       cmds:
         - |
           ./task/scripts/create-go-and-bnf-consumer-and-secrets.mjs
 
-    lagoon:projects:ensure:node-env-vars:
+    # These secrets are unique per secret as well as per project
+    lagoon:projects:env-variables:ensure:unique-per-site:
       cmds:
         - |
           ./task/scripts/create-update-node-env-variables.mjs
