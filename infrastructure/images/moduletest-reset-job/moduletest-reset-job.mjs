@@ -5,10 +5,18 @@ if (!projectName) {
   throw Error("No 'projectName' provided");
 }
 
-echo(`Will now sync databases from ${projectName}-main to ${projectName}-moduletest`);
+echo(`Now getting ${projectName}'s database connection details`);
+// try {
+//   await $`kubectl exec -n ${projectName}-moduletest deployment/cli -- bash -c "mariadb-dump --user=${databaseUser} --host=mariadb-10-0-6-01-4.mariadb-servers.svc.cluster.local --password=${databasePassword} --ssl=false --skip-add-locks --single-transaction ${databaseName} > /tmp/dump.sql"`
+// } catch(error) {
+//   echo("Database sync for ${projectName} moduletest failed", error.stderr);
+//   throw Error("Database sync for ${projectName} moduletest failed", { cause: error });
+// }
 
+
+echo(`Will now sync databases from ${projectName}-main to ${projectName}-moduletest`);
 try {
-  await $`kubectl exec -n ${projectName}-moduletest deployment/cli -- bash -c "drush sql-drop -y; drush -y sql-sync @lagoon.${projectName}-main @self --create-db"`
+  await $`kubectl exec -n ${projectName}-moduletest deployment/cli -- bash -c "mariadb-dump --user=${databaseUser} --host=mariadb-10-0-6-01-4.mariadb-servers.svc.cluster.local --password=${databasePassword} --ssl=false --skip-add-locks --single-transaction ${databaseName} > /tmp/dump.sql"`
 } catch(error) {
   echo("Database sync for ${projectName} moduletest failed", error.stderr);
   throw Error("Database sync for ${projectName} moduletest failed", { cause: error });
