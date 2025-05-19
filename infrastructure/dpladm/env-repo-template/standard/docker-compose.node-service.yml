@@ -80,7 +80,9 @@ services:
       << : *default-environment
 
   node:
-    image: ghcr.io/danskernesdigitalebibliotek/dpl-go-node:0.24.1
+    build:
+      context: .
+      dockerfile: lagoon/node.dockerfile
     labels:
       provenance: false
       lagoon.type: node-persistent
