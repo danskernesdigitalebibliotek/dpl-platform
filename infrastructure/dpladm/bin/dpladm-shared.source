@@ -138,7 +138,7 @@ EndOfMessage
   if [[ -n "${primaryGoSubDomain}" ]]; then
     PRIMARY_GO_SUBDOMAIN_AND_ANNOTATION=$(cat << EndOfMessage
 ${routesIndent}  - node:
-${singleRouteIndent}- "$primaryGoSubDomain"
+${singleRouteIndent}- "$primaryGoSubDomain":
 ${singleRouteIndent}    annotations:
 ${singleRouteIndent}      nginx.ingress.kubernetes.io/proxy-buffer-size: 32k
 EndOfMessage
@@ -151,7 +151,7 @@ EndOfMessage
     for secondaryGoSubDomain in ${secondaryGoSubDomains}; do
       SECONDARY_GO_SUBDOMAINS+=$(cat << EndOfMessage
 
-${singleRouteIndent}- "$secondaryGoSubDomain"
+${singleRouteIndent}- "$secondaryGoSubDomain":
 ${singleRouteIndent}    annotations:
 ${singleRouteIndent}      nginx.ingress.kubernetes.io/permanent-redirect: https://${primaryGoSubDomain}\$request_uri
 EndOfMessage
