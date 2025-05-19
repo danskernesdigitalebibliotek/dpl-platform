@@ -271,6 +271,15 @@ function syncEnvRepo {
   cd "${repoName}"
   renderProfileTemplate "${siteName}" "${branchName}" "${releaseTag}" "${releaseImageRepository}" "${releaseImageName}" "${importTranslationsCron}" "${autogenerateRoutes}" "${primaryDomain}" "${secondaryDomains}" "${primaryGoSubDomain}" "${secondaryGoSubDomains}"
 
+  # If we have GO use the docker-compose which set the node service
+  if [ "$hasGo" = "true" ]; then
+    rm docker-compose.yml
+    cp docker-compose.node-service.yml docker-compose.yml
+    rm docker-compose.node-service.yml
+  elif [ -z "$hasGo" ] || [ "$hasGo" = "false" ]; then
+    rm docker-compose.node-service.yml
+  fi
+
   # Detect changes
   local changedFiles
   changedFiles="$(git status --porcelain)"
