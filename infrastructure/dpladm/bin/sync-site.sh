@@ -118,8 +118,8 @@ function getGoRelease {
 }
 
 function calculatePrimaryGoSubdomain {
-    local hasGo=$(projectHasGo "${1}" "${2}")
-    if [[ "${hasGo}" = "false" ]]; then
+    local hasGo=$(getGoRelease "${1}" "${2}")
+    if [[ "${hasGo}" = "" ]]; then
         echo ""
         return
     fi
@@ -135,8 +135,8 @@ function calculatePrimaryGoSubdomain {
 }
 
 function calcutelateSecondaryGoSubDomains {
-    local hasGo=$(projectHasGo "${1}" "${2}")
-    if [[ "${hasGo}" = "false" ]]; then
+    local hasGo=$(getGoRelease "${1}" "${2}")
+    if [[ "${hasGo}" = "" ]]; then
         echo ""
         return
     fi
