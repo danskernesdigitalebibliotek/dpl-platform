@@ -228,11 +228,12 @@ siteReleaseImageName=$(getSiteReleaseImageName "${SITE}" "${SITES_CONFIG}")
 failOnErr $? "${siteReleaseImageName}"
 plan=$(getSitePlan "${SITE}" "${SITES_CONFIG}")
 importTranslationsCron=$(getSiteImportTranslationsCron "${SITE}" "${SITES_CONFIG}")
+hasGo=$(projectHasGo "${SITE}" "${SITES_CONFIG}")
 set -o errexit
 
 # Synchronise the sites environment repository.
-syncEnvRepo "${SITE}" "${releaseTag}" "${BRANCH}" "${siteImageRepository}" "${siteReleaseImageName}" "${importTranslationsCron}" "${autogenerateRoutes}" "${primaryDomain}" "${secondaryDomains}" "${primaryGoSubDomain}" "${secondaryGoSubDomains}"
+syncEnvRepo "${SITE}" "${releaseTag}" "${BRANCH}" "${siteImageRepository}" "${siteReleaseImageName}" "${importTranslationsCron}" "${autogenerateRoutes}" "${primaryDomain}" "${secondaryDomains}" "${primaryGoSubDomain}" "${secondaryGoSubDomains}" "${hasGo}"
 
 if [ "${plan}" = "webmaster" ] && [ "${BRANCH}" = "main" ]; then
-    syncEnvRepo "${SITE}" "${wmReleaseTag}" "moduletest" "${siteImageRepository}" "${siteReleaseImageName}" "${importTranslationsCron}" "${autogenerateRoutes}" "${primaryDomain}" "${secondaryDomains}" "${primaryGoSubDomain}" "${secondaryGoSubDomains}"
+    syncEnvRepo "${SITE}" "${wmReleaseTag}" "moduletest" "${siteImageRepository}" "${siteReleaseImageName}" "${importTranslationsCron}" "${autogenerateRoutes}" "${primaryDomain}" "${secondaryDomains}" "${primaryGoSubDomain}" "${secondaryGoSubDomains}" "${hasGo}"
 fi
