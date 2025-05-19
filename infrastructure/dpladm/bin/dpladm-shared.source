@@ -193,6 +193,11 @@ EndOfMessage
     "lagoon/conf/nginx/metrics/version.json"
     "README.md"
   )
+  if [ -n "$GO_RELEASE" ]; then
+    # Add this to the template list
+    templateFiles+=("lagoon/node.dockerfile")
+  fi
+
   for templateFile in "${templateFiles[@]}"
   do
       envsubst "${variablesToSubst}" < "${templateFile}" > "${templateFile}.render"
