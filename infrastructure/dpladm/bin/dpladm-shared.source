@@ -280,12 +280,16 @@ function syncEnvRepo {
   renderProfileTemplate "${siteName}" "${branchName}" "${releaseTag}" "${releaseImageRepository}" "${releaseImageName}" "${importTranslationsCron}" "${autogenerateRoutes}" "${primaryDomain}" "${secondaryDomains}" "${primaryGoSubDomain}" "${secondaryGoSubDomains}" "${goRelease}"
 
   # If we have GO use the docker-compose which set the node service
-  if [ "$hasGo" = "true" ]; then
-    rm docker-compose.yml
+  if [ "$goRelease" ]; then
+    # If we're deploying a site with GO project, we want the docker-compose with the node service defined
+    rm docker-compose.base-services.yml
     cp docker-compose.node-service.yml docker-compose.yml
     rm docker-compose.node-service.yml
-  elif [ -z "$hasGo" ] || [ "$hasGo" = "false" ]; then
+  elif [ -z "$goRelease" ] || [ "$goRelease" = "" ]; then
+    # If we are deploying a site which doesn't have the GO project, use the base-services docker-compose file
     rm docker-compose.node-service.yml
+    cp docker-compose.base-services.yml docker-compose.yml
+    rm docker-compose.base-services.yml
   fi
 
   # Detect changes
