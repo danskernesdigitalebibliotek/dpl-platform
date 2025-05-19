@@ -219,7 +219,7 @@ function syncEnvRepo {
   local secondaryDomains="${9:-}"
   local primaryGoSubDomain="${10:-}"
   local secondaryGoSubDomains="${11:-}"
-  local hasGo="${12:-}"
+  local goRelease="${12:-}"
 
   if [[ -z $siteName ]]; then
       echo "Missing site name"
@@ -277,7 +277,7 @@ function syncEnvRepo {
 
   # Enter the template and rendered it
   cd "${repoName}"
-  renderProfileTemplate "${siteName}" "${branchName}" "${releaseTag}" "${releaseImageRepository}" "${releaseImageName}" "${importTranslationsCron}" "${autogenerateRoutes}" "${primaryDomain}" "${secondaryDomains}" "${primaryGoSubDomain}" "${secondaryGoSubDomains}"
+  renderProfileTemplate "${siteName}" "${branchName}" "${releaseTag}" "${releaseImageRepository}" "${releaseImageName}" "${importTranslationsCron}" "${autogenerateRoutes}" "${primaryDomain}" "${secondaryDomains}" "${primaryGoSubDomain}" "${secondaryGoSubDomains}" "${goRelease}"
 
   # If we have GO use the docker-compose which set the node service
   if [ "$hasGo" = "true" ]; then
