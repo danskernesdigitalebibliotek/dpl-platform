@@ -5,16 +5,7 @@ if (!projectName) {
   throw Error("No 'projectName' provided");
 }
 
-echo(`Will now sync databases from ${projectName}-main to ${projectName}-moduletest`);
-
-try {
-  await $`kubectl exec -n ${projectName}-moduletest deployment/cli -- bash -c "drush sql-drop -y; drush -y sql-sync @lagoon.${projectName}-main @self --create-db"`
-} catch(error) {
-  echo("Database sync for ${projectName} moduletest failed", error.stderr);
-  throw Error("Database sync for ${projectName} moduletest failed", { cause: error });
-}
-
-echo(`Database reset for ${projectName} complete`);
+const databaseConnectionInfo = await getDatabaseConnectionInfo(projectName);
 
 echo(`Reseting files from ${projectName}-main to ${projectName}-moduletest
   \n
@@ -54,3 +45,57 @@ try {
 }
 
 echo(`File reset for ${projectName} complete`);
+
+async function getDatabaseConnectionInfo(projectName) {
+  echo(`Now getting ${projectName}'s database connection details`);
+  let configMapJson;
+  try {
+    configMapJson = await $`kubectl get -n ${projectName}-main configmap lagoon-env -o json`
+  } catch(error) {
+    echo("Database sync for ${projectName} moduletest failed", error.stderr);
+    throw Error("Database sync for ${projectName} moduletest failed", { cause: error });
+  }
+
+  const originalDatabaseConnectionInfo = await $`jq -r '.data | { databaseName: .MARIADB_DATABASE, databaseHost: .MARIADB_HOST, databasePassword: .MARIADB_PASSWORD, datatbaseUser: .MARIADB_USERNAME}'`;
+  const overrideDatabaseConnectionInfo = await $`jq -r '.data | { databaseName: .OVERRIDE_MARIADB_DATABASE, databaseHost: .OVERRIDE_MARIADB_HOST, databasePassword: .OVERRIDE_MARIADB_PASSWORD, datatbaseUser: .OVERRIDE_MARIADB_USERNAME}'`;
+  // If overrideDatabaseConnectionInfo hgas info the project is using the incluster database, and we should the overrideDatabaseConnectionInfo to connecto the database.
+  let databaseConnectionInfo;
+  if(typeof overrideDatabaseConnectionInfo === "string") {
+    databaseConnection = overrideDatabaseConnectionInfo;
+  } else {
+    databaseConnection = originalDatabaseConnectionInfo;
+  }
+
+  return databaseConnectionInfo;
+}
+
+async function makeDatabaseDump(databaseUser, databasePassword, databaseName, databaseHost, projectName, override = false) {
+  echo(`Will now sync dump ${projectName}-main's database`);
+
+  try {
+    await $`kubectl exec -n ${projectName}-moduletest deployment/cli -- bash -c "mariadb-dump --user=${databaseUser} --host=${databaseHost} --password=${databasePassword} --ssl=false --skip-add-locks --single-transaction ${databaseName} > /tmp/dump.sql"`
+  } catch(error) {
+    echo("Database sync for ${projectName} moduletest failed", error.stderr);
+    throw Error("Database sync for ${projectName} moduletest failed", { cause: error });
+  }
+
+  echo(`Database reset for ${projectName} complete`);
+}
+
+function calculateDatabaseHost(databaseHost, projectName, override = false) {
+  // We are in the middle of switching to an incluster database. The incluster database has uses the same hostname no matter the namespace calling.
+  // The the database accessed via Lagoon uses the following host format: svcName.environmentNamespace.svc.cluster.local.
+  // The svcName is the non-override hostname found in the configmap lagoon-env.
+  if(override === false) {
+    return databaseHost;
+  }
+  return `${databaseHost}.${projectName}.svc.cluster.local`;
+}
+
+async function clearDatabaseBeforeUploading() {
+  
+}
+
+async function importMainDumpIntoModuletestDatabase(databaseUser, databasePassword, databaseName, databaseHost) {
+  
+}
