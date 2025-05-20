@@ -1,0 +1,43 @@
+# This manifest will fire up a customer Kubernetes Job in moduletest namepaces.
+# It will synchronize all files from the corresponding main environment to the moduletest environment
+
+{{ range .Values.projects }}
+
+apiVersion: v1
+kind: Pod
+metadata:
+  name: file-reset-{{ . }}
+  labels:
+    app: moduletest-file-reset-job
+  # namespace: moduletest-reset
+spec:
+  # schedule: "0 7 * * 4" # Every thursday at 07.00
+  # ttlSecondsAfterFinished: 36000 # 10 hours leaving time to investigate failed jobs
+  # backoffLimit: 3
+  # template:
+  # spec:
+  restartPolicy: Never
+  imagePullSecrets:
+    - name: ghcr-login-secret
+  containers:
+    - name: file-reset-container
+      image: ghcr.io/danskernesdigitalebibliotek/dpl-platform/moduletest-file-reset-job:mfr-0.0.2
+      command:
+        - /bin/bash
+        - -c
+        - ./moduletest-files-reset-job.mjs {{ . }}
+  tolerations:
+      - key: noderole.dplplatform
+        operator: Equal
+        value: prod
+        effect: NoSchedule
+  affinity:
+    nodeAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+        nodeSelectorTerms:
+        - matchExpressions:
+          - key: noderole.dplplatform
+            operator: In
+            values:
+            - prod
+{{ end }}

@@ -7,6 +7,7 @@ if (!projectName) {
 
 const databaseConnectionInfo = await getDatabaseConnectionInfo(projectName);
 await makeDatabaseDump(...databaseConnectionInfo, projectName);
+await importMainDumpIntoModuletestDatabase(...targetDatabaseConnectionInfo, targetProjectName);
 
 echo(`Reseting files from ${projectName}-main to ${projectName}-moduletest
   \n
@@ -77,13 +78,13 @@ async function makeDatabaseDump(databaseUser, databasePassword, databaseName, da
 
   const namespace = projectName + "-main";
   try {
-    await $`kubectl exec -n ${projectName}-moduletest deployment/cli -- bash -c "mariadb-dump --user=${databaseUser} --host=${getDatabaseHost(databaseHost, namespace, override)} --password=${databasePassword} --ssl=false --skip-add-locks --single-transaction ${databaseName} > /tmp/dump.sql"`
+    await $`kubectl exec -n ${projectName}-moduletest deployment/cli -- bash -c "mariadb-dump --user=${databaseUser} --host=${getDatabaseHost(databaseHost, namespace, override)} --password=${databasePassword} --ssl=false --skip-add-locks --single-transaction ${databaseName} > /tmp/${projectName}-dump.sql"`
   } catch(error) {
     echo("Database sync for ${projectName} moduletest failed", error.stderr);
     throw Error("Database sync for ${projectName} moduletest failed", { cause: error });
   }
 
-  echo(`Database reset for ${projectName} complete`);
+  echo(`Database dump for ${projectName} complete`);
 }
 
 function getDatabaseHost(databaseHost, namespace, override = false) {
@@ -96,10 +97,17 @@ function getDatabaseHost(databaseHost, namespace, override = false) {
   return `${databaseHost}.${namespace}.svc.cluster.local`;
 }
 
-async function clearDatabaseBeforeUploading() {
-  
-}
+async function importMainDumpIntoModuletestDatabase(databaseUser, databasePassword, databaseName, databaseHost, override = false, projectName) {
+  echo(`Will now import ${projectName}-main's database dump in to ${projectName}-moduletest's database`);
 
-async function importMainDumpIntoModuletestDatabase(databaseUser, databasePassword, databaseName, databaseHost) {
+  const namespace = projectName + "-main";
+  try {
+    await $`kubectl exec -n ${projectName}-moduletest deployment/cli -- bash -c "mariadb --user=${databaseUser} --host=${getDatabaseHost(databaseHost, namespace, override)} --password=${databasePassword} ${databaseName} < /tmp/${projectName}dump.sql"`
+  } catch(error) {
+    echo("Database sync for ${projectName} moduletest failed", error.stderr);
+    throw Error("Database sync for ${projectName} moduletest failed", { cause: error });
+  }
+
+  echo(`Database reset for ${projectName} complete`);
   
 }
