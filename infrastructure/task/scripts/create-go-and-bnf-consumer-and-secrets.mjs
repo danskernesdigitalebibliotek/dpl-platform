@@ -11,7 +11,6 @@ const sites = await $`cat ../host_mount/environments/dplplat01/sites.yaml | yq '
 const lagoonVariableName = [
   "BNF_GRAPHQL_CONSUMER_SECRET",
   "BNF_GRAPHQL_CONSUMER_USER_PASSWORD",
-  "BNF_SERVER_GRAPHQL_ENDPOINT",
   "GO_GRAPHQL_CONSUMER_SECRET",
   "DRUPAL_REVALIDATE_SECRET",
   "GO_GRAPHQL_CONSUMER_USER_PASSWORD"
