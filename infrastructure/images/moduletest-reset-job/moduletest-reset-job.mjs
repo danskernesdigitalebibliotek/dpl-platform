@@ -6,6 +6,7 @@ if (!projectName) {
 }
 
 const databaseConnectionInfo = await getDatabaseConnectionInfo(projectName);
+await makeDatabaseDump(...databaseConnectionInfo, projectName);
 
 echo(`Reseting files from ${projectName}-main to ${projectName}-moduletest
   \n
@@ -62,18 +63,21 @@ async function getDatabaseConnectionInfo(projectName) {
   let databaseConnectionInfo;
   if(typeof overrideDatabaseConnectionInfo === "string") {
     databaseConnection = overrideDatabaseConnectionInfo;
+    databaseConnectionInfo.override = true;
   } else {
     databaseConnection = originalDatabaseConnectionInfo;
+    databaseConnectionInfo.override = false;
   }
 
   return databaseConnectionInfo;
 }
 
-async function makeDatabaseDump(databaseUser, databasePassword, databaseName, databaseHost, projectName, override = false) {
+async function makeDatabaseDump(databaseUser, databasePassword, databaseName, databaseHost, override = false, projectName) {
   echo(`Will now sync dump ${projectName}-main's database`);
 
+  const namespace = projectName + "-main";
   try {
-    await $`kubectl exec -n ${projectName}-moduletest deployment/cli -- bash -c "mariadb-dump --user=${databaseUser} --host=${databaseHost} --password=${databasePassword} --ssl=false --skip-add-locks --single-transaction ${databaseName} > /tmp/dump.sql"`
+    await $`kubectl exec -n ${projectName}-moduletest deployment/cli -- bash -c "mariadb-dump --user=${databaseUser} --host=${getDatabaseHost(databaseHost, namespace, override)} --password=${databasePassword} --ssl=false --skip-add-locks --single-transaction ${databaseName} > /tmp/dump.sql"`
   } catch(error) {
     echo("Database sync for ${projectName} moduletest failed", error.stderr);
     throw Error("Database sync for ${projectName} moduletest failed", { cause: error });
@@ -82,14 +86,14 @@ async function makeDatabaseDump(databaseUser, databasePassword, databaseName, da
   echo(`Database reset for ${projectName} complete`);
 }
 
-function calculateDatabaseHost(databaseHost, projectName, override = false) {
+function getDatabaseHost(databaseHost, namespace, override = false) {
   // We are in the middle of switching to an incluster database. The incluster database has uses the same hostname no matter the namespace calling.
   // The the database accessed via Lagoon uses the following host format: svcName.environmentNamespace.svc.cluster.local.
   // The svcName is the non-override hostname found in the configmap lagoon-env.
   if(override === false) {
     return databaseHost;
   }
-  return `${databaseHost}.${projectName}.svc.cluster.local`;
+  return `${databaseHost}.${namespace}.svc.cluster.local`;
 }
 
 async function clearDatabaseBeforeUploading() {
