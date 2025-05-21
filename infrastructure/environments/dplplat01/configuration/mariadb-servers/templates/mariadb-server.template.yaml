@@ -44,9 +44,12 @@ spec:
     [mariadb]
     bind-address=*
     default_storage_engine=InnoDB
-    binlog_format=row
+    innodb_buffer_pool_size=3200MB
     innodb_autoinc_lock_mode=2
-    max_allowed_packet=256M
+    binlog_format=row
+    max_connections=125
+    wait_timeout=180
+    transaction_isolation="READ-COMMITTED"
 
   myCnfConfigMapKeyRef:
     name: mariadb
@@ -78,7 +81,7 @@ spec:
         - bash
         - -c
         - mariadb -u root -p"${MARIADB_ROOT_PASSWORD}" -e "SELECT 1;"
-    initialDelaySeconds: 20
+    initialDelaySeconds: 30
     periodSeconds: 5
     timeoutSeconds: 5
 
@@ -88,12 +91,12 @@ spec:
         - bash
         - -c
         - mariadb -u root -p"${MARIADB_ROOT_PASSWORD}" -e "SELECT 1;"
-    initialDelaySeconds: 20
+    initialDelaySeconds: 30
     periodSeconds: 5
     timeoutSeconds: 5
 
   podDisruptionBudget:
-    maxUnavailable: 50%
+    maxUnavailable: 40%
 
   updatestrategy:
     type: ReplicasFirstPrimaryLast
@@ -111,3 +114,19 @@ spec:
 
   secondaryService:
     type: ClusterIP
+
+  tolerations:
+    - effect: NoSchedule
+      key: noderole.dplplatform
+      operator: Equal
+      value: prod
+
+  affinity:
+    nodeAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+        nodeSelectorTerms:
+        - matchExpressions:
+          - key: noderole.dplplatform
+            operator: In
+            values:
+            - prod
