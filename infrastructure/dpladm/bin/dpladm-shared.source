@@ -196,6 +196,8 @@ EndOfMessage
   if [ -n "$GO_RELEASE" ]; then
     # Add this to the template list
     templateFiles+=("lagoon/node.dockerfile")
+  else
+    rm lagoon/node.dockerfile
   fi
 
   for templateFile in "${templateFiles[@]}"
