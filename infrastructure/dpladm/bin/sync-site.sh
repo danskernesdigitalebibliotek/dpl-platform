@@ -97,32 +97,29 @@ function getSiteSecondaryDomains {
     return
 }
 
-function projectHasGo {
-    local hasGo
-    hasGo=$(yq eval ".sites.${1}.hasGo" "${2}")
-     if [[ "${hasGo}" == "null" ]]; then
-        echo "false"
+function getGoRelease {
+    local goRelease
+    # get the version instad - if no version no GO
+    goRelease=$(yq eval ".sites.${1}.go-release" "${2}")
+     if [[ "${goRelease}" == "null" ]]; then
+        echo ""
         return
     fi
-    if [[ -z "${hasGo}" ]]; then
-        echo "Error: hasGo should have a boolean value"
+    if [[ -z "${goRelease}" ]]; then
+        echo "Error: goRelease should have a boolean value"
         exit 1
     fi
-    if [[ "${hasGo}" = "true" ]]; then
-        echo "true"
+    if [[ "${goRelease}" ]]; then
+        echo "$goRelease"
         return
     fi
-    if [[ "${hasGo}" = "false" ]]; then
-        echo "false"
-        return
-    fi
-    echo "Error: hasGo should a boolean value"
+    echo "Error: goRelease somehow emtpy but this wasen't captured"
     exit 1
 }
 
 function calculatePrimaryGoSubdomain {
-    local hasGo=$(projectHasGo "${1}" "${2}")
-    if [[ "${hasGo}" = "false" ]]; then
+    local hasGo=$(getGoRelease "${1}" "${2}")
+    if [[ "${hasGo}" = "" ]]; then
         echo ""
         return
     fi
@@ -138,8 +135,8 @@ function calculatePrimaryGoSubdomain {
 }
 
 function calcutelateSecondaryGoSubDomains {
-    local hasGo=$(projectHasGo "${1}" "${2}")
-    if [[ "${hasGo}" = "false" ]]; then
+    local hasGo=$(getGoRelease "${1}" "${2}")
+    if [[ "${hasGo}" = "" ]]; then
         echo ""
         return
     fi
@@ -228,11 +225,12 @@ siteReleaseImageName=$(getSiteReleaseImageName "${SITE}" "${SITES_CONFIG}")
 failOnErr $? "${siteReleaseImageName}"
 plan=$(getSitePlan "${SITE}" "${SITES_CONFIG}")
 importTranslationsCron=$(getSiteImportTranslationsCron "${SITE}" "${SITES_CONFIG}")
+goRelease=$(getGoRelease "${SITE}" "${SITES_CONFIG}")
 set -o errexit
 
 # Synchronise the sites environment repository.
-syncEnvRepo "${SITE}" "${releaseTag}" "${BRANCH}" "${siteImageRepository}" "${siteReleaseImageName}" "${importTranslationsCron}" "${autogenerateRoutes}" "${primaryDomain}" "${secondaryDomains}" "${primaryGoSubDomain}" "${secondaryGoSubDomains}"
+syncEnvRepo "${SITE}" "${releaseTag}" "${BRANCH}" "${siteImageRepository}" "${siteReleaseImageName}" "${importTranslationsCron}" "${autogenerateRoutes}" "${primaryDomain}" "${secondaryDomains}" "${primaryGoSubDomain}" "${secondaryGoSubDomains}" "${goRelease}"
 
 if [ "${plan}" = "webmaster" ] && [ "${BRANCH}" = "main" ]; then
-    syncEnvRepo "${SITE}" "${wmReleaseTag}" "moduletest" "${siteImageRepository}" "${siteReleaseImageName}" "${importTranslationsCron}" "${autogenerateRoutes}" "${primaryDomain}" "${secondaryDomains}" "${primaryGoSubDomain}" "${secondaryGoSubDomains}"
+    syncEnvRepo "${SITE}" "${wmReleaseTag}" "moduletest" "${siteImageRepository}" "${siteReleaseImageName}" "${importTranslationsCron}" "${autogenerateRoutes}" "${primaryDomain}" "${secondaryDomains}" "${primaryGoSubDomain}" "${secondaryGoSubDomains}" "${goRelease}"
 fi

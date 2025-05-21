@@ -80,6 +80,8 @@ function renderProfileTemplate {
   local primaryGoSubDomain=${10:-}
   # A space seperated list of secondary GO sub domains (optional)
   local secondaryGoSubDomains=${11:-}
+  #GO release version
+  local GO_RELEASE=${12:-}
 
   PRIMARY_DOMAIN=""
 
@@ -136,7 +138,7 @@ EndOfMessage
   if [[ -n "${primaryGoSubDomain}" ]]; then
     PRIMARY_GO_SUBDOMAIN_AND_ANNOTATION=$(cat << EndOfMessage
 ${routesIndent}  - node:
-${singleRouteIndent}- "$primaryGoSubDomain"
+${singleRouteIndent}- "$primaryGoSubDomain":
 ${singleRouteIndent}    annotations:
 ${singleRouteIndent}      nginx.ingress.kubernetes.io/proxy-buffer-size: 32k
 EndOfMessage
@@ -149,7 +151,7 @@ EndOfMessage
     for secondaryGoSubDomain in ${secondaryGoSubDomains}; do
       SECONDARY_GO_SUBDOMAINS+=$(cat << EndOfMessage
 
-${singleRouteIndent}- "$secondaryGoSubDomain"
+${singleRouteIndent}- "$secondaryGoSubDomain":
 ${singleRouteIndent}    annotations:
 ${singleRouteIndent}      nginx.ingress.kubernetes.io/permanent-redirect: https://${primaryGoSubDomain}\$request_uri
 EndOfMessage
@@ -173,12 +175,13 @@ EndOfMessage
   export PRIMARY_GO_SUBDOMAIN_AND_ANNOTATION
   export SECONDARY_GO_SUBDOMAINS
   export IMPORT_TRANSLATIONS_CRON=${importTranslationsCron}
+  export GO_RELEASE
 
   # TODO this templating could be quite a bit more flexible.
   # Tell envsubst which variables to replace. This allows other variables to
   # remain untouched.
   # shellcheck disable=SC2016
-  local variablesToSubst='$RELEASE_IMAGE_REPOSITORY $RELEASE_IMAGE_NAME $RELEASE_TAG $ENABLE_ROUTES $LAGOON_IMAGES_RELEASE_TAG $LAGOON_PROJECT_NAME $LAGOON_ENVIRONMENT $PRIMARY_DOMAIN $SECONDARY_DOMAINS $IMPORT_TRANSLATIONS_CRON $PRIMARY_GO_SUBDOMAIN_AND_ANNOTATION $SECONDARY_GO_SUBDOMAINS'
+  local variablesToSubst='$RELEASE_IMAGE_REPOSITORY $RELEASE_IMAGE_NAME $RELEASE_TAG $ENABLE_ROUTES $LAGOON_IMAGES_RELEASE_TAG $LAGOON_PROJECT_NAME $LAGOON_ENVIRONMENT $PRIMARY_DOMAIN $SECONDARY_DOMAINS $IMPORT_TRANSLATIONS_CRON $PRIMARY_GO_SUBDOMAIN_AND_ANNOTATION $SECONDARY_GO_SUBDOMAINS $GO_RELEASE'
 
   # Loop through the files we know to contain variables that needs replacing.
   local templateFiles=(
@@ -190,6 +193,13 @@ EndOfMessage
     "lagoon/conf/nginx/metrics/version.json"
     "README.md"
   )
+  if [ -n "$GO_RELEASE" ]; then
+    # Add this to the template list
+    templateFiles+=("lagoon/node.dockerfile")
+  else
+    rm lagoon/node.dockerfile
+  fi
+
   for templateFile in "${templateFiles[@]}"
   do
       envsubst "${variablesToSubst}" < "${templateFile}" > "${templateFile}.render"
@@ -211,6 +221,7 @@ function syncEnvRepo {
   local secondaryDomains="${9:-}"
   local primaryGoSubDomain="${10:-}"
   local secondaryGoSubDomains="${11:-}"
+  local goRelease="${12:-}"
 
   if [[ -z $siteName ]]; then
       echo "Missing site name"
@@ -268,7 +279,20 @@ function syncEnvRepo {
 
   # Enter the template and rendered it
   cd "${repoName}"
-  renderProfileTemplate "${siteName}" "${branchName}" "${releaseTag}" "${releaseImageRepository}" "${releaseImageName}" "${importTranslationsCron}" "${autogenerateRoutes}" "${primaryDomain}" "${secondaryDomains}" "${primaryGoSubDomain}" "${secondaryGoSubDomains}"
+  renderProfileTemplate "${siteName}" "${branchName}" "${releaseTag}" "${releaseImageRepository}" "${releaseImageName}" "${importTranslationsCron}" "${autogenerateRoutes}" "${primaryDomain}" "${secondaryDomains}" "${primaryGoSubDomain}" "${secondaryGoSubDomains}" "${goRelease}"
+
+  # If we have GO use the docker-compose which set the node service
+  if [ "$goRelease" ]; then
+    # If we're deploying a site with GO project, we want the docker-compose with the node service defined
+    rm docker-compose.base-services.yml
+    cp docker-compose.node-service.yml docker-compose.yml
+    rm docker-compose.node-service.yml
+  elif [ -z "$goRelease" ] || [ "$goRelease" = "" ]; then
+    # If we are deploying a site which doesn't have the GO project, use the base-services docker-compose file
+    rm docker-compose.node-service.yml
+    cp docker-compose.base-services.yml docker-compose.yml
+    rm docker-compose.base-services.yml
+  fi
 
   # Detect changes
   local changedFiles
