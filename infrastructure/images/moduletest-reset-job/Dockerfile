@@ -1,7 +1,7 @@
 FROM node:24-alpine
 
 # Install apk dependencies
-RUN apk add --no-cache bash kubectl && npm install -g zx
+RUN apk add --no-cache bash kubectl && npm install -g zx && RUN apt-get install jq -y
 
 WORKDIR /usr/src/app
 
