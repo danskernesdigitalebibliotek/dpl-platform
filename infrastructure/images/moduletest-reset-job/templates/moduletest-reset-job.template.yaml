@@ -56,9 +56,9 @@ metadata:
   namespace: moduletest-reset
 rules:
 - apiGroups: [""]
-  resources: [ "namespaces", "pods", "pods/exec" ]
+  resources: [ "namespaces", "pods", "pods/exec", "configmaps" ]
   verbs: [ "get", "list", "create" ]
-- apiGroups: [ "apps" ]
+- apiGroups: [ "apps", "configmaps" ]
   resources: [ "deployments", "pods" ]
   verbs: [ "get", "list" ]
 

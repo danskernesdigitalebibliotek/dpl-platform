@@ -63,7 +63,7 @@ async function getDatabaseConnectionInfo(namespace) {
   echo(`Now getting ${namespace}'s database connection details`);
   let configMapJson;
   try {
-    configMapJson = await $`kubectl get -n ${namespace}-main configmap lagoon-env -o json`
+    configMapJson = await $`kubectl get -n ${namespace} configmap lagoon-env -o json`
   } catch(error) {
     echo(`Failed to get configmap "lagoon-env" in namespace ${namespace}`, error.stderr);
     throw Error(`Failed to get configmap "lagoon-env" in namespace ${namespace}`, { cause: error });
