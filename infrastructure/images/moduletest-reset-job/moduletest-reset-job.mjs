@@ -133,7 +133,7 @@ function getDatabaseHost(databaseHost, projectName, override = false) {
   // We are in the middle of switching to an incluster database. The incluster database has uses the same hostname no matter the namespace calling.
   // The the database accessed via Lagoon uses the following host format: svcName.environmentNamespace.svc.cluster.local.
   // The svcName is the non-override hostname found in the configmap lagoon-env.
-  if(override === false) {
+  if(override === true) {
     return databaseHost;
   }
   return `${databaseHost}.${projectName}-moduletest.svc.cluster.local`;
