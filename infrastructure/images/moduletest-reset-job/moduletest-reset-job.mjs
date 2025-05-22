@@ -69,17 +69,30 @@ async function getDatabaseConnectionInfo(namespace) {
     throw Error(`Failed to get configmap "lagoon-env" in namespace ${namespace}`, { cause: error });
   }
 
-  const originalDatabaseConnectionInfo = await $`${configMapJson} | jq -r '.data | { databaseName: .MARIADB_DATABASE, databaseHost: .MARIADB_HOST, databasePassword: .MARIADB_PASSWORD, datatbaseUser: .MARIADB_USERNAME}'`;
-  const overrideDatabaseConnectionInfo = await $`${configMapJson} | jq -r '.data | { databaseName: .OVERRIDE_MARIADB_DATABASE, databaseHost: .OVERRIDE_MARIADB_HOST, databasePassword: .OVERRIDE_MARIADB_PASSWORD, datatbaseUser: .OVERRIDE_MARIADB_USERNAME}'`;
-  // If overrideDatabaseConnectionInfo, the project is using the incluster database, and we should the overrideDatabaseConnectionInfo to connecto the database.
+  const { data } = configMapJson;
   let databaseConnectionInfo;
-  if(typeof overrideDatabaseConnectionInfo === "string") {
-    databaseConnectionInfo = overrideDatabaseConnectionInfo;
-    databaseConnectionInfo.override = true;
+  if(typeof data.OVERRIDE_MARIADB_DATABASE === "string" && data.OVERRIDE_MARIADB_DATABASE.length > 1) {
+    databaseConnectionInfo.databaseName = data.OVERRIDE_MARIADB_DATABASE;
+    databaseConnectionInfo.databaseHost = data.OVERRIDE_MARIADB_HOST;
+    databaseConnectionInfo.databasePassword = data.OVERRIDE_MARIADB_PASSWORD;
+    databaseConnectionInfo.databaseUser = data.OVERRIDE_MARIADB_USERNAME;
   } else {
-    databaseConnectionInfo = originalDatabaseConnectionInfo;
-    databaseConnectionInfo.override = false;
+    databaseConnectionInfo.databaseName = data.MARIADB_DATABASE;
+    databaseConnectionInfo.databaseHost = data.MARIADB_HOST;
+    databaseConnectionInfo.databasePassword = data.MARIADB_PASSWORD;
+    databaseConnectionInfo.databaseUser = data.MARIADB_USERNAME;
   }
+
+  // const originalDatabaseConnectionInfo = await $`${configMapJson} | jq -r '.data | { databaseName: .MARIADB_DATABASE, databaseHost: .MARIADB_HOST, databasePassword: .MARIADB_PASSWORD, datatbaseUser: .MARIADB_USERNAME}'`;
+  // const overrideDatabaseConnectionInfo = await $`${configMapJson} | jq -r '.data | { databaseName: .OVERRIDE_MARIADB_DATABASE, databaseHost: .OVERRIDE_MARIADB_HOST, databasePassword: .OVERRIDE_MARIADB_PASSWORD, datatbaseUser: .OVERRIDE_MARIADB_USERNAME}'`;
+  // // If overrideDatabaseConnectionInfo, the project is using the incluster database, and we should the overrideDatabaseConnectionInfo to connecto the database.
+  // if(typeof overrideDatabaseConnectionInfo === "string") {
+  //   databaseConnectionInfo = overrideDatabaseConnectionInfo;
+  //   databaseConnectionInfo.override = true;
+  // } else {
+  //   databaseConnectionInfo = originalDatabaseConnectionInfo;
+  //   databaseConnectionInfo.override = false;
+  // }
 
   return databaseConnectionInfo;
 }
