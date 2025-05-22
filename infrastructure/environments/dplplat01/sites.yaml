@@ -2,7 +2,7 @@
 x-defaults: &default-release-image-source
   releaseImageRepository: ghcr.io/danskernesdigitalebibliotek
   releaseImageName: dpl-cms-source
-  dpl-cms-release: "2025.20.0"
+  dpl-cms-release: "2025.21.2"
 x-webmaster: &webmaster-release-image-source
   # This is the default release plan for webmasters. There's currently no webmasters on it.
   # This is should be updated according with https://danskernesdigitalebibliotek.github.io/dpl-docs/DPL-Platform/runbooks/monthly-release-to-editors-and-webmasters/
@@ -14,8 +14,16 @@ x-webmasters-on-weekly-release-cycle: &webmasters-on-weekly-release-cycle
   #This release cycle releases the newest release, which has been tested on webmaster moduletests in the previous week, on to production
   releaseImageRepository: ghcr.io/danskernesdigitalebibliotek
   releaseImageName: dpl-cms-source
-  dpl-cms-release: "2025.19.0"
-  moduletest-dpl-cms-release: "2025.20.0"
+  dpl-cms-release: "2025.20.0"
+  moduletest-dpl-cms-release: "2025.21.2"
+x-webmasters-on-latest-release: &x-webmasters-on-latest-release
+  #This release cycle releases the newest release on both production and moduletest sites.
+  #This is relevant for webmaster sites acting as pilots for new features.
+  #Currently: Go
+  releaseImageRepository: ghcr.io/danskernesdigitalebibliotek
+  releaseImageName: dpl-cms-source
+  dpl-cms-release: "2025.21.2"
+  moduletest-dpl-cms-release: "2025.21.2"
 sites:
   # Site objects are indexed by a unique key that must be a valid lagoon, and
   # github project name. That is, alphanumeric and dashes.
@@ -25,10 +33,13 @@ sites:
     description: "A site for developers and operators to test on"
     releaseImageRepository: ghcr.io/danskernesdigitalebibliotek
     releaseImageName: dpl-cms-source
-    dpl-cms-release: "2025.20.0"
+    dpl-cms-release: "2025.21.2"
     plan: webmaster
     primary-domain: canary.dplplat01.dpl.reload.dk
-    moduletest-dpl-cms-release: "2025.20.0"
+    # TODO: Remove this once the the Adgangsplatformen OpenID client used here
+    # has been updated to use the primary domain.
+    autogenerateRoutes: true
+    moduletest-dpl-cms-release: "2025.21.2"
     deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIIhuA0K7CNvRoe+Xx7RaXG4+a8KcSpzuWn+G4sUPzNWx"
   customizable-canary:
     name: "Customizable bibliotek - eksempel"
@@ -36,8 +47,8 @@ sites:
     releaseImageRepository: ghcr.io/danskernesdigitalebibliotek
     releaseImageName: dpl-cms-source
     plan: webmaster
-    dpl-cms-release: "2025.20.0"
-    moduletest-dpl-cms-release: "2025.20.0"
+    dpl-cms-release: "2025.21.2"
+    moduletest-dpl-cms-release: "2025.21.2"
     deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAILj8lXv7C/7s7te9sEpwcHQhgDWfzsCkAN7rqQ4sdTzk"
   staging:
     name: "Staging"
@@ -50,6 +61,9 @@ sites:
     moduletest-dpl-cms-release: "2025.21.2"
     plan: webmaster
     primary-domain: staging.dplplat01.dpl.reload.dk
+    # TODO: Remove this once the the Adgangsplatformen OpenID client used here
+    # has been updated to use the primary domain.
+    autogenerateRoutes: true
     deploy_key: ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBLUrrxfwsfwz4nkn/WCbMUbLHkTFvyYB2uusHLA7NlH
   cms-school:
     name: "CMS-skole"
@@ -57,7 +71,10 @@ sites:
     deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJ6SzfPFf/XeLeqI342kxuJAlATpDMtgAfqlrLTTbW2m"
     plan: webmaster
     primary-domain: cms-school.dplplat01.dpl.reload.dk
-    moduletest-dpl-cms-release: "2025.20.0"
+    # TODO: Remove this once the the Adgangsplatformen OpenID client used here
+    # has been updated to use the primary domain.
+    autogenerateRoutes: true
+    moduletest-dpl-cms-release: "2025.21.2"
     # This site is a webmaster site but we usually want the latest release
     # deployed to production. Our YAML handling chokes on duplicates to we
     # follow the default release plan and update the module test site manually.
@@ -795,7 +812,7 @@ sites:
       - www.silkeborgbib.dk
     autogenerateRoutes: true
     plan: webmaster
-    <<: *webmasters-on-weekly-release-cycle
+    <<: *x-webmasters-on-latest-release
   skanderborg:
     name: "Skanderborg Bibliotek"
     description: "The library site for Skanderborg"
