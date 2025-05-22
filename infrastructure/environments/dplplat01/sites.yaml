@@ -443,7 +443,7 @@ sites:
       - herningbib.dk
     autogenerateRoutes: true
     plan: webmaster
-    <<: *x-webmasters-on-latest-release
+    <<: *webmasters-on-weekly-release-cycle
   hillerod:
     name: "Hillerød Bibliotekerne"
     description: "The library site for Hillerød"
