@@ -5,8 +5,7 @@ if (!projectName) {
   throw Error("No 'projectName' provided");
 }
 
-const envs = $.env;
-console.log(envs);
+$`printenv`
 
 const sourceNamespace = projectName + "-main";
 const sourceDatabaseConnectionInfo = await getDatabaseConnectionInfo(sourceNamespace);
