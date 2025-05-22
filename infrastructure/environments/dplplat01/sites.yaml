@@ -16,6 +16,14 @@ x-webmasters-on-weekly-release-cycle: &webmasters-on-weekly-release-cycle
   releaseImageName: dpl-cms-source
   dpl-cms-release: "2025.20.0"
   moduletest-dpl-cms-release: "2025.21.2"
+x-webmasters-on-latest-release: &x-webmasters-on-latest-release
+  #This release cycle releases the newest release on both production and moduletest sites.
+  #This is relevant for webmaster sites acting as pilots for new features.
+  #Currently: Go
+  releaseImageRepository: ghcr.io/danskernesdigitalebibliotek
+  releaseImageName: dpl-cms-source
+  dpl-cms-release: "2025.21.2"
+  moduletest-dpl-cms-release: "2025.21.2"
 sites:
   # Site objects are indexed by a unique key that must be a valid lagoon, and
   # github project name. That is, alphanumeric and dashes.
@@ -149,7 +157,7 @@ sites:
       - www.albertslundbibliotek.dk
     autogenerateRoutes: true
     plan: webmaster
-    <<: *webmasters-on-weekly-release-cycle
+    <<: *x-webmasters-on-latest-release
   allerod:
     name: "Allerød Biblioteker"
     description: "The library site for Allerød"
@@ -435,7 +443,7 @@ sites:
       - herningbib.dk
     autogenerateRoutes: true
     plan: webmaster
-    <<: *webmasters-on-weekly-release-cycle
+    <<: *x-webmasters-on-latest-release
   hillerod:
     name: "Hillerød Bibliotekerne"
     description: "The library site for Hillerød"
@@ -804,7 +812,7 @@ sites:
       - www.silkeborgbib.dk
     autogenerateRoutes: true
     plan: webmaster
-    <<: *webmasters-on-weekly-release-cycle
+    <<: *x-webmasters-on-latest-release
   skanderborg:
     name: "Skanderborg Bibliotek"
     description: "The library site for Skanderborg"
