@@ -764,6 +764,23 @@ tasks:
       - sh: "[ ! -z \"{{.PROJECT_NAME}}\" ]"
         msg: "Missing PROJECT_NAME"
 
+    lagoon:projects:ensure:next-env-variables-across-projects:
+      cmds:
+        - task: lagoon:ensure:environment-variable
+          vars:
+            VARIABLE_NAME: "DRUPAL_PREVIEW_SECRET"
+            PROJECT_NAME: "{{.PROJECT_NAME}}"
+            VARIABLE_SCOPE: "RUNTIME"
+            # TODO: The variable values should be generated and stored in a secret manager.
+            VARIABLE_VALUE: "foo"
+        - task: lagoon:ensure:environment-variable
+          vars:
+            VARIABLE_NAME: "DRUPAL_REVALIDATE_SECRET"
+            PROJECT_NAME: "{{.PROJECT_NAME}}"
+            VARIABLE_SCOPE: "RUNTIME"
+            # TODO: The variable values should be generated and stored in a secret manager.
+            VARIABLE_VALUE: "foo"
+
     lagoon:add:cluster:
       deps: [cluster:auth]
       desc: Add a Kubernetes cluster (Lagoon Remote) to the Lagoon Core.
