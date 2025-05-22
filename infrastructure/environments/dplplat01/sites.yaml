@@ -157,7 +157,7 @@ sites:
       - www.albertslundbibliotek.dk
     autogenerateRoutes: true
     plan: webmaster
-    <<: *x-webmasters-on-latest-release
+    <<: *webmasters-on-weekly-release-cycle
   allerod:
     name: "Allerød Biblioteker"
     description: "The library site for Allerød"
