@@ -69,7 +69,8 @@ async function getDatabaseConnectionInfo(namespace) {
     throw Error(`Failed to get configmap "lagoon-env" in namespace ${namespace}`, { cause: error });
   }
 
-  const { data } = JSON.parse(configMapJson);
+  const configmap = JSON.parse(configMapJson);
+  const { data } = configmap;
   console.log(data)
   let databaseConnectionInfo;
   if(data.OVERRIDE_MARIADB_DATABASE != undefined) {
