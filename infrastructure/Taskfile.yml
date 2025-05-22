@@ -867,6 +867,9 @@ tasks:
         - task: lagoon:project:ensure:consumer-secrets-n-passwords
           vars:
             PROJECT_NAME: "{{.PROJECT_NAME}}"
+        - task: lagoon:projects:ensure:next-env-variables-across-projects
+          vars:
+            PROJECT_NAME: "{{.PROJECT_NAME}}"
       preconditions:
       - sh: "[ ! -z {{.GIT_URL}} ]"
         msg: "Env variable GIT_URL is not set or empty."
