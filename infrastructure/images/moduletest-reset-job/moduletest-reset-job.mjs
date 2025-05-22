@@ -7,10 +7,10 @@ if (!projectName) {
 
 const sourceNamespace = projectName + "-main";
 const sourceDatabaseConnectionInfo = await getDatabaseConnectionInfo(sourceNamespace);
-await makeDatabaseDump(...sourceDatabaseConnectionInfo, projectName);
-const targetNamespace = projectName + "-main";
+await makeDatabaseDump(sourceDatabaseConnectionInfo, projectName);
+const targetNamespace = projectName + "-moduletest";
 const targetDatabaseConnectionInfo = await getDatabaseConnectionInfo(targetNamespace);
-await importMainDumpIntoModuletestDatabase(...targetDatabaseConnectionInfo, projectName);
+await importMainDumpIntoModuletestDatabase(targetDatabaseConnectionInfo, projectName);
 
 echo(`Reseting files from ${projectName}-main to ${projectName}-moduletest
   \n
@@ -83,11 +83,13 @@ async function getDatabaseConnectionInfo(namespace) {
     databaseConnectionInfo.databaseHost = data.OVERRIDE_MARIADB_HOST;
     databaseConnectionInfo.databasePassword = data.OVERRIDE_MARIADB_PASSWORD;
     databaseConnectionInfo.databaseUser = data.OVERRIDE_MARIADB_USERNAME;
+    databaseConnectionInfo.override = true;
   } else {
     databaseConnectionInfo.databaseName = data.MARIADB_DATABASE;
     databaseConnectionInfo.databaseHost = data.MARIADB_HOST;
     databaseConnectionInfo.databasePassword = data.MARIADB_PASSWORD;
     databaseConnectionInfo.databaseUser = data.MARIADB_USERNAME;
+    databaseConnectionInfo.override = false;
   }
 
   // const originalDatabaseConnectionInfo = await $`${configMapJson} | jq -r '.data | { databaseName: .MARIADB_DATABASE, databaseHost: .MARIADB_HOST, databasePassword: .MARIADB_PASSWORD, datatbaseUser: .MARIADB_USERNAME}'`;
@@ -104,8 +106,15 @@ async function getDatabaseConnectionInfo(namespace) {
   return databaseConnectionInfo;
 }
 
-async function makeDatabaseDump(databaseUser, databasePassword, databaseName, databaseHost, override = false, projectName) {
+async function makeDatabaseDump(databaseConnectionInfo, projectName) {
   echo(`Will now sync dump ${projectName}-main's database`);
+
+  const {
+    databaseName,
+    databaseHost,
+    databaseUser,
+    databasePassword,
+  } = databaseConnectionInfo;
 
   try {
     await $`kubectl exec -n ${projectName}-moduletest deployment/cli -- bash -c "mariadb-dump --user=${databaseUser} --host=${getDatabaseHost(databaseHost, projectName, override)} --password=${databasePassword} --ssl=false --skip-add-locks --single-transaction ${databaseName} > /tmp/${projectName}-dump.sql"`
@@ -127,8 +136,15 @@ function getDatabaseHost(databaseHost, projectName, override = false) {
   return `${databaseHost}.${projectName}-moduletest.svc.cluster.local`;
 }
 
-async function importMainDumpIntoModuletestDatabase(databaseUser, databasePassword, databaseName, databaseHost, override = false, projectName) {
+async function importMainDumpIntoModuletestDatabase(databaseConnectionInfo, projectName) {
   echo(`Importing ${projectName}-main's database dump in to ${projectName}-moduletest's database`);
+
+  const {
+    databaseName,
+    databaseHost,
+    databaseUser,
+    databasePassword,
+  } = databaseConnectionInfo;
 
   try {
     await $`kubectl exec -n ${projectName}-moduletest deployment/cli -- bash -c "mariadb --user=${databaseUser} --host=${getDatabaseHost(databaseHost, projectName, override)} --password=${databasePassword} ${databaseName} < /tmp/${projectName}dump.sql"`
