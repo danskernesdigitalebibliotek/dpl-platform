@@ -70,6 +70,7 @@ async function getDatabaseConnectionInfo(namespace) {
   }
 
   const { data } = configMapJson;
+  console.log(data)
   let databaseConnectionInfo;
   if(data.OVERRIDE_MARIADB_DATABASE != undefined) {
     databaseConnectionInfo.databaseName = data.OVERRIDE_MARIADB_DATABASE;
