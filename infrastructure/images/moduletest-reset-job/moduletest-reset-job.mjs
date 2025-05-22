@@ -114,6 +114,7 @@ async function makeDatabaseDump(databaseConnectionInfo, projectName) {
     databaseHost,
     databaseUser,
     databasePassword,
+    override,
   } = databaseConnectionInfo;
 
   const host = getDatabaseHost(databaseHost, projectName, override);
@@ -146,6 +147,7 @@ async function importMainDumpIntoModuletestDatabase(databaseConnectionInfo, proj
     databaseHost,
     databaseUser,
     databasePassword,
+    override,
   } = databaseConnectionInfo;
 
   try {
