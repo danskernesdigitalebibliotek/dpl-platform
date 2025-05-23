@@ -5,7 +5,7 @@ if (!projectName) {
   throw Error("No 'projectName' provided");
 }
 
-const host = $.env.AZURE_DATABASE_HOST;
+const host = process.env
 echo(host);
 
 const sourceNamespace = projectName + "-main";
