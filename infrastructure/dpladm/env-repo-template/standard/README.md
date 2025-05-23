@@ -48,6 +48,8 @@ UNILOGIN_MUNICIPALITY_ID
 UNLILOGIN_SERVICES_WS_USER
 UNLILOGIN_SERVICES_WS_PASSWORD
 
-### Right now the GO application figures this one out, but it being deprecated (Should be deletable in july 2025)
+### Right now the GO application figures this one out, but it being deprecated
+
+### (Should be deletable in july 2025)
 
 NEXT_PUBLIC_GRAPHQL_BASIC_TOKEN_DPL_CMS
