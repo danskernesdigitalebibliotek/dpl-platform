@@ -5,6 +5,9 @@ if (!projectName) {
   throw Error("No 'projectName' provided");
 }
 
+const host = $.env.AZURE_DATABASE_HOST;
+echo(host);
+
 const sourceNamespace = projectName + "-main";
 const sourceDatabaseConnectionInfo = await getDatabaseConnectionInfo(sourceNamespace);
 await makeDatabaseDump(sourceDatabaseConnectionInfo, projectName);
