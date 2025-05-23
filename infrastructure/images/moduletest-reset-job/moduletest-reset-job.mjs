@@ -6,7 +6,7 @@ if (!projectName) {
 }
 
 const host = process.env
-echo(host);
+console.log(JSON.stringify(host));
 
 const sourceNamespace = projectName + "-main";
 const sourceDatabaseConnectionInfo = await getDatabaseConnectionInfo(sourceNamespace);
