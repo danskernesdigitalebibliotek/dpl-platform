@@ -35,7 +35,6 @@ sites:
     releaseImageName: dpl-cms-source
     dpl-cms-release: "2025.21.2"
     plan: webmaster
-    primary-domain: canary.dplplat01.dpl.reload.dk
     # TODO: Remove this once the the Adgangsplatformen OpenID client used here
     # has been updated to use the primary domain.
     autogenerateRoutes: true
@@ -47,6 +46,9 @@ sites:
     releaseImageRepository: ghcr.io/danskernesdigitalebibliotek
     releaseImageName: dpl-cms-source
     plan: webmaster
+    primary-domain: canary.dplplat01.dpl.reload.dk
+    autogenerateRoutes: true
+    go-release: 0.25.7
     dpl-cms-release: "2025.21.2"
     moduletest-dpl-cms-release: "2025.21.2"
     deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAILj8lXv7C/7s7te9sEpwcHQhgDWfzsCkAN7rqQ4sdTzk"
@@ -59,6 +61,7 @@ sites:
     # to make client and server use the same version.
     dpl-cms-release: "2025.21.2"
     moduletest-dpl-cms-release: "2025.21.2"
+    go-release: 0.25.7
     plan: webmaster
     primary-domain: staging.dplplat01.dpl.reload.dk
     # TODO: Remove this once the the Adgangsplatformen OpenID client used here

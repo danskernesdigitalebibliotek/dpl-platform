@@ -19,9 +19,10 @@ const lagoonVariableName = [
 const lagoonVariableValues = lagoonVariableName.map((_, i) => crypto.randomBytes(64).toString("base64"));
 
 async function setVariablesForProject(project, environment = "main") {
+  echo(`setting env variables for ${project}-${environment}`);
   for (const [index, value] of lagoonVariableName.entries()) {
     try {
-      await $`lagoon add variable --project ${project} --environment ${environment} --name ${value} --scope global --value ${lagoonVariableValues[index]}`;
+      await $`lagoon update variable --project ${project} --environment ${environment} --name ${value} --scope global --value "${lagoonVariableValues[index]}"`;
     } catch (error) {
       throw Error("failed to create or update variables for BNF and GO secrets", { cause: error });
     }
@@ -33,11 +34,11 @@ async function isWebmaster(project) {
    return result.stdout === "webmaster\n" ? true : false;
 }
 
-for await (const site of sites) {
+for await (const site of sites.lines()) {
   await setVariablesForProject(site);
   if (await isWebmaster(site)) {
   // Also set it for the moduletest project
-    setVariablesForProject(site, "moduletest");
+    await setVariablesForProject(site, "moduletest");
   }
 }
 

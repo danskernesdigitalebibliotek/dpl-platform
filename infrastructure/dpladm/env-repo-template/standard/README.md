@@ -13,7 +13,7 @@ NEXT_PUBLIC_APP_URL
 NEXT_PUBLIC_GRAPHQL_SCHEMA_ENDPOINT_DPL_CMS
 NEXT_PUBLIC_DPL_CMS_HOSTNAME
 
-### Bliver sat i .env.defaults found in this folder
+### Bliver sat i node.dockerfile found in this folder
 
 NEXT_PUBLIC_GRAPHQL_SCHEMA_ENDPOINT_FBI
 UNILOGIN_API_URL

@@ -12,6 +12,7 @@ const lagoonVariableName = [
 ];
 
 async function setVariablesForProject(project, environment = "main") {
+  echo(`setting env variables for ${project}-${environment}`);
   for (const variableName of lagoonVariableName) {
     const secret = crypto.randomBytes(64).toString("base64");
     try {
