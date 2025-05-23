@@ -40,7 +40,7 @@ BNF_GRAPHQL_CONSUMER_USER_PASSWORD
 GO_GRAPHQL_CONSUMER_SECRET
 GO_GRAPHQL_CONSUMER_USER_PASSWORD
 
-### These variables are set by han in DPL CMS config form found at https://dpl-cms-project-url.tld/admin/config/services/
+### These variables are set by han in DPL CMS config form found at <https://dpl-cms-project-url.tld/admin/config/services/>
 
 UNILOGIN_CLIENT_SECRET
 UNLILOGIN_PUBHUB_RETAILER_KEY_CODE
@@ -51,4 +51,3 @@ UNLILOGIN_SERVICES_WS_PASSWORD
 ### Right now the GO application figures this one out, but it being deprecated (Should be deletable in july 2025)
 
 NEXT_PUBLIC_GRAPHQL_BASIC_TOKEN_DPL_CMS
-
