@@ -139,7 +139,7 @@ function getDatabaseHost(databaseHost, projectName, override = false) {
   if(override === true) {
     return databaseHost;
   }
-  return `azureDatabaseHost`;
+  return azureDatabaseHost;
 }
 
 async function importMainDumpIntoModuletestDatabase(databaseConnectionInfo, projectName) {
