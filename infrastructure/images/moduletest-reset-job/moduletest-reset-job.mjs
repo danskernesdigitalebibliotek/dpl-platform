@@ -12,6 +12,7 @@ const sourceDatabaseConnectionInfo = await getDatabaseConnectionInfo(sourceNames
 await makeDatabaseDump(sourceDatabaseConnectionInfo, projectName);
 const targetNamespace = projectName + "-moduletest";
 const targetDatabaseConnectionInfo = await getDatabaseConnectionInfo(targetNamespace);
+await importMainDumpIntoModuletestDatabase(targetDatabaseConnectionInfo, projectName);
 
 
   }
@@ -84,4 +85,24 @@ async function makeDatabaseDump(databaseConnectionInfo, projectName) {
   }
 
   echo(`Database dump for ${projectName} complete`);
+}
+async function importMainDumpIntoModuletestDatabase(databaseConnectionInfo, projectName) {
+  echo(`Importing ${projectName}-main's database dump in to ${projectName}-moduletest's database`);
+
+  const {
+    databaseName,
+    databaseHost,
+    databaseUser,
+    databasePassword,
+    override,
+  } = databaseConnectionInfo;
+
+  try {
+    await $`kubectl exec -n ${projectName}-moduletest deployment/cli -- bash -c "mariadb --user=${databaseUser} --host=${getDatabaseHost(databaseHost, projectName, override)} --password=${databasePassword} ${databaseName} < /tmp/${projectName}-dump.sql"`
+  } catch(error) {
+    echo(`Failed to import dump into ${projectName}-moduletest's database`, error.stderr);
+    throw Error(`Failed to import dump into ${projectName}-moduletest's database`, { cause: error });
+  }
+
+  echo(`Database reset for ${projectName} complete`);
 }
