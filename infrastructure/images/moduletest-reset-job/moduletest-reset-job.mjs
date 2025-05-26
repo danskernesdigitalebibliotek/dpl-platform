@@ -9,6 +9,7 @@ const azureDatabaseHost = $.env.AZURE_DATABASE_HOST;
 
 const sourceNamespace = projectName + "-main";
 const sourceDatabaseConnectionInfo = await getDatabaseConnectionInfo(sourceNamespace);
+await makeDatabaseDump(sourceDatabaseConnectionInfo, projectName);
 const targetNamespace = projectName + "-moduletest";
 const targetDatabaseConnectionInfo = await getDatabaseConnectionInfo(targetNamespace);
 
@@ -62,3 +63,25 @@ try {
 }
 
 echo(`File reset for ${projectName} complete`);
+async function makeDatabaseDump(databaseConnectionInfo, projectName) {
+  echo(`Dumping ${projectName}-main's database to file`);
+
+  const {
+    databaseName,
+    databaseHost,
+    databaseUser,
+    databasePassword,
+    override,
+  } = databaseConnectionInfo;
+
+  const host = getDatabaseHost(databaseHost, projectName, override);
+
+  try {
+    await $`kubectl exec -n ${projectName}-moduletest deployment/cli -- bash -c "mariadb-dump --user=${databaseUser} --host=${host} --password=${databasePassword} --ssl=false --skip-add-locks --single-transaction ${databaseName} > /tmp/${projectName}-dump.sql"`
+  } catch(error) {
+    echo(`Failed to make database dump from ${projectName}-main to CLI pod in ${projectName}-moduletest`, error.stderr);
+    throw Error(`Failed to make database dump from ${projectName}-main to CLI pod in ${projectName}-moduletest`, { cause: error });
+  }
+
+  echo(`Database dump for ${projectName} complete`);
+}
