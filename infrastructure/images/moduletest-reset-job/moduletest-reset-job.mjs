@@ -5,7 +5,6 @@ if (!projectName) {
   throw Error("No 'projectName' provided");
 }
 
-echo(`Will now sync databases from ${projectName}-main to ${projectName}-moduletest`);
 const azureDatabaseHost = $.env.AZURE_DATABASE_HOST;
 
 try {
