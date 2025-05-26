@@ -35,6 +35,8 @@ sites:
     releaseImageName: dpl-cms-source
     dpl-cms-release: "2025.21.2"
     plan: webmaster
+    go-release: 0.25.7
+    primary-domain: canary.dplplat01.dpl.reload.dk
     # TODO: Remove this once the the Adgangsplatformen OpenID client used here
     # has been updated to use the primary domain.
     autogenerateRoutes: true
@@ -46,9 +48,6 @@ sites:
     releaseImageRepository: ghcr.io/danskernesdigitalebibliotek
     releaseImageName: dpl-cms-source
     plan: webmaster
-    primary-domain: canary.dplplat01.dpl.reload.dk
-    autogenerateRoutes: true
-    go-release: 0.25.7
     dpl-cms-release: "2025.21.2"
     moduletest-dpl-cms-release: "2025.21.2"
     deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAILj8lXv7C/7s7te9sEpwcHQhgDWfzsCkAN7rqQ4sdTzk"
@@ -61,7 +60,6 @@ sites:
     # to make client and server use the same version.
     dpl-cms-release: "2025.21.2"
     moduletest-dpl-cms-release: "2025.21.2"
-    go-release: 0.25.7
     plan: webmaster
     primary-domain: staging.dplplat01.dpl.reload.dk
     # TODO: Remove this once the the Adgangsplatformen OpenID client used here
@@ -160,7 +158,8 @@ sites:
       - www.albertslundbibliotek.dk
     autogenerateRoutes: true
     plan: webmaster
-    <<: *webmasters-on-weekly-release-cycle
+    go-release: 0.25.7
+    <<: *x-webmasters-on-latest-release
   allerod:
     name: "Allerød Biblioteker"
     description: "The library site for Allerød"
@@ -345,6 +344,7 @@ sites:
     secondary-domains:
       - www.genbib.dk
     autogenerateRoutes: true
+    go-release: 0.25.7
     <<: *default-release-image-source
   gladsaxe:
     name: "Gladsaxe Bibliotekerne"
@@ -446,6 +446,7 @@ sites:
       - herningbib.dk
     autogenerateRoutes: true
     plan: webmaster
+    go-release: 0.25.7
     <<: *webmasters-on-weekly-release-cycle
   hillerod:
     name: "Hillerød Bibliotekerne"
@@ -464,6 +465,7 @@ sites:
     secondary-domains:
       - www.hjbib.dk
     autogenerateRoutes: true
+    go-release: 0.25.7
     <<: *default-release-image-source
   hoje-taastrup:
     name: "Høje-Taastrup Kommunes Biblioteker"
@@ -606,6 +608,7 @@ sites:
     secondary-domains:
       - www.langelandbibliotek.dk
     autogenerateRoutes: true
+    go-release: 0.25.7
     <<: *default-release-image-source
   lejre:
     name: "Lejre Bibliotek & Arkiv"
@@ -815,6 +818,7 @@ sites:
       - www.silkeborgbib.dk
     autogenerateRoutes: true
     plan: webmaster
+    go-release: 0.25.7
     <<: *x-webmasters-on-latest-release
   skanderborg:
     name: "Skanderborg Bibliotek"
