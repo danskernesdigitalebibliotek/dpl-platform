@@ -14,10 +14,19 @@ const targetNamespace = projectName + "-moduletest";
 const targetDatabaseConnectionInfo = await getDatabaseConnectionInfo(targetNamespace);
 await importMainDumpIntoModuletestDatabase(targetDatabaseConnectionInfo, projectName);
 
+await syncFileFromSourceToTarget(projectName);
 
   }
 }
 
+async function syncFileFromSourceToTarget(projectName) {
+  echo(`Now moving files from ${projectName}-main to ${projectName}-moduletest`);
+  try {
+      await $`kubectl exec -n ${projectName}-moduletest deployment/cli -- bash -c "rsync --omit-dir-times --recursive --no-perms --no-group --no-owner --no-times --chmod=ugo=rwX --delete --exclude=css/* --exclude=js/* --exclude=styles/* --delete-excluded ${projectName}-main@20.238.147.183:/app/web/sites/default/files/ /app/web/sites/default/files/"`;
+  } catch (error) {
+      echo(`The file move failed for ${projectName} moduletest`, error.stderr);
+      throw Error(`The file move failed for ${projectName} moduletest`, { cause: error });
+  }
 }
 
 async function getDatabaseConnectionInfo(namespace) {
