@@ -5,7 +5,7 @@ if (!projectName) {
   throw Error("No 'projectName' provided");
 }
 
-await sleept(5000);
+await sleep(5000);
 
 const host = process.env
 console.log(JSON.stringify(host));
