@@ -5,7 +5,7 @@ if (!projectName) {
   throw Error("No 'projectName' provided");
 }
 
-const host = process.env.AZURE_DATBASE_HOST;
+const host = process.env.AZURE_DATABASE_HOST;
 console.log("host:", host);
 echo($.env);
 
