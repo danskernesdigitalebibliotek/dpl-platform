@@ -14,15 +14,6 @@ const targetNamespace = projectName + "-moduletest";
 const targetDatabaseConnectionInfo = await getDatabaseConnectionInfo(targetNamespace);
 await importMainDumpIntoModuletestDatabase(targetDatabaseConnectionInfo, projectName);
 
-echo(`Reseting files from ${projectName}-main to ${projectName}-moduletest
-  \n
-  Will now delete all files and folder in '/app/web/sites/default/files'
-  \n
-  on ${projectName}-moduletest
-`);
-
-// Do we actually need to do this - rsync should handle the removal of files the source doesn't have
-// await deleteFilesFolder(projectName);
 await syncFileFromSourceToTarget(projectName);
 
 await runDrushDeployForStateTransferToTakeEffect();
@@ -50,17 +41,6 @@ async function syncFileFromSourceToTarget(projectName) {
   }
 }
 
-// async function deleteFilesFolder(projectName) {
-//     try {
-//         await $`kubectl exec -n ${projectName}-moduletest deployment/cli -- bash -c "rm -fr /app/web/sites/default/files"`;
-//     } catch (error) {
-//         if (error.exitCode != 1) {
-//             throw Error("unexpected error", { cause: error });
-//         }
-//         echo("As expected, the deletion of all files and folders in '/app/web/default/files' threw an 'exit 1'", error);
-//     }
-// }
-
 async function getDatabaseConnectionInfo(namespace) {
   echo(`Getting ${namespace}'s database connection details`);
   let configMapJson;
@@ -73,12 +53,14 @@ async function getDatabaseConnectionInfo(namespace) {
 
   const configmap = JSON.parse(configMapJson);
   const { data } = configmap;
+
   let databaseConnectionInfo = {
     databaseName: "",
     databaseHost: "",
     databaseUser: "",
     databasePassword : "",
   };
+
   if(data.OVERRIDE_MARIADB_DATABASE != undefined) {
     databaseConnectionInfo.databaseName = data.OVERRIDE_MARIADB_DATABASE;
     databaseConnectionInfo.databaseHost = data.OVERRIDE_MARIADB_HOST;
@@ -97,7 +79,7 @@ async function getDatabaseConnectionInfo(namespace) {
 }
 
 async function makeDatabaseDump(databaseConnectionInfo, projectName) {
-  echo(`Will now sync dump ${projectName}-main's database`);
+  echo(`Dumping ${projectName}-main's database to file`);
 
   const {
     databaseName,
