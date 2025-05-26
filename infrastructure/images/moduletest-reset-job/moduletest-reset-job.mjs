@@ -86,6 +86,15 @@ async function makeDatabaseDump(databaseConnectionInfo, projectName) {
 
   echo(`Database dump for ${projectName} complete`);
 }
+
+function getDatabaseHost(databaseHost, projectName, override = false) {
+  // We are in the middle of switching to an incluster database. We therefore need to use the database the site is using to make a database transfer
+  if(override === true) {
+    return databaseHost;
+  }
+  return azureDatabaseHost;
+}
+
 async function importMainDumpIntoModuletestDatabase(databaseConnectionInfo, projectName) {
   echo(`Importing ${projectName}-main's database dump in to ${projectName}-moduletest's database`);
 
