@@ -63,7 +63,7 @@ async function syncFileFromSourceToTarget(projectName) {
 // }
 
 async function getDatabaseConnectionInfo(namespace) {
-  echo(`Now getting ${namespace}'s database connection details`);
+  echo(`Getting ${namespace}'s database connection details`);
   let configMapJson;
   try {
     configMapJson = await $`kubectl get -n ${namespace} configmap lagoon-env -o json`
@@ -74,7 +74,6 @@ async function getDatabaseConnectionInfo(namespace) {
 
   const configmap = JSON.parse(configMapJson);
   const { data } = configmap;
-  console.log(data)
   let databaseConnectionInfo = {
     databaseName: "",
     databaseHost: "",
@@ -94,17 +93,6 @@ async function getDatabaseConnectionInfo(namespace) {
     databaseConnectionInfo.databaseUser = data.MARIADB_USERNAME;
     databaseConnectionInfo.override = false;
   }
-
-  // const originalDatabaseConnectionInfo = await $`${configMapJson} | jq -r '.data | { databaseName: .MARIADB_DATABASE, databaseHost: .MARIADB_HOST, databasePassword: .MARIADB_PASSWORD, datatbaseUser: .MARIADB_USERNAME}'`;
-  // const overrideDatabaseConnectionInfo = await $`${configMapJson} | jq -r '.data | { databaseName: .OVERRIDE_MARIADB_DATABASE, databaseHost: .OVERRIDE_MARIADB_HOST, databasePassword: .OVERRIDE_MARIADB_PASSWORD, datatbaseUser: .OVERRIDE_MARIADB_USERNAME}'`;
-  // // If overrideDatabaseConnectionInfo, the project is using the incluster database, and we should the overrideDatabaseConnectionInfo to connecto the database.
-  // if(typeof overrideDatabaseConnectionInfo === "string") {
-  //   databaseConnectionInfo = overrideDatabaseConnectionInfo;
-  //   databaseConnectionInfo.override = true;
-  // } else {
-  //   databaseConnectionInfo = originalDatabaseConnectionInfo;
-  //   databaseConnectionInfo.override = false;
-  // }
 
   return databaseConnectionInfo;
 }
@@ -133,9 +121,7 @@ async function makeDatabaseDump(databaseConnectionInfo, projectName) {
 }
 
 function getDatabaseHost(databaseHost, projectName, override = false) {
-  // We are in the middle of switching to an incluster database. The incluster database has uses the same hostname no matter the namespace calling.
-  // The the database accessed via Lagoon uses the following host format: svcName.environmentNamespace.svc.cluster.local.
-  // The svcName is the non-override hostname found in the configmap lagoon-env.
+  // We are in the middle of switching to an incluster database. We therefore need to use the database the site is using to make a database transfer
   if(override === true) {
     return databaseHost;
   }
@@ -154,7 +140,7 @@ async function importMainDumpIntoModuletestDatabase(databaseConnectionInfo, proj
   } = databaseConnectionInfo;
 
   try {
-    await $`kubectl exec -n ${projectName}-moduletest deployment/cli -- bash -c "mariadb --user=${databaseUser} --host=${getDatabaseHost(databaseHost, projectName, override)} --password=${databasePassword} ${databaseName} < /tmp/${projectName}dump.sql"`
+    await $`kubectl exec -n ${projectName}-moduletest deployment/cli -- bash -c "mariadb --user=${databaseUser} --host=${getDatabaseHost(databaseHost, projectName, override)} --password=${databasePassword} ${databaseName} < /tmp/${projectName}-dump.sql"`
   } catch(error) {
     echo(`Failed to import dump into ${projectName}-moduletest's database`, error.stderr);
     throw Error(`Failed to import dump into ${projectName}-moduletest's database`, { cause: error });
