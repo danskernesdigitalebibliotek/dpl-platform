@@ -5,10 +5,9 @@ if (!projectName) {
   throw Error("No 'projectName' provided");
 }
 
-await sleep(5000);
-
-const host = process.env
-console.log(JSON.stringify(host));
+const host = process.env.AZURE_DATBASE_HOST;
+console.log("host:", host);
+echo($.env);
 
 const sourceNamespace = projectName + "-main";
 const sourceDatabaseConnectionInfo = await getDatabaseConnectionInfo(sourceNamespace);
