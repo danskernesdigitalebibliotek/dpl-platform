@@ -18,6 +18,8 @@ await syncFileFromSourceToTarget(projectName);
 
 await runDrushDeployForStateTransferToTakeEffect();
 
+echo(`File reset for ${projectName} complete`);
+
 
 async function runDrushDeployForStateTransferToTakeEffect() {
   echo(`Starting 'drush deploy' in ${projectName}-moduletest`);
