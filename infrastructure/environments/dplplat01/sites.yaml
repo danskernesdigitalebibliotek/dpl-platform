@@ -159,7 +159,7 @@ sites:
     autogenerateRoutes: true
     plan: webmaster
     go-release: 0.25.7
-    <<: *webmasters-on-weekly-release-cycle
+    <<: *x-webmasters-on-latest-release
   allerod:
     name: "Allerød Biblioteker"
     description: "The library site for Allerød"
