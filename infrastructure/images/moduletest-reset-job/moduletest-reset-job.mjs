@@ -16,6 +16,16 @@ await importMainDumpIntoModuletestDatabase(targetDatabaseConnectionInfo, project
 
 await syncFileFromSourceToTarget(projectName);
 
+await runDrushDeployForStateTransferToTakeEffect();
+
+
+async function runDrushDeployForStateTransferToTakeEffect() {
+  echo(`Starting 'drush deploy' in ${projectName}-moduletest`);
+  try {
+      await $`kubectl exec -n ${projectName}-moduletest deployment/cli -- bash -c "drush deploy"`;
+  } catch (error) {
+      echo(`Failed to run drush deploy from CLI pod in namespace ${projectName}-moduletest`, error.stderr);
+      throw Error(`Failed to run drush deploy from CLI pod in namespace ${projectName}-moduletest`, { cause: error });
   }
 }
 
@@ -42,12 +52,6 @@ async function getDatabaseConnectionInfo(namespace) {
   const configmap = JSON.parse(configMapJson);
   const { data } = configmap;
 
-echo(`Starting 'drush deploy' in ${projectName}-moduletest`);
-try {
-  await $`kubectl exec -n ${projectName}-moduletest deployment/cli -- bash -c "drush deploy"`
-} catch(error) {
-  echo("The file move failed for ${projectName} moduletest", error.stderr);
-  throw Error("The file move failed for ${projectName} moduletest", { cause: error });
   let databaseConnectionInfo = {
     databaseName: "",
     databaseHost: "",
