@@ -6,7 +6,6 @@ if (!projectName) {
 }
 
 const azureDatabaseHost = $.env.AZURE_DATABASE_HOST;
-console.log("host:", azureDatabaseHost);
 
 const sourceNamespace = projectName + "-main";
 const sourceDatabaseConnectionInfo = await getDatabaseConnectionInfo(sourceNamespace);
