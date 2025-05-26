@@ -6,6 +6,7 @@ if (!projectName) {
 }
 
 echo(`Will now sync databases from ${projectName}-main to ${projectName}-moduletest`);
+const azureDatabaseHost = $.env.AZURE_DATABASE_HOST;
 
 try {
   await $`kubectl exec -n ${projectName}-moduletest deployment/cli -- bash -c "drush sql-drop -y; drush -y sql-sync @lagoon.${projectName}-main @self --create-db"`

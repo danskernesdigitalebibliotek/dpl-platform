@@ -20,6 +20,12 @@ spec:
             - /bin/bash
             - -c
             - ./moduletest-reset-job.mjs {{ . }}
+          env:
+            - name: AZURE_DATABASE_HOST
+              valueFrom:
+                secretKeyRef:
+                  name: azure-database-host
+                  key: host
       serviceAccountName: moduletest-reset-serviceaccount
       tolerations:
         - key: noderole.dplplatform
