@@ -78,7 +78,6 @@ async function getDatabaseConnectionInfo(namespace) {
   return databaseConnectionInfo;
 }
 
-echo(`File reset for ${projectName} complete`);
 async function makeDatabaseDump(databaseConnectionInfo, projectName) {
   echo(`Dumping ${projectName}-main's database to file`);
 
