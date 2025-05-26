@@ -5,9 +5,8 @@ if (!projectName) {
   throw Error("No 'projectName' provided");
 }
 
-const host = process.env.AZURE_DATABASE_HOST;
-console.log("host:", host);
-echo($.env);
+const azureDatabaseHost = $.env.AZURE_DATABASE_HOST;
+console.log("host:", azureDatabaseHost);
 
 const sourceNamespace = projectName + "-main";
 const sourceDatabaseConnectionInfo = await getDatabaseConnectionInfo(sourceNamespace);
@@ -140,7 +139,7 @@ function getDatabaseHost(databaseHost, projectName, override = false) {
   if(override === true) {
     return databaseHost;
   }
-  return `${databaseHost}.${projectName}-moduletest.svc.cluster.local`;
+  return `azureDatabaseHost`;
 }
 
 async function importMainDumpIntoModuletestDatabase(databaseConnectionInfo, projectName) {
