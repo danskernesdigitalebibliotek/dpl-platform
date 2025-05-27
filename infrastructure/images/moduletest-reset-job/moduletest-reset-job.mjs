@@ -54,25 +54,20 @@ async function getDatabaseConnectionInfo(namespace) {
   const configmap = JSON.parse(configMapJson);
   const { data } = configmap;
 
-  let databaseConnectionInfo = {
-    databaseName: "",
-    databaseHost: "",
-    databaseUser: "",
-    databasePassword : "",
+  const databaseConnectionInfo = {
+    databaseName: data.MARIADB_DATABASE,
+    databaseHost: data.MARIADB_HOST,
+    databaseUser:  data.MARIADB_USERNAME,
+    databasePassword: data.MARIADB_PASSWORD,
+    override: false,
   };
 
-  if(data.OVERRIDE_MARIADB_DATABASE != undefined) {
+  if(data.OVERRIDE_MARIADB_DATABASE) {
     databaseConnectionInfo.databaseName = data.OVERRIDE_MARIADB_DATABASE;
     databaseConnectionInfo.databaseHost = data.OVERRIDE_MARIADB_HOST;
     databaseConnectionInfo.databasePassword = data.OVERRIDE_MARIADB_PASSWORD;
     databaseConnectionInfo.databaseUser = data.OVERRIDE_MARIADB_USERNAME;
     databaseConnectionInfo.override = true;
-  } else {
-    databaseConnectionInfo.databaseName = data.MARIADB_DATABASE;
-    databaseConnectionInfo.databaseHost = data.MARIADB_HOST;
-    databaseConnectionInfo.databasePassword = data.MARIADB_PASSWORD;
-    databaseConnectionInfo.databaseUser = data.MARIADB_USERNAME;
-    databaseConnectionInfo.override = false;
   }
 
   return databaseConnectionInfo;
