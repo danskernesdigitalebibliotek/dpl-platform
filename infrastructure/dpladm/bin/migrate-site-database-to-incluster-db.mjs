@@ -2,18 +2,18 @@
 
 import * as crypto from "crypto";
 
-const project = `${process.argv[3]}`;
+const project = `${argv.project}`;
 if (!project) {
   throw Error("No 'project' provided");
 }
 
-const environment = `${process.argv[4]}`;
+const environment = `${argv.env}`;
 if (!environment) {
   throw Error("No 'environment' provided");
 }
 
-let dryRun = `${process.argv[5]}`;
-if (typeof `${process.argv[5]}` === "undefined") {
+let dryRun = `${argv.dry-run}`;
+if (typeof `${argv.dry-run}` === "undefined") {
   dryRun = false;
 }
 
