@@ -110,6 +110,7 @@ sites:
       - www.bibliotekernesdelingstjeneste.dk
       - delingstjeneste.dk
       - www.delingstjeneste.dk
+    go-release: 0.25.10
   # Production sites
   aabenraa:
     name: "Aabenraa Biblioteker og Kulturhuse"
