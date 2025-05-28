@@ -33,8 +33,10 @@ async function runDrushDeployForStateTransferToTakeEffect() {
 
 async function syncFileFromSourceToTarget(projectName) {
   echo(`Now moving files from ${projectName}-main to ${projectName}-moduletest`);
+  // The IP here is the lagoon SSH host and it is documented here: https://github.com/danskernesdigitalebibliotek/dpl-platform/blob/main/docs/runbooks/connecting-the-lagoon-cli.md#configure-your-local-lagoon-cli
+  const sshHost = "20.238.147.183";
   try {
-      await $`kubectl exec -n ${projectName}-moduletest deployment/cli -- bash -c "rsync --omit-dir-times --recursive --no-perms --no-group --no-owner --no-times --chmod=ugo=rwX --delete --exclude=css/* --exclude=js/* --exclude=styles/* --delete-excluded ${projectName}-main@20.238.147.183:/app/web/sites/default/files/ /app/web/sites/default/files/"`;
+      await $`kubectl exec -n ${projectName}-moduletest deployment/cli -- bash -c "rsync --omit-dir-times --recursive --no-perms --no-group --no-owner --no-times --chmod=ugo=rwX --delete --exclude=css/* --exclude=js/* --exclude=styles/* --delete-excluded ${projectName}-main@${sshHost}:/app/web/sites/default/files/ /app/web/sites/default/files/"`;
   } catch (error) {
       echo(`The file move failed for ${projectName} moduletest`, error.stderr);
       throw Error(`The file move failed for ${projectName} moduletest`, { cause: error });
