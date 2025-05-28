@@ -9,7 +9,7 @@ spec:
     key: root-password
   replicas: {{ .Values.replicas }}
   galera:
-    enabled: true
+    enabled: false
     config:
       reuseStorageVolume: true
     agent:
@@ -44,12 +44,20 @@ spec:
     [mariadb]
     bind-address=*
     default_storage_engine=InnoDB
-    innodb_buffer_pool_size=3200MB
-    innodb_autoinc_lock_mode=2
+    innodb_buffer_pool_size=5500MB
+    innodb_autoinc_lock_mode=1
     binlog_format=row
-    max_connections=125
+    max_connections=220
     wait_timeout=180
     transaction_isolation="READ-COMMITTED"
+    collation_server="LATIN1_SWEDISH_CI"
+    connect_timeout=10
+    expensive_subquery_limit=100
+    group_concat_max_len=1048576
+    innodb_read_io_threads=1
+    innodb_write_io_threads=1
+    log_queries_not_using_indexes="ON"
+    long_query_time=1
 
   myCnfConfigMapKeyRef:
     name: mariadb
