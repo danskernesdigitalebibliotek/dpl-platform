@@ -56,10 +56,9 @@ async function getDatabaseConnectionInfo(namespace) {
 
   const databaseConnectionInfo = {
     databaseName: data.MARIADB_DATABASE,
-    databaseHost: data.MARIADB_HOST,
+    databaseHost: azureDatabaseHost,
     databaseUser:  data.MARIADB_USERNAME,
     databasePassword: data.MARIADB_PASSWORD,
-    override: false,
   };
 
   if(data.OVERRIDE_MARIADB_DATABASE) {
@@ -67,7 +66,6 @@ async function getDatabaseConnectionInfo(namespace) {
     databaseConnectionInfo.databaseHost = data.OVERRIDE_MARIADB_HOST;
     databaseConnectionInfo.databasePassword = data.OVERRIDE_MARIADB_PASSWORD;
     databaseConnectionInfo.databaseUser = data.OVERRIDE_MARIADB_USERNAME;
-    databaseConnectionInfo.override = true;
   }
 
   return databaseConnectionInfo;
@@ -81,27 +79,16 @@ async function makeDatabaseDump(databaseConnectionInfo, projectName) {
     databaseHost,
     databaseUser,
     databasePassword,
-    override,
   } = databaseConnectionInfo;
 
-  const host = getDatabaseHost(databaseHost, projectName, override);
-
   try {
-    await $`kubectl exec -n ${projectName}-moduletest deployment/cli -- bash -c "mariadb-dump --user=${databaseUser} --host=${host} --password=${databasePassword} --ssl=false --skip-add-locks --single-transaction ${databaseName} > /tmp/${projectName}-dump.sql"`
+    await $`kubectl exec -n ${projectName}-moduletest deployment/cli -- bash -c "mariadb-dump --user=${databaseUser} --host=${databaseHost} --password=${databasePassword} --ssl=false --skip-add-locks --single-transaction ${databaseName} > /tmp/${projectName}-dump.sql"`
   } catch(error) {
     echo(`Failed to make database dump from ${projectName}-main to CLI pod in ${projectName}-moduletest`, error.stderr);
     throw Error(`Failed to make database dump from ${projectName}-main to CLI pod in ${projectName}-moduletest`, { cause: error });
   }
 
   echo(`Database dump for ${projectName} complete`);
-}
-
-function getDatabaseHost(databaseHost, projectName, override = false) {
-  // We are in the middle of switching to an incluster database. We therefore need to use the database the site is using to make a database transfer
-  if(override === true) {
-    return databaseHost;
-  }
-  return azureDatabaseHost;
 }
 
 async function importMainDumpIntoModuletestDatabase(databaseConnectionInfo, projectName) {
@@ -112,11 +99,10 @@ async function importMainDumpIntoModuletestDatabase(databaseConnectionInfo, proj
     databaseHost,
     databaseUser,
     databasePassword,
-    override,
   } = databaseConnectionInfo;
 
   try {
-    await $`kubectl exec -n ${projectName}-moduletest deployment/cli -- bash -c "mariadb --user=${databaseUser} --host=${getDatabaseHost(databaseHost, projectName, override)} --password=${databasePassword} ${databaseName} < /tmp/${projectName}-dump.sql"`
+    await $`kubectl exec -n ${projectName}-moduletest deployment/cli -- bash -c "mariadb --user=${databaseUser} --host=${databaseHost} --password=${databasePassword} ${databaseName} < /tmp/${projectName}-dump.sql"`
   } catch(error) {
     echo(`Failed to import dump into ${projectName}-moduletest's database`, error.stderr);
     throw Error(`Failed to import dump into ${projectName}-moduletest's database`, { cause: error });
