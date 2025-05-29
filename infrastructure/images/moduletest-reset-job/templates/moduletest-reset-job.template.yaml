@@ -15,11 +15,17 @@ spec:
       restartPolicy: Never
       containers:
         - name: moduletest-reset-container
-          image: ghcr.io/danskernesdigitalebibliotek/dpl-platform/moduletest-reset-job:mr-1.0.1
+          image: ghcr.io/danskernesdigitalebibliotek/dpl-platform/moduletest-reset-job:mr-1.0.38-rc
           command:
             - /bin/bash
             - -c
             - ./moduletest-reset-job.mjs {{ . }}
+          env:
+            - name: AZURE_DATABASE_HOST
+              valueFrom:
+                secretKeyRef:
+                  name: azure-database-host
+                  key: host
       serviceAccountName: moduletest-reset-serviceaccount
       tolerations:
         - key: noderole.dplplatform
@@ -56,9 +62,9 @@ metadata:
   namespace: moduletest-reset
 rules:
 - apiGroups: [""]
-  resources: [ "namespaces", "pods", "pods/exec" ]
+  resources: [ "namespaces", "pods", "pods/exec", "configmaps" ]
   verbs: [ "get", "list", "create" ]
-- apiGroups: [ "apps" ]
+- apiGroups: [ "apps", "configmaps" ]
   resources: [ "deployments", "pods" ]
   verbs: [ "get", "list" ]
 
