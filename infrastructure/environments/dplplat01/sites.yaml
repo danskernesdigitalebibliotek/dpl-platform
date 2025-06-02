@@ -24,6 +24,12 @@ x-webmasters-on-latest-release: &x-webmasters-on-latest-release
   releaseImageName: dpl-cms-source
   dpl-cms-release: "2025.21.2"
   moduletest-dpl-cms-release: "2025.21.2"
+x-go-release-pilot-sites: &go-release-pilot-sites
+  releaseImageRepository: ghcr.io/danskernesdigitalebibliotek
+  releaseImageName: dpl-cms-source
+  dpl-cms-release: "2025.22.0"
+  moduletest-dpl-cms-release: "2025.22.0"
+  go-release: 0.25.13
 sites:
   # Site objects are indexed by a unique key that must be a valid lagoon, and
   # github project name. That is, alphanumeric and dashes.
@@ -92,14 +98,13 @@ sites:
     name: "Bibliotekernes Nationale Formidling"
     description: "The BNF content sharing site"
     plan: webmaster
-    moduletest-dpl-cms-release: "2025.21.2"
     # Use the webmaster plan to add a module-test site which acts as a server
     # for the staging environment.
     # The module-test site should use the next version while the production
     # environment should use the latest version.
     # Our YAML handling chokes on duplicates so we follow the default release
     # plan and update the module test site manually.
-    <<: *default-release-image-source
+    <<: *go-release-pilot-sites
     deploy_key: ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAICTmMC/cUI3U3QloX6aAdN7g0EU42J0fwA9aO7UJOzx9
     primary-domain: delingstjenesten.dk
     secondary-domains:
@@ -110,7 +115,6 @@ sites:
       - www.bibliotekernesdelingstjeneste.dk
       - delingstjeneste.dk
       - www.delingstjeneste.dk
-    go-release: 0.25.11
   # Production sites
   aabenraa:
     name: "Aabenraa Biblioteker og Kulturhuse"
@@ -345,8 +349,7 @@ sites:
     secondary-domains:
       - www.genbib.dk
     autogenerateRoutes: true
-    go-release: 0.25.11
-    <<: *default-release-image-source
+    <<: *go-release-pilot-sites
   gladsaxe:
     name: "Gladsaxe Bibliotekerne"
     description: "The library site for Gladsaxe"
@@ -466,8 +469,7 @@ sites:
     secondary-domains:
       - www.hjbib.dk
     autogenerateRoutes: true
-    go-release: 0.25.11
-    <<: *default-release-image-source
+    <<: *go-release-pilot-sites
   hoje-taastrup:
     name: "Høje-Taastrup Kommunes Biblioteker"
     description: "The library site for Høje-Taastrup"
@@ -609,8 +611,7 @@ sites:
     secondary-domains:
       - www.langelandbibliotek.dk
     autogenerateRoutes: true
-    go-release: 0.25.11
-    <<: *default-release-image-source
+    <<: *go-release-pilot-sites
   lejre:
     name: "Lejre Bibliotek & Arkiv"
     description: "The library site for Lejre"
@@ -819,8 +820,7 @@ sites:
       - www.silkeborgbib.dk
     autogenerateRoutes: true
     plan: webmaster
-    go-release: 0.25.11
-    <<: *x-webmasters-on-latest-release
+    <<: *go-release-pilot-sites
   skanderborg:
     name: "Skanderborg Bibliotek"
     description: "The library site for Skanderborg"
