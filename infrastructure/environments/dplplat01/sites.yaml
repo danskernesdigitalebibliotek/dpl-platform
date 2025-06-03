@@ -450,7 +450,6 @@ sites:
       - herningbib.dk
     autogenerateRoutes: true
     plan: webmaster
-    go-release: 0.25.11
     <<: *webmasters-on-weekly-release-cycle
   hillerod:
     name: "Hillerød Bibliotekerne"
