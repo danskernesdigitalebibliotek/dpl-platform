@@ -163,8 +163,7 @@ sites:
       - www.albertslundbibliotek.dk
     autogenerateRoutes: true
     plan: webmaster
-    go-release: 0.25.11
-    <<: *x-webmasters-on-latest-release
+    <<: *go-release-pilot-sites
   allerod:
     name: "Allerød Biblioteker"
     description: "The library site for Allerød"
