@@ -3,12 +3,12 @@
 import * as crypto from "crypto";
 
 const project = `${argv.project}`;
-if (!project) {
+if (!project || typeof project === "undefined") {
   throw Error("No 'project' provided");
 }
 
 const environment = `${argv.env}`;
-if (!environment) {
+if (!environment || typeof project === "undefined") {
   throw Error("No 'environment' provided");
 }
 
