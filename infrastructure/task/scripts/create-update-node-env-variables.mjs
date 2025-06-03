@@ -16,7 +16,7 @@ async function setVariablesForProject(project, environment = "main") {
   for (const variableName of lagoonVariableName) {
     const secret = crypto.randomBytes(64).toString("base64");
     try {
-      await $`lagoon add variable --project ${project} --environment ${environment} --name ${variableName} --scope global --value ${secret}`;
+      await $`lagoon add variable --project ${project} --name ${variableName} --scope global --value ${secret}`;
     } catch (error) {
       throw Error("failed to create or update variables for BNF and GO secrets", { cause: error });
     }
