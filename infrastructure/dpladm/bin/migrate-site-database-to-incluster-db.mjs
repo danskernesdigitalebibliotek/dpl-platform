@@ -12,8 +12,8 @@ if (!environment || typeof project === "undefined") {
   throw Error("No 'environment' provided");
 }
 
-let dryRun = `${argv.dry-run}`;
-if (typeof `${argv.dry-run}` === "undefined") {
+let dryRun = `${argv.dryrun}`;
+if (typeof `${argv.dryrun}` === "undefined") {
   dryRun = false;
 }
 
