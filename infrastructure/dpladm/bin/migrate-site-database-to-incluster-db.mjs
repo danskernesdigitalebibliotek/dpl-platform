@@ -45,7 +45,7 @@ async function createOverrideVariables(project, environment, password) {
     },
     {
       name: "MARIADB_HOST_OVERRIDE",
-      value: "mariadb-10-6-01.mariadb-servers.svc.cluster.local",
+      value: "mariadb-10-06-01-test.mariadb-10-06-01-test.svc.cluster.local",
     },
     {
       name: "MARIADB_PORT_OVERRIDE",
@@ -64,13 +64,13 @@ async function createOverrideVariables(project, environment, password) {
 
 async function importDumpIntoInclusterDatabase(project, environment, password) {
   echo(`Importing ${project}-${environment} database into incluster database`);
-  await $`kubectl exec -n mariadb-servers mariadb-10-6-01-0 -- bash -c "mariadb -uuser-database-${project}-${environment} -p${password} --database database-${project}-${environment} --verbose < /tmp/dump.sql"`
+  await $`kubectl exec -n mariadb-10-06-01-test mariadb-10-06-01-test-0 -- bash -c "mariadb -uuser-database-${project}-${environment} -p${password} --database database-${project}-${environment} --verbose < /tmp/dump.sql"`
 }
 
 async function dumpCurrentDatabaseIntoTmp(project, environment) {
   echo(`Dumping ${project}-${environment} database to /tmp/dump.sql`);
   const databaseConnectionDetails = await getCurrentDatabaseConnectionDetails(project, environment)
-  await $`kubectl exec -n mariadb-servers mariadb-10-6-01-0 -- bash -c "mariadb-dump --user=${databaseConnectionDetails.user} --host=${databaseConnectionDetails.host}.${project}-${environment}.svc.cluster.local --password=${databaseConnectionDetails.password} --ssl=false --skip-add-locks --single-transaction ${databaseConnectionDetails.databaseName} --verbose > /tmp/dump.sql"`
+  await $`kubectl exec -n mariadb-10-06-01-test mariadb-10-06-01-test-0 -- bash -c "mariadb-dump --user=${databaseConnectionDetails.user} --host=${databaseConnectionDetails.host}.${project}-${environment}.svc.cluster.local --password=${databaseConnectionDetails.password} --ssl=false --skip-add-locks --single-transaction ${databaseConnectionDetails.databaseName} --verbose > /tmp/dump.sql"`
 }
 
 async function getCurrentDatabaseConnectionDetails(project, environment) {
