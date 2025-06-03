@@ -63,13 +63,13 @@ async function createOverrideVariables(project, environment, password) {
 }
 
 async function importDumpIntoInclusterDatabase(project, environment, password) {
-  echo(`Importing ${project}-${environment} database into incluster database`);
+  echo(chalk.blue(`Importing ${project}-${environment} database into incluster database`));
   await $`kubectl exec -n mariadb-10-06-01-test mariadb-10-06-01-test-0 -- bash -c "mariadb -uuser-database-${project}-${environment} -p${password} --database database-${project}-${environment} --verbose < /tmp/dump.sql"`
 }
 
 async function dumpCurrentDatabaseIntoTmp(project, environment) {
-  echo(`Dumping ${project}-${environment} database to /tmp/dump.sql`);
   const databaseConnectionDetails = await getCurrentDatabaseConnectionDetails(project, environment)
+  echo(chalk.blue(`Dumping ${project}-${environment} database to /tmp/dump.sql`));
   await $`kubectl exec -n mariadb-10-06-01-test mariadb-10-06-01-test-0 -- bash -c "mariadb-dump --user=${databaseConnectionDetails.user} --host=${databaseConnectionDetails.host}.${project}-${environment}.svc.cluster.local --password=${databaseConnectionDetails.password} --ssl=false --skip-add-locks --single-transaction ${databaseConnectionDetails.databaseName} --verbose > /tmp/dump.sql"`
 }
 
@@ -85,13 +85,13 @@ async function getCurrentDatabaseConnectionDetails(project, environment) {
 }
 
 async function createDatabaseGrantUserSecret(project, environment, password, dryRun) {
-  echo(`Now migrating ${project}-${environment} database to incluser database`)
+  echo(chalk.blue(`Now migrating ${project}-${environment} database to incluser database`));
 
   echo(await $`helm upgrade --install --namespace ${project}-${environment}  --set password=${password}  mariadb-database ./dpladm/mariadb-database/ --dry-run`);
 
   if (dryRun) {
-    echo("done")
-    await $`exit 1`;
+    echo(chalk.green("dry-run complete"));
+    process.exit(0);
   }
 
   await $`helm upgrade --install --namespace ${project}-${environment}  --set password=${password}  mariadb-database ./dpladm/mariadb-database/`;
