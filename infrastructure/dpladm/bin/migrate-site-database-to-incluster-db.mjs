@@ -68,8 +68,8 @@ async function importDumpIntoInclusterDatabase(project, environment, password) {
 }
 
 async function dumpCurrentDatabaseIntoTmp(project, environment) {
-  const databaseConnectionDetails = await getCurrentDatabaseConnectionDetails(project, environment)
   echo(chalk.blue(`Dumping ${project}-${environment} database to /tmp/dump.sql`));
+  const databaseConnectionDetails = await getCurrentDatabaseConnectionDetails(project, environment);
   await $`kubectl exec -n mariadb-10-06-01-test mariadb-10-06-01-test-0 -- bash -c "mariadb-dump --user=${databaseConnectionDetails.user} --host=${databaseConnectionDetails.host}.${project}-${environment}.svc.cluster.local --password=${databaseConnectionDetails.password} --ssl=false --skip-add-locks --single-transaction ${databaseConnectionDetails.databaseName} --verbose > /tmp/dump.sql"`
 }
 
