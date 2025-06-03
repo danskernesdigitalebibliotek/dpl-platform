@@ -1344,7 +1344,7 @@ tasks:
         DRYRUN: "{{.DRYRUN}}"
       cmds:
         - |
-          ./dpladm/bin/migrate-site-database-to-incluster-db.mjs --project={{.PROJECT}} --env={{.ENVIRONMENT}} --dry-run={{.DRYRUN}}
+          ./dpladm/bin/migrate-site-database-to-incluster-db.mjs --project={{.PROJECT}} --env={{.ENVIRONMENT}} --dryrun={{.DRYRUN}}
 
     certs:clear-queue:
       deps: [cluster:auth]
