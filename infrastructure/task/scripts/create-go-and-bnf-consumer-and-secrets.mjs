@@ -22,7 +22,7 @@ async function setVariablesForProject(project, environment = "main") {
   echo(`setting env variables for ${project}`);
   for (const [index, value] of lagoonVariableName.entries()) {
     try {
-      await $`lagoon update variable --project ${project} --environment ${environment} --name ${value} --scope global --value "${lagoonVariableValues[index]}"`;
+      await $`lagoon update variable --project ${project} --name ${value} --scope global --value "${lagoonVariableValues[index]}"`;
     } catch (error) {
       throw Error("failed to create or update variables for BNF and GO secrets", { cause: error });
     }
