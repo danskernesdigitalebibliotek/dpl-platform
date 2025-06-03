@@ -51,6 +51,7 @@ spec:
     wait_timeout=180
     transaction_isolation="READ-COMMITTED"
     collation_server="LATIN1_SWEDISH_CI"
+    character_set_server="LATIN1"
     connect_timeout=10
     expensive_subquery_limit=100
     group_concat_max_len=1048576
