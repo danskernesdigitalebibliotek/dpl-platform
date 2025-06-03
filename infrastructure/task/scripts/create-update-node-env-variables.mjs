@@ -23,17 +23,8 @@ async function setVariablesForProject(project, environment = "main") {
   }
 }
 
-async function isWebmaster(project) {
-   const result = await $`cat ../host_mount/environments/dplplat01/sites.yaml | yq '.sites.${project}.plan'`;
-   return result.stdout === "webmaster\n" ? true : false;
-}
-
 for await (const site of sites) {
   await setVariablesForProject(site);
-  if (await isWebmaster(site)) {
-  // Also set it for the moduletest project
-    setVariablesForProject(site, "moduletest");
-  }
 }
 
 echo("done");
