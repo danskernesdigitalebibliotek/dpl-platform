@@ -24,3 +24,10 @@ async function deleteEnvironmentVariables(project, environment = "main") {
   }
 }
 
+for await (const site of sites.lines()) {
+  await deleteEnvironmentVariables(site);
+  if (await isWebmaster(site)) {
+  // Also set it for the moduletest project
+    await deleteEnvironmentVariables(site, "moduletest");
+  }
+}
