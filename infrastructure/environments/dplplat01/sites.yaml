@@ -39,14 +39,14 @@ sites:
     description: "A site for developers and operators to test on"
     releaseImageRepository: ghcr.io/danskernesdigitalebibliotek
     releaseImageName: dpl-cms-source
-    dpl-cms-release: "2025.21.2"
+    dpl-cms-release: "2025.23.0"
     plan: webmaster
-    go-release: 0.25.11
+    go-release: 0.25.13
     primary-domain: canary.dplplat01.dpl.reload.dk
     # TODO: Remove this once the the Adgangsplatformen OpenID client used here
     # has been updated to use the primary domain.
     autogenerateRoutes: true
-    moduletest-dpl-cms-release: "2025.21.2"
+    moduletest-dpl-cms-release: "2025.23.0"
     deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIIhuA0K7CNvRoe+Xx7RaXG4+a8KcSpzuWn+G4sUPzNWx"
   customizable-canary:
     name: "Customizable bibliotek - eksempel"
@@ -54,8 +54,8 @@ sites:
     releaseImageRepository: ghcr.io/danskernesdigitalebibliotek
     releaseImageName: dpl-cms-source
     plan: webmaster
-    dpl-cms-release: "2025.21.2"
-    moduletest-dpl-cms-release: "2025.21.2"
+    dpl-cms-release: "2025.23.0"
+    moduletest-dpl-cms-release: "2025.23.0"
     deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAILj8lXv7C/7s7te9sEpwcHQhgDWfzsCkAN7rqQ4sdTzk"
   staging:
     name: "Staging"
@@ -81,7 +81,7 @@ sites:
     # TODO: Remove this once the the Adgangsplatformen OpenID client used here
     # has been updated to use the primary domain.
     autogenerateRoutes: true
-    moduletest-dpl-cms-release: "2025.21.2"
+    moduletest-dpl-cms-release: "2025.23.0"
     # This site is a webmaster site but we usually want the latest release
     # deployed to production. Our YAML handling chokes on duplicates to we
     # follow the default release plan and update the module test site manually.
