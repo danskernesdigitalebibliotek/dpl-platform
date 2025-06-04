@@ -13,3 +13,14 @@ const lagoonVariableNames = [
   "GO_SESSION_SECRET"
 ];
 
+async function deleteEnvironmentVariables(project, environment = "main") {
+  echo(`deleting env variables for ${project}-${environment}`);
+  for (const variableName of lagoonVariableNames) {
+    try {
+      await $`lagoon delete variable --project ${project} --environment ${environment} --name ${variableName} --force`;
+    } catch (error) {
+      throw Error("failed to delete variables for BNF and GO secrets", { cause: error });
+    }
+  }
+}
+
