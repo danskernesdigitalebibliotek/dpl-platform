@@ -28,7 +28,7 @@ x-go-release-pilot-sites: &go-release-pilot-sites
   releaseImageRepository: ghcr.io/danskernesdigitalebibliotek
   releaseImageName: dpl-cms-source
   dpl-cms-release: "2025.22.0"
-  moduletest-dpl-cms-release: "2025.22.0"
+  moduletest-dpl-cms-release: "2025.23.0"
   go-release: 0.25.13
 sites:
   # Site objects are indexed by a unique key that must be a valid lagoon, and
@@ -64,8 +64,8 @@ sites:
     releaseImageName: dpl-cms-source
     # Remember to update bnf.moduletest-dpl-cms-release to the same release
     # to make client and server use the same version.
-    dpl-cms-release: "2025.21.2"
-    moduletest-dpl-cms-release: "2025.21.2"
+    dpl-cms-release: "2025.23.0"
+    moduletest-dpl-cms-release: "2025.23.0"
     plan: webmaster
     primary-domain: staging.dplplat01.dpl.reload.dk
     # TODO: Remove this once the the Adgangsplatformen OpenID client used here
