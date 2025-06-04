@@ -21,6 +21,8 @@ PROMOTED_NAMESPACES=(
   "bibliotek-test-main"
   "bibliotek-test-moduletest"
   "billund-main"
+  "bnf-main"
+  "bnf-moduletest"
   "bornholm-main"
   "brondby-main"
   "bronderslev-main"
@@ -117,6 +119,7 @@ PROMOTED_NAMESPACES=(
   "taarnby-main"
   "taarnby-moduletest"
   "thisted-main"
+  "torshavn-main"
   "vallensbaek-main"
   "varde-main"
   "vejen-main"
@@ -126,7 +129,7 @@ PROMOTED_NAMESPACES=(
   "vordingborg-main"
 )
 
-DEPLOYMENTS=("cli" "nginx" "varnish" "redis")
+DEPLOYMENTS=("cli" "nginx" "varnish" "redis" "node")
 
 NAMESPACES_RAW=$(kubectl get ns -o jsonpath='{.items[*].metadata.name}')
 # shellcheck disable=SC2206
