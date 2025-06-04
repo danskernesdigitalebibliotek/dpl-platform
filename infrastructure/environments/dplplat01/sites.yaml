@@ -27,7 +27,7 @@ x-webmasters-on-latest-release: &x-webmasters-on-latest-release
 x-go-release-pilot-sites: &go-release-pilot-sites
   releaseImageRepository: ghcr.io/danskernesdigitalebibliotek
   releaseImageName: dpl-cms-source
-  dpl-cms-release: "2025.22.0"
+  dpl-cms-release: "2025.23.0"
   moduletest-dpl-cms-release: "2025.23.0"
   go-release: 0.25.13
 sites:
