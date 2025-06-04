@@ -36,3 +36,6 @@ for await (const site of sites.lines()) {
     await deleteEnvironmentVariables(site, "moduletest");
   }
 }
+
+echo(chalk.green("done"));
+echo("")
