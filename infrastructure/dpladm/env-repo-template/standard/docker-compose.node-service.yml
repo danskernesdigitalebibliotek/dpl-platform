@@ -85,10 +85,4 @@ services:
       dockerfile: lagoon/node.dockerfile
     labels:
       provenance: false
-      lagoon.type: node-persistent
-      lagoon.persistent: /app/.next
-      # The size of the persistent storage for this service
-      # is based on some documentation in Lagoon about hosting a node service:
-      # https://docs.lagoon.sh/docker-images/nodejs/#docker-composeyml-snippet
-      # We could revise in the future if we need more space.
-      lagoon.persistent.size: 10Gi
+      lagoon.type: node
