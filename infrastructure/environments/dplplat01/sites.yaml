@@ -98,7 +98,7 @@ sites:
     name: "Bibliotekernes Nationale Formidling"
     description: "The BNF content sharing site"
     plan: webmaster
-    moduletest-dpl-cms-release: "2025.23.0"
+    moduletest-dpl-cms-release: "2025.24.0"
     go-release: 0.25.26
     # Use the webmaster plan to add a module-test site which acts as a server
     # for the staging environment.
