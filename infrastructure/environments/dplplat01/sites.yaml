@@ -98,13 +98,15 @@ sites:
     name: "Bibliotekernes Nationale Formidling"
     description: "The BNF content sharing site"
     plan: webmaster
+    moduletest-dpl-cms-release: "2025.23.0"
+    go-release: 0.25.26
     # Use the webmaster plan to add a module-test site which acts as a server
     # for the staging environment.
     # The module-test site should use the next version while the production
     # environment should use the latest version.
     # Our YAML handling chokes on duplicates so we follow the default release
     # plan and update the module test site manually.
-    <<: *go-release-pilot-sites
+    <<: *default-release-image-source
     deploy_key: ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAICTmMC/cUI3U3QloX6aAdN7g0EU42J0fwA9aO7UJOzx9
     primary-domain: delingstjenesten.dk
     secondary-domains:
