@@ -1006,5 +1006,6 @@ sites:
     primary-domain: www.vordingborgbibliotekerne.dk
     secondary-domains:
       - vordingborgbibliotekerne.dk
+      - vordingborgbibliotek.dk
     autogenerateRoutes: true
     <<: *default-release-image-source
