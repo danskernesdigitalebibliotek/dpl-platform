@@ -1,6 +1,6 @@
 FROM ghcr.io/danskernesdigitalebibliotek/dpl-go-node:${GO_RELEASE} as builder
 
-ARG GO_CMS_DOMAIN=${PRIMARY_DOMAIN}
+ARG GO_CMS_DOMAIN=${CMS_DOMAIN}
 
 ARG DRUPAL_REVALIDATE_SECRET
 ARG GO_SESSION_SECRET
