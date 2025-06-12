@@ -32,6 +32,14 @@ controller:
       service.beta.kubernetes.io/azure-load-balancer-resource-group: "${RESOURCE_GROUP}"
   nodeSelector:
     kubernetes.io/os: linux
+  # Enable metrics for Prometheus
+  # See https://kubernetes.github.io/ingress-nginx/user-guide/monitoring/#re-configure-ingress-nginx-controller
+  metrics:
+    enabled: true
+    serviceMonitor:
+      enabled: true
+      additionalLabels:
+        release: "prometheus"
   admissionWebhooks:
     patch.nodeSelector:
       kubernetes.io/os: linux
