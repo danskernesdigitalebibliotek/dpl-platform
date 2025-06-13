@@ -3,7 +3,7 @@
 Tools and configuration for deploying and operating the Danish Public Libraries
 application platform.
 
-The main entrypoints for this repository are
+The main entrypoints for this repository are:
 
 * The collection of operational [runbooks](docs/runbooks), use these
   if you with to perform any operations on environments.
