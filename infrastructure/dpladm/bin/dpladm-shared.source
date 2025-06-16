@@ -176,13 +176,13 @@ EndOfMessage
   export SECONDARY_GO_SUBDOMAINS
   export IMPORT_TRANSLATIONS_CRON=${importTranslationsCron}
   export GO_RELEASE
-  export CMS_DOMAIN="${primaryDomain}"
+  export PRIMARY_GO_DOMAIN="${primaryGoSubDomain}"
 
   # TODO this templating could be quite a bit more flexible.
   # Tell envsubst which variables to replace. This allows other variables to
   # remain untouched.
   # shellcheck disable=SC2016
-  local variablesToSubst='$RELEASE_IMAGE_REPOSITORY $RELEASE_IMAGE_NAME $RELEASE_TAG $ENABLE_ROUTES $LAGOON_IMAGES_RELEASE_TAG $LAGOON_PROJECT_NAME $LAGOON_ENVIRONMENT $PRIMARY_DOMAIN $SECONDARY_DOMAINS $IMPORT_TRANSLATIONS_CRON $PRIMARY_GO_SUBDOMAIN_AND_ANNOTATION $SECONDARY_GO_SUBDOMAINS $GO_RELEASE $CMS_DOMAIN'
+  local variablesToSubst='$RELEASE_IMAGE_REPOSITORY $RELEASE_IMAGE_NAME $RELEASE_TAG $ENABLE_ROUTES $LAGOON_IMAGES_RELEASE_TAG $LAGOON_PROJECT_NAME $LAGOON_ENVIRONMENT $PRIMARY_DOMAIN $SECONDARY_DOMAINS $IMPORT_TRANSLATIONS_CRON $PRIMARY_GO_SUBDOMAIN_AND_ANNOTATION $SECONDARY_GO_SUBDOMAINS $GO_RELEASE $PRIMARY_GO_DOMAIN'
 
   # Loop through the files we know to contain variables that needs replacing.
   local templateFiles=(
