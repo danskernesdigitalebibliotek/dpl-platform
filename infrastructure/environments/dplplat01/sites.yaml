@@ -41,7 +41,7 @@ sites:
     releaseImageName: dpl-cms-source
     dpl-cms-release: "2025.24.1"
     plan: webmaster
-    go-release: 0.25.27
+    go-release: 0.25.30
     primary-domain: canary.dplplat01.dpl.reload.dk
     # TODO: Remove this once the the Adgangsplatformen OpenID client used here
     # has been updated to use the primary domain.

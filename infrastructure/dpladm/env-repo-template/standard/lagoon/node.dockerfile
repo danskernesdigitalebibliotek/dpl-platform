@@ -1,11 +1,24 @@
-FROM ghcr.io/danskernesdigitalebibliotek/dpl-go-node:${GO_RELEASE} as node
+FROM ghcr.io/danskernesdigitalebibliotek/dpl-go-node:${GO_RELEASE} as builder
 
-ENV NEXT_PUBLIC_GO_GRAPHQL_CONSUMER_USER_NAME=go_graphql
-ENV BNF_GRAPHQL_CONSUMER_USER_NAME=bnf_graphql
-ENV NEXT_PUBLIC_GRAPHQL_SCHEMA_ENDPOINT_FBI=https://fbi-api.dbc.dk/ereolgo/graphql
-ENV UNILOGIN_WELLKNOWN_URL=https://broker.unilogin.dk/auth/realms/broker/.well-known/openid-configuration
-ENV UNLILOGIN_PUBHUB_RETAILER_ID=810
-ENV UNLILOGIN_PUBHUB_CLIENT_ID=EE939D96-702D-4BEE-AEB7-517B8BA18B15
-ENV UNILOGIN_CLIENT_ID=https://ereolengo.dk/
-ENV NEXT_PUBLIC_PUBHUB_BASE_URL=https://pubhub-openplatform.dbc.dk
-ENV BNF_SERVER_GRAPHQL_ENDPOINT=askFini
+ARG DRUPAL_REVALIDATE_SECRET
+ARG GO_SESSION_SECRET
+ARG NEXT_PUBLIC_APP_URL="https://${PRIMARY_GO_DOMAIN}"
+ARG NEXT_PUBLIC_DPL_CMS_HOSTNAME="${PRIMARY_GO_DOMAIN}"
+ARG NEXT_PUBLIC_GO_GRAPHQL_CONSUMER_USER_PASSWORD
+ARG NEXT_PUBLIC_GRAPHQL_SCHEMA_ENDPOINT_DPL_CMS="https://${PRIMARY_GO_DOMAIN}/graphql"
+
+ENV NEXT_TELEMETRY_DISABLED=1
+
+RUN yarn run build
+
+# Production image, copy all the files and run next
+FROM uselagoon/node-20:latest AS runner
+WORKDIR /app
+
+ENV NODE_ENV=production
+# Uncomment the following line in case you want to disable telemetry during runtime.
+ENV NEXT_TELEMETRY_DISABLED=1
+
+COPY --from=builder --chown=10000:10000 /app .
+
+CMD ["/app/lagoon/start.sh"]
