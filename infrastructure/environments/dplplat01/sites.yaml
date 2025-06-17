@@ -451,7 +451,7 @@ sites:
       - herningbib.dk
     autogenerateRoutes: true
     plan: webmaster
-    <<: *webmasters-on-weekly-release-cycle
+    <<: *go-release-pilot-sites
   hillerod:
     name: "Hillerød Bibliotekerne"
     description: "The library site for Hillerød"
