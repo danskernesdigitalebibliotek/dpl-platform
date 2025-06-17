@@ -99,7 +99,7 @@ sites:
     description: "The BNF content sharing site"
     plan: webmaster
     moduletest-dpl-cms-release: "2025.25.0"
-    go-release: 0.25.26
+    go-release: 0.25.43
     # Use the webmaster plan to add a module-test site which acts as a server
     # for the staging environment.
     # The module-test site should use the next version while the production
