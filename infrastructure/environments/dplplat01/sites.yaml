@@ -66,6 +66,7 @@ sites:
     # to make client and server use the same version.
     dpl-cms-release: "2025.25.0"
     moduletest-dpl-cms-release: "2025.25.0"
+    go-release: 0.25.44
     plan: webmaster
     primary-domain: staging.dplplat01.dpl.reload.dk
     # TODO: Remove this once the the Adgangsplatformen OpenID client used here
