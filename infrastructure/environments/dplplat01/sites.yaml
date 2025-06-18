@@ -29,7 +29,7 @@ x-go-release-pilot-sites: &go-release-pilot-sites
   releaseImageName: dpl-cms-source
   dpl-cms-release: "2025.24.1"
   moduletest-dpl-cms-release: "2025.24.1"
-  go-release: 0.25.43
+  go-release: 0.25.44
 sites:
   # Site objects are indexed by a unique key that must be a valid lagoon, and
   # github project name. That is, alphanumeric and dashes.
@@ -41,7 +41,7 @@ sites:
     releaseImageName: dpl-cms-source
     dpl-cms-release: "2025.24.1"
     plan: webmaster
-    go-release: 0.25.43
+    go-release: 0.25.44
     primary-domain: canary.dplplat01.dpl.reload.dk
     # TODO: Remove this once the the Adgangsplatformen OpenID client used here
     # has been updated to use the primary domain.
