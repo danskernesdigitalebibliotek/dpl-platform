@@ -534,7 +534,7 @@ tasks:
       cmds:
         # Render the variables we've collected into a values file we can install.
         - |
-          envsubst '$SSH_LOADBALANCER_IP $RABBITMQ_PASS $HARBOR_ADMIN_PASS $SQL_HOSTNAME $SQL_SERVERNAME $SQL_USER $SQL_PASSWORD $BUILD_DEPLOY_DIND_IMAGE_VER $ACS_CONNECTION_STRING' \
+          envsubst '$SSH_LOADBALANCER_IP $RABBITMQ_PASS $HARBOR_ADMIN_PASS $SQL_HOSTNAME $SQL_SERVERNAME $SQL_USER $SQL_PASSWORD $BUILD_DEPLOY_DIND_IMAGE_VER $ACS_CONNECTION_STRING $TEST_DATABASE_SERVER_PASSWORD $TEST_DATABASE_SERVER_USER $TEST_DATABASE_SERVER_HOST' \
           < "{{.dir_lagoon}}/lagoon-remote-values.template.yaml" \
           > "{{.dir_lagoon}}/lagoon-remote-values.yaml"
         # Setup the namespace manually to control eg. labels on the namespace.
