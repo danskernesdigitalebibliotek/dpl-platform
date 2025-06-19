@@ -223,7 +223,7 @@ sites:
     secondary-domains:
       - brondby-bibliotekerne.dk
     autogenerateRoutes: true
-    <<: *default-release-image-source
+    <<: *go-release-pilot-sites
   bronderslev:
     name: "Brønderslev Bibliotek"
     description: "The library site for Brønderslev"
@@ -335,7 +335,7 @@ sites:
     secondary-domains:
       - bibliotekerne.frederikssund.dk
     autogenerateRoutes: true
-    <<: *default-release-image-source
+    <<: *go-release-pilot-sites
   fureso:
     name: "Furesø Bibliotek & Borgerservice"
     description: "The library site for Furesø"
@@ -497,7 +497,7 @@ sites:
     secondary-domains:
       - holstebrobibliotek.dk
     autogenerateRoutes: true
-    <<: *default-release-image-source
+    <<: *go-release-pilot-sites
   horsens:
     name: "Horsens Bibliotek"
     description: "The library site for Horsens"
@@ -747,7 +747,7 @@ sites:
       - randersbibliotek.dk
       - www.randersbibliotek.dk
     autogenerateRoutes: true
-    <<: *default-release-image-source
+    <<: *go-release-pilot-sites
   rebild:
     name: "Rebild Bibliotekerne"
     description: "The library site for Rebild"
@@ -956,7 +956,7 @@ sites:
     secondary-domains:
       - www.kulturogborgerhus.vallensbaek.dk
     autogenerateRoutes: true
-    <<: *default-release-image-source
+    <<: *go-release-pilot-sites
   varde:
     name: "Varde Bibliotek"
     description: "The library site for Varde"
