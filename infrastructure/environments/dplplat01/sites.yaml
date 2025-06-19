@@ -30,6 +30,13 @@ x-go-release-pilot-sites: &go-release-pilot-sites
   dpl-cms-release: "2025.25.0"
   moduletest-dpl-cms-release: "2025.25.0"
   go-release: 0.25.44
+x-webmaster-weekly-release-cycle-with-go: &x-webmaster-weekly-release-cycle-with-go
+  #To be used from week 26 and onwards
+  releaseImageRepository: ghcr.io/danskernesdigitalebibliotek
+  releaseImageName: dpl-cms-source
+  dpl-cms-release: "2025.25.0"
+  moduletest-dpl-cms-release: "2025.26.0"
+  go-release: 0.25.44
 sites:
   # Site objects are indexed by a unique key that must be a valid lagoon, and
   # github project name. That is, alphanumeric and dashes.
