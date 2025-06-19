@@ -2,28 +2,13 @@
 x-defaults: &default-release-image-source
   releaseImageRepository: ghcr.io/danskernesdigitalebibliotek
   releaseImageName: dpl-cms-source
-  dpl-cms-release: "2025.25.0"
-x-webmaster: &webmaster-release-image-source
-  # This is the default release plan for webmasters. There's currently no webmasters on it.
-  # This is should be updated according with https://danskernesdigitalebibliotek.github.io/dpl-docs/DPL-Platform/runbooks/monthly-release-to-editors-and-webmasters/
-  releaseImageRepository: ghcr.io/danskernesdigitalebibliotek
-  releaseImageName: dpl-cms-source
-  dpl-cms-release: "2024.50.0"
-  moduletest-dpl-cms-release: "2025.4.0"
+  dpl-cms-release: "2025.24.1"
 x-webmasters-on-weekly-release-cycle: &webmasters-on-weekly-release-cycle
   #This release cycle releases the newest release, which has been tested on webmaster moduletests in the previous week, on to production
   releaseImageRepository: ghcr.io/danskernesdigitalebibliotek
   releaseImageName: dpl-cms-source
-  dpl-cms-release: "2025.24.1"
-  moduletest-dpl-cms-release: "2025.25.0"
-x-webmasters-on-latest-release: &x-webmasters-on-latest-release
-  #This release cycle releases the newest release on both production and moduletest sites.
-  #This is relevant for webmaster sites acting as pilots for new features.
-  #Currently: Go
-  releaseImageRepository: ghcr.io/danskernesdigitalebibliotek
-  releaseImageName: dpl-cms-source
-  dpl-cms-release: "2025.21.2"
-  moduletest-dpl-cms-release: "2025.21.2"
+  dpl-cms-release: "2025.23.0"
+  moduletest-dpl-cms-release: "2025.24.1"
 x-go-release-pilot-sites: &go-release-pilot-sites
   releaseImageRepository: ghcr.io/danskernesdigitalebibliotek
   releaseImageName: dpl-cms-source
