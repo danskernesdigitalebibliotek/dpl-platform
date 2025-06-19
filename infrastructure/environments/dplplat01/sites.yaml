@@ -241,7 +241,7 @@ sites:
     secondary-domains:
       - drabib.dk
     autogenerateRoutes: true
-    <<: *default-release-image-source
+    <<: *go-release-pilot-sites
   egedal:
     name: "Egedal Bibliotekerne"
     description: "The library site for Egedal"
