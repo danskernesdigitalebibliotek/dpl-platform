@@ -56,6 +56,7 @@ sites:
     plan: webmaster
     dpl-cms-release: "2025.25.0"
     moduletest-dpl-cms-release: "2025.25.0"
+    go-release: 0.25.44
     deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAILj8lXv7C/7s7te9sEpwcHQhgDWfzsCkAN7rqQ4sdTzk"
   staging:
     name: "Staging"
@@ -92,6 +93,7 @@ sites:
     description: "Et site hvor bibliotekerne kan teste"
     importTranslationsCron: "0 * * * *"
     plan: webmaster
+    go-release: 0.25.44
     deploy_key: ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHvhy79hHjLcQJCcMNwci1Q/P/O2LwD4IzBVfkmRGKom
     <<: *webmasters-on-weekly-release-cycle
   # BNF site.
