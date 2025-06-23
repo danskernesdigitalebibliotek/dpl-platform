@@ -50,13 +50,12 @@ dbaas-operator:
 
     development:
       environment: "development"
-      type: "azure"
       hostname: "$TEST_DATABASE_SERVER_HOST"
       readReplicaHostnames:
         - "$TEST_DATABASE_SERVER_HOST"
       password: "$TEST_DATABASE_SERVER_PASSWORD"
       port: "3306"
-      user: "$TEST_DATABASE_SERVER_USER@$TEST_DATABASE_SERVER_HOST"
+      user: "$TEST_DATABASE_SERVER_USER"
   tolerations:
     - key: CriticalAddonsOnly
       operator: Exists
