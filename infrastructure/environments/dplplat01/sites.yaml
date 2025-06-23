@@ -12,14 +12,8 @@ x-webmasters-on-weekly-release-cycle: &webmasters-on-weekly-release-cycle
 x-go-release-pilot-sites: &go-release-pilot-sites
   releaseImageRepository: ghcr.io/danskernesdigitalebibliotek
   releaseImageName: dpl-cms-source
-  dpl-cms-release: "2025.25.0"
-  moduletest-dpl-cms-release: "2025.25.0"
-  go-release: 0.25.44
-x-go-release-pilot-sites-www-cookie-fix: &go-release-pilot-sites-www-cookie-fix
-  releaseImageRepository: ghcr.io/danskernesdigitalebibliotek
-  releaseImageName: dpl-cms-source
-  dpl-cms-release: "2025.25.2"
-  moduletest-dpl-cms-release: "2025.25.2"
+  dpl-cms-release: "2025.25.3"
+  moduletest-dpl-cms-release: "2025.25.3"
   go-release: 0.25.44
 sites:
   # Site objects are indexed by a unique key that must be a valid lagoon, and
@@ -254,7 +248,7 @@ sites:
       - esbbib.dk
       - www.esbbib.dk
     autogenerateRoutes: true
-    <<: *go-release-pilot-sites-www-cookie-fix
+    <<: *go-release-pilot-sites
   faaborg-midtfyn:
     name: "Faaborg-Midtfyn Bibliotekerne"
     description: "The library site for Faaborg-Midtfyn"
@@ -823,7 +817,7 @@ sites:
     secondary-domains:
       - bibliotek.skanderborg.dk
     autogenerateRoutes: true
-    <<: *go-release-pilot-sites-www-cookie-fix
+    <<: *go-release-pilot-sites
   skive:
     name: "Skive Bibliotek"
     description: "The library site for Skive"
