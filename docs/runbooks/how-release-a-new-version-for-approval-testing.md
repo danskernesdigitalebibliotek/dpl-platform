@@ -11,6 +11,16 @@ When deploying a new release, for approval testing by DDF, on the staging projec
   environment name.
 * The version tag you want to deploy. This must correspond to a
   tagged version of the [`dpl-cms-source` image](https://github.com/danskernesdigitalebibliotek/dpl-cms/pkgs/container/dpl-cms-source).
+* The version tag of Go that you want to deploy. The version follows the cms
+version unless a Go hotfix is being released (see: "In case a Go hotfix is released").
+
+### In case a Go hotfix is released
+
+In case of a Go hotfix it will be tagged as the current dpl-cms/go release __with
+the last digit incremented__.
+
+So if the current cms/go release is called: 2025.26.0 the Go hotfix release
+would be tagged with:  2025.26.1.
 
 ## Procedure: New release for approval testing
 
@@ -24,6 +34,8 @@ production library sites.
    1. Set the value of `dpl-cms-release` and `moduletest-dpl-cms-release` for
       `staging` to the new version
    2. Set the value of `moduletest-dpl-cms-release` for `bnf` to the new version
+   3. Set the value of `go-release` for to the new version. In case the go
+release is a hotfix: see "In case a Go hotfix is released"
 4. Commit the change and push your branch to GitHub and create a pull request.
 5. Request a review for the change and wait for approval.
 6. Start `dplsh` from the `/infrastructure` directory of your local
