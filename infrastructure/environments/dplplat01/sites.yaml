@@ -18,8 +18,8 @@ x-go-release-pilot-sites: &go-release-pilot-sites
 x-go-release-pilot-sites-www-cookie-fix: &go-release-pilot-sites-www-cookie-fix
   releaseImageRepository: ghcr.io/danskernesdigitalebibliotek
   releaseImageName: dpl-cms-source
-  dpl-cms-release: "2025.25.1"
-  moduletest-dpl-cms-release: "2025.25.1"
+  dpl-cms-release: "2025.25.2"
+  moduletest-dpl-cms-release: "2025.25.2"
   go-release: 0.25.44
 sites:
   # Site objects are indexed by a unique key that must be a valid lagoon, and
@@ -254,7 +254,7 @@ sites:
       - esbbib.dk
       - www.esbbib.dk
     autogenerateRoutes: true
-    <<: *go-release-pilot-sites
+    <<: *go-release-pilot-sites-www-cookie-fix
   faaborg-midtfyn:
     name: "Faaborg-Midtfyn Bibliotekerne"
     description: "The library site for Faaborg-Midtfyn"
