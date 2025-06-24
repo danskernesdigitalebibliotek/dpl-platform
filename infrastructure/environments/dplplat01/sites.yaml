@@ -220,7 +220,7 @@ sites:
     secondary-domains:
       - brondby-bibliotekerne.dk
     autogenerateRoutes: true
-    <<: *go-release-pilot-sites
+    <<: *x-defaults-with-go
   bronderslev:
     name: "Brønderslev Bibliotek"
     description: "The library site for Brønderslev"
@@ -238,7 +238,7 @@ sites:
     secondary-domains:
       - drabib.dk
     autogenerateRoutes: true
-    <<: *go-release-pilot-sites
+    <<: *x-defaults-with-go
   egedal:
     name: "Egedal Bibliotekerne"
     description: "The library site for Egedal"
@@ -260,7 +260,11 @@ sites:
       - esbbib.dk
       - www.esbbib.dk
     autogenerateRoutes: true
+<<<<<<< HEAD
     <<: *go-release-pilot-sites
+=======
+    <<: *x-defaults-with-go
+>>>>>>> 0d8719b (move editors with GO onto the defaults with GO anchor)
   faaborg-midtfyn:
     name: "Faaborg-Midtfyn Bibliotekerne"
     description: "The library site for Faaborg-Midtfyn"
@@ -332,7 +336,7 @@ sites:
     secondary-domains:
       - bibliotekerne.frederikssund.dk
     autogenerateRoutes: true
-    <<: *go-release-pilot-sites
+    <<: *x-defaults-with-go
   fureso:
     name: "Furesø Bibliotek & Borgerservice"
     description: "The library site for Furesø"
@@ -494,7 +498,7 @@ sites:
     secondary-domains:
       - holstebrobibliotek.dk
     autogenerateRoutes: true
-    <<: *go-release-pilot-sites
+    <<: *x-defaults-with-go
   horsens:
     name: "Horsens Bibliotek"
     description: "The library site for Horsens"
@@ -744,7 +748,7 @@ sites:
       - randersbibliotek.dk
       - www.randersbibliotek.dk
     autogenerateRoutes: true
-    <<: *go-release-pilot-sites
+    <<: *x-defaults-with-go
   rebild:
     name: "Rebild Bibliotekerne"
     description: "The library site for Rebild"
@@ -829,7 +833,11 @@ sites:
     secondary-domains:
       - bibliotek.skanderborg.dk
     autogenerateRoutes: true
+<<<<<<< HEAD
     <<: *go-release-pilot-sites
+=======
+    <<: *x-defaults-with-go
+>>>>>>> 0d8719b (move editors with GO onto the defaults with GO anchor)
   skive:
     name: "Skive Bibliotek"
     description: "The library site for Skive"
@@ -953,7 +961,7 @@ sites:
     secondary-domains:
       - www.kulturogborgerhus.vallensbaek.dk
     autogenerateRoutes: true
-    <<: *go-release-pilot-sites
+    <<: *x-defaults-with-go
   varde:
     name: "Varde Bibliotek"
     description: "The library site for Varde"
