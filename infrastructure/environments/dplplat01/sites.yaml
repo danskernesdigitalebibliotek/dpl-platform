@@ -56,9 +56,9 @@ sites:
     releaseImageName: dpl-cms-source
     # Remember to update bnf.moduletest-dpl-cms-release to the same release
     # to make client and server use the same version.
-    dpl-cms-release: "2025.25.0"
-    moduletest-dpl-cms-release: "2025.25.0"
-    go-release: 0.25.44
+    dpl-cms-release: "2025.26.0"
+    moduletest-dpl-cms-release: "2025.26.0"
+    go-release: 2025.26.0
     plan: webmaster
     primary-domain: staging.dplplat01.dpl.reload.dk
     # TODO: Remove this once the the Adgangsplatformen OpenID client used here
