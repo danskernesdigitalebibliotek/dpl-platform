@@ -159,7 +159,7 @@ sites:
       - www.albertslundbibliotek.dk
     autogenerateRoutes: true
     plan: webmaster
-    <<: *go-release-pilot-sites
+    <<: *x-webmasters-with-go
   allerod:
     name: "Allerød Biblioteker"
     description: "The library site for Allerød"
@@ -348,7 +348,7 @@ sites:
     secondary-domains:
       - www.genbib.dk
     autogenerateRoutes: true
-    <<: *go-release-pilot-sites
+    <<: *x-defaults-with-go
   gladsaxe:
     name: "Gladsaxe Bibliotekerne"
     description: "The library site for Gladsaxe"
@@ -467,7 +467,7 @@ sites:
     secondary-domains:
       - www.hjbib.dk
     autogenerateRoutes: true
-    <<: *go-release-pilot-sites
+    <<: *x-defaults-with-go
   hoje-taastrup:
     name: "Høje-Taastrup Kommunes Biblioteker"
     description: "The library site for Høje-Taastrup"
@@ -609,7 +609,7 @@ sites:
     secondary-domains:
       - www.langelandbibliotek.dk
     autogenerateRoutes: true
-    <<: *go-release-pilot-sites
+    <<: *x-defaults-with-go
   lejre:
     name: "Lejre Bibliotek & Arkiv"
     description: "The library site for Lejre"
@@ -818,7 +818,7 @@ sites:
       - www.silkeborgbib.dk
     autogenerateRoutes: true
     plan: webmaster
-    <<: *go-release-pilot-sites
+    <<: *x-webmasters-with-go
   skanderborg:
     name: "Skanderborg Bibliotek"
     description: "The library site for Skanderborg"
