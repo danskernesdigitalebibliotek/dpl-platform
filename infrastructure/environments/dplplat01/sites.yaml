@@ -174,7 +174,7 @@ sites:
     secondary-domains:
       - bibliotek.alleroed.dk
     autogenerateRoutes: true
-    <<: *default-release-image-source
+    <<: *x-defaults-with-go
   assens:
     name: "AssensBibliotekerne"
     description: "The library site for Assens"
@@ -183,7 +183,7 @@ sites:
     secondary-domains:
       - assensbib.dk
     autogenerateRoutes: true
-    <<: *default-release-image-source
+    <<: *x-defaults-with-go
   ballerup:
     name: "Ballerup Bibliotekerne"
     description: "The library site for Ballerup"
@@ -204,7 +204,7 @@ sites:
       - www.billundbibliotek.dk
     autogenerateRoutes: "redirect"
     deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOsUy+dVkL+KxOYz8zSel7mNkcKrEnqDZPHmsU4sfMv/"
-    <<: *default-release-image-source
+    <<: *x-defaults-with-go
   bornholm:
     name: "Bornholms Folkebiblioteker"
     description: "The library site for Bornholm"
@@ -284,7 +284,7 @@ sites:
       - favrskovbibliotekerne.dk
       - www.favrskovbibliotekerne.dk
     autogenerateRoutes: true
-    <<: *default-release-image-source
+    <<: *x-defaults-with-go
   faxe:
     name: "Faxe Kommunes Bibliotek & Borgerservice"
     description: "The library site for Faxe"
@@ -303,7 +303,7 @@ sites:
     secondary-domains:
       - fredensborgbibliotekerne.dk
     autogenerateRoutes: true
-    <<: *default-release-image-source
+    <<: *x-defaults-with-go
   fredericia:
     name: "Fredericia Bibliotek"
     description: "The library site for Fredericia"
@@ -527,7 +527,7 @@ sites:
       - www.hvidovrebibliotekerne.dk
       - hvidovrebibliotekerne.dk
     autogenerateRoutes: true
-    <<: *default-release-image-source
+    <<: *x-defaults-with-go
   ikast-brande:
     name: "Ikast-Brande Bibliotek"
     description: "The library site for Ikast-Brande"
@@ -682,7 +682,7 @@ sites:
     secondary-domains:
       - naesbib.dk
     autogenerateRoutes: true
-    <<: *default-release-image-source
+    <<: *x-defaults-with-go
   norddjurs:
     name: "Norddjurs Biblioteker"
     description: "The library site for Norddjurs"
@@ -936,14 +936,14 @@ sites:
     secondary-domains:
       - www.taarnbybib.dk
     autogenerateRoutes: true
-    <<: *webmasters-on-weekly-release-cycle
+    <<: *x-webmasters-with-go
   thisted:
     name: "Biblioteket i Thy"
     description: "The library site for Thisted"
     deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAII8zoNSiwkKmOSHvtKxSMJiDC9EWbTzhkAUd1+csvnne"
     primary-domain: bib.kulturrummet.dk
     autogenerateRoutes: true
-    <<: *default-release-image-source
+    <<: *x-defaults-with-go
   torshavn:
     name: "Bibliotekerne i Torshavn kommune"
     description: "The library site for Torshavn municipality"
@@ -988,7 +988,7 @@ sites:
     secondary-domains:
       - www.vejlebib.dk
     autogenerateRoutes: true
-    <<: *default-release-image-source
+    <<: *x-defaults-with-go
   vesthimmerland:
     name: "Vesthimmerlands Biblioteker"
     description: "The library site for Vesthimmerland"
