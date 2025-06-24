@@ -41,6 +41,7 @@ sites:
     primary-domain: "www.roskildebib.dk"
     secondary-domains: ["roskildebib.dk"]
     dpl-cms-release: "1.2.3"
+    go-release: "1.2.3"
     << : *default-release-image-source
 ```
 
@@ -56,6 +57,7 @@ sites:
     primary-domain: "www.roskildebib.dk"
     secondary-domains: ["roskildebib.dk"]
     dpl-cms-release: "1.2.3"
+    go-release: "1.2.3"
     # Github package registry used as an example here, but any registry will
     # work.
     releaseImageRepository: ghcr.io/some-github-org
@@ -77,6 +79,7 @@ sites:
     primary-domain: "www.roskildebib.dk"
     secondary-domains: ["roskildebib.dk"]
     dpl-cms-release: "1.2.3"
+    go-release: "1.2.3"
     plan: webmaster
     << : *default-release-image-source
 ```
