@@ -136,7 +136,7 @@ sites:
       - aalborgbibliotekerne.dk
     autogenerateRoutes: "redirect"
     plan: webmaster
-    <<: *go-release-pilot-sites
+    <<: *x-webmasters-with-go
   aarhus:
     name: "Aarhus Kommunes Biblioteker"
     description: "The library site for Aarhus"
@@ -451,7 +451,7 @@ sites:
       - herningbib.dk
     autogenerateRoutes: true
     plan: webmaster
-    <<: *go-release-pilot-sites
+    <<: *x-webmasters-with-go
   hillerod:
     name: "Hillerød Bibliotekerne"
     description: "The library site for Hillerød"
@@ -575,7 +575,7 @@ sites:
       - varnish.main.kobenhavn.dplplat01.dpl.reload.dk
     plan: webmaster
     deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHaTkDvjLW/b2qVj8FIvtX9x3TxFFZTENn+w2CFELeoC"
-    <<: *go-release-pilot-sites
+    <<: *x-webmasters-with-go
   koge:
     name: "KøgeBibliotekerne"
     description: "The library site for Køge"
@@ -863,7 +863,7 @@ sites:
       - www.biblioteket.sonderborg.dk
     autogenerateRoutes: true
     plan: webmaster
-    <<: *go-release-pilot-sites
+    <<: *x-webmasters-with-go
   soro:
     name: "Sorø Bibliotek"
     description: "The library site for Sorø"
