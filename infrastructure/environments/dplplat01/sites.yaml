@@ -254,11 +254,7 @@ sites:
       - esbbib.dk
       - www.esbbib.dk
     autogenerateRoutes: true
-<<<<<<< HEAD
-    <<: *go-release-pilot-sites
-=======
     <<: *x-defaults-with-go
->>>>>>> 0d8719b (move editors with GO onto the defaults with GO anchor)
   faaborg-midtfyn:
     name: "Faaborg-Midtfyn Bibliotekerne"
     description: "The library site for Faaborg-Midtfyn"
@@ -827,11 +823,7 @@ sites:
     secondary-domains:
       - bibliotek.skanderborg.dk
     autogenerateRoutes: true
-<<<<<<< HEAD
-    <<: *go-release-pilot-sites
-=======
     <<: *x-defaults-with-go
->>>>>>> 0d8719b (move editors with GO onto the defaults with GO anchor)
   skive:
     name: "Skive Bibliotek"
     description: "The library site for Skive"
