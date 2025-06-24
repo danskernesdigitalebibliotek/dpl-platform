@@ -12,8 +12,9 @@ x-webmasters-on-weekly-release-cycle: &webmasters-on-weekly-release-cycle
 x-go-release-pilot-sites: &go-release-pilot-sites
   releaseImageRepository: ghcr.io/danskernesdigitalebibliotek
   releaseImageName: dpl-cms-source
-  dpl-cms-release: "2025.25.0"
-  moduletest-dpl-cms-release: "2025.25.0"
+  dpl-cms-release: "2025.25.4"
+  moduletest-dpl-cms-release: "2025.25.4"
+  go-release: 0.25.46
 x-defaults-with-go: &x-defaults-with-go
   releaseImageRepository: ghcr.io/danskernesdigitalebibliotek
   releaseImageName: dpl-cms-source
