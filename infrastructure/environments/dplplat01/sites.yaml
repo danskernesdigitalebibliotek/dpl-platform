@@ -14,6 +14,10 @@ x-go-release-pilot-sites: &go-release-pilot-sites
   releaseImageName: dpl-cms-source
   dpl-cms-release: "2025.25.0"
   moduletest-dpl-cms-release: "2025.25.0"
+x-defaults-with-go: &x-defaults-with-go
+  releaseImageRepository: ghcr.io/danskernesdigitalebibliotek
+  releaseImageName: dpl-cms-source
+  dpl-cms-release: "2025.25.4"
   go-release: 0.25.44
 x-webmasters-with-go: &x-webmasters-with-go
   #This release cycle releases the newest release, which has been tested on webmaster moduletests in the previous week, on to production
