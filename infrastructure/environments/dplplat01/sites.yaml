@@ -9,12 +9,18 @@ x-webmasters-on-weekly-release-cycle: &webmasters-on-weekly-release-cycle
   releaseImageName: dpl-cms-source
   dpl-cms-release: "2025.23.0"
   moduletest-dpl-cms-release: "2025.24.1"
-x-go-release-pilot-sites: &go-release-pilot-sites
+x-defaults-with-go: &x-defaults-with-go
+  releaseImageRepository: ghcr.io/danskernesdigitalebibliotek
+  releaseImageName: dpl-cms-source
+  dpl-cms-release: "2025.25.4"
+  go-release: 0.25.47
+x-webmasters-with-go: &x-webmasters-with-go
+  #This release cycle releases the newest release, which has been tested on webmaster moduletests in the previous week, on to production
   releaseImageRepository: ghcr.io/danskernesdigitalebibliotek
   releaseImageName: dpl-cms-source
   dpl-cms-release: "2025.25.4"
   moduletest-dpl-cms-release: "2025.25.4"
-  go-release: 0.25.44
+  go-release: 0.25.47
 sites:
   # Site objects are indexed by a unique key that must be a valid lagoon, and
   # github project name. That is, alphanumeric and dashes.
@@ -124,7 +130,7 @@ sites:
       - aalborgbibliotekerne.dk
     autogenerateRoutes: "redirect"
     plan: webmaster
-    <<: *go-release-pilot-sites
+    <<: *x-webmasters-with-go
   aarhus:
     name: "Aarhus Kommunes Biblioteker"
     description: "The library site for Aarhus"
@@ -153,7 +159,7 @@ sites:
       - www.albertslundbibliotek.dk
     autogenerateRoutes: true
     plan: webmaster
-    <<: *go-release-pilot-sites
+    <<: *x-webmasters-with-go
   allerod:
     name: "Allerød Biblioteker"
     description: "The library site for Allerød"
@@ -162,7 +168,7 @@ sites:
     secondary-domains:
       - bibliotek.alleroed.dk
     autogenerateRoutes: true
-    <<: *default-release-image-source
+    <<: *x-defaults-with-go
   assens:
     name: "AssensBibliotekerne"
     description: "The library site for Assens"
@@ -171,7 +177,7 @@ sites:
     secondary-domains:
       - assensbib.dk
     autogenerateRoutes: true
-    <<: *default-release-image-source
+    <<: *x-defaults-with-go
   ballerup:
     name: "Ballerup Bibliotekerne"
     description: "The library site for Ballerup"
@@ -181,7 +187,7 @@ sites:
       - www.bib.ballerup.dk
     autogenerateRoutes: true
     plan: webmaster
-    <<: *webmasters-on-weekly-release-cycle
+    <<: *x-webmasters-with-go
   billund:
     name: "Billund Bibliotekerne og Borgerservice"
     description: "The main library site for Billund"
@@ -192,7 +198,7 @@ sites:
       - www.billundbibliotek.dk
     autogenerateRoutes: "redirect"
     deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOsUy+dVkL+KxOYz8zSel7mNkcKrEnqDZPHmsU4sfMv/"
-    <<: *default-release-image-source
+    <<: *x-defaults-with-go
   bornholm:
     name: "Bornholms Folkebiblioteker"
     description: "The library site for Bornholm"
@@ -208,7 +214,7 @@ sites:
     secondary-domains:
       - brondby-bibliotekerne.dk
     autogenerateRoutes: true
-    <<: *go-release-pilot-sites
+    <<: *x-defaults-with-go
   bronderslev:
     name: "Brønderslev Bibliotek"
     description: "The library site for Brønderslev"
@@ -226,7 +232,7 @@ sites:
     secondary-domains:
       - drabib.dk
     autogenerateRoutes: true
-    <<: *go-release-pilot-sites
+    <<: *x-defaults-with-go
   egedal:
     name: "Egedal Bibliotekerne"
     description: "The library site for Egedal"
@@ -248,7 +254,7 @@ sites:
       - esbbib.dk
       - www.esbbib.dk
     autogenerateRoutes: true
-    <<: *go-release-pilot-sites
+    <<: *x-defaults-with-go
   faaborg-midtfyn:
     name: "Faaborg-Midtfyn Bibliotekerne"
     description: "The library site for Faaborg-Midtfyn"
@@ -268,7 +274,7 @@ sites:
       - favrskovbibliotekerne.dk
       - www.favrskovbibliotekerne.dk
     autogenerateRoutes: true
-    <<: *default-release-image-source
+    <<: *x-defaults-with-go
   faxe:
     name: "Faxe Kommunes Bibliotek & Borgerservice"
     description: "The library site for Faxe"
@@ -287,7 +293,7 @@ sites:
     secondary-domains:
       - fredensborgbibliotekerne.dk
     autogenerateRoutes: true
-    <<: *default-release-image-source
+    <<: *x-defaults-with-go
   fredericia:
     name: "Fredericia Bibliotek"
     description: "The library site for Fredericia"
@@ -320,7 +326,7 @@ sites:
     secondary-domains:
       - bibliotekerne.frederikssund.dk
     autogenerateRoutes: true
-    <<: *go-release-pilot-sites
+    <<: *x-defaults-with-go
   fureso:
     name: "Furesø Bibliotek & Borgerservice"
     description: "The library site for Furesø"
@@ -338,7 +344,7 @@ sites:
     secondary-domains:
       - www.genbib.dk
     autogenerateRoutes: true
-    <<: *go-release-pilot-sites
+    <<: *x-defaults-with-go
   gladsaxe:
     name: "Gladsaxe Bibliotekerne"
     description: "The library site for Gladsaxe"
@@ -439,7 +445,7 @@ sites:
       - herningbib.dk
     autogenerateRoutes: true
     plan: webmaster
-    <<: *go-release-pilot-sites
+    <<: *x-webmasters-with-go
   hillerod:
     name: "Hillerød Bibliotekerne"
     description: "The library site for Hillerød"
@@ -457,7 +463,7 @@ sites:
     secondary-domains:
       - www.hjbib.dk
     autogenerateRoutes: true
-    <<: *go-release-pilot-sites
+    <<: *x-defaults-with-go
   hoje-taastrup:
     name: "Høje-Taastrup Kommunes Biblioteker"
     description: "The library site for Høje-Taastrup"
@@ -482,7 +488,7 @@ sites:
     secondary-domains:
       - holstebrobibliotek.dk
     autogenerateRoutes: true
-    <<: *go-release-pilot-sites
+    <<: *x-defaults-with-go
   horsens:
     name: "Horsens Bibliotek"
     description: "The library site for Horsens"
@@ -511,7 +517,7 @@ sites:
       - www.hvidovrebibliotekerne.dk
       - hvidovrebibliotekerne.dk
     autogenerateRoutes: true
-    <<: *default-release-image-source
+    <<: *x-defaults-with-go
   ikast-brande:
     name: "Ikast-Brande Bibliotek"
     description: "The library site for Ikast-Brande"
@@ -563,7 +569,7 @@ sites:
       - varnish.main.kobenhavn.dplplat01.dpl.reload.dk
     plan: webmaster
     deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHaTkDvjLW/b2qVj8FIvtX9x3TxFFZTENn+w2CFELeoC"
-    <<: *go-release-pilot-sites
+    <<: *x-webmasters-with-go
   koge:
     name: "KøgeBibliotekerne"
     description: "The library site for Køge"
@@ -599,7 +605,7 @@ sites:
     secondary-domains:
       - www.langelandbibliotek.dk
     autogenerateRoutes: true
-    <<: *go-release-pilot-sites
+    <<: *x-defaults-with-go
   lejre:
     name: "Lejre Bibliotek & Arkiv"
     description: "The library site for Lejre"
@@ -666,7 +672,7 @@ sites:
     secondary-domains:
       - naesbib.dk
     autogenerateRoutes: true
-    <<: *default-release-image-source
+    <<: *x-defaults-with-go
   norddjurs:
     name: "Norddjurs Biblioteker"
     description: "The library site for Norddjurs"
@@ -732,7 +738,7 @@ sites:
       - randersbibliotek.dk
       - www.randersbibliotek.dk
     autogenerateRoutes: true
-    <<: *go-release-pilot-sites
+    <<: *x-defaults-with-go
   rebild:
     name: "Rebild Bibliotekerne"
     description: "The library site for Rebild"
@@ -778,7 +784,7 @@ sites:
     secondary-domains:
       - roskildebib.dk
     autogenerateRoutes: true
-    <<: *webmasters-on-weekly-release-cycle
+    <<: *x-webmasters-with-go
   rudersdal:
     name: "Rudersdal Bibliotekerne"
     description: "The library site for Rudersdal"
@@ -808,7 +814,7 @@ sites:
       - www.silkeborgbib.dk
     autogenerateRoutes: true
     plan: webmaster
-    <<: *go-release-pilot-sites
+    <<: *x-webmasters-with-go
   skanderborg:
     name: "Skanderborg Bibliotek"
     description: "The library site for Skanderborg"
@@ -817,7 +823,7 @@ sites:
     secondary-domains:
       - bibliotek.skanderborg.dk
     autogenerateRoutes: true
-    <<: *go-release-pilot-sites
+    <<: *x-defaults-with-go
   skive:
     name: "Skive Bibliotek"
     description: "The library site for Skive"
@@ -851,7 +857,7 @@ sites:
       - www.biblioteket.sonderborg.dk
     autogenerateRoutes: true
     plan: webmaster
-    <<: *go-release-pilot-sites
+    <<: *x-webmasters-with-go
   soro:
     name: "Sorø Bibliotek"
     description: "The library site for Sorø"
@@ -916,14 +922,14 @@ sites:
     secondary-domains:
       - www.taarnbybib.dk
     autogenerateRoutes: true
-    <<: *webmasters-on-weekly-release-cycle
+    <<: *x-webmasters-with-go
   thisted:
     name: "Biblioteket i Thy"
     description: "The library site for Thisted"
     deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAII8zoNSiwkKmOSHvtKxSMJiDC9EWbTzhkAUd1+csvnne"
     primary-domain: bib.kulturrummet.dk
     autogenerateRoutes: true
-    <<: *default-release-image-source
+    <<: *x-defaults-with-go
   torshavn:
     name: "Bibliotekerne i Torshavn kommune"
     description: "The library site for Torshavn municipality"
@@ -941,7 +947,7 @@ sites:
     secondary-domains:
       - www.kulturogborgerhus.vallensbaek.dk
     autogenerateRoutes: true
-    <<: *go-release-pilot-sites
+    <<: *x-defaults-with-go
   varde:
     name: "Varde Bibliotek"
     description: "The library site for Varde"
@@ -968,7 +974,7 @@ sites:
     secondary-domains:
       - www.vejlebib.dk
     autogenerateRoutes: true
-    <<: *default-release-image-source
+    <<: *x-defaults-with-go
   vesthimmerland:
     name: "Vesthimmerlands Biblioteker"
     description: "The library site for Vesthimmerland"
