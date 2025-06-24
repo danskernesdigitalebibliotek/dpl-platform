@@ -6,3 +6,6 @@
 **/kdevconfig.yaml
 **/skaffold.yaml
 .env
+
+# Ignore .idea files
+.idea/
