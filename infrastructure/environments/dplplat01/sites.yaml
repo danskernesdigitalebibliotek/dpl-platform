@@ -727,7 +727,7 @@ sites:
     secondary-domains:
       - www.odsbib.dk
     autogenerateRoutes: true
-    <<: *default-release-image-source
+    <<: *x-defaults-with-go
   randers:
     name: "Randers Bibliotek"
     description: "The library site for Randers"
@@ -747,7 +747,7 @@ sites:
     secondary-domains:
       - rebildbib.dk
     autogenerateRoutes: true
-    <<: *default-release-image-source
+    <<: *x-defaults-with-go
   ringkobing-skjern:
     name: "Ringkøbing-Skjern Bibliotekerne"
     description: "The library site for Ringkøbing-Skjern"
@@ -756,7 +756,7 @@ sites:
     secondary-domains:
       - www.riskbib.dk
     autogenerateRoutes: true
-    <<: *default-release-image-source
+    <<: *x-defaults-with-go
   ringsted:
     name: "Ringsted Bibliotek & Borgerservice"
     description: "The library site for Ringsted"
@@ -765,7 +765,7 @@ sites:
     secondary-domains:
       - www.ringstedbib.dk
     autogenerateRoutes: true
-    <<: *default-release-image-source
+    <<: *x-defaults-with-go
   rodovre:
     name: "Rødovre Bibliotek"
     description: "The library site for Rødovre"
@@ -795,7 +795,7 @@ sites:
       - rudersdalbibliotekerne.dk
       - www.rudersdalbibliotekerne.dk
     autogenerateRoutes: true
-    <<: *default-release-image-source
+    <<: *x-defaults-with-go
   samso:
     name: "Samsø Bibliotek"
     description: "The library site for Samsø"
@@ -804,7 +804,7 @@ sites:
     secondary-domains:
       - "www.bibliotek.samsoe.dk"
     autogenerateRoutes: true
-    <<: *default-release-image-source
+    <<: *x-defaults-with-go
   silkeborg:
     name: "Silkeborg Bibliotekerne"
     description: "The library site for Silkeborg"
@@ -832,13 +832,13 @@ sites:
     secondary-domains:
       - skivebibliotek.dk
     autogenerateRoutes: true
-    <<: *default-release-image-source
+    <<: *x-defaults-with-go
   solrod:
     #This site is dead due to the following problem: https://reload.zulipchat.com/#narrow/channel/240325-DDF/topic/Hasteopgave.2013.2F01.2F25
     name: "Solrød Bibliotek og Kulturhus"
     description: "The library site for Solrød"
     deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIF1GwZ4r8QZ7Vebdqiz/mtkifrLU+ZSvlAJshdXjCh5J"
-    <<: *default-release-image-source
+    <<: *x-defaults-with-go
   solrod2:
     name: "Solrød Bibliotek og Kulturhus"
     description: "The library site for Solrød"
@@ -847,7 +847,7 @@ sites:
     secondary-domains:
       - www.solbib.dk
     autogenerateRoutes: true
-    <<: *default-release-image-source
+    <<: *x-defaults-with-go
   sonderborg:
     name: "Biblioteket Sønderborg"
     description: "The library site for Sønderborg"
@@ -866,7 +866,7 @@ sites:
     secondary-domains:
       - soroebib.dk
     autogenerateRoutes: true
-    <<: *default-release-image-source
+    <<: *x-defaults-with-go
   stevns:
     name: "Stevns Bibliotekerne"
     description: "The library site for Stevns"
@@ -875,7 +875,7 @@ sites:
     secondary-domains:
       - stevnsbib.dk
     autogenerateRoutes: true
-    <<: *default-release-image-source
+    <<: *x-defaults-with-go
   struer:
     name: "Struer Bibliotek"
     description: "The library site for Struer"
@@ -884,7 +884,7 @@ sites:
     secondary-domains:
       - "struerbibliotek.dk"
     autogenerateRoutes: "redirect"
-    <<: *default-release-image-source
+    <<: *x-defaults-with-go
   sydslesvig:
     name: "Dansk Centralbibliotek for Sydslesvig e.V."
     description: "The library site for Dansk Centralbibliotek for Sydslesvig e.V."
@@ -912,7 +912,7 @@ sites:
     secondary-domains:
       - www.syddjursbibliotek.dk
     autogenerateRoutes: true
-    <<: *default-release-image-source
+    <<: *x-defaults-with-go
   taarnby:
     name: "Tårnby Kommunebiblioteker"
     description: "The library site for Tårnby"
