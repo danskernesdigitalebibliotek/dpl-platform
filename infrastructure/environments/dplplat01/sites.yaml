@@ -205,7 +205,7 @@ sites:
     deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIApUNh71neiuKAsO3OL4jEzxnPCXt9gvl66gDRiYLnLw"
     primary-domain: bibliotek.brk.dk
     autogenerateRoutes: true
-    <<: *default-release-image-source
+    <<: *x-defaults-with-go
   brondby:
     name: "Brøndby-Bibliotekerne"
     description: "The library site for Brøndby"
@@ -223,7 +223,7 @@ sites:
     secondary-domains:
       - bronderslevbib.dk
     autogenerateRoutes: true
-    <<: *default-release-image-source
+    <<: *x-defaults-with-go
   dragor:
     name: "Dragør Bibliotek"
     description: "The library site for Dragør"
@@ -241,7 +241,7 @@ sites:
     secondary-domains:
       - www.egedalbibliotekerne.dk
     autogenerateRoutes: true
-    <<: *default-release-image-source
+    <<: *x-defaults-with-go
   esbjerg:
     name: "Esbjerg Kommunes Biblioteker"
     description: "The library site for Esbjerg"
@@ -263,7 +263,7 @@ sites:
     secondary-domains:
       - www.fmbib.dk
     autogenerateRoutes: true
-    <<: *default-release-image-source
+    <<: *x-defaults-with-go
   favrskov:
     name: "Favrskov Bibliotekerne"
     description: "The library site for Favrskov"
@@ -302,7 +302,7 @@ sites:
     secondary-domains:
       - www.fredericiabib.dk
     autogenerateRoutes: true
-    <<: *default-release-image-source
+    <<: *x-defaults-with-go
   frederiksberg:
     name: "Biblioteket Frederiksberg"
     description: "The library site for Frederiksberg"
@@ -310,14 +310,14 @@ sites:
     secondary-domains:
       - www.fkb.dk
     deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIGatN86NGcfXHefEFAACwDVkDxob2SW+N8R+8/rANnvF"
-    <<: *default-release-image-source
+    <<: *x-defaults-with-go
   frederikshavn:
     name: "Frederikshavn Kommunes Biblioteker"
     description: "The library site for Frederikshavn"
     deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAICZcYBGIGrw0aei4UFmWcNMiQ4ZbJbBR7OU7q5Bsu/lz"
     primary-domain: bibl.frederikshavn.dk
     autogenerateRoutes: true
-    <<: *default-release-image-source
+    <<: *x-defaults-with-go
   frederikssund:
     name: "Frederikssund Bibliotekerne"
     description: "The library site for Frederikssund"
@@ -335,7 +335,7 @@ sites:
     secondary-domains:
       - www.furbib.dk
     autogenerateRoutes: true
-    <<: *default-release-image-source
+    <<: *x-defaults-with-go
   gentofte:
     name: "Gentofte Bibliotekerne"
     description: "The library site for Gentofte"
@@ -353,7 +353,7 @@ sites:
     secondary-domains:
       - www.gladbib.dk
     autogenerateRoutes: true
-    <<: *default-release-image-source
+    <<: *x-defaults-with-go
   glostrup:
     name: "Glostrup Bibliotek"
     description: "The library site for Glostrup"
@@ -362,7 +362,7 @@ sites:
     secondary-domains:
       - glostrupbib.dk
     autogenerateRoutes: true
-    <<: *default-release-image-source
+    <<: *x-defaults-with-go
   greve:
     name: "Greve Bibliotek"
     description: "The library site for Greve"
@@ -381,7 +381,7 @@ sites:
     secondary-domains:
       - gribskovbib.dk
     autogenerateRoutes: true
-    <<: *default-release-image-source
+    <<: *x-defaults-with-go
   guldborgsund:
     name: "Guldborgsund-bibliotekerne"
     description: "The library site for Guldborgsund"
@@ -390,7 +390,7 @@ sites:
     secondary-domains:
       - www.guldbib.dk
     autogenerateRoutes: true
-    <<: *default-release-image-source
+    <<: *x-defaults-with-go
   haderslev:
     name: "Haderslev Bibliotekerne"
     description: "The library site for Haderslev"
@@ -690,7 +690,7 @@ sites:
     secondary-domains:
       - nordfynsbib.dk
     autogenerateRoutes: true
-    <<: *default-release-image-source
+    <<: *x-defaults-with-go
   nyborg:
     name: "Nyborg Bibliotek"
     description: "The library site for Nyborg"
@@ -938,7 +938,7 @@ sites:
     secondary-domains:
       - bbs.fo
     autogenerateRoutes: true
-    <<: *default-release-image-source
+    <<: *x-defaults-with-go
   vallensbaek:
     name: "Vallensbæk Bibliotek"
     description: "The library site for Vallensbæk"
