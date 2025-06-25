@@ -774,7 +774,7 @@ sites:
     secondary-domains:
       - rdb.dk
     autogenerateRoutes: true
-    <<: *default-release-image-source
+    <<: *x-webmasters-with-go
   roskilde:
     name: "Roskilde Bibliotekerne"
     description: "The library site for Roskilde"
