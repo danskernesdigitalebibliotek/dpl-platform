@@ -1,5 +1,5 @@
 # Configure the source we default to when looking for release images.
-x-defaults: &x-defaults-with-go
+x-defaults: &default-release-image-source
   releaseImageRepository: ghcr.io/danskernesdigitalebibliotek
   releaseImageName: dpl-cms-source
   dpl-cms-release: "2025.25.0"
