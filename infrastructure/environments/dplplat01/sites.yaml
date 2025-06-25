@@ -1,5 +1,5 @@
 # Configure the source we default to when looking for release images.
-x-defaults: &default-release-image-source
+x-defaults: &x-defaults-with-go
   releaseImageRepository: ghcr.io/danskernesdigitalebibliotek
   releaseImageName: dpl-cms-source
   dpl-cms-release: "2025.25.0"
@@ -120,7 +120,7 @@ sites:
     secondary-domains:
       - aabenraabib.dk
     autogenerateRoutes: true
-    <<: *default-release-image-source
+    <<: *x-defaults-with-go
   aalborg:
     name: "Aalborg Bibliotekerne"
     description: "The main library site for Aalborg"
@@ -149,7 +149,7 @@ sites:
     secondary-domains:
       - arrebib.dk
     autogenerateRoutes: true
-    <<: *default-release-image-source
+    <<: *x-defaults-with-go
   albertslund:
     name: "Albertslund Bibliotek"
     description: "The library site for Albertslund"
@@ -372,7 +372,7 @@ sites:
       - grevebib.dk
       - www.grevebib.dk
     autogenerateRoutes: true
-    <<: *default-release-image-source
+    <<: *x-defaults-with-go
   gribskov:
     name: "Gribskov Biblioteker"
     description: "The library site for Gribskov"
@@ -535,7 +535,7 @@ sites:
     secondary-domains:
       - ishojbib.dk
     autogenerateRoutes: true
-    <<: *default-release-image-source
+    <<: *x-defaults-with-go
   jammerbugt:
     name: "Jammerbugt Bibliotekerne"
     description: "The library site for Jammerbugt"
@@ -903,7 +903,7 @@ sites:
     secondary-domains:
       - www.svendborgbibliotek.dk
     autogenerateRoutes: true
-    <<: *default-release-image-source
+    <<: *x-defaults-with-go
   syddjurs:
     name: "Syddjurs Bibliotek"
     description: "The library site for Syddjurs"
@@ -956,7 +956,7 @@ sites:
     secondary-domains:
       - vardebib.dk
     autogenerateRoutes: true
-    <<: *default-release-image-source
+    <<: *x-defaults-with-go
   vejen:
     name: "Vejen Kommunes Biblioteker"
     description: "The library site for Vejen"
@@ -965,7 +965,7 @@ sites:
     secondary-domains:
       - www.vejbib.dk
     autogenerateRoutes: true
-    <<: *default-release-image-source
+    <<: *x-defaults-with-go
   vejle:
     name: "Vejle Bibliotekerne"
     description: "The library site for Vejle"
@@ -983,7 +983,7 @@ sites:
     secondary-domains:
       - "vhbib.dk"
     autogenerateRoutes: "redirect"
-    <<: *default-release-image-source
+    <<: *x-defaults-with-go
   viborg:
     name: "Viborg Bibliotekerne"
     description: "The library site for Viborg"
@@ -992,7 +992,7 @@ sites:
     secondary-domains:
       - www.viborgbib.dk
     autogenerateRoutes: true
-    <<: *default-release-image-source
+    <<: *x-defaults-with-go
   vordingborg:
     name: "Vordingborg Bibliotekerne"
     description: "The library site for Vordingborg"
@@ -1002,4 +1002,4 @@ sites:
       - vordingborgbibliotekerne.dk
       - vordingborgbibliotek.dk
     autogenerateRoutes: true
-    <<: *default-release-image-source
+    <<: *x-defaults-with-go
