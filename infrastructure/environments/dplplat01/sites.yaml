@@ -399,7 +399,7 @@ sites:
     secondary-domains:
       - www.haderslevbibliotekerne.dk
     autogenerateRoutes: true
-    <<: *default-release-image-source
+    <<: *x-defaults-with-go
   halsnaes:
     name: "Halsnæs Bibliotekerne"
     description: "The library site for Halsnæs"
@@ -408,7 +408,7 @@ sites:
     secondary-domains:
       - www.bibliotekerne.halsnaes.dk
     autogenerateRoutes: true
-    <<: *default-release-image-source
+    <<: *x-defaults-with-go
   hedensted:
     name: "Hedensted Bibliotekerne"
     description: "The library site for Hedensted"
@@ -417,7 +417,7 @@ sites:
     secondary-domains:
       - www.hedenstedbib.dk
     autogenerateRoutes: true
-    <<: *default-release-image-source
+    <<: *x-defaults-with-go
   helsingor:
     name: "Helsingør Kommunes Biblioteker"
     description: "The library site for Helsingør"
@@ -426,7 +426,7 @@ sites:
     secondary-domains:
       - www.helsbib.dk
     autogenerateRoutes: true
-    <<: *default-release-image-source
+    <<: *x-defaults-with-go
   herlev:
     name: "Herlev Bibliotek"
     description: "The library site for Herlev"
@@ -435,7 +435,7 @@ sites:
       - herlevbibliotek.dk
     autogenerateRoutes: "redirect"
     deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAICsQ7blUGjtlSdPU4AV7PR21o2Eqg5IMKTCFX3PV/2Mf"
-    <<: *default-release-image-source
+    <<: *x-defaults-with-go
   herning:
     name: "Herning Bibliotekerne"
     description: "The main library site for Herning"
@@ -454,7 +454,7 @@ sites:
     secondary-domains:
       - www.hilbib.dk
     autogenerateRoutes: true
-    <<: *default-release-image-source
+    <<: *x-defaults-with-go
   hjorring:
     name: "Hjørring Bibliotekerne"
     description: "The library site for Hjørring"
@@ -472,14 +472,14 @@ sites:
     secondary-domains:
       - www.bibliotek.htk.dk
     autogenerateRoutes: true
-    <<: *default-release-image-source
+    <<: *x-defaults-with-go
   holbaek:
     name: "Holbæk Bibliotekerne"
     description: "The library site for Holbæk"
     deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIL6uSbRiMzeDVejoPx5+YlAPCHebnY0XwF/zDd3YZtQ+"
     primary-domain: bibliotek.holbaek.dk
     autogenerateRoutes: true
-    <<: *default-release-image-source
+    <<: *x-defaults-with-go
   holstebro:
     name: "Holstebro Bibliotek"
     description: "The library site for Holstebro"
@@ -497,7 +497,7 @@ sites:
     secondary-domains:
       - www.horsensbibliotek.dk
     autogenerateRoutes: true
-    <<: *default-release-image-source
+    <<: *x-defaults-with-go
   horsholm:
     name: "Hørsholm Bibliotek"
     description: "The library site for Hørsholm"
@@ -506,7 +506,7 @@ sites:
     secondary-domains:
       - www.biblioteket.horsholm.dk
     autogenerateRoutes: redirect
-    <<: *default-release-image-source
+    <<: *x-defaults-with-go
   hvidovre:
     name: "HvidovreBibliotekerne"
     description: "The library site for Hvidovre"
@@ -526,7 +526,7 @@ sites:
     secondary-domains:
       - ikast-brandebibliotek.dk
     autogenerateRoutes: true
-    <<: *default-release-image-source
+    <<: *x-defaults-with-go
   ishoj:
     name: "Ishøj Bibliotek"
     description: "The library site for Ishøj"
@@ -540,7 +540,7 @@ sites:
     name: "Jammerbugt Bibliotekerne"
     description: "The library site for Jammerbugt"
     deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIAjNMzYEEzdjsgQlnh5TAJdDlIzmr1pG8s9S/M86gHjZ"
-    <<: *default-release-image-source
+    <<: *x-defaults-with-go
   kalundborg:
     name: "Kalundborg Biblioteker"
     description: "The library site for Kallundborg"
