@@ -549,7 +549,7 @@ sites:
     secondary-domains:
       - kalundborgbib.dk
     autogenerateRoutes: true
-    <<: *default-release-image-source
+    <<: *x-defaults-with-go
   kerteminde:
     name: "Kerteminde Bibliotekerne"
     description: "The library site for Kerteminde"
@@ -558,7 +558,7 @@ sites:
     secondary-domains:
       - www.kertemindebibliotekerne.dk
     autogenerateRoutes: true
-    <<: *default-release-image-source
+    <<: *x-defaults-with-go
   kobenhavn:
     name: "Københavns Biblioteker"
     description: "The main library site for København"
@@ -578,7 +578,7 @@ sites:
     secondary-domains:
       - koegebib.dk
     autogenerateRoutes: true
-    <<: *default-release-image-source
+    <<: *x-defaults-with-go
   kolding:
     name: "Koldingbibliotekerne"
     description: "The library site for Kolding"
@@ -589,14 +589,14 @@ sites:
       - koldingbibliotekerne.dk
       - www.koldingbibliotekerne.dk
     autogenerateRoutes: true
-    <<: *default-release-image-source
+    <<: *x-defaults-with-go
   laeso:
     name: "Læsø Bibliotek"
     description: "The library site for Læsø"
     deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIGBAqZWP02LnFU7Iwlj9ebWeX3efwl9tkRzidSIjo6FF"
     primary-domain: biblioteket.laesoe.dk
     autogenerateRoutes: true
-    <<: *default-release-image-source
+    <<: *x-defaults-with-go
   langeland:
     name: "Langeland Bibliotek"
     description: "The library site for Langeland"
@@ -616,7 +616,7 @@ sites:
       - lejrebibliotek.dk
       - www.lejrebibliotek.dk
     autogenerateRoutes: true
-    <<: *default-release-image-source
+    <<: *x-defaults-with-go
   lolland:
     name: "LollandBibliotekerne"
     description: "The library site for Lolland"
@@ -625,7 +625,7 @@ sites:
     secondary-domains:
       - www.lollandbib.dk
     autogenerateRoutes: true
-    <<: *default-release-image-source
+    <<: *x-defaults-with-go
   lyngby-taarbaek:
     name: "Lyngby-Taarbæk Bibliotekerne"
     description: "The library site for Lyngby-Taarbæk"
@@ -634,7 +634,7 @@ sites:
     secondary-domains:
       - lyngbybib.dk
     autogenerateRoutes: true
-    <<: *default-release-image-source
+    <<: *x-defaults-with-go
   mariagerfjord:
     name: "Mariagerfjord Bibliotekerne"
     description: "The library site for Mariagerfjord"
@@ -645,7 +645,7 @@ sites:
       - mariagerfjordbibliotekerne.dk
       - www.mariagerfjordbibliotekerne.dk
     autogenerateRoutes: true
-    <<: *default-release-image-source
+    <<: *x-defaults-with-go
   middelfart:
     name: "Middelfart Bibliotek"
     description: "The library site for Middelfart"
@@ -654,7 +654,7 @@ sites:
     secondary-domains:
       - middelfartbibliotek.dk
     autogenerateRoutes: true
-    <<: *default-release-image-source
+    <<: *x-defaults-with-go
   morso:
     name: "Morsø Folkebibliotek"
     description: "The library site for Morsø"
@@ -663,7 +663,7 @@ sites:
     secondary-domains:
       - bibliotekmorsoe.dk
     autogenerateRoutes: true
-    <<: *default-release-image-source
+    <<: *x-defaults-with-go
   naestved:
     name: "Næstved Bibliotek og Borgerservice"
     description: "The library site for Næstved"
@@ -681,7 +681,7 @@ sites:
     secondary-domains:
       - www.norddjursbib.dk
     autogenerateRoutes: true
-    <<: *default-release-image-source
+    <<: *x-defaults-with-go
   nordfyn:
     name: "Bibliotek og Borgerservice Nordfyns Kommune"
     description: "The library site for Nordfyn"
@@ -699,7 +699,7 @@ sites:
     secondary-domains:
       - nyborgbibliotek.dk
     autogenerateRoutes: true
-    <<: *default-release-image-source
+    <<: *x-defaults-with-go
   odder:
     name: "Odder Bibliotek"
     description: "The library site for Odder"
@@ -708,7 +708,7 @@ sites:
     secondary-domains:
       - bibliotek.odder.dk
     autogenerateRoutes: true
-    <<: *default-release-image-source
+    <<: *x-defaults-with-go
   odense:
     name: "Odense Biblioteker og Borgerservice"
     description: "The library site for Odense"
