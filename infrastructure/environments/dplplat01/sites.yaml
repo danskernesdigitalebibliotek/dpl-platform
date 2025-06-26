@@ -3,17 +3,13 @@ x-defaults: &default-release-image-source
   releaseImageRepository: ghcr.io/danskernesdigitalebibliotek
   releaseImageName: dpl-cms-source
   dpl-cms-release: "2025.26.0"
+  go-release: 2025.26.0
 x-webmasters-on-weekly-release-cycle: &webmasters-on-weekly-release-cycle
   #This release cycle releases the newest release, which has been tested on webmaster moduletests in the previous week, on to production
   releaseImageRepository: ghcr.io/danskernesdigitalebibliotek
   releaseImageName: dpl-cms-source
   dpl-cms-release: "2025.25.0"
   moduletest-dpl-cms-release: "2025.26.0"
-x-defaults-with-go: &x-defaults-with-go
-  releaseImageRepository: ghcr.io/danskernesdigitalebibliotek
-  releaseImageName: dpl-cms-source
-  dpl-cms-release: "2025.26.0"
-  go-release: 2025.26.0
 x-webmasters-with-go: &x-webmasters-with-go
   #This release cycle releases the newest release, which has been tested on webmaster moduletests in the previous week, on to production
   releaseImageRepository: ghcr.io/danskernesdigitalebibliotek
@@ -93,7 +89,6 @@ sites:
     description: "The BNF content sharing site"
     plan: webmaster
     moduletest-dpl-cms-release: 2025.26.0
-    go-release: 2025.26.0
     # Use the webmaster plan to add a module-test site which acts as a server
     # for the staging environment.
     # The module-test site should use the next version while the production
