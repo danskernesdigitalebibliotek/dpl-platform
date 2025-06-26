@@ -19,8 +19,8 @@ x-webmasters-with-go: &x-webmasters-with-go
   releaseImageRepository: ghcr.io/danskernesdigitalebibliotek
   releaseImageName: dpl-cms-source
   dpl-cms-release: "2025.25.4"
-  moduletest-dpl-cms-release: "2025.25.4"
-  go-release: 0.25.47
+  moduletest-dpl-cms-release: "2025.26.0"
+  go-release: 2025.26.0
 sites:
   # Site objects are indexed by a unique key that must be a valid lagoon, and
   # github project name. That is, alphanumeric and dashes.
