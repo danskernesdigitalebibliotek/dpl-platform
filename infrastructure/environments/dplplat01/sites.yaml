@@ -10,11 +10,11 @@ x-webmasters-on-weekly-release-cycle: &webmasters-on-weekly-release-cycle
   releaseImageName: dpl-cms-source
   dpl-cms-release: "2025.25.0"
   moduletest-dpl-cms-release: "2025.26.1"
-x-webmasters-with-go: &x-webmasters-with-go
-  #This release cycle releases the newest release, which has been tested on webmaster moduletests in the previous week, on to production
+x-webmasters-with-latest-release-in-production: &webmasters-with-latest-release-in-production
+  #This release cycle releases the latest release to both production and moduletest environments.
   releaseImageRepository: ghcr.io/danskernesdigitalebibliotek
   releaseImageName: dpl-cms-source
-  dpl-cms-release: "2025.25.4"
+  dpl-cms-release: "2025.26.1"
   moduletest-dpl-cms-release: "2025.26.1"
   go-release: 2025.26.0
 sites:
@@ -125,7 +125,7 @@ sites:
       - aalborgbibliotekerne.dk
     autogenerateRoutes: "redirect"
     plan: webmaster
-    <<: *x-webmasters-with-go
+    <<: *webmasters-with-latest-release-in-production
   aarhus:
     name: "Aarhus Kommunes Biblioteker"
     description: "The library site for Aarhus"
@@ -154,7 +154,7 @@ sites:
       - www.albertslundbibliotek.dk
     autogenerateRoutes: true
     plan: webmaster
-    <<: *x-webmasters-with-go
+    <<: *webmasters-with-latest-release-in-production
   allerod:
     name: "Allerød Biblioteker"
     description: "The library site for Allerød"
@@ -182,7 +182,7 @@ sites:
       - www.bib.ballerup.dk
     autogenerateRoutes: true
     plan: webmaster
-    <<: *x-webmasters-with-go
+    <<: *webmasters-with-latest-release-in-production
   billund:
     name: "Billund Bibliotekerne og Borgerservice"
     description: "The main library site for Billund"
@@ -440,7 +440,7 @@ sites:
       - herningbib.dk
     autogenerateRoutes: true
     plan: webmaster
-    <<: *x-webmasters-with-go
+    <<: *webmasters-with-latest-release-in-production
   hillerod:
     name: "Hillerød Bibliotekerne"
     description: "The library site for Hillerød"
@@ -564,7 +564,7 @@ sites:
       - varnish.main.kobenhavn.dplplat01.dpl.reload.dk
     plan: webmaster
     deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHaTkDvjLW/b2qVj8FIvtX9x3TxFFZTENn+w2CFELeoC"
-    <<: *x-webmasters-with-go
+    <<: *webmasters-with-latest-release-in-production
   koge:
     name: "KøgeBibliotekerne"
     description: "The library site for Køge"
@@ -779,7 +779,7 @@ sites:
     secondary-domains:
       - roskildebib.dk
     autogenerateRoutes: true
-    <<: *x-webmasters-with-go
+    <<: *webmasters-with-latest-release-in-production
   rudersdal:
     name: "Rudersdal Bibliotekerne"
     description: "The library site for Rudersdal"
@@ -809,7 +809,7 @@ sites:
       - www.silkeborgbib.dk
     autogenerateRoutes: true
     plan: webmaster
-    <<: *x-webmasters-with-go
+    <<: *webmasters-with-latest-release-in-production
   skanderborg:
     name: "Skanderborg Bibliotek"
     description: "The library site for Skanderborg"
@@ -852,7 +852,7 @@ sites:
       - www.biblioteket.sonderborg.dk
     autogenerateRoutes: true
     plan: webmaster
-    <<: *x-webmasters-with-go
+    <<: *webmasters-with-latest-release-in-production
   soro:
     name: "Sorø Bibliotek"
     description: "The library site for Sorø"
@@ -917,7 +917,7 @@ sites:
     secondary-domains:
       - www.taarnbybib.dk
     autogenerateRoutes: true
-    <<: *x-webmasters-with-go
+    <<: *webmasters-with-latest-release-in-production
   thisted:
     name: "Biblioteket i Thy"
     description: "The library site for Thisted"
