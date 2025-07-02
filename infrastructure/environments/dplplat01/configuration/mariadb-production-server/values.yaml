@@ -1,0 +1,7 @@
+name: mariadb-10-06-01-production
+
+mariadbVersion: 10.6
+replicas: 1
+storageSize: 120Gi
+resReqMemory: 40Gi
+resReqCpu: 8
