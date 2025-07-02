@@ -737,28 +737,28 @@ tasks:
         vars:
           VARIABLE_NAME: "BNF_GRAPHQL_CONSUMER_SECRET"
           PROJECT_NAME: "{{.PROJECT_NAME}}"
-          VARIABLE_SCOPE: "RUNTIME"
+          VARIABLE_SCOPE: "GLOBAL"
           # TODO: The variable values should be generated and stored in a secret manager.
           VARIABLE_VALUE: "foo"
       - task: lagoon:ensure:environment-variable
         vars:
           VARIABLE_NAME: "BNF_GRAPHQL_CONSUMER_USER_PASSWORD"
           PROJECT_NAME: "{{.PROJECT_NAME}}"
-          VARIABLE_SCOPE: "RUNTIME"
+          VARIABLE_SCOPE: "GLOBAL"
           # TODO: The variable values should be generated and stored in a secret manager.
           VARIABLE_VALUE: "foo"
       - task: lagoon:ensure:environment-variable
         vars:
           VARIABLE_NAME: "GO_GRAPHQL_CONSUMER_SECRET"
           PROJECT_NAME: "{{.PROJECT_NAME}}"
-          VARIABLE_SCOPE: "RUNTIME"
+          VARIABLE_SCOPE: "GLOBAL"
           # TODO: The variable values should be generated and stored in a secret manager.
           VARIABLE_VALUE: "foo"
       - task: lagoon:ensure:environment-variable
         vars:
           VARIABLE_NAME: "GO_GRAPHQL_CONSUMER_USER_PASSWORD"
           PROJECT_NAME: "{{.PROJECT_NAME}}"
-          VARIABLE_SCOPE: "RUNTIME"
+          VARIABLE_SCOPE: "GLOBAL"
           # TODO: The variable values should be generated and stored in a secret manager.
           VARIABLE_VALUE: "foo"
       preconditions:
@@ -771,14 +771,14 @@ tasks:
           vars:
             VARIABLE_NAME: "DRUPAL_PREVIEW_SECRET"
             PROJECT_NAME: "{{.PROJECT_NAME}}"
-            VARIABLE_SCOPE: "RUNTIME"
+            VARIABLE_SCOPE: "GLOBAL"
             # TODO: The variable values should be generated and stored in a secret manager.
             VARIABLE_VALUE: "foo"
         - task: lagoon:ensure:environment-variable
           vars:
             VARIABLE_NAME: "DRUPAL_REVALIDATE_SECRET"
             PROJECT_NAME: "{{.PROJECT_NAME}}"
-            VARIABLE_SCOPE: "RUNTIME"
+            VARIABLE_SCOPE: "GLOBAL"
             # TODO: The variable values should be generated and stored in a secret manager.
             VARIABLE_VALUE: "foo"
 
