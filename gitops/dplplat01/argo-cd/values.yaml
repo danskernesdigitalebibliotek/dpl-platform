@@ -2381,7 +2381,9 @@ argo-cd:
       labels: {}
       # -- Additional ingress annotations
       ## Ref: https://argo-cd.readthedocs.io/en/stable/operator-manual/ingress/#option-1-ssl-passthrough
-      annotations: {}
+      annotations:
+        cert-manager.io/cluster-issuer: letsencrypt-prod
+
         # traefik.ingress.kubernetes.io/router.entrypoints: websecure
 
         # nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
