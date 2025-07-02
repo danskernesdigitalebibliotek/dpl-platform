@@ -737,28 +737,28 @@ tasks:
         vars:
           VARIABLE_NAME: "BNF_GRAPHQL_CONSUMER_SECRET"
           PROJECT_NAME: "{{.PROJECT_NAME}}"
-          VARIABLE_SCOPE: "RUNTIME"
+          VARIABLE_SCOPE: "GLOBAL"
           # TODO: The variable values should be generated and stored in a secret manager.
           VARIABLE_VALUE: "foo"
       - task: lagoon:ensure:environment-variable
         vars:
           VARIABLE_NAME: "BNF_GRAPHQL_CONSUMER_USER_PASSWORD"
           PROJECT_NAME: "{{.PROJECT_NAME}}"
-          VARIABLE_SCOPE: "RUNTIME"
+          VARIABLE_SCOPE: "GLOBAL"
           # TODO: The variable values should be generated and stored in a secret manager.
           VARIABLE_VALUE: "foo"
       - task: lagoon:ensure:environment-variable
         vars:
           VARIABLE_NAME: "GO_GRAPHQL_CONSUMER_SECRET"
           PROJECT_NAME: "{{.PROJECT_NAME}}"
-          VARIABLE_SCOPE: "RUNTIME"
+          VARIABLE_SCOPE: "GLOBAL"
           # TODO: The variable values should be generated and stored in a secret manager.
           VARIABLE_VALUE: "foo"
       - task: lagoon:ensure:environment-variable
         vars:
-          VARIABLE_NAME: "GO_GRAPHQL_CONSUMER_USER_PASSWORD"
+          VARIABLE_NAME: "NEXT_PUBLIC_GO_GRAPHQL_CONSUMER_USER_PASSWORD"
           PROJECT_NAME: "{{.PROJECT_NAME}}"
-          VARIABLE_SCOPE: "RUNTIME"
+          VARIABLE_SCOPE: "GLOBAL"
           # TODO: The variable values should be generated and stored in a secret manager.
           VARIABLE_VALUE: "foo"
       preconditions:
@@ -769,16 +769,16 @@ tasks:
       cmds:
         - task: lagoon:ensure:environment-variable
           vars:
-            VARIABLE_NAME: "DRUPAL_PREVIEW_SECRET"
+            VARIABLE_NAME: "DRUPAL_REVALIDATE_SECRET"
             PROJECT_NAME: "{{.PROJECT_NAME}}"
-            VARIABLE_SCOPE: "RUNTIME"
+            VARIABLE_SCOPE: "GLOBAL"
             # TODO: The variable values should be generated and stored in a secret manager.
             VARIABLE_VALUE: "foo"
         - task: lagoon:ensure:environment-variable
           vars:
-            VARIABLE_NAME: "DRUPAL_REVALIDATE_SECRET"
+            VARIABLE_NAME: "GO_SESSION_SECRET"
             PROJECT_NAME: "{{.PROJECT_NAME}}"
-            VARIABLE_SCOPE: "RUNTIME"
+            VARIABLE_SCOPE: "GLOBAL"
             # TODO: The variable values should be generated and stored in a secret manager.
             VARIABLE_VALUE: "foo"
 
@@ -1075,10 +1075,10 @@ tasks:
           task: site:full-sync
           vars:
             SITE: "{{.ITEM}}"
-            SKIP_ENSURE_PROJECT: "{{.SKIP_ENSURE_PROJECT}}"
-            SKIP_CAPTURE_DEPLOY_KEY: "{{.SKIP_CAPTURE_DEPLOY_KEY}}"
-            SKIP_PROVISION: "{{.SKIP_PROVISION}}"
-            SKIP_FIRST_DEPLOYMENT: "{{.SKIP_FIRST_DEPLOYMENT}}"
+            SKIP_ENSURE_PROJECT: "{{.SKIP_ENSURE_PROJECT | default TRUE}}"
+            SKIP_CAPTURE_DEPLOY_KEY: "{{.SKIP_CAPTURE_DEPLOY_KEY | default TRUE}}"
+            SKIP_PROVISION: "{{.SKIP_PROVISION | default TRUE}}"
+            SKIP_FIRST_DEPLOYMENT: "{{.SKIP_FIRST_DEPLOYMENT | default TRUE}}"
             SKIP_REPO_SYNC: "{{.SKIP_REPO_SYNC}}"
             SKIP:
               sh: |
