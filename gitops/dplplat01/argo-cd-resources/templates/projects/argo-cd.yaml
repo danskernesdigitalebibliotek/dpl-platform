@@ -21,4 +21,4 @@ spec:
   orphanedResources:
     warn: false
   sourceRepos:
-  - https://github.com/ai-platform-infrastructure/open-webui-k8s.git # git repository
+  - https://github.com/danskernesdigitalebibliotek/dpl-platform.git # git repository
