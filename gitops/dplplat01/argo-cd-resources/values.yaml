@@ -9,7 +9,7 @@ apps:
     namespace: argo-cd
     automated: true
 
-  # - name: sealed-secrets
-  #   project: sealed-secrets
-  #   namespace: kube-system
-  #   automated: true
+  - name: sealed-secrets
+    project: sealed-secrets
+    namespace: kube-system
+    automated: true

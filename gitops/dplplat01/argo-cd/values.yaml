@@ -2388,7 +2388,7 @@ argo-cd:
         # nginx.ingress.kubernetes.io/ssl-passthrough: "true"
 
       # -- Defines which ingress controller will implement the resource
-      ingressClassName: traefik
+      ingressClassName: nginx
 
       # -- Argo CD server hostname
       # @default -- `""` (defaults to global.domain)
