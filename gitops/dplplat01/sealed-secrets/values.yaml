@@ -304,7 +304,7 @@ sealed-secrets:
     ## This is supported in Kubernetes 1.18+ and required if you have more than one IngressClass marked as the default for your cluster.
     ## ref: https://kubernetes.io/blog/2020/04/02/improvements-to-the-ingress-api-in-kubernetes-1.18/
     ##
-    ingressClassName: traefik
+    ingressClassName: nginx
     ## @param ingress.hostname Default host for the ingress record
     ##
     hostname: sealed-secrets.dplplat01.dpl.reload.dk
