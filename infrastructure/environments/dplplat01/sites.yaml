@@ -8,8 +8,9 @@ x-webmasters-on-weekly-release-cycle: &webmasters-on-weekly-release-cycle
   #This release cycle releases the newest release, which has been tested on webmaster moduletests in the previous week, on to production
   releaseImageRepository: ghcr.io/danskernesdigitalebibliotek
   releaseImageName: dpl-cms-source
-  dpl-cms-release: "2025.25.0"
-  moduletest-dpl-cms-release: "2025.26.1"
+  dpl-cms-release: "2025.26.1"
+  moduletest-dpl-cms-release: "2025.27.1"
+  go-release: 2025.26.0
 x-webmasters-with-latest-release-in-production: &webmasters-with-latest-release-in-production
   #This release cycle releases the latest release to both production and moduletest environments.
   releaseImageRepository: ghcr.io/danskernesdigitalebibliotek
