@@ -776,7 +776,7 @@ tasks:
             VARIABLE_VALUE: "foo"
         - task: lagoon:ensure:environment-variable
           vars:
-            VARIABLE_NAME: "DRUPAL_REVALIDATE_SECRET"
+            VARIABLE_NAME: "GO_SESSION_SECRET"
             PROJECT_NAME: "{{.PROJECT_NAME}}"
             VARIABLE_SCOPE: "GLOBAL"
             # TODO: The variable values should be generated and stored in a secret manager.
