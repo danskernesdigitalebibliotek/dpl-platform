@@ -52,9 +52,9 @@ sites:
     releaseImageName: dpl-cms-source
     # Remember to update bnf.moduletest-dpl-cms-release to the same release
     # to make client and server use the same version.
-    dpl-cms-release: 2025.27.0
-    moduletest-dpl-cms-release: 2025.27.0
-    go-release: 2025.27.0
+    dpl-cms-release: 2025.27.1
+    moduletest-dpl-cms-release: 2025.27.1
+    go-release: 2025.27.1
     plan: webmaster
     primary-domain: staging.dplplat01.dpl.reload.dk
     # TODO: Remove this once the the Adgangsplatformen OpenID client used here
@@ -88,7 +88,7 @@ sites:
     name: "Bibliotekernes Nationale Formidling"
     description: "The BNF content sharing site"
     plan: webmaster
-    moduletest-dpl-cms-release: 2025.27.0
+    moduletest-dpl-cms-release: 2025.27.1
     # Use the webmaster plan to add a module-test site which acts as a server
     # for the staging environment.
     # The module-test site should use the next version while the production
