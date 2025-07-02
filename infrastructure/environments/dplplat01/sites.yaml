@@ -14,9 +14,9 @@ x-webmasters-with-latest-release-in-production: &webmasters-with-latest-release-
   #This release cycle releases the latest release to both production and moduletest environments.
   releaseImageRepository: ghcr.io/danskernesdigitalebibliotek
   releaseImageName: dpl-cms-source
-  dpl-cms-release: "2025.26.1"
-  moduletest-dpl-cms-release: "2025.26.1"
-  go-release: 2025.26.0
+  dpl-cms-release: "2025.27.1"
+  moduletest-dpl-cms-release: "2025.27.1"
+  go-release: 2025.27.0
 sites:
   # Site objects are indexed by a unique key that must be a valid lagoon, and
   # github project name. That is, alphanumeric and dashes.
