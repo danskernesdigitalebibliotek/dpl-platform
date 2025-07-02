@@ -215,12 +215,12 @@ argo-cd:
       #         clientSecret: $dex.github.clientSecret # Alternatively $<some_K8S_secret>:dex.github.clientSecret
       #         orgs:
       #         - name: your-github-org
-      # oidc.config: |
-      #   name: deranged SSO
-      #   issuer: https://auth.deranged.dk/realms/deranged
-      #   clientID: bJDCFviyQcUXVIr2uXqbos5l6ZjIjBZlY0j647T4
-      #   clientSecret: $oidc-keycloak-client-secret:oidc.keycloak.clientSecret
-      #   requestedScopes: [openid, profile, email, groups]
+      oidc.config: |
+        name: deranged SSO
+        issuer: https://auth.deranged.dk/realms/deranged
+        clientID: dplplat01-argo-cd
+        clientSecret: $oidc-keycloak-client-secret:oidc.keycloak.clientSecret
+        requestedScopes: [openid, profile, email, groups]
 
       # OIDC configuration as an alternative to dex (optional).
       # oidc.config: |
