@@ -809,7 +809,7 @@ sites:
       - www.silkeborgbib.dk
     autogenerateRoutes: true
     plan: webmaster
-    <<: *webmasters-with-latest-release-in-production
+    <<: *webmasters-on-weekly-release-cycle
   skanderborg:
     name: "Skanderborg Bibliotek"
     description: "The library site for Skanderborg"
