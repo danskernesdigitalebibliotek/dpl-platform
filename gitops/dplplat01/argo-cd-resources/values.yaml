@@ -62,3 +62,9 @@ apps:
     namespace: allerod-main
     path: sites/allerod-main
     automated: false
+
+  - name: ishoj-main
+    project: sites
+    namespace: ishoj-main
+    path: sites/ishoj-main
+    automated: false
