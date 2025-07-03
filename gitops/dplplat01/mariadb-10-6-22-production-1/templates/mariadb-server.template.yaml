@@ -5,7 +5,7 @@ metadata:
 spec:
   image: docker-registry1.mariadb.com/library/mariadb:{{ .Values.imageTag }}
   rootPasswordSecretKeyRef:
-    name: {{ .Release.name }}-secret
+    name: mariadb-root-password-secret
     key: root-password
   replicas: {{ .Values.replicas }}
   galera:
