@@ -26,3 +26,9 @@ apps:
     namespace: canary-main
     path: sites/canary-main
     automated: false
+
+  - name: kolding-main
+    project: sites
+    namespace: kolding-main
+    path: sites/kolding-main
+    automated: false
