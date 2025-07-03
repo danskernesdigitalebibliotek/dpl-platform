@@ -38,3 +38,9 @@ apps:
     namespace: billund-main
     path: sites/billund-main
     automated: false
+
+  - name: solrod2-main
+    project: sites
+    namespace: solrod2-main
+    path: sites/solrod2-main
+    automated: false
