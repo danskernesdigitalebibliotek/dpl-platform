@@ -19,3 +19,9 @@ apps:
     project: databases
     namespace: mariadb-10-6-22-production-1
     automated: false
+
+  # Sites
+  - name: sites
+    project: sites
+    namespace: sites
+    automated: false
