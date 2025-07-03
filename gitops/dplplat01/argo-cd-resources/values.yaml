@@ -24,5 +24,5 @@ apps:
   - name: canary-main
     project: sites
     namespace: canary-main
-    path: /sites/canary-main
+    path: sites/canary-main
     automated: false
