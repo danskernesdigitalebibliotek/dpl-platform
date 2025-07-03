@@ -5,10 +5,10 @@ metadata:
 spec:
   destinations:
   - name: in-cluster
-    namespace: *-main
+    namespace: "*-main"
     server: https://kubernetes.default.svc
   - name: in-cluster
-    namespace: *-moduletest
+    namespace: "*-moduletest"
     server: https://kubernetes.default.svc
   clusterResourceWhitelist:
   - group: ''
