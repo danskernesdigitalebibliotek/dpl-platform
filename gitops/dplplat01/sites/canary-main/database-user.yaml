@@ -1,0 +1,13 @@
+apiVersion: k8s.mariadb.com/v1alpha1
+kind: User
+metadata:
+  name: user-database-{{ .Release.Name }}
+spec:
+  mariaDbRef:
+    name: mariadb-10-6-22-production-1
+    namespace: mariadb-10-6-22-production-1
+    waitForIt: true
+  passwordSecretKeyRef:
+    name: database-secret
+    key: password
+  maxUserConnections: 50

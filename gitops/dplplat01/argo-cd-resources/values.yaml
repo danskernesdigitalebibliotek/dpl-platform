@@ -21,7 +21,8 @@ apps:
     automated: false
 
   # Sites
-  - name: sites
+  - name: canary-main
     project: sites
-    namespace: sites
+    namespace: canary-main
+    path: /sites/canary-main
     automated: false
