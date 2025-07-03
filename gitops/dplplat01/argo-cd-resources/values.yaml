@@ -13,3 +13,9 @@ apps:
     project: sealed-secrets
     namespace: kube-system
     automated: true
+
+  # Databases
+  - name: mariadb-10-6-22-production-1
+    project: databases
+    namespace: mariadb-10-6-22-production-1
+    automated: false
