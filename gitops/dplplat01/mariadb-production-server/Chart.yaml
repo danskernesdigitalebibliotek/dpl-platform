@@ -1,0 +1,3 @@
+apiVersion: v2
+name: mariadb-cluster-10.6-production
+version: 0.0.0

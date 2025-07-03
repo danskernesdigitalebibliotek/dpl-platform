@@ -1,11 +1,11 @@
 apiVersion: k8s.mariadb.com/v1alpha1
 kind: MariaDB
 metadata:
-  name: {{ .Values.name }}
+  name: {{ .Release.name }}
 spec:
-  image: docker-registry1.mariadb.com/library/mariadb:{{ .Values.mariadbVersion }}
+  image: docker-registry1.mariadb.com/library/mariadb:{{ .Values.imageTag }}
   rootPasswordSecretKeyRef:
-    name: {{ .Values.name }}-secret
+    name: {{ .Release.name }}-secret
     key: root-password
   replicas: {{ .Values.replicas }}
   galera:
@@ -66,10 +66,7 @@ spec:
 
   timeZone: "UTC"
 
-  resources:
-    requests:
-      cpu: {{ .Values.resReqCpu }}
-      memory: {{ .Values.resReqMemory }}
+  resources: {}
 
   env:
     - name: TZ

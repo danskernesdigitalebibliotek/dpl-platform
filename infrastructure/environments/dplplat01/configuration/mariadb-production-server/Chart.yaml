@@ -1,4 +1,0 @@
-apiVersion: v2
-name: Mariadb-cluster-10.6-production
-version: 0.0.1
-description: This Chart installs a production tuned MariaDB server cluster
