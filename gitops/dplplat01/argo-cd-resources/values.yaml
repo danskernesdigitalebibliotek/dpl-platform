@@ -32,3 +32,9 @@ apps:
     namespace: kolding-main
     path: sites/kolding-main
     automated: false
+
+  - name: billund-main
+    project: sites
+    namespace: billund-main
+    path: sites/billund-main
+    automated: false
