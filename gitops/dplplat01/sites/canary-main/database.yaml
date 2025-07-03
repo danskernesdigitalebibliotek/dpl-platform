@@ -8,7 +8,7 @@ spec:
   collate: LATIN1_SWEDISH_CI
   mariaDbRef:
     name: mariadb-10-6-22-production-1
-    namespace: {{ .Release.Name }}
+    namespace: mariadb-10-6-22-production-1
     waitForIt: true
   requeueInterval: 30s
   retryInterval: 5s
