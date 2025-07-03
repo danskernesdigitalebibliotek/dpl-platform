@@ -74,3 +74,9 @@ apps:
     namespace: faxe-main
     path: sites/faxe-main
     automated: false
+
+  - name: faxe-moduletest
+    project: sites
+    namespace: faxe-moduletest
+    path: sites/faxe-moduletest
+    automated: false
