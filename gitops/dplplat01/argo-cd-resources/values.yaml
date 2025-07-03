@@ -56,3 +56,9 @@ apps:
     namespace: hvidovre-main
     path: sites/hvidovre-main
     automated: false
+
+  - name: allerod-main
+    project: sites
+    namespace: allerod-main
+    path: sites/allerod-main
+    automated: false
