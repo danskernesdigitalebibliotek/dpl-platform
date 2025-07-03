@@ -50,3 +50,9 @@ apps:
     namespace: brondby-main
     path: sites/brondby-main
     automated: false
+
+  - name: hvidovre-main
+    project: sites
+    namespace: hvidovre-main
+    path: sites/hvidovre-main
+    automated: false
