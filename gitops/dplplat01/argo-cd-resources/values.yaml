@@ -27,10 +27,10 @@ apps:
     path: sites/canary-main
     automated: false
 
-  - name: kolding-main
+  - name: allerod-main
     project: sites
-    namespace: kolding-main
-    path: sites/kolding-main
+    namespace: allerod-main
+    path: sites/allerod-main
     automated: false
 
   - name: billund-main
@@ -39,34 +39,10 @@ apps:
     path: sites/billund-main
     automated: false
 
-  - name: solrod2-main
-    project: sites
-    namespace: solrod2-main
-    path: sites/solrod2-main
-    automated: false
-
   - name: brondby-main
     project: sites
     namespace: brondby-main
     path: sites/brondby-main
-    automated: false
-
-  - name: hvidovre-main
-    project: sites
-    namespace: hvidovre-main
-    path: sites/hvidovre-main
-    automated: false
-
-  - name: allerod-main
-    project: sites
-    namespace: allerod-main
-    path: sites/allerod-main
-    automated: false
-
-  - name: ishoj-main
-    project: sites
-    namespace: ishoj-main
-    path: sites/ishoj-main
     automated: false
 
   - name: faxe-main
@@ -79,4 +55,28 @@ apps:
     project: sites
     namespace: faxe-moduletest
     path: sites/faxe-moduletest
+    automated: false
+
+  - name: hvidovre-main
+    project: sites
+    namespace: hvidovre-main
+    path: sites/hvidovre-main
+    automated: false
+
+  - name: ishoj-main
+    project: sites
+    namespace: ishoj-main
+    path: sites/ishoj-main
+    automated: false
+
+  - name: kolding-main
+    project: sites
+    namespace: kolding-main
+    path: sites/kolding-main
+    automated: false
+
+  - name: solrod2-main
+    project: sites
+    namespace: solrod2-main
+    path: sites/solrod2-main
     automated: false
