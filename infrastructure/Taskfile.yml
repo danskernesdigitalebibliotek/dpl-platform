@@ -1335,6 +1335,17 @@ tasks:
           cat {{.dir_env}}/sites.yaml | yq '.sites | keys | .[]' \
           | xargs -n 1 -I % bash -c 'set -e; if (( $(curl -s https://varnish.main.%.dplplat01.dpl.reload.dk/ | grep "\"header__logo-desktop-link\"" -A 8 | grep "\"logo-fallback\s*\"" -A 4 | grep "Logo title (bold)" | wc -l) > 0 )); then echo "% not yet set up"; fi'
 
+    site:db:migrate:
+      desc: |
+        Migrates site from Azure managed database for MariaDB to our incluster MariaDB
+      env:
+        PROJECT: "{{.PROJECT}}"
+        ENVIRONMENT: "{{.ENVIRONMENT}}"
+        DRYRUN: "{{.DRYRUN}}"
+      cmds:
+        - |
+          ./dpladm/bin/migrate-site-database-to-incluster-db.mjs --project={{.PROJECT}} --env={{.ENVIRONMENT}} --dryrun={{.DRYRUN}}
+
     certs:clear-queue:
       deps: [cluster:auth]
       desc: |
