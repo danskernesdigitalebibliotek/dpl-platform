@@ -1,7 +1,7 @@
 apiVersion: k8s.mariadb.com/v1alpha1
 kind: MariaDB
 metadata:
-  name: {{ .Release.name }}
+  name: {{ .Release.Name }}
 spec:
   image: docker-registry1.mariadb.com/library/mariadb:{{ .Values.imageTag }}
   rootPasswordSecretKeyRef:
