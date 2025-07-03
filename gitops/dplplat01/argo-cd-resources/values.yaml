@@ -68,3 +68,9 @@ apps:
     namespace: ishoj-main
     path: sites/ishoj-main
     automated: false
+
+  - name: faxe-main
+    project: sites
+    namespace: faxe-main
+    path: sites/faxe-main
+    automated: false
