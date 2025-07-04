@@ -15,11 +15,15 @@ if (typeof `${argv.dryrun}` === "undefined") {
 }
 
 await dumpCurrentDatabaseIntoTmp(project, environment);
+const password = await getInclusterDatabasePassword(project, environment);
 await importDumpIntoInclusterDatabase(project, environment, password);
 await createOverrideVariables(project, environment, password);
 // we need to redeploy the environment for it to take effect ("force" forces yes to prompts)
 await $`lagoon deploy latest --project ${project} --environment ${environment} --force`
 
+async function getInclusterDatabasePassword(project, environment) {
+  return await $`kubectl get secret -n ${project}-${environment} database-secret --template={{.data.password}} | base64 -d`;
+}
 
 async function createOverrideVariables(project, environment, password) {
   const overrideVariables = [
