@@ -714,7 +714,7 @@ sites:
     secondary-domains:
       - odensebib.dk
     autogenerateRoutes: true
-    <<: *webmasters-on-weekly-release-cycle
+    <<: *webmasters-with-latest-release-in-production
   odsherred:
     name: "Odsherred Bibliotek og Kulturhuse"
     description: "The library site for Odsherred"
