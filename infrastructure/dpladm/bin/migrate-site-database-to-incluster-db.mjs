@@ -41,7 +41,7 @@ async function createOverrideVariables(project, environment, password) {
     },
     {
       name: "MARIADB_HOST_OVERRIDE",
-      value: "mariadb-10-06-01-test.mariadb-10-06-01-test.svc.cluster.local",
+      value: "mariadb-10-6-22-production-1.mariadb-10-6-22-production-1.svc.cluster.local",
     },
     {
       name: "MARIADB_PORT_OVERRIDE",
@@ -60,13 +60,13 @@ async function createOverrideVariables(project, environment, password) {
 
 async function importDumpIntoInclusterDatabase(project, environment, password) {
   echo(chalk.blue(`Importing ${project}-${environment} database into incluster database`));
-  await $`kubectl exec -n mariadb-10-06-01-test mariadb-10-06-01-test-0 -- bash -c "mariadb -uuser-database-${project}-${environment} -p${password} --database database-${project}-${environment} --verbose < /tmp/dump.sql"`
+  await $`kubectl exec -n mariadb-10-6-22-production-1 mariadb-10-6-22-production-1-0 -- bash -c "mariadb -udatabase-user-${project}-${environment} -p${password} --database database-${project}-${environment} --verbose < /tmp/dump.sql"`;
 }
 
 async function dumpCurrentDatabaseIntoTmp(project, environment) {
   echo(chalk.blue(`Dumping ${project}-${environment} database to /tmp/dump.sql`));
   const databaseConnectionDetails = await getCurrentDatabaseConnectionDetails(project, environment);
-  await $`kubectl exec -n mariadb-10-06-01-test mariadb-10-06-01-test-0 -- bash -c "mariadb-dump --user=${databaseConnectionDetails.user} --host=${databaseConnectionDetails.host}.${project}-${environment}.svc.cluster.local --password=${databaseConnectionDetails.password} --ssl=false --skip-add-locks --single-transaction ${databaseConnectionDetails.databaseName} --verbose > /tmp/dump.sql"`
+  await $`kubectl exec -n mariadb-10-6-22-production-1 mariadb-10-6-22-production-1-0 -- bash -c "mariadb-dump --user=${databaseConnectionDetails.user} --host=${databaseConnectionDetails.host}.${project}-${environment}.svc.cluster.local --password=${databaseConnectionDetails.password} --ssl=false --skip-add-locks --single-transaction ${databaseConnectionDetails.databaseName} --verbose > /tmp/dump.sql"`
 }
 
 async function getCurrentDatabaseConnectionDetails(project, environment) {
