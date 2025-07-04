@@ -1,7 +1,5 @@
 #!/usr/bin/env zx
 
-import * as crypto from "crypto";
-
 const project = `${argv.project}`;
 if (!project || typeof project === "undefined") {
   throw Error("No 'project' provided");
@@ -12,16 +10,10 @@ if (!environment || typeof project === "undefined") {
   throw Error("No 'environment' provided");
 }
 
-let dryRun = `${argv.dryrun}`;
 if (typeof `${argv.dryrun}` === "undefined") {
   dryRun = false;
 }
 
-const password = crypto.randomBytes(32).toString("base64");
-
-await createDatabaseGrantUserSecret(project, environment, password, dryRun);
-// wait for database, user and secret to have been created, it takes a little bit of time
-await sleep(3000)
 await dumpCurrentDatabaseIntoTmp(project, environment);
 await importDumpIntoInclusterDatabase(project, environment, password);
 await createOverrideVariables(project, environment, password);
@@ -82,17 +74,4 @@ async function getCurrentDatabaseConnectionDetails(project, environment) {
     password: lagoonEnvConfig.MARIADB_PASSWORD,
     databaseName: lagoonEnvConfig.MARIADB_DATABASE
   };
-}
-
-async function createDatabaseGrantUserSecret(project, environment, password, dryRun) {
-  echo(chalk.blue(`Now migrating ${project}-${environment} database to incluser database`));
-
-  echo(await $`helm upgrade --install --namespace ${project}-${environment}  --set password=${password}  mariadb-database ./dpladm/mariadb-database/ --dry-run`);
-
-  if (dryRun) {
-    echo(chalk.green("dry-run complete"));
-    process.exit(0);
-  }
-
-  await $`helm upgrade --install --namespace ${project}-${environment}  --set password=${password}  mariadb-database ./dpladm/mariadb-database/`;
 }
