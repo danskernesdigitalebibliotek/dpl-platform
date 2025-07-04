@@ -1075,10 +1075,10 @@ tasks:
           task: site:full-sync
           vars:
             SITE: "{{.ITEM}}"
-            SKIP_ENSURE_PROJECT: "{{.SKIP_ENSURE_PROJECT | default TRUE}}"
-            SKIP_CAPTURE_DEPLOY_KEY: "{{.SKIP_CAPTURE_DEPLOY_KEY | default TRUE}}"
-            SKIP_PROVISION: "{{.SKIP_PROVISION | default TRUE}}"
-            SKIP_FIRST_DEPLOYMENT: "{{.SKIP_FIRST_DEPLOYMENT | default TRUE}}"
+            SKIP_ENSURE_PROJECT: "{{.SKIP_ENSURE_PROJECT | default \"TRUE\"}}"
+            SKIP_CAPTURE_DEPLOY_KEY: "{{.SKIP_CAPTURE_DEPLOY_KEY | default \"TRUE\"}}"
+            SKIP_PROVISION: "{{.SKIP_PROVISION | default \"TRUE\"}}"
+            SKIP_FIRST_DEPLOYMENT: "{{.SKIP_FIRST_DEPLOYMENT | default \"TRUE\"}}"
             SKIP_REPO_SYNC: "{{.SKIP_REPO_SYNC}}"
             SKIP:
               sh: |
