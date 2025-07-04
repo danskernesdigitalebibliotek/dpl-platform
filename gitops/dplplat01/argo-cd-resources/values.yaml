@@ -27,6 +27,12 @@ apps:
     path: sites/canary-main
     automated: false
 
+  - name: aalborg-moduletest
+    project: sites
+    namespace: aalborg-moduletest
+    path: sites/aalborg-moduletest
+    automated: false
+
   - name: allerod-main
     project: sites
     namespace: allerod-main
