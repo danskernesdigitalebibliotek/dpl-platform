@@ -33,7 +33,7 @@ async function createOverrideVariables(project, environment, password) {
     },
     {
       name: "MARIADB_USERNAME_OVERRIDE",
-      value: `user-database-${project}-${environment}`,
+      value: `database-user-${project}-${environment}`,
     },
     {
       name: "MARIADB_PASSWORD_OVERRIDE",
