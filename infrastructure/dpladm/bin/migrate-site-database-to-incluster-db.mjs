@@ -1,7 +1,5 @@
 #!/usr/bin/env zx
 
-import * as crypto from "crypto";
-
 const project = `${argv.project}`;
 if (!project || typeof project === "undefined") {
   throw Error("No 'project' provided");
@@ -12,22 +10,20 @@ if (!environment || typeof project === "undefined") {
   throw Error("No 'environment' provided");
 }
 
-let dryRun = `${argv.dryrun}`;
 if (typeof `${argv.dryrun}` === "undefined") {
   dryRun = false;
 }
 
-const password = crypto.randomBytes(32).toString("base64");
-
-await createDatabaseGrantUserSecret(project, environment, password, dryRun);
-// wait for database, user and secret to have been created, it takes a little bit of time
-await sleep(3000)
 await dumpCurrentDatabaseIntoTmp(project, environment);
+const password = await getInclusterDatabasePassword(project, environment);
 await importDumpIntoInclusterDatabase(project, environment, password);
 await createOverrideVariables(project, environment, password);
 // we need to redeploy the environment for it to take effect ("force" forces yes to prompts)
 await $`lagoon deploy latest --project ${project} --environment ${environment} --force`
 
+async function getInclusterDatabasePassword(project, environment) {
+  return await $`kubectl get secret -n ${project}-${environment} database-secret --template={{.data.password}} | base64 -d`;
+}
 
 async function createOverrideVariables(project, environment, password) {
   const overrideVariables = [
@@ -37,7 +33,7 @@ async function createOverrideVariables(project, environment, password) {
     },
     {
       name: "MARIADB_USERNAME_OVERRIDE",
-      value: `user-database-${project}-${environment}`,
+      value: `database-user-${project}-${environment}`,
     },
     {
       name: "MARIADB_PASSWORD_OVERRIDE",
@@ -45,7 +41,7 @@ async function createOverrideVariables(project, environment, password) {
     },
     {
       name: "MARIADB_HOST_OVERRIDE",
-      value: "mariadb-10-06-01-test.mariadb-10-06-01-test.svc.cluster.local",
+      value: "mariadb-10-6-22-production-1.mariadb-10-6-22-production-1.svc.cluster.local",
     },
     {
       name: "MARIADB_PORT_OVERRIDE",
@@ -64,13 +60,13 @@ async function createOverrideVariables(project, environment, password) {
 
 async function importDumpIntoInclusterDatabase(project, environment, password) {
   echo(chalk.blue(`Importing ${project}-${environment} database into incluster database`));
-  await $`kubectl exec -n mariadb-10-06-01-test mariadb-10-06-01-test-0 -- bash -c "mariadb -uuser-database-${project}-${environment} -p${password} --database database-${project}-${environment} --verbose < /tmp/dump.sql"`
+  await $`kubectl exec -n mariadb-10-6-22-production-1 mariadb-10-6-22-production-1-0 -- bash -c "mariadb -udatabase-user-${project}-${environment} -p${password} --database database-${project}-${environment} --verbose < /tmp/dump.sql"`;
 }
 
 async function dumpCurrentDatabaseIntoTmp(project, environment) {
   echo(chalk.blue(`Dumping ${project}-${environment} database to /tmp/dump.sql`));
   const databaseConnectionDetails = await getCurrentDatabaseConnectionDetails(project, environment);
-  await $`kubectl exec -n mariadb-10-06-01-test mariadb-10-06-01-test-0 -- bash -c "mariadb-dump --user=${databaseConnectionDetails.user} --host=${databaseConnectionDetails.host}.${project}-${environment}.svc.cluster.local --password=${databaseConnectionDetails.password} --ssl=false --skip-add-locks --single-transaction ${databaseConnectionDetails.databaseName} --verbose > /tmp/dump.sql"`
+  await $`kubectl exec -n mariadb-10-6-22-production-1 mariadb-10-6-22-production-1-0 -- bash -c "mariadb-dump --user=${databaseConnectionDetails.user} --host=${databaseConnectionDetails.host}.${project}-${environment}.svc.cluster.local --password=${databaseConnectionDetails.password} --ssl=false --skip-add-locks --single-transaction ${databaseConnectionDetails.databaseName} --verbose > /tmp/dump.sql"`
 }
 
 async function getCurrentDatabaseConnectionDetails(project, environment) {
@@ -82,17 +78,4 @@ async function getCurrentDatabaseConnectionDetails(project, environment) {
     password: lagoonEnvConfig.MARIADB_PASSWORD,
     databaseName: lagoonEnvConfig.MARIADB_DATABASE
   };
-}
-
-async function createDatabaseGrantUserSecret(project, environment, password, dryRun) {
-  echo(chalk.blue(`Now migrating ${project}-${environment} database to incluser database`));
-
-  echo(await $`helm upgrade --install --namespace ${project}-${environment}  --set password=${password}  mariadb-database ./dpladm/mariadb-database/ --dry-run`);
-
-  if (dryRun) {
-    echo(chalk.green("dry-run complete"));
-    process.exit(0);
-  }
-
-  await $`helm upgrade --install --namespace ${project}-${environment}  --set password=${password}  mariadb-database ./dpladm/mariadb-database/`;
 }
