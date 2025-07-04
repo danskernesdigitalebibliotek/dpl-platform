@@ -27,6 +27,12 @@ apps:
     path: sites/canary-main
     automated: false
 
+  - name: aalborg-main
+    project: sites
+    namespace: aalborg-main
+    path: sites/aalborg-main
+    automated: false
+
   - name: aalborg-moduletest
     project: sites
     namespace: aalborg-moduletest
