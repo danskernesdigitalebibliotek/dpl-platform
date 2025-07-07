@@ -1,3 +1,7 @@
 apiVersion: v2
 name: mariadb-test-prometheus-exporter
 version: 0.0.0
+dependencies:
+  - name: prometheus-mysql-exporter
+    version: 2.10.0
+    repository: https://prometheus-community.github.io/helm-charts
