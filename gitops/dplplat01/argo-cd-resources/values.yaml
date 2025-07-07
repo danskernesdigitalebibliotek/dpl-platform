@@ -22,7 +22,7 @@ apps:
 
   - name: mariadb-test-prometheus-exporter
     project: databases
-    namespace: mariadb-10-06-01-test
+    namespace: mariadb-export-test
     automated: false
 
   # Sites
