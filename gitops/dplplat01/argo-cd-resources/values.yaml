@@ -27,6 +27,12 @@ apps:
     path: sites/canary-main
     automated: false
 
+  - name: aabenraa-main
+    project: sites
+    namespace: aabenraa-main
+    path: sites/aabenraa-main
+    automated: false
+
   - name: aalborg-main
     project: sites
     namespace: aalborg-main
