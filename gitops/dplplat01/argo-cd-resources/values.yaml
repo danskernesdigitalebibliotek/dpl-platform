@@ -45,10 +45,46 @@ apps:
     path: sites/aalborg-moduletest
     automated: false
 
+  - name: aarhus-main
+    project: sites
+    namespace: aarhus-main
+    path: sites/aarhus-main
+    automated: false
+
+  - name: aarhus-moduletest
+    project: sites
+    namespace: aarhus-moduletest
+    path: sites/aarhus-moduletest
+    automated: false
+
+  - name: aero-main
+    project: sites
+    namespace: aero-main
+    path: sites/aero-main
+    automated: false
+
+  - name: albertslund-main
+    project: sites
+    namespace: albertslund-main
+    path: sites/albertslund-main
+    automated: false
+
+  - name: albertslund-moduletest
+    project: sites
+    namespace: albertslund-moduletest
+    path: sites/albertslund-moduletest
+    automated: false
+
   - name: allerod-main
     project: sites
     namespace: allerod-main
     path: sites/allerod-main
+    automated: false
+
+  - name: assens-moduletest
+    project: sites
+    namespace: assens-moduletest
+    path: sites/assens-moduletest
     automated: false
 
   - name: billund-main
