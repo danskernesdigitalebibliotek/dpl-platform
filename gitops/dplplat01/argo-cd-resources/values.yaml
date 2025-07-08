@@ -140,6 +140,12 @@ apps:
     path: sites/egedal-main
     automated: false
 
+  - name: esbjerg-main
+    project: sites
+    namespace: esbjerg-main
+    path: sites/esbjerg-main
+    automated: false
+
   - name: faxe-main
     project: sites
     namespace: faxe-main
