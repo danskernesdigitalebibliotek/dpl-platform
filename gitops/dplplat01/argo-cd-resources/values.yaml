@@ -86,10 +86,10 @@ apps:
     path: sites/allerod-main
     automated: false
 
-  - name: assens-moduletest
+  - name: assens-main
     project: sites
-    namespace: assens-moduletest
-    path: sites/assens-moduletest
+    namespace: assens-main
+    path: sites/assens-main
     automated: false
 
   - name: billund-main
