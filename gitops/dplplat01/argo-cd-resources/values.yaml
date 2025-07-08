@@ -128,6 +128,12 @@ apps:
     path: sites/bronderslev-main
     automated: false
 
+  - name: dragor-main
+    project: sites
+    namespace: dragor-main
+    path: sites/dragor-main
+    automated: false
+
   - name: faxe-main
     project: sites
     namespace: faxe-main
