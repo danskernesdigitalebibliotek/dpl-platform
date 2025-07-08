@@ -92,6 +92,18 @@ apps:
     path: sites/assens-main
     automated: false
 
+  - name: ballerup-main
+    project: sites
+    namespace: ballerup-main
+    path: sites/ballerup-main
+    automated: false
+
+  - name: ballerup-moduletest
+    project: sites
+    namespace: ballerup-moduletest
+    path: sites/ballerup-moduletest
+    automated: false
+
   - name: billund-main
     project: sites
     namespace: billund-main
