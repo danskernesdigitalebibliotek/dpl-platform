@@ -134,6 +134,12 @@ apps:
     path: sites/dragor-main
     automated: false
 
+  - name: egedal-main
+    project: sites
+    namespace: egedal-main
+    path: sites/egedal-main
+    automated: false
+
   - name: faxe-main
     project: sites
     namespace: faxe-main
