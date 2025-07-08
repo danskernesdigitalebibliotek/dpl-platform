@@ -532,11 +532,6 @@ sites:
       - ishojbib.dk
     autogenerateRoutes: true
     <<: *default-release-image-source
-  jammerbugt:
-    name: "Jammerbugt Bibliotekerne"
-    description: "The library site for Jammerbugt"
-    deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIAjNMzYEEzdjsgQlnh5TAJdDlIzmr1pG8s9S/M86gHjZ"
-    <<: *default-release-image-source
   kalundborg:
     name: "Kalundborg Biblioteker"
     description: "The library site for Kallundborg"
