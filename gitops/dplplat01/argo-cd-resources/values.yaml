@@ -110,6 +110,12 @@ apps:
     path: sites/billund-main
     automated: false
 
+  - name: bornholm-main
+    project: sites
+    namespace: bornholm-main
+    path: sites/bornholm-main
+    automated: false
+
   - name: brondby-main
     project: sites
     namespace: brondby-main
