@@ -122,6 +122,12 @@ apps:
     path: sites/brondby-main
     automated: false
 
+  - name: bronderslev-main
+    project: sites
+    namespace: bronderslev-main
+    path: sites/bronderslev-main
+    automated: false
+
   - name: faxe-main
     project: sites
     namespace: faxe-main
