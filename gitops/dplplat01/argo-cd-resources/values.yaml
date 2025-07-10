@@ -146,6 +146,12 @@ apps:
     path: sites/esbjerg-main
     automated: false
 
+  - name: favrskov-main
+    project: sites
+    namespace: favrskov-main
+    path: sites/favrskov-main
+    automated: false
+
   - name: faxe-main
     project: sites
     namespace: faxe-main
