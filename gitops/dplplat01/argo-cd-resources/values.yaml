@@ -146,6 +146,42 @@ apps:
     path: sites/esbjerg-main
     automated: false
 
+  - name: faaborg-midtfyn-main
+    project: sites
+    namespace: faaborg-midtfyn-main
+    path: sites/faaborg-midtfyn-main
+    automated: false
+
+  - name: favrskov-main
+    project: sites
+    namespace: favrskov-main
+    path: sites/favrskov-main
+    automated: false
+
+  - name: fredensborg-main
+    project: sites
+    namespace: fredensborg-main
+    path: sites/fredensborg-main
+    automated: false
+
+  - name: fredericia-main
+    project: sites
+    namespace: fredericia-main
+    path: sites/fredericia-main
+    automated: false
+
+  - name: frederiksberg-main
+    project: sites
+    namespace: frederiksberg-main
+    path: sites/frederiksberg-main
+    automated: false
+
+  - name: frederikssund-main
+    project: sites
+    namespace: frederikssund-main
+    path: sites/frederikssund-main
+    automated: false
+
   - name: faxe-main
     project: sites
     namespace: faxe-main
@@ -156,6 +192,18 @@ apps:
     project: sites
     namespace: faxe-moduletest
     path: sites/faxe-moduletest
+    automated: false
+
+  - name: fureso-main
+    project: sites
+    namespace: fureso-main
+    path: sites/fureso-main
+    automated: false
+
+  - name: gentofte-main
+    project: sites
+    namespace: gentofte-main
+    path: sites/gentofte-main
     automated: false
 
   - name: hvidovre-main
@@ -176,8 +224,44 @@ apps:
     path: sites/kolding-main
     automated: false
 
+  - name: nordfyn-main
+    project: sites
+    namespace: nordfyn-main
+    path: sites/nordfyn-main
+    automated: false
+
   - name: solrod2-main
     project: sites
     namespace: solrod2-main
     path: sites/solrod2-main
+    automated: false
+
+  - name: sonderborg-main
+    project: sites
+    namespace: sonderborg-main
+    path: sites/sonderborg-main
+    automated: false
+
+  - name: sonderborg-moduletest
+    project: sites
+    namespace: sonderborg-moduletest
+    path: sites/sonderborg-moduletest
+    automated: false
+
+  - name: sydslesvig-main
+    project: sites
+    namespace: sydslesvig-main
+    path: sites/sydslesvig-main
+    automated: false
+
+  - name: sydslesvig-moduletest
+    project: sites
+    namespace: sydslesvig-moduletest
+    path: sites/sydslesvig-moduletest
+    automated: false
+
+  - name: thisted-main
+    project: sites
+    namespace: thisted-main
+    path: sites/thisted-main
     automated: false

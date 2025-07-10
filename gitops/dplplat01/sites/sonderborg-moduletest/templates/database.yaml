@@ -1,0 +1,15 @@
+apiVersion: k8s.mariadb.com/v1alpha1
+kind: Database
+metadata:
+  name: database
+spec:
+  name: database-{{ .Release.Name }}
+  characterSet: LATIN1
+  cleanupPolicy: Delete
+  collate: LATIN1_SWEDISH_CI
+  mariaDbRef:
+    name: mariadb-10-6-22-production-1
+    namespace: mariadb-10-6-22-production-1
+    waitForIt: true
+  requeueInterval: 30s
+  retryInterval: 5s
