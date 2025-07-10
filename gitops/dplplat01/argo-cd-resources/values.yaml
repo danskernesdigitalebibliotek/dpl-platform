@@ -229,3 +229,9 @@ apps:
     namespace: sydslesvig-main
     path: sites/sydslesvig-main
     automated: false
+
+  - name: sydslesvig-moduletest
+    project: sites
+    namespace: sydslesvig-moduletest
+    path: sites/sydslesvig-moduletest
+    automated: false
