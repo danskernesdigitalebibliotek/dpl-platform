@@ -224,6 +224,12 @@ apps:
     path: sites/kolding-main
     automated: false
 
+  - name: nordfyn-main
+    project: sites
+    namespace: nordfyn-main
+    path: sites/nordfyn-main
+    automated: false
+
   - name: solrod2-main
     project: sites
     namespace: solrod2-main
