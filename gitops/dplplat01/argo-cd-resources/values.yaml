@@ -152,6 +152,12 @@ apps:
     path: sites/favrskov-main
     automated: false
 
+  - name: fredensborg-main
+    project: sites
+    namespace: fredensborg-main
+    path: sites/fredensborg-main
+    automated: false
+
   - name: faxe-main
     project: sites
     namespace: faxe-main
