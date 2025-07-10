@@ -194,6 +194,12 @@ apps:
     path: sites/fureso-main
     automated: false
 
+  - name: gentofte-main
+    project: sites
+    namespace: gentofte-main
+    path: sites/gentofte-main
+    automated: false
+
   - name: hvidovre-main
     project: sites
     namespace: hvidovre-main
