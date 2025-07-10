@@ -224,6 +224,12 @@ apps:
     path: sites/solrod2-main
     automated: false
 
+  - name: sonderborg-main
+    project: sites
+    namespace: sonderborg-main
+    path: sites/sonderborg-main
+    automated: false
+
   - name: sydslesvig-main
     project: sites
     namespace: sydslesvig-main
