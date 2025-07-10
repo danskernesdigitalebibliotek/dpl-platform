@@ -223,3 +223,9 @@ apps:
     namespace: solrod2-main
     path: sites/solrod2-main
     automated: false
+
+  - name: sydslesvig-main
+    project: sites
+    namespace: sydslesvig-main
+    path: sites/sydslesvig-main
+    automated: false
