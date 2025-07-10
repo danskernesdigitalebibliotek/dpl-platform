@@ -182,6 +182,12 @@ apps:
     path: sites/faxe-moduletest
     automated: false
 
+  - name: fureso-main
+    project: sites
+    namespace: fureso-main
+    path: sites/fureso-main
+    automated: false
+
   - name: hvidovre-main
     project: sites
     namespace: hvidovre-main
