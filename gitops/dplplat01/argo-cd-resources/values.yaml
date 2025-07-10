@@ -164,6 +164,12 @@ apps:
     path: sites/fredericia-main
     automated: false
 
+  - name: frederikssund-main
+    project: sites
+    namespace: frederikssund-main
+    path: sites/frederikssund-main
+    automated: false
+
   - name: faxe-main
     project: sites
     namespace: faxe-main
