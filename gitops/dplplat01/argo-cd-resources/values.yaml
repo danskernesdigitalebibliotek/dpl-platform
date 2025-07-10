@@ -146,6 +146,12 @@ apps:
     path: sites/esbjerg-main
     automated: false
 
+  - name: faaborg-midtfyn-main
+    project: sites
+    namespace: faaborg-midtfyn-main
+    path: sites/faaborg-midtfyn-main
+    automated: false
+
   - name: favrskov-main
     project: sites
     namespace: favrskov-main
