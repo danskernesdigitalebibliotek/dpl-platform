@@ -1,0 +1,19 @@
+apiVersion: k8s.mariadb.com/v1alpha1
+kind: Grant
+metadata:
+  name: grant
+spec:
+  cleanupPolicy: Delete
+  database: database-{{ .Release.Name }}
+  grantOption: true
+  host: '%'
+  mariaDbRef:
+    name: mariadb-10-6-22-production-1
+    namespace: mariadb-10-6-22-production-1
+    waitForIt: true
+  privileges:
+  - ALL PRIVILEGES
+  requeueInterval: 30s
+  retryInterval: 5s
+  table: '*'
+  username: database-user-{{ .Release.Name }}

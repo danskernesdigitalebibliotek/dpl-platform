@@ -230,6 +230,12 @@ apps:
     path: sites/sonderborg-main
     automated: false
 
+  - name: sonderborg-moduletest
+    project: sites
+    namespace: sonderborg-moduletest
+    path: sites/sonderborg-moduletest
+    automated: false
+
   - name: sydslesvig-main
     project: sites
     namespace: sydslesvig-main
