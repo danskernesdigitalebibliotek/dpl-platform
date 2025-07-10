@@ -170,6 +170,12 @@ apps:
     path: sites/fredericia-main
     automated: false
 
+  - name: frederiksberg-main
+    project: sites
+    namespace: frederiksberg-main
+    path: sites/frederiksberg-main
+    automated: false
+
   - name: frederikssund-main
     project: sites
     namespace: frederikssund-main
