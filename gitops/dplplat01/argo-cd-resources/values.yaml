@@ -247,3 +247,9 @@ apps:
     namespace: sydslesvig-moduletest
     path: sites/sydslesvig-moduletest
     automated: false
+
+  - name: thisted-main
+    project: sites
+    namespace: thisted-main
+    path: sites/thisted-main
+    automated: false
