@@ -117,6 +117,26 @@ function getGoRelease {
     exit 1
 }
 
+function getDiskSize {
+    local diskSize
+    # get the version instad - if no version no GO
+    diskSize=$(yq eval ".sites.${1}.diskSize" "${2}")
+    #  if [[ "${diskSize}" == "null" ]]; then
+    #     echo ""
+    #     return
+    # fi
+    # if [[ -z "${diskSize}" ]]; then
+    #     echo "Error: diskSize should have a boolean value"
+    #     exit 1
+    # fi
+    if [[ "${diskSize}" ]]; then
+        echo "$diskSize"
+        return
+    fi
+    echo "Error: diskSize somehow emtpy but this wasen't captured"
+    exit 1
+}
+
 function calculatePrimaryGoSubdomain {
     local hasGo=$(getGoRelease "${1}" "${2}")
     if [[ "${hasGo}" = "" ]]; then
@@ -185,6 +205,11 @@ function getSiteImportTranslationsCron {
     return
 }
 
+function adjustPersistentVolume {
+    volumeName=$(kubectl get pvc -n ${1}-${2} nginx --template={{.spec.volumeName}})
+    az storage share update -n $volumeName --quota ${3} --account-name stdpldplplat01585708af
+}
+
 if [[ -z "${SITES_CONFIG:-}" ]]; then
     print_usage "SITES_CONFIG"
 fi
@@ -226,11 +251,14 @@ failOnErr $? "${siteReleaseImageName}"
 plan=$(getSitePlan "${SITE}" "${SITES_CONFIG}")
 importTranslationsCron=$(getSiteImportTranslationsCron "${SITE}" "${SITES_CONFIG}")
 goRelease=$(getGoRelease "${SITE}" "${SITES_CONFIG}")
+diskSize=$(getDiskSize "${SITE}" "${SITES_CONFIG}")
 set -o errexit
 
 # Synchronise the sites environment repository.
-syncEnvRepo "${SITE}" "${releaseTag}" "${BRANCH}" "${siteImageRepository}" "${siteReleaseImageName}" "${importTranslationsCron}" "${autogenerateRoutes}" "${primaryDomain}" "${secondaryDomains}" "${primaryGoSubDomain}" "${secondaryGoSubDomains}" "${goRelease}"
+syncEnvRepo "${SITE}" "${releaseTag}" "${BRANCH}" "${siteImageRepository}" "${siteReleaseImageName}" "${importTranslationsCron}" "${autogenerateRoutes}" "${primaryDomain}" "${secondaryDomains}" "${diskSize}" "${primaryGoSubDomain}" "${secondaryGoSubDomains}" "${goRelease}"
+adjustPersistentVolume "${SITE}" "moduletest" "${diskSize}"
 
 if [ "${plan}" = "webmaster" ] && [ "${BRANCH}" = "main" ]; then
-    syncEnvRepo "${SITE}" "${wmReleaseTag}" "moduletest" "${siteImageRepository}" "${siteReleaseImageName}" "${importTranslationsCron}" "${autogenerateRoutes}" "${primaryDomain}" "${secondaryDomains}"
+    syncEnvRepo "${SITE}" "${wmReleaseTag}" "moduletest" "${siteImageRepository}" "${siteReleaseImageName}" "${importTranslationsCron}" "${autogenerateRoutes}" "${primaryDomain}" "${secondaryDomains}" "${diskSize}"
+    adjustPersistentVolume "${SITE}" "moduletest" "${diskSize}"
 fi

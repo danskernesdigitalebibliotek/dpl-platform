@@ -31,6 +31,7 @@ sites:
     plan: webmaster
     go-release: 2025.27.0
     primary-domain: canary.dplplat01.dpl.reload.dk
+    diskSize: 7
     # TODO: Remove this once the the Adgangsplatformen OpenID client used here
     # has been updated to use the primary domain.
     autogenerateRoutes: true

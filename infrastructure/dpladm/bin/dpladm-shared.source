@@ -82,6 +82,8 @@ function renderProfileTemplate {
   local secondaryGoSubDomains=${11:-}
   #GO release version
   local GO_RELEASE=${12:-}
+  # The desired size of the Persistent Volume
+  local diskSize=${13:-}
 
   PRIMARY_DOMAIN=""
 
@@ -178,15 +180,17 @@ EndOfMessage
   export GO_RELEASE
   export PRIMARY_GO_DOMAIN="${primaryGoSubDomain}"
   export CMS_DOMAIN="${primaryDomain}"
+  export DISK_SIZE="${diskSize}"
 
   # TODO this templating could be quite a bit more flexible.
   # Tell envsubst which variables to replace. This allows other variables to
   # remain untouched.
   # shellcheck disable=SC2016
-  local variablesToSubst='$RELEASE_IMAGE_REPOSITORY $RELEASE_IMAGE_NAME $RELEASE_TAG $ENABLE_ROUTES $LAGOON_IMAGES_RELEASE_TAG $LAGOON_PROJECT_NAME $LAGOON_ENVIRONMENT $PRIMARY_DOMAIN $SECONDARY_DOMAINS $IMPORT_TRANSLATIONS_CRON $PRIMARY_GO_SUBDOMAIN_AND_ANNOTATION $SECONDARY_GO_SUBDOMAINS $GO_RELEASE $PRIMARY_GO_DOMAIN $CMS_DOMAIN'
+  local variablesToSubst='$RELEASE_IMAGE_REPOSITORY $RELEASE_IMAGE_NAME $RELEASE_TAG $ENABLE_ROUTES $LAGOON_IMAGES_RELEASE_TAG $LAGOON_PROJECT_NAME $LAGOON_ENVIRONMENT $PRIMARY_DOMAIN $SECONDARY_DOMAINS $IMPORT_TRANSLATIONS_CRON $PRIMARY_GO_SUBDOMAIN_AND_ANNOTATION $SECONDARY_GO_SUBDOMAINS $GO_RELEASE $PRIMARY_GO_DOMAIN $CMS_DOMAIN $DISK_SIZE'
 
   # Loop through the files we know to contain variables that needs replacing.
   local templateFiles=(
+    "docker-compose.node-service.yml"
     ".lagoon.yml"
     "lagoon/cli.dockerfile"
     "lagoon/nginx.dockerfile"
@@ -221,9 +225,10 @@ function syncEnvRepo {
   local autogenerateRoutes="${7:-}"
   local primaryDomain="${8:-}"
   local secondaryDomains="${9:-}"
-  local primaryGoSubDomain="${10:-}"
-  local secondaryGoSubDomains="${11:-}"
-  local goRelease="${12:-}"
+  local goRelease="${10:-}"
+  local diskSize="${11:-}"
+  local primaryGoSubDomain="${12:-}"
+  local secondaryGoSubDomains="${13:-}"
 
   if [[ -z $siteName ]]; then
       echo "Missing site name"
@@ -281,7 +286,7 @@ function syncEnvRepo {
 
   # Enter the template and rendered it
   cd "${repoName}"
-  renderProfileTemplate "${siteName}" "${branchName}" "${releaseTag}" "${releaseImageRepository}" "${releaseImageName}" "${importTranslationsCron}" "${autogenerateRoutes}" "${primaryDomain}" "${secondaryDomains}" "${primaryGoSubDomain}" "${secondaryGoSubDomains}" "${goRelease}"
+  renderProfileTemplate "${siteName}" "${branchName}" "${releaseTag}" "${releaseImageRepository}" "${releaseImageName}" "${importTranslationsCron}" "${autogenerateRoutes}" "${primaryDomain}" "${secondaryDomains}" "${diskSize}" "${primaryGoSubDomain}" "${secondaryGoSubDomains}" "${goRelease}"
 
   # If we have GO use the docker-compose which set the node service
   if [ "$goRelease" ]; then
