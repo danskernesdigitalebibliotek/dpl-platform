@@ -7,7 +7,7 @@ on:
 
 jobs:
   publish:
-    name: Publish publish MariaDb Chart
+    name: Publish MariaDb Chart
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -32,7 +32,7 @@ jobs:
         env:
           VERSION: ${{ steps.version.outputs.value }}
         run: |
-          yq -i ".version = \"$VERSION\"" gitops/dplplat01/charts/mariadb/Chart.yaml
+          yq -i "version = \"$VERSION\"" gitops/dplplat01/charts/mariadb/Chart.yaml
           NAME=$(yq '.name' gitops/dplplat01/charts/mariadb/Chart.yaml)
           helm dependency update gitops/dplplat01/charts/mariadb || true
           helm package gitops/dplplat01/charts/mariadb
