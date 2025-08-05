@@ -230,6 +230,12 @@ apps:
     path: sites/gribskov-main
     automated: false
 
+  - name: guldborgsund-main
+    project: sites
+    namespace: guldborgsund-main
+    path: sites/guldborgsund-main
+    automated: false
+
   - name: hvidovre-main
     project: sites
     namespace: hvidovre-main
