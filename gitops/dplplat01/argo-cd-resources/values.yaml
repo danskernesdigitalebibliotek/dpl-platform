@@ -278,6 +278,12 @@ apps:
     path: sites/herning-moduletest
     automated: false
 
+  - name: hillerod-main
+    project: sites
+    namespace: hillerod-main
+    path: sites/hillerod-main
+    automated: false
+
   - name: hvidovre-main
     project: sites
     namespace: hvidovre-main
