@@ -4,4 +4,4 @@ version: 0.0.0
 dependencies:
   - name: mariadb
     version: 0.0.3
-    repository: oci://ghcr.io/danskernesdigitalebibliotek/dpl-platform/charts/mariadb
+    repository: oci://ghcr.io/danskernesdigitalebibliotek/dpl-platform/charts
