@@ -206,6 +206,12 @@ apps:
     path: sites/gentofte-main
     automated: false
 
+  - name: gladsaxe-main
+    project: sites
+    namespace: gladsaxe-main
+    path: sites/gladsaxe-main
+    automated: false
+
   - name: hvidovre-main
     project: sites
     namespace: hvidovre-main
