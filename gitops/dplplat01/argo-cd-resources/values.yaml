@@ -242,6 +242,48 @@ apps:
     path: sites/halsnaes-main
     automated: false
 
+  - name: haderslev-main
+    project: sites
+    namespace: haderslev-main
+    path: sites/haderslev-main
+    automated: false
+
+  - name: hedensted-main
+    project: sites
+    namespace: hedensted-main
+    path: sites/hedensted-main
+    automated: false
+
+  - name: helsingor-main
+    project: sites
+    namespace: helsingor-main
+    path: sites/helsingor-main
+    automated: false
+
+  - name: herlev-main
+    project: sites
+    namespace: herlev-main
+    path: sites/herlev-main
+    automated: false
+
+  - name: herning-main
+    project: sites
+    namespace: herning-main
+    path: sites/herning-main
+    automated: false
+
+  - name: herning-moduletest
+    project: sites
+    namespace: herning-moduletest
+    path: sites/herning-moduletest
+    automated: false
+
+  - name: hillerod-main
+    project: sites
+    namespace: hillerod-main
+    path: sites/hillerod-main
+    automated: false
+
   - name: hvidovre-main
     project: sites
     namespace: hvidovre-main
