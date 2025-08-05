@@ -248,6 +248,12 @@ apps:
     path: sites/haderslev-main
     automated: false
 
+  - name: hedensted-main
+    project: sites
+    namespace: hedensted-main
+    path: sites/hedensted-main
+    automated: false
+
   - name: hvidovre-main
     project: sites
     namespace: hvidovre-main
