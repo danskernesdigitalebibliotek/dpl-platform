@@ -284,6 +284,36 @@ apps:
     path: sites/hillerod-main
     automated: false
 
+  - name: holbaek-main
+    project: sites
+    namespace: holbaek-main
+    path: sites/holbaek-main
+    automated: false
+
+  - name: holstebro-main
+    project: sites
+    namespace: holstebro-main
+    path: sites/holstebro-main
+    automated: false
+
+  - name: horsens-main
+    project: sites
+    namespace: horsens-main
+    path: sites/horsens-main
+    automated: false
+
+  - name: hoje-taastrup-main
+    project: sites
+    namespace: hoje-taastrup-main
+    path: sites/hoje-taastrup-main
+    automated: false
+
+  - name: horsholm-main
+    project: sites
+    namespace: horsholm-main
+    path: sites/horsholm-main
+    automated: false
+
   - name: hvidovre-main
     project: sites
     namespace: hvidovre-main
