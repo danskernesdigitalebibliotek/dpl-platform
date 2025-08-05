@@ -260,6 +260,12 @@ apps:
     path: sites/helsingor-main
     automated: false
 
+  - name: herlev-main
+    project: sites
+    namespace: herlev-main
+    path: sites/herlev-main
+    automated: false
+
   - name: hvidovre-main
     project: sites
     namespace: hvidovre-main
