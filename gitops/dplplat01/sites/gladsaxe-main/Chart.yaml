@@ -1,0 +1,7 @@
+apiVersion: v2
+name: gladsaxe-main
+version: 0.0.0
+dependencies:
+  - name: mariadb
+    version: 0.0.3
+    repository: ghcr.io/danskernesdigitalebibliotek/dpl-platform/charts/mariadb:0.0.3
