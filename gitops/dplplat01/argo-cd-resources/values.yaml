@@ -224,6 +224,12 @@ apps:
     path: sites/greve-main
     automated: false
 
+  - name: gribskov-main
+    project: sites
+    namespace: gribskov-main
+    path: sites/gribskov-main
+    automated: false
+
   - name: hvidovre-main
     project: sites
     namespace: hvidovre-main
