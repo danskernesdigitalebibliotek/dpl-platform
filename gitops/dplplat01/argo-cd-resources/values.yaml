@@ -254,6 +254,12 @@ apps:
     path: sites/hedensted-main
     automated: false
 
+  - name: helsingor-main
+    project: sites
+    namespace: helsingor-main
+    path: sites/helsingor-main
+    automated: false
+
   - name: hvidovre-main
     project: sites
     namespace: hvidovre-main
