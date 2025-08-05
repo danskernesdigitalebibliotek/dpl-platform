@@ -236,6 +236,12 @@ apps:
     path: sites/guldborgsund-main
     automated: false
 
+  - name: halsnaes-main
+    project: sites
+    namespace: halsnaes-main
+    path: sites/halsnaes-main
+    automated: false
+
   - name: hvidovre-main
     project: sites
     namespace: hvidovre-main
