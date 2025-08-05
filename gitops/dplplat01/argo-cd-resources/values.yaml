@@ -266,6 +266,12 @@ apps:
     path: sites/herlev-main
     automated: false
 
+  - name: herning-main
+    project: sites
+    namespace: herning-main
+    path: sites/herning-main
+    automated: false
+
   - name: hvidovre-main
     project: sites
     namespace: hvidovre-main
