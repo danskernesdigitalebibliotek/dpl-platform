@@ -296,6 +296,12 @@ apps:
     path: sites/holstebro-main
     automated: false
 
+  - name: horsens-main
+    project: sites
+    namespace: horsens-main
+    path: sites/horsens-main
+    automated: false
+
   - name: hvidovre-main
     project: sites
     namespace: hvidovre-main
