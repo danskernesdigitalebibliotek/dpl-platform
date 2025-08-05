@@ -218,6 +218,12 @@ apps:
     path: sites/glostrup-main
     automated: false
 
+  - name: greve-main
+    project: sites
+    namespace: greve-main
+    path: sites/greve-main
+    automated: false
+
   - name: hvidovre-main
     project: sites
     namespace: hvidovre-main
