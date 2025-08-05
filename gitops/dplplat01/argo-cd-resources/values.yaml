@@ -290,6 +290,12 @@ apps:
     path: sites/holbaek-main
     automated: false
 
+  - name: holstebro-main
+    project: sites
+    namespace: holstebro-main
+    path: sites/holstebro-main
+    automated: false
+
   - name: hvidovre-main
     project: sites
     namespace: hvidovre-main
