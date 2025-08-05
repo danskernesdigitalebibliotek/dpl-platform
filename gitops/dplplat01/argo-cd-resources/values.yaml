@@ -212,6 +212,12 @@ apps:
     path: sites/gladsaxe-main
     automated: false
 
+  - name: glostrup-main
+    project: sites
+    namespace: glostrup-main
+    path: sites/glostrup-main
+    automated: false
+
   - name: hvidovre-main
     project: sites
     namespace: hvidovre-main
