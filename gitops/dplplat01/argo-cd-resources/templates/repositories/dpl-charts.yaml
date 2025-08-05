@@ -9,4 +9,4 @@ stringData:
   name: dpl-charts
   type: helm
   url: ghcr.io/danskernesdigitalebibliotek/dpl-platform/charts/
-  enableOCI: true
+  enableOCI: "true"
