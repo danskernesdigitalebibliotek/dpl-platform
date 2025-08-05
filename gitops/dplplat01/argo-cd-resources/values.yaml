@@ -308,6 +308,12 @@ apps:
     path: sites/hoje-taastrup-main
     automated: false
 
+  - name: horsholm-main
+    project: sites
+    namespace: horsholm-main
+    path: sites/horsholm-main
+    automated: false
+
   - name: hvidovre-main
     project: sites
     namespace: hvidovre-main
