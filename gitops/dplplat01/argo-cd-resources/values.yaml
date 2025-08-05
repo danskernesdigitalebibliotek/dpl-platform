@@ -272,6 +272,12 @@ apps:
     path: sites/herning-main
     automated: false
 
+  - name: herning-moduletest
+    project: sites
+    namespace: herning-moduletest
+    path: sites/herning-moduletest
+    automated: false
+
   - name: hvidovre-main
     project: sites
     namespace: hvidovre-main
