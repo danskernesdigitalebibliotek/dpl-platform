@@ -20,4 +20,4 @@ spec:
     warn: false
   sourceRepos:
   - https://github.com/danskernesdigitalebibliotek/dpl-platform.git # git repository
-  - oci://ghcr.io/danskernesdigitalebibliotek/dpl-platform/charts/
+  - ghcr.io/danskernesdigitalebibliotek/dpl-platform/charts
