@@ -32,7 +32,7 @@ jobs:
         env:
           VERSION: ${{ steps.version.outputs.value }}
         run: |
-          yq -i ".version = \"$VERSION\"" gitops/dplplat01/charts/mariadb/Chart.yaml
+          VERSION=$(yq '.version' gitops/dplplat01/charts/mariadb/Chart.yaml)
           NAME=$(yq '.name' gitops/dplplat01/charts/mariadb/Chart.yaml)
           helm dependency update gitops/dplplat01/charts/mariadb || true
           helm package gitops/dplplat01/charts/mariadb
