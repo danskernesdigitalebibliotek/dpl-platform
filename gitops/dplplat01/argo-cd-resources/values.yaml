@@ -302,6 +302,12 @@ apps:
     path: sites/horsens-main
     automated: false
 
+  - name: hoje-taastrup-main
+    project: sites
+    namespace: hoje-taastrup-main
+    path: sites/hoje-taastrup-main
+    automated: false
+
   - name: hvidovre-main
     project: sites
     namespace: hvidovre-main
