@@ -70,7 +70,7 @@ sites:
     # has been updated to use the primary domain.
     autogenerateRoutes: true
     deploy_key: ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBLUrrxfwsfwz4nkn/WCbMUbLHkTFvyYB2uusHLA7NlH
-    <<: *disk-size-small
+    <<: *disk-size-medium
   cms-school:
     name: "CMS-skole"
     description: "Et site til undervisning i CMSet"
