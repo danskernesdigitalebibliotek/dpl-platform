@@ -226,9 +226,9 @@ function syncEnvRepo {
   local primaryDomain="${8:-}"
   local secondaryDomains="${9:-}"
   local diskSize="${10:-}"
-  local goRelease="${11:-}"
-  local primaryGoSubDomain="${12:-}"
-  local secondaryGoSubDomains="${13:-}"
+  local primaryGoSubDomain="${11:-}"
+  local secondaryGoSubDomains="${12:-}"
+  local goRelease="${13:-}"
 
   if [[ -z $siteName ]]; then
       echo "Missing site name"
