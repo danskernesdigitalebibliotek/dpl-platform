@@ -76,14 +76,14 @@ function renderProfileTemplate {
   local primaryDomain=${8:-}
   # A space-seperated list of secondary domains (optional)
   local secondaryDomainsString=${9:-}
-  # The primary GO subdomain (optional)
-  local primaryGoSubDomain=${10:-}
-  # A space seperated list of secondary GO sub domains (optional)
-  local secondaryGoSubDomains=${11:-}
-  #GO release version
-  local GO_RELEASE=${12:-}
   # The desired size of the Persistent Volume
-  local diskSize=${13:-}
+  local diskSize=${10:-}
+  # The primary GO subdomain (optional)
+  local primaryGoSubDomain=${11:-}
+  # A space seperated list of secondary GO sub domains (optional)
+  local secondaryGoSubDomains=${12:-}
+  #GO release version
+  local GO_RELEASE=${13:-}
 
   PRIMARY_DOMAIN=""
 
@@ -225,10 +225,10 @@ function syncEnvRepo {
   local autogenerateRoutes="${7:-}"
   local primaryDomain="${8:-}"
   local secondaryDomains="${9:-}"
-  local goRelease="${10:-}"
-  local diskSize="${11:-}"
-  local primaryGoSubDomain="${12:-}"
-  local secondaryGoSubDomains="${13:-}"
+  local diskSize="${10:-}"
+  local primaryGoSubDomain="${11:-}"
+  local secondaryGoSubDomains="${12:-}"
+  local goRelease="${13:-}"
 
   if [[ -z $siteName ]]; then
       echo "Missing site name"
