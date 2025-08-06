@@ -154,7 +154,7 @@ sites:
     secondary-domains:
       - arrebib.dk
     autogenerateRoutes: true
-    << : [ *webmasters-on-weekly-release-cycle, *disk-size-medium ]
+    << : [ *default-release-image-source, *disk-size-medium ]
   albertslund:
     name: "Albertslund Bibliotek"
     description: "The library site for Albertslund"
