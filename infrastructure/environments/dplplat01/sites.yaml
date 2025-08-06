@@ -49,6 +49,7 @@ sites:
     releaseImageRepository: ghcr.io/danskernesdigitalebibliotek
     releaseImageName: dpl-cms-source
     plan: webmaster
+    diskSize: 5
     dpl-cms-release: 2025.27.2
     moduletest-dpl-cms-release: 2025.27.2
     go-release: 2025.27.0
@@ -64,6 +65,7 @@ sites:
     dpl-cms-release: 2025.32.0
     moduletest-dpl-cms-release: 2025.32.0
     go-release: 2025.32.0
+    diskSize: 5
     plan: webmaster
     primary-domain: staging.dplplat01.dpl.reload.dk
     # TODO: Remove this once the the Adgangsplatformen OpenID client used here
@@ -77,6 +79,7 @@ sites:
     deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJ6SzfPFf/XeLeqI342kxuJAlATpDMtgAfqlrLTTbW2m"
     plan: webmaster
     primary-domain: cms-school.dplplat01.dpl.reload.dk
+    diskSize: 5
     # TODO: Remove this once the the Adgangsplatformen OpenID client used here
     # has been updated to use the primary domain.
     autogenerateRoutes: true
@@ -90,6 +93,7 @@ sites:
     description: "Et site hvor bibliotekerne kan teste"
     importTranslationsCron: "0 * * * *"
     plan: webmaster
+    diskSize: 5
     go-release: 2025.27.0
     deploy_key: ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHvhy79hHjLcQJCcMNwci1Q/P/O2LwD4IzBVfkmRGKom
     << : [ *webmasters-on-weekly-release-cycle, *disk-size-small ]
@@ -98,6 +102,7 @@ sites:
     name: "Bibliotekernes Nationale Formidling"
     description: "The BNF content sharing site"
     plan: webmaster
+    diskSize: 7
     moduletest-dpl-cms-release: 2025.32.0
     deploy_key: ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAICTmMC/cUI3U3QloX6aAdN7g0EU42J0fwA9aO7UJOzx9
     primary-domain: delingstjenesten.dk
@@ -122,6 +127,7 @@ sites:
     description: "The library site for Aabenraa"
     deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIEMyXdV9INXfJeWlvQAke7jOtWWHTokbPoQ/0vjZ0S1D"
     primary-domain: www.aabenraabib.dk
+    diskSize: 10
     secondary-domains:
       - aabenraabib.dk
     autogenerateRoutes: true
@@ -131,6 +137,7 @@ sites:
     description: "The main library site for Aalborg"
     deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIE8+vj/1goR+Y42JMD/NbL4PXM4N6DifKbRZjJdyAURp"
     primary-domain: www.aalborgbibliotekerne.dk
+    diskSize: 10
     secondary-domains:
       - aalborgbibliotekerne.dk
     autogenerateRoutes: "redirect"
@@ -142,6 +149,7 @@ sites:
     deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFL+uMeEfsaHEzbNxOmBB8dX32OLo63CTomG8VZvuiN2"
     plan: webmaster
     primary-domain: www.aakb.dk
+    diskSize: 10
     secondary-domains:
       - aakb.dk
     autogenerateRoutes: true
@@ -151,6 +159,7 @@ sites:
     description: "The library site for Ærø"
     deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDJNI7OU7O3X0AYNJSyZ9VkdSGaD5mAQmhcRMW72TpKi"
     primary-domain: www.arrebib.dk
+    diskSize: 10
     secondary-domains:
       - arrebib.dk
     autogenerateRoutes: true
@@ -160,6 +169,7 @@ sites:
     description: "The library site for Albertslund"
     deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOpbJ5Duz6d8xqIF6CMOGrJxkpcwwAeAmP2OPnuXwAQe"
     primary-domain: albertslundbibliotek.dk
+    diskSize: 10
     secondary-domains:
       - www.albertslundbibliotek.dk
     autogenerateRoutes: true
@@ -170,6 +180,7 @@ sites:
     description: "The library site for Allerød"
     deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOlK4u+5C8Y+euVj0Q+s7ZsNWMeUqSKgVg+845d3XX1s"
     primary-domain: www.bibliotek.alleroed.dk
+    diskSize: 10
     secondary-domains:
       - bibliotek.alleroed.dk
     autogenerateRoutes: true
@@ -179,6 +190,7 @@ sites:
     description: "The library site for Assens"
     deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDrdA9FWa+mpmJ+uyMO6H3O+xIVYpdjcbodE/zS790Ee"
     primary-domain: www.assensbib.dk
+    diskSize: 10
     secondary-domains:
       - assensbib.dk
     autogenerateRoutes: true
@@ -188,6 +200,7 @@ sites:
     description: "The library site for Ballerup"
     deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKnoDa5OsU/7RESGoGwvRv/piSndDnLShEyaBDP2pW1r"
     primary-domain: bib.ballerup.dk
+    diskSize: 10
     secondary-domains:
       - www.bib.ballerup.dk
     autogenerateRoutes: true
@@ -197,6 +210,7 @@ sites:
     name: "Billund Bibliotekerne og Borgerservice"
     description: "The main library site for Billund"
     primary-domain: billundbib.dk
+    diskSize: 10
     secondary-domains:
       - www.billundbib.dk
       - billundbibliotek.dk
@@ -209,6 +223,7 @@ sites:
     description: "The library site for Bornholm"
     deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIApUNh71neiuKAsO3OL4jEzxnPCXt9gvl66gDRiYLnLw"
     primary-domain: bibliotek.brk.dk
+    diskSize: 10
     autogenerateRoutes: true
     << : [ *default-release-image-source, *disk-size-medium ]
   brondby:
@@ -216,6 +231,7 @@ sites:
     description: "The library site for Brøndby"
     deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAICyvaCXo55aJOmlSTDQr+GXCIihWMJHhUiw4XpDrbVID"
     primary-domain: www.brondby-bibliotekerne.dk
+    diskSize: 10
     secondary-domains:
       - brondby-bibliotekerne.dk
     autogenerateRoutes: true
@@ -225,6 +241,7 @@ sites:
     description: "The library site for Brønderslev"
     deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPocm02vNblShmSFlQqWsIszR/AXsbT5Jmwj8fDwjSwO"
     primary-domain: www.bronderslevbib.dk
+    diskSize: 10
     secondary-domains:
       - bronderslevbib.dk
     autogenerateRoutes: true
@@ -234,6 +251,7 @@ sites:
     description: "The library site for Dragør"
     deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIAwkmlUnVYpnRLKQDohUcg58fFYn+UdPGDU2AUWoTybo"
     primary-domain: www.drabib.dk
+    diskSize: 10
     secondary-domains:
       - drabib.dk
     autogenerateRoutes: true
@@ -243,6 +261,7 @@ sites:
     description: "The library site for Egedal"
     deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDCT5ZJIKWlbAYV5Fnr9Qq5WaVIuZKfcLucqTebUpXyz"
     primary-domain: egedalbibliotekerne.dk
+    diskSize: 10
     secondary-domains:
       - www.egedalbibliotekerne.dk
     autogenerateRoutes: true
@@ -252,6 +271,7 @@ sites:
     description: "The library site for Esbjerg"
     deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBQFAh4UeSmcPTFtXj5W/ZKhelJcAornaFYIYJUP0hH9"
     primary-domain: www.esbjergbibliotek.dk
+    diskSize: 10
     secondary-domains:
       - esbjergbibliotek.dk
       - ekb.dk
@@ -265,6 +285,7 @@ sites:
     description: "The library site for Faaborg-Midtfyn"
     deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAILKo6SAhtuZy4z708mYP3vyc6YDMmTxwme3kg+kyQoTM"
     primary-domain: fmbib.dk
+    diskSize: 10
     secondary-domains:
       - www.fmbib.dk
     autogenerateRoutes: true
@@ -274,6 +295,7 @@ sites:
     description: "The library site for Favrskov"
     deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINqAkzzI+VgHhM7NpOQaEe7XSUo2iWU/cVXvt8rq88uK"
     primary-domain: favrskovbib.dk
+    diskSize: 10
     secondary-domains:
       - www.favrskovbib.dk
       - favrskovbibliotekerne.dk
@@ -285,6 +307,7 @@ sites:
     description: "The library site for Faxe"
     deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBkdxUoBx0ZAXfMfA0rRUNo2EcUK39fp0M/zKJPOcYx2"
     primary-domain: "www.faxebibliotek.dk"
+    diskSize: 10
     secondary-domains:
       - "faxebibliotek.dk"
     autogenerateRoutes: true
@@ -295,6 +318,7 @@ sites:
     description: "The library site for Fredensborg"
     deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKxoe8V6eyofhPOEe18qZACQAoWjfgCjN3yxcTWVjyxV"
     primary-domain: www.fredensborgbibliotekerne.dk
+    diskSize: 10
     secondary-domains:
       - fredensborgbibliotekerne.dk
     autogenerateRoutes: true
@@ -304,6 +328,7 @@ sites:
     description: "The library site for Fredericia"
     deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIA2SgYgOoWn6jbg+U91/PcxmfRIxoSWbTANKP++LKanO"
     primary-domain: fredericiabib.dk
+    diskSize: 10
     secondary-domains:
       - www.fredericiabib.dk
     autogenerateRoutes: true
@@ -312,6 +337,7 @@ sites:
     name: "Biblioteket Frederiksberg"
     description: "The library site for Frederiksberg"
     primary-domain: fkb.dk
+    diskSize: 10
     secondary-domains:
       - www.fkb.dk
     deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIGatN86NGcfXHefEFAACwDVkDxob2SW+N8R+8/rANnvF"
@@ -321,6 +347,7 @@ sites:
     description: "The library site for Frederikshavn"
     deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAICZcYBGIGrw0aei4UFmWcNMiQ4ZbJbBR7OU7q5Bsu/lz"
     primary-domain: bibl.frederikshavn.dk
+    diskSize: 10
     autogenerateRoutes: true
     << : [ *default-release-image-source, *disk-size-medium ]
   frederikssund:
@@ -328,6 +355,7 @@ sites:
     description: "The library site for Frederikssund"
     deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOSWh56XpMvlK6CMz2bi3RZoUXUWFUVw7eo/cfaxmE/1"
     primary-domain: www.bibliotekerne.frederikssund.dk
+    diskSize: 10
     secondary-domains:
       - bibliotekerne.frederikssund.dk
     autogenerateRoutes: true
@@ -337,6 +365,7 @@ sites:
     description: "The library site for Furesø"
     deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIB+OntBSayMdg22NU1xDnoMsuW1E69uNwvcmeEgt8wlQ"
     primary-domain: furbib.dk
+    diskSize: 10
     secondary-domains:
       - www.furbib.dk
     autogenerateRoutes: true
@@ -346,6 +375,7 @@ sites:
     description: "The library site for Gentofte"
     deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIP3Gh74TPbjSiKTz/cJQeH3l0gLsPtgzGVpC1YezMi+D"
     primary-domain: genbib.dk
+    diskSize: 10
     secondary-domains:
       - www.genbib.dk
     autogenerateRoutes: true
@@ -355,6 +385,7 @@ sites:
     description: "The library site for Gladsaxe"
     deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAICAQZr2pUtpsYarlI31+J/EXr3QHomuiG5TwQJDhquYF"
     primary-domain: gladbib.dk
+    diskSize: 10
     secondary-domains:
       - www.gladbib.dk
     autogenerateRoutes: true
@@ -364,6 +395,7 @@ sites:
     description: "The library site for Glostrup"
     deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBMV2GongJbNSRKHl2OUNd2Md5Y9PxKMLxyU8BprGV1L"
     primary-domain: www.glostrupbib.dk
+    diskSize: 10
     secondary-domains:
       - glostrupbib.dk
     autogenerateRoutes: true
@@ -373,6 +405,7 @@ sites:
     description: "The library site for Greve"
     deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMjwn5wHT3u7AIfYN0FMPtxidi+vUmcE1cZpWeg1pPm9"
     primary-domain: www.grevebibliotek.dk
+    diskSize: 10
     secondary-domains:
       - grevebib.dk
       - www.grevebib.dk
@@ -383,6 +416,7 @@ sites:
     description: "The library site for Gribskov"
     deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIIK40x6Y/UvhxDaW+McgqIeY2phSuuadNxuG/FGnSY70"
     primary-domain: www.gribskovbib.dk
+    diskSize: 10
     secondary-domains:
       - gribskovbib.dk
     autogenerateRoutes: true
@@ -392,6 +426,7 @@ sites:
     description: "The library site for Guldborgsund"
     deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFwCP4jEJTjUyPTNlOJd7dHaT63C1iox9PPWl/Ck7IJH"
     primary-domain: guldbib.dk
+    diskSize: 10
     secondary-domains:
       - www.guldbib.dk
     autogenerateRoutes: true
@@ -401,6 +436,7 @@ sites:
     description: "The library site for Haderslev"
     deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAICsEjJ7Yqh8JPF1UglkMDQbksKwAeZLSZeqWRCWFXMkR"
     primary-domain: haderslevbibliotekerne.dk
+    diskSize: 10
     secondary-domains:
       - www.haderslevbibliotekerne.dk
     autogenerateRoutes: true
@@ -410,6 +446,7 @@ sites:
     description: "The library site for Halsnæs"
     deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMB+INXad3Fl3fbnPVnDJcMq1L907fu5J4S7rL3nUv84"
     primary-domain: bibliotekerne.halsnaes.dk
+    diskSize: 10
     secondary-domains:
       - www.bibliotekerne.halsnaes.dk
     autogenerateRoutes: true
@@ -419,6 +456,7 @@ sites:
     description: "The library site for Hedensted"
     deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAID34dCc953IPi1leCQyIOo4XMOvuRz84qam4P1r9Dzuh"
     primary-domain: hedenstedbib.dk
+    diskSize: 10
     secondary-domains:
       - www.hedenstedbib.dk
     autogenerateRoutes: true
@@ -428,6 +466,7 @@ sites:
     description: "The library site for Helsingør"
     deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMjjzFRg91rY4Bsr1I8yxysk/aCk374S2rpgixONAP7a"
     primary-domain: helsbib.dk
+    diskSize: 10
     secondary-domains:
       - www.helsbib.dk
     autogenerateRoutes: true
@@ -436,6 +475,7 @@ sites:
     name: "Herlev Bibliotek"
     description: "The library site for Herlev"
     primary-domain: www.herlevbibliotek.dk
+    diskSize: 10
     secondary-domains:
       - herlevbibliotek.dk
     autogenerateRoutes: "redirect"
@@ -446,6 +486,7 @@ sites:
     description: "The main library site for Herning"
     deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIA4LZWJFrRQQD65WohscqcmX0uqx7/zXFsK/o2tVY/9B"
     primary-domain: www.herningbib.dk
+    diskSize: 10
     secondary-domains:
       - herningbib.dk
     autogenerateRoutes: true
@@ -456,6 +497,7 @@ sites:
     description: "The library site for Hillerød"
     deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMpZ969v19pbZ6ILz1krcNBccZMkUK3ok5S1HjF7u5Y1"
     primary-domain: hilbib.dk
+    diskSize: 10
     secondary-domains:
       - www.hilbib.dk
     autogenerateRoutes: true
@@ -465,6 +507,7 @@ sites:
     description: "The library site for Hjørring"
     deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJw8nFZITPe1eVE9BUmtxWWuJUKNezmJgRa3QS1T0nWI"
     primary-domain: hjbib.dk
+    diskSize: 10
     secondary-domains:
       - www.hjbib.dk
     autogenerateRoutes: true
@@ -474,6 +517,7 @@ sites:
     description: "The library site for Høje-Taastrup"
     deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAILiVBegVlQMb0OfQCfJAv87mLMe37xAaGCQc42i0j+2H"
     primary-domain: bibliotek.htk.dk
+    diskSize: 10
     secondary-domains:
       - www.bibliotek.htk.dk
     autogenerateRoutes: true
@@ -483,6 +527,7 @@ sites:
     description: "The library site for Holbæk"
     deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIL6uSbRiMzeDVejoPx5+YlAPCHebnY0XwF/zDd3YZtQ+"
     primary-domain: bibliotek.holbaek.dk
+    diskSize: 10
     autogenerateRoutes: true
     << : [ *default-release-image-source, *disk-size-medium ]
   holstebro:
@@ -490,6 +535,7 @@ sites:
     description: "The library site for Holstebro"
     deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINQNXpvIAg6/lHe/RVocj2losQ6Q2TIN/S5IFdY17g0Y"
     primary-domain: www.holstebrobibliotek.dk
+    diskSize: 10
     secondary-domains:
       - holstebrobibliotek.dk
     autogenerateRoutes: true
@@ -499,6 +545,7 @@ sites:
     description: "The library site for Horsens"
     deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFR0Fs3s0SyO3kSWPJd2flAItMWSvN0elpWrqHuJSjjz"
     primary-domain: horsensbibliotek.dk
+    diskSize: 10
     secondary-domains:
       - www.horsensbibliotek.dk
     autogenerateRoutes: true
@@ -508,6 +555,7 @@ sites:
     description: "The library site for Hørsholm"
     deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDAyQTTt/8Wnhyz03LUWjVrAuhohatAUuBx3dtmM8wa8"
     primary-domain: biblioteket.horsholm.dk
+    diskSize: 10
     secondary-domains:
       - www.biblioteket.horsholm.dk
     autogenerateRoutes: redirect
@@ -517,6 +565,7 @@ sites:
     description: "The library site for Hvidovre"
     deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINf+6OcOZOpd8hdtNcBm7wA8jYe6CtdYbW8iUrDjWapZ"
     primary-domain: www.hvidovrebib.dk
+    diskSize: 10
     secondary-domains:
       - hvidovrebib.dk
       - www.hvidovrebibliotekerne.dk
@@ -528,6 +577,7 @@ sites:
     description: "The library site for Ikast-Brande"
     deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKpSICadbqfwDoZgxSro2QlhWCNKMfN4Juhpg+S+57Jg"
     primary-domain: www.ikast-brandebibliotek.dk
+    diskSize: 10
     secondary-domains:
       - ikast-brandebibliotek.dk
     autogenerateRoutes: true
@@ -537,6 +587,7 @@ sites:
     description: "The library site for Ishøj"
     deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAILAwD4x4QUSQlylgELoKuxBwP7PqHke5gbv4mkog82GK"
     primary-domain: www.ishojbib.dk
+    diskSize: 10
     secondary-domains:
       - ishojbib.dk
     autogenerateRoutes: true
@@ -546,6 +597,7 @@ sites:
     description: "The library site for Kallundborg"
     deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIB+tCuK/9Ywp8AizLtg+GflsiGcB8QVDWNbXBwznxHkw"
     primary-domain: www.kalundborgbib.dk
+    diskSize: 10
     secondary-domains:
       - kalundborgbib.dk
     autogenerateRoutes: true
@@ -555,6 +607,7 @@ sites:
     description: "The library site for Kerteminde"
     deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBeh/ST+IzZySTeQZcFF/W17U4X4JZDLSptHNlGU6IOJ"
     primary-domain: kertemindebibliotekerne.dk
+    diskSize: 10
     secondary-domains:
       - www.kertemindebibliotekerne.dk
     autogenerateRoutes: true
@@ -563,6 +616,7 @@ sites:
     name: "Københavns Biblioteker"
     description: "The main library site for København"
     primary-domain: bibliotek.kk.dk
+    diskSize: 15
     secondary-domains:
       - www.bibliotek.kk.dk
       - nginx.main.kobenhavn.dplplat01.dpl.reload.dk
@@ -575,6 +629,7 @@ sites:
     description: "The library site for Køge"
     deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMRB54Z7o6Vt3qOucjvE7No6LN2NdBNtfRi2f4y+UQdA"
     primary-domain: www.koegebib.dk
+    diskSize: 10
     secondary-domains:
       - koegebib.dk
     autogenerateRoutes: true
@@ -584,6 +639,7 @@ sites:
     description: "The library site for Kolding"
     deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBIP5Rlg98TBW8mdIbqcksbxpT0epIbAe56iAcEmi2z6"
     primary-domain: koldingbib.dk
+    diskSize: 10
     secondary-domains:
       - www.koldingbib.dk
       - koldingbibliotekerne.dk
@@ -595,6 +651,7 @@ sites:
     description: "The library site for Læsø"
     deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIGBAqZWP02LnFU7Iwlj9ebWeX3efwl9tkRzidSIjo6FF"
     primary-domain: biblioteket.laesoe.dk
+    diskSize: 10
     autogenerateRoutes: true
     << : [ *default-release-image-source, *disk-size-medium ]
   langeland:
@@ -602,6 +659,7 @@ sites:
     description: "The library site for Langeland"
     deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIGRQJKuvPilMa2QiqPNzHf1EIa3epkJ6m0STYTLE1MaW"
     primary-domain: langelandbibliotek.dk
+    diskSize: 10
     secondary-domains:
       - www.langelandbibliotek.dk
     autogenerateRoutes: true
@@ -611,6 +669,7 @@ sites:
     description: "The library site for Lejre"
     deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJUCoDJmWFsXa3nZe7XBa/v1nahzl2GeoT46XAW7ZVQG"
     primary-domain: lejrebib.dk
+    diskSize: 10
     secondary-domains:
       - www.lejrebib.dk
       - lejrebibliotek.dk
@@ -622,6 +681,7 @@ sites:
     description: "The library site for Lolland"
     deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDHoX6Huapt+Rjz1pgyyYRLAHpgsgctmi+Fs37tVIbjN"
     primary-domain: lollandbib.dk
+    diskSize: 10
     secondary-domains:
       - www.lollandbib.dk
     autogenerateRoutes: true
@@ -631,6 +691,7 @@ sites:
     description: "The library site for Lyngby-Taarbæk"
     deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOeXHvVXTlOXtrK8kSR12qZQH1YHto+PpWx0rac/1QMe"
     primary-domain: www.lyngbybib.dk
+    diskSize: 10
     secondary-domains:
       - lyngbybib.dk
     autogenerateRoutes: true
@@ -640,6 +701,7 @@ sites:
     description: "The library site for Mariagerfjord"
     deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFeTDNC6HBZrpSy73UadgOdr8sjxpsKZkwGARuJ3X8rC"
     primary-domain: mfbib.dk
+    diskSize: 10
     secondary-domains:
       - www.mfbib.dk
       - mariagerfjordbibliotekerne.dk
@@ -651,6 +713,7 @@ sites:
     description: "The library site for Middelfart"
     deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIL+cnxhliA+siikDk40SlviShSK6MmC3g/3spAVey0ht"
     primary-domain: www.middelfartbibliotek.dk
+    diskSize: 10
     secondary-domains:
       - middelfartbibliotek.dk
     autogenerateRoutes: true
@@ -660,6 +723,7 @@ sites:
     description: "The library site for Morsø"
     deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIAVce9r/E16lOPiiZEcjzEW40nuxCCt7ahv5NYUPwU8P"
     primary-domain: www.bibliotekmorsoe.dk
+    diskSize: 10
     secondary-domains:
       - bibliotekmorsoe.dk
     autogenerateRoutes: true
@@ -669,6 +733,7 @@ sites:
     description: "The library site for Næstved"
     deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOBkIsTxho/rrVQvPwmByNSae/PtdymCDlVtMBstG3BK"
     primary-domain: www.naesbib.dk
+    diskSize: 10
     secondary-domains:
       - naesbib.dk
     autogenerateRoutes: true
@@ -678,6 +743,7 @@ sites:
     description: "The library site for Norddjurs"
     deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAICgrEOr/QVP8FkakoeoFwqqYMMroLzUEu2ieyLLWGmsB"
     primary-domain: norddjursbib.dk
+    diskSize: 10
     secondary-domains:
       - www.norddjursbib.dk
     autogenerateRoutes: true
@@ -687,6 +753,7 @@ sites:
     description: "The library site for Nordfyn"
     deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIN7dIiOkzwJ2CVJFl2GMPWuxa4mzJvSi3q80twgvHTki"
     primary-domain: www.nordfynsbib.dk
+    diskSize: 10
     secondary-domains:
       - nordfynsbib.dk
     autogenerateRoutes: true
@@ -696,6 +763,7 @@ sites:
     description: "The library site for Nyborg"
     deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMpG7Br//TQnc3LRdkXCR80mD0C6vsZg36ZVibTUfdyS"
     primary-domain: www.nyborgbibliotek.dk
+    diskSize: 10
     secondary-domains:
       - nyborgbibliotek.dk
     autogenerateRoutes: true
@@ -705,6 +773,7 @@ sites:
     description: "The library site for Odder"
     deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHppEy2QVzOCwuLSQqf4OOMxiVtfbuxMQzatS4HBXXYB"
     primary-domain: www.bibliotek.odder.dk
+    diskSize: 10
     secondary-domains:
       - bibliotek.odder.dk
     autogenerateRoutes: true
@@ -715,6 +784,7 @@ sites:
     deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIEQ6nngmgVZXTNpPzhMTvJyx4tUPjHxoLSNL/jJPaNQ0"
     plan: webmaster
     primary-domain: www.odensebib.dk
+    diskSize: 10
     secondary-domains:
       - odensebib.dk
     autogenerateRoutes: true
@@ -724,6 +794,7 @@ sites:
     description: "The library site for Odsherred"
     deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKO7a1/SEglnKZ3RJpSYKSaadeeVXr6xb5b5MJIEeYmc"
     primary-domain: odsbib.dk
+    diskSize: 10
     secondary-domains:
       - www.odsbib.dk
     autogenerateRoutes: true
@@ -733,6 +804,7 @@ sites:
     description: "The library site for Randers"
     deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIEmOBUxVFYKHM8QNQ3od1a8e7+w+oFlE871SxH1+FN4R"
     primary-domain: www.randersbib.dk
+    diskSize: 10
     secondary-domains:
       - randersbib.dk
       - randersbibliotek.dk
@@ -744,6 +816,7 @@ sites:
     description: "The library site for Rebild"
     deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJ7BXhw6xig5W2AjtX7eqnnrWHKnavFqHdgc+5vY2U3T"
     primary-domain: www.rebildbib.dk
+    diskSize: 10
     secondary-domains:
       - rebildbib.dk
     autogenerateRoutes: true
@@ -753,6 +826,7 @@ sites:
     description: "The library site for Ringkøbing-Skjern"
     deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFDaximGZYZQWR0IX2sP/e94hfbHQrKVD5mTqiCvpIW2"
     primary-domain: riskbib.dk
+    diskSize: 10
     secondary-domains:
       - www.riskbib.dk
     autogenerateRoutes: true
@@ -762,6 +836,7 @@ sites:
     description: "The library site for Ringsted"
     deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIGimIWKuDZGYhgEmh26pImLTGtIHvh9xEw1lHfxxplJz"
     primary-domain: ringstedbib.dk
+    diskSize: 10
     secondary-domains:
       - www.ringstedbib.dk
     autogenerateRoutes: true
@@ -771,6 +846,7 @@ sites:
     description: "The library site for Rødovre"
     deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOLyDhYdpnunBj8EZNR4fE6lN4vc/+RVVB5n2ei/40xt"
     primary-domain: www.rdb.dk
+    diskSize: 10
     secondary-domains:
       - rdb.dk
     autogenerateRoutes: true
@@ -781,6 +857,7 @@ sites:
     deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPfCXTAe50+d/RUIu8JSctoCSzfJoEMtZ2OY0AUQdZgo"
     plan: webmaster
     primary-domain: www.roskildebib.dk
+    diskSize: 10
     secondary-domains:
       - roskildebib.dk
     autogenerateRoutes: true
@@ -790,6 +867,7 @@ sites:
     description: "The library site for Rudersdal"
     deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMS9z1DqqOV7+ycLji2x8PYZeBgpUKvZLPlBu5/8IPDy"
     primary-domain: rudbib.dk
+    diskSize: 10
     secondary-domains:
       - www.rudbib.dk
       - rudersdalbibliotekerne.dk
@@ -801,6 +879,7 @@ sites:
     description: "The library site for Samsø"
     deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFZcxFuzVNn72t0dnDsnEX60NZ0OJ5ce4HxgI1PtIKFp"
     primary-domain: "bibliotek.samsoe.dk"
+    diskSize: 10
     secondary-domains:
       - "www.bibliotek.samsoe.dk"
     autogenerateRoutes: true
@@ -810,6 +889,7 @@ sites:
     description: "The library site for Silkeborg"
     deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHudvU3HuWcnnCOFlQU5Tvgkb/v6b2DttwUTN7Vl0sQV"
     primary-domain: silkeborgbib.dk
+    diskSize: 10
     secondary-domains:
       - www.silkeborgbib.dk
     autogenerateRoutes: true
@@ -820,6 +900,7 @@ sites:
     description: "The library site for Skanderborg"
     deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJ3uD7iCaZUa5HRmzs9esYCFoVnmPp5KKee+q5FPyR+Z"
     primary-domain: www.bibliotek.skanderborg.dk
+    diskSize: 10
     secondary-domains:
       - bibliotek.skanderborg.dk
     autogenerateRoutes: true
@@ -829,6 +910,7 @@ sites:
     description: "The library site for Skive"
     deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIGpJAKCBMKM9G0qvUGeCRSvz8QNg27r7sDedj15HP7Hh"
     primary-domain: www.skivebibliotek.dk
+    diskSize: 10
     secondary-domains:
       - skivebibliotek.dk
     autogenerateRoutes: true
@@ -844,6 +926,7 @@ sites:
     description: "The library site for Solrød"
     deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAII3HmqAMg/J80EG9JvAYAZZLn8xGOLsqDOG5eugUuOS1"
     primary-domain: solbib.dk
+    diskSize: 10
     secondary-domains:
       - www.solbib.dk
     autogenerateRoutes: true
@@ -853,6 +936,7 @@ sites:
     description: "The library site for Sønderborg"
     deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJKta0DYtcxlP5VNCAQFVtRSbzJRSEs1YY3zsSxVQgfi"
     primary-domain: biblioteket.sonderborg.dk
+    diskSize: 10
     secondary-domains:
       - www.biblioteket.sonderborg.dk
     autogenerateRoutes: true
@@ -863,6 +947,7 @@ sites:
     description: "The library site for Sorø"
     deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHmUt7ZK7IAXv9t8rDAfnrdYdBdPDy63rMDnHCW1E+xZ"
     primary-domain: www.soroebib.dk
+    diskSize: 10
     secondary-domains:
       - soroebib.dk
     autogenerateRoutes: true
@@ -872,6 +957,7 @@ sites:
     description: "The library site for Stevns"
     deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINmstZ41PSBjLAxu8cE4Oi7G1oktlH1FFJBNbLT1GAez"
     primary-domain: www.stevnsbib.dk
+    diskSize: 10
     secondary-domains:
       - stevnsbib.dk
     autogenerateRoutes: true
@@ -881,6 +967,7 @@ sites:
     description: "The library site for Struer"
     deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIAcZDg9Veyvl3u/TGG0lIw6Z8osrEZwd4HhcXvbABAsH"
     primary-domain: "www.struerbibliotek.dk"
+    diskSize: 10
     secondary-domains:
       - "struerbibliotek.dk"
     autogenerateRoutes: "redirect"
@@ -890,6 +977,7 @@ sites:
     description: "The library site for Dansk Centralbibliotek for Sydslesvig e.V."
     deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIH5J5WxZ7j+tCGTPOt36J6r1Vnth7PXXcdvYzP2TPph0"
     primary-domain: www.dcbib.dk
+    diskSize: 10
     secondary-domains:
       - dcbib.dk
     autogenerateRoutes: true
@@ -900,6 +988,7 @@ sites:
     description: "The library site for Svendborg"
     deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKi6cflBrH2UZZSW9P3mWCMV2T7TUbfDSgAWBUWaIaPQ"
     primary-domain: svendborgbibliotek.dk
+    diskSize: 10
     secondary-domains:
       - www.svendborgbibliotek.dk
     autogenerateRoutes: true
@@ -909,6 +998,7 @@ sites:
     description: "The library site for Syddjurs"
     deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINhp6QNrL71jlzbhSPRoTcRQS6b8Ztpx+JLZVxUhNSVK"
     primary-domain: syddjursbibliotek.dk
+    diskSize: 10
     secondary-domains:
       - www.syddjursbibliotek.dk
     autogenerateRoutes: true
@@ -919,6 +1009,7 @@ sites:
     deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIF0F5bqQwdmAdMcDHVT8xxK0tOEGZYp21WIZ1zydr28O"
     plan: webmaster
     primary-domain: taarnbybib.dk
+    diskSize: 10
     secondary-domains:
       - www.taarnbybib.dk
     autogenerateRoutes: true
@@ -928,6 +1019,7 @@ sites:
     description: "The library site for Thisted"
     deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAII8zoNSiwkKmOSHvtKxSMJiDC9EWbTzhkAUd1+csvnne"
     primary-domain: bib.kulturrummet.dk
+    diskSize: 10
     autogenerateRoutes: true
     << : [ *default-release-image-source, *disk-size-medium ]
   torshavn:
@@ -935,6 +1027,7 @@ sites:
     description: "The library site for Torshavn municipality"
     deploy_key: ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKn1Sp3+OYALypBUk3qo9VLL3jl9vbKa/29/tzALzm7W
     primary-domain: www.bbs.fo
+    diskSize: 10
     secondary-domains:
       - bbs.fo
     autogenerateRoutes: true
@@ -944,6 +1037,7 @@ sites:
     description: "The library site for Vallensbæk"
     deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIM1BwEGpOF6YrjToeH8iD2cALRjCdk1XOrHl7Yj9NPUE"
     primary-domain: kulturogborgerhus.vallensbaek.dk
+    diskSize: 10
     secondary-domains:
       - www.kulturogborgerhus.vallensbaek.dk
     autogenerateRoutes: true
@@ -953,6 +1047,7 @@ sites:
     description: "The library site for Varde"
     deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINk4ZKSj49vjmu9/wQAuK/LC8B7Q7dF7B+0N4JIRcGCp"
     primary-domain: www.vardebib.dk
+    diskSize: 10
     secondary-domains:
       - vardebib.dk
     autogenerateRoutes: true
@@ -962,6 +1057,7 @@ sites:
     description: "The library site for Vejen"
     deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKEKCWFJdpWpxSXpP0fXHBkZG6v0mENmOEsyJEDIqnoQ"
     primary-domain: vejbib.dk
+    diskSize: 10
     secondary-domains:
       - www.vejbib.dk
     autogenerateRoutes: true
@@ -971,6 +1067,7 @@ sites:
     description: "The library site for Vejle"
     deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAILj79u24Ev3uo0WLgNVyMT+V0921M7a8qdM7Q/GyOdZl"
     primary-domain: vejlebib.dk
+    diskSize: 10
     secondary-domains:
       - www.vejlebib.dk
     autogenerateRoutes: true
@@ -980,6 +1077,7 @@ sites:
     description: "The library site for Vesthimmerland"
     deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKNqMIGZql1EAivzzOPpcq2DmC5tPnA1KvLgtnJBqd1F"
     primary-domain: "www.vhbib.dk"
+    diskSize: 10
     secondary-domains:
       - "vhbib.dk"
     autogenerateRoutes: "redirect"
@@ -989,6 +1087,7 @@ sites:
     description: "The library site for Viborg"
     deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINOTdXuLPGfLvqVJYmsF06Bdgmrff2tKl4PS7pRg4fFx"
     primary-domain: viborgbib.dk
+    diskSize: 10
     secondary-domains:
       - www.viborgbib.dk
     autogenerateRoutes: true
@@ -998,6 +1097,7 @@ sites:
     description: "The library site for Vordingborg"
     deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAICeMmI9ufAPgkQvdcFEg0EAMNNuLbXHxw2MXhVdtPT3w"
     primary-domain: www.vordingborgbibliotekerne.dk
+    diskSize: 10
     secondary-domains:
       - vordingborgbibliotekerne.dk
       - vordingborgbibliotek.dk
