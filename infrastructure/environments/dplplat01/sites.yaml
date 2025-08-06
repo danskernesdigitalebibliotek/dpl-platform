@@ -19,11 +19,11 @@ x-webmasters-with-latest-release-in-production: &webmasters-with-latest-release-
   moduletest-dpl-cms-release: "2025.27.2"
   go-release: 2025.27.0
 x-disk-size-small: &disk-size-small
-  diskSize: 5
-x-disk-size-medium: &disk-size-medium
   diskSize: 10
-x-disk-size-large: &disk-size-large
+x-disk-size-medium: &disk-size-medium
   diskSize: 15
+x-disk-size-large: &disk-size-large
+  diskSize: 20
 sites:
   # Site objects are indexed by a unique key that must be a valid lagoon, and
   # github project name. That is, alphanumeric and dashes.
