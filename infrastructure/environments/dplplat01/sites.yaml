@@ -11,6 +11,7 @@ x-webmasters-on-weekly-release-cycle: &webmasters-on-weekly-release-cycle
   dpl-cms-release: "2025.27.2"
   moduletest-dpl-cms-release: "2025.32.0"
   go-release: 2025.27.2
+# Mounted Disk sizes
 x-disk-size-small: &disk-size-small
   diskSize: 10
 x-disk-size-medium: &disk-size-medium
