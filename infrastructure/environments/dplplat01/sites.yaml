@@ -8,16 +8,10 @@ x-webmasters-on-weekly-release-cycle: &webmasters-on-weekly-release-cycle
   #This release cycle releases the newest release, which has been tested on webmaster moduletests in the previous week, on to production
   releaseImageRepository: ghcr.io/danskernesdigitalebibliotek
   releaseImageName: dpl-cms-source
-  dpl-cms-release: "2025.26.1"
-  moduletest-dpl-cms-release: "2025.27.2"
-  go-release: 2025.26.0
-x-webmasters-with-latest-release-in-production: &webmasters-with-latest-release-in-production
-  #This release cycle releases the latest release to both production and moduletest environments.
-  releaseImageRepository: ghcr.io/danskernesdigitalebibliotek
-  releaseImageName: dpl-cms-source
   dpl-cms-release: "2025.27.2"
-  moduletest-dpl-cms-release: "2025.27.2"
-  go-release: 2025.27.0
+  moduletest-dpl-cms-release: "2025.32.0"
+  go-release: 2025.27.2
+# Mounted Disk sizes
 x-disk-size-small: &disk-size-small
   diskSize: 10
 x-disk-size-medium: &disk-size-medium
@@ -135,7 +129,7 @@ sites:
       - aalborgbibliotekerne.dk
     autogenerateRoutes: "redirect"
     plan: webmaster
-    << : [ *webmasters-with-latest-release-in-production, *disk-size-medium ]
+    << : [ *webmasters-on-weekly-release-cycle, *disk-size-medium ]
   aarhus:
     name: "Aarhus Kommunes Biblioteker"
     description: "The library site for Aarhus"
@@ -164,7 +158,7 @@ sites:
       - www.albertslundbibliotek.dk
     autogenerateRoutes: true
     plan: webmaster
-    << : [ *webmasters-with-latest-release-in-production, *disk-size-medium ]
+    << : [ *webmasters-on-weekly-release-cycle, *disk-size-medium ]
   allerod:
     name: "Allerød Biblioteker"
     description: "The library site for Allerød"
@@ -192,7 +186,7 @@ sites:
       - www.bib.ballerup.dk
     autogenerateRoutes: true
     plan: webmaster
-    <<: [ *webmasters-with-latest-release-in-production, *disk-size-medium ]
+    <<: [ *webmasters-on-weekly-release-cycle, *disk-size-medium ]
   billund:
     name: "Billund Bibliotekerne og Borgerservice"
     description: "The main library site for Billund"
@@ -289,7 +283,7 @@ sites:
       - "faxebibliotek.dk"
     autogenerateRoutes: true
     plan: webmaster
-    <<: [ *webmasters-with-latest-release-in-production, *disk-size-medium ]
+    <<: [ *webmasters-on-weekly-release-cycle, *disk-size-medium ]
   fredensborg:
     name: "Fredensborg Bibliotekerne"
     description: "The library site for Fredensborg"
@@ -450,7 +444,7 @@ sites:
       - herningbib.dk
     autogenerateRoutes: true
     plan: webmaster
-    <<: [ *webmasters-with-latest-release-in-production, *disk-size-medium ]
+    <<: [ *webmasters-on-weekly-release-cycle, *disk-size-medium ]
   hillerod:
     name: "Hillerød Bibliotekerne"
     description: "The library site for Hillerød"
@@ -569,7 +563,7 @@ sites:
       - varnish.main.kobenhavn.dplplat01.dpl.reload.dk
     plan: webmaster
     deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHaTkDvjLW/b2qVj8FIvtX9x3TxFFZTENn+w2CFELeoC"
-    <<: [ *webmasters-with-latest-release-in-production, *disk-size-large ]
+    <<: [ *webmasters-on-weekly-release-cycle, *disk-size-large ]
   koge:
     name: "KøgeBibliotekerne"
     description: "The library site for Køge"
@@ -718,7 +712,7 @@ sites:
     secondary-domains:
       - odensebib.dk
     autogenerateRoutes: true
-    <<: [ *webmasters-with-latest-release-in-production, *disk-size-medium ]
+    <<: [ *webmasters-on-weekly-release-cycle, *disk-size-medium ]
   odsherred:
     name: "Odsherred Bibliotek og Kulturhuse"
     description: "The library site for Odsherred"
@@ -784,7 +778,7 @@ sites:
     secondary-domains:
       - roskildebib.dk
     autogenerateRoutes: true
-    <<: [ *webmasters-with-latest-release-in-production, *disk-size-medium ]
+    <<: [ *webmasters-on-weekly-release-cycle, *disk-size-medium ]
   rudersdal:
     name: "Rudersdal Bibliotekerne"
     description: "The library site for Rudersdal"
@@ -857,7 +851,7 @@ sites:
       - www.biblioteket.sonderborg.dk
     autogenerateRoutes: true
     plan: webmaster
-    <<: [ *webmasters-with-latest-release-in-production, *disk-size-medium ]
+    <<: [ *webmasters-on-weekly-release-cycle, *disk-size-medium ]
   soro:
     name: "Sorø Bibliotek"
     description: "The library site for Sorø"
@@ -922,7 +916,7 @@ sites:
     secondary-domains:
       - www.taarnbybib.dk
     autogenerateRoutes: true
-    <<: [ *webmasters-with-latest-release-in-production, *disk-size-medium ]
+    <<: [ *webmasters-on-weekly-release-cycle, *disk-size-medium ]
   thisted:
     name: "Biblioteket i Thy"
     description: "The library site for Thisted"
