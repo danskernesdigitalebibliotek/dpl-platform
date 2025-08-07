@@ -79,7 +79,7 @@ prometheus:
          resources:
            requests:
            # Setup a disk for holding the metrics.
-             storage: 500Gi
+             storage: 600Gi
 
     tolerations:
       - key: CriticalAddonsOnly
