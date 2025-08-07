@@ -256,7 +256,7 @@ set -o errexit
 
 # Synchronise the sites environment repository.
 syncEnvRepo "${SITE}" "${releaseTag}" "${BRANCH}" "${siteImageRepository}" "${siteReleaseImageName}" "${importTranslationsCron}" "${autogenerateRoutes}" "${primaryDomain}" "${secondaryDomains}" "${diskSize}" "${primaryGoSubDomain}" "${secondaryGoSubDomains}" "${goRelease}"
-adjustPersistentVolume "${SITE}" "moduletest" "${diskSize}"
+adjustPersistentVolume "${SITE}" "main" "${diskSize}"
 
 if [ "${plan}" = "webmaster" ] && [ "${BRANCH}" = "main" ]; then
     syncEnvRepo "${SITE}" "${wmReleaseTag}" "moduletest" "${siteImageRepository}" "${siteReleaseImageName}" "${importTranslationsCron}" "${autogenerateRoutes}" "${primaryDomain}" "${secondaryDomains}" "${diskSize}"
