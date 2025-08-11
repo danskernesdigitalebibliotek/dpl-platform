@@ -338,6 +338,12 @@ apps:
     path: sites/ishoj-main
     automated: false
 
+  - name: kalundborg-main
+    project: sites
+    namespace: kalundborg-main
+    path: sites/kalundborg-main
+    automated: false
+
   - name: kolding-main
     project: sites
     namespace: kolding-main
