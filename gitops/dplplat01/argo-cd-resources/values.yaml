@@ -350,6 +350,12 @@ apps:
     path: sites/kerteminde-main
     automated: false
 
+  - name: kobenhavn-main
+    project: sites
+    namespace: kobenhavn-main
+    path: sites/kobenhavn-main
+    automated: false
+
   - name: kolding-main
     project: sites
     namespace: kolding-main
