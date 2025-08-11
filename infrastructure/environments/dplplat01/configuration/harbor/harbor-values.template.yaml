@@ -10,7 +10,7 @@ expose:
     enabled: true
     certSource: secret
     secret:
-      secretName: harbor-harbor-ingress
+      secretName: harbor-harbor-ingress-v1-14-3
 externalURL: https://harbor.lagoon.dplplat01.dpl.reload.dk
 harborAdminPassword: "$HARBOR_ADMIN_PASS"
 chartmuseum:
