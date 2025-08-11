@@ -284,6 +284,12 @@ apps:
     path: sites/hillerod-main
     automated: false
 
+  - name: hjorring-main
+    project: sites
+    namespace: hjorring-main
+    path: sites/hjorring-main
+    automated: false
+
   - name: holbaek-main
     project: sites
     namespace: holbaek-main
