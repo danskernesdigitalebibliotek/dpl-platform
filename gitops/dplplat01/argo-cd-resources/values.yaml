@@ -344,6 +344,12 @@ apps:
     path: sites/kalundborg-main
     automated: false
 
+  - name: kerteminde-main
+    project: sites
+    namespace: kerteminde-main
+    path: sites/kerteminde-main
+    automated: false
+
   - name: kolding-main
     project: sites
     namespace: kolding-main
