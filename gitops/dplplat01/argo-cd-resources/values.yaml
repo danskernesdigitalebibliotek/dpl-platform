@@ -326,6 +326,12 @@ apps:
     path: sites/hvidovre-main
     automated: false
 
+  - name: ikast-brande-main
+    project: sites
+    namespace: ikast-brande-main
+    path: sites/ikast-brande-main
+    automated: false
+
   - name: ishoj-main
     project: sites
     namespace: ishoj-main
