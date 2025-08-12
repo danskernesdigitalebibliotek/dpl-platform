@@ -404,6 +404,12 @@ apps:
     path: sites/mariagerfjord-main
     automated: false
 
+  - name: middelfart-main
+    project: sites
+    namespace: middelfart-main
+    path: sites/middelfart-main
+    automated: false
+
   - name: nordfyn-main
     project: sites
     namespace: nordfyn-main
