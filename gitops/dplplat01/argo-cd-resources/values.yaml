@@ -494,6 +494,12 @@ apps:
     path: sites/roskilde-main
     automated: false
 
+  - name: roskilde-moduletest
+    project: sites
+    namespace: roskilde-moduletest
+    path: sites/roskilde-moduletest
+    automated: false
+
   - name: rudersdal-main
     project: sites
     namespace: rudersdal-main
