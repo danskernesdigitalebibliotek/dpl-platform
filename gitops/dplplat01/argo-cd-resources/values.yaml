@@ -446,6 +446,12 @@ apps:
     path: sites/odder-main
     automated: false
 
+  - name: odense-main
+    project: sites
+    namespace: odense-main
+    path: sites/odense-main
+    automated: false
+
   - name: solrod2-main
     project: sites
     namespace: solrod2-main
