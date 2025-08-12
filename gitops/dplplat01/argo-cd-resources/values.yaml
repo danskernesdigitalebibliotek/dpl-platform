@@ -500,6 +500,12 @@ apps:
     path: sites/rudersdal-main
     automated: false
 
+  - name: rodovre-main
+    project: sites
+    namespace: rodovre-main
+    path: sites/rodovre-main
+    automated: false
+
   - name: solrod2-main
     project: sites
     namespace: solrod2-main
