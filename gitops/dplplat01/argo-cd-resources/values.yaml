@@ -476,6 +476,12 @@ apps:
     path: sites/rebild-main
     automated: false
 
+  - name: ringkobing-skjern-main
+    project: sites
+    namespace: ringkobing-skjern-main
+    path: sites/ringkobing-skjern-main
+    automated: false
+
   - name: solrod2-main
     project: sites
     namespace: solrod2-main
