@@ -458,6 +458,12 @@ apps:
     path: sites/odense-moduletest
     automated: false
 
+  - name: odsherred-main
+    project: sites
+    namespace: odsherred-main
+    path: sites/odsherred-main
+    automated: false
+
   - name: solrod2-main
     project: sites
     namespace: solrod2-main
