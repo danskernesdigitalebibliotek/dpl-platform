@@ -464,6 +464,12 @@ apps:
     path: sites/odsherred-main
     automated: false
 
+  - name: randers-main
+    project: sites
+    namespace: randers-main
+    path: sites/randers-main
+    automated: false
+
   - name: solrod2-main
     project: sites
     namespace: solrod2-main
