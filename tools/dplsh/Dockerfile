@@ -14,8 +14,6 @@ FROM mcr.microsoft.com/azure-cli:2.63.0
 
 # See https://github.com/go-task/task/releases
 ARG TASK_VERSION=v3.40.0
-# See https://github.com/stern/stern/releases
-ARG STERN_RELEASE=1.31.0
 # See https://github.com/uselagoon/lagoon-cli/releases
 ARG LAGOON_CLI_RELEASE=v0.31.1
 # https://github.com/alenkacz/cert-manager-verifier/releases
@@ -55,17 +53,6 @@ RUN apk add --no-cache \
 RUN npm install -g zx
 # Add task, a modern Make equivalent.
 RUN curl -sL https://taskfile.dev/install.sh | bash -s -- -b /usr/local/bin ${TASK_VERSION}
-
-# Add Stern, a multi pod and container log tailing tool.
-RUN ( \
-    set -x; cd "$(mktemp -d)" && \
-    OS="$(uname | tr '[:upper:]' '[:lower:]')" && \
-    ARCH="$(uname -m | sed -e 's/x86_64/amd64/' -e 's/\(arm\)\(64\)\?.*/\1\2/' -e 's/aarch64$/arm64/')" && \
-    STERN="stern_${STERN_RELEASE}_${OS}_${ARCH}" && \
-    curl -fsSLO "https://github.com/stern/stern/releases/download/v${STERN_RELEASE}/${STERN}.tar.gz" && \
-    tar zxvf "${STERN}.tar.gz" && \
-    mv ./stern /usr/bin \
-  )
 
 # Add the Lagoon CLI
 RUN curl -Lo /usr/local/bin/lagoon https://github.com/uselagoon/lagoon-cli/releases/download/${LAGOON_CLI_RELEASE}/lagoon-cli-${LAGOON_CLI_RELEASE}-linux-amd64 \
