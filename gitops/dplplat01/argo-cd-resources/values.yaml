@@ -488,6 +488,12 @@ apps:
     path: sites/ringsted-main
     automated: false
 
+  - name: roskilde-main
+    project: sites
+    namespace: roskilde-main
+    path: sites/roskilde-main
+    automated: false
+
   - name: solrod2-main
     project: sites
     namespace: solrod2-main
