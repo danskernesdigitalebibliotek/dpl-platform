@@ -362,6 +362,12 @@ apps:
     path: sites/kobenhavn-moduletest
     automated: false
 
+  - name: koge-main
+    project: sites
+    namespace: koge-main
+    path: sites/koge-main
+    automated: false
+
   - name: kolding-main
     project: sites
     namespace: kolding-main
