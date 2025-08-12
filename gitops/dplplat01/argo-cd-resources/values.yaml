@@ -428,6 +428,12 @@ apps:
     path: sites/nordfyn-main
     automated: false
 
+  - name: nyborg-main
+    project: sites
+    namespace: nyborg-main
+    path: sites/nyborg-main
+    automated: false
+
   - name: solrod2-main
     project: sites
     namespace: solrod2-main
