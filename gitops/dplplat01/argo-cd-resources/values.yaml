@@ -398,6 +398,12 @@ apps:
     path: sites/lyngby-taarbaek-main
     automated: false
 
+  - name: mariagerfjord-main
+    project: sites
+    namespace: mariagerfjord-main
+    path: sites/mariagerfjord-main
+    automated: false
+
   - name: nordfyn-main
     project: sites
     namespace: nordfyn-main
