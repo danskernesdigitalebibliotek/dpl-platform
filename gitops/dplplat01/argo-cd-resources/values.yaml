@@ -416,6 +416,12 @@ apps:
     path: sites/morso-main
     automated: false
 
+  - name: naestved-main
+    project: sites
+    namespace: naestved-main
+    path: sites/naestved-main
+    automated: false
+
   - name: norddjurs-main
     project: sites
     namespace: norddjurs-main
