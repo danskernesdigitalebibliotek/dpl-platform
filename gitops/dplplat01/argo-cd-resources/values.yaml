@@ -380,6 +380,12 @@ apps:
     path: sites/langeland-main
     automated: false
 
+  - name: lejre-main
+    project: sites
+    namespace: lejre-main
+    path: sites/lejre-main
+    automated: false
+
   - name: nordfyn-main
     project: sites
     namespace: nordfyn-main
