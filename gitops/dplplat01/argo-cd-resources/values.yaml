@@ -356,6 +356,12 @@ apps:
     path: sites/kobenhavn-main
     automated: false
 
+  - name: kobenhavn-moduletest
+    project: sites
+    namespace: kobenhavn-moduletest
+    path: sites/kobenhavn-moduletest
+    automated: false
+
   - name: kolding-main
     project: sites
     namespace: kolding-main
