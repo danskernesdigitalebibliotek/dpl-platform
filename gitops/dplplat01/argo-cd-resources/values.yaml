@@ -470,6 +470,12 @@ apps:
     path: sites/randers-main
     automated: false
 
+  - name: rebild-main
+    project: sites
+    namespace: rebild-main
+    path: sites/rebild-main
+    automated: false
+
   - name: solrod2-main
     project: sites
     namespace: solrod2-main
