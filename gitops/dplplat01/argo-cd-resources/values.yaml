@@ -494,6 +494,12 @@ apps:
     path: sites/roskilde-main
     automated: false
 
+  - name: rudersdal-main
+    project: sites
+    namespace: rudersdal-main
+    path: sites/rudersdal-main
+    automated: false
+
   - name: solrod2-main
     project: sites
     namespace: solrod2-main
