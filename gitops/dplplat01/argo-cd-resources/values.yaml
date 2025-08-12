@@ -416,10 +416,94 @@ apps:
     path: sites/morso-main
     automated: false
 
+  - name: naestved-main
+    project: sites
+    namespace: naestved-main
+    path: sites/naestved-main
+    automated: false
+
+  - name: norddjurs-main
+    project: sites
+    namespace: norddjurs-main
+    path: sites/norddjurs-main
+    automated: false
+
   - name: nordfyn-main
     project: sites
     namespace: nordfyn-main
     path: sites/nordfyn-main
+    automated: false
+
+  - name: nyborg-main
+    project: sites
+    namespace: nyborg-main
+    path: sites/nyborg-main
+    automated: false
+
+  - name: odder-main
+    project: sites
+    namespace: odder-main
+    path: sites/odder-main
+    automated: false
+
+  - name: odense-main
+    project: sites
+    namespace: odense-main
+    path: sites/odense-main
+    automated: false
+
+  - name: odense-moduletest
+    project: sites
+    namespace: odense-moduletest
+    path: sites/odense-moduletest
+    automated: false
+
+  - name: odsherred-main
+    project: sites
+    namespace: odsherred-main
+    path: sites/odsherred-main
+    automated: false
+
+  - name: randers-main
+    project: sites
+    namespace: randers-main
+    path: sites/randers-main
+    automated: false
+
+  - name: rebild-main
+    project: sites
+    namespace: rebild-main
+    path: sites/rebild-main
+    automated: false
+
+  - name: ringkobing-skjern-main
+    project: sites
+    namespace: ringkobing-skjern-main
+    path: sites/ringkobing-skjern-main
+    automated: false
+
+  - name: ringsted-main
+    project: sites
+    namespace: ringsted-main
+    path: sites/ringsted-main
+    automated: false
+
+  - name: roskilde-main
+    project: sites
+    namespace: roskilde-main
+    path: sites/roskilde-main
+    automated: false
+
+  - name: rudersdal-main
+    project: sites
+    namespace: rudersdal-main
+    path: sites/rudersdal-main
+    automated: false
+
+  - name: rodovre-main
+    project: sites
+    namespace: rodovre-main
+    path: sites/rodovre-main
     automated: false
 
   - name: solrod2-main
