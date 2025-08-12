@@ -374,6 +374,12 @@ apps:
     path: sites/kolding-main
     automated: false
 
+  - name: langeland-main
+    project: sites
+    namespace: langeland-main
+    path: sites/langeland-main
+    automated: false
+
   - name: nordfyn-main
     project: sites
     namespace: nordfyn-main
