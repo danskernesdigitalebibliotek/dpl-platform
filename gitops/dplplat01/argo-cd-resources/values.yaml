@@ -386,6 +386,18 @@ apps:
     path: sites/lejre-main
     automated: false
 
+  - name: lolland-main
+    project: sites
+    namespace: lolland-main
+    path: sites/lolland-main
+    automated: false
+
+  - name: lyngby-taarbaek-main
+    project: sites
+    namespace: lyngby-taarbaek-main
+    path: sites/lyngby-taarbaek-main
+    automated: false
+
   - name: nordfyn-main
     project: sites
     namespace: nordfyn-main
