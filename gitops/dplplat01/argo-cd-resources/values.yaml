@@ -410,6 +410,12 @@ apps:
     path: sites/middelfart-main
     automated: false
 
+  - name: morso-main
+    project: sites
+    namespace: morso-main
+    path: sites/morso-main
+    automated: false
+
   - name: nordfyn-main
     project: sites
     namespace: nordfyn-main
