@@ -482,6 +482,12 @@ apps:
     path: sites/ringkobing-skjern-main
     automated: false
 
+  - name: ringsted-main
+    project: sites
+    namespace: ringsted-main
+    path: sites/ringsted-main
+    automated: false
+
   - name: solrod2-main
     project: sites
     namespace: solrod2-main
