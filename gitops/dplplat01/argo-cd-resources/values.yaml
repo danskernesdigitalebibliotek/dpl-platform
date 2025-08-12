@@ -284,6 +284,12 @@ apps:
     path: sites/hillerod-main
     automated: false
 
+  - name: hjorring-main
+    project: sites
+    namespace: hjorring-main
+    path: sites/hjorring-main
+    automated: false
+
   - name: holbaek-main
     project: sites
     namespace: holbaek-main
@@ -320,10 +326,40 @@ apps:
     path: sites/hvidovre-main
     automated: false
 
+  - name: ikast-brande-main
+    project: sites
+    namespace: ikast-brande-main
+    path: sites/ikast-brande-main
+    automated: false
+
   - name: ishoj-main
     project: sites
     namespace: ishoj-main
     path: sites/ishoj-main
+    automated: false
+
+  - name: kalundborg-main
+    project: sites
+    namespace: kalundborg-main
+    path: sites/kalundborg-main
+    automated: false
+
+  - name: kerteminde-main
+    project: sites
+    namespace: kerteminde-main
+    path: sites/kerteminde-main
+    automated: false
+
+  - name: kobenhavn-main
+    project: sites
+    namespace: kobenhavn-main
+    path: sites/kobenhavn-main
+    automated: false
+
+  - name: kobenhavn-moduletest
+    project: sites
+    namespace: kobenhavn-moduletest
+    path: sites/kobenhavn-moduletest
     automated: false
 
   - name: kolding-main
