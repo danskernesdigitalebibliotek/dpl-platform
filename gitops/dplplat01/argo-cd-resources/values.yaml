@@ -362,10 +362,58 @@ apps:
     path: sites/kobenhavn-moduletest
     automated: false
 
+  - name: koge-main
+    project: sites
+    namespace: koge-main
+    path: sites/koge-main
+    automated: false
+
   - name: kolding-main
     project: sites
     namespace: kolding-main
     path: sites/kolding-main
+    automated: false
+
+  - name: langeland-main
+    project: sites
+    namespace: langeland-main
+    path: sites/langeland-main
+    automated: false
+
+  - name: lejre-main
+    project: sites
+    namespace: lejre-main
+    path: sites/lejre-main
+    automated: false
+
+  - name: lolland-main
+    project: sites
+    namespace: lolland-main
+    path: sites/lolland-main
+    automated: false
+
+  - name: lyngby-taarbaek-main
+    project: sites
+    namespace: lyngby-taarbaek-main
+    path: sites/lyngby-taarbaek-main
+    automated: false
+
+  - name: mariagerfjord-main
+    project: sites
+    namespace: mariagerfjord-main
+    path: sites/mariagerfjord-main
+    automated: false
+
+  - name: middelfart-main
+    project: sites
+    namespace: middelfart-main
+    path: sites/middelfart-main
+    automated: false
+
+  - name: morso-main
+    project: sites
+    namespace: morso-main
+    path: sites/morso-main
     automated: false
 
   - name: nordfyn-main
