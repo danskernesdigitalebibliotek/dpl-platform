@@ -452,6 +452,12 @@ apps:
     path: sites/odense-main
     automated: false
 
+  - name: odense-moduletest
+    project: sites
+    namespace: odense-moduletest
+    path: sites/odense-moduletest
+    automated: false
+
   - name: solrod2-main
     project: sites
     namespace: solrod2-main
