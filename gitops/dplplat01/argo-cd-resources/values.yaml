@@ -440,6 +440,12 @@ apps:
     path: sites/nyborg-main
     automated: false
 
+  - name: odder-main
+    project: sites
+    namespace: odder-main
+    path: sites/odder-main
+    automated: false
+
   - name: solrod2-main
     project: sites
     namespace: solrod2-main
