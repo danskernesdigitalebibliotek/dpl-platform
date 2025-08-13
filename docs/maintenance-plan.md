@@ -152,15 +152,6 @@ Time to do: 1 hour
 Runbook:
 Notes:
 
-### Krew
-
-Update interval: Half yearly
-Release URL: <https://github.com/kubernetes-sigs/krew/releases>
-Expect downtime: None
-Time to do: 1 hour
-Runbook:
-Notes:
-
 ### Task
 
 Update interval: Half yearly
