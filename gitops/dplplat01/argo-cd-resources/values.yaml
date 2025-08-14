@@ -572,6 +572,12 @@ apps:
     path: sites/syddjurs-main
     automated: false
 
+  - name: taarnby-main
+    project: sites
+    namespace: taarnby-main
+    path: sites/taarnby-main
+    automated: false
+
   - name: solrod2-main
     project: sites
     namespace: solrod2-main
