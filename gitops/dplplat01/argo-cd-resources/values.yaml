@@ -524,6 +524,12 @@ apps:
     path: sites/silkeborg-main
     automated: false
 
+  - name: silkeborg-moduletest
+    project: sites
+    namespace: silkeborg-moduletest
+    path: sites/silkeborg-moduletest
+    automated: false
+
   - name: solrod2-main
     project: sites
     namespace: solrod2-main
