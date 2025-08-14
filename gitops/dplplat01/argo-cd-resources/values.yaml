@@ -560,6 +560,12 @@ apps:
     path: sites/struer-main
     automated: false
 
+  - name: svendborg-main
+    project: sites
+    namespace: svendborg-main
+    path: sites/svendborg-main
+    automated: false
+
   - name: solrod2-main
     project: sites
     namespace: solrod2-main
