@@ -536,6 +536,12 @@ apps:
     path: sites/skanderborg-main
     automated: false
 
+  - name: skive-main
+    project: sites
+    namespace: skive-main
+    path: sites/skive-main
+    automated: false
+
   - name: solrod2-main
     project: sites
     namespace: solrod2-main
