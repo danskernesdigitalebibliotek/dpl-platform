@@ -512,6 +512,18 @@ apps:
     path: sites/rodovre-main
     automated: false
 
+  - name: samso-main
+    project: sites
+    namespace: samso-main
+    path: sites/samso-main
+    automated: false
+
+  - name: silkeborg-main
+    project: sites
+    namespace: silkeborg-main
+    path: sites/silkeborg-main
+    automated: false
+
   - name: solrod2-main
     project: sites
     namespace: solrod2-main
