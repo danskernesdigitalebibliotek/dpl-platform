@@ -542,6 +542,12 @@ apps:
     path: sites/skive-main
     automated: false
 
+  - name: soro-main
+    project: sites
+    namespace: soro-main
+    path: sites/soro-main
+    automated: false
+
   - name: solrod2-main
     project: sites
     namespace: solrod2-main
