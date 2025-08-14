@@ -548,6 +548,12 @@ apps:
     path: sites/soro-main
     automated: false
 
+  - name: stevns-main
+    project: sites
+    namespace: stevns-main
+    path: sites/stevns-main
+    automated: false
+
   - name: solrod2-main
     project: sites
     namespace: solrod2-main
