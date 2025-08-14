@@ -566,6 +566,12 @@ apps:
     path: sites/svendborg-main
     automated: false
 
+  - name: syddjurs-main
+    project: sites
+    namespace: syddjurs-main
+    path: sites/syddjurs-main
+    automated: false
+
   - name: solrod2-main
     project: sites
     namespace: solrod2-main
