@@ -1156,6 +1156,28 @@ tasks:
       preconditions:
       - *require_site
 
+    site:backup:restore:files:
+      desc: Restore the files backup for a site/environment to the same or another site/environment.
+      deps: [ lagoon:cli:config ]
+      vars:
+        PROJECT: "{{.PROJECT}}"
+        PROJECT_ENV: '{{.PROJECT_ENV | default "main" }}'
+        SOURCE_PROJECT: "{{.SOURCE_PROJECT | default .PROJECT }}"
+        SOURCE_ENV: "{{.SOURCE_ENV | default .PROJECT_ENV }}"
+        TARGET_PROJECT: "{{.TARGET_PROJECT | default .SOURCE_PROJECT }}"
+        TARGET_ENV: "{{.TARGET_ENV | default .PROJECT_ENV }}"
+        TARGET_NAMESPACE: "{{.TARGET_PROJECT}}-{{.TARGET_ENV}}"
+        LOCAL_BACKUP_DESTINATION: "/tmp/{{.SOURCE_PROJECT}}-files-backup.tar.gz"
+        REMOTE_BACKUP_DESTINATION: "/tmp/{{.SOURCE_PROJECT}}-{{.SOURCE_ENV}}-files-backup.tar.gz"
+        REMOTE_FILES_PATH: "/app/web/sites/default/files"
+        BACKUP_ENTRY: '{{.BACKUP_ENTRY | default "1" }}'
+      prompt:
+        - Restore {{.BACKUP_ENTRY}}. most recent files backup from {{.SOURCE_PROJECT}}-{{.SOURCE_ENV}} to {{.TARGET_PROJECT}}-{{.TARGET_ENV}}
+      cmds:
+        - LAGOON_PROJECT={{.SOURCE_PROJECT}} BACKUP_TYPE=nginx BACKUP_ENTRY={{.BACKUP_ENTRY}} BACKUP_DESTINATION={{.LOCAL_BACKUP_DESTINATION}} ./task/scripts/lagoon-get-backup.sh
+        - kubectl cp -n {{.TARGET_NAMESPACE}} {{.LOCAL_BACKUP_DESTINATION}} $(kubectl -n {{.TARGET_NAMESPACE}} get pod -l app.kubernetes.io/instance=cli -o jsonpath="{.items[0].metadata.name}"):{{.REMOTE_BACKUP_DESTINATION}}
+        - kubectl exec -n {{.TARGET_NAMESPACE}} deployment/cli -- bash -c "echo Verifying file && test -s {{.REMOTE_BACKUP_DESTINATION}} || (echo {{.REMOTE_BACKUP_DESTINATION}} is missing or empty && exit 1) && tar ztf {{.REMOTE_BACKUP_DESTINATION}} data/nginx &> /dev/null || (echo could not verify the tar.gz file {{.REMOTE_BACKUP_DESTINATION}} && exit 1) && test -d {{.REMOTE_FILES_PATH}} || (echo Could not find destination {{.REMOTE_FILES_PATH}} && exit 1) && echo Removing existing {{.REMOTE_FILES_PATH}} && rm -fr {{.REMOTE_FILES_PATH}} && echo Unpacking backup && mkdir -p {{.REMOTE_FILES_PATH}} && tar --strip 2 --gzip --extract --file {{.REMOTE_BACKUP_DESTINATION}} --directory {{.REMOTE_FILES_PATH}} data/nginx && echo Fixing permissions && chmod -R 777 {{.REMOTE_FILES_PATH}} && echo Clearing cache && drush cr && echo Deleting backup archive && rm {{.REMOTE_BACKUP_DESTINATION}}"
+
     site:backup:restore:db:
       desc: Restore the database backup for a site/environment to the same or another site/environment.
       deps: [lagoon:cli:config]
