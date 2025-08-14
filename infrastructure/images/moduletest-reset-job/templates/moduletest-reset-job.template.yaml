@@ -4,43 +4,46 @@
 {{ range .Values.projects }}
 
 apiVersion: batch/v1
-kind: Job
+kind: CronJob
 metadata:
   name: moduletest-reset-{{ . }}
 spec:
-  ttlSecondsAfterFinished: 36000 # 10 hours leaving time to investigate failed jobs
-  backoffLimit: 3
-  template:
+  schedule: "0 23 * * 3"  # Every Wednesday at 23:00
+  jobTemplate:
     spec:
-      restartPolicy: Never
-      containers:
-        - name: moduletest-reset-container
-          image: ghcr.io/danskernesdigitalebibliotek/dpl-platform/moduletest-reset-job:mr-1.0.38-rc
-          command:
-            - /bin/bash
-            - -c
-            - ./moduletest-reset-job.mjs {{ . }}
-          env:
-            - name: AZURE_DATABASE_HOST
-              valueFrom:
-                secretKeyRef:
-                  name: azure-database-host
-                  key: host
-      serviceAccountName: moduletest-reset-serviceaccount
-      tolerations:
-        - key: noderole.dplplatform
-          operator: Equal
-          value: prod
-          effect: NoSchedule
-      affinity:
-        nodeAffinity:
-          requiredDuringSchedulingIgnoredDuringExecution:
-            nodeSelectorTerms:
-              - matchExpressions:
-                - key: noderole.dplplatform
-                  operator: In
-                  values:
-                   - prod
+      ttlSecondsAfterFinished: 50400 # 14 hours leaving time to investigate failed jobs
+      backoffLimit: 3
+      template:
+        spec:
+          restartPolicy: Never
+          containers:
+            - name: moduletest-reset-container
+              image: ghcr.io/danskernesdigitalebibliotek/dpl-platform/moduletest-reset-job:mr-1.0.40
+              command:
+                - /bin/bash
+                - -c
+                - ./moduletest-reset-job.mjs {{ . }}
+              env:
+                - name: AZURE_DATABASE_HOST
+                  valueFrom:
+                    secretKeyRef:
+                      name: azure-database-host
+                      key: host
+          serviceAccountName: moduletest-reset-serviceaccount
+          tolerations:
+            - key: noderole.dplplatform
+              operator: Equal
+              value: prod
+              effect: NoSchedule
+          affinity:
+            nodeAffinity:
+              requiredDuringSchedulingIgnoredDuringExecution:
+                nodeSelectorTerms:
+                  - matchExpressions:
+                    - key: noderole.dplplatform
+                      operator: In
+                      values:
+                       - prod
 
 ---
 {{ end }}
