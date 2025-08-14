@@ -6,18 +6,18 @@ handled in a timely manner
 
 This is guide on how to fix this.
 
-## When to use:
+## When to use
 
 The development team is usually the first to write that some development
 environment they have provisioned, doesn't get a certificate.
 It may sometimes come from the libraries or DDF themselves.
 
-## Prerequisites:
+## Prerequisites
 
 You'll need `kubectl` configured to access the cluster. Either use the binary
 on your machine or use it from `DPLSH`.
 
-## Procedure:
+## Procedure
 
 1. Check how many challenges exists accross namespaces.
 2. Check the logs of the leader Cert-manager pod. If it is handling certicates
