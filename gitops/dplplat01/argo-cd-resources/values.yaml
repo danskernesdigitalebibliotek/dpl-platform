@@ -626,6 +626,12 @@ apps:
     path: sites/aero-main
     automated: false
 
+  - name: laeso-main
+    project: sites
+    namespace: laeso-main
+    path: sites/laeso-main
+    automated: false
+
   - name: solrod2-main
     project: sites
     namespace: solrod2-main
