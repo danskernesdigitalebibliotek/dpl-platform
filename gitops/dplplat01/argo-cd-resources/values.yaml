@@ -596,6 +596,12 @@ apps:
     path: sites/varde-main
     automated: false
 
+  - name: vejen-main
+    project: sites
+    namespace: vejen-main
+    path: sites/vejen-main
+    automated: false
+
   - name: solrod2-main
     project: sites
     namespace: solrod2-main
