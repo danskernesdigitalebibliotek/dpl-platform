@@ -590,6 +590,12 @@ apps:
     path: sites/vallensbaek-main
     automated: false
 
+  - name: varde-main
+    project: sites
+    namespace: varde-main
+    path: sites/varde-main
+    automated: false
+
   - name: solrod2-main
     project: sites
     namespace: solrod2-main
