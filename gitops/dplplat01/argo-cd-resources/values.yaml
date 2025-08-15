@@ -512,6 +512,162 @@ apps:
     path: sites/rodovre-main
     automated: false
 
+  - name: samso-main
+    project: sites
+    namespace: samso-main
+    path: sites/samso-main
+    automated: false
+
+  - name: silkeborg-main
+    project: sites
+    namespace: silkeborg-main
+    path: sites/silkeborg-main
+    automated: false
+
+  - name: silkeborg-moduletest
+    project: sites
+    namespace: silkeborg-moduletest
+    path: sites/silkeborg-moduletest
+    automated: false
+
+  - name: skanderborg-main
+    project: sites
+    namespace: skanderborg-main
+    path: sites/skanderborg-main
+    automated: false
+
+  - name: skive-main
+    project: sites
+    namespace: skive-main
+    path: sites/skive-main
+    automated: false
+
+  - name: soro-main
+    project: sites
+    namespace: soro-main
+    path: sites/soro-main
+    automated: false
+
+  - name: stevns-main
+    project: sites
+    namespace: stevns-main
+    path: sites/stevns-main
+    automated: false
+
+  - name: struer-main
+    project: sites
+    namespace: struer-main
+    path: sites/struer-main
+    automated: false
+
+  - name: svendborg-main
+    project: sites
+    namespace: svendborg-main
+    path: sites/svendborg-main
+    automated: false
+
+  - name: syddjurs-main
+    project: sites
+    namespace: syddjurs-main
+    path: sites/syddjurs-main
+    automated: false
+
+  - name: taarnby-main
+    project: sites
+    namespace: taarnby-main
+    path: sites/taarnby-main
+    automated: false
+
+  - name: taarnby-moduletest
+    project: sites
+    namespace: taarnby-moduletest
+    path: sites/taarnby-moduletest
+    automated: false
+
+  - name: vallensbaek-main
+    project: sites
+    namespace: vallensbaek-main
+    path: sites/vallensbaek-main
+    automated: false
+
+  - name: varde-main
+    project: sites
+    namespace: varde-main
+    path: sites/varde-main
+    automated: false
+
+  - name: vejen-main
+    project: sites
+    namespace: vejen-main
+    path: sites/vejen-main
+    automated: false
+
+  - name: vesthimmerland-main
+    project: sites
+    namespace: vesthimmerland-main
+    path: sites/vesthimmerland-main
+    automated: false
+
+  - name: viborg-main
+    project: sites
+    namespace: viborg-main
+    path: sites/viborg-main
+    automated: false
+
+  - name: vordingborg-main
+    project: sites
+    namespace: vordingborg-main
+    path: sites/vordingborg-main
+    automated: false
+
+  - name: aero-main
+    project: sites
+    namespace: aero-main
+    path: sites/aero-main
+    automated: false
+
+  - name: laeso-main
+    project: sites
+    namespace: laeso-main
+    path: sites/laeso-main
+    automated: false
+
+  - name: torshavn-main
+    project: sites
+    namespace: torshavn-main
+    path: sites/torshavn-main
+    automated: false
+
+  - name: frederikshavn-main
+    project: sites
+    namespace: frederikshavn-main
+    path: sites/frederikshavn-main
+    automated: false
+
+  - name: bnf-main
+    project: sites
+    namespace: bnf-main
+    path: sites/bnf-main
+    automated: false
+
+  - name: bnf-moduletest
+    project: sites
+    namespace: bnf-moduletest
+    path: sites/bnf-moduletest
+    automated: false
+
+  - name: cms-school-main
+    project: sites
+    namespace: cms-school-main
+    path: sites/cms-school-main
+    automated: false
+
+  - name: cms-school-moduletest
+    project: sites
+    namespace: cms-school-moduletest
+    path: sites/cms-school-moduletest
+    automated: false
+
   - name: solrod2-main
     project: sites
     namespace: solrod2-main
