@@ -662,6 +662,12 @@ apps:
     path: sites/cms-school-main
     automated: false
 
+  - name: cms-school-moduletest
+    project: sites
+    namespace: cms-school-moduletest
+    path: sites/cms-school-moduletest
+    automated: false
+
   - name: solrod2-main
     project: sites
     namespace: solrod2-main
