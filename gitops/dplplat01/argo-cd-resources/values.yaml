@@ -608,6 +608,12 @@ apps:
     path: sites/vesthimmerland-main
     automated: false
 
+  - name: viborg-main
+    project: sites
+    namespace: viborg-main
+    path: sites/viborg-main
+    automated: false
+
   - name: solrod2-main
     project: sites
     namespace: solrod2-main
