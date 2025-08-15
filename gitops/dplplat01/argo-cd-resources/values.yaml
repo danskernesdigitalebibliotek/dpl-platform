@@ -584,6 +584,12 @@ apps:
     path: sites/taarnby-moduletest
     automated: false
 
+  - name: vallensbaek-main
+    project: sites
+    namespace: vallensbaek-main
+    path: sites/vallensbaek-main
+    automated: false
+
   - name: solrod2-main
     project: sites
     namespace: solrod2-main
