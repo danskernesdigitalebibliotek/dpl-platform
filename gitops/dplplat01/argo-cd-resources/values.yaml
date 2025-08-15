@@ -644,6 +644,12 @@ apps:
     path: sites/frederikshavn-main
     automated: false
 
+  - name: bnf-main
+    project: sites
+    namespace: bnf-main
+    path: sites/bnf-main
+    automated: false
+
   - name: solrod2-main
     project: sites
     namespace: solrod2-main
