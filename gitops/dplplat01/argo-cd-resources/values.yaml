@@ -650,6 +650,12 @@ apps:
     path: sites/bnf-main
     automated: false
 
+  - name: bnf-moduletest
+    project: sites
+    namespace: bnf-moduletest
+    path: sites/bnf-moduletest
+    automated: false
+
   - name: solrod2-main
     project: sites
     namespace: solrod2-main
