@@ -632,6 +632,12 @@ apps:
     path: sites/laeso-main
     automated: false
 
+  - name: torshavn-main
+    project: sites
+    namespace: torshavn-main
+    path: sites/torshavn-main
+    automated: false
+
   - name: solrod2-main
     project: sites
     namespace: solrod2-main
