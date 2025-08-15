@@ -614,6 +614,12 @@ apps:
     path: sites/viborg-main
     automated: false
 
+  - name: vordingborg-main
+    project: sites
+    namespace: vordingborg-main
+    path: sites/vordingborg-main
+    automated: false
+
   - name: solrod2-main
     project: sites
     namespace: solrod2-main
