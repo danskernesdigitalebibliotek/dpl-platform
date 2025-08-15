@@ -578,6 +578,12 @@ apps:
     path: sites/taarnby-main
     automated: false
 
+  - name: taarnby-moduletest
+    project: sites
+    namespace: taarnby-moduletest
+    path: sites/taarnby-moduletest
+    automated: false
+
   - name: solrod2-main
     project: sites
     namespace: solrod2-main
