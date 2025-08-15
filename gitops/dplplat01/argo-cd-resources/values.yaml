@@ -620,6 +620,12 @@ apps:
     path: sites/vordingborg-main
     automated: false
 
+  - name: aero-main
+    project: sites
+    namespace: aero-main
+    path: sites/aero-main
+    automated: false
+
   - name: solrod2-main
     project: sites
     namespace: solrod2-main
