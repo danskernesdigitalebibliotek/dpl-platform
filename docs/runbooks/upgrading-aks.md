@@ -20,6 +20,8 @@ When you want to upgrade Azure Kubernetes Service to a newer version.
 
 ## Procedure
 
+Read the changelog of the desired new version. Pay attention to any breaking
+changes!
 We use Terraform to upgrade AKS. Should you need to do a manual upgrade consult
 Azures documentation on [upgrading a cluster](https://learn.microsoft.com/en-us/azure/aks/upgrade-cluster)
 and on [upgrading node pools](https://learn.microsoft.com/en-us/azure/aks/use-multiple-node-pools#upgrade-a-node-pool).
