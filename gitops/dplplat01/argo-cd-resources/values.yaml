@@ -656,6 +656,12 @@ apps:
     path: sites/bnf-moduletest
     automated: false
 
+  - name: cms-school-main
+    project: sites
+    namespace: cms-school-main
+    path: sites/cms-school-main
+    automated: false
+
   - name: solrod2-main
     project: sites
     namespace: solrod2-main
