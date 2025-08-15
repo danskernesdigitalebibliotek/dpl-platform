@@ -602,6 +602,12 @@ apps:
     path: sites/vejen-main
     automated: false
 
+  - name: vesthimmerland-main
+    project: sites
+    namespace: vesthimmerland-main
+    path: sites/vesthimmerland-main
+    automated: false
+
   - name: solrod2-main
     project: sites
     namespace: solrod2-main
