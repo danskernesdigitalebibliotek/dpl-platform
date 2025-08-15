@@ -638,6 +638,12 @@ apps:
     path: sites/torshavn-main
     automated: false
 
+  - name: frederikshavn-main
+    project: sites
+    namespace: frederikshavn-main
+    path: sites/frederikshavn-main
+    automated: false
+
   - name: solrod2-main
     project: sites
     namespace: solrod2-main
