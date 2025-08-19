@@ -14,6 +14,12 @@ apps:
     namespace: kube-system
     automated: true
 
+  # Support workloads
+  - name: harbor
+    project: harbor
+    namespace: harbor
+    automated: false
+
   # Databases
   - name: mariadb-10-6-22-production-1
     project: databases
