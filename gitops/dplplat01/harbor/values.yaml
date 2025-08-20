@@ -44,7 +44,7 @@ registry:
   registry:
     image:
       repository: goharbor/registry-photon
-      tag: {{ .Value.imageTag }}
+      tag: v2.11.2 
   controller:
     image:
       repository: goharbor/harbor-registryctl
