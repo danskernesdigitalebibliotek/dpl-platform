@@ -1,4 +1,4 @@
-imageTag: v2.10.3
+imageTag: v2.11.2
 updateStrategy:
   type: Recreate
 expose:
