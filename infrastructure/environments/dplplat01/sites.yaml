@@ -55,9 +55,9 @@ sites:
     releaseImageName: dpl-cms-source
     # Remember to update bnf.moduletest-dpl-cms-release to the same release
     # to make client and server use the same version.
-    dpl-cms-release: 2025.33.0
-    moduletest-dpl-cms-release: 2025.33.0
-    go-release: 2025.33.0
+    dpl-cms-release: 2025.34.0
+    moduletest-dpl-cms-release: 2025.34.0
+    go-release: 2025.34.0
     plan: webmaster
     primary-domain: staging.dplplat01.dpl.reload.dk
     # TODO: Remove this once the the Adgangsplatformen OpenID client used here
@@ -92,7 +92,7 @@ sites:
     name: "Bibliotekernes Nationale Formidling"
     description: "The BNF content sharing site"
     plan: webmaster
-    moduletest-dpl-cms-release: 2025.33.0
+    moduletest-dpl-cms-release: 2025.34.0
     deploy_key: ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAICTmMC/cUI3U3QloX6aAdN7g0EU42J0fwA9aO7UJOzx9
     primary-domain: delingstjenesten.dk
     secondary-domains:
