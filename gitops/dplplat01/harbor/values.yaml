@@ -1,4 +1,4 @@
-imageTag: v2.11.2
+imageTag: "v2.11.2"
 updateStrategy:
   type: Recreate
 expose:
@@ -26,7 +26,7 @@ trivy:
 jobservice:
   image:
     repository: goharbor/harbor-jobservice
-    tag: {{ .Values.imageTag }}
+    tag: {{ tpl .Values.imageTag }}
   jobLogger: stdout
   # Use tolerations
   tolerations:
@@ -49,7 +49,7 @@ registry:
   controller:
     image:
       repository: goharbor/harbor-registryctl
-      tag: {{ .Values.imageTag }}
+      tag: {{ tpl .Values.imageTag }}
   replicas: 3
   resources:
     requests:
@@ -71,7 +71,7 @@ registry:
 core:
   image:
     repository: goharbor/harbor-core
-    tag: {{ .Values.imageTag }}
+    tag: {{ tpl .Values.imageTag }}
   replicas: 2
   resources:
     requests:
@@ -92,7 +92,7 @@ core:
 portal:
   image:
     repository: goharbor/harbor-portal
-    tag: {{ .Values.imageTag }}
+    tag: {{ tpl .Values.imageTag }}
   # Use tolerations
   tolerations:
     - key: CriticalAddonsOnly
@@ -110,7 +110,7 @@ database:
   internal:
     image:
       repository: goharbor/harbor-db
-      tag: {{ .Values.imageTag }}
+      tag: {{ tpl .Values.imageTag }}
     # Use tolerations
     tolerations:
       - key: CriticalAddonsOnly
@@ -128,7 +128,7 @@ redis:
   internal:
     image:
       repository: goharbor/redis-photon
-      tag: {{ .Values.imageTag }}
+      tag: {{ tpl .Values.imageTag }}
     # Use tolerations
     tolerations:
       - key: CriticalAddonsOnly
