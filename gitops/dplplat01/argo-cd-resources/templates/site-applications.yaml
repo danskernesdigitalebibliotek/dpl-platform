@@ -16,7 +16,7 @@ spec:
     server: https://kubernetes.default.svc
     namespace: {{ .name }}
   syncPolicy:
-    {{- if .Values.automateSites }}
+    {{- if $.Values.automateSites }}
     automated: {}
     {{- end }}
 {{- end }}

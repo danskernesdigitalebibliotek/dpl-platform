@@ -32,6 +32,7 @@ apps:
     automated: false
 
 automateSites: false
+
 sites:
   - name: canary-main
 
