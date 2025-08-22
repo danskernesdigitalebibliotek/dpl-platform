@@ -44,10 +44,10 @@ spec:
     [mariadb]
     bind-address=*
     default_storage_engine=InnoDB
-    innodb_buffer_pool_size=24000MB
+    innodb_buffer_pool_size=64000MB
     innodb_autoinc_lock_mode=1
     binlog_format=row
-    max_connections=1250
+    max_connections=1500
     wait_timeout=180
     transaction_isolation="READ-COMMITTED"
     collation_server="LATIN1_SWEDISH_CI"
