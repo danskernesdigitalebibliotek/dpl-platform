@@ -31,7 +31,7 @@ apps:
     namespace: mariadb-10-06-01-test
     automated: false
 
-automateSites: true
+automateSites: false
 
 sites:
   - name: canary-main
