@@ -14,14 +14,14 @@ spec:
     - containerName: nginx
       minAllowed:
         cpu: 3m
-        memory: 5Mi
+        memory: 50Mi
       maxAllowed:
         cpu: 500m
-        memory: 40Mi
+        memory: 400Mi
     - containerName: php
       minAllowed:
         cpu: 3m
-        memory: 5Mi
+        memory: 500Mi
       maxAllowed:
         cpu: 400m
-        memory: 400Mi
+        memory: 4000Mi
