@@ -11,7 +11,11 @@ spec:
     repoURL: https://github.com/danskernesdigitalebibliotek/dpl-platform.git
     path: gitops/dplplat01/sites/{{ .name }}
     targetRevision: HEAD
-    helm: {}
+    helm:
+      {{- if .values }}
+      valuesObject:
+        {{- .values | toYaml | nindent 8 }}
+      {{- end }}
   destination:
     server: https://kubernetes.default.svc
     namespace: {{ .name }}
