@@ -31,675 +31,228 @@ apps:
     namespace: mariadb-10-06-01-test
     automated: false
 
-  # Sites
+automateSites: false
+sites:
   - name: canary-main
-    project: sites
-    namespace: canary-main
-    path: sites/canary-main
-    automated: false
 
   - name: aabenraa-main
-    project: sites
-    namespace: aabenraa-main
-    path: sites/aabenraa-main
-    automated: false
 
   - name: aalborg-main
-    project: sites
-    namespace: aalborg-main
-    path: sites/aalborg-main
-    automated: false
 
   - name: aalborg-moduletest
-    project: sites
-    namespace: aalborg-moduletest
-    path: sites/aalborg-moduletest
-    automated: false
 
   - name: aarhus-main
-    project: sites
-    namespace: aarhus-main
-    path: sites/aarhus-main
-    automated: false
 
   - name: aarhus-moduletest
-    project: sites
-    namespace: aarhus-moduletest
-    path: sites/aarhus-moduletest
-    automated: false
 
   - name: aero-main
-    project: sites
-    namespace: aero-main
-    path: sites/aero-main
-    automated: false
 
   - name: albertslund-main
-    project: sites
-    namespace: albertslund-main
-    path: sites/albertslund-main
-    automated: false
 
   - name: albertslund-moduletest
-    project: sites
-    namespace: albertslund-moduletest
-    path: sites/albertslund-moduletest
-    automated: false
 
   - name: allerod-main
-    project: sites
-    namespace: allerod-main
-    path: sites/allerod-main
-    automated: false
 
   - name: assens-main
-    project: sites
-    namespace: assens-main
-    path: sites/assens-main
-    automated: false
 
   - name: ballerup-main
-    project: sites
-    namespace: ballerup-main
-    path: sites/ballerup-main
-    automated: false
 
   - name: ballerup-moduletest
-    project: sites
-    namespace: ballerup-moduletest
-    path: sites/ballerup-moduletest
-    automated: false
 
   - name: billund-main
-    project: sites
-    namespace: billund-main
-    path: sites/billund-main
-    automated: false
 
   - name: bornholm-main
-    project: sites
-    namespace: bornholm-main
-    path: sites/bornholm-main
-    automated: false
 
   - name: brondby-main
-    project: sites
-    namespace: brondby-main
-    path: sites/brondby-main
-    automated: false
 
   - name: bronderslev-main
-    project: sites
-    namespace: bronderslev-main
-    path: sites/bronderslev-main
-    automated: false
 
   - name: dragor-main
-    project: sites
-    namespace: dragor-main
-    path: sites/dragor-main
-    automated: false
 
   - name: egedal-main
-    project: sites
-    namespace: egedal-main
-    path: sites/egedal-main
-    automated: false
 
   - name: esbjerg-main
-    project: sites
-    namespace: esbjerg-main
-    path: sites/esbjerg-main
-    automated: false
 
   - name: faaborg-midtfyn-main
-    project: sites
-    namespace: faaborg-midtfyn-main
-    path: sites/faaborg-midtfyn-main
-    automated: false
 
   - name: favrskov-main
-    project: sites
-    namespace: favrskov-main
-    path: sites/favrskov-main
-    automated: false
 
   - name: fredensborg-main
-    project: sites
-    namespace: fredensborg-main
-    path: sites/fredensborg-main
-    automated: false
 
   - name: fredericia-main
-    project: sites
-    namespace: fredericia-main
-    path: sites/fredericia-main
-    automated: false
 
   - name: frederiksberg-main
-    project: sites
-    namespace: frederiksberg-main
-    path: sites/frederiksberg-main
-    automated: false
 
   - name: frederikssund-main
-    project: sites
-    namespace: frederikssund-main
-    path: sites/frederikssund-main
-    automated: false
 
   - name: faxe-main
-    project: sites
-    namespace: faxe-main
-    path: sites/faxe-main
-    automated: false
 
   - name: faxe-moduletest
-    project: sites
-    namespace: faxe-moduletest
-    path: sites/faxe-moduletest
-    automated: false
 
   - name: fureso-main
-    project: sites
-    namespace: fureso-main
-    path: sites/fureso-main
-    automated: false
 
   - name: gentofte-main
-    project: sites
-    namespace: gentofte-main
-    path: sites/gentofte-main
-    automated: false
 
   - name: gladsaxe-main
-    project: sites
-    namespace: gladsaxe-main
-    path: sites/gladsaxe-main
-    automated: false
 
   - name: glostrup-main
-    project: sites
-    namespace: glostrup-main
-    path: sites/glostrup-main
-    automated: false
 
   - name: greve-main
-    project: sites
-    namespace: greve-main
-    path: sites/greve-main
-    automated: false
 
   - name: gribskov-main
-    project: sites
-    namespace: gribskov-main
-    path: sites/gribskov-main
-    automated: false
 
   - name: guldborgsund-main
-    project: sites
-    namespace: guldborgsund-main
-    path: sites/guldborgsund-main
-    automated: false
 
   - name: halsnaes-main
-    project: sites
-    namespace: halsnaes-main
-    path: sites/halsnaes-main
-    automated: false
 
   - name: haderslev-main
-    project: sites
-    namespace: haderslev-main
-    path: sites/haderslev-main
-    automated: false
 
   - name: hedensted-main
-    project: sites
-    namespace: hedensted-main
-    path: sites/hedensted-main
-    automated: false
 
   - name: helsingor-main
-    project: sites
-    namespace: helsingor-main
-    path: sites/helsingor-main
-    automated: false
 
   - name: herlev-main
-    project: sites
-    namespace: herlev-main
-    path: sites/herlev-main
-    automated: false
 
   - name: herning-main
-    project: sites
-    namespace: herning-main
-    path: sites/herning-main
-    automated: false
 
   - name: herning-moduletest
-    project: sites
-    namespace: herning-moduletest
-    path: sites/herning-moduletest
-    automated: false
 
   - name: hillerod-main
-    project: sites
-    namespace: hillerod-main
-    path: sites/hillerod-main
-    automated: false
 
   - name: hjorring-main
-    project: sites
-    namespace: hjorring-main
-    path: sites/hjorring-main
-    automated: false
 
   - name: holbaek-main
-    project: sites
-    namespace: holbaek-main
-    path: sites/holbaek-main
-    automated: false
 
   - name: holstebro-main
-    project: sites
-    namespace: holstebro-main
-    path: sites/holstebro-main
-    automated: false
 
   - name: horsens-main
-    project: sites
-    namespace: horsens-main
-    path: sites/horsens-main
-    automated: false
 
   - name: hoje-taastrup-main
-    project: sites
-    namespace: hoje-taastrup-main
-    path: sites/hoje-taastrup-main
-    automated: false
 
   - name: horsholm-main
-    project: sites
-    namespace: horsholm-main
-    path: sites/horsholm-main
-    automated: false
 
   - name: hvidovre-main
-    project: sites
-    namespace: hvidovre-main
-    path: sites/hvidovre-main
-    automated: false
 
   - name: ikast-brande-main
-    project: sites
-    namespace: ikast-brande-main
-    path: sites/ikast-brande-main
-    automated: false
 
   - name: ishoj-main
-    project: sites
-    namespace: ishoj-main
-    path: sites/ishoj-main
-    automated: false
 
   - name: kalundborg-main
-    project: sites
-    namespace: kalundborg-main
-    path: sites/kalundborg-main
-    automated: false
 
   - name: kerteminde-main
-    project: sites
-    namespace: kerteminde-main
-    path: sites/kerteminde-main
-    automated: false
 
   - name: kobenhavn-main
-    project: sites
-    namespace: kobenhavn-main
-    path: sites/kobenhavn-main
-    automated: false
 
   - name: kobenhavn-moduletest
-    project: sites
-    namespace: kobenhavn-moduletest
-    path: sites/kobenhavn-moduletest
-    automated: false
 
   - name: koge-main
-    project: sites
-    namespace: koge-main
-    path: sites/koge-main
-    automated: false
 
   - name: kolding-main
-    project: sites
-    namespace: kolding-main
-    path: sites/kolding-main
-    automated: false
 
   - name: langeland-main
-    project: sites
-    namespace: langeland-main
-    path: sites/langeland-main
-    automated: false
 
   - name: lejre-main
-    project: sites
-    namespace: lejre-main
-    path: sites/lejre-main
-    automated: false
 
   - name: lolland-main
-    project: sites
-    namespace: lolland-main
-    path: sites/lolland-main
-    automated: false
 
   - name: lyngby-taarbaek-main
-    project: sites
-    namespace: lyngby-taarbaek-main
-    path: sites/lyngby-taarbaek-main
-    automated: false
 
   - name: mariagerfjord-main
-    project: sites
-    namespace: mariagerfjord-main
-    path: sites/mariagerfjord-main
-    automated: false
 
   - name: middelfart-main
-    project: sites
-    namespace: middelfart-main
-    path: sites/middelfart-main
-    automated: false
 
   - name: morso-main
-    project: sites
-    namespace: morso-main
-    path: sites/morso-main
-    automated: false
 
   - name: naestved-main
-    project: sites
-    namespace: naestved-main
-    path: sites/naestved-main
-    automated: false
 
   - name: norddjurs-main
-    project: sites
-    namespace: norddjurs-main
-    path: sites/norddjurs-main
-    automated: false
 
   - name: nordfyn-main
-    project: sites
-    namespace: nordfyn-main
-    path: sites/nordfyn-main
-    automated: false
 
   - name: nyborg-main
-    project: sites
-    namespace: nyborg-main
-    path: sites/nyborg-main
-    automated: false
 
   - name: odder-main
-    project: sites
-    namespace: odder-main
-    path: sites/odder-main
-    automated: false
 
   - name: odense-main
-    project: sites
-    namespace: odense-main
-    path: sites/odense-main
-    automated: false
 
   - name: odense-moduletest
-    project: sites
-    namespace: odense-moduletest
-    path: sites/odense-moduletest
-    automated: false
 
   - name: odsherred-main
-    project: sites
-    namespace: odsherred-main
-    path: sites/odsherred-main
-    automated: false
 
   - name: randers-main
-    project: sites
-    namespace: randers-main
-    path: sites/randers-main
-    automated: false
 
   - name: rebild-main
-    project: sites
-    namespace: rebild-main
-    path: sites/rebild-main
-    automated: false
 
   - name: ringkobing-skjern-main
-    project: sites
-    namespace: ringkobing-skjern-main
-    path: sites/ringkobing-skjern-main
-    automated: false
 
   - name: ringsted-main
-    project: sites
-    namespace: ringsted-main
-    path: sites/ringsted-main
-    automated: false
 
   - name: roskilde-main
-    project: sites
-    namespace: roskilde-main
-    path: sites/roskilde-main
-    automated: false
 
   - name: roskilde-moduletest
-    project: sites
-    namespace: roskilde-moduletest
-    path: sites/roskilde-moduletest
-    automated: false
 
   - name: rudersdal-main
-    project: sites
-    namespace: rudersdal-main
-    path: sites/rudersdal-main
-    automated: false
 
   - name: rodovre-main
-    project: sites
-    namespace: rodovre-main
-    path: sites/rodovre-main
-    automated: false
 
   - name: samso-main
-    project: sites
-    namespace: samso-main
-    path: sites/samso-main
-    automated: false
 
   - name: silkeborg-main
-    project: sites
-    namespace: silkeborg-main
-    path: sites/silkeborg-main
-    automated: false
 
   - name: silkeborg-moduletest
-    project: sites
-    namespace: silkeborg-moduletest
-    path: sites/silkeborg-moduletest
-    automated: false
 
   - name: skanderborg-main
-    project: sites
-    namespace: skanderborg-main
-    path: sites/skanderborg-main
-    automated: false
 
   - name: skive-main
-    project: sites
-    namespace: skive-main
-    path: sites/skive-main
-    automated: false
 
   - name: soro-main
-    project: sites
-    namespace: soro-main
-    path: sites/soro-main
-    automated: false
 
   - name: stevns-main
-    project: sites
-    namespace: stevns-main
-    path: sites/stevns-main
-    automated: false
 
   - name: struer-main
-    project: sites
-    namespace: struer-main
-    path: sites/struer-main
-    automated: false
 
   - name: svendborg-main
-    project: sites
-    namespace: svendborg-main
-    path: sites/svendborg-main
-    automated: false
 
   - name: syddjurs-main
-    project: sites
-    namespace: syddjurs-main
-    path: sites/syddjurs-main
-    automated: false
 
   - name: taarnby-main
-    project: sites
-    namespace: taarnby-main
-    path: sites/taarnby-main
-    automated: false
 
   - name: taarnby-moduletest
-    project: sites
-    namespace: taarnby-moduletest
-    path: sites/taarnby-moduletest
-    automated: false
 
   - name: vallensbaek-main
-    project: sites
-    namespace: vallensbaek-main
-    path: sites/vallensbaek-main
-    automated: false
 
   - name: varde-main
-    project: sites
-    namespace: varde-main
-    path: sites/varde-main
-    automated: false
 
   - name: vejen-main
-    project: sites
-    namespace: vejen-main
-    path: sites/vejen-main
-    automated: false
 
   - name: vesthimmerland-main
-    project: sites
-    namespace: vesthimmerland-main
-    path: sites/vesthimmerland-main
-    automated: false
 
   - name: viborg-main
-    project: sites
-    namespace: viborg-main
-    path: sites/viborg-main
-    automated: false
 
   - name: vordingborg-main
-    project: sites
-    namespace: vordingborg-main
-    path: sites/vordingborg-main
-    automated: false
 
   - name: laeso-main
-    project: sites
-    namespace: laeso-main
-    path: sites/laeso-main
-    automated: false
 
   - name: torshavn-main
-    project: sites
-    namespace: torshavn-main
-    path: sites/torshavn-main
-    automated: false
 
   - name: frederikshavn-main
-    project: sites
-    namespace: frederikshavn-main
-    path: sites/frederikshavn-main
-    automated: false
 
   - name: bnf-main
-    project: sites
-    namespace: bnf-main
-    path: sites/bnf-main
-    automated: false
 
   - name: bnf-moduletest
-    project: sites
-    namespace: bnf-moduletest
-    path: sites/bnf-moduletest
-    automated: false
 
   - name: cms-school-main
-    project: sites
-    namespace: cms-school-main
-    path: sites/cms-school-main
-    automated: false
 
   - name: cms-school-moduletest
-    project: sites
-    namespace: cms-school-moduletest
-    path: sites/cms-school-moduletest
-    automated: false
 
   - name: solrod2-main
-    project: sites
-    namespace: solrod2-main
-    path: sites/solrod2-main
-    automated: false
 
   - name: sonderborg-main
-    project: sites
-    namespace: sonderborg-main
-    path: sites/sonderborg-main
-    automated: false
 
   - name: sonderborg-moduletest
-    project: sites
-    namespace: sonderborg-moduletest
-    path: sites/sonderborg-moduletest
-    automated: false
 
   - name: sydslesvig-main
-    project: sites
-    namespace: sydslesvig-main
-    path: sites/sydslesvig-main
-    automated: false
 
   - name: sydslesvig-moduletest
-    project: sites
-    namespace: sydslesvig-moduletest
-    path: sites/sydslesvig-moduletest
-    automated: false
 
   - name: thisted-main
-    project: sites
-    namespace: thisted-main
-    path: sites/thisted-main
-    automated: false
