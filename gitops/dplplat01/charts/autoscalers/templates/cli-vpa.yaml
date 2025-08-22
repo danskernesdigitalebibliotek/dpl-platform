@@ -1,0 +1,41 @@
+apiVersion: autoscaling.k8s.io/v1
+kind: VerticalPodAutoscaler
+metadata:
+  name: cli-vpa
+spec:
+  targetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: cli
+  updatePolicy:
+    updateMode: Initial
+  resourcePolicy:
+    containerPolicies:
+    - containerName: cli
+      minAllowed:
+        cpu: 4m
+        memory: 2Mi
+      maxAllowed:
+        cpu: 150m
+        memory: 400Mi
+    - containerName: cronjob-cli-drush-err-purge
+      minAllowed:
+        cpu: 4m
+        memory: 10Mi
+      maxAllowed:
+        cpu: 250m
+        memory: 210Mi
+    - containerName: cronjob-cli-import-danish-config-translations
+      minAllowed:
+        cpu: 70m
+        memory: 90Mi
+      maxAllowed:
+        cpu: 250m
+        memory: 220Mi
+    - containerName: cronjob-cli-import-translations
+      minAllowed:
+        cpu: 70m
+        memory: 50Mi
+      maxAllowed:
+        cpu: 350m
+        memory: 200Mi

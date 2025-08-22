@@ -1,0 +1,39 @@
+name: Publish autoscalers chart
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  publish:
+    name: Publish autoscalers Chart
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0 # Fetch all history for all branches and tags
+
+      - name: Setup helm and yq
+        uses: alexellis/arkade-get@7cc6ec1b6d8fcfcf3cc8cac995973147bc5fabf7
+        with:
+          helm: v3.17.3
+          yq: v4.45.3
+
+      - name: Log in to the Container registry
+        uses: docker/login-action@65b78e6e13532edd9afa3aa52ac7964289d1a9c1
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Push helm chart
+        env:
+          VERSION: ${{ steps.version.outputs.value }}
+        run: |
+          VERSION=$(yq '.version' gitops/dplplat01/charts/autoscalers/Chart.yaml)
+          NAME=$(yq '.name' gitops/dplplat01/charts/autoscalers/Chart.yaml)
+          helm dependency update gitops/dplplat01/charts/autoscalers || true
+          helm package gitops/dplplat01/charts/autoscalers
+          helm push $NAME-$VERSION.tgz oci://ghcr.io/danskernesdigitalebibliotek/dpl-platform/charts
