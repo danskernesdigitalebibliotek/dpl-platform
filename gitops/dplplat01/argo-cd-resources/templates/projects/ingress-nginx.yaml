@@ -14,9 +14,9 @@ spec:
     kind: ClusterRole
   - group: rbac.authorization.k8s.io
     kind: ClusterRoleBinding
-  - group: networking.k8s.io/v1
+  - group: networking.k8s.io
     kind: IngressClass
-  - group: admissionregistration.k8s.io/v1
+  - group: admissionregistration.k8s.io
     kind: ValidatingWebhookConfiguration
   namespaceResourceWhitelist:
   - group: '*'
