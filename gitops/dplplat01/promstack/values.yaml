@@ -1,0 +1,102 @@
+prometheus-stack:
+  # We use the chart for installing the node-exporter and the Prometheus operator.
+  # All other components are either already installed via other charts (grafana)
+  # or a part of AKS (kube-state-metrics).
+  grafana:
+    # Installed via a separate chart.
+    enabled: false
+  nodeExporter:
+    # Installed via this chart.
+    enabled: true
+  kubeStateMetrics:
+    # Already a part of AKS so we install it manually for local environments to
+    # avoid missing details in its configuration.
+    enabled: false
+
+  alertmanager:
+    enabled: true
+    alertmanagerSpec:
+      tolerations:
+        - key: CriticalAddonsOnly
+          operator: Exists
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+              - matchExpressions:
+                  - key: noderole.dplplatform
+                    operator: In
+                    values:
+                      - system
+
+  prometheus-node-exporter:
+    podLabels:
+      # Set job label to "node" to be compatible with more default dashboards.
+      jobLabel: node
+
+  prometheusOperator:
+    enabled: true
+    tolerations:
+      - key: CriticalAddonsOnly
+        operator: Exists
+    affinity:
+      nodeAffinity:
+        requiredDuringSchedulingIgnoredDuringExecution:
+          nodeSelectorTerms:
+            - matchExpressions:
+                - key: noderole.dplplatform
+                  operator: In
+                  values:
+                    - system
+  ## Deploy a Prometheus instance
+  ##
+  prometheus:
+    enabled: true
+      ## Define which Nodes the Pods are scheduled on.
+      ## ref: https://kubernetes.io/docs/user-guide/node-selection/
+      ##
+    prometheusSpec:
+      # The following four settings reconfigures the operator to pick up configs
+      # of the mentioned kind regardless of their lables.
+      # Without this settings, we would be required to apply a series of labels
+      # that are specific to the helm release we've installed. This is required
+      # in order to support multiple instances of controlled Prometheus instances.
+      # To simplify our eg ServiceMonitor manifests, we disable this feature which
+      # means we don't have to supply any specific labels for the resources to be
+      # picked up.
+      ruleSelectorNilUsesHelmValues: false
+      serviceMonitorSelectorNilUsesHelmValues: false
+      podMonitorSelectorNilUsesHelmValues: false
+      probeSelectorNilUsesHelmValues: false
+
+      # How long to retain metrics
+      retention: 93d
+
+      # Ensure we're scheduled to our administrative nodepool.
+      storageSpec:
+      volumeClaimTemplate:
+        spec:
+          accessModes: ["ReadWriteOnce"]
+          resources:
+            requests:
+            # Setup a disk for holding the metrics.
+              storage: 600Gi
+
+      tolerations:
+        - key: CriticalAddonsOnly
+          operator: Exists
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+              - matchExpressions:
+                  - key: noderole.dplplatform
+                    operator: In
+                    values:
+                      - system
+
+  defaultRules:
+    disabled:
+      KubeControllerManagerDown: true
+      KubeProxyDown: true
+      KubeSchedulerDown: true

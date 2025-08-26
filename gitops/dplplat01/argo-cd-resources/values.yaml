@@ -19,6 +19,13 @@ apps:
     namespace: ingress-nginx
     automated: false
 
+  - name: promstack
+    project: monitoring
+    namespace: prometheus
+    automated: false
+    syncOptions:
+      - ServerSideApply=true
+
   # Support workloads
   - name: harbor
     project: harbor
