@@ -1,4 +1,4 @@
-prometheus-stack:
+kube-prometheus-stack:
   # We use the chart for installing the node-exporter and the Prometheus operator.
   # All other components are either already installed via other charts (grafana)
   # or a part of AKS (kube-state-metrics).
