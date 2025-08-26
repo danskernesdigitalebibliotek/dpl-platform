@@ -17,7 +17,7 @@ apps:
   - name: ingress-nginx-controller
     project: ingress-nginx
     namespace: ingress-nginx
-    automated: true
+    automated: false
 
   # Support workloads
   - name: harbor
