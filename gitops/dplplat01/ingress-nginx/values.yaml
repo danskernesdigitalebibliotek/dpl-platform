@@ -58,3 +58,5 @@ ingress-nginx:
                     - prod
     metrics:
       enabled: true
+      serviceMonitor:
+        enabled: true
