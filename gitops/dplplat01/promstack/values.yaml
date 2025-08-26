@@ -15,8 +15,8 @@ kube-prometheus-stack:
 
   alertmanager:
     enabled: true
-    replicas: 2
     alertmanagerSpec:
+      replicas: 2
       tolerations:
         - key: noderole.dplplatform
           operator: Exists
