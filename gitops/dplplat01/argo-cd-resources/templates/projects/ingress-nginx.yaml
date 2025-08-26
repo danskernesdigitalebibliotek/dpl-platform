@@ -5,7 +5,7 @@ metadata:
 spec:
   destinations:
   - name: in-cluster
-    namespace: kube-system
+    namespace: ingress-nginx
     server: https://kubernetes.default.svc
   clusterResourceWhitelist:
   - group: ''
