@@ -15,19 +15,13 @@ kube-prometheus-stack:
 
   alertmanager:
     enabled: true
+    replicas: 2
     alertmanagerSpec:
       tolerations:
-        - key: CriticalAddonsOnly
+        - key: noderole.dplplatform
           operator: Exists
-      affinity:
-        nodeAffinity:
-          requiredDuringSchedulingIgnoredDuringExecution:
-            nodeSelectorTerms:
-              - matchExpressions:
-                  - key: noderole.dplplatform
-                    operator: In
-                    values:
-                      - system
+      nodeSelector:
+        noderole.dplplatform: prod
 
   prometheus-node-exporter:
     podLabels:
@@ -39,15 +33,8 @@ kube-prometheus-stack:
     tolerations:
       - key: CriticalAddonsOnly
         operator: Exists
-    affinity:
-      nodeAffinity:
-        requiredDuringSchedulingIgnoredDuringExecution:
-          nodeSelectorTerms:
-            - matchExpressions:
-                - key: noderole.dplplatform
-                  operator: In
-                  values:
-                    - system
+    nodeSelector:
+      noderole.dplplatform: prod system
   ## Deploy a Prometheus instance
   ##
   prometheus:
@@ -56,6 +43,8 @@ kube-prometheus-stack:
       ## ref: https://kubernetes.io/docs/user-guide/node-selection/
       ##
     prometheusSpec:
+      replicas: 3
+
       # The following four settings reconfigures the operator to pick up configs
       # of the mentioned kind regardless of their lables.
       # Without this settings, we would be required to apply a series of labels
@@ -83,17 +72,10 @@ kube-prometheus-stack:
               storage: 600Gi
 
       tolerations:
-        - key: CriticalAddonsOnly
+        - key: noderole.dplplatform
           operator: Exists
-      affinity:
-        nodeAffinity:
-          requiredDuringSchedulingIgnoredDuringExecution:
-            nodeSelectorTerms:
-              - matchExpressions:
-                  - key: noderole.dplplatform
-                    operator: In
-                    values:
-                      - system
+      nodeSelector:
+        noderole.dplplatform: prod
 
   # We can't currently disable individual rules, as the templating is broken,
   # when appyling via argocd. we must silence these instead. This will
