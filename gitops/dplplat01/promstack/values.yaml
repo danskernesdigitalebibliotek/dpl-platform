@@ -34,7 +34,7 @@ kube-prometheus-stack:
       - key: CriticalAddonsOnly
         operator: Exists
     nodeSelector:
-      noderole.dplplatform: prod system
+      noderole.dplplatform: system
   ## Deploy a Prometheus instance
   ##
   prometheus:
