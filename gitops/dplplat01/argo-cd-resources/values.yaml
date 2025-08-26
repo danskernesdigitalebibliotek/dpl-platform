@@ -14,6 +14,11 @@ apps:
     namespace: kube-system
     automated: true
 
+  - name: ingress-nginx-controller
+    project: ingress-nginx
+    namespace: ingress-nginx
+    automated: true
+
   # Support workloads
   - name: harbor
     project: harbor
