@@ -56,3 +56,5 @@ ingress-nginx:
                   operator: In
                   values:
                     - prod
+    metrics:
+      enabled: true
