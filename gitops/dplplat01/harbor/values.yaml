@@ -28,7 +28,7 @@ expose:
       secretName: harbor-harbor-ingress-v1-14-3
   ingress:
     hosts:
-      core: core.harbor.domain
+      core: harbor.lagoon.dplplat01.dpl.reload.dk
     # set to the type of ingress controller if it has specific requirements.
     # leave as `default` for most ingress controllers.
     # set to `gce` if using the GCE ingress controller
