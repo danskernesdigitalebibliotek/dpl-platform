@@ -754,10 +754,10 @@ registry:
     image:
       repository: goharbor/harbor-registryctl
       tag: v2.11.2
-        resources:
-          requests:
-            memory: 1Gi
-            cpu: 500m
+    resources:
+      requests:
+        memory: 1Gi
+        cpu: 500m
     extraEnvVars: []
   # set the service account to be used, default if left empty
   serviceAccountName: ""
