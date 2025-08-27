@@ -2638,7 +2638,8 @@ kube-prometheus-stack:
 
     ## Annotations to add to the operator deployment
     ##
-    annotations: {}
+    annotations:
+      argocd.argoproj.io/hook: PreSync
 
     ## Labels to add to the operator pod
     ##
