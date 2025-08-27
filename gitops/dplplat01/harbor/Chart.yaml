@@ -1,3 +1,7 @@
 apiVersion: v2
 name: harbor
 version: 0.0.0
+dependencies:
+  - name: harbor
+    version: 1.15.2
+    repository: https://https://github.com/goharbor/harbor-helm
