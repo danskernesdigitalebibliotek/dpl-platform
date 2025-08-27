@@ -1,0 +1,14 @@
+piVersion: bitnami.com/v1alpha1
+kind: SealedSecret
+metadata:
+  creationTimestamp: null
+  name: REGISTRY_STORAGE_AZURE_ACCOUNTKEY
+  namespace: default
+spec:
+  encryptedData:
+    AZURE_STORAGE_ACCESS_KEY: AgCTOjJYNLzt7EhvdT7GRMOn+FEakSW/w4+5C2e4y29RnRFtjKotSRG34YPNgFd7pEzVY5WEGAnVzZCIpGsr3hRh16ROdBR+SHYtmGDCE+u2cQ8jC7bGG4HDpjwgyLTZznoflvkv7bXy37jOdGF42n5doT6L8ZxCjlelEU/O7wwvuKEJDWupNKw7KwTrxncgr+/ZffHXMZsJopjm8LGRNKYYC8DSMCkW+wIKkbirl/cJ+zriYt3Qya/ib0jUa+6JDu8fWXdwVgw/Vk/22ACTex7vQhGGN0DrrTHWdSXnsr4kmokH8m+/gkFu/c7G/p423itOTSBOXCzvTj5u/YiswEGihkkgBkpO6GpUgLdZahCG2ZNejFv2sGfZk49npu0iYY+n7fe2sACnmfUIUptNmuo5zz5NX8cdMOclDBa9WDNTEmqZEpP9gcp9OU8tPGCeIojun3Y1AYcVOEYx70UhxHhKB9zoyL3ZGJJUtUoqkbWU/NW4aIOkrgh+ewWK7FJcnwFaq9lLMovmEJbyxGCJQw1e7GrFqtt6/i+NvOMo9VNyHrAck7tjyjwrK0N9269/csAxvASRFcnHBVrlBWF15edJDcyv8uo2Sp/J0Sr5TXg0L22FpQOo4d1yYV1jcMzycPZUBrgXYZRGLul1gHA3LAbmL3QGN4aq61At7zVY43mqcJUkWjCavRDMNvlr4dRDA2luTvyEC0v9Byoj2OJYWpp7d6XpEA7k7EXdfD13BA==
+  template:
+    metadata:
+      creationTimestamp: null
+      name: REGISTRY_STORAGE_AZURE_ACCOUNTKEY
+      namespace: default
