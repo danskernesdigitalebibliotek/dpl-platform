@@ -3337,7 +3337,15 @@ kube-prometheus-stack:
       ## prometheus resource to be created with selectors based on values in the helm deployment,
       ## which will also match the PrometheusRule resources created
       ##
-      ruleSelectorNilUsesHelmValues: true
+      # The following four settings reconfigures the operator to pick up configs
+      # of the mentioned kind regardless of their lables.
+      # Without this settings, we would be required to apply a series of labels
+      # that are specific to the helm release we've installed. This is required
+      # in order to support multiple instances of controlled Prometheus instances.
+      # To simplify our eg ServiceMonitor manifests, we disable this feature which
+      # means we don't have to supply any specific labels for the resources to be
+      # picked up.
+      ruleSelectorNilUsesHelmValues: false
 
       ## PrometheusRules to be selected for target discovery.
       ## If {}, select all PrometheusRules
@@ -4225,16 +4233,7 @@ kube-prometheus-stack:
       ## prometheus resource to be created with selectors based on values in the helm deployment,
       ## which will also match the PrometheusRule resources created
       ##
-
-      # The following four settings reconfigures the operator to pick up configs
-      # of the mentioned kind regardless of their lables.
-      # Without this settings, we would be required to apply a series of labels
-      # that are specific to the helm release we've installed. This is required
-      # in order to support multiple instances of controlled Prometheus instances.
-      # To simplify our eg ServiceMonitor manifests, we disable this feature which
-      # means we don't have to supply any specific labels for the resources to be
-      # picked up.
-      ruleSelectorNilUsesHelmValues: false
+      ruleSelectorNilUsesHelmValues: true
 
       ## PrometheusRules to be selected for target discovery.
       ## If {}, select all PrometheusRules
