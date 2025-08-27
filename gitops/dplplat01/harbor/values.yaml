@@ -1,5 +1,3 @@
-updateStrategy:
-  type: Recreate
 expose:
   # Set how to expose the service. Set the type as "ingress", "clusterIP", "nodePort" or "loadBalancer"
   # and fill the information in the corresponding section
@@ -166,20 +164,20 @@ persistence:
     # If external Redis is used, the following settings for Redis will
     # be ignored
   # redis:
-      existingClaim: ""
-      storageClass: ""
-      subPath: ""
-      accessMode: ReadWriteOnce
+      # existingClaim: ""
+      # storageClass: ""
+      # subPath: ""
+      # accessMode: ReadWriteOnce
   #   # The actual size of the disk Azure will give us if we ask for a 1Gi
-      size: 4Gi
-      annotations: {}
-    trivy:
-      existingClaim: ""
-      storageClass: ""
-      subPath: ""
-      accessMode: ReadWriteOnce
-      size: 5Gi
-      annotations: {}
+      # size: 4Gi
+      # annotations: {}
+    # trivy:
+    #   existingClaim: ""
+    #   storageClass: ""
+    #   subPath: ""
+    #   accessMode: ReadWriteOnce
+    #   size: 5Gi
+    #   annotations: {}
   # Define which storage backend is used for registry to store
   # images and charts. Refer to
   # https://github.com/distribution/distribution/blob/main/docs/content/about/configuration.md#storage
@@ -354,7 +352,7 @@ imagePullSecrets:
 # The update strategy for deployments with persistent volumes(jobservice, registry): "RollingUpdate" or "Recreate"
 # Set it as "Recreate" when "RWM" for volumes isn't supported
 updateStrategy:
-  type: RollingUpdate
+  type: Recreate
 
 # debug, info, warning, error or fatal
 logLevel: info
@@ -588,7 +586,6 @@ core:
       cpu: 500m
       memory: 1Gi
     limits:
-      cpu: 1
       memory: 1Gi
       cpu: 500m
   extraEnvVars: []
