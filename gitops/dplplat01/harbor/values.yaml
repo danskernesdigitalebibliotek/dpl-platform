@@ -206,7 +206,7 @@ persistence:
       container: harbor
       #realm: core.windows.net
       # To use existing secret, the key must be AZURE_STORAGE_ACCESS_KEY
-      existingSecret: azure-image-chart-storage-key
+      existingSecret: REGISTRY_STORAGE_AZURE_ACCOUNTKEY
     gcs:
       bucket: bucketname
       # The base64 encoded json file which contains the key
@@ -735,8 +735,8 @@ jobservice:
   # If a secret key is not specified, Helm will generate one.
   # Must be a string of 16 chars.
   secret: ""
-  # Use an existing secret resource
-  existingSecret: ""
+  # Usei an existing secret resource
+  existngSecret: ""
   # Key within the existing secret for the job service secret
   existingSecretKey: JOBSERVICE_SECRET
 
