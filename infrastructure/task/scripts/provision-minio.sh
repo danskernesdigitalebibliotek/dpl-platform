@@ -11,6 +11,10 @@ SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 # shellcheck source=./util.source.sh
 source "${SCRIPT_DIR}/util.source.sh"
 
+echo "MinIO can no longer be provisioned, as the Bitnami chart has been deprecated and removed."
+echo "Due to the bitnami 'rug pull', we have changed the image repository from bitnami/minio to bitnamilegacy/minio directly on the resources."
+exit 1
+
 # Determine the platform environment.
 if [[ -z "${DPLPLAT_ENV:-}" ]] ; then
     echo "Missing DPLPLAT_ENV environment variable"
@@ -72,5 +76,3 @@ helm ${diff_or_nothing} upgrade --install \
   --values "${configuration_dir}/minio/minio-values.yaml"
 
 echo " > Done."
-
-
