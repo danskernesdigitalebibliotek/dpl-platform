@@ -79,7 +79,7 @@ kube-prometheus-stack:
 
       resources:
         requests:
-          memory: 30Gi
+          memory: 28Gi
 
   # We can't currently disable individual rules, as the templating is broken,
   # when appyling via argocd. we must silence these instead. This will
