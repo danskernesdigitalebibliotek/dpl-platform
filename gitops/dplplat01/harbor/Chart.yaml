@@ -4,4 +4,4 @@ version: 0.0.0
 dependencies:
   - name: harbor-helm
     version: 1.15.2
-    repository: https://github.com/goharbor/harbor-helm
+    repository: https://helm.goharbor.io
