@@ -243,6 +243,8 @@ sites:
 
   - name: vejen-main
 
+  - name: vejle-main
+
   - name: vesthimmerland-main
 
   - name: viborg-main
