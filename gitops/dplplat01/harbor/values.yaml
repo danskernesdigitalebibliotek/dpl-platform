@@ -199,6 +199,9 @@ persistence:
     # "oss" and fill the information needed in the corresponding section. The type
     # must be "filesystem" if you want to use persistent volumes for registry
     type: azure
+    filesystem:
+      rootdirectory: /storage
+      #maxthreads: 100
     azure:
       accountname: stdplplat01harborf7b6
       # We are using the existing secret to hold the accountKey
@@ -683,7 +686,6 @@ jobservice:
   #     cpu: 100m
   extraEnvVars: []
   nodeSelector: {}
-  # Use tolerations
   tolerations:
     - key: CriticalAddonsOnly
       operator: Exists
@@ -766,7 +768,6 @@ registry:
   replicas: 3
   revisionHistoryLimit: 10
   nodeSelector: {}
-  # Use tolerations
   tolerations:
     - key: CriticalAddonsOnly
       operator: Exists
