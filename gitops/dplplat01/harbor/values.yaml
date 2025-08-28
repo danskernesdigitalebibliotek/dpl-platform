@@ -210,7 +210,7 @@ harbor:
         container: harbor
         #realm: core.windows.net
         # To use existing secret, the key must be AZURE_STORAGE_ACCESS_KEY
-        existingSecret: REGISTRY_STORAGE_AZURE_ACCOUNTKEY
+        existingSecret: registry_storage_azure_accountkey
       gcs:
         bucket: bucketname
         # The base64 encoded json file which contains the key
