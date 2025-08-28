@@ -181,14 +181,14 @@ harbor:
       #   annotations: {}
     # Define which storage backend is used for registry to store
     # images and charts. Refer to
-    # https://github.com/distribution/distribution/blob/main/docs/content/about/configuration.md#storage
+    # https://github.com/distribution/distribution/blob/release/2.8/docs/configuration.md#storage
     # for the detail.
     imageChartStorage:
       # Specify whether to disable `redirect` for images and chart storage, for
       # backends which not supported it (such as using minio for `s3` storage type), please disable
       # it. To disable redirects, simply set `disableredirect` to `true` instead.
       # Refer to
-      # https://github.com/distribution/distribution/blob/main/docs/configuration.md#redirect
+      # https://github.com/distribution/distribution/blob/release/2.8/docs/configuration.md#redirect
       # for the detail.
       disableredirect: false
       # Specify the "caBundleSecretName" if the storage service uses a self-signed certificate.
@@ -492,7 +492,7 @@ harbor:
   nginx:
     image:
       repository: goharbor/nginx-photon
-      tag: v2.11.2
+      tag: v2.12.4
     # set the service account to be used, default if left empty
     serviceAccountName: ""
     # mount the service account token
@@ -523,7 +523,7 @@ harbor:
   portal:
     image:
       repository: goharbor/harbor-portal
-      tag: v2.11.2
+      tag: v2.12.4
     # set the service account to be used, default if left empty
     serviceAccountName: ""
     # mount the service account token
@@ -574,7 +574,7 @@ harbor:
   core:
     image:
       repository: goharbor/harbor-core
-      tag: v2.11.2
+      tag: v2.12.4
     # set the service account to be used, default if left empty
     serviceAccountName: ""
     # mount the service account token
@@ -674,7 +674,7 @@ harbor:
   jobservice:
     image:
       repository: goharbor/harbor-jobservice
-      tag: v2.11.2
+      tag: v2.12.4
     # set the service account to be used, default if left empty
     serviceAccountName: ""
     # mount the service account token
@@ -747,7 +747,7 @@ harbor:
     registry:
       image:
         repository: goharbor/registry-photon
-        tag: v2.11.2
+        tag: v2.12.4
       # resources:
       #  requests:
       #    memory: 256Mi
@@ -756,7 +756,7 @@ harbor:
     controller:
       image:
         repository: goharbor/harbor-registryctl
-        tag: v2.11.2
+        tag: v2.12.4
       resources:
         requests:
           memory: 1Gi
