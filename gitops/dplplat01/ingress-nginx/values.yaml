@@ -60,3 +60,12 @@ ingress-nginx:
       enabled: true
       serviceMonitor:
         enabled: true
+        metricRelabelings:
+          # Drop unused metrics with high cardinality.
+          - sourceLabels: [__name__]
+            action: drop
+            regex: 'nginx_ingress_controller_(bytes_sent_bucket|connect_duration_seconds_bucket|header_duration_seconds_bucket|request_size_bucket|response_size_bucket)'
+          - sourceLabels: [__name__, method]
+            regex: "nginx_ingress_controller_(request_duration_seconds_bucket|response_duration_seconds_bucket);.+"
+            replacement: ""
+            targetLabel: method
