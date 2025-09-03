@@ -19,6 +19,11 @@ apps:
     namespace: ingress-nginx
     automated: false
 
+  - name: grafana
+    project: monitoring
+    namespace: grafana
+    automated: false
+
   - name: promstack
     project: monitoring
     namespace: prometheus
