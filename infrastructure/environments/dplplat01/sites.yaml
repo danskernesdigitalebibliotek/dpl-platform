@@ -9,7 +9,7 @@ x-webmasters-on-weekly-release-cycle: &webmasters-on-weekly-release-cycle
   releaseImageRepository: ghcr.io/danskernesdigitalebibliotek
   releaseImageName: dpl-cms-source
   dpl-cms-release: "2025.34.0"
-  moduletest-dpl-cms-release: "2025.34.0"
+  moduletest-dpl-cms-release: "2025.36.0"
   go-release: 2025.34.1
 # Mounted Disk sizes
 x-disk-size-small: &disk-size-small
