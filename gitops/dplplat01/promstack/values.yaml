@@ -4249,7 +4249,7 @@ kube-prometheus-stack:
 
       ## How long to retain metrics
       ##
-      retention: 93d
+      retention: 31d
 
       ## Maximum size of metrics
       ## Unit format should be in the form of "50GiB"
