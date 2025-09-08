@@ -945,10 +945,12 @@ harbor:
       serviceAccountName: ""
       # mount the service account token
       automountServiceAccountToken: false
-      # resources:
-      #  requests:
-      #    memory: 256Mi
-      #    cpu: 100m
+      resources:
+        limits:
+          memory: 800M
+        requests:
+          cpu: 100m
+          memory: 400M
       # The timeout used in livenessProbe; 1 to 5 seconds
       livenessProbe:
         timeoutSeconds: 1
@@ -958,8 +960,10 @@ harbor:
       extraEnvVars: []
       nodeSelector: {}
       tolerations:
-        - key: CriticalAddonsOnly
-          operator: Exists
+        - key: noderole.dplplatform
+          operator: Equal
+          value: prod
+          effect: NoSchedule
       affinity:
         nodeAffinity:
           requiredDuringSchedulingIgnoredDuringExecution:
@@ -968,7 +972,7 @@ harbor:
                   - key: noderole.dplplatform
                     operator: In
                     values:
-                      - system
+                      - prod
       ## The priority class to run the pod as
       priorityClassName:
       # containers to be run before the controller's container starts.
@@ -1129,4 +1133,3 @@ harbor:
     #   whenUnsatisfiable: DoNotSchedule
     cacheDuration: 23
     cacheCleanInterval: 14400
-
