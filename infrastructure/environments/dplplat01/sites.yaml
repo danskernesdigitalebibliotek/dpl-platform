@@ -3,7 +3,7 @@ x-defaults: &default-release-image-source
   releaseImageRepository: ghcr.io/danskernesdigitalebibliotek
   releaseImageName: dpl-cms-source
   dpl-cms-release: "2025.36.1"
-  go-release: 2025.36.1
+  go-release: 2025.36.2
 x-webmasters-on-weekly-release-cycle: &webmasters-on-weekly-release-cycle
   #This release cycle releases the newest release, which has been tested on webmaster moduletests in the previous week, on to production
   releaseImageRepository: ghcr.io/danskernesdigitalebibliotek
@@ -29,7 +29,7 @@ sites:
     releaseImageName: dpl-cms-source
     dpl-cms-release: 2025.36.1
     plan: webmaster
-    go-release: 2025.36.1
+    go-release: 2025.36.2
     primary-domain: canary.dplplat01.dpl.reload.dk
     # TODO: Remove this once the the Adgangsplatformen OpenID client used here
     # has been updated to use the primary domain.
@@ -45,7 +45,7 @@ sites:
     plan: webmaster
     dpl-cms-release: 2025.36.1
     moduletest-dpl-cms-release: 2025.36.1
-    go-release: 2025.36.1
+    go-release: 2025.36.2
     deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAILj8lXv7C/7s7te9sEpwcHQhgDWfzsCkAN7rqQ4sdTzk"
     <<: *disk-size-small
   staging:
@@ -84,7 +84,7 @@ sites:
     description: "Et site hvor bibliotekerne kan teste"
     importTranslationsCron: "0 * * * *"
     plan: webmaster
-    go-release: 2025.36.1
+    go-release: 2025.36.2
     deploy_key: ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHvhy79hHjLcQJCcMNwci1Q/P/O2LwD4IzBVfkmRGKom
     << : [ *webmasters-on-weekly-release-cycle, *disk-size-small ]
   # BNF site.
