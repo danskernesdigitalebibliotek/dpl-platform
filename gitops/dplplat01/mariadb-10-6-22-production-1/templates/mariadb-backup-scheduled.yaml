@@ -1,0 +1,24 @@
+apiVersion: k8s.mariadb.com/v1alpha1
+kind: Backup
+metadata:
+  name: mariadb-backup-scheduled
+spec:
+  mariaDbRef:
+    name: {{ .Release.Name }}
+  schedule:
+    cron: "20 2 * * *"
+    suspend: false
+  maxRetention: 168h # 7 days
+  storage:
+    persistentVolumeClaim:
+      resources:
+        requests:
+          storage: 120Gi
+      accessModes:
+        - ReadWriteOnce
+  resources:
+    requests:
+      cpu: 100m
+      memory: 128Mi
+    limits:
+      memory: 512Mi
