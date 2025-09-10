@@ -22,3 +22,10 @@ spec:
       memory: 128Mi
     limits:
       memory: 512Mi
+  nodeSelector:
+    noderole.dplplatform: prod
+  tolerations:
+    - key: noderole.dplplatform
+      operator: Equal
+      value: prod
+      effect: NoSchedule
