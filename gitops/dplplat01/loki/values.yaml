@@ -839,7 +839,12 @@ loki:
     # -- volumeClaimTemplates to add to StatefulSet
     extraVolumeClaimTemplates: []
     # -- Resource requests and limits for the write
-    resources: {}
+    resources:
+      requests:
+        memory: 800mi
+        cpu: 300m
+      limits:
+        memory: 1Gi
     # -- Grace period to allow the write to shutdown before it is killed. Especially for the ingester,
     # this must be increased. It must be long enough so writes can be gracefully shutdown flushing/transferring
     # all data and to successfully leave the member ring on shutdown.
@@ -856,11 +861,16 @@ loki:
     # -- DNS config for write pods
     dnsConfig: {}
     # -- Node selector for write pods
-    nodeSelector: {}
-    # -- Topology Spread Constraints for write pods
+    nodeSelector:
+      noderole.dplplatform: prod
+    # -- Topology Spread Constraints for read pods
     topologySpreadConstraints: []
-    # -- Tolerations for write pods
-    tolerations: []
+    # -- Tolerations for read pods
+    tolerations:
+      - key: noderole.dplplatform
+        operator: Equal
+        value: prod
+        effect: NoSchedule
     # -- The default is to deploy all pods in parallel.
     podManagementPolicy: "Parallel"
     persistence:
