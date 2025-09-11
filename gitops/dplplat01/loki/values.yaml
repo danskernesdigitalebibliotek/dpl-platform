@@ -761,7 +761,7 @@ loki:
   # Configuration for the write pod(s)
   write:
     # -- Number of replicas for the write
-    replicas: 2
+    replicas: 3
     autoscaling:
       # -- Enable autoscaling for the write.
       enabled: false
