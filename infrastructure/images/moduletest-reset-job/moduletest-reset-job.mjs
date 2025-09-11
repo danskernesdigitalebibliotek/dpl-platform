@@ -63,11 +63,11 @@ async function getDatabaseConnectionInfo(namespace) {
     databasePassword: data.MARIADB_PASSWORD,
   };
 
-  if(data.OVERRIDE_MARIADB_DATABASE) {
-    databaseConnectionInfo.databaseName = data.OVERRIDE_MARIADB_DATABASE;
-    databaseConnectionInfo.databaseHost = data.OVERRIDE_MARIADB_HOST;
-    databaseConnectionInfo.databasePassword = data.OVERRIDE_MARIADB_PASSWORD;
-    databaseConnectionInfo.databaseUser = data.OVERRIDE_MARIADB_USERNAME;
+  if(data.MARIADB_DATABASE_OVERRIDE) {
+    databaseConnectionInfo.databaseName = data.MARIADB_DATABASE_OVERRIDE;
+    databaseConnectionInfo.databaseHost = data.MARIADB_HOST_OVERRIDE;
+    databaseConnectionInfo.databasePassword = data.MARIADB_PASSWORD_OVERRIDE;
+    databaseConnectionInfo.databaseUser = data.MARIADB_USERNAME_OVERRIDE;
   }
 
   return databaseConnectionInfo;
