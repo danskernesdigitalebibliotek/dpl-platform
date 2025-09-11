@@ -841,7 +841,7 @@ loki:
     # -- Resource requests and limits for the write
     resources:
       requests:
-        memory: 800mi
+        memory: 800Mi
         cpu: 300m
       limits:
         memory: 1Gi
