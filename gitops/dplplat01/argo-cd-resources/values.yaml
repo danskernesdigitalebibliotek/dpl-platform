@@ -28,6 +28,7 @@ apps:
     project: monitoring
     namespace: loki
     automated: false
+      - ServerSideApply=true
 
   - name: promstack
     project: monitoring
