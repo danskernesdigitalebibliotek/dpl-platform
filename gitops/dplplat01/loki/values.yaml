@@ -812,10 +812,14 @@ loki:
     # -- Comma-separated list of Loki modules to load for the write
     targetModule: "write"
     # -- Additional CLI args for the write
-    extraArgs: []
-    # -- Environment variables to add to the write pods
-    extraEnv: []
-    # -- Environment variables from secrets or configmaps to add to the write pods
+    extraArgs:
+      - '-config.expand-env=true'
+    extraEnv:
+      - name: AZURE_STORAGE_ACCOUNT_KEY
+        valueFrom:
+          secretKeyRef:
+            name: azure-storage-account
+            key: azure-storage-account-key
     extraEnvFrom: []
     # -- Lifecycle for the write container
     lifecycle: {}
