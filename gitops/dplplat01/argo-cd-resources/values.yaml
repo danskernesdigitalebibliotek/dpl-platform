@@ -24,6 +24,11 @@ apps:
     namespace: grafana
     automated: false
 
+  - name: loki
+    project: monitoring
+    namespace: loki
+    automated: false
+
   - name: promstack
     project: monitoring
     namespace: prometheus
