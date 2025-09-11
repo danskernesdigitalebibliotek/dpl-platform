@@ -952,7 +952,7 @@ loki:
   # Configuration for the read pod(s)
   read:
     # -- Number of replicas for the read
-    replicas: 2
+    replicas: 3
     autoscaling:
       # -- Enable autoscaling for the read, this is only used if `queryIndex.enabled: true`
       enabled: false
@@ -1024,7 +1024,12 @@ loki:
     # -- Volumes to add to the read pods
     extraVolumes: []
     # -- Resource requests and limits for the read
-    resources: {}
+    resources:
+      requests:
+        memory: 500Mi
+        cpu: 800m
+      limits:
+        memory: 1Gi
     # -- Grace period to allow the read to shutdown before it is killed
     terminationGracePeriodSeconds: 30
     # -- Affinity for read pods. Passed through `tpl` and, thus, to be configured as string
@@ -1039,11 +1044,16 @@ loki:
     # -- DNS config for read pods
     dnsConfig: {}
     # -- Node selector for read pods
-    nodeSelector: {}
+    nodeSelector:
+      noderole.dplplatform: prod
     # -- Topology Spread Constraints for read pods
     topologySpreadConstraints: []
     # -- Tolerations for read pods
-    tolerations: []
+    tolerations:
+      - key: noderole.dplplatform
+        operator: Equal
+        value: prod
+        effect: NoSchedule
     # -- The default is to deploy all pods in parallel.
     podManagementPolicy: "Parallel"
     persistence:
