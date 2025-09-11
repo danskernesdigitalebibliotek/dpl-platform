@@ -29,6 +29,12 @@ spec:
                     secretKeyRef:
                       name: azure-database-host
                       key: host
+              resources:
+                requests:
+                  memory: 256Mi
+                  cpu: 250m
+                limits:
+                  memory: 512Mi
           serviceAccountName: moduletest-reset-serviceaccount
           tolerations:
             - key: noderole.dplplatform
@@ -44,13 +50,6 @@ spec:
                       operator: In
                       values:
                        - prod
-          resources:
-            requests:
-              memory: 256Mi
-              cpu: 250m
-            limits:
-              memory: 512Mi
-
 ---
 {{ end }}
 
