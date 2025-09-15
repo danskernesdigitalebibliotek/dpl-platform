@@ -272,7 +272,9 @@ importTranslationsCron=$(getSiteImportTranslationsCron "${SITE}" "${SITES_CONFIG
 goRelease=$(getGoRelease "${SITE}" "${SITES_CONFIG}")
 diskSize=$(getDiskSize "${SITE}" "${SITES_CONFIG}")
 phpVersionMain=$(getPhpVersion "${SITE}" "main" "${SITES_CONFIG}")
+failOnErr $? "${phpVersionMain}"
 phpVersionModuletest=$(getPhpVersion "${SITE}" "moduletest" "${SITES_CONFIG}")
+failOnErr $? "${phpVersionModuletest}"
 set -o errexit
 
 # Synchronise the sites environment repository.
