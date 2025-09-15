@@ -152,7 +152,7 @@ function getPhpVersion {
         return
     fi
 
-    echo "Error: Neither branchPhpVersion nor phpVersion is defined" >&2
+    echo "Error: Neither specific or general php-version is defined for environment ${2}"
     exit 1
 }
 
