@@ -37,7 +37,7 @@ jobs:
       image-url: ghcr.io/danskernesdigitalebibliotek/dpl-platform/moduletest-reset-job
     steps:
       - name: Checkout
-        uses: actions/checkout@v4.2.2
+        uses: actions/checkout@v5
       - name: Install Task
         uses: arduino/setup-task@v2
       - name: Log in to the Container registry
@@ -60,7 +60,7 @@ jobs:
             org.opencontainers.image.description=Danish Public Libraries Moduletest Reset Job
 
       - name: Checkout again
-        uses: actions/checkout@v4.2.2
+        uses: actions/checkout@v5
       - name: Build and push
         uses: docker/build-push-action@v6
         with:
