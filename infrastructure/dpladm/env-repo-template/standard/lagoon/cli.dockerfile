@@ -3,7 +3,7 @@
 # static across all sites.
 FROM ${RELEASE_IMAGE_REPOSITORY}/${RELEASE_IMAGE_NAME}:${RELEASE_TAG} AS release
 
-FROM uselagoon/php-8.1-cli-drupal:${LAGOON_IMAGES_RELEASE_TAG}
+FROM uselagoon/php-8.3-cli-drupal:${LAGOON_IMAGES_RELEASE_TAG}
 
 COPY --from=release /app /app
 RUN mkdir -p -v -m775 /app/web/sites/default/files
