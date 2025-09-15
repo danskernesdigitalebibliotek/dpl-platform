@@ -137,6 +137,25 @@ function getDiskSize {
     exit 1
 }
 
+function getPhpVersion {
+    local branchPhpVersion phpVersion
+
+    branchPhpVersion=$(yq eval ".sites.${1}.${2}-php-version" "${3}")
+    if [[ -n "${branchPhpVersion}" && "${branchPhpVersion}" != "null" ]]; then
+        echo "${branchPhpVersion}"
+        return
+    fi
+
+    phpVersion=$(yq eval ".sites.${1}.php-version" "${3}")
+    if [[ -n "${phpVersion}" && "${phpVersion}" != "null" ]]; then
+        echo "${phpVersion}"
+        return
+    fi
+
+    echo "Error: Neither branchPhpVersion nor phpVersion is defined" >&2
+    exit 1
+}
+
 function calculatePrimaryGoSubdomain {
     local hasGo=$(getGoRelease "${1}" "${2}")
     if [[ "${hasGo}" = "" ]]; then
@@ -252,13 +271,15 @@ plan=$(getSitePlan "${SITE}" "${SITES_CONFIG}")
 importTranslationsCron=$(getSiteImportTranslationsCron "${SITE}" "${SITES_CONFIG}")
 goRelease=$(getGoRelease "${SITE}" "${SITES_CONFIG}")
 diskSize=$(getDiskSize "${SITE}" "${SITES_CONFIG}")
+phpVersionMain=$(getPhpVersion "${SITE}" "main" "${SITES_CONFIG}")
+phpVersionModuletest=$(getPhpVersion "${SITE}" "moduletest" "${SITES_CONFIG}")
 set -o errexit
 
 # Synchronise the sites environment repository.
-syncEnvRepo "${SITE}" "${releaseTag}" "${BRANCH}" "${siteImageRepository}" "${siteReleaseImageName}" "${importTranslationsCron}" "${autogenerateRoutes}" "${primaryDomain}" "${secondaryDomains}" "${diskSize}" "${primaryGoSubDomain}" "${secondaryGoSubDomains}" "${goRelease}"
+syncEnvRepo "${SITE}" "${releaseTag}" "${BRANCH}" "${siteImageRepository}" "${siteReleaseImageName}" "${importTranslationsCron}" "${autogenerateRoutes}" "${primaryDomain}" "${secondaryDomains}" "${diskSize}" "${phpVersionMain}" "${primaryGoSubDomain}" "${secondaryGoSubDomains}" "${goRelease}"
 adjustPersistentVolume "${SITE}" "main" "${diskSize}"
 
 if [ "${plan}" = "webmaster" ] && [ "${BRANCH}" = "main" ]; then
-    syncEnvRepo "${SITE}" "${wmReleaseTag}" "moduletest" "${siteImageRepository}" "${siteReleaseImageName}" "${importTranslationsCron}" "${autogenerateRoutes}" "${primaryDomain}" "${secondaryDomains}" "${diskSize}"
+    syncEnvRepo "${SITE}" "${wmReleaseTag}" "moduletest" "${siteImageRepository}" "${siteReleaseImageName}" "${importTranslationsCron}" "${autogenerateRoutes}" "${primaryDomain}" "${secondaryDomains}" "${diskSize}" "${phpVersionModuletest}"
     adjustPersistentVolume "${SITE}" "moduletest" "${diskSize}"
 fi
