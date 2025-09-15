@@ -190,6 +190,7 @@ EndOfMessage
 
   # Loop through the files we know to contain variables that needs replacing.
   local templateFiles=(
+    "docker-compose.base-services.yml"
     "docker-compose.node-service.yml"
     ".lagoon.yml"
     "lagoon/cli.dockerfile"

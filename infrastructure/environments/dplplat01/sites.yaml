@@ -30,13 +30,13 @@ sites:
     dpl-cms-release: 2025.36.1
     plan: webmaster
     go-release: 2025.36.2
+    diskSize: 11
     primary-domain: canary.dplplat01.dpl.reload.dk
     # TODO: Remove this once the the Adgangsplatformen OpenID client used here
     # has been updated to use the primary domain.
     autogenerateRoutes: true
     moduletest-dpl-cms-release: 2025.36.1
     deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIIhuA0K7CNvRoe+Xx7RaXG4+a8KcSpzuWn+G4sUPzNWx"
-    <<: *disk-size-small
   customizable-canary:
     name: "Customizable bibliotek - eksempel"
     description: "Eksempel på bibliotek der kører på 'webmaster' plan, og derfor har et modultest-miljø"
