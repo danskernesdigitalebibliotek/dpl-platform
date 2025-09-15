@@ -225,8 +225,8 @@ function getSiteImportTranslationsCron {
 }
 
 function adjustPersistentVolume {
-    volumeName=$(kubectl get pvc -n ${1}-${2} nginx --template={{.spec.volumeName}})
-    az storage share update -n $volumeName --quota ${3} --account-name stdpldplplat01585708af
+    volumeName=$(kubectl get pvc -n "${1}"-"${2}" nginx --template={{.spec.volumeName}})
+    az storage share update -n "$volumeName" --quota "${3}" --account-name stdpldplplat01585708af
 }
 
 if [[ -z "${SITES_CONFIG:-}" ]]; then
