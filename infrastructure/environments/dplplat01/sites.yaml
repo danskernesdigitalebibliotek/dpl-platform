@@ -4,7 +4,7 @@ x-defaults: &default-release-image-source
   releaseImageName: dpl-cms-source
   dpl-cms-release: "2025.36.1"
   go-release: 2025.36.2
-  php-version: 8.1
+  php-version: 8.3
 x-webmasters-on-weekly-release-cycle: &webmasters-on-weekly-release-cycle
   #This release cycle releases the newest release, which has been tested on webmaster moduletests in the previous week, on to production
   releaseImageRepository: ghcr.io/danskernesdigitalebibliotek
@@ -13,6 +13,7 @@ x-webmasters-on-weekly-release-cycle: &webmasters-on-weekly-release-cycle
   moduletest-dpl-cms-release: "2025.36.1"
   go-release: 2025.34.1
   php-version: 8.1
+  moduletest-php-version: 8.3
 # Mounted Disk sizes
 x-disk-size-small: &disk-size-small
   diskSize: 10
@@ -32,8 +33,8 @@ sites:
     dpl-cms-release: 2025.36.1
     plan: webmaster
     go-release: 2025.36.2
-    php-version: 8.1
-    moduletest-php-version: 8.1
+    php-version: 8.3
+    moduletest-php-version: 8.3
     diskSize: 11
     primary-domain: canary.dplplat01.dpl.reload.dk
     # TODO: Remove this once the the Adgangsplatformen OpenID client used here
@@ -50,8 +51,8 @@ sites:
     dpl-cms-release: 2025.36.1
     moduletest-dpl-cms-release: 2025.36.1
     go-release: 2025.36.2
-    php-version: 8.1
-    moduletest-php-version: 8.1
+    php-version: 8.3
+    moduletest-php-version: 8.3
     deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAILj8lXv7C/7s7te9sEpwcHQhgDWfzsCkAN7rqQ4sdTzk"
     <<: *disk-size-small
   staging:
