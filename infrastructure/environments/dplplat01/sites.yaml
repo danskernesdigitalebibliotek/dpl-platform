@@ -12,6 +12,7 @@ x-webmasters-on-weekly-release-cycle: &webmasters-on-weekly-release-cycle
   dpl-cms-release: "2025.34.0"
   moduletest-dpl-cms-release: "2025.36.1"
   go-release: 2025.34.1
+  # Releases prior to 2025.38.0 uses 8.1. TODO: remove these two lines as part of 2025.40.0.
   php-version: 8.1
   moduletest-php-version: 8.3
 # Mounted Disk sizes
