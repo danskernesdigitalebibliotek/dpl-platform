@@ -14,3 +14,14 @@ const blackList = [
   "bibliotek-test"
 ];
 
+for await (const site of sites.lines()) {
+  if(blackList.includes(site)) {
+    continue;
+   }
+    await reconfigureMariaDbConsumerAndServices(site, "main");
+  if (await isWebmaster(site)) {
+    await reconfigureMariaDbConsumerAndServices(site, "moduletest");
+    break;
+  }
+}
+
