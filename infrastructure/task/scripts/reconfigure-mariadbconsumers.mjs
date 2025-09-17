@@ -25,3 +25,10 @@ for await (const site of sites.lines()) {
   }
 }
 
+async function isWebmaster(project) {
+   const result = await $`cat ../../../host_mount/environments/dplplat01/sites.yaml | yq '.sites.${project}.plan'`;
+   return result.stdout === "webmaster\n" ? true : false;
+}
+
+
+
