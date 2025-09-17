@@ -73,3 +73,6 @@ async function updateMariaDbServices(site, dbConnectionInfo, environment = "main
   await $`kubectl patch svc -n ${site}-${environment} ${dbConnectionInfo.readReplica} --type='json' -p='[{"op": "replace", "path": "/spec/externalName", "value": ${dbConnectionInfo.hostname}}]'`
 }
 
+echo(chalk.green("done"));
+echo("")
+
