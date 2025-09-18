@@ -9,9 +9,9 @@ x-webmasters-on-weekly-release-cycle: &webmasters-on-weekly-release-cycle
   #This release cycle releases the newest release, which has been tested on webmaster moduletests in the previous week, on to production
   releaseImageRepository: ghcr.io/danskernesdigitalebibliotek
   releaseImageName: dpl-cms-source
-  dpl-cms-release: "2025.34.0"
-  moduletest-dpl-cms-release: "2025.36.1"
-  go-release: 2025.34.1
+  dpl-cms-release: "2025.36.1"
+  moduletest-dpl-cms-release: 2025.38.0
+  go-release: 2025.36.2
   php-version: 8.1
   moduletest-php-version: 8.3
 # Mounted Disk sizes
