@@ -4,7 +4,7 @@ x-defaults: &default-release-image-source
   releaseImageName: dpl-cms-source
   dpl-cms-release: 2025.38.0
   go-release: 2025.38.0
-  php-version: 8.1
+  php-version: 8.3
 x-webmasters-on-weekly-release-cycle: &webmasters-on-weekly-release-cycle
   #This release cycle releases the newest release, which has been tested on webmaster moduletests in the previous week, on to production
   releaseImageRepository: ghcr.io/danskernesdigitalebibliotek
@@ -12,6 +12,7 @@ x-webmasters-on-weekly-release-cycle: &webmasters-on-weekly-release-cycle
   dpl-cms-release: "2025.36.1"
   moduletest-dpl-cms-release: 2025.38.0
   go-release: 2025.36.2
+  # TODO: Update to 8.3 during release in week 40
   php-version: 8.1
   moduletest-php-version: 8.3
 # Mounted Disk sizes
