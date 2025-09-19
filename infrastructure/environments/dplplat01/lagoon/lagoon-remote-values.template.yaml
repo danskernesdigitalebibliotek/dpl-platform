@@ -38,15 +38,14 @@ dbaas-operator:
   enabled: true
 
   mariadbProviders:
-    # production:
-    #   environment: "production"
-    #   type: "azure"
-    #   hostname: "$SQL_HOSTNAME"
-    #   readReplicaHostnames:
-    #     - "$SQL_HOSTNAME"
-    #   password: "$SQL_PASSWORD"
-    #   port: "3306"
-    #   user: "$SQL_USER@$SQL_HOSTNAME"
+    production:
+      environment: production
+      hostname: mariadb-10-6-22-tmp-test-1.mariadb-10-6-22-tmp-test-1.svc.cluster.local
+      readReplicaHostnames:
+        - mariadb-10-6-22-tmp-test-1.mariadb-10-6-22-tmp-test-1.svc.cluster.local
+      password: IVJWtewr2UUg5Dh2jDqoJVt3pLoj556lI5dCh3xW # Temporary password for temporary database that we will remove shortly
+      port: 3306
+      user: root
 
     development:
       environment: "development"
