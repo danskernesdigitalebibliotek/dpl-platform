@@ -38,15 +38,15 @@ dbaas-operator:
   enabled: true
 
   mariadbProviders:
-    production:
-      environment: "production"
-      type: "azure"
-      hostname: "$SQL_HOSTNAME"
-      readReplicaHostnames:
-        - "$SQL_HOSTNAME"
-      password: "$SQL_PASSWORD"
-      port: "3306"
-      user: "$SQL_USER@$SQL_HOSTNAME"
+    # production:
+    #   environment: "production"
+    #   type: "azure"
+    #   hostname: "$SQL_HOSTNAME"
+    #   readReplicaHostnames:
+    #     - "$SQL_HOSTNAME"
+    #   password: "$SQL_PASSWORD"
+    #   port: "3306"
+    #   user: "$SQL_USER@$SQL_HOSTNAME"
 
     development:
       environment: "development"
