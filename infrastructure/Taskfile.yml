@@ -882,19 +882,6 @@ tasks:
       cmds:
         - task/scripts/provision-bulk-storage.sh
 
-    support:provision:promtail:
-      deps: [cluster:auth]
-      summary: Set the DIFF environment variable to any value to switch to diffing instead of an actual upgrade.
-      desc: Install and configure Promtail
-      env:
-        STORAGE_ACCOUNT_NAME:
-          sh: terraform -chdir={{.dir_infra}} output -json | jq --raw-output ".monitoring_storage_account_name.value | select (.!=null)"
-        STORAGE_ACCOUNT_KEY:
-          sh: az keyvault secret show --subscription "{{.AZURE_SUBSCRIPTION_ID}}" --name $(terraform -chdir={{.dir_infra}} output -json | jq --raw-output ".monitoring_primary_access_key_name.value | select (.!=null)") --vault-name $(terraform -chdir={{.dir_infra}} output -json | jq --raw-output ".keyvault_name.value | select (.!=null)") --query value -o tsv
-        STORAGE_CONTAINER_NAME:
-          sh: terraform -chdir={{.dir_infra}} output -json | jq --raw-output ".monitoring_blob_storage_container_name.value | select (.!=null)"
-      cmds:
-        - task/scripts/provision-promtail.sh
     ops:get-versions:
       deps: [cluster:auth]
       summary: Extract the current and latest version for the things we've installed into the cluster.
@@ -921,7 +908,6 @@ tasks:
         - task: support:provision:cert-manager
         - task: support:provision:k8up
         - task: support:provision:minio
-        - task: support:provision:promtail
 
     site:sync:
       desc: Runs the a dpladm sync of a site which eg. can be used to deploy a new release
