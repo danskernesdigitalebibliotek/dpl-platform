@@ -938,13 +938,6 @@ tasks:
       cmds:
         - task/scripts/provision-promtail.sh
 
-    support:provision:grafana:
-      deps: [cluster:auth]
-      summary: Set the DIFF environment variable to any value to switch to diffing instead of an actual upgrade.
-      desc: Install and configure Grafana
-      cmds:
-        - task/scripts/provision-grafana.sh
-
     support:provision:prometheus:
       deps: [cluster:auth]
       summary: Set the DIFF environment variable to any value to switch to diffing instead of an actual upgrade.
@@ -976,7 +969,6 @@ tasks:
       cmds:
         - task: support:provision:bulk-storage
         - task: support:provision:cert-manager
-        - task: support:provision:grafana
         - task: support:provision:harbor
         - task: support:provision:k8up
         - task: support:provision:loki
