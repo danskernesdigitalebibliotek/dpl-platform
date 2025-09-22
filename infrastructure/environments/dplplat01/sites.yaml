@@ -65,7 +65,7 @@ sites:
     # to make client and server use the same version.
     dpl-cms-release: 2025.38.0
     moduletest-dpl-cms-release: 2025.38.0
-    go-release: 2025.38.0
+    go-release: 2025.38.1
     php-version: 8.3
     moduletest-php-version: 8.3
     plan: webmaster
