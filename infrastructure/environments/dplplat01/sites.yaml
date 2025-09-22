@@ -565,7 +565,15 @@ sites:
     secondary-domains:
       - www.kertemindebibliotekerne.dk
     autogenerateRoutes: true
-    << : [ *default-release-image-source, *disk-size-medium ]
+    # Pin down to specific version until we figure out what's wrong
+    # with their database. When ready, revert the commit that added
+    # this.
+    releaseImageRepository: ghcr.io/danskernesdigitalebibliotek
+    releaseImageName: dpl-cms-source
+    dpl-cms-release: 2025.36.1
+    go-release: 2025.38.0
+    php-version: 8.1
+    << : [ *disk-size-medium ]
   kobenhavn:
     name: "Københavns Biblioteker"
     description: "The main library site for København"
@@ -725,7 +733,15 @@ sites:
     secondary-domains:
       - odensebib.dk
     autogenerateRoutes: true
-    <<: [ *webmasters-on-weekly-release-cycle, *disk-size-medium ]
+    # Pin down to specific version until we figure out what's making
+    # the updata fail. When ready, revert the commit that added this.
+    releaseImageRepository: ghcr.io/danskernesdigitalebibliotek
+    releaseImageName: dpl-cms-source
+    dpl-cms-release: 2025.36.1
+    moduletest-dpl-cms-release: 2025.36.1
+    go-release: 2025.36.2
+    php-version: 8.1
+    <<: [ *disk-size-medium ]
   odsherred:
     name: "Odsherred Bibliotek og Kulturhuse"
     description: "The library site for Odsherred"
