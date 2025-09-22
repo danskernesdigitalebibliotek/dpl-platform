@@ -895,14 +895,6 @@ tasks:
           sh: terraform -chdir={{.dir_infra}} output -json | jq --raw-output ".monitoring_blob_storage_container_name.value | select (.!=null)"
       cmds:
         - task/scripts/provision-promtail.sh
-
-    support:provision:prometheus:
-      deps: [cluster:auth]
-      summary: Set the DIFF environment variable to any value to switch to diffing instead of an actual upgrade.
-      desc: Install and configure Prometheus
-      cmds:
-        - task/scripts/provision-prometheus.sh
-
     ops:get-versions:
       deps: [cluster:auth]
       summary: Extract the current and latest version for the things we've installed into the cluster.
@@ -928,9 +920,7 @@ tasks:
         - task: support:provision:bulk-storage
         - task: support:provision:cert-manager
         - task: support:provision:k8up
-        - task: support:provision:loki
         - task: support:provision:minio
-        - task: support:provision:prometheus
         - task: support:provision:promtail
 
     site:sync:
