@@ -13,7 +13,6 @@ const blackList = [
   "staging",
   "bibliotek-test",
   "solrod2",
-  "struer"
 ];
 
 for await (const site of sites.lines()) {
