@@ -1,0 +1,7 @@
+apiVersion: v2
+name: lagooon-remote
+version: 0.0.0
+dependencies:
+  - name: lagoon-remote
+    version: 0.87.0
+    repository: https://uselagoon.github.io/lagoon-charts
