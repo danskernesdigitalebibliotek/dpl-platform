@@ -3,7 +3,7 @@
 harborAdminPassword: "$HARBOR_ADMIN_PASS"
 elasticsearchURL: none
 harborURL: https://habor.lagoon.dplplat01.dpl.reload.dk
-# kibanaURL:
+kibanaURL: none
 s3BAASSecretAccessKey: $BAAS_STORAGE_SECRET_KEY
 s3BAASAccessKeyID: $BAAS_STORAGE_ACCESS_KEY
 s3FilesAccessKeyID: $LAGOON_FILES_ACCESS_KEY
