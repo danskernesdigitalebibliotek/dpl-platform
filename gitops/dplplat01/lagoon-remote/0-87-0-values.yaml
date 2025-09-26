@@ -93,24 +93,23 @@ dockerHost:
     port: 2375
 
   tolerations:
-  - key: noderole.dplplatform
-    operator: Equal
-    value: build
+  - key: lagoon/build
     effect: NoSchedule
-  affinity:
-    nodeAffinity:
-      requiredDuringSchedulingIgnoredDuringExecution:
-        nodeSelectorTerms:
-          - matchExpressions:
-            - key: noderole.dplplatform
-              operator: In
-              values:
-                - build
+    operator: Exists
+  - key: lagoon/build
+    effect: PreferNoSchedule
+    operator: Exists
+  - key: lagoon.sh/build
+    effect: NoSchedule
+    operator: Exists
+  - key: lagoon.sh/build
+    effect: PreferNoSchedule
+    operator: Exists
 
 # sshCore creates a restricted, non-expiring ServiceAccount token for use by
 # lagoon-core.
 sshCore:
-  enabled: true
+  enabled: false
   serviceAccount:
     annotations: {}
     # The name of the service account to use.
@@ -167,47 +166,25 @@ sshPortal:
 # This subchart is disabled by default until this build-deploy type is in
 # widespread use.
 lagoon-build-deploy:
-  enabled: true
+  enabled: false
   # these values are used by the lagoon-build-deploy controller and do not have
   # sensible defaults.
   # lagoonTargetName:
-  taskSSHHost: "$SSH_LOADBALANCER_IP"
-  taskSSHPort: "22"
-  taskAPIHost: "api.lagoon.dplplat01.dpl.reload.dk"
+  # taskSSHHost: "" # use lagoonTokenHost
+  # taskSSHPort: "" # use lagoonTokenPort
+  # taskAPIHost: "" # use lagoonAPIHost
   # lagoonTokenHost: ""
   # lagoonTokenPort: ""
   # lagoonAPIHost: ""
   # sshPortalHost: ""
   # sshPortalPort: ""
-  rabbitMQUsername: "lagoon"
-  rabbitMQPassword: "$RABBITMQ_PASS"
-  rabbitMQHostname: "lagoon-core-broker.lagoon-core.svc.cluster.local"
-  lagoonTargetName: "lagoon"
-  lagoonFeatureFlagDefaultRootlessWorkload: "enabled"
   # See the parent chart for the full range of values that can be passed here to control builds
   # https://github.com/uselagoon/lagoon-charts/blob/main/charts/lagoon-build-deploy/values.yaml
-  extraArgs:
-    - "--enable-harbor=true"
-    # TODO template
-    - "--harbor-url=https://harbor.lagoon.dplplat01.dpl.reload.dk"
-    - "--harbor-api=https://harbor.lagoon.dplplat01.dpl.reload.dk/api/"
-    - "--harbor-username=admin"
-    - "--harbor-password=$HARBOR_ADMIN_PASS"
-    - "--enable-qos"
-    - "--qos-max-builds=8"
 
-  tolerations:
-    - key: CriticalAddonsOnly
-      operator: Exists
-  affinity:
-    nodeAffinity:
-      requiredDuringSchedulingIgnoredDuringExecution:
-        nodeSelectorTerms:
-          - matchExpressions:
-              - key: noderole.dplplatform
-                operator: In
-                values:
-                  - system
+# dioscuri is the operator which implements Lagoon active-standby.
+# This subchart is enabled by default as this is a core Lagoon feature.
+dioscuri:
+  enabled: true
 
 # dbaas-operator provisions database-as-a-service accounts for projects.
 # Example provider configuration can be found in the dbaas-operator values.yaml
@@ -215,42 +192,10 @@ lagoon-build-deploy:
 # This subchart is disabled by default for legacy reasons. It will be enabled
 # by default in future as this is a core Lagoon feature.
 dbaas-operator:
-  enabled: true
+  enabled: false
   enableMariaDBProviders: true
   enableMongoDBProviders: true
   enablePostreSQLProviders: true
-
-  mariadbProviders:
-    production:
-      environment: production
-      hostname: mariadb-10-6-22-tmp-test-1.mariadb-10-6-22-tmp-test-1.svc.cluster.local
-      readReplicaHostnames:
-        - mariadb-10-6-22-tmp-test-1.mariadb-10-6-22-tmp-test-1.svc.cluster.local
-      password: IVJWtewr2UUg5Dh2jDqoJVt3pLoj556lI5dCh3xW # Temporary password for temporary database that we will remove shortly
-      port: 3306
-      user: root
-
-    development:
-      environment: "development"
-      hostname: "$TEST_DATABASE_SERVER_HOST"
-      readReplicaHostnames:
-        - "$TEST_DATABASE_SERVER_HOST"
-      password: "$TEST_DATABASE_SERVER_PASSWORD"
-      port: "3306"
-      user: "$TEST_DATABASE_SERVER_USER"
-  tolerations:
-    - key: CriticalAddonsOnly
-      operator: Exists
-  affinity:
-    nodeAffinity:
-      requiredDuringSchedulingIgnoredDuringExecution:
-        nodeSelectorTerms:
-          - matchExpressions:
-              - key: noderole.dplplatform
-                operator: In
-                values:
-                  - system
-
 
 # if you are using the dbaas-operator in a different release, you can define the http endpoint to use here
 # setting this will always override whatever `dbaas-operator` would set, useful if you want to target a different endpoint
