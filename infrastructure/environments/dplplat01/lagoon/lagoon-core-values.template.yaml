@@ -10,6 +10,7 @@ s3FilesAccessKeyID: $LAGOON_FILES_ACCESS_KEY
 s3FilesBucket: $LAGOON_FILES_BUCKET
 s3FilesHost: $LAGOON_FILES_API_URL
 s3FilesSecretAccessKey: $LAGOON_FILES_SECRET_KEY
+registry: none.com
 
 # These values are optional.
 # overwriteActiveStandbyTaskImage:
@@ -398,7 +399,7 @@ keycloakDB:
                   - system
 
 broker:
-  replicaCount: 1
+  replicaCount: 3
   image:
     repository: uselagoon/broker
     pullPolicy: Always
