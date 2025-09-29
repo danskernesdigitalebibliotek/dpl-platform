@@ -1,0 +1,50 @@
+global:
+  logLevel: 5
+
+installCRDs: true
+ingressShim:
+  defaultIssuerName: zerossl-production
+  defaultIssuerKind: ClusterIssuer
+  defaultIssuerGroup: cert-manager.io
+maxConcurrentChallenges: 120
+
+tolerations:
+  - key: CriticalAddonsOnly
+    operator: Exists
+affinity:
+  nodeAffinity:
+    requiredDuringSchedulingIgnoredDuringExecution:
+      nodeSelectorTerms:
+        - matchExpressions:
+            - key: noderole.dplplatform
+              operator: In
+              values:
+                - system
+
+webhook:
+  tolerations:
+    - key: CriticalAddonsOnly
+      operator: Exists
+  affinity:
+    nodeAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+        nodeSelectorTerms:
+          - matchExpressions:
+              - key: noderole.dplplatform
+                operator: In
+                values:
+                  - system
+
+cainjector:
+  tolerations:
+    - key: CriticalAddonsOnly
+      operator: Exists
+  affinity:
+    nodeAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+        nodeSelectorTerms:
+          - matchExpressions:
+              - key: noderole.dplplatform
+                operator: In
+                values:
+                  - system
