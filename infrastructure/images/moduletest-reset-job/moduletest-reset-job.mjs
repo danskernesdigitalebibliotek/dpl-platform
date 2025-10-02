@@ -56,7 +56,7 @@ async function getDatabaseConnectionInfo(namespace) {
 
   const databaseConnectionInfo = {
     databaseName: data.MARIADB_DATABASE,
-    databaseHost: await $`kubectl get svc -n ${namespace} ${data.MARIADB_HOST} -o --jsonpath={.spec.externalName}`,
+    databaseHost: await $`kubectl get svc ${data.MARIADB_HOST} -n ${namespace} -o --jsonpath='{.spec.externalName}'`,
     databaseUser:  data.MARIADB_USERNAME,
     databasePassword: data.MARIADB_PASSWORD,
   };
