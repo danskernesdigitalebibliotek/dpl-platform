@@ -5,8 +5,6 @@ if (!projectName) {
   throw Error("No 'projectName' provided");
 }
 
-const azureDatabaseHost = $.env.AZURE_DATABASE_HOST;
-
 const sourceNamespace = projectName + "-main";
 const sourceDatabaseConnectionInfo = await getDatabaseConnectionInfo(sourceNamespace);
 await makeDatabaseDump(sourceDatabaseConnectionInfo, projectName);
@@ -58,12 +56,13 @@ async function getDatabaseConnectionInfo(namespace) {
 
   const databaseConnectionInfo = {
     databaseName: data.MARIADB_DATABASE,
-    databaseHost: azureDatabaseHost,
+    databaseHost: await $`kubectl get svc -n ${namespace} ${data.MARIADB_HOST} -o --jsonpath={.spec.externalName}`,
     databaseUser:  data.MARIADB_USERNAME,
     databasePassword: data.MARIADB_PASSWORD,
   };
 
   if(data.MARIADB_DATABASE_OVERRIDE) {
+    echo('using OVERRIDE variables');
     databaseConnectionInfo.databaseName = data.MARIADB_DATABASE_OVERRIDE;
     databaseConnectionInfo.databaseHost = data.MARIADB_HOST_OVERRIDE;
     databaseConnectionInfo.databasePassword = data.MARIADB_PASSWORD_OVERRIDE;
@@ -104,7 +103,7 @@ async function importMainDumpIntoModuletestDatabase(databaseConnectionInfo, proj
   } = databaseConnectionInfo;
 
   try {
-    await $`kubectl exec -n ${projectName}-moduletest deployment/cli -- bash -c "mariadb --user=${databaseUser} --host=${databaseHost} --password=${databasePassword} ${databaseName} < /tmp/${projectName}-dump.sql"`
+    await $`kubectl exec -n ${projectName}-moduletest deployment/cli -- bash -c "drush sql-drop && mariadb --user=${databaseUser} --host=${databaseHost} --password=${databasePassword} ${databaseName} < /tmp/${projectName}-dump.sql"`
   } catch(error) {
     echo(`Failed to import dump into ${projectName}-moduletest's database`, error.stderr);
     throw Error(`Failed to import dump into ${projectName}-moduletest's database`, { cause: error });
