@@ -9,6 +9,16 @@ apps:
     namespace: argo-cd
     automated: true
 
+  - name: lagoon-core
+    project: lagoon-core
+    namespace: lagoon-core
+    automated: false
+
+  - name: lagoon-remote
+    project: lagoon-remote
+    namespace: lagoon-remote
+    automated: false
+
   - name: sealed-secrets
     project: sealed-secrets
     namespace: kube-system
