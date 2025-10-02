@@ -73,7 +73,7 @@ rules:
   resources: [ "namespaces", "pods", "pods/exec", "configmaps" ]
   verbs: [ "get", "list", "create" ]
 - apiGroups: [ "apps", "configmaps" ]
-  resources: [ "deployments", "pods" ]
+  resources: [ "deployments", "pods", "services" ]
   verbs: [ "get", "list" ]
 
 ---
