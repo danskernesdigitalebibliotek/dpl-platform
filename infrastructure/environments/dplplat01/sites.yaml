@@ -11,8 +11,8 @@ x-webmasters-on-weekly-release-cycle: &webmasters-on-weekly-release-cycle
   # production
   releaseImageRepository: ghcr.io/danskernesdigitalebibliotek
   releaseImageName: dpl-cms-source
-  dpl-cms-release: 2025.38.0
-  moduletest-dpl-cms-release: 2025.40.0
+  dpl-cms-release: 2025.38.1
+  moduletest-dpl-cms-release: 2025.40.2
   go-release: 2025.38.1
   php-version: 8.3
 x-holdback-40: &holdback-40
@@ -23,7 +23,7 @@ x-holdback-40: &holdback-40
   releaseImageName: dpl-cms-source
   dpl-cms-release: 2025.36.1
   # Even though main is held back, we still upgrade moduletest.
-  moduletest-dpl-cms-release: 2025.40.0
+  moduletest-dpl-cms-release: 2025.40.2
   go-release: 2025.36.3
   php-version: 8.1
   moduletest-php-version: 8.3
