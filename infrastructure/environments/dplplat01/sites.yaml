@@ -2,17 +2,29 @@
 x-defaults: &default-release-image-source
   releaseImageRepository: ghcr.io/danskernesdigitalebibliotek
   releaseImageName: dpl-cms-source
-  dpl-cms-release: 2025.38.0
-  go-release: 2025.38.1
+  dpl-cms-release: 2025.40.2
+  go-release: 2025.40.0
   php-version: 8.3
 x-webmasters-on-weekly-release-cycle: &webmasters-on-weekly-release-cycle
-  #This release cycle releases the newest release, which has been tested on webmaster moduletests in the previous week, on to production
+  # This release cycle releases the newest release, which has been
+  # tested on webmaster moduletests in the previous week, on to
+  # production
   releaseImageRepository: ghcr.io/danskernesdigitalebibliotek
   releaseImageName: dpl-cms-source
-  dpl-cms-release: "2025.36.1"
-  moduletest-dpl-cms-release: 2025.38.0
+  dpl-cms-release: 2025.38.0
+  moduletest-dpl-cms-release: 2025.40.0
+  go-release: 2025.38.1
+  php-version: 8.3
+x-holdback-40: &holdback-40
+  # København and Herning wishes to skip 2025.38.0 in production due
+  # to DDFSAL-419. This is a copy of
+  # x-webmasters-on-weekly-release-cycle before upgrade.
+  releaseImageRepository: ghcr.io/danskernesdigitalebibliotek
+  releaseImageName: dpl-cms-source
+  dpl-cms-release: 2025.36.1
+  # Even though main is held back, we still upgrade moduletest.
+  moduletest-dpl-cms-release: 2025.40.0
   go-release: 2025.36.3
-  # TODO: Update to 8.3 during release in week 40
   php-version: 8.1
   moduletest-php-version: 8.3
 # Mounted Disk sizes
@@ -32,9 +44,9 @@ sites:
     releaseImageRepository: ghcr.io/danskernesdigitalebibliotek
     releaseImageName: dpl-cms-source
     plan: webmaster
-    dpl-cms-release: 2025.38.0
-    moduletest-dpl-cms-release: 2025.38.0
-    go-release: 2025.38.1
+    dpl-cms-release: 2025.40.2
+    moduletest-dpl-cms-release: 2025.40.2
+    go-release: 2025.40.0
     php-version: 8.3
     moduletest-php-version: 8.3
     diskSize: 11
@@ -49,9 +61,9 @@ sites:
     releaseImageRepository: ghcr.io/danskernesdigitalebibliotek
     releaseImageName: dpl-cms-source
     plan: webmaster
-    dpl-cms-release: 2025.38.0
-    moduletest-dpl-cms-release: 2025.38.0
-    go-release: 2025.38.1
+    dpl-cms-release: 2025.40.2
+    moduletest-dpl-cms-release: 2025.40.2
+    go-release: 2025.40.0
     php-version: 8.3
     moduletest-php-version: 8.3
     deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAILj8lXv7C/7s7te9sEpwcHQhgDWfzsCkAN7rqQ4sdTzk"
@@ -83,8 +95,7 @@ sites:
     # TODO: Remove this once the the Adgangsplatformen OpenID client used here
     # has been updated to use the primary domain.
     autogenerateRoutes: true
-    moduletest-dpl-cms-release: 2025.38.0
-    moduletest-php-version: 8.3
+    moduletest-dpl-cms-release: 2025.40.2
     # This site is a webmaster site but we usually want the latest release
     # deployed to production. Our YAML handling chokes on duplicates to we
     # follow the default release plan and update the module test site manually.
@@ -94,7 +105,7 @@ sites:
     description: "Et site hvor bibliotekerne kan teste"
     importTranslationsCron: "0 * * * *"
     plan: webmaster
-    go-release: 2025.38.1
+    go-release: 2025.40.0
     deploy_key: ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHvhy79hHjLcQJCcMNwci1Q/P/O2LwD4IzBVfkmRGKom
     << : [ *webmasters-on-weekly-release-cycle, *disk-size-small ]
   # BNF site.
@@ -454,7 +465,7 @@ sites:
       - herningbib.dk
     autogenerateRoutes: true
     plan: webmaster
-    <<: [ *webmasters-on-weekly-release-cycle, *disk-size-medium ]
+    <<: [ *holdback-40, *disk-size-medium ]
   hillerod:
     name: "Hillerød Bibliotekerne"
     description: "The library site for Hillerød"
@@ -562,15 +573,7 @@ sites:
     secondary-domains:
       - www.kertemindebibliotekerne.dk
     autogenerateRoutes: true
-    # Pin down to specific version until we figure out what's wrong
-    # with their database. When ready, revert the commit that added
-    # this.
-    releaseImageRepository: ghcr.io/danskernesdigitalebibliotek
-    releaseImageName: dpl-cms-source
-    dpl-cms-release: 2025.36.1
-    go-release: 2025.38.1
-    php-version: 8.1
-    << : [ *disk-size-medium ]
+    << : [ *default-release-image-source, *disk-size-medium ]
   kobenhavn:
     name: "Københavns Biblioteker"
     description: "The main library site for København"
@@ -581,7 +584,7 @@ sites:
       - varnish.main.kobenhavn.dplplat01.dpl.reload.dk
     plan: webmaster
     deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHaTkDvjLW/b2qVj8FIvtX9x3TxFFZTENn+w2CFELeoC"
-    <<: [ *webmasters-on-weekly-release-cycle, *disk-size-large ]
+    <<: [ *holdback-40, *disk-size-large ]
   koge:
     name: "KøgeBibliotekerne"
     description: "The library site for Køge"
@@ -730,15 +733,7 @@ sites:
     secondary-domains:
       - odensebib.dk
     autogenerateRoutes: true
-    # Pin down to specific version until we figure out what's making
-    # the updata fail. When ready, revert the commit that added this.
-    releaseImageRepository: ghcr.io/danskernesdigitalebibliotek
-    releaseImageName: dpl-cms-source
-    dpl-cms-release: 2025.36.1
-    moduletest-dpl-cms-release: 2025.36.1
-    go-release: 2025.36.3
-    php-version: 8.1
-    <<: [ *disk-size-medium ]
+    <<: [ *webmasters-on-weekly-release-cycle, *disk-size-medium ]
   odsherred:
     name: "Odsherred Bibliotek og Kulturhuse"
     description: "The library site for Odsherred"
