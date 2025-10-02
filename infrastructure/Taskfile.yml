@@ -287,14 +287,6 @@ tasks:
       cmds:
         - task/scripts/provision-cert-manager.sh
 
-    support:verify:cert-manager:
-      deps: [cluster:auth]
-      summary: Verify cert-manager
-      desc: Attempts to verify that cert-manager is installed and configured correctly.
-      cmds:
-        - cm-verifier
-        - kubectl get pods --namespace cert-manager
-
     support:provision:minio:
       deps: [cluster:auth]
       summary: Set the DIFF environment variable to any value to switch to diffing instead of an actual upgrade.
