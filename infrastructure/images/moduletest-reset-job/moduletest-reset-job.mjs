@@ -5,8 +5,6 @@ if (!projectName) {
   throw Error("No 'projectName' provided");
 }
 
-const azureDatabaseHost = $.env.AZURE_DATABASE_HOST;
-
 const sourceNamespace = projectName + "-main";
 const sourceDatabaseConnectionInfo = await getDatabaseConnectionInfo(sourceNamespace);
 await makeDatabaseDump(sourceDatabaseConnectionInfo, projectName);
@@ -58,12 +56,13 @@ async function getDatabaseConnectionInfo(namespace) {
 
   const databaseConnectionInfo = {
     databaseName: data.MARIADB_DATABASE,
-    databaseHost: azureDatabaseHost,
+    databaseHost: data.MARIADB_HOST,
     databaseUser:  data.MARIADB_USERNAME,
     databasePassword: data.MARIADB_PASSWORD,
   };
 
   if(data.MARIADB_DATABASE_OVERRIDE) {
+    echo('using OVERRIDE variables');
     databaseConnectionInfo.databaseName = data.MARIADB_DATABASE_OVERRIDE;
     databaseConnectionInfo.databaseHost = data.MARIADB_HOST_OVERRIDE;
     databaseConnectionInfo.databasePassword = data.MARIADB_PASSWORD_OVERRIDE;
