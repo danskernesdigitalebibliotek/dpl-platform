@@ -104,7 +104,7 @@ async function importMainDumpIntoModuletestDatabase(databaseConnectionInfo, proj
   } = databaseConnectionInfo;
 
   try {
-    await $`kubectl exec -n ${projectName}-moduletest deployment/cli -- bash -c "mariadb --user=${databaseUser} --host=${databaseHost} --password=${databasePassword} ${databaseName} < /tmp/${projectName}-dump.sql"`
+    await $`kubectl exec -n ${projectName}-moduletest deployment/cli -- bash -c "drush drop && mariadb --user=${databaseUser} --host=${databaseHost} --password=${databasePassword} ${databaseName} < /tmp/${projectName}-dump.sql"`
   } catch(error) {
     echo(`Failed to import dump into ${projectName}-moduletest's database`, error.stderr);
     throw Error(`Failed to import dump into ${projectName}-moduletest's database`, { cause: error });
