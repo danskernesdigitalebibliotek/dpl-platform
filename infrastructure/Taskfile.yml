@@ -1102,7 +1102,7 @@ tasks:
         TARGET_PROJECT: "{{.TARGET_PROJECT}}"
         TARGET_ENV: "{{.TARGET_ENV}}"
       cmds:
-        - lagoon ssh --project {{.TARGET_PROJECT}} --environment {{.TARGET_ENV}} -C "drush -y rsync @lagoon.{{.SOURCE_PROJECT}}-{{.SOURCE_ENV}}:%files @self:%files -- --omit-dir-times --no-perms --no-group --no-owner --no-times --chmod=ugo=rwX --delete --exclude=styles/* --delete-excluded"
+        - lagoon ssh --project {{.TARGET_PROJECT}} --environment {{.TARGET_ENV}} -C "drush -y rsync @lagoon.{{.SOURCE_PROJECT}}-{{.SOURCE_ENV}}:%files @self:%files -- --omit-dir-times --no-perms --no-group --no-owner --no-times --chmod=ugo=rwX --delete --exclude=/styles/* --delete-excluded"
         - lagoon ssh --project {{.TARGET_PROJECT}} --environment {{.TARGET_ENV}} -C "drush sql-drop -y; drush -y sql-sync @lagoon.{{.SOURCE_PROJECT}}-{{.SOURCE_ENV}} @self --create-db"
         - lagoon deploy latest --project {{.TARGET_PROJECT}} --environment {{.TARGET_ENV}} --force
 
