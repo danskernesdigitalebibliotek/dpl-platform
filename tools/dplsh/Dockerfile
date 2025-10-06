@@ -16,9 +16,6 @@ FROM mcr.microsoft.com/azure-cli:2.63.0
 ARG TASK_VERSION=v3.40.0
 # See https://github.com/uselagoon/lagoon-cli/releases
 ARG LAGOON_CLI_RELEASE=v0.31.1
-# https://github.com/alenkacz/cert-manager-verifier/releases
-# Exclude the "v" from the version.
-ARG CERT_MANAGER_VERIFIER_VERSION=0.3.0
 
 # The kubectl version can be bumped as we upgrade the cluster minor version.
 ARG KUBECTL_VERSION=v1.29.5
@@ -64,17 +61,6 @@ COPY --from=terraform /bin/terraform /bin/
 
 # Add Helm
 COPY --from=helm /usr/bin/helm /usr/bin/
-
-# Add cert-manager verifyer
-RUN ( \
-    set -x; cd "$(mktemp -d)" && \
-    OS="$(uname)" && \
-    ARCH="$(uname -m | sed -e 's/\(arm\)\(64\)\?.*/\1\2/' -e 's/aarch64$/arm64/')" && \
-    ARTIFACT_NAME="cert-manager-verifier_${CERT_MANAGER_VERIFIER_VERSION}_${OS}_${ARCH}.tar.gz" && \
-    curl -fsSLO "https://github.com/alenkacz/cert-manager-verifier/releases/download/v${CERT_MANAGER_VERIFIER_VERSION}/${ARTIFACT_NAME}" && \
-    tar zxvf "${ARTIFACT_NAME}" && \
-    mv ./cm-verifier /usr/bin/ \
-  )
 
 # Create a dplsh user and switch to it to avoid running the shell as root
 RUN adduser -D --shell /bin/bash dplsh
