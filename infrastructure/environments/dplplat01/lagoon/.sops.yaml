@@ -1,0 +1,4 @@
+creation_rules:
+  - path_regex: \.sops\.yaml$
+    azure_keyvault: https://kv-dplplat01-c3b2.vault.azure.net/keys/sops-key/d82fe2456d6e4c4aaaaf808226bd5769
+    encrypted_comment_regex: ENCRYPT
