@@ -1,0 +1,1033 @@
+# These values must be set on install, as they don't have sensible defaults.
+#ENCRYPT
+harborAdminPassword: ENC[AES256_GCM,data:PodB8WcJneZw9rWEbZFHEw==,iv:zLmaadlrrAd9SMwsK+mUeYfnbiYOVredPdhJ5RxiHrE=,tag:+S2VZBO2bmi/U7zSpgOP4w==,type:str]
+elasticsearchURL: none
+#ENCRYPT
+harborURL: ENC[AES256_GCM,data:P2X6mpq0E5soJ+4mZW3lBUPrlNGxRVkAWIlpREjy5yIcVlhx9rloY9odnFk=,iv:ES/W0MEGAHFhJj/Vb6Y+nsBxrLxJOBXMyQXKW2P6hH4=,tag:Idsai0RktsTP8jBjDrzOuw==,type:str]
+kibanaURL: none
+#ENCRYPT
+s3BAASSecretAccessKey: ENC[AES256_GCM,data:WEEyXfvKGkH+yDfr7DffkhHa+aS3jQ==,iv:4lmFWGxBFt8/5n/DcnLB1gbaPwJgu/ShOQVkmTpRwnA=,tag:nbpKLOf5aTXtLrPwmbs/6Q==,type:str]
+#ENCRYPT
+s3BAASAccessKeyID: ENC[AES256_GCM,data:FoURtEiVZBanqx4i7R9uNKFoTRuMKQ==,iv:knOS8oa/7maF0YA3OisPGXCgUJI9voGz5XzT8/FetpE=,tag:XEdGzsbUqO0KJYyEUbYT3A==,type:str]
+#ENCRYPT
+s3FilesAccessKeyID: ENC[AES256_GCM,data:rtDfh9uDM5T1r5609ZPpaRK+j/Pr/g==,iv:x1mO+j1N6rCst57mHOE1cmVyiL+Cz7u+7yX9KaB/UhI=,tag:sSC7t4+yrjcIWpkQbwWgbA==,type:str]
+#ENCRYPT
+s3FilesBucket: ENC[AES256_GCM,data:j4R6U2IRyKGC6xS2,iv:ZpndvnSV4HXS8MyGoe/a0CQYTEA6wgM9asZlY03cLuc=,tag:clae8wvmy9Q488/iU67yVA==,type:str]
+#ENCRYPT
+s3FilesHost: ENC[AES256_GCM,data:v/WzQe/yjlkn2/Dnojuy1lpOBRJ6zWbcS8Xml670+M7Qr63l0OHZ5zVXjEo=,iv:74VQkOl33uWitJnQfi0LaG6T/gf6rb5EJ+OngJSDuqI=,tag:D1+qlZELbzoFMWVoGeNgNw==,type:str]
+#ENCRYPT
+s3FilesSecretAccessKey: ENC[AES256_GCM,data:rSOymylbZyUyr65zhUMbgYL3+FLD0g==,iv:Y4XKdouvYYhrHeF4ZwSv5xw9GaIuPj4+WOxgpbH4VoM=,tag:q35XDqzQjwZx7AnXYJiu0g==,type:str]
+#ENCRYPT
+registry: ENC[AES256_GCM,data:4SJZjwtQR1Y=,iv:YkfARKYKMtzQf5meU6pXW6MceOAgX28fh24kF6IZBak=,tag:2X95+p/xBAV8HEuQh7/Vxw==,type:str]
+# These values are optional.
+# overwriteActiveStandbyTaskImage:
+# appspecific discovery.json settings
+# This should point to the publicly accessible ssh endpoint as a schema-less
+# URI (either domain or IP) for the ssh-token (or fallback ssh) service
+# e.g. ssh-token.example.com, ssh.example.com or 192.168.0.100
+# The port will be read from the sshToken (or ssh) port value
+# sshTokenEndpoint:
+# These values are optional depending on the services Lagoon is integrated with
+# in your environment.
+# gitlabAPIToken:
+# gitlabAPIURL:
+# bitbucketAPIToken:
+# bitbucketAPIURL:
+# s3Region:
+# These values may be set on install, otherwise the chart tries to guess
+# sensible defaults.
+# keycloakFrontEndURL: https://keycloak.example.com
+# lagoonAPIURL: https://api.example.com/graphql
+# lagoonUIURL: https://ui.example.com
+# lagoonWebhookURL: https://webhook-handler.example.com
+# These values are randomly generated on install if not otherwise defined.
+#ENCRYPT
+apiDBPassword: ENC[AES256_GCM,data:MIlgGOuIFyQ1saediujbkkM4FKu3hv5YaVJWdIkSv24=,iv:7dnWKYPWVbokPfxCxuiTsOR4lWwCbRsScrOxBvmqw3Q=,tag:bxIGYuBTalzev8UktBD2Uw==,type:str]
+#ENCRYPT
+jwtSecret: ENC[AES256_GCM,data:vV8HjFsZvYI48eYa8EHQZw/zB48iLNVLVc1ESoF8Qzo=,iv:ohQ5NJkD3885cIgevXsZC30kqDZzq2PQJmh9GRWfa9A=,tag:Wj0yK0Ng5m6oNDTU07QLLA==,type:str]
+#ENCRYPT
+keycloakAdminPassword: ENC[AES256_GCM,data:w1COM9gXAcBWa4FFeEk6Eg==,iv:CK2aMksxozcyZlK7h/BIO4bkU0bCqs6chdey11u8G84=,tag:FfvYAKBFv+kbiuUuRpLI/Q==,type:str]
+#ENCRYPT
+keycloakAPIClientSecret: ENC[AES256_GCM,data:sxW78NUbqYAx4VLw72KJ78ZOcVmLuDhqqTeU2NEnixtJTNLT,iv:R0+V0Gm1HN2+wNo7YW4UyyWJLr9cJGQs0Maufz4BmFU=,tag:FbeJnuIE2tz5FFObJlhcIQ==,type:str]
+#ENCRYPT
+keycloakAuthServerClientSecret: ENC[AES256_GCM,data:n6985wkJhVt/Wf7/Fse8WgDLaFoXHGOnRKv+61XFck9Sow79,iv:/+JKCTTHhIc5dgt6I9YcRhowqjQOFSKgF6z1GGv7rw0=,tag:bs/tkexfYivW5hy3oqBNsA==,type:str]
+#ENCRYPT
+keycloakDBPassword: ENC[AES256_GCM,data:U4l3a2UvMyrSNufPBDqKXfvrBQ8bXR8fj02FknE5WfE=,iv:q0epyPVj8CXhcGyU88l5v+SVypIaJrnc7TRJkCnD/MU=,tag:xouqmK9N5TLVEbSfjytziA==,type:str]
+#ENCRYPT
+keycloakLagoonAdminPassword: ENC[AES256_GCM,data:LyHuGzC2U74rUrps6LLtISAkBFonkVg7PFiUcDgMSdY=,iv:BkznlVENWWarYHLTmaDhtrjD1ZR21kxN8E4wGmIFEvg=,tag:IxJDBw3t2bUpEUt9OiK7Ng==,type:str]
+#ENCRYPT
+logsDBAdminPassword: ENC[AES256_GCM,data:ppybgBVDgXtEow==,iv:ylCJvyJRgGk4JCatw+7xZHQGsGOfnm0IYHVGxLVSeoI=,tag:nGmr/iZjOsx2WqK1TvIx+A==,type:str]
+#ENCRYPT
+keycloakLagoonOpensearchSyncClientSecret: ENC[AES256_GCM,data:wHVurluoJWcevRQpPqgqnXDhH15UyOk+wcYSYxakjZyyXjyF,iv:LMvFDjCIhv88XPz0bdaMKvqx/uGZZGY/LRaq71crxH8=,tag:mulDUECZZh6uoPSZXle7bA==,type:str]
+#ENCRYPT
+keycloakServiceAPIClientSecret: ENC[AES256_GCM,data:dSNVxN4d9mO1PF2ZVQ1LOrz45h0mWB9+OEijVIqip6wdTxKA,iv:R8AptNlG8fq4b5r92i8Om7Rgn6/w8DLCPuWlZ+z6d/w=,tag:TNi3fu7GvFq/nw+RPEQn/Q==,type:str]
+#ENCRYPT
+rabbitMQPassword: ENC[AES256_GCM,data:MWDuqpPUE3+FN2hvgB7s0V/gWeJmWH60SIuEUyVy2lo=,iv:tcN6GvgKEReq0Uo+HxfdLaEfubUcugaeS9tfiBIzlak=,tag:iiSQ6vEWVwPfX/hRf5kw4Q==,type:str]
+#ENCRYPT
+redisPassword: ENC[AES256_GCM,data:8Q31vK3T6PbxoW8NShxr+hFJcXPyeasfmEvbWvrFaeI=,iv:Xhwyis4JZmggAoOPtl5QVS8y6rAcdhCF7GAndkwFNIM=,tag:lUecvLqNuv7WVS9oiGpl+Q==,type:str]
+#ENCRYPT
+k8upBackupBucketName: ENC[AES256_GCM,data:G09wd/bUysWEDFfCSLxu0IVPOip1UjUvzw==,iv:2f3gsidly/IZie7AVBlU3jZVhQvjBZKqhyEnzS1umEA=,tag:6OlOfOWAXSyMy1dGQ5PUiA==,type:str]
+# This value is set to match jwtSecret on existing installs if not defined.
+# It should only ever be set here for backwards compatibility.
+#ENCRYPT
+projectSeed: ENC[AES256_GCM,data:rPlWET9yepGqBpTn5OVA/gv6CvpJB9sjuFxeF4eToOo=,iv:dZl8KOqKv2s3jUWOhkKpIJEIb3ktqeUJ7UagUNFXLG8=,tag:IvSuZPvr35+l1lLsu3+o4w==,type:str]
+# These values are the chart defaults, but can be overridden.
+imagePullSecrets: []
+rabbitMQUsername: lagoon
+k8upS3Endpoint: ""
+#ENCRYPT
+keycloakAdminUser: ENC[AES256_GCM,data:b2hTJOM=,iv:psG1rFL1zqhvS+qibsH/sQis5LhntfK/53xuXy1cIBU=,tag:dQDQUv8Gmf1BVvyDlny6ng==,type:str]
+# this is required if email sending is to be enabled in keycloak
+# keycloakAdminEmail: admin@example.com
+buildDeployImage:
+    edge:
+        enabled: false
+# Set to an empty string to support Harbor v1.x.x
+harborAPIVersion: v2.0
+# this default podSecurityContext is set for all services and can be overridden
+# on the service level.
+podSecurityContext:
+    fsGroup: 10001
+    runAsGroup: 0
+    runAsUser: 10000
+# Set the default ingressClass for the exposed lagoon-core services
+# it can be overridden per-service if needed via ingress.ingressClassName
+# Note that this is the Class, not the IngressName
+# defaultIngressClassName: nginx
+# this default image tag is set for all services and can be overridden
+# on the service level, if not set it falls back to chart appVersion.
+imageTag: ""
+# This value is false by default, which means that Developers can SSH to
+# Development environments as per the Lagoon documentation
+# (https://docs.lagoon.sh/administering-lagoon/rbac/#developer).
+# Set this to true to:
+# * block Developers from SSH access to Lagoon environments; and
+# * stop Developers from getting a redirect message when trying to SSH into the
+#   ssh-token service.
+# blockDeveloperSSH: false
+# the following services are part of the lagoon-core chart
+api:
+    replicaCount: 2
+    image:
+        repository: uselagoon/api
+        pullPolicy: Always
+        # Overrides the image tag whose default is the chart appVersion.
+        tag: ""
+    service:
+        type: ClusterIP
+        port: 80
+    ingress:
+        enabled: true
+        annotations:
+            kubernetes.io/tls-acme: "true"
+            kubernetes.io/ingress.class: nginx
+            nginx.ingress.kubernetes.io/ssl-redirect: "false"
+        hosts:
+            - host: api.lagoon.dplplat01.dpl.reload.dk
+              paths:
+                - /
+        tls:
+            - secretName: api-tls
+              hosts:
+                - api.lagoon.dplplat01.dpl.reload.dk
+    podAnnotations: {}
+    securityContext: {}
+    resources:
+        requests:
+            memory: 256Mi
+            cpu: 500m
+    additionalEnvs: null
+    #   FOO: Bar
+    autoscaling:
+        enabled: false
+        minReplicas: 1
+        maxReplicas: 100
+        targetCPUUtilizationPercentage: 80
+        # targetMemoryUtilizationPercentage: 80
+    tolerations:
+        - key: CriticalAddonsOnly
+          operator: Exists
+    affinity:
+        nodeAffinity:
+            requiredDuringSchedulingIgnoredDuringExecution:
+                nodeSelectorTerms:
+                    - matchExpressions:
+                        - key: noderole.dplplatform
+                          operator: In
+                          values:
+                            - system
+apiDB:
+    image:
+        repository: uselagoon/api-db
+        pullPolicy: Always
+        # Overrides the image tag whose default is the chart appVersion.
+        tag: ""
+    service:
+        type: ClusterIP
+        port: 3306
+    podAnnotations:
+        appuio.ch/backupcommand: |
+            /bin/sh -c "mysqldump --max-allowed-packet=500M --events --routines --quick --add-locks --no-autocommit --single-transaction --all-databases"
+        backup.appuio.ch/file-extension: .api-db.sql
+    securityContext: {}
+    resources:
+        requests:
+            memory: 512Mi
+            cpu: 500m
+    additionalEnvs: null
+    #   FOO: Bar
+    storageSize: 128Gi
+    terminationGracePeriodSeconds: 30
+    startupProbe:
+        # 60*10s period = 10 minutes
+        failureThreshold: 60
+        exec:
+            command:
+                - test
+                - -f
+                - /tmp/mariadb-init-complete
+    livenessProbe:
+        exec:
+            command:
+                - mysqladmin
+                - --connect-timeout=4
+                - ping
+    readinessProbe:
+        exec:
+            command:
+                - /usr/share/container-scripts/mysql/readiness-probe.sh
+    tolerations:
+        - key: CriticalAddonsOnly
+          operator: Exists
+    affinity:
+        nodeAffinity:
+            requiredDuringSchedulingIgnoredDuringExecution:
+                nodeSelectorTerms:
+                    - matchExpressions:
+                        - key: noderole.dplplatform
+                          operator: In
+                          values:
+                            - system
+apiRedis:
+    image:
+        repository: uselagoon/api-redis
+        pullPolicy: Always
+        # Overrides the image tag whose default is the chart appVersion.
+        tag: ""
+    podAnnotations: {}
+    securityContext: {}
+    resources:
+        requests:
+            memory: 64Mi
+            cpu: 50m
+    additionalEnvs: null
+    #   FOO: Bar
+    persistence:
+        enabled: false
+        size: 100Mi
+    service:
+        type: ClusterIP
+        port: 6379
+    tolerations:
+        - key: CriticalAddonsOnly
+          operator: Exists
+    affinity:
+        nodeAffinity:
+            requiredDuringSchedulingIgnoredDuringExecution:
+                nodeSelectorTerms:
+                    - matchExpressions:
+                        - key: noderole.dplplatform
+                          operator: In
+                          values:
+                            - system
+keycloak:
+    # keycloak realm and email settings configuration
+    realmSettings:
+        enabled: false
+        # the full list of config settings is available TODO
+        options:
+            resetPasswordAllowed: true
+            rememberMe: true
+    email:
+        enabled: false
+        settings:
+            host: mailhog
+            port: "1025"
+            from: lagoon@example.com
+            fromDisplayName: Lagoon
+            replyTo: lagoon@example.com
+            ssl: "false"
+            starttls: "false"
+            auth: "false"
+    replicaCount: 1
+    image:
+        repository: uselagoon/keycloak
+        pullPolicy: Always
+        # Overrides the image tag whose default is the chart appVersion.
+        tag: ""
+    podAnnotations: {}
+    securityContext: {}
+    resources:
+        requests:
+            memory: 1Gi
+            cpu: 500m
+    additionalEnvs: null
+    #   FOO: Bar
+    service:
+        type: ClusterIP
+        port: 8080
+    ingress:
+        enabled: true
+        annotations:
+            kubernetes.io/tls-acme: "true"
+            kubernetes.io/ingress.class: nginx
+        hosts:
+            - host: keycloak.lagoon.dplplat01.dpl.reload.dk
+              paths:
+                - /
+        tls:
+            - secretName: keycloak-tls
+              hosts:
+                - keycloak.lagoon.dplplat01.dpl.reload.dk
+    tolerations:
+        - key: CriticalAddonsOnly
+          operator: Exists
+    affinity:
+        nodeAffinity:
+            requiredDuringSchedulingIgnoredDuringExecution:
+                nodeSelectorTerms:
+                    - matchExpressions:
+                        - key: noderole.dplplatform
+                          operator: In
+                          values:
+                            - system
+keycloakDB:
+    replicaCount: 1
+    image:
+        repository: uselagoon/keycloak-db
+        pullPolicy: Always
+        # Overrides the image tag whose default is the chart appVersion.
+        tag: ""
+    service:
+        type: ClusterIP
+        port: 3306
+    podAnnotations:
+        appuio.ch/backupcommand: |
+            /bin/sh -c "mysqldump --max-allowed-packet=500M --events --routines --quick --add-locks --no-autocommit --single-transaction --all-databases"
+        backup.appuio.ch/file-extension: .keycloak-db.sql
+    securityContext: {}
+    resources:
+        requests:
+            memory: 512Mi
+            cpu: 100m
+    additionalEnvs: null
+    #   FOO: Bar
+    terminationGracePeriodSeconds: 30
+    startupProbe:
+        # 60*10s period = 10 minutes
+        failureThreshold: 60
+        tcpSocket:
+            port: mariadb
+    livenessProbe:
+        exec:
+            command:
+                - mysqladmin
+                - --connect-timeout=4
+                - ping
+    readinessProbe:
+        exec:
+            command:
+                - /usr/share/container-scripts/mysql/readiness-probe.sh
+    tolerations:
+        - key: CriticalAddonsOnly
+          operator: Exists
+    affinity:
+        nodeAffinity:
+            requiredDuringSchedulingIgnoredDuringExecution:
+                nodeSelectorTerms:
+                    - matchExpressions:
+                        - key: noderole.dplplatform
+                          operator: In
+                          values:
+                            - system
+broker:
+    replicaCount: 3
+    image:
+        repository: uselagoon/broker
+        pullPolicy: Always
+        # Overrides the image tag whose default is the chart appVersion.
+        tag: ""
+    service:
+        type: ClusterIP
+        ports:
+            epmd: 4369
+            amqp: 5672
+            http: 15672
+            metrics: 15692
+        amqpExternal:
+            enabled: false
+            type: LoadBalancer
+            port: 5672
+    serviceMonitor:
+        enabled: false
+    podAnnotations: {}
+    securityContext: {}
+    resources:
+        requests:
+            memory: 1Gi
+            cpu: 500m
+    additionalEnvs: null
+    #   FOO: Bar
+    serviceAccount:
+        # Annotations to add to the service account
+        annotations: {}
+        # The name of the service account to use.
+        # If not set and create is true, a name is generated using the fullname
+        # template
+        name: ""
+    autoscaling:
+        enabled: false
+        minReplicas: 1
+        maxReplicas: 100
+        targetCPUUtilizationPercentage: 80
+        # targetMemoryUtilizationPercentage: 80
+    ingress:
+        enabled: true
+        annotations:
+            kubernetes.io/tls-acme: "true"
+            kubernetes.io/ingress.class: nginx
+        hosts:
+            - host: broker.lagoon.dplplat01.dpl.reload.dk
+              paths:
+                - /
+        tls:
+            - secretName: broker-tls
+              hosts:
+                - broker.lagoon.dplplat01.dpl.reload.dk
+    tolerations:
+        - key: CriticalAddonsOnly
+          operator: Exists
+    affinity:
+        nodeAffinity:
+            requiredDuringSchedulingIgnoredDuringExecution:
+                nodeSelectorTerms:
+                    - matchExpressions:
+                        - key: noderole.dplplatform
+                          operator: In
+                          values:
+                            - system
+authServer:
+    replicaCount: 2
+    image:
+        repository: uselagoon/auth-server
+        pullPolicy: Always
+        # Overrides the image tag whose default is the chart appVersion.
+        tag: ""
+    service:
+        type: ClusterIP
+        port: 80
+        annotations: {}
+    podAnnotations: {}
+    securityContext: {}
+    resources:
+        requests:
+            memory: 64Mi
+            cpu: 50m
+    additionalEnvs: null
+    #   FOO: Bar
+    autoscaling:
+        enabled: false
+        minReplicas: 1
+        maxReplicas: 100
+        targetCPUUtilizationPercentage: 80
+        # targetMemoryUtilizationPercentage: 80
+    tolerations:
+        - key: CriticalAddonsOnly
+          operator: Exists
+    affinity:
+        nodeAffinity:
+            requiredDuringSchedulingIgnoredDuringExecution:
+                nodeSelectorTerms:
+                    - matchExpressions:
+                        - key: noderole.dplplatform
+                          operator: In
+                          values:
+                            - system
+webhooks2tasks:
+    enabled: true
+    replicaCount: 2
+    image:
+        repository: uselagoon/webhooks2tasks
+        pullPolicy: Always
+        # Overrides the image tag whose default is the chart appVersion.
+        tag: ""
+    podAnnotations: {}
+    securityContext: {}
+    resources:
+        requests:
+            memory: 64Mi
+            cpu: 50m
+    additionalEnvs: null
+    #   FOO: Bar
+    autoscaling:
+        enabled: false
+        minReplicas: 1
+        maxReplicas: 100
+        targetCPUUtilizationPercentage: 80
+        # targetMemoryUtilizationPercentage: 80
+    tolerations:
+        - key: CriticalAddonsOnly
+          operator: Exists
+    affinity:
+        nodeAffinity:
+            requiredDuringSchedulingIgnoredDuringExecution:
+                nodeSelectorTerms:
+                    - matchExpressions:
+                        - key: noderole.dplplatform
+                          operator: In
+                          values:
+                            - system
+webhookHandler:
+    enabled: true
+    replicaCount: 2
+    image:
+        repository: uselagoon/webhook-handler
+        pullPolicy: Always
+        # Overrides the image tag whose default is the chart appVersion.
+        tag: ""
+    podAnnotations: {}
+    securityContext: {}
+    resources:
+        requests:
+            memory: 64Mi
+            cpu: 50m
+    additionalEnvs: null
+    #   FOO: Bar
+    service:
+        type: ClusterIP
+        port: 3000
+    ingress:
+        enabled: true
+        annotations:
+            kubernetes.io/tls-acme: "true"
+            kubernetes.io/ingress.class: nginx
+        hosts:
+            - host: webhookhandler.lagoon.dplplat01.dpl.reload.dk
+              paths:
+                - /
+        tls:
+            - secretName: webhookhandler-tls
+              hosts:
+                - webhookhandler.lagoon.dplplat01.dpl.reload.dk
+    tolerations:
+        - key: CriticalAddonsOnly
+          operator: Exists
+    affinity:
+        nodeAffinity:
+            requiredDuringSchedulingIgnoredDuringExecution:
+                nodeSelectorTerms:
+                    - matchExpressions:
+                        - key: noderole.dplplatform
+                          operator: In
+                          values:
+                            - system
+    autoscaling:
+        enabled: false
+        minReplicas: 1
+        maxReplicas: 100
+        targetCPUUtilizationPercentage: 80
+        # targetMemoryUtilizationPercentage: 80
+ui:
+    enabled: true
+    replicaCount: 2
+    image:
+        repository: uselagoon/ui
+        pullPolicy: Always
+        # Overrides the image tag whose default is the chart appVersion.
+        tag: ""
+    podAnnotations: {}
+    securityContext: {}
+    resources:
+        requests:
+            memory: 128Mi
+            cpu: 50m
+    additionalEnvs: null
+    #   FOO: Bar
+    service:
+        type: ClusterIP
+        port: 3000
+    ingress:
+        enabled: true
+        annotations:
+            kubernetes.io/tls-acme: "true"
+            kubernetes.io/ingress.class: nginx
+        hosts:
+            - host: ui.lagoon.dplplat01.dpl.reload.dk
+              paths:
+                - /
+        tls:
+            - secretName: ui-tls
+              hosts:
+                - ui.lagoon.dplplat01.dpl.reload.dk
+    autoscaling:
+        enabled: false
+        minReplicas: 1
+        maxReplicas: 100
+        targetCPUUtilizationPercentage: 80
+        # targetMemoryUtilizationPercentage: 80
+    tolerations:
+        - key: CriticalAddonsOnly
+          operator: Exists
+    affinity:
+        nodeAffinity:
+            requiredDuringSchedulingIgnoredDuringExecution:
+                nodeSelectorTerms:
+                    - matchExpressions:
+                        - key: noderole.dplplatform
+                          operator: In
+                          values:
+                            - system
+actionsHandler:
+    enabled: true
+    replicaCount: 2
+    image:
+        repository: uselagoon/actions-handler
+        pullPolicy: Always
+        # Overrides the image tag whose default is the chart appVersion.
+        tag: ""
+    autoscaling:
+        enabled: false
+        minReplicas: 1
+        maxReplicas: 100
+        targetCPUUtilizationPercentage: 80
+        # targetMemoryUtilizationPercentage: 80
+    additionalEnvs: null
+    #   FOO: Bar
+    resources:
+        requests:
+            memory: 16Mi
+            cpu: 10m
+    tolerations:
+        - key: CriticalAddonsOnly
+          operator: Exists
+    affinity:
+        nodeAffinity:
+            requiredDuringSchedulingIgnoredDuringExecution:
+                nodeSelectorTerms:
+                    - matchExpressions:
+                        - key: noderole.dplplatform
+                          operator: In
+                          values:
+                            - system
+backupHandler:
+    enabled: true
+    replicaCount: 2
+    image:
+        repository: uselagoon/backup-handler
+        pullPolicy: Always
+        # Overrides the image tag whose default is the chart appVersion.
+        tag: ""
+    podAnnotations: {}
+    securityContext: {}
+    resources:
+        requests:
+            memory: 32Mi
+            cpu: 50m
+    additionalEnvs: null
+    #   FOO: Bar
+    service:
+        type: ClusterIP
+        port: 3000
+    ingress:
+        enabled: true
+        annotations:
+            kubernetes.io/tls-acme: "true"
+            kubernetes.io/ingress.class: nginx
+        hosts:
+            - host: backuphandler.lagoon.dplplat01.dpl.reload.dk
+              paths:
+                - /
+        tls:
+            - secretName: backuphandler-tls
+              hosts:
+                - backuphandler.lagoon.dplplat01.dpl.reload.dk
+    autoscaling:
+        enabled: false
+        minReplicas: 1
+        maxReplicas: 100
+        targetCPUUtilizationPercentage: 80
+        # targetMemoryUtilizationPercentage: 80
+    tolerations:
+        - key: CriticalAddonsOnly
+          operator: Exists
+    affinity:
+        nodeAffinity:
+            requiredDuringSchedulingIgnoredDuringExecution:
+                nodeSelectorTerms:
+                    - matchExpressions:
+                        - key: noderole.dplplatform
+                          operator: In
+                          values:
+                            - system
+insightsHandler:
+    enabled: false
+    replicaCount: 2
+    image:
+        repository: uselagoon/insights-handler
+        pullPolicy: Always
+        # Overrides the image tag whose default is the chart appVersion.
+        tag: v0.0.4
+    podAnnotations: {}
+    securityContext: {}
+    resources:
+        requests:
+            memory: 32Mi
+            cpu: 10m
+    additionalEnvs: null
+    #   FOO: Bar
+    autoscaling:
+        enabled: false
+        minReplicas: 1
+        maxReplicas: 100
+        targetCPUUtilizationPercentage: 80
+        # targetMemoryUtilizationPercentage: 80
+    trivy:
+        enabled: false
+        image:
+            repository: aquasec/trivy
+            tag: 0.48.0
+        service:
+            type: ClusterIP
+            port: 4954
+logs2notifications:
+    enabled: true
+    replicaCount: 2
+    image:
+        repository: uselagoon/logs2notifications
+        pullPolicy: Always
+        # Overrides the image tag whose default is the chart appVersion.
+        tag: ""
+    logs2slack:
+        disabled: true
+    logs2rocketchat:
+        disabled: true
+    logs2microsoftteams:
+        disabled: true
+    logs2email:
+        disabled: true
+    logs2webhooks:
+        disabled: true
+    logs2s3:
+        disabled: false
+    podAnnotations: {}
+    securityContext: {}
+    resources:
+        requests:
+            memory: 16Mi
+            cpu: 10m
+    additionalEnvs: null
+    #   FOO: Bar
+    autoscaling:
+        enabled: false
+        minReplicas: 1
+        maxReplicas: 100
+        targetCPUUtilizationPercentage: 80
+        # targetMemoryUtilizationPercentage: 80
+    tolerations:
+        - key: CriticalAddonsOnly
+          operator: Exists
+    affinity:
+        nodeAffinity:
+            requiredDuringSchedulingIgnoredDuringExecution:
+                nodeSelectorTerms:
+                    - matchExpressions:
+                        - key: noderole.dplplatform
+                          operator: In
+                          values:
+                            - system
+drushAlias:
+    enabled: true
+    replicaCount: 2
+    image:
+        repository: uselagoon/drush-alias
+        pullPolicy: Always
+        # Overrides the image tag whose default is "latest".
+        tag: v3.1.0
+    podAnnotations: {}
+    securityContext: {}
+    resources:
+        requests:
+            memory: 8Mi
+            cpu: 10m
+    additionalEnvs: null
+    #   FOO: Bar
+    service:
+        type: ClusterIP
+        port: 8080
+    ingress:
+        enabled: true
+        annotations:
+            kubernetes.io/tls-acme: "true"
+            kubernetes.io/ingress.class: nginx
+        hosts:
+            - host: drushalias.lagoon.dplplat01.dpl.reload.dk
+              paths:
+                - /
+        tls:
+            - secretName: drushalias-tls
+              hosts:
+                - drushalias.lagoon.dplplat01.dpl.reload.dk
+    autoscaling:
+        enabled: false
+        minReplicas: 1
+        maxReplicas: 100
+        targetCPUUtilizationPercentage: 80
+        # targetMemoryUtilizationPercentage: 80
+    tolerations:
+        - key: CriticalAddonsOnly
+          operator: Exists
+    affinity:
+        nodeAffinity:
+            requiredDuringSchedulingIgnoredDuringExecution:
+                nodeSelectorTerms:
+                    - matchExpressions:
+                        - key: noderole.dplplatform
+                          operator: In
+                          values:
+                            - system
+ssh:
+    enabled: true
+    replicaCount: 2
+    image:
+        repository: uselagoon/ssh
+        pullPolicy: Always
+        # Overrides the image tag whose default is the chart appVersion.
+        tag: ""
+    podAnnotations: {}
+    securityContext: {}
+    resources:
+        requests:
+            memory: 128Mi
+            cpu: 500m
+    additionalEnvs: null
+    #   FOO: Bar
+    service:
+        type: LoadBalancer
+        port: 22
+    tolerations:
+        - key: CriticalAddonsOnly
+          operator: Exists
+    affinity:
+        nodeAffinity:
+            requiredDuringSchedulingIgnoredDuringExecution:
+                nodeSelectorTerms:
+                    - matchExpressions:
+                        - key: noderole.dplplatform
+                          operator: In
+                          values:
+                            - system
+    autoscaling:
+        enabled: false
+        minReplicas: 1
+        maxReplicas: 100
+        targetCPUUtilizationPercentage: 80
+        # targetMemoryUtilizationPercentage: 80
+workflows:
+    enabled: true
+    replicaCount: 2
+    image:
+        repository: uselagoon/workflows
+        pullPolicy: Always
+        # Overrides the image tag whose default is the chart appVersion.
+        tag: ""
+    podAnnotations: {}
+    securityContext: {}
+    resources:
+        requests:
+            memory: 16Mi
+            cpu: 10m
+    additionalEnvs: null
+    #   FOO: Bar
+    autoscaling:
+        enabled: false
+        minReplicas: 1
+        maxReplicas: 100
+        targetCPUUtilizationPercentage: 80
+        # targetMemoryUtilizationPercentage: 80
+    tolerations:
+        - key: CriticalAddonsOnly
+          operator: Exists
+    affinity:
+        nodeAffinity:
+            requiredDuringSchedulingIgnoredDuringExecution:
+                nodeSelectorTerms:
+                    - matchExpressions:
+                        - key: noderole.dplplatform
+                          operator: In
+                          values:
+                            - system
+nats:
+    enabled: false
+    # inject additional config
+    additionalVolumes:
+        - name: lagoon-core-nats-tls
+          secret:
+            secretName: lagoon-core-nats-tls
+    additionalVolumeMounts:
+        - name: lagoon-core-nats-tls
+          mountPath: /etc/lagoon-core-nats-tls
+    nats:
+        config:
+            - name: lagoon-core
+              secret:
+                secretName: lagoon-core-nats-conf
+    cluster:
+        enabled: true
+        name: lagoon-core
+        # internal cluster IPs are not routable, so don't advertise them
+        noAdvertise: true
+    natsbox:
+        enabled: false
+    # to connect to nats, pods must have the right label
+    networkPolicy:
+        enabled: true
+        allowExternal: false
+        # allow inbound leaf connections
+        extraIngress:
+            - ports:
+                - port: 7422
+                  protocol: TCP
+natsService:
+    # this service is enabled via nats.enabled
+    type: LoadBalancer
+    leafnodes:
+        port: 7422
+natsConfig:
+    users:
+        lagoonRemote: []
+        # Remote cluster  credentials and the account they have access to are
+        # specified here.
+        #
+        # - user: ...
+        #   password: ...
+    tls: {}
+    # If the lagoon-core-nats-tls secret should be created by the lagoon-core
+    # chart, certificate values can be specified directly in secretData.
+    # Configuring TLS this way also allows specifying a custom ca.crt.
+    #
+    # secretData:
+    #   ca.crt: |
+    #     ...
+    #   server.crt: |
+    #     ...
+    #   server.key: |
+    #     ...
+    #
+    # If the TLS secret is created outside the lagoon-core chart, it should be
+    # named lagoon-core-nats-tls. This secret should contain fields tls.crt and
+    # tls.key, and the certificate should be issued by a public authority.
+sshPortalAPI:
+    enabled: false
+    replicaCount: 2
+    image:
+        repository: ghcr.io/uselagoon/lagoon-ssh-portal/ssh-portal-api
+        pullPolicy: IfNotPresent
+        # Overrides the image tag whose default is the chart appVersion.
+        tag: v0.30.1
+    podAnnotations: {}
+    securityContext: {}
+    resources:
+        requests:
+            memory: 8Mi
+            cpu: 10m
+    additionalEnvs: null
+    #   FOO: Bar
+    autoscaling:
+        enabled: false
+        minReplicas: 1
+        maxReplicas: 100
+        targetCPUUtilizationPercentage: 80
+        # targetMemoryUtilizationPercentage: 80
+    serviceAccount:
+        # Annotations to add to the service account
+        annotations: {}
+        # The name of the service account to use.
+        # If not set and create is true, a name is generated using the fullname
+        # template
+        name: ""
+    serviceMonitor:
+        enabled: true
+    service:
+        type: ClusterIP
+        ports:
+            metrics: 9911
+opensearchSync:
+    enabled: false
+    image:
+        repository: ghcr.io/uselagoon/lagoon-opensearch-sync
+        pullPolicy: IfNotPresent
+        # Overrides the image tag whose default is the chart appVersion.
+        tag: v0.7.1
+    # debug logging toggle
+    debug: false
+    # root certificate for the server certificate presented by opensearch
+    opensearchCACertificate: ""
+    # -----BEGIN CERTIFICATE-----
+    # ...
+    # -----END CERTIFICATE-----
+    podAnnotations: {}
+    securityContext: {}
+    resources:
+        requests:
+            memory: 8Mi
+            cpu: 10m
+    additionalEnvs: null
+    #   FOO: Bar
+sshToken:
+    enabled: false
+    replicaCount: 2
+    image:
+        repository: ghcr.io/uselagoon/lagoon-ssh-portal/ssh-token
+        pullPolicy: IfNotPresent
+        # Overrides the image tag whose default is the chart appVersion.
+        tag: v0.30.1
+    podAnnotations: {}
+    securityContext: {}
+    resources:
+        requests:
+            memory: 8Mi
+            cpu: 10m
+    additionalEnvs: null
+    #   FOO: Bar
+    autoscaling:
+        enabled: false
+        minReplicas: 1
+        maxReplicas: 100
+        targetCPUUtilizationPercentage: 80
+        # targetMemoryUtilizationPercentage: 80
+    serviceMonitor:
+        enabled: true
+    service:
+        type: LoadBalancer
+        ports:
+            sshserver: 22
+    metricsService:
+        type: ClusterIP
+        ports:
+            metrics: 9948
+    # host keys, PEM encoded
+    hostKeys:
+        ecdsa: ""
+        ed25519: ""
+        rsa: ""
+sops:
+    azure_kv:
+        - vault_url: https://kv-dplplat01-c3b2.vault.azure.net
+          name: sops-key
+          version: d82fe2456d6e4c4aaaaf808226bd5769
+          created_at: "2025-10-01T10:48:49Z"
+          enc: lKLLfcsGMPOa8si4_6lbskY6J9hJ18WKJsc-qGUxAdZ9dgxHGRurzDFl9aTjigPsdrPFE5hdBWZo1Ao3o9XVpAiEF8CFVV6q7tgWRromrg4mnDszCGBi1H9Bdqlg6kFKfGQvwdzCt6uPkMoE5qmcIZdd2fcrnBa_rUMSFwIL4l9fVs1uIyi_ts4fhQ0zz3w_1dKxDk7n8d0GSyorsr2rC2Wff5pDLkozi9HVAE4ZiqTH_nCLaM3vZZlquTQfyETK5HsRUxdsDxorHqFzLEfX1hP5CmTZbG4PvLctfl4OMXUT1pnc404zRwcix9S3pQBfoLF9fb-IVOUfEZpdSuEfk4y_6nw8buEvCNTFrvfHbrFHe0t9ouuO9TD8eEbUI_cyM96-X9dLtG7fJ85UWjvAZNXvzs5_ebry6ud9iMh7N1XPMlVEkZ3FGRaIGLE1e9CAbfhtRdKtiBbIAsvyvVsUnODLEEglMsTl3fAkFUCaCpu7_Kl-iIc2nm2RPfv_1zrKDY4UwW-H89Tc2lOu6WkfDp9ukYNuoMYH_suWeZWNlqD-Og64bHcC7jsacdvatodwKYcICUv-2GKd-Y7JDPDos2JjH9H5ZuNk-NY_iDHL_VGhxkUbqSdFOr-4EovP6M46YcMLynYAsx5PiJZdxq0RdjCSNLIuYPqRCRZhAFkuYxw
+    lastmodified: "2025-10-06T11:53:51Z"
+    mac: ENC[AES256_GCM,data:68s9y5rTVxusPM+6nYf2UpTsacLym2F0mc2iIuGllKNLt0lTChF6AxlGxD3bS7Q391sJaKl6fVAtgo8/xvl2rbAa2hF43tdmuJ5xc6wg3HfoJ5BMjojA8uM2Gt6ENUmJHNcl97xrypZQbx91WAqd8OWP9Zxf6OtdzMAOX3aZv9s=,iv:T04DXE/IBGPp8KPW20OJTAvqJbdpxJ55ZMbspUUbzuE=,tag:xfKcRjgi6048E9sgRCfQXw==,type:str]
+    encrypted_comment_regex: ENCRYPT
+    version: 3.11.0
