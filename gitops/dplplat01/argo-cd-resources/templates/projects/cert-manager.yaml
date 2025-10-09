@@ -27,3 +27,4 @@ spec:
     warn: false
   sourceRepos:
   - https://github.com/danskernesdigitalebibliotek/dpl-platform.git # git repository
+  - https://helm.gocert-manager.io
