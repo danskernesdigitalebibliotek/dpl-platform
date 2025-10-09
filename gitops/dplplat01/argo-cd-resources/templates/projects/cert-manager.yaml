@@ -26,4 +26,4 @@ spec:
   orphanedResources:
     warn: false
   sourceRepos:
-  - '*'
+  - https://github.com/danskernesdigitalebibliotek/dpl-platform.git
