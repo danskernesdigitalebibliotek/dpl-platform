@@ -75,8 +75,8 @@ sites:
     releaseImageName: dpl-cms-source
     # Remember to update bnf.moduletest-dpl-cms-release to the same release
     # to make client and server use the same version.
-    dpl-cms-release: 2025.40.3
-    moduletest-dpl-cms-release: 2025.40.3
+    dpl-cms-release: 2025.40.4
+    moduletest-dpl-cms-release: 2025.40.4
     go-release: 2025.40.0
     php-version: 8.3
     plan: webmaster
@@ -113,7 +113,7 @@ sites:
     name: "Bibliotekernes Nationale Formidling"
     description: "The BNF content sharing site"
     plan: webmaster
-    moduletest-dpl-cms-release: 2025.40.3
+    moduletest-dpl-cms-release: 2025.40.4
     deploy_key: ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAICTmMC/cUI3U3QloX6aAdN7g0EU42J0fwA9aO7UJOzx9
     primary-domain: delingstjenesten.dk
     secondary-domains:
