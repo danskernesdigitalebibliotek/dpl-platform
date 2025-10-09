@@ -261,32 +261,6 @@ tasks:
             )
           --node-count 3
 
-    support:provision:cert-manager:
-      deps: [cluster:auth]
-      summary: Set the DIFF environment variable to any value to switch to diffing instead of an actual upgrade.
-      desc: Install and configure cert-manager
-      env:
-        ZEROSSL_EAB_SECRET_KEY_ID:
-          sh: az keyvault secret show
-              --subscription "{{.AZURE_SUBSCRIPTION_ID}}"
-              --name zerossl-eabsecret-kid
-              --vault-name
-                $(
-                  terraform -chdir={{.dir_infra}} output -json | jq --raw-output ".keyvault_name.value | select (.!=null)"
-                )
-              --query value -o tsv
-        ZEROSSL_EAB_SECRET:
-          sh: az keyvault secret show
-              --subscription "{{.AZURE_SUBSCRIPTION_ID}}"
-              --name zerossl-eabsecret
-              --vault-name
-                $(
-                  terraform -chdir={{.dir_infra}} output -json | jq --raw-output ".keyvault_name.value | select (.!=null)"
-                )
-              --query value -o tsv
-      cmds:
-        - task/scripts/provision-cert-manager.sh
-
     support:provision:minio:
       deps: [cluster:auth]
       summary: Set the DIFF environment variable to any value to switch to diffing instead of an actual upgrade.
@@ -897,7 +871,6 @@ tasks:
         DIFF_COMMAND: '{{empty .DIFF | ternary "" "diff"}}'
       cmds:
         - task: support:provision:bulk-storage
-        - task: support:provision:cert-manager
         - task: support:provision:k8up
         - task: support:provision:minio
 
