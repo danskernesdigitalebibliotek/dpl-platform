@@ -293,11 +293,7 @@ approveSignerNames:
 # For example:
 #  extraArgs:
 #    - --controllers=*,-certificaterequests-approver
-extraArgs:
-  - --default-issuer-name=zerossl-production
-  - --default-issuer-kind=ClusterIssuer
-  - --default-issuer-group=cert-manager.io
-  - --max-concurrent-challenges=120
+extraArgs: []
 
 # Additional environment variables to pass to cert-manager controller binary.
 # For example:
