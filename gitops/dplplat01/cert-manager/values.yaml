@@ -1031,7 +1031,7 @@ cainjector:
   #
   # Note that cert-manager uses leader election to ensure that there can
   # only be a single instance active at a time.
-  replicaCount: 1
+  replicaCount: 2
 
   # This is used to configure options for the cainjector pod.
   # It allows setting options that are usually provided via flags.
