@@ -47,7 +47,7 @@ global:
 
   leaderElection:
     # Override the namespace used for the leader election lease.
-    namespace: "kube-system"
+    namespace: cert-manager
 
     # The duration that non-leader candidates will wait after observing a
     # leadership renewal until attempting to acquire leadership of a led but
@@ -578,6 +578,7 @@ prometheus:
     # to the cert-manager namespace.
     # +docs:property
     # namespace: cert-manager
+    namespace: cert-manager
 
     # Specifies the `prometheus` label on the created PodMonitor. This is
     # used when different Prometheus instances have label selectors matching
