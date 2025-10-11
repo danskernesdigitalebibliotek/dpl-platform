@@ -1064,9 +1064,10 @@ cainjector:
   #      secretName: "cert-manager-metrics-ca"
   #      dnsNames:
   #      - cert-manager-metrics
-  leaderElectionConfig:
-    namespace: cert-manager
-  config: {}
+  config:
+    leaderElectionConfig:
+      namespace: cert-manager
+
 
   # Deployment update strategy for the cert-manager cainjector deployment.
   # For more information, see the [Kubernetes documentation](https://kubernetes.io/docs/concepts/workloads/controllers/deployment/#strategy).
