@@ -4,4 +4,4 @@ version: 0.0.0
 dependencies:
   - name: cert-manager
     version: 1.17.4
-    repository: oci://quay.io/jetstack/charts
+    repository: quay.io/jetstack/charts/cert-manager
