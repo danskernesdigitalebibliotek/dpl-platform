@@ -47,7 +47,7 @@ global:
 
   leaderElection:
     # Override the namespace used for the leader election lease.
-    namespace: cert-manager
+    namespace: kube-system
 
     # The duration that non-leader candidates will wait after observing a
     # leadership renewal until attempting to acquire leadership of a led but
@@ -1066,7 +1066,7 @@ cainjector:
   #      - cert-manager-metrics
   config:
     leaderElectionConfig:
-      namespace: cert-manager
+      namespace: kube-system
 
 
   # Deployment update strategy for the cert-manager cainjector deployment.
