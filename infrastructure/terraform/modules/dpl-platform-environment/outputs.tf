@@ -18,26 +18,6 @@ output "egress_ip" {
   value       = azurerm_public_ip.aks_egress.ip_address
 }
 
-output "mariadb_user" {
-  description = "Username for the administrative mariadb user"
-  value       = azurerm_mariadb_server.sql.administrator_login
-}
-
-output "mariadb_password" {
-  description = "Password for the administrative mariadb user"
-  value       = azurerm_mariadb_server.sql.administrator_login_password
-  sensitive   = true
-}
-
-output "mariadb_hostname" {
-  description = "Fully qualified MariaDB Hostname"
-  value       = azurerm_mariadb_server.sql.fqdn
-}
-
-output "mariadb_servername" {
-  description = "MariaDB Servername (used as a part of the username when logging in)"
-  value       = azurerm_mariadb_server.sql.name
-}
 
 output "harbor_admin_pass_key_name" {
   description = "Name under which the admin password for harbor is stored in keyvault"
@@ -77,26 +57,6 @@ output "lagoon_domain_base" {
 output "resourcegroup_name" {
   description = "Name of the environments main Resource Group"
   value       = azurerm_resource_group.rg.name
-}
-
-output "sql_user" {
-  description = "Username of the administrative MariaDB user"
-  value       = azurerm_mariadb_server.sql.administrator_login
-}
-
-output "sql_hostname" {
-  description = "Fully qualified hostname for the MariaDB server"
-  value       = azurerm_mariadb_server.sql.fqdn
-}
-
-output "sql_servername" {
-  description = "value"
-  value       = azurerm_mariadb_server.sql.name
-}
-
-output "sql_password_key_name" {
-  description = "Name under which the administrative sql users passwqord is stored in keyvault"
-  value       = azurerm_key_vault_secret.sql_pass.name
 }
 
 output "storage_account_name" {
