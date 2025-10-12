@@ -5,6 +5,7 @@
 # }
 provider "azurerm" {
   features {}
+  subscription_id = "8ac8a259-5bb3-4799-bd1e-455145b12550"
 }
 
 resource "random_id" "acs" {
