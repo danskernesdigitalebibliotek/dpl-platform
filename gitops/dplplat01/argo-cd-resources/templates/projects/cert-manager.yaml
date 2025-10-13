@@ -20,6 +20,8 @@ spec:
     kind: MutatingWebhookConfiguration
   - group: admissionregistration.k8s.io
     kind: ValidatingWebhookConfiguration
+  - group: cert-manager.io
+    kind: ClusterIssuer
   namespaceResourceWhitelist:
   - group: '*'
     kind: '*'
