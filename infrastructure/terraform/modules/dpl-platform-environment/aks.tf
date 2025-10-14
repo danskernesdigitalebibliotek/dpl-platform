@@ -42,7 +42,6 @@ resource "azurerm_kubernetes_cluster" "cluster" {
     # september 2021.
     network_policy     = "calico"
     dns_service_ip     = "10.10.0.10"
-    docker_bridge_cidr = "172.18.0.1/16"
     service_cidr       = "10.10.0.0/16"
     # The Standard load balancer provides all the feature we need at this point.
     load_balancer_sku = "standard"
@@ -88,7 +87,6 @@ resource "azurerm_kubernetes_cluster_node_pool" "pool" {
   vm_size = each.value.vm
 
   # Enable autoscaling.
-  enable_auto_scaling = try(each.value.min, try(each.value.max, null)) != null ? true : false
   min_count           = try(each.value.min, null)
   max_count           = try(each.value.max, null)
   node_count          = try(each.value.count, null)
