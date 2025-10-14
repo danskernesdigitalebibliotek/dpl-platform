@@ -1,4 +1,5 @@
 creation_rules:
   - path_regex: \.sops\.yaml$
     azure_keyvault: https://kv-dplplat01-c3b2.vault.azure.net/keys/sops-key/d82fe2456d6e4c4aaaaf808226bd5769
+    age: age1q8yqc5jvhkk7ufj95tw25u3es0846pkrwgcd4pn9ctermr7e6cesn6l0gd
     encrypted_comment_regex: ENCRYPT
