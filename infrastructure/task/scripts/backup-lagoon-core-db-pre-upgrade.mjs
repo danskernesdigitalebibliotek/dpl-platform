@@ -13,7 +13,7 @@ try {
 }
 
 try {
-  await $`kubectl cp lagoon-core/lagoon-core-api-db-0:/var/lib/mysql/backup/$(date +%Y-%m-%d).infrastructure.sql.gz ./lagoon-core-api-db-backup.infrastructure.sql.gz`
+  await $`kubectl cp lagoon-core/lagoon-core-api-db-0:/var/lib/mysql/backup/$(date +%Y-%m-%d).infrastructure.sql.gz ./lagoon-core-api-db-0-backup.sql.gz`
 } catch(error) {
   throw Error("Failed to copy the backup from lagoon-core-api-db-0 to local machine", { cause: error});
 }
