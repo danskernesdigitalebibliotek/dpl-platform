@@ -12,12 +12,6 @@ module "environment" {
     "admin6": { count : 1, vm : "Standard_E4s_v3", role : "admin", max_pods : 60, },
   }
   node_pool_system_count = 3
-  # We've increased this quite a bit to test performance. The ideal starting-
-  # point seems to be in the range 102400 - 204800 to get enough IOPS to
-  # maintain performance during a Drupal site-install.
-  # When copying this value, consider leaving it out and falling back to the
-  # default of 102400.
-  sql_storage_mb        = 409600
   control_plane_version = "1.28.9"
 }
 
@@ -163,20 +157,4 @@ output "storage_primary_access_key_name" {
 }
 output "storage_secondary_access_key_name" {
   value = module.environment.storage_secondary_access_key_name
-}
-
-output "sql_user" {
-  value = module.environment.sql_user
-}
-
-output "sql_hostname" {
-  value = module.environment.sql_hostname
-}
-
-output "sql_servername" {
-  value = module.environment.sql_servername
-}
-
-output "sql_password_key_name" {
-  value = module.environment.sql_password_key_name
 }
