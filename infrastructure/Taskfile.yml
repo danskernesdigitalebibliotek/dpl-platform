@@ -24,7 +24,7 @@ vars:
   # Root of the configurations for the environment.
   dir_configuration: "environments/{{.platform_env}}/configuration"
   # Root of the lagoon-configurations for the environment.
-  dir_lagoon: "environments/{{.platform_env}}/lagoon"
+  dir_lagoon: "environments/{{.platform_env}}/lagoon/lagoon-core-and-remote_OLD"
   # The suffix domain we will use when constructing urls
   global_environment_suffix: "dpl.reload.dk"
   # A file we can write environment variables in we want to persist for this
