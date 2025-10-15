@@ -11,9 +11,9 @@ x-webmasters-on-weekly-release-cycle: &webmasters-on-weekly-release-cycle
   # production
   releaseImageRepository: ghcr.io/danskernesdigitalebibliotek
   releaseImageName: dpl-cms-source
-  dpl-cms-release: 2025.38.2
-  moduletest-dpl-cms-release: 2025.40.4
-  go-release: 2025.38.1
+  dpl-cms-release: 2025.40.4
+  moduletest-dpl-cms-release: 2025.42.0
+  go-release: 2025.40.0
   php-version: 8.3
 x-holdback-40: &holdback-40
   # København and Herning wishes to skip 2025.38.0 in production due
