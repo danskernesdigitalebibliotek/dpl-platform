@@ -396,6 +396,13 @@ tasks:
       - sh: "[ ! -z ${HARBOR_ADMIN_PASS} ]"
         msg: "Could not extract the password for the harbor admin from keyvault."
 
+    lagoon:backup:core-and-keycloak:
+      deps: [cluster:auth]
+      desc: Backs up the Lagoon Core API DB and Lagoon's Keycloak to local machine
+      cmds:
+        - ./task/scripts/backup-lagoon-core-db-pre-upgrade.mjs
+        - ./task/scripts/backup-keycloak-pre-upgrade.mjs
+
     lagoon:provision:core-db-migration:
       deps: [cluster:auth]
       desc: Run database migrations after an upgrade
