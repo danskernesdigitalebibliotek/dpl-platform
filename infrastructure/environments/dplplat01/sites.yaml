@@ -2,8 +2,8 @@
 x-defaults: &default-release-image-source
   releaseImageRepository: ghcr.io/danskernesdigitalebibliotek
   releaseImageName: dpl-cms-source
-  dpl-cms-release: 2025.40.4
-  go-release: 2025.40.0
+  dpl-cms-release: 2025.42.0
+  go-release: 2025.42.0
   php-version: 8.3
 x-webmasters-on-weekly-release-cycle: &webmasters-on-weekly-release-cycle
   # This release cycle releases the newest release, which has been
