@@ -1,4 +1,4 @@
-FROM node:24-alpine
+FROM node:25-alpine
 
 # Install apk dependencies
 RUN apk add --no-cache bash kubectl && npm install -g zx
