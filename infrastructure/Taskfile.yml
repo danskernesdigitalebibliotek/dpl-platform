@@ -403,12 +403,6 @@ tasks:
         - ./task/scripts/backup-lagoon-core-db-pre-upgrade.mjs
         - ./task/scripts/backup-keycloak-pre-upgrade.mjs
 
-    lagoon:provision:core-db-migration:
-      deps: [cluster:auth]
-      desc: Run database migrations after an upgrade
-      cmds:
-        - kubectl --namespace lagoon-core exec -it lagoon-core-api-db-0 -- sh -c /rerun_initdb.sh
-
     lagoon:cli:config:
       deps: [cluster:auth]
       desc: Configure a lagoon cli with the knowledge of a lagoon core.
