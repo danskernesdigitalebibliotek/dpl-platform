@@ -882,6 +882,7 @@ tasks:
         - task: support:provision:minio
 
     site:sync:
+      deps: [lagoon:cli:config]
       desc: Runs the a dpladm sync of a site which eg. can be used to deploy a new release
       summary: Run the task without additional variables to see required arguments
       silent: true
