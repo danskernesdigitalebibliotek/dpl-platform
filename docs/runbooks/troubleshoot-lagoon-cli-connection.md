@@ -21,6 +21,7 @@ likely during an upgrade to the Lagoon Chart.
 
 ## How to fix
 
+This part needs to be run outside of the DPL shell.
 The first thing we need to know, is which entry in the `known_hosts` file is
 wrong.
 This can be discovered by running the following command:
@@ -54,6 +55,8 @@ has gone bad.
 Now delete the bad entry by by running this command:
 `sed -i -e <index of bad entry>d /home/dplsh/.ssh/known_hosts`
 
+If you have the Lagoon CLI installed on your local machine you can run this part
+while outside of the shell. Otherwise, open the shell, but don't log in yet.
 Now readd the Lagoon Config, but add a pointer to which ssh key to use:
 `lagoon config add --lagoon dplplat01
 lagoon config add \
