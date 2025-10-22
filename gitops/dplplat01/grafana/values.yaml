@@ -86,6 +86,11 @@ grafana:
     dataproxy:
       timeout: "1200"
 
+  resources:
+    requests:
+      cpu: 20
+      memory: 500
+
   tolerations:
     - key: CriticalAddonsOnly
       operator: Exists
