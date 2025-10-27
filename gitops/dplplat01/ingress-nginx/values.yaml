@@ -848,7 +848,7 @@ ingress-nginx:
       port: 10254
       portName: metrics
       # if this port is changed, change healthz-port: in extraArgs: accordingly
-      enabled: true
+      enabled: false
       service:
         annotations: {}
         # prometheus.io/scrape: "true"
@@ -868,7 +868,7 @@ ingress-nginx:
         # externalTrafficPolicy: ""
         # nodePort: ""
       serviceMonitor:
-        enabled: true
+        enabled: false
         additionalLabels: {}
         annotations: {}
         ## The label to use to retrieve the job name from.
