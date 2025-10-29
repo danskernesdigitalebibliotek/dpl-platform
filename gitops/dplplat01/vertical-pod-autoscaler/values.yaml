@@ -8,5 +8,5 @@ vpa:
       # recommendation-lower-bound-memory-percentile: 0.4 // causes an error when running the recommender
       target-memory-percentile: 0.87
       target-cpu-percentile: 0.8
-      recommender-interval: 1*time.Minute
+      # recommender-interval: 1*time.Minute // causes an error when running the recommender
       pod-recommendation-min-memory-mb: 2
