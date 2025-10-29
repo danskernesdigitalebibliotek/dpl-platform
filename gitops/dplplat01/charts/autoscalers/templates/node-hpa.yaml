@@ -1,7 +1,7 @@
 apiVersion: autoscaling/v2
 kind: HorizontalPodAutoscaler
 metadata:
-  name: php-nginx-autoscaler
+  name: node-hpa
 spec:
   minReplicas: 1
   maxReplicas: 5
