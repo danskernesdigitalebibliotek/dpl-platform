@@ -3,5 +3,5 @@ name: aabenraa-main
 version: 0.0.0
 dependencies:
   - name: autoscalers
-    version: 0.0.8
+    version: 0.0.9
     repository: oci://ghcr.io/danskernesdigitalebibliotek/dpl-platform/charts
