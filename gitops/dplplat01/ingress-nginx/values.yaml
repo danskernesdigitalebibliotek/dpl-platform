@@ -389,16 +389,16 @@ ingress-nginx:
       ##    cpu: 100m
       ##    memory: 90Mi
       requests:
-        cpu: null # lets not worry about CPU for now
-        memory: 500Mi
+        cpu: 800Mi
+        # memory: 500Mi # lets not worry about memory for now
     # Mutually exclusive with keda autoscaling
     autoscaling:
       enabled: true
       annotations: {}
       minReplicas: 5
       maxReplicas: 15
-      targetCPUUtilizationPercentage: null
-      targetMemoryUtilizationPercentage: 80
+      targetCPUUtilizationPercentage: 80
+      # targetMemoryUtilizationPercentage: 80
       behavior: {}
       # scaleDown:
       #   stabilizationWindowSeconds: 300

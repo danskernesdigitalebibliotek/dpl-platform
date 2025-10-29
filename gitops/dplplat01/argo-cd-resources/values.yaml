@@ -22,7 +22,7 @@ apps:
   - name: ingress-nginx
     project: ingress-nginx
     namespace: ingress-nginx
-    automated: false
+    automated: true
 
   - name: cert-manager
     project: cert-manager
