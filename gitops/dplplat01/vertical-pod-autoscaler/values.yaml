@@ -5,7 +5,7 @@ vpa:
 
   recommender:
     extraArgs:
-      recommendation-lower-bound-memory-percentile: 0.4
+      # recommendation-lower-bound-memory-percentile: 0.4 // causes an error when running the recommender
       target-memory-percentile: 0.87
       target-cpu-percentile: 0.8
       recommender-interval: 1*time.Minute
