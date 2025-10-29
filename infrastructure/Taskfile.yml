@@ -902,17 +902,7 @@ tasks:
       preconditions:
       - *require_site
 
-    site:autoscaler:
-      desc: Runs the a dpladm setup of horizontal autoscaler, making sure the site has an autoscaler configured
-      deps: [cluster:auth]
-      summary: Run the task without additional variables to see required arguments
-      env:
-        SITES_CONFIG: "{{.dir_env}}/sites.yaml"
-        SITE: "{{.SITE}}"
-      cmds:
-        - dpladm/bin/set-up-horizontal-autoscaler.sh
-      preconditions:
-      - *require_site
+
 
     sites:list-keys:
       desc: List keys for sites in sites.yaml config
@@ -977,10 +967,6 @@ tasks:
                   echo -n "true"
                   exit 0
                 fi
-        - for: { var: sites }
-          task: site:autoscaler
-          vars:
-            SITE: "{{.ITEM}}"
 
     site:full-sync:
       desc: Performs a full syncrhonization from sites.yaml for a single site to running state
@@ -1125,7 +1111,7 @@ tasks:
                 }
               }
             }
-          }" | jq -r '.allProjects[] | .name as $name | .environments[].deployments[] | select(.status != "complete") | ($name) + ": " + (.status)' 
+          }" | jq -r '.allProjects[] | .name as $name | .environments[].deployments[] | select(.status != "complete") | ($name) + ": " + (.status)'
 
     sites:redeploy-failed-deployments:
       deps: [lagoon:cli:config]
