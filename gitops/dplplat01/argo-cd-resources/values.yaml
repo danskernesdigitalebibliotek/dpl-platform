@@ -17,7 +17,7 @@ apps:
   - name: vertical-pod-autoscaler
     project: vertical-pod-autoscaler
     namespace: vpa
-    automated: false
+    automated: true
 
   - name: ingress-nginx
     project: ingress-nginx
