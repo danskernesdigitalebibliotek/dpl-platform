@@ -75,7 +75,7 @@ apps:
     namespace: mariadb-10-06-01-test
     automated: false
 
-automateSites: false
+automateSites: true
 
 sites:
   - name: canary-main
@@ -85,6 +85,10 @@ sites:
   - name: aalborg-main
 
   - name: aalborg-moduletest
+    values:
+      autoscalers:
+        node:
+          enabled: false
 
   - name: aarhus-main
 

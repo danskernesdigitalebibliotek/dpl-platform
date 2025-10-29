@@ -3,5 +3,5 @@ name: canary-main
 version: 0.0.0
 dependencies:
   - name: autoscalers
-    version: 0.0.6
+    version: 0.0.7
     repository: oci://ghcr.io/danskernesdigitalebibliotek/dpl-platform/charts
