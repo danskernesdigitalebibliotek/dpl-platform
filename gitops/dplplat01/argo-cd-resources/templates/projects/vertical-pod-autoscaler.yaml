@@ -1,7 +1,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: AppProject
 metadata:
-  name: vertical-pod-updater
+  name: vertical-pod-autoscaler
 spec:
   destinations:
   - name: in-cluster
