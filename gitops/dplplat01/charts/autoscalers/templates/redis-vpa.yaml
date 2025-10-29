@@ -13,8 +13,8 @@ spec:
     containerPolicies:
     - containerName: redis
       minAllowed:
-        cpu: 5m
-        memory: 20Mi
+        cpu: 10m
+        memory: 10Mi
       maxAllowed:
-        cpu: 150m
-        memory: 800Mi
+        cpu: 800m
+        memory: 1000Mi

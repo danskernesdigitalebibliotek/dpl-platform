@@ -13,8 +13,8 @@ spec:
     containerPolicies:
     - containerName: node
       minAllowed:
-        cpu: 3m
-        memory: 4000Mi
+        cpu: 10m
+        memory: 100Mi
       maxAllowed:
-        cpu: 500m
-        memory: 8000Mi
+        cpu: 800m
+        memory: 500Mi

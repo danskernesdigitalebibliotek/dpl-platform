@@ -13,15 +13,15 @@ spec:
     containerPolicies:
     - containerName: nginx
       minAllowed:
-        cpu: 3m
-        memory: 50Mi
+        cpu: 10m
+        memory: 10Mi
       maxAllowed:
-        cpu: 500m
+        cpu: 800m
         memory: 400Mi
     - containerName: php
       minAllowed:
-        cpu: 3m
-        memory: 500Mi
+        cpu: 10m
+        memory: 10Mi
       maxAllowed:
-        cpu: 400m
-        memory: 4000Mi
+        cpu: 800m
+        memory: 1000Mi

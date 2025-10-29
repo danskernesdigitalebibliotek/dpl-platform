@@ -13,8 +13,8 @@ spec:
     containerPolicies:
     - containerName: varnish
       minAllowed:
-        cpu: 2m
+        cpu: 10m
         memory: 20Mi
       maxAllowed:
-        cpu: 200m
-        memory: 3Gi
+        cpu: 800m
+        memory: 800Mi

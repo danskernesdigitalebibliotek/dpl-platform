@@ -13,7 +13,7 @@ spec:
     containerPolicies:
     - containerName: cli
       minAllowed:
-        cpu: 4m
+        cpu: 10m
         memory: 10Mi
       maxAllowed:
         cpu: 150m
