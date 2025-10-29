@@ -17,4 +17,4 @@ spec:
     apiVersion: apps/v1
     kind: Deployment
     name: node
-{{- }}
+{{- end }}
