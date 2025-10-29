@@ -3,5 +3,5 @@ name: aarhus-moduletest
 version: 0.0.0
 dependencies:
   - name: autoscalers
-    version: 0.0.7
+    version: 0.0.8
     repository: oci://ghcr.io/danskernesdigitalebibliotek/dpl-platform/charts
