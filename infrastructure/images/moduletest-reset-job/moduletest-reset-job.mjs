@@ -32,7 +32,7 @@ async function runDrushDeployForStateTransferToTakeEffect() {
 async function syncFileFromSourceToTarget(projectName) {
   echo(`Now moving files from ${projectName}-main to ${projectName}-moduletest`);
   // The IP here is the lagoon SSH host and it is documented here: https://github.com/danskernesdigitalebibliotek/dpl-platform/blob/main/docs/runbooks/connecting-the-lagoon-cli.md#configure-your-local-lagoon-cli
-  const sshHost = "20.238.147.183";
+  const sshHost = "20.238.202.21";
   try {
       await $`kubectl exec -n ${projectName}-moduletest deployment/cli -- bash -c "rsync --omit-dir-times --recursive --no-perms --no-group --no-owner --no-times --chmod=ugo=rwX --delete --exclude=/styles/* --delete-excluded ${projectName}-main@${sshHost}:/app/web/sites/default/files/ /app/web/sites/default/files/"`;
   } catch (error) {
