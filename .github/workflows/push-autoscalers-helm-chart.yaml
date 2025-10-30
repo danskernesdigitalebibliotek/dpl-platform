@@ -32,8 +32,8 @@ jobs:
         env:
           VERSION: ${{ steps.version.outputs.value }}
         run: |
-          VERSION=$(yq '.version' gitops/dplplat01/charts/autoscalers/Chart.yaml)
-          NAME=$(yq '.name' gitops/dplplat01/charts/autoscalers/Chart.yaml)
-          helm dependency update gitops/dplplat01/charts/autoscalers || true
-          helm package gitops/dplplat01/charts/autoscalers
+          VERSION=$(yq '.version' gitops/charts/autoscalers/Chart.yaml)
+          NAME=$(yq '.name' gitops/charts/autoscalers/Chart.yaml)
+          helm dependency update gitops/charts/autoscalers || true
+          helm package gitops/charts/autoscalers
           helm push $NAME-$VERSION.tgz oci://ghcr.io/danskernesdigitalebibliotek/dpl-platform/charts
