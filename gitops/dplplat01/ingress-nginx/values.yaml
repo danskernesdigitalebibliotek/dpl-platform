@@ -389,7 +389,7 @@ ingress-nginx:
       ##    cpu: 100m
       ##    memory: 90Mi
       requests:
-        cpu: 800Mi
+        cpu: 800m
         # memory: 500Mi # lets not worry about memory for now
     # Mutually exclusive with keda autoscaling
     autoscaling:
