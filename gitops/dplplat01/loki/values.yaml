@@ -667,7 +667,7 @@ loki:
     # It will create custom resources for GrafanaAgent, LogsInstance, and PodLogs to configure
     # scrape configs to scrape its own logs with the labels expected by the included dashboards.
     selfMonitoring:
-      enabled: true
+      enabled: false
       # -- Tenant to use for self monitoring
       tenant:
         # -- Name of the tenant
