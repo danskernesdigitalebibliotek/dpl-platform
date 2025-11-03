@@ -17,7 +17,7 @@ spec:
         memory: 10Mi
       maxAllowed:
         cpu: 800m
-        memory: 400Mi
+        memory: 500Mi
     - containerName: php
       minAllowed:
         cpu: 10m
