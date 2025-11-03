@@ -17,4 +17,4 @@ spec:
         memory: 20Mi
       maxAllowed:
         cpu: 800m
-        memory: 800Mi
+        memory: 2Gi
