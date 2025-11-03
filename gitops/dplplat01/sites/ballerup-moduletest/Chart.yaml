@@ -3,5 +3,5 @@ name: ballerup-moduletest
 version: 0.0.0
 dependencies:
   - name: autoscalers
-    version: 0.0.9
+    version: 0.0.10
     repository: oci://ghcr.io/danskernesdigitalebibliotek/dpl-platform/charts
