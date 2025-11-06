@@ -37,7 +37,7 @@ apps:
   - name: loki
     project: monitoring
     namespace: loki
-    automated: false
+    automated: true
     syncOptions:
       - ServerSideApply=true
 
