@@ -841,10 +841,10 @@ loki:
     # -- Resource requests and limits for the write
     resources:
       requests:
-        memory: 800Mi
+        memory: 1000Mi
         cpu: 300m
       limits:
-        memory: 1Gi
+        memory: 2000Mi
     # -- Grace period to allow the write to shutdown before it is killed. Especially for the ingester,
     # this must be increased. It must be long enough so writes can be gracefully shutdown flushing/transferring
     # all data and to successfully leave the member ring on shutdown.
