@@ -8,7 +8,7 @@ spec:
     kind: Deployment
     name: cli
   updatePolicy:
-    updateMode: Initial
+    updateMode: InPlaceOrRecreate
   resourcePolicy:
     containerPolicies:
     - containerName: cli

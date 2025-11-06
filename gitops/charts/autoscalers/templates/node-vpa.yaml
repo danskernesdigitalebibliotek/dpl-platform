@@ -9,14 +9,15 @@ spec:
     kind: Deployment
     name: node
   updatePolicy:
-    updateMode: Initial
+    updateMode: InPlaceOrRecreate
   resourcePolicy:
     containerPolicies:
     - containerName: node
+      # these are identical since we use the hpa for scaling
       minAllowed:
-        cpu: 10m
-        memory: 100Mi
+        cpu: 500m
+        memory: 800Mi
       maxAllowed:
-        cpu: 800m
-        memory: 500Mi
+        cpu: 500m
+        memory: 800Mi
 {{- end }}

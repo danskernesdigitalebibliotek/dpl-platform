@@ -8,20 +8,22 @@ spec:
     kind: Deployment
     name: nginx
   updatePolicy:
-    updateMode: Initial
+    updateMode: InPlaceOrRecreate
   resourcePolicy:
     containerPolicies:
     - containerName: nginx
+      # these are identical since we use the hpa for scaling
       minAllowed:
-        cpu: 10m
-        memory: 10Mi
+        cpu: 500m
+        memory: 100Mi
       maxAllowed:
-        cpu: 800m
-        memory: 500Mi
+        cpu: 500m
+        memory: 100Mi
     - containerName: php
+      # these are identical since we use the hpa for scaling
       minAllowed:
-        cpu: 10m
-        memory: 10Mi
+        cpu: 500m
+        memory: 500Mi
       maxAllowed:
-        cpu: 800m
-        memory: 1000Mi
+        cpu: 500m
+        memory: 500Mi
