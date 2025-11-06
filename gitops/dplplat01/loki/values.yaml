@@ -1036,7 +1036,7 @@ loki:
     # -- Resource requests and limits for the read
     resources:
       requests:
-        memory: 500Mi
+        memory: 700Mi
         cpu: 800m
       limits:
         memory: 1Gi
