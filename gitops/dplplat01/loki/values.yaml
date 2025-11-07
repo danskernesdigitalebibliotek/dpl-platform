@@ -844,7 +844,7 @@ loki:
         memory: 1500Mi
         cpu: 300m
       limits:
-        memory: 2000Mi
+        memory: 2500Mi
     # -- Grace period to allow the write to shutdown before it is killed. Especially for the ingester,
     # this must be increased. It must be long enough so writes can be gracefully shutdown flushing/transferring
     # all data and to successfully leave the member ring on shutdown.
@@ -1036,10 +1036,10 @@ loki:
     # -- Resource requests and limits for the read
     resources:
       requests:
-        memory: 700Mi
+        memory: 1000Mi
         cpu: 800m
       limits:
-        memory: 1Gi
+        memory: 1500Mi
     # -- Grace period to allow the read to shutdown before it is killed
     terminationGracePeriodSeconds: 30
     # -- Affinity for read pods. Passed through `tpl` and, thus, to be configured as string
