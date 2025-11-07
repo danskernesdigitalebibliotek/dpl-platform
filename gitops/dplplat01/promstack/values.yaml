@@ -286,16 +286,16 @@ kube-prometheus-stack:
       kubeApiserverBurnrate: {}
       kubeApiserverHistogram: {}
       kubeApiserverSlos: {}
-      kubeControllerManager: {}
+      kubeControllerManager: false
       kubelet: {}
-      kubeProxy: {}
+      kubeProxy: false
       kubePrometheusGeneral: {}
       kubePrometheusNodeRecording: {}
       kubernetesApps: {}
       kubernetesResources: {}
       kubernetesStorage: {}
       kubernetesSystem: {}
-      kubeSchedulerAlerting: {}
+      kubeSchedulerAlerting: false
       kubeSchedulerRecording: {}
       kubeStateMetrics: {}
       network: {}
@@ -315,10 +315,9 @@ kube-prometheus-stack:
       # fsSelector: 'fstype=~"ext[234]|btrfs|xfs|zfs"'
 
     ## Disabled PrometheusRule alerts
-    disabled:
-      KubeProxyDown: true
-      KubeSchedulerDown: true
-      KubeControllerManagerDown: true
+    disabled: {}
+    # KubeAPIDown: true
+    # NodeRAIDDegraded: true
 
   ## Deprecated way to provide custom recording or alerting rules to be deployed into the cluster.
   ##
@@ -1846,7 +1845,7 @@ kube-prometheus-stack:
   ## Component scraping the kube controller manager
   ##
   kubeControllerManager:
-    enabled: true
+    enabled: false
 
     ## If your kube controller manager is not deployed as a pod, specify IPs it can be found on
     ##
