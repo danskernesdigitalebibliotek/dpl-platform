@@ -8,25 +8,6 @@ spec:
     name: mariadb-root-password-secret
     key: root-password
   replicas: {{ .Values.replicas }}
-  galera:
-    enabled: false
-    config:
-      reuseStorageVolume: true
-    agent:
-      basicAuth:
-        enabled: true
-    replicaThreads: 1
-    providerOptions:
-      gcs.fc_limit: '64'
-    recovery:
-      enabled: true
-      minClusterSize: 1
-      clusterMonitorInterval: 10s
-      clusterHealthyTimeout: 30s
-      clusterBootstrapTimeout: 10m
-      podRecoveryTimeout: 5m
-      podSyncTimeout: 5m
-
   storage:
     size: {{ .Values.storageSize }}
     storageClassName: default
@@ -104,7 +85,7 @@ spec:
   podDisruptionBudget:
     maxUnavailable: 40%
 
-  updatestrategy:
+  updateStrategy:
     type: ReplicasFirstPrimaryLast
 
   metrics:
