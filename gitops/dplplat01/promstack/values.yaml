@@ -2402,9 +2402,9 @@ kube-prometheus-stack:
       port: http-metrics
 
       jobLabel: jobLabel
-      selector: {}
-      #  matchLabels:
-      #    k8s-app: kube-proxy
+      selector:
+        matchLabels:
+          component: kube-proxy
 
       ## Enable scraping kube-proxy over https.
       ## Requires proper certs (not self-signed) and delegated authentication/authorization checks
