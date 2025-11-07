@@ -12,7 +12,6 @@ spec:
   resourcePolicy:
     containerPolicies:
     - containerName: nginx
-      # these are identical since we use the hpa for scaling
       minAllowed:
         cpu: 20m
         memory: 20Mi
@@ -20,7 +19,6 @@ spec:
         cpu: 500m
         memory: 400Mi
     - containerName: php
-      # these are identical since we use the hpa for scaling
       minAllowed:
         cpu: 20m
         memory: 20Mi

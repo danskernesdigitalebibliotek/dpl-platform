@@ -13,7 +13,6 @@ spec:
   resourcePolicy:
     containerPolicies:
     - containerName: node
-      # these are identical since we use the hpa for scaling
       minAllowed:
         cpu: 20m
         memory: 20Mi
