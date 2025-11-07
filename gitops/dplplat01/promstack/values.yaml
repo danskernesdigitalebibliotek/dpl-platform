@@ -193,16 +193,16 @@ kube-prometheus-stack:
       kubeApiserverBurnrate: true
       kubeApiserverHistogram: true
       kubeApiserverSlos: true
-      kubeControllerManager: true
+      kubeControllerManager: false
       kubelet: true
-      kubeProxy: true
+      kubeProxy: false
       kubePrometheusGeneral: true
       kubePrometheusNodeRecording: true
       kubernetesApps: true
       kubernetesResources: true
       kubernetesStorage: true
       kubernetesSystem: true
-      kubeSchedulerAlerting: true
+      kubeSchedulerAlerting: false
       kubeSchedulerRecording: true
       kubeStateMetrics: true
       network: true
@@ -286,16 +286,16 @@ kube-prometheus-stack:
       kubeApiserverBurnrate: {}
       kubeApiserverHistogram: {}
       kubeApiserverSlos: {}
-      kubeControllerManager: false
+      kubeControllerManager: {}
       kubelet: {}
-      kubeProxy: false
+      kubeProxy: {}
       kubePrometheusGeneral: {}
       kubePrometheusNodeRecording: {}
       kubernetesApps: {}
       kubernetesResources: {}
       kubernetesStorage: {}
       kubernetesSystem: {}
-      kubeSchedulerAlerting: false
+      kubeSchedulerAlerting: {}
       kubeSchedulerRecording: {}
       kubeStateMetrics: {}
       network: {}
