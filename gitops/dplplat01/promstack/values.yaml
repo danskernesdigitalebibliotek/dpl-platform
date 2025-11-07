@@ -315,9 +315,10 @@ kube-prometheus-stack:
       # fsSelector: 'fstype=~"ext[234]|btrfs|xfs|zfs"'
 
     ## Disabled PrometheusRule alerts
-    disabled: {}
-    # KubeAPIDown: true
-    # NodeRAIDDegraded: true
+    disabled:
+      KubeProxyDown: true
+      KubeSchedulerDown: true
+      KubeControllerManagerDown: true
 
   ## Deprecated way to provide custom recording or alerting rules to be deployed into the cluster.
   ##
