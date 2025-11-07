@@ -15,9 +15,9 @@ spec:
     - containerName: node
       # these are identical since we use the hpa for scaling
       minAllowed:
-        cpu: 500m
-        memory: 800Mi
+        cpu: 20m
+        memory: 20Mi
       maxAllowed:
-        cpu: 500m
-        memory: 800Mi
+        cpu: 1000m
+        memory: 1000Mi
 {{- end }}

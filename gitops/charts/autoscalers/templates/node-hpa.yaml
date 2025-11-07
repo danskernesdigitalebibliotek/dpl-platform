@@ -5,7 +5,7 @@ metadata:
   name: node-hpa
 spec:
   minReplicas: 1
-  maxReplicas: 5
+  maxReplicas: 1
   metrics:
     - type: Resource
       resource:
