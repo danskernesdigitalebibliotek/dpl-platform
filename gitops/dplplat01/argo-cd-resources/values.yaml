@@ -44,7 +44,7 @@ apps:
   - name: promstack
     project: monitoring
     namespace: prometheus
-    automated: false
+    automated: true
     syncOptions:
       - ServerSideApply=true
 
