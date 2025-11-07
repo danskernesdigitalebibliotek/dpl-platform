@@ -2347,7 +2347,7 @@ kube-prometheus-stack:
   ## Component scraping kube proxy
   ##
   kubeProxy:
-    enabled: true
+    enabled: false
 
     ## If your kube proxy is not deployed as a pod, specify IPs it can be found on
     ##
@@ -2402,9 +2402,9 @@ kube-prometheus-stack:
       port: http-metrics
 
       jobLabel: jobLabel
-      selector:
-        matchLabels:
-          component: kube-proxy
+      selector: {}
+      #  matchLabels:
+      #    k8s-app: kube-proxy
 
       ## Enable scraping kube-proxy over https.
       ## Requires proper certs (not self-signed) and delegated authentication/authorization checks
