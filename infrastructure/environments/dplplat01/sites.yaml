@@ -2,8 +2,8 @@
 x-defaults: &default-release-image-source
   releaseImageRepository: ghcr.io/danskernesdigitalebibliotek
   releaseImageName: dpl-cms-source
-  dpl-cms-release: 2025.44.0
-  go-release: 2025.44.0
+  dpl-cms-release: 2025.46.0
+  go-release: 2025.46.0
   php-version: 8.3
 x-webmasters-on-weekly-release-cycle: &webmasters-on-weekly-release-cycle
   # This release cycle releases the newest release, which has been
@@ -11,8 +11,8 @@ x-webmasters-on-weekly-release-cycle: &webmasters-on-weekly-release-cycle
   # production
   releaseImageRepository: ghcr.io/danskernesdigitalebibliotek
   releaseImageName: dpl-cms-source
-  dpl-cms-release: 2025.42.0
-  moduletest-dpl-cms-release: 2025.44.0
+  dpl-cms-release: 2025.44.0
+  moduletest-dpl-cms-release: 2025.46.0
   go-release: 2025.44.0
   php-version: 8.3
 x-holdback-46: &holdback-46
@@ -39,9 +39,9 @@ sites:
     releaseImageRepository: ghcr.io/danskernesdigitalebibliotek
     releaseImageName: dpl-cms-source
     plan: webmaster
-    dpl-cms-release: 2025.44.0
-    moduletest-dpl-cms-release: 2025.44.0
-    go-release: 2025.44.0
+    dpl-cms-release: 2025.46.0
+    moduletest-dpl-cms-release: 2025.46.0
+    go-release: 2025.46.0
     php-version: 8.3
     moduletest-php-version: 8.3
     diskSize: 11
@@ -56,9 +56,9 @@ sites:
     releaseImageRepository: ghcr.io/danskernesdigitalebibliotek
     releaseImageName: dpl-cms-source
     plan: webmaster
-    dpl-cms-release: 2025.44.0
-    moduletest-dpl-cms-release: 2025.44.0
-    go-release: 2025.44.0
+    dpl-cms-release: 2025.46.0
+    moduletest-dpl-cms-release: 2025.46.0
+    go-release: 2025.46.0
     php-version: 8.3
     moduletest-php-version: 8.3
     deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAILj8lXv7C/7s7te9sEpwcHQhgDWfzsCkAN7rqQ4sdTzk"
@@ -90,7 +90,7 @@ sites:
     # TODO: Remove this once the the Adgangsplatformen OpenID client used here
     # has been updated to use the primary domain.
     autogenerateRoutes: true
-    moduletest-dpl-cms-release: 2025.44.0
+    moduletest-dpl-cms-release: 2025.46.0
     # This site is a webmaster site but we usually want the latest release
     # deployed to production. Our YAML handling chokes on duplicates to we
     # follow the default release plan and update the module test site manually.
@@ -100,7 +100,7 @@ sites:
     description: "Et site hvor bibliotekerne kan teste"
     importTranslationsCron: "0 * * * *"
     plan: webmaster
-    go-release: 2025.44.0
+    go-release: 2025.46.0
     deploy_key: ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHvhy79hHjLcQJCcMNwci1Q/P/O2LwD4IzBVfkmRGKom
     << : [ *webmasters-on-weekly-release-cycle, *disk-size-small ]
   # BNF site.
