@@ -15,6 +15,13 @@ x-webmasters-on-weekly-release-cycle: &webmasters-on-weekly-release-cycle
   moduletest-dpl-cms-release: 2025.44.0
   go-release: 2025.44.0
   php-version: 8.3
+x-holdback-46: &holdback-46
+  # Herning has asked to stay on 2025.42.0
+  releaseImageRepository: ghcr.io/danskernesdigitalebibliotek
+  releaseImageName: dpl-cms-source
+  dpl-cms-release: 2025.42.0
+  moduletest-dpl-cms-release: 2025.46.0
+  go-release: 2025.44.0
 # Mounted Disk sizes
 x-disk-size-small: &disk-size-small
   diskSize: 10
@@ -453,7 +460,7 @@ sites:
       - herningbib.dk
     autogenerateRoutes: true
     plan: webmaster
-    <<: [ *webmasters-on-weekly-release-cycle, *disk-size-medium ]
+    <<: [ *holdback-46, *disk-size-medium ]
   hillerod:
     name: "Hillerød Bibliotekerne"
     description: "The library site for Hillerød"
