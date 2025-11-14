@@ -299,8 +299,7 @@ sites:
     secondary-domains:
       - "faxebibliotek.dk"
     autogenerateRoutes: true
-    plan: webmaster
-    <<: [ *webmasters-on-weekly-release-cycle, *disk-size-medium ]
+    <<: [ *default-release-image-source, *disk-size-medium ]
   fredensborg:
     name: "Fredensborg Bibliotekerne"
     description: "The library site for Fredensborg"
