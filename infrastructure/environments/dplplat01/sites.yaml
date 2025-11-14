@@ -2,7 +2,7 @@
 x-defaults: &default-release-image-source
   releaseImageRepository: ghcr.io/danskernesdigitalebibliotek
   releaseImageName: dpl-cms-source
-  dpl-cms-release: 2025.46.0
+  dpl-cms-release: 2025.46.1
   go-release: 2025.46.0
   php-version: 8.3
 x-webmasters-on-weekly-release-cycle: &webmasters-on-weekly-release-cycle
@@ -12,7 +12,7 @@ x-webmasters-on-weekly-release-cycle: &webmasters-on-weekly-release-cycle
   releaseImageRepository: ghcr.io/danskernesdigitalebibliotek
   releaseImageName: dpl-cms-source
   dpl-cms-release: 2025.44.0
-  moduletest-dpl-cms-release: 2025.46.0
+  moduletest-dpl-cms-release: 2025.46.1
   go-release: 2025.44.0
   php-version: 8.3
 x-holdback-46: &holdback-46
@@ -20,7 +20,7 @@ x-holdback-46: &holdback-46
   releaseImageRepository: ghcr.io/danskernesdigitalebibliotek
   releaseImageName: dpl-cms-source
   dpl-cms-release: 2025.42.0
-  moduletest-dpl-cms-release: 2025.46.0
+  moduletest-dpl-cms-release: 2025.46.1
   go-release: 2025.44.0
   php-version: 8.3
 # Mounted Disk sizes
@@ -40,8 +40,8 @@ sites:
     releaseImageRepository: ghcr.io/danskernesdigitalebibliotek
     releaseImageName: dpl-cms-source
     plan: webmaster
-    dpl-cms-release: 2025.46.0
-    moduletest-dpl-cms-release: 2025.46.0
+    dpl-cms-release: 2025.46.1
+    moduletest-dpl-cms-release: 2025.46.1
     go-release: 2025.46.0
     php-version: 8.3
     moduletest-php-version: 8.3
@@ -57,8 +57,8 @@ sites:
     releaseImageRepository: ghcr.io/danskernesdigitalebibliotek
     releaseImageName: dpl-cms-source
     plan: webmaster
-    dpl-cms-release: 2025.46.0
-    moduletest-dpl-cms-release: 2025.46.0
+    dpl-cms-release: 2025.46.1
+    moduletest-dpl-cms-release: 2025.46.1
     go-release: 2025.46.0
     php-version: 8.3
     moduletest-php-version: 8.3
@@ -71,8 +71,8 @@ sites:
     releaseImageName: dpl-cms-source
     # Remember to update bnf.moduletest-dpl-cms-release to the same release
     # to make client and server use the same version.
-    dpl-cms-release: 2025.46.0
-    moduletest-dpl-cms-release: 2025.46.0
+    dpl-cms-release: 2025.46.1
+    moduletest-dpl-cms-release: 2025.46.1
     go-release: 2025.46.0
     php-version: 8.3
     plan: webmaster
@@ -91,7 +91,7 @@ sites:
     # TODO: Remove this once the the Adgangsplatformen OpenID client used here
     # has been updated to use the primary domain.
     autogenerateRoutes: true
-    moduletest-dpl-cms-release: 2025.46.0
+    moduletest-dpl-cms-release: 2025.46.1
     # This site is a webmaster site but we usually want the latest release
     # deployed to production. Our YAML handling chokes on duplicates to we
     # follow the default release plan and update the module test site manually.
@@ -109,7 +109,7 @@ sites:
     name: "Bibliotekernes Nationale Formidling"
     description: "The BNF content sharing site"
     plan: webmaster
-    moduletest-dpl-cms-release: 2025.46.0
+    moduletest-dpl-cms-release: 2025.46.1
     deploy_key: ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAICTmMC/cUI3U3QloX6aAdN7g0EU42J0fwA9aO7UJOzx9
     primary-domain: delingstjenesten.dk
     secondary-domains:
