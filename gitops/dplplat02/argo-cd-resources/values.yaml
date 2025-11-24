@@ -1,0 +1,15 @@
+apps:
+  - name: argo-cd
+    project: argo-cd
+    namespace: argo-cd
+    automated: true
+
+  - name: argo-cd-resources
+    project: argo-cd
+    namespace: argo-cd
+    automated: true
+
+  - name: sealed-secrets
+    project: sealed-secrets
+    namespace: kube-system
+    automated: true
