@@ -13,3 +13,8 @@ apps:
     project: sealed-secrets
     namespace: kube-system
     automated: true
+
+  - name: ingress-nginx
+    project: ingress-nginx
+    namespace: ingress-nginx
+    automated: true

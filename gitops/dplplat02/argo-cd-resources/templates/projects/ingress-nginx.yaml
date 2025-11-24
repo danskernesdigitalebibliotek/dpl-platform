@@ -1,0 +1,27 @@
+apiVersion: argoproj.io/v1alpha1
+kind: AppProject
+metadata:
+  name: ingress-nginx
+spec:
+  destinations:
+  - name: in-cluster
+    namespace: ingress-nginx
+    server: https://kubernetes.default.svc
+  clusterResourceWhitelist:
+  - group: ''
+    kind: Namespace
+  - group: rbac.authorization.k8s.io
+    kind: ClusterRole
+  - group: rbac.authorization.k8s.io
+    kind: ClusterRoleBinding
+  - group: networking.k8s.io
+    kind: IngressClass
+  - group: admissionregistration.k8s.io
+    kind: ValidatingWebhookConfiguration
+  namespaceResourceWhitelist:
+  - group: '*'
+    kind: '*'
+  orphanedResources:
+    warn: false
+  sourceRepos:
+  - https://github.com/danskernesdigitalebibliotek/dpl-platform.git # git repository
