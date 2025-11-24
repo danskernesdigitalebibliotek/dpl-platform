@@ -456,8 +456,10 @@ cert-manager:
       requiredDuringSchedulingIgnoredDuringExecution:
         nodeSelectorTerms:
           - matchExpressions:
-              - key: node-role.kubernetet.io/control-plane
-                operator: Exists
+              - key: noderole.dplplatform
+                operator: In
+                values:
+                  - system
 
   # A list of Kubernetes Tolerations, if required. For more information, see [Toleration v1 core](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.27/#toleration-v1-core).
   #
@@ -468,7 +470,7 @@ cert-manager:
   #     value: master
   #     effect: NoSchedule
   tolerations:
-    - key: node-role.kubernetet.io/control-plane
+    - key: CriticalAddonsOnly
       operator: Exists
 
   # A list of Kubernetes TopologySpreadConstraints, if required. For more information, see [Topology spread constraint v1 core](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.27/#topologyspreadconstraint-v1-core
@@ -858,8 +860,10 @@ cert-manager:
         requiredDuringSchedulingIgnoredDuringExecution:
           nodeSelectorTerms:
             - matchExpressions:
-                - key: node-role.kubernetet.io/control-plane
-                  operator: Exists
+                - key: noderole.dplplatform
+                  operator: In
+                  values:
+                    - system
 
 
     # A list of Kubernetes Tolerations, if required. For more information, see [Toleration v1 core](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.27/#toleration-v1-core).
@@ -871,7 +875,7 @@ cert-manager:
     #     value: master
     #     effect: NoSchedule
     tolerations:
-      - key: node-role.kubernetet.io/control-plane
+      - key: CriticalAddonsOnly
         operator: Exists
 
     # A list of Kubernetes TopologySpreadConstraints, if required. For more information, see [Topology spread constraint v1 core](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.27/#topologyspreadconstraint-v1-core).
@@ -1185,8 +1189,10 @@ cert-manager:
         requiredDuringSchedulingIgnoredDuringExecution:
           nodeSelectorTerms:
             - matchExpressions:
-                - key: nnode-role.kubernetet.io/control-plane
-                  operator: Exists
+                - key: noderole.dplplatform
+                  operator: In
+                  values:
+                    - system
 
     # A list of Kubernetes Tolerations, if required. For more information, see [Toleration v1 core](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.27/#toleration-v1-core).
     #
@@ -1197,7 +1203,7 @@ cert-manager:
     #     value: master
     #     effect: NoSchedule
     tolerations:
-      - key: node-role.kubernetet.io/control-plane
+      - key: CriticalAddonsOnly
         operator: Exists
 
     # A list of Kubernetes TopologySpreadConstraints, if required. For more information, see [Topology spread constraint v1 core](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.27/#topologyspreadconstraint-v1-core).
@@ -1512,3 +1518,4 @@ cert-manager:
   # for more info.
   # +docs:hidden
   enabled: true
+
