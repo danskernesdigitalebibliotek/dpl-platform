@@ -18,3 +18,8 @@ apps:
     project: ingress-nginx
     namespace: ingress-nginx
     automated: true
+
+  - name: cert-manager
+    project: cert-manager
+    namespace: cert-manager
+    automated: true
