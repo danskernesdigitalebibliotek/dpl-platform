@@ -23,3 +23,8 @@ apps:
     project: cert-manager
     namespace: cert-manager
     automated: true
+
+  - name: harbor
+    project: harbor
+    namespace: harbor
+    automated: false
