@@ -140,7 +140,7 @@ harbor:
         # Set it to "-" to disable dynamic provisioning
         storageClass: ""
         subPath: ""
-        accessMode: ReadWriteMany
+        accessMode: ReadWriteOnce
         size: 5Gi
         annotations: {}
       jobservice:
@@ -731,7 +731,7 @@ harbor:
     serviceAccountName: ""
     # mount the service account token
     automountServiceAccountToken: false
-    replicas: 3
+    replicas: 1
     revisionHistoryLimit: 10
     nodeSelector: {}
     tolerations: []
