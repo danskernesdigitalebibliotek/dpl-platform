@@ -140,7 +140,7 @@ harbor:
         # Set it to "-" to disable dynamic provisioning
         storageClass: ""
         subPath: ""
-        accessMode: ReadWriteOnce
+        accessMode: ReadWriteMany
         size: 5Gi
         annotations: {}
       jobservice:
