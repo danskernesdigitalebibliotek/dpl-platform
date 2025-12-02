@@ -28,3 +28,10 @@ apps:
     project: harbor
     namespace: harbor
     automated: false
+
+  - name: loki
+    project: monitoring
+    namespace: loki
+    automated: true
+    syncOptions:
+      - ServerSideApply=true
