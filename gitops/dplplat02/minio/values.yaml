@@ -431,7 +431,11 @@ minio:
 
   ## List of buckets to be created after minio install
   ##
-  buckets: []
+  buckets:
+    - name: images
+      policy: none
+    - name: files
+      policy: none
     #   # Name of the bucket
     # - name: bucket1
     #   # Policy to be set on the
