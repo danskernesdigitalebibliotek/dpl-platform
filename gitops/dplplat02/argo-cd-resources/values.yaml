@@ -39,4 +39,4 @@ apps:
   - name: minio
     project: minio
     namespace: minio
-    automated: true
+    automated: false
