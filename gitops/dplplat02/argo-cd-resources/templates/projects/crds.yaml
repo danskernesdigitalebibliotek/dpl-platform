@@ -5,7 +5,6 @@ metadata:
 spec:
   destinations:
   - name: in-cluster
-    namespace: *
     server: https://kubernetes.default.svc
   clusterResourceWhitelist:
   - group: ''
