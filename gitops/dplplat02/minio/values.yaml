@@ -30,7 +30,7 @@ minio:
     pullPolicy: IfNotPresent
 
   ## minio mode, i.e. standalone or distributed
-  mode: standalone ## other supported values are "standalone"
+  mode: distributed ## other supported values are "standalone"
 
   ## Additional labels to include with deployment or statefulset
   additionalLabels: {}
@@ -119,11 +119,11 @@ minio:
   bucketRoot: ""
 
   # Number of drives attached to a node
-  drivesPerNode: 1
+  drivesPerNode: 4
   # Number of MinIO containers running
-  replicas: 1
+  replicas: 4
   # Number of expanded MinIO clusters
-  pools: 2
+  pools: 1
 
   ## TLS Settings for MinIO
   tls:
@@ -163,7 +163,7 @@ minio:
     storageClass: ceph-block
     volumeName: minio-volume
     accessMode: ReadWriteOnce
-    size: 100Gi
+    size: 10GB
 
     ## If subPath is set mount a sub folder of a volume instead of the root of the volume.
     ## This is especially handy for volume plugins that don't natively support sub mounting (like glusterfs).
