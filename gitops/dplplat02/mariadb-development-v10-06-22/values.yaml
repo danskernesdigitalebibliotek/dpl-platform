@@ -1,0 +1,3 @@
+imageTag: 10.6.22
+replicas: 1
+storageSize: 10Gi
