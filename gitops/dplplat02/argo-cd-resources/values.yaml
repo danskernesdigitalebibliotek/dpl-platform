@@ -48,7 +48,6 @@ apps:
 
   - name: mariadb-operator-crds
     project: crds
-    namespace: mariadb-operator-crds
     automated: false
 
   - name: mariadb-development-v10-06-22
