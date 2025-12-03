@@ -1,0 +1,19 @@
+apiVersion: argoproj.io/v1alpha1
+kind: AppProject
+metadata:
+  name: crds
+spec:
+  destinations:
+  - name: in-cluster
+    namespace: *
+    server: https://kubernetes.default.svc
+  clusterResourceWhitelist:
+  - group: ''
+    kind: Namespace
+  namespaceResourceWhitelist:
+  - group: apiextensions.k8s.io
+    kind: CustomResourceDefinition
+  orphanedResources:
+    warn: false
+  sourceRepos:
+  - https://github.com/danskernesdigitalebibliotek/dpl-platform.git # git repository

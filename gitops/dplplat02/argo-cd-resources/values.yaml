@@ -47,7 +47,7 @@ apps:
     automated: false
 
   - name: mariadb-operator-crds
-    project: databases
+    project: crds
     namespace: mariadb-operator-crds
     automated: false
 
