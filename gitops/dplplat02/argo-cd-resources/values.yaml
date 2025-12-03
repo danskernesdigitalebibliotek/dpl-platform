@@ -41,7 +41,7 @@ apps:
     namespace: minio
     automated: false
 
-  - name: mariadb-development-v10-6-22
+  - name: mariadb-development-v10-06-22
     project: databases
-    namespace: mariadb-development-v10-6-22
+    namespace: mariadb-development-v10-06-22
     automated: false
