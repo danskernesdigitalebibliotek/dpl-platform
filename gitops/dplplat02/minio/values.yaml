@@ -121,9 +121,9 @@ minio:
   # Number of drives attached to a node
   drivesPerNode: 1
   # Number of MinIO containers running
-  replicas: 2
+  replicas: 1
   # Number of expanded MinIO clusters
-  pools: 1
+  pools: 2
 
   ## TLS Settings for MinIO
   tls:
