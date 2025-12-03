@@ -119,9 +119,9 @@ minio:
   bucketRoot: ""
 
   # Number of drives attached to a node
-  drivesPerNode: 2
+  drivesPerNode: 1
   # Number of MinIO containers running
-  replicas: 2
+  replicas: 3
   # Number of expanded MinIO clusters
   pools: 1
 
