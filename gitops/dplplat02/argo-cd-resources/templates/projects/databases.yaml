@@ -12,6 +12,12 @@ spec:
     kind: Namespace
   - group: rbac.authorization.k8s.io
     kind: ClusterRole
+  - group: admissionregistration.k8s.io
+    kind: MutatingWebhookConfiguration
+  - group: admissionregistration.k8s.io
+    kind: ValidatingWebhookConfiguration
+  - group: rbac.authorization.k8s.io
+    kind: ClusterRoleBinding
   namespaceResourceWhitelist:
   - group: '*'
     kind: '*'
