@@ -41,6 +41,16 @@ apps:
     namespace: minio
     automated: false
 
+  - name: mariadb-operator
+    project: databases
+    namespace: mariadb-operator
+    automated: false
+
+  - name: mariadb-operator-crds
+    project: databases
+    namespace: mariadb-operator-crds
+    automated: false
+
   - name: mariadb-development-v10-06-22
     project: databases
     namespace: mariadb-development-v10-06-22
