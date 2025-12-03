@@ -35,3 +35,8 @@ apps:
     automated: true
     syncOptions:
       - ServerSideApply=true
+
+  - name: minio
+    project: minio
+    namespace: minio
+    automated: true
