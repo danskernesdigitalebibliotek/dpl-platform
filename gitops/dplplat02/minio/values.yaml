@@ -30,7 +30,7 @@ minio:
     pullPolicy: IfNotPresent
 
   ## minio mode, i.e. standalone or distributed
-  mode: distributed ## other supported values are "standalone"
+  mode: standalone ## other supported values are "standalone"
 
   ## Additional labels to include with deployment or statefulset
   additionalLabels: {}
@@ -119,9 +119,9 @@ minio:
   bucketRoot: ""
 
   # Number of drives attached to a node
-  drivesPerNode: 4
+  drivesPerNode: 1
   # Number of MinIO containers running
-  replicas: 4
+  replicas: 1
   # Number of expanded MinIO clusters
   pools: 1
 
