@@ -67,6 +67,12 @@ spec:
 
   securityContext:
     allowPrivilegeEscalation: false
+    capabilities:
+      drop:
+        - drop
+    seccompProfile:
+      type:
+        - RuntimeDefault
 
   livenessProbe:
     exec:
