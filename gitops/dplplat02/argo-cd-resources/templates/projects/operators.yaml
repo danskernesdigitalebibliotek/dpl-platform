@@ -6,6 +6,7 @@ spec:
   destinations:
   - name: in-cluster
     server: https://kubernetes.default.svc
+    namespace: mariadb-operator
   clusterResourceWhitelist:
   - group: ''
     kind: Namespace
