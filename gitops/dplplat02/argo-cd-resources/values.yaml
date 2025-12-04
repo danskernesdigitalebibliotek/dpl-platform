@@ -54,3 +54,8 @@ apps:
     project: databases
     namespace: mariadb-development-v10-06-22
     automated: false
+
+  - name: lagoon-core
+    project: lagoon
+    namespace: lagoon-core
+    automated: false
