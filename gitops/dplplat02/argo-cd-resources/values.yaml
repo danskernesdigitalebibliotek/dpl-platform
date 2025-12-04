@@ -42,7 +42,7 @@ apps:
     automated: false
 
   - name: mariadb-operator
-    project: databases
+    project: operators
     namespace: mariadb-operator
     automated: false
 
