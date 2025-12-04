@@ -101,7 +101,7 @@ spec:
     type: ReplicasFirstPrimaryLast
 
   metrics:
-    enabled: false
+    enabled: true
 
   suspend: false
 
