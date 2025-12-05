@@ -11,17 +11,17 @@ x-webmasters-on-weekly-release-cycle: &webmasters-on-weekly-release-cycle
   # production
   releaseImageRepository: ghcr.io/danskernesdigitalebibliotek
   releaseImageName: dpl-cms-source
-  dpl-cms-release: 2025.46.1
+  dpl-cms-release: 2025.46.2
   moduletest-dpl-cms-release: 2025.48.2
-  go-release: 2025.46.0
+  go-release: 2025.46.1
   php-version: 8.3
 x-holdback-46: &holdback-46
   # Herning has asked to stay on 2025.42.0
   releaseImageRepository: ghcr.io/danskernesdigitalebibliotek
   releaseImageName: dpl-cms-source
-  dpl-cms-release: 2025.42.0
+  dpl-cms-release: 2025.42.1
   moduletest-dpl-cms-release: 2025.48.2
-  go-release: 2025.44.0
+  go-release: 2025.44.1
   php-version: 8.3
 # Mounted Disk sizes
 x-disk-size-small: &disk-size-small
