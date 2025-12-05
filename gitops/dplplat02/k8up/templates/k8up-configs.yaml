@@ -3,10 +3,9 @@ kind: ConfigMap
 metadata:
   name: k8up-configs
 data:
-  global-s3-bucket:
+  global-s3-bucket: backup
   global-s3-endpoint:
-  global-keep-jobs:
+  global-keep-jobs: 1
   global-stats-url:
-  backof-limit:
-  k8up-configs:
-  global-restore-s3-endpoint:
+  backof-limit: 2
+  global-restore-s3-endpoint: restore
