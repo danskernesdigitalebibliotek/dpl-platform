@@ -215,7 +215,7 @@ minio:
       # nginx.ingress.kubernetes.io/whitelist-source-range: 0.0.0.0/0
     path: /
     hosts:
-      - files.lagoon.dplplat01.dpl.reload.dk
+      - files.lagoon.dplplat02.dpl.reload.dk
     tls: []
     #  - secretName: chart-example-tls
     #    hosts:
