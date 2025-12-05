@@ -1,7 +1,0 @@
-apiVersion: v2
-name: lagoon-core
-version: 0.0.0
-dependencies:
-  - name: lagoon-core
-    version: 1.44.0
-    repository: https://uselagoon.github.io/lagoon-charts/
