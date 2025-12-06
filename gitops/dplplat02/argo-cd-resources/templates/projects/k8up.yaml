@@ -5,7 +5,7 @@ metadata:
 spec:
   destinations:
   - name: in-cluster
-    namespace: lagoon-*
+    namespace: k8up
     server: https://kubernetes.default.svc
   clusterResourceWhitelist:
   - group: ''
