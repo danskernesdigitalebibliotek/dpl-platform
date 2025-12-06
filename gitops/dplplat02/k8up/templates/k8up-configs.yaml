@@ -3,8 +3,8 @@ kind: ConfigMap
 metadata:
   name: k8up-configs
 data:
-  global-s3-bucket: lagoon-backup
-  global-s3-endpoint: http://rook-ceph-rgw-ceph-objectstore.rook-ceph.svc.cluster.local:80
+  # global-s3-bucket: lagoon-backup
+  # global-s3-endpoint: http://rook-ceph-rgw-ceph-objectstore.rook-ceph.svc.cluster.local:80
   global-keep-jobs: 1
   global-stats-url: https://backuphandler.lagoon.dplplat02.dpl.reload.dk
   backof-limit: 2

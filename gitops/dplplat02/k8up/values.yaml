@@ -27,34 +27,34 @@ k8up:
      - name: BACKUP_GLOBALACCESSKEYID
        valueFrom:
         secretKeyRef:
-          name: k8up-secrets
-          key: global-access-key-id
+          name: lagoon-bucket
+          key: AWS_ACCESS_KEY_ID
      - name: BACKUP_GLOBALSECRETACCESSKEY
        valueFrom:
         secretKeyRef:
-          name: k8up-secrets
-          key: global-secret-access-key
+          name: lagoon-bucket
+          key: AWS_SECRET_ACCESS_KEY
      - name: BACKUP_GLOBALRESTORES3ACCESSKEYID
        valueFrom:
         secretKeyRef:
-          name: k8up-secrets
-          key: global-restore-s3-access-key-id
+          name: lagoon-bucket
+          key: AWS_ACCESS_KEY_ID
      - name: BACKUP_GLOBALRESTORES3SECRETACCESSKEY
        valueFrom:
         secretKeyRef:
-          name: k8up-secrets
-          key: global-restore-s3-secret-access-key
+          name: lagoon-bucket
+          key: AWS_SECRET_ACCESS_KEY
     # Config values
      - name: BACKUP_GLOBALS3BUCKET
        valueFrom:
         configMapKeyRef:
-          name: k8up-configs
-          key: global-s3-bucket
+          name: lagoon-bucket
+          key: BUCKET_NAME
      - name: BACKUP_GLOBALS3ENDPOINT
        valueFrom:
         configMapKeyRef:
-          name: k8up-configs
-          key: global-s3-endpoint
+          name: lagoon-bucket
+          key: BUCKET_HOST
      - name: BACKUP_GLOBALKEEPJOBS
        valueFrom:
         configMapKeyRef:
