@@ -59,3 +59,8 @@ apps:
     project: lagoon-auxiliary
     namespace: lagoon-auxiliary
     automated: false
+
+  - name: k8up
+    project: k8up
+    namespace: k8up
+    automated: false
