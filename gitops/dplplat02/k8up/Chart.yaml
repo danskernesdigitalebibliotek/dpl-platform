@@ -4,4 +4,4 @@ version: 0.0.0
 dependencies:
   - name: k8up
     version: 1.1.0
-    repository: https://https://charts.appuio.ch
+    repository: https://charts.appuio.ch
