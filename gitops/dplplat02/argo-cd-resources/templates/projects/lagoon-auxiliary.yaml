@@ -1,7 +1,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: AppProject
 metadata:
-  name: lagoon
+  name: lagoon-auxiliary
 spec:
   destinations:
   - name: in-cluster
