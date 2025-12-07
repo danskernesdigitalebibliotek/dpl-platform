@@ -1,7 +1,0 @@
-apiVersion: v2
-name: k8up
-version: 0.0.0
-dependencies:
-  - name: k8up
-    version: 1.1.0
-    repository: https://https://charts.appuio.ch
