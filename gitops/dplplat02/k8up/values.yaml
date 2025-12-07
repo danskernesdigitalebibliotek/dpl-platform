@@ -56,30 +56,15 @@ k8up:
           name: lagoon-bucket
           key: BUCKET_HOST
      - name: BACKUP_GLOBALKEEPJOBS
-       valueFrom:
-        configMapKeyRef:
-          name: k8up-configs
-          key: global-keep-jobs
+       value: 1
      - name: BACKUP_GLOBALSTATSURL
-       valueFrom:
-        configMapKeyRef:
-          name: k8up-configs
-          key: global-stats-url
+       value: https://backup-stats.lagoon.dplplat02.dpl.reload.dk
      - name: BACKUP_BACKOFFLIMIT
-       valueFrom:
-        configMapKeyRef:
-          name: k8up-configs
-          key: backof-limit
+       value: 2
      - name: BACKUP_GLOBALRESTORES3BUCKET
-       valueFrom:
-        configMapKeyRef:
-          name: k8up-configs
-          key: k8up-configs
+       value: restore
      - name: BACKUP_GLOBALRESTORES3ENDPOINT
-       valueFrom:
-        configMapKeyRef:
-          name: k8up-configs
-          key: global-restore-s3-endpoint
+       value: https://backuphandler.lagoon.dplplat02.dpl.reload.dk
 
     backupImage:
       # -- The backup runner image repository
