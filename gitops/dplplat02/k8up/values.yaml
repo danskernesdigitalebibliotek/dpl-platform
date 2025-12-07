@@ -56,11 +56,11 @@ k8up:
           name: lagoon-bucket
           key: BUCKET_HOST
      - name: BACKUP_GLOBALKEEPJOBS
-       value: 1
+       value: "1"
      - name: BACKUP_GLOBALSTATSURL
        value: https://backup-stats.lagoon.dplplat02.dpl.reload.dk
      - name: BACKUP_BACKOFFLIMIT
-       value: 2
+       value: "2"
      - name: BACKUP_GLOBALRESTORES3BUCKET
        value: restore
      - name: BACKUP_GLOBALRESTORES3ENDPOINT
