@@ -1,19 +1,19 @@
 # These values must be set on install, as they don't have sensible defaults.
 #ENCRYPT
-harborAdminPassword: ENC[AES256_GCM,data:ddnkX+fpCOFp7c2v2/qMuA==,iv:+adIPHqnhk9UoLKzWgVNODLw4O0CrXKMbNzMp+nGHKE=,tag:U4PyJsfmDvtS6OVwGb3a+w==,type:str]
+harborAdminPassword: ENC[AES256_GCM,data:5YYqnoYI9RRf2VJkodQ2kz9lXoU=,iv:TYaoFkoYblMvsI7OTG0tr2cLoAySmPqoR9PuYl7CRHk=,tag:SZ3HTdUT4GZR3KOZbiBwSg==,type:str]
 elasticsearchURL: none
-harborURL: https://habor.lagoon.dplplat01.dpl.reload.dk
+harborURL: https://habor.lagoon.dplplat02.dpl.reload.dk
 kibanaURL: none
 #ENCRYPT
-s3BAASSecretAccessKey: ENC[AES256_GCM,data:YaiaGKg7RhM8LJbSecPxaxAHaYuaqA==,iv:OQ2w8oeA99Lbd867biGr9jr9t+OCjHXqrDu+mtUJhSE=,tag:Mkd4I5prlO3j1EuABPBAeA==,type:str]
+s3BAASSecretAccessKey: ENC[AES256_GCM,data:mMOORK6d8IdSuEoTF8CTCVRa5n55uIMiM4zCxN4vOLRL2WwPMi8u9Q==,iv:b6DH+XshNZZ9lpm0ondz0dun7BD80a3lGe3iBzfjjGQ=,tag:bnKiypP1ZNQ8b0vFZ/qDlQ==,type:str]
 #ENCRYPT
-s3BAASAccessKeyID: ENC[AES256_GCM,data:0FJm6PkW0goqWDkKLq67QKwFpzjVGQ==,iv:ksG5oMYZyb0oCrpomZVfaT3qypIleeCCUzTtm29sCnE=,tag:dC7yL9NBQTE3eY1jhzOi+g==,type:str]
+s3BAASAccessKeyID: ENC[AES256_GCM,data:3/xdazr4zCCX8h8z8+dGI/N1RpY=,iv:2/jBLv21U79Z+Oj124VnDumlaRqYPFIHlnMv3+x5Vqw=,tag:QoDZlFwz53hNX+ni0JoxjA==,type:str]
 #ENCRYPT
-s3FilesAccessKeyID: ENC[AES256_GCM,data:QoRNEYeTTYfPs5tDGrtdwh9nnOTMNQ==,iv:2UQZ1KINlgZ5TJjyATmQKv+5VWmqsGoHGK9ASC3xJoY=,tag:aTZ4V5i80WSQbHTPIDkYhw==,type:str]
-s3FilesBucket: lagoon-files
-s3FilesHost: https://files.lagoon.dplplat01.dpl.reload.dk
+s3FilesAccessKeyID: ENC[AES256_GCM,data:tGznfuP0DQOl/WCd8SIW8jNUOUA=,iv:JX+qzeBIiVeaXSNTuLxlFZaLKFAxwfi2svfiw/g7TvQ=,tag:MMXrFzF9OagLsdGl4LJNuA==,type:str]
+s3FilesBucket: lagoon-files-bucket
+s3FilesHost: https://files.lagoon.dplplat02.dpl.reload.dk
 #ENCRYPT
-s3FilesSecretAccessKey: ENC[AES256_GCM,data:/UXjfHn8C230dgz/4yxbzQwNGZ1w2Q==,iv:ajPtuT9gxAR2evYQeH372r+XyH5ifj4BIYjZErzofYI=,tag:/W97G7R/BOanKKz8+dGpag==,type:str]
+s3FilesSecretAccessKey: ENC[AES256_GCM,data:jOJDvovQAcv5gu/TwjxFqCRNtnV+FiV2wHwPv8eBrH49wlUq3N+T6A==,iv:eJPy1LMYgB4LBMXCX7i/sK5ZpPHGTbN4V/kB39XLKwo=,tag:gP90aytfdqAfgcwlMmQJ9w==,type:str]
 # These values are optional.
 # overwriteActiveStandbyTaskImage:
 # appspecific discovery.json settings
@@ -37,40 +37,45 @@ s3FilesSecretAccessKey: ENC[AES256_GCM,data:/UXjfHn8C230dgz/4yxbzQwNGZ1w2Q==,iv:
 # lagoonWebhookURL: https://webhook-handler.example.com
 # These values are randomly generated on install if not otherwise defined.
 #ENCRYPT
-apiDBPassword: ENC[AES256_GCM,data:yaRMEo9OL9e7XhCo0+XxmtkZSNFU0+DNaYrLgMq8QX8=,iv:15i357hyA0Yw7TjrCWd6SULUOHITr/ZTddlDlT1mI1c=,tag:dZOrTk08XODRp5mXOFf4MA==,type:str]
+apiDBPassword: ENC[AES256_GCM,data:p/5r7CL5zTk9op5rDES6I92u4w8YIGFT64gRPKET,iv:/ALwY3gG8riegBMNCv4cpCtz5GJLWyQAckvJnSi/3/Y=,tag:Zo7fmY0jfbUhzr03V8Gjyw==,type:str]
 #ENCRYPT
-jwtSecret: ENC[AES256_GCM,data:yM/O3QKiV9cSoJClCynkvvxYU22rkoNhPVl4Yx0EzkI=,iv:GvfdbbgBCCnMIngySET1TRfiRiAMxLWVl8PxIPMz1aw=,tag:TVU+7hKfb1cmHugyhsNB/A==,type:str]
+jwtSecret: ENC[AES256_GCM,data:WxzBIHb/MfcRumciMjoFB0uXbJgIaxCekYP2UENz,iv:oaO0xEgkRLy3d0U07z1mmmq/nlpyMggYmFOKhyberR8=,tag:+QwZH/2rRoVBC84Nk2EC1g==,type:str]
 #ENCRYPT
-keycloakAdminPassword: ENC[AES256_GCM,data:bkIt2RtqmYDIJDno0vxkOw==,iv:S6ZsPQOS6SRnGI6S5//su2PbmpUyl9xzjjdQokR9DzY=,tag:ndMQBDSZ3w8884FnoKVo0Q==,type:str]
+keycloakAdminPassword: ENC[AES256_GCM,data:tSzAeAgT78B84TZzVOnnNblRVfBDH6obktSOMECY,iv:aUzPCBZA6aMSj0FBPSi7xKsV2gjIWReRwy4Oah55K6I=,tag:zmEypyT6inGwj8YWPkqIXg==,type:str]
 #ENCRYPT
-keycloakAPIClientSecret: ENC[AES256_GCM,data:b0CBX99wIEhLYwf9n2vT6Eqvss3lOKvnTMqFHo90iKOmjKZn,iv:FucU32uUTrFUtjfNpXsOrMLC2ewfZis7oSPveWZoNEc=,tag:yzCzk34pTSjqAAulAIiiog==,type:str]
+keycloakAPIClientSecret: ENC[AES256_GCM,data:Gm5ukNq2EQV6X/brvyIRWCv1D9wVzlCocUMjKW4T,iv:NvshvRouXsgUTRZdQXe6EH/1qNYabuA2az1ozi7FNhs=,tag:oqoT6uYQbBCueJJ80DRz9Q==,type:str]
 #ENCRYPT
-keycloakAuthServerClientSecret: ENC[AES256_GCM,data:srLssJCn+tHVgkg6EhmFUA+gAPUdW1/bt8RmEpEoPp2sPT3j,iv:Hhrk5j5R41MeYsifKFfiWcHM20aH/FRou0bJSLdpZnU=,tag:kvd9j/Woku6vf9akNxaTOQ==,type:str]
+keycloakAuthServerClientSecret: ENC[AES256_GCM,data:RGZsFgodL79TIehvsNNSmDB8U1aoEEJIGUNRBeTx,iv:3ycH4MozZfiveeAGT5yGQY8uDvOo95/HDT0gfHsowIU=,tag:UNd5yO05et7ci3QCtxdRfQ==,type:str]
 #ENCRYPT
-keycloakDBPassword: ENC[AES256_GCM,data:OAtvhBMI5CymK1B7g0n9Lx2QTCMCLcQ1X56IwWOY4zs=,iv:8oV8azh+Ags3U1mFHynWVWXgczr0OfnZ3EPxfnyKbZw=,tag:X5AWrc/JW6FNcf2S52eyNQ==,type:str]
+keycloakDBPassword: ENC[AES256_GCM,data:Z6e7l4rRYySWgGE+xhvHQ9yRiIzvLuQgwfkBxqIZ,iv:bCbgqNGXeF2HQAe6ks8lg8hOJGnIxMrMelGZlbWnJ6s=,tag:WnutMjZnsLhkTJkZb/QtxQ==,type:str]
 #ENCRYPT
-keycloakLagoonAdminPassword: ENC[AES256_GCM,data:O5jo8Ar0AQ4tz/yC+lRe5jWK8hW7Y9zDC2DSFCQ4Bak=,iv:uC3oAgpbTzDkIbiFMkMSNCZ5PbNFfPLvHnp+cLzRfm4=,tag:iTp7m0A7FEq7+k4127qd8Q==,type:str]
+keycloakLagoonAdminPassword: ENC[AES256_GCM,data:OE6fqw/rKApvBP+vrs3KLz9nTxG3GbdouLUzX7zi,iv:ds6aUm7eQvkg6qPgaSIpH7nJW90iDNoXoVWvijqY4+s=,tag:oElXjBwLNkwJSWU69DrUXw==,type:str]
 #ENCRYPT
-logsDBAdminPassword: ENC[AES256_GCM,data:YZonKxg8zKjeSA==,iv:g6bFrrk3OKUvvaYvZWuHqLn6Pe5j7SuzukOvVbLsHCI=,tag:jn6bvW56VeeluF0koUG+Dw==,type:str]
+logsDBAdminPassword: ENC[AES256_GCM,data:9KlAZxhW1I5fTn2SeB2CfDE5nxwjilVHBf2lICnW,iv:xQMZ9gbbkNNT5xwLTlIvzVp0QxqRYM9K1dJTY87TwJg=,tag:cZQLztv/6uAaIsUjqcowVQ==,type:str]
 #ENCRYPT
-keycloakLagoonOpensearchSyncClientSecret: ENC[AES256_GCM,data:LcNYzpsELO89FP4EAJ0WIITg+0PHZkdUEVeTM2w1YuxGPsSa,iv:0GNOOk0ZAAAfspWI8dVObFUjCh88fCeaVdXmGmUCHpQ=,tag:lZDHEjkmx4seuO4lI/SBKA==,type:str]
+keycloakLagoonOpensearchSyncClientSecret: ENC[AES256_GCM,data:JZRH3EI/RjqmU5qILZQiqwlixl5EIL0nIZY5VpZ4,iv:7w+xn4Q/V2/l0hoGTrWpNkp4EfMQU0LaTQXIHp2/E18=,tag:KaICESXLVrd5mxADXMw79g==,type:str]
 #ENCRYPT
-keycloakServiceAPIClientSecret: ENC[AES256_GCM,data:ETNwlfVpfRVr1r1nj94XFnx9KvPfzr8GeP2MtqqFhEXkr4VB,iv:bimNPwkOZ3xB39amafdH6ulmuDZjoKHzhTcs0hGdyrw=,tag:7204z0Ct4NVM7MyIGr7uwA==,type:str]
+keycloakServiceAPIClientSecret: ENC[AES256_GCM,data:MpFqXzOZjDET66wnivdfiII2Mbyd8/FbkS0uy3qa,iv:eHRWd4ThvMo2dDABj8+Qul9FRdA5OLW2xMc3zW94xEM=,tag:yqZQW1pFc4AxFRnErAME0g==,type:str]
 #ENCRYPT
-rabbitMQPassword: ENC[AES256_GCM,data:SVkkgn7rSG0AtwdVTnMJtpXb5Imf4cOn7hkxYcHd2Cg=,iv:q9G0RwltzsV/3AJRCqOrIG1tA4PtMlvfHIO2ql3AWI8=,tag:Yj4C0+rpawxNvGm00OpK/A==,type:str]
+rabbitMQPassword: ENC[AES256_GCM,data:F7vI6mmbG8i5MnJ4ewqu2Mty+Bu9lciJeviB8vPE,iv:LN55EuCzK9uNqlkZb9RceeZu2Nt2fgH4PPbA7yrgvsI=,tag:7ZTI3uIKn99ez0TTGDMSUw==,type:str]
 #ENCRYPT
-redisPassword: ENC[AES256_GCM,data:jbl+vxE5G68ROExtvJ9m+ov0JUFKcqfsvTTICir2dDQ=,iv:73DGUO7+Kei3w189na/lWwpUbMYL3SMAzwr78W30p1Q=,tag:aYrk6aJ7AQwXTjZ5Z/MTeQ==,type:str]
-k8upBackupBucketName: baas-lagoon-core-1ixvj7te
+redisPassword: ENC[AES256_GCM,data:GXoopl9Uu2/HR3a1Ysc3wgnHHHwTprTPxuKGyQs2,iv:8sSypraPKKVuUIqgLixOiSSKb2pKkKXh1lm34Ok6VZA=,tag:Age2jajk3/OMvLS4iXY/QQ==,type:str]
+k8upBackupBucketName: lagoon-backup
 # This value is set to match jwtSecret on existing installs if not defined.
 # It should only ever be set here for backwards compatibility.
 #ENCRYPT
-projectSeed: ENC[AES256_GCM,data:bDP7EOWClSqPBJ5MgpXmL7hoR9JWRmV9oxaizK8IO3U=,iv:gUwD8KrVmDqMiH4x5GpKwdcqXYkTkwBghbbzSJhnRjc=,tag:QJ3LoFhTO1D8Itt6icbP4Q==,type:str]
+projectSeed: ENC[AES256_GCM,data:TC7SlYhwt4l41yKr+NNtTEOJDAGBdO3a5DuYmnlz,iv:mWQPCoSvopIYzZr0vTetW03tdFwKivwdDh3yeWLW7iA=,tag:vdglvuz7Rq1Svv7T9fggwQ==,type:str]
+lagoonSeedOrganization: Danish Public Libraries
+#ENCRYPT
+lagoonSeedUsername: ENC[AES256_GCM,data:R8ybBLCURuYLUkOTmu4h7mbF,iv:Bvpjb1Jl4nCc4N4xW5DHqVEE/1kFLiUwGPXEq0yG+8c=,tag:xhpFDH9H+TWQ61kttCwdUg==,type:str]
+#ENCRYPT
+lagoonSeedPassword: ENC[AES256_GCM,data:P1+NCsIPAdgO19N3NUvxuJzhj4/hOi33FtHAC2Ua,iv:rLRtOjFOVJerUuNLKmvoFAEmnR5f9CSIkW+bqryItbI=,tag:Dnlc34m8NaFAucpCGDMOgQ==,type:str]
 # These values are the chart defaults, but can be overridden.
 imagePullSecrets: []
 rabbitMQUsername: lagoon
 k8upS3Endpoint: ""
 #ENCRYPT
-keycloakAdminUser: ENC[AES256_GCM,data:VHPBZqY=,iv:BXunbB6+SHknz4kEamHTU0azClqeyC+sSjPhspcWi54=,tag:quDDrbW4Zn3JAk1QWLD1kg==,type:str]
+keycloakAdminUser: ENC[AES256_GCM,data:gFCWKC8=,iv:b4236k8O8c003jH9jdcT6NxE93UVDAJpyG/RzqkJVCc=,tag:37pibc0TqPjlBRsn6G3/LA==,type:str]
 # this is required if email sending is to be enabled in keycloak
 # keycloakAdminEmail: admin@example.com
 buildDeployImage:
@@ -117,13 +122,13 @@ api:
             kubernetes.io/ingress.class: nginx
             nginx.ingress.kubernetes.io/ssl-redirect: "false"
         hosts:
-            - host: api.lagoon.dplplat01.dpl.reload.dk
+            - host: api.lagoon.dplplat02.dpl.reload.dk
               paths:
                 - /
         tls:
             - secretName: api-tls
               hosts:
-                - api.lagoon.dplplat01.dpl.reload.dk
+                - api.lagoon.dplplat02.dpl.reload.dk
     podAnnotations: {}
     securityContext: {}
     resources:
@@ -139,17 +144,9 @@ api:
         targetCPUUtilizationPercentage: 80
         # targetMemoryUtilizationPercentage: 80
     tolerations:
-        - key: CriticalAddonsOnly
-          operator: Exists
-    affinity:
-        nodeAffinity:
-            requiredDuringSchedulingIgnoredDuringExecution:
-                nodeSelectorTerms:
-                    - matchExpressions:
-                        - key: noderole.dplplatform
-                          operator: In
-                          values:
-                            - system
+        - key: noderole.dplplatform
+          value: prod
+    affinity: {}
 apiDB:
     image:
         repository: uselagoon/api-db
@@ -191,17 +188,9 @@ apiDB:
             command:
                 - /usr/share/container-scripts/mysql/readiness-probe.sh
     tolerations:
-        - key: CriticalAddonsOnly
-          operator: Exists
-    affinity:
-        nodeAffinity:
-            requiredDuringSchedulingIgnoredDuringExecution:
-                nodeSelectorTerms:
-                    - matchExpressions:
-                        - key: noderole.dplplatform
-                          operator: In
-                          values:
-                            - system
+        - key: noderole.dplplatform
+          value: prod
+    affinity: {}
 apiRedis:
     image:
         repository: uselagoon/api-redis
@@ -223,17 +212,9 @@ apiRedis:
         type: ClusterIP
         port: 6379
     tolerations:
-        - key: CriticalAddonsOnly
-          operator: Exists
-    affinity:
-        nodeAffinity:
-            requiredDuringSchedulingIgnoredDuringExecution:
-                nodeSelectorTerms:
-                    - matchExpressions:
-                        - key: noderole.dplplatform
-                          operator: In
-                          values:
-                            - system
+        - key: noderole.dplplatform
+          value: prod
+    affinity: {}
 keycloak:
     # keycloak realm and email settings configuration
     realmSettings:
@@ -276,25 +257,17 @@ keycloak:
             kubernetes.io/tls-acme: "true"
             kubernetes.io/ingress.class: nginx
         hosts:
-            - host: keycloak.lagoon.dplplat01.dpl.reload.dk
+            - host: keycloak.lagoon.dplplat02.dpl.reload.dk
               paths:
                 - /
         tls:
             - secretName: keycloak-tls
               hosts:
-                - keycloak.lagoon.dplplat01.dpl.reload.dk
+                - keycloak.lagoon.dplplat02.dpl.reload.dk
     tolerations:
-        - key: CriticalAddonsOnly
-          operator: Exists
-    affinity:
-        nodeAffinity:
-            requiredDuringSchedulingIgnoredDuringExecution:
-                nodeSelectorTerms:
-                    - matchExpressions:
-                        - key: noderole.dplplatform
-                          operator: In
-                          values:
-                            - system
+        - key: noderole.dplplatform
+          value: prod
+    affinity: {}
 keycloakDB:
     replicaCount: 1
     image:
@@ -333,17 +306,9 @@ keycloakDB:
             command:
                 - /usr/share/container-scripts/mysql/readiness-probe.sh
     tolerations:
-        - key: CriticalAddonsOnly
-          operator: Exists
-    affinity:
-        nodeAffinity:
-            requiredDuringSchedulingIgnoredDuringExecution:
-                nodeSelectorTerms:
-                    - matchExpressions:
-                        - key: noderole.dplplatform
-                          operator: In
-                          values:
-                            - system
+        - key: noderole.dplplatform
+          value: prod
+    affinity: {}
 broker:
     replicaCount: 3
     image:
@@ -391,30 +356,22 @@ broker:
             kubernetes.io/tls-acme: "true"
             kubernetes.io/ingress.class: nginx
         hosts:
-            - host: broker.lagoon.dplplat01.dpl.reload.dk
+            - host: broker.lagoon.dplplat02.dpl.reload.dk
               paths:
                 - /
         tls:
             - secretName: broker-tls
               hosts:
-                - broker.lagoon.dplplat01.dpl.reload.dk
+                - broker.lagoon.dplplat02.dpl.reload.dk
     startupProbe:
         # 60*10s period = 10 minutes
         failureThreshold: 60
         tcpSocket:
             port: amqp
     tolerations:
-        - key: CriticalAddonsOnly
-          operator: Exists
-    affinity:
-        nodeAffinity:
-            requiredDuringSchedulingIgnoredDuringExecution:
-                nodeSelectorTerms:
-                    - matchExpressions:
-                        - key: noderole.dplplatform
-                          operator: In
-                          values:
-                            - system
+        - key: noderole.dplplatform
+          value: prod
+    affinity: {}
 authServer:
     replicaCount: 2
     image:
@@ -441,17 +398,9 @@ authServer:
         targetCPUUtilizationPercentage: 80
         # targetMemoryUtilizationPercentage: 80
     tolerations:
-        - key: CriticalAddonsOnly
-          operator: Exists
-    affinity:
-        nodeAffinity:
-            requiredDuringSchedulingIgnoredDuringExecution:
-                nodeSelectorTerms:
-                    - matchExpressions:
-                        - key: noderole.dplplatform
-                          operator: In
-                          values:
-                            - system
+        - key: noderole.dplplatform
+          value: prod
+    affinity: {}
 webhooks2tasks:
     enabled: true
     replicaCount: 2
@@ -475,17 +424,9 @@ webhooks2tasks:
         targetCPUUtilizationPercentage: 80
         # targetMemoryUtilizationPercentage: 80
     tolerations:
-        - key: CriticalAddonsOnly
-          operator: Exists
-    affinity:
-        nodeAffinity:
-            requiredDuringSchedulingIgnoredDuringExecution:
-                nodeSelectorTerms:
-                    - matchExpressions:
-                        - key: noderole.dplplatform
-                          operator: In
-                          values:
-                            - system
+        - key: noderole.dplplatform
+          value: prod
+    affinity: {}
 webhookHandler:
     enabled: true
     replicaCount: 2
@@ -511,25 +452,17 @@ webhookHandler:
             kubernetes.io/tls-acme: "true"
             kubernetes.io/ingress.class: nginx
         hosts:
-            - host: webhookhandler.lagoon.dplplat01.dpl.reload.dk
+            - host: webhookhandler.lagoon.dplplat02.dpl.reload.dk
               paths:
                 - /
         tls:
             - secretName: webhookhandler-tls
               hosts:
-                - webhookhandler.lagoon.dplplat01.dpl.reload.dk
+                - webhookhandler.lagoon.dplplat02.dpl.reload.dk
     tolerations:
-        - key: CriticalAddonsOnly
-          operator: Exists
-    affinity:
-        nodeAffinity:
-            requiredDuringSchedulingIgnoredDuringExecution:
-                nodeSelectorTerms:
-                    - matchExpressions:
-                        - key: noderole.dplplatform
-                          operator: In
-                          values:
-                            - system
+        - key: noderole.dplplatform
+          value: prod
+    affinity: {}
     autoscaling:
         enabled: false
         minReplicas: 1
@@ -561,13 +494,13 @@ ui:
             kubernetes.io/tls-acme: "true"
             kubernetes.io/ingress.class: nginx
         hosts:
-            - host: ui.lagoon.dplplat01.dpl.reload.dk
+            - host: ui.lagoon.dplplat02.dpl.reload.dk
               paths:
                 - /
         tls:
             - secretName: ui-tls
               hosts:
-                - ui.lagoon.dplplat01.dpl.reload.dk
+                - ui.lagoon.dplplat02.dpl.reload.dk
     autoscaling:
         enabled: false
         minReplicas: 1
@@ -575,17 +508,9 @@ ui:
         targetCPUUtilizationPercentage: 80
         # targetMemoryUtilizationPercentage: 80
     tolerations:
-        - key: CriticalAddonsOnly
-          operator: Exists
-    affinity:
-        nodeAffinity:
-            requiredDuringSchedulingIgnoredDuringExecution:
-                nodeSelectorTerms:
-                    - matchExpressions:
-                        - key: noderole.dplplatform
-                          operator: In
-                          values:
-                            - system
+        - key: noderole.dplplatform
+          value: prod
+    affinity: {}
 actionsHandler:
     enabled: true
     replicaCount: 2
@@ -607,17 +532,9 @@ actionsHandler:
             memory: 16Mi
             cpu: 10m
     tolerations:
-        - key: CriticalAddonsOnly
-          operator: Exists
-    affinity:
-        nodeAffinity:
-            requiredDuringSchedulingIgnoredDuringExecution:
-                nodeSelectorTerms:
-                    - matchExpressions:
-                        - key: noderole.dplplatform
-                          operator: In
-                          values:
-                            - system
+        - key: noderole.dplplatform
+          value: prod
+    affinity: {}
 backupHandler:
     enabled: true
     replicaCount: 2
@@ -643,13 +560,13 @@ backupHandler:
             kubernetes.io/tls-acme: "true"
             kubernetes.io/ingress.class: nginx
         hosts:
-            - host: backuphandler.lagoon.dplplat01.dpl.reload.dk
+            - host: backuphandler.lagoon.dplplat02.dpl.reload.dk
               paths:
                 - /
         tls:
             - secretName: backuphandler-tls
               hosts:
-                - backuphandler.lagoon.dplplat01.dpl.reload.dk
+                - backuphandler.lagoon.dplplat02.dpl.reload.dk
     autoscaling:
         enabled: false
         minReplicas: 1
@@ -657,17 +574,9 @@ backupHandler:
         targetCPUUtilizationPercentage: 80
         # targetMemoryUtilizationPercentage: 80
     tolerations:
-        - key: CriticalAddonsOnly
-          operator: Exists
-    affinity:
-        nodeAffinity:
-            requiredDuringSchedulingIgnoredDuringExecution:
-                nodeSelectorTerms:
-                    - matchExpressions:
-                        - key: noderole.dplplatform
-                          operator: In
-                          values:
-                            - system
+        - key: noderole.dplplatform
+          value: prod
+    affinity: {}
 insightsHandler:
     enabled: false
     replicaCount: 2
@@ -733,17 +642,9 @@ logs2notifications:
         targetCPUUtilizationPercentage: 80
         # targetMemoryUtilizationPercentage: 80
     tolerations:
-        - key: CriticalAddonsOnly
-          operator: Exists
-    affinity:
-        nodeAffinity:
-            requiredDuringSchedulingIgnoredDuringExecution:
-                nodeSelectorTerms:
-                    - matchExpressions:
-                        - key: noderole.dplplatform
-                          operator: In
-                          values:
-                            - system
+        - key: noderole.dplplatform
+          value: prod
+    affinity: {}
 drushAlias:
     enabled: true
     replicaCount: 2
@@ -769,13 +670,13 @@ drushAlias:
             kubernetes.io/tls-acme: "true"
             kubernetes.io/ingress.class: nginx
         hosts:
-            - host: drushalias.lagoon.dplplat01.dpl.reload.dk
+            - host: drushalias.lagoon.dplplat02.dpl.reload.dk
               paths:
                 - /
         tls:
             - secretName: drushalias-tls
               hosts:
-                - drushalias.lagoon.dplplat01.dpl.reload.dk
+                - drushalias.lagoon.dplplat02.dpl.reload.dk
     autoscaling:
         enabled: false
         minReplicas: 1
@@ -783,17 +684,9 @@ drushAlias:
         targetCPUUtilizationPercentage: 80
         # targetMemoryUtilizationPercentage: 80
     tolerations:
-        - key: CriticalAddonsOnly
-          operator: Exists
-    affinity:
-        nodeAffinity:
-            requiredDuringSchedulingIgnoredDuringExecution:
-                nodeSelectorTerms:
-                    - matchExpressions:
-                        - key: noderole.dplplatform
-                          operator: In
-                          values:
-                            - system
+        - key: noderole.dplplatform
+          value: prod
+    affinity: {}
 ssh:
     enabled: true
     replicaCount: 2
@@ -814,17 +707,9 @@ ssh:
         type: LoadBalancer
         port: 22
     tolerations:
-        - key: CriticalAddonsOnly
-          operator: Exists
-    affinity:
-        nodeAffinity:
-            requiredDuringSchedulingIgnoredDuringExecution:
-                nodeSelectorTerms:
-                    - matchExpressions:
-                        - key: noderole.dplplatform
-                          operator: In
-                          values:
-                            - system
+        - key: noderole.dplplatform
+          value: prod
+    affinity: {}
     autoscaling:
         enabled: false
         minReplicas: 1
@@ -854,17 +739,9 @@ workflows:
         targetCPUUtilizationPercentage: 80
         # targetMemoryUtilizationPercentage: 80
     tolerations:
-        - key: CriticalAddonsOnly
-          operator: Exists
-    affinity:
-        nodeAffinity:
-            requiredDuringSchedulingIgnoredDuringExecution:
-                nodeSelectorTerms:
-                    - matchExpressions:
-                        - key: noderole.dplplatform
-                          operator: In
-                          values:
-                            - system
+        - key: noderole.dplplatform
+          value: prod
+    affinity: {}
 nats:
     enabled: false
     # inject additional config
@@ -1024,19 +901,19 @@ sops:
         - vault_url: https://kv-dplplat01-c3b2.vault.azure.net
           name: sops-key
           version: d82fe2456d6e4c4aaaaf808226bd5769
-          created_at: "2025-12-08T11:10:35Z"
-          enc: QHC42BNvntgGhoeW5Wf0QUbCbYvkBcJqX1IJjodJIrT8SPnJMxwUxQ4MR1P-x94NeniqKx6o9IDiMR1-CfyMDZdUkMEsanYRQgdEo-GDK4w0CVL089hkOC4z-cMQefym_XsjeQYFkjjxMz6XKcvUIN9ioD7ZKkBhGCOEFFvfQbL0ca8vG6rKvE4FEiZWhRhJlOPrI6Vb_ZnMQdWKGCjbVQO8Q2bH4k8yUjEen5o5-ULsfu71FDeqJBuNVGMyyPng2XztUwcGx-29YODCf92CxxMdbiDkma7Cz0lRqOerQQ-Gc9Yf9tV9gjiDTeZ3gLvTEAiLCJxe7MT3ZYU7esAw551ZuixIQsqzbUyztN4THFFdD6NWsQ-v9CGgXUV81AwVaBvuxD_YNJshZ25Qys7oD2bcS4gxtMtX9R3TYAxYRccYg3xD6auXDrD9fghdBQIy1v0CmWge0-o4QDYau6DtdgLkQMNUHjQxpm4oSAU_9SjTYeAPHLET3e7bA_IHpi5JwwshDP5LMZK5dO_42M6zffxkr0rRFANHJT1ghupeL4z_GxMCRpfPHQLXLLYZYxM9q_YN6YIIz4yE6gYe5PwYpQlJxvqR2MaSXe0g6bqX8A32WK6EwT1lq-HB8owuyBelQP8tV3b13Q5Iof87p58AjHrp9ImZdHbWvrKCV6wQZyM
+          created_at: "2025-12-09T13:33:14Z"
+          enc: mpFs_lfkg_nfa9sIbZOzTosID4L_IBqL3bVWJpatrRnQucLY0FZtRF_1oHyM90vrysXw-uea2-3JPQcEjT_9kvxJI7Tp7nLtpwXyMBoE3SWKPjFlJMEQZpEe6-ZsuTfBnuUTXMY6N3AqE5wtzgA1m2vfhoUP4cgD6xPWpyX52jQ3K0R4g6EYCFqo2QdfiQ7KnsYjqnE3A-62FGJdK1nGT_0kERNPfYaoQmSEm77KswWAK-jdj9bhuUsmg2psRQwZR2KfYiDah3OpYVYRxLt-I_2WOtv3Abm5d6I7Kz3PdvOqVAFLIxuoRkbdAR1QK_yhsOLfBQ-SyiAch1SgJ9YsQFQlpNoRby6xOvzrJAWvqkfSoS1uAf92z6kFJq276umKFvm1o_0U_xUHMbU47as02qwer_d0hlu0kh83hFTwvyQa7QqLgoLlE9IKi6yhDCXLN6vZaSEEQoBYoiTPOe3xSUYjtRNAtlgmDSeOLwDNwhLvdc-8gixkhaXrMnBqAoUo1P5HKIPIRInWtG5Td9lmP3geH2MSoQyQ6CIhPfBmZeJxffcHWhHYU2cr19AdadkMIcJJ_mCnlQZ_-cIhqVhAtKQVFJfLkbOiNTyVnTKBTvrY2kY3mdVQLCWcCO2tU-5QCuEPtrzJAWf34cNUpAIKozeLZIjfGGeZlfzqq-kjuoM
     age:
         - recipient: age1q8yqc5jvhkk7ufj95tw25u3es0846pkrwgcd4pn9ctermr7e6cesn6l0gd
           enc: |
             -----BEGIN AGE ENCRYPTED FILE-----
-            YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSBXWEpWTm1WQlF6QWU3NVdk
-            YnplUzJkYVFZWCtjdHNVb2NiMFBZVGd1WkI0Ck9aaE5pc3R1RUhTZlArb2pPeGhw
-            Q1dTcEx2cEtEWEZkOUhJWmRIdXBNeFUKLS0tIFVlK3pFT3pWK3JTZ3NibWpZcVlh
-            MkYzY0lwUWNHdTBZVmxURjk0MFhqa28K3s7R+yIBqMSBtledj/1wsizXP/VN7JKo
-            65PwCfLMUyJM6blQQnRItMSCVtSa7j/N33Cqvk1RSQErXpNqAbbULg==
+            YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSA5Q3dPbWsyN0NvNkZmN0FR
+            a1pxSzBEbmYvYmR5Mys3MTlMOFJJN0lXL0VJCk1PaGtDRkJINEQ0SWVSOGVmWjlm
+            ZDIvN3JkZ1BjeWg5KzNEUFRtMUVHNWsKLS0tIDJsdWJ3ckZBZUR5QTIzUXM4WTEy
+            WldYSk9uaCtmYkR2NHgwTlFoU2cyRHMKuvXUJfMATpklMYUeGzr27dKPTApR9umX
+            4GX7T2Yi+7tkBN5g0SimMIhKzxewihJc0osyOd6L2sNXsIQKF+ycEQ==
             -----END AGE ENCRYPTED FILE-----
-    lastmodified: "2025-12-08T11:10:37Z"
-    mac: ENC[AES256_GCM,data:WDxoXNzSbBMp/uUxkH8SDEr7uN6fhS2Ke1hwFDoLosdi0DXXs5Dlnh8W3JQuh5simZSMDu8KziEQqs3mv8Lkcg269Av/3hgc+b4cOG2XXS/t9ZGtavL3AVbDQt+eRUwEP+CZ2WuRNf2KlyDwLlFNdmHY7KD2+YK2Cig/apj8R08=,iv:KkQLbF3e76oOzDBFlYsd9CgjgrmDTFNof1L4tjo+ioU=,tag:gyfw1iA8hlLp3br56u2GpQ==,type:str]
+    lastmodified: "2025-12-09T13:33:15Z"
+    mac: ENC[AES256_GCM,data:H0mpPa+b5mu/BpaC087CwUP6SYKAHSh9vKuelIPT967Xqo1DXlU3MqXSvzCVIhob4OtoVtSc61W/QGJbB/ZYSnKDLGuIB+gPLp6URtNcB4PxzTxw0WtlQtM8RC39dU1kov+2y6w+P7vIwjfPWIrcLjdBf8AnHrImjBL6k+oAGiI=,iv:6TjGFmGw/CDbFyg76e8jf3zFeKs7s/SHFW/ZzPH+p6w=,tag:C7f9sPqL6KABsw8Ps9zT9A==,type:str]
     encrypted_comment_regex: ENCRYPT
     version: 3.11.0
