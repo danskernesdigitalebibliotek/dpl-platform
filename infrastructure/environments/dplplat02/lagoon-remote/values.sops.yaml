@@ -1,11 +1,11 @@
 # Default values for lagoon-remote.
 # global values which can affect subcharts
 global:
-  # set to true to enable openshift support
-  openshift: false
-  rabbitMQUsername: ""
-  rabbitMQPassword: ""
-  rabbitMQHostname: ""
+    # set to true to enable openshift support
+    openshift: false
+    rabbitMQUsername: ""
+    rabbitMQPassword: ""
+    rabbitMQHostname: ""
 imagePullSecrets: []
 logsDispatcherHost: lagoon-logging-logs-dispatcher.lagoon-logging.svc.cluster.local
 # If this value is set, it will create an `mxout` ExternalName service in the
@@ -16,212 +16,212 @@ mxoutHost: ""
 # on the service level, if not set it uses chart appVersion
 imageTag: ""
 dockerHost:
-  image:
-    repository: uselagoon/docker-host
-    pullPolicy: Always
-    # Overrides the image tag whose default is "latest".
-    tag: v3.3.0
-  name: docker-host
-  registry: registry.lagoon.svc:5000
-  repositoryToUpdate: amazeeio|lagoon
-  pruneImagesUntil: 168h
-  replicaCount: 1
-  ## proxy configuration
-  # httpProxy: ""
-  # httpsProxy: ""
-  # noProxy: ""
-  # add extra environment variables if required
-  extraEnvs: null
-  storage:
-    create: true
-    size: 750Gi
-    # className sets the storageClassName for the docker-host PVC. This is
-    # useful if the docker-host requires a specific storage class for features
-    # such as increased IOPS.
-    #
-    # WARNING: On platforms such as AKS not all storage volume classes can be
-    # bound to all node types. So if you configure a storage class that can't
-    # be bound to any nodes in the cluster it will cause the docker-host pod to
-    # fail to schedule. For example AKS requires Premium Storage suport on the
-    # node for the managed-premium storage class.
-    #
-    # If className is not defined the chart will not set any specify storage
-    # class on the PVC, effectively falling back to the cluster default.
-    #
-    # className: managed-premium
-  networkPolicy:
-    # Specifies whether the docker-host network policy should be enabled
-    enabled: true
-  serviceAccount:
-    # Specifies whether a service account should be created
-    create: true
-    # The name of the service account to use.
-    # If not set and create is true, a name is generated using the fullname
-    # template
-    name: null
-  podSecurityContext: {}
-  securityContext:
-    privileged: true
-    seLinuxOptions:
-      # Ensures selinux relabeling is disabled, this would case the container never to start
-      # as there can be so many files in the persistent storage
-      type: spc_t
-  resources: {}
-  service:
-    type: ClusterIP
-    port: 2375
-  tolerations:
-    - key: noderole.dplplatform
-      operator: Equal
-      value: build
-      effect: NoSchedule
-  affinity:
-    nodeAffinity:
-      requiredDuringSchedulingIgnoredDuringExecution:
-        nodeSelectorTerms:
-          - matchExpressions:
-              - key: noderole.dplplatform
-                operator: In
-                values:
-                  - build
+    image:
+        repository: uselagoon/docker-host
+        pullPolicy: Always
+        # Overrides the image tag whose default is "latest".
+        tag: v3.3.0
+    name: docker-host
+    registry: registry.lagoon.svc:5000
+    repositoryToUpdate: amazeeio|lagoon
+    pruneImagesUntil: 168h
+    replicaCount: 1
+    ## proxy configuration
+    # httpProxy: ""
+    # httpsProxy: ""
+    # noProxy: ""
+    # add extra environment variables if required
+    extraEnvs: null
+    storage:
+        create: true
+        size: 750Gi
+        # className sets the storageClassName for the docker-host PVC. This is
+        # useful if the docker-host requires a specific storage class for features
+        # such as increased IOPS.
+        #
+        # WARNING: On platforms such as AKS not all storage volume classes can be
+        # bound to all node types. So if you configure a storage class that can't
+        # be bound to any nodes in the cluster it will cause the docker-host pod to
+        # fail to schedule. For example AKS requires Premium Storage suport on the
+        # node for the managed-premium storage class.
+        #
+        # If className is not defined the chart will not set any specify storage
+        # class on the PVC, effectively falling back to the cluster default.
+        #
+        # className: managed-premium
+    networkPolicy:
+        # Specifies whether the docker-host network policy should be enabled
+        enabled: true
+    serviceAccount:
+        # Specifies whether a service account should be created
+        create: true
+        # The name of the service account to use.
+        # If not set and create is true, a name is generated using the fullname
+        # template
+        name: null
+    podSecurityContext: {}
+    securityContext:
+        privileged: true
+        seLinuxOptions:
+            # Ensures selinux relabeling is disabled, this would case the container never to start
+            # as there can be so many files in the persistent storage
+            type: spc_t
+    resources: {}
+    service:
+        type: ClusterIP
+        port: 2375
+    tolerations:
+        - key: noderole.dplplatform
+          operator: Equal
+          value: build
+          effect: NoSchedule
+    affinity:
+        nodeAffinity:
+            requiredDuringSchedulingIgnoredDuringExecution:
+                nodeSelectorTerms:
+                    - matchExpressions:
+                        - key: noderole.dplplatform
+                          operator: In
+                          values:
+                            - build
 # sshCore creates a restricted, non-expiring ServiceAccount token for use by
 # lagoon-core.
 sshCore:
-  enabled: true
-  serviceAccount:
-    annotations: {}
-    # The name of the service account to use.
-    # If not set, a name is generated using the fullname
-    # template
-    name: ""
+    enabled: true
+    serviceAccount:
+        annotations: {}
+        # The name of the service account to use.
+        # If not set, a name is generated using the fullname
+        # template
+        name: ""
 # sshPortal is an optional service providing low-latency SSH connectivity to
 # Lagoon environments.
 sshPortal:
-  enabled: false
-  replicaCount: 2
-  image:
-    repository: ghcr.io/uselagoon/lagoon-ssh-portal/ssh-portal
-    pullPolicy: IfNotPresent
-    # Overrides the image tag whose default is the chart appVersion.
-    tag: v0.36.0
-  service:
-    type: LoadBalancer
-    ports:
-      sshserver: 22
-    annotations: {}
-  metricsService:
-    type: ClusterIP
-    ports:
-      metrics: 9912
-  podAnnotations: {}
-  securityContext: {}
-  resources: {}
-  additionalEnvs: {}
-  serviceAccount:
-    annotations: {}
-    # The name of the service account to use.
-    # If not set and create is true, a name is generated using the fullname
-    # template
-    name: ""
-  serviceMonitor:
-    enabled: true
-  # host keys, PEM encoded
-  hostKeys:
-    ecdsa: ""
-    ed25519: ""
-    rsa: ""
-    # Log access via SSH is disabled by default.
-    # Uncomment this line to enable log access via SSH.
-    # logAccessEnabled: true
+    enabled: false
+    replicaCount: 2
+    image:
+        repository: ghcr.io/uselagoon/lagoon-ssh-portal/ssh-portal
+        pullPolicy: IfNotPresent
+        # Overrides the image tag whose default is the chart appVersion.
+        tag: v0.36.0
+    service:
+        type: LoadBalancer
+        ports:
+            sshserver: 22
+        annotations: {}
+    metricsService:
+        type: ClusterIP
+        ports:
+            metrics: 9912
+    podAnnotations: {}
+    securityContext: {}
+    resources: {}
+    additionalEnvs: {}
+    serviceAccount:
+        annotations: {}
+        # The name of the service account to use.
+        # If not set and create is true, a name is generated using the fullname
+        # template
+        name: ""
+    serviceMonitor:
+        enabled: true
+    # host keys, PEM encoded
+    hostKeys:
+        ecdsa: ""
+        ed25519: ""
+        rsa: ""
+        # Log access via SSH is disabled by default.
+        # Uncomment this line to enable log access via SSH.
+        # logAccessEnabled: true
 # This subchart is disabled by default until this build-deploy type is in
 # widespread use.
 lagoon-build-deploy:
-  enabled: true
-  # these values are used by the lagoon-build-deploy controller and do not have
-  # sensible defaults.
-  # lagoonTargetName:
-  #ENCRYPT
-  taskSSHHost:
-  taskSSHPort: 22
-  taskAPIHost: api.lagoon.dplplat02.dpl.reload.dk
-  # lagoonTokenHost: ""
-  # lagoonTokenPort: ""
-  # lagoonAPIHost: ""
-  # sshPortalHost: ""
-  # sshPortalPort: ""
-  #ENCRYPT
-  rabbitMQUsername: lagoon
-  #ENCRYPT
-  rabbitMQPassword: uGU3iSBKkc7UJ8rc0kr2p2uYYPNrxS
-  rabbitMQHostname: lagoon-core-broker.lagoon-core.svc.cluster.local
-  lagoonTargetName: lagoon-remote
-  lagoonFeatureFlagDefaultRootlessWorkload: enabled
-  # See the parent chart for the full range of values that can be passed here to control builds
-  # https://github.com/uselagoon/lagoon-charts/blob/main/charts/lagoon-build-deploy/values.yaml
-  extraArgs:
-    - --enable-harbor=true
-    - --harbor-url=https://harbor.lagoon.dplplat02.dpl.reload.dk
-    - --harbor-api=https://harbor.lagoon.dplplat02.dpl.reload.dk/api/
-    - --harbor-username=admin
+    enabled: true
+    # these values are used by the lagoon-build-deploy controller and do not have
+    # sensible defaults.
+    # lagoonTargetName:
     #ENCRYPT
-    - --harbor-password=ryELCA%&X8bjow2!5jjJ
-    - --enable-qos
-    - --qos-max-builds=8
-  tolerations:
-    - key: CriticalAddonsOnly
-      operator: Exists
-  affinity:
-    nodeAffinity:
-      requiredDuringSchedulingIgnoredDuringExecution:
-        nodeSelectorTerms:
-          - matchExpressions:
-              - key: noderole.dplplatform
-                operator: In
-                values:
-                  - system
+    taskSSHHost: null
+    taskSSHPort: 22
+    taskAPIHost: api.lagoon.dplplat02.dpl.reload.dk
+    # lagoonTokenHost: ""
+    # lagoonTokenPort: ""
+    # lagoonAPIHost: ""
+    # sshPortalHost: ""
+    # sshPortalPort: ""
+    #ENCRYPT
+    rabbitMQUsername: ENC[AES256_GCM,data:sy4c1Ont,iv:eL0I0NqLY/CTiaKqEFq+Gg6WKdMgVn0ZA55COV4iF0k=,tag:Gg9ZSZeoHHXuV5hc6QjjfQ==,type:str]
+    #ENCRYPT
+    rabbitMQPassword: ENC[AES256_GCM,data:pm3NS8HHcKxY56xA0cb6E7/T5/kIoGIXFvcYL/4T,iv:6l0WuToo+7vcIunvbGXqYE5OEDC0Zwr5sIt5S51Y+vg=,tag:65XNPAHRXIqc/YIdxgbcdA==,type:str]
+    rabbitMQHostname: lagoon-core-broker.lagoon-core.svc.cluster.local
+    lagoonTargetName: lagoon-remote
+    lagoonFeatureFlagDefaultRootlessWorkload: enabled
+    # See the parent chart for the full range of values that can be passed here to control builds
+    # https://github.com/uselagoon/lagoon-charts/blob/main/charts/lagoon-build-deploy/values.yaml
+    extraArgs:
+        - --enable-harbor=true
+        - --harbor-url=https://harbor.lagoon.dplplat02.dpl.reload.dk
+        - --harbor-api=https://harbor.lagoon.dplplat02.dpl.reload.dk/api/
+        - --harbor-username=admin
+        #ENCRYPT
+        - ENC[AES256_GCM,data:oaYGIgwLglnRV7O8ehoIIQmvmCiqmP5sjqf6m5N1iuO60fR3wA4=,iv:Bgvvry2SysvlzuAakO2og1Mpd8xn4RWxCgRt3J4tx9c=,tag:2lfNRUWsaF2bvFaipnYBbA==,type:str]
+        - --enable-qos
+        - --qos-max-builds=8
+    tolerations:
+        - key: CriticalAddonsOnly
+          operator: Exists
+    affinity:
+        nodeAffinity:
+            requiredDuringSchedulingIgnoredDuringExecution:
+                nodeSelectorTerms:
+                    - matchExpressions:
+                        - key: noderole.dplplatform
+                          operator: In
+                          values:
+                            - system
 # dbaas-operator provisions database-as-a-service accounts for projects.
 # Example provider configuration can be found in the dbaas-operator values.yaml
 # https://github.com/amazeeio/charts/blob/main/charts/dbaas-operator/values.yaml
 # This subchart is disabled by default for legacy reasons. It will be enabled
 # by default in future as this is a core Lagoon feature.
 dbaas-operator:
-  enabled: true
-  enableMariaDBProviders: true
-  enableMongoDBProviders: true
-  enablePostreSQLProviders: true
-  mariadbProviders:
-    production:
-      environment: production
-      hostname: mariadb-10-6-22-production-1.mariadb-10-6-22-production-1.svc.cluster.local
-      readReplicaHostnames:
-        - mariadb-10-6-22-production-1.mariadb-10-6-22-production-1.svc.cluster.local
-      #ENCRYPT
-      password: 4Oh0mosqd0P@3o2vD0M@N@Jj
-      port: 3306
-      #ENCRYPT
-      user: root
-    development:
-      environment: development
-      hostname: mariadb-development-v10-06-22-0.mariadb-development-v10-06-22.svc.cluster.local
-      readReplicaHostnames:
-        - mariadb-development-v10-06-22-0.mariadb-development-v10-06-22.svc.cluster.local
-      #ENCRYPT
-      password: u0WVJO5tPq3USN@XJEZKaSe1Wc@OnI7$5t2AP9Q#
-      port: 3306
-      #ENCRYPT
-      user: root
-  tolerations:
-    - key: CriticalAddonsOnly
-      operator: Exists
-  affinity:
-    nodeAffinity:
-      requiredDuringSchedulingIgnoredDuringExecution:
-        nodeSelectorTerms:
-          - matchExpressions:
-              - key: noderole.dplplatform
-                operator: In
-                values:
-                  - system
+    enabled: true
+    enableMariaDBProviders: true
+    enableMongoDBProviders: true
+    enablePostreSQLProviders: true
+    mariadbProviders:
+        production:
+            environment: production
+            hostname: mariadb-10-6-22-production-1.mariadb-10-6-22-production-1.svc.cluster.local
+            readReplicaHostnames:
+                - mariadb-10-6-22-production-1.mariadb-10-6-22-production-1.svc.cluster.local
+            #ENCRYPT
+            password: ENC[AES256_GCM,data:VQXJ3xhfC0muCPR/y2way3RUw4dDh4K0,iv:4Kz3gbKzQtdpnpWeq8xCrF/h0ofW8HOAsuSHh6ODdGs=,tag:XKNB7aqWr6dG1fE9qOGx3A==,type:str]
+            port: 3306
+            #ENCRYPT
+            user: ENC[AES256_GCM,data:yV9QEQ==,iv:D9N7DwN/GmUG4lfq1i6BXvP2WjgkE/LArujFaAE+L9U=,tag:x/kaZRQ/pGuEJFgcptQVGQ==,type:str]
+        development:
+            environment: development
+            hostname: mariadb-development-v10-06-22-0.mariadb-development-v10-06-22.svc.cluster.local
+            readReplicaHostnames:
+                - mariadb-development-v10-06-22-0.mariadb-development-v10-06-22.svc.cluster.local
+            #ENCRYPT
+            password: ENC[AES256_GCM,data:zLk2mw1tPx54NHbowOi8yTJYtsEUIES0+qu5ColLB/6Uc7aMGhK3UQ==,iv:JGwODCEXpPQFOL0s1f0XUM+S1yYnba5qcH05esdNV+U=,tag:A/Lu9BWYDT6d2nkL6llkXw==,type:str]
+            port: 3306
+            #ENCRYPT
+            user: ENC[AES256_GCM,data:2JiZhQ==,iv:SAIGmxR/XOpbPwscbqaF5PvNXyU8TueQfWHYsQCGBP8=,tag:y0bRx/HYv5cujKv5UrQPxg==,type:str]
+    tolerations:
+        - key: CriticalAddonsOnly
+          operator: Exists
+    affinity:
+        nodeAffinity:
+            requiredDuringSchedulingIgnoredDuringExecution:
+                nodeSelectorTerms:
+                    - matchExpressions:
+                        - key: noderole.dplplatform
+                          operator: In
+                          values:
+                            - system
 # if you are using the dbaas-operator in a different release, you can define the http endpoint to use here
 # setting this will always override whatever `dbaas-operator` would set, useful if you want to target a different endpoint
 dbaasHTTPEndpoint: ""
@@ -229,151 +229,172 @@ dbaasHTTPEndpoint: ""
 #   enabled: false
 # burnAfterReading: false
 insightsRemote:
-  enabled: false
-  # sets insights configMaps to be removed after being processed
-  burnAfterReading: true
-  replicaCount: 1
-  # This is the secret used to sign JWT's injected into environments
-  # This shouldn't need to be changed in most circumstances - here for completion
-  # insightsTokenSecret: ""
-  image:
-    repository: uselagoon/insights-remote
-    pullPolicy: Always
-    # Overrides the image tag whose default is the chart appVersion.
-    tag: v0.0.10
-  imagePullSecrets: []
-  nameOverride: ""
-  fullnameOverride: ""
-  serviceAccount:
-    # Specifies whether a service account should be created
-    create: true
-    # Annotations to add to the service account
-    annotations: {}
-    # The name of the service account to use.
-    # If not set and create is true, a name is generated using the fullname template
-    name: ""
-  podAnnotations: {}
-  podSecurityContext: {}
-  # fsGroup: 2000
-  securityContext: {}
-  # capabilities:
-  #   drop:
-  #   - ALL
-  # readOnlyRootFilesystem: true
-  # runAsNonRoot: true
-  # runAsUser: 1000
-  # service:
-  #   type: ClusterIP
-  #   port: 80
-  # ingress:
-  #   enabled: false
-  #   className: ""
-  #   annotations: {}
-  #     # kubernetes.io/ingress.class: nginx
-  #     # kubernetes.io/tls-acme: "true"
-  #   hosts:
-  #     - host: chart-example.local
-  #       paths:
-  #         - path: /
-  #           pathType: ImplementationSpecific
-  #   tls: []
-  #  - secretName: chart-example-tls
-  #    hosts:
-  #      - chart-example.local
-  resources: {}
-  # We usually recommend not to specify default resources and to leave this as a conscious
-  # choice for the user. This also increases chances charts run on environments with little
-  # resources, such as Minikube. If you do want to specify resources, uncomment the following
-  # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
-  # limits:
-  #   cpu: 100m
-  #   memory: 128Mi
-  # requests:
-  #   cpu: 100m
-  #   memory: 128Mi
-  autoscaling:
     enabled: false
-    minReplicas: 1
-    maxReplicas: 100
-    targetCPUUtilizationPercentage: 80
-    # targetMemoryUtilizationPercentage: 80
-  nodeSelector: {}
-  tolerations: []
-  affinity: {}
-  service:
-    type: ClusterIP
-    port: 80
+    # sets insights configMaps to be removed after being processed
+    burnAfterReading: true
+    replicaCount: 1
+    # This is the secret used to sign JWT's injected into environments
+    # This shouldn't need to be changed in most circumstances - here for completion
+    # insightsTokenSecret: ""
+    image:
+        repository: uselagoon/insights-remote
+        pullPolicy: Always
+        # Overrides the image tag whose default is the chart appVersion.
+        tag: v0.0.10
+    imagePullSecrets: []
+    nameOverride: ""
+    fullnameOverride: ""
+    serviceAccount:
+        # Specifies whether a service account should be created
+        create: true
+        # Annotations to add to the service account
+        annotations: {}
+        # The name of the service account to use.
+        # If not set and create is true, a name is generated using the fullname template
+        name: ""
+    podAnnotations: {}
+    podSecurityContext: {}
+    # fsGroup: 2000
+    securityContext: {}
+    # capabilities:
+    #   drop:
+    #   - ALL
+    # readOnlyRootFilesystem: true
+    # runAsNonRoot: true
+    # runAsUser: 1000
+    # service:
+    #   type: ClusterIP
+    #   port: 80
+    # ingress:
+    #   enabled: false
+    #   className: ""
+    #   annotations: {}
+    #     # kubernetes.io/ingress.class: nginx
+    #     # kubernetes.io/tls-acme: "true"
+    #   hosts:
+    #     - host: chart-example.local
+    #       paths:
+    #         - path: /
+    #           pathType: ImplementationSpecific
+    #   tls: []
+    #  - secretName: chart-example-tls
+    #    hosts:
+    #      - chart-example.local
+    resources: {}
+    # We usually recommend not to specify default resources and to leave this as a conscious
+    # choice for the user. This also increases chances charts run on environments with little
+    # resources, such as Minikube. If you do want to specify resources, uncomment the following
+    # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
+    # limits:
+    #   cpu: 100m
+    #   memory: 128Mi
+    # requests:
+    #   cpu: 100m
+    #   memory: 128Mi
+    autoscaling:
+        enabled: false
+        minReplicas: 1
+        maxReplicas: 100
+        targetCPUUtilizationPercentage: 80
+        # targetMemoryUtilizationPercentage: 80
+    nodeSelector: {}
+    tolerations: []
+    affinity: {}
+    service:
+        type: ClusterIP
+        port: 80
 # the nats chart is a subchart which is configured for use by lagoon-remote
 nats:
-  enabled: false
-  # inject additional config
-  additionalVolumes:
-    - name: lagoon-remote-nats-tls
-      secret:
-        secretName: lagoon-remote-nats-tls
-  additionalVolumeMounts:
-    - name: lagoon-remote-nats-tls
-      mountPath: /etc/lagoon-remote-nats-tls
-  nats:
-    config:
-      - name: lagoon-remote
-        secret:
-          secretName: lagoon-remote-nats-conf
-  cluster:
-    enabled: true
-    name: lagoon-remote
-    # internal cluster IPs are not routable, so don't advertise them
-    noAdvertise: true
-  natsbox:
     enabled: false
-  # to connect to nats, pods must have the right label
-  networkPolicy:
-    enabled: true
-    allowExternal: false
-    # allow outbound leaf connection
-    extraEgress:
-      - ports:
-          - port: 7422
-            protocol: TCP
+    # inject additional config
+    additionalVolumes:
+        - name: lagoon-remote-nats-tls
+          secret:
+            secretName: lagoon-remote-nats-tls
+    additionalVolumeMounts:
+        - name: lagoon-remote-nats-tls
+          mountPath: /etc/lagoon-remote-nats-tls
+    nats:
+        config:
+            - name: lagoon-remote
+              secret:
+                secretName: lagoon-remote-nats-conf
+    cluster:
+        enabled: true
+        name: lagoon-remote
+        # internal cluster IPs are not routable, so don't advertise them
+        noAdvertise: true
+    natsbox:
+        enabled: false
+    # to connect to nats, pods must have the right label
+    networkPolicy:
+        enabled: true
+        allowExternal: false
+        # allow outbound leaf connection
+        extraEgress:
+            - ports:
+                - port: 7422
+                  protocol: TCP
 # Configuration for the nats subchart
 natsConfig:
-  # coreURL format nats://<username>:<password>@<host>:7422
-  coreURL: ""
-  tls: {}
-  # If the lagoon-remote-nats-tls secret should be created by the
-  # lagoon-remote chart, certificate values can be specified directly in
-  # secretData. Configuring TLS this way also allows specifying a custom
-  # ca.crt.
-  #
-  # secretData:
-  #   ca.crt: |
-  #     ...
-  #   client.crt: |
-  #     ...
-  #   client.key: |
-  #     ...
-  #
-  # If the TLS secret is created outside the lagoon-remote chart, it should
-  # be named lagoon-remote-nats-tls. This secret should contain fields
-  # tls.crt and tls.key, and the certificate should be issued by a public
-  # authority.
+    # coreURL format nats://<username>:<password>@<host>:7422
+    coreURL: ""
+    tls: {}
+    # If the lagoon-remote-nats-tls secret should be created by the
+    # lagoon-remote chart, certificate values can be specified directly in
+    # secretData. Configuring TLS this way also allows specifying a custom
+    # ca.crt.
+    #
+    # secretData:
+    #   ca.crt: |
+    #     ...
+    #   client.crt: |
+    #     ...
+    #   client.key: |
+    #     ...
+    #
+    # If the TLS secret is created outside the lagoon-remote chart, it should
+    # be named lagoon-remote-nats-tls. This secret should contain fields
+    # tls.crt and tls.key, and the certificate should be issued by a public
+    # authority.
 storageCalculator:
-  enabled: false
-  # cronjob: 5 */12 * * *
-  # ignoreRegex: "solr|redis"
-  serviceAccount:
-    # The name of the service account to use.
-    # If not set and create is true, a name is generated using the fullname
-    # template
-    name: null
-  metricsService:
-    type: ClusterIP
-    ports:
-      metrics: 9912
-  serviceMonitor:
-    enabled: true
-  image:
-    repository: uselagoon/remote-calculator
-    pullPolicy: IfNotPresent
-    # Overrides the image tag whose default is the chart appVersion.
-    tag: v0.6.0
+    enabled: false
+    # cronjob: 5 */12 * * *
+    # ignoreRegex: "solr|redis"
+    serviceAccount:
+        # The name of the service account to use.
+        # If not set and create is true, a name is generated using the fullname
+        # template
+        name: null
+    metricsService:
+        type: ClusterIP
+        ports:
+            metrics: 9912
+    serviceMonitor:
+        enabled: true
+    image:
+        repository: uselagoon/remote-calculator
+        pullPolicy: IfNotPresent
+        # Overrides the image tag whose default is the chart appVersion.
+        tag: v0.6.0
+sops:
+    azure_kv:
+        - vault_url: https://kv-dplplat01-c3b2.vault.azure.net
+          name: sops-key
+          version: d82fe2456d6e4c4aaaaf808226bd5769
+          created_at: "2025-12-10T12:21:43Z"
+          enc: lax5AJ5v9hqfkDLMo7pepFURNyQ-oR0G5QRPLgIvtSwrrV6pqM7vf0fT4YBWclGBIvAQSLsxto0UbckHrf550uiCja-RfqDcyyV7w5XZIZcaIR7hgfL9eCYuvWnujR6WFDkiSh6MV1nkT5zPFBBRPprudyRcHewsgpCKWXd0iD5pvH6cfQCfCGl3p08IhGkKk4mzAfiKxjQpZaCKRtKlmO2LWKuTsVdxs30d9Z8UFJtgv2SxohasW8RV4yy1NrPFm0q0f020Smc6Hkl--MMv3kiRE2iCNJWhPLPu445jO3Mt-w0hgrp2Rm5KSBm0rebFzV5-egGnxofh0oqVM-HRnyq8KzkfYAfxHqymP6FMto-QKXpPWoxjcsEDGzmj9afkMCJX3dx0zft7aY_j9XrqTIpyNURVHmHN7P_Qw7AmLkuBi0vu7HQDY7VCJKVIhjJsUe1aWKoqg4wmj6G5nz_endYNejNszpK4IdGwRqhVYJlA0UqnqUZ5iysr7oWiRoqcHlZS-qeWF2ke019cZ2bchDnpw_8xJEW01qKZQww6fSwqmiUt6vM7eqeldK67PNL45mTLkKZz9LHIoiJqMxJDIs1lNXU_-hD3xAKAEih_FeLrx5Iw0n09n2GalZ7M2KHtCeeCQz9fycgGMzKAiqGPotg3TVZ4uaEdAgjqm-Boc-c
+    age:
+        - recipient: age1q8yqc5jvhkk7ufj95tw25u3es0846pkrwgcd4pn9ctermr7e6cesn6l0gd
+          enc: |
+            -----BEGIN AGE ENCRYPTED FILE-----
+            YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSBZdEJyUXBxWXRKWVZnRUJY
+            NDNqVGpOWTNJcEFZcWdyTmhmS3AzdlM5dmpjCmQ5a2M3L2dHaC9aaW9PK1Q2enZ6
+            STU1NERPVGJQVWpOQmlhZWNaemNabFkKLS0tIHIzQnJldko4UUlQZ1N0eTVkdHFZ
+            Y1dmSGsyVFVrNEdvZHFQNkhDano5aVEK2RvuRLCkPN08uUP35seZcctyTjYKgNoy
+            5erqhJzsKd4t6N6MlyZa4I5ziSM1/4c/ralXAqVk7vRcxyCTz2fIQA==
+            -----END AGE ENCRYPTED FILE-----
+    lastmodified: "2025-12-10T12:21:45Z"
+    mac: ENC[AES256_GCM,data:9AjmHmGU8P7IesPoA9vGGzcUxKDmZKDgxCMC851NCW2iFG8FLLw1It+IxrxA7fv/pTG0GJt+tmHb7iFu/HuJJm4UC6bE4OEn62ooCkiMT6nYNvryMufs9mAN5r6mCkPgaMZmkkEIN7uOJYNgEAAZQXmrNMBXNygtvdngAoNelNY=,iv:FcEzt1YGq0iG8FKZq/2nmFCFGnJmmsyN39xZQBVk7Tg=,tag:kYeMDvzxEqZMLqkHFl0Dow==,type:str]
+    encrypted_comment_regex: ENCRYPT
+    version: 3.11.0
