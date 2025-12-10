@@ -1,15 +1,15 @@
 apiVersion: k8s.mariadb.com/v1alpha1
 kind: MariaDB
 metadata:
-  name: { { .Release.Name } }
+  name: {{ .Release.Name }}
 spec:
   image: docker-registry1.mariadb.com/library/mariadb:{{ .Values.imageTag }}
   rootPasswordSecretKeyRef:
     name: mariadb-root-password-secret
     key: root-password
-  replicas: { { .Values.replicas } }
+  replicas: {{ .Values.replicas }}
   storage:
-    size: { { .Values.storageSize } }
+    size: {{ .Values.storageSize }}
     storageClassName: default
     resizeInUseVolumes: true
     waitForVolumeResize: true
@@ -106,10 +106,8 @@ spec:
     type: ClusterIP
 
   tolerations:
-    - effect: NoSchedule
-      key: noderole.dplplatform
-      operator: Equal
-      value: prod-database
+    - key: noderole.dplplatform
+      value: prod
 
   affinity:
     nodeAffinity:
@@ -119,4 +117,4 @@ spec:
               - key: noderole.dplplatform
                 operator: In
                 values:
-                  - prod-database
+                  - prod
