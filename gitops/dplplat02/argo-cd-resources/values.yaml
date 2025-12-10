@@ -55,6 +55,11 @@ apps:
     namespace: mariadb-development-v10-06-22
     automated: false
 
+  - name: mariadb-production-v10-06-22
+    project: databases
+    namespace: mariadb-production-v10-06-22
+    automated: false
+
   - name: lagoon-auxiliary
     project: lagoon-auxiliary
     namespace: lagoon-auxiliary

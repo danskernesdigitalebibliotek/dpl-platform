@@ -1,0 +1,3 @@
+apiVersion: v2
+name: mariadb-production-v10-06-22
+version: 0.0.0
