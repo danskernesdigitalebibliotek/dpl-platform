@@ -1,7 +1,7 @@
 #!/usr/bin/env zx
 // This script takes a backup of Lagoon's Keycloak DB, which Amazee suggests before running an ugprade to Lagoon Core: [https://docs.lagoon.sh/installing-lagoon/update-lagoon/#api-db]
 
-echo(chalk.yellow("Getting a backup Lagoon's Keycloak DB"));
+echo(chalk.yellow("Getting a backup of Lagoon's Keycloak DB"));
 try {
   await $`kubectl --namespace lagoon-core exec -it lagoon-core-keycloak-db-0 -- \
     sh -c 'mysqldump --max-allowed-packet=500M --events \
