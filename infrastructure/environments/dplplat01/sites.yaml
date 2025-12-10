@@ -15,13 +15,13 @@ x-webmasters-on-weekly-release-cycle: &webmasters-on-weekly-release-cycle
   moduletest-dpl-cms-release: 2025.50.0
   go-release: 2025.48.1
   php-version: 8.3
-x-holdback-46: &holdback-46
-  # Herning has asked to stay on 2025.42.0
+x-eager-50: &eager-50
+  # Herning and København has asked to get 50.0 right away.
   releaseImageRepository: ghcr.io/danskernesdigitalebibliotek
   releaseImageName: dpl-cms-source
-  dpl-cms-release: 2025.42.1
-  moduletest-dpl-cms-release: 2025.48.2
-  go-release: 2025.44.2
+  dpl-cms-release: 2025.50.0
+  moduletest-dpl-cms-release: 2025.50.0
+  go-release: 2025.50.0
   php-version: 8.3
 # Mounted Disk sizes
 x-disk-size-small: &disk-size-small
@@ -460,7 +460,7 @@ sites:
       - herningbib.dk
     autogenerateRoutes: true
     plan: webmaster
-    <<: [ *holdback-46, *disk-size-medium ]
+    <<: [ *eager-50, *disk-size-medium ]
   hillerod:
     name: "Hillerød Bibliotekerne"
     description: "The library site for Hillerød"
@@ -579,7 +579,7 @@ sites:
       - varnish.main.kobenhavn.dplplat01.dpl.reload.dk
     plan: webmaster
     deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHaTkDvjLW/b2qVj8FIvtX9x3TxFFZTENn+w2CFELeoC"
-    <<: [ *webmasters-on-weekly-release-cycle, *disk-size-large ]
+    <<: [ *eager-50, *disk-size-large ]
   koge:
     name: "KøgeBibliotekerne"
     description: "The library site for Køge"
