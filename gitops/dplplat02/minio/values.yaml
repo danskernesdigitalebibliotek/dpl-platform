@@ -266,8 +266,20 @@ minio:
   ## Ref: https://kubernetes.io/docs/user-guide/node-selection/
   ##
   nodeSelector: {}
-  tolerations: []
-  affinity: {}
+  tolerations:
+    - key: noderole.dplplatform
+      operator: Equal
+      value: prod
+      effect: NoSchedule
+  affinity:
+    nodeAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+        nodeSelectorTerms:
+          - matchExpressions:
+              - key: node-role.kubernetes.io/prod
+                operator: In
+                values:
+                  - ""
   topologySpreadConstraints: []
 
   ## Add stateful containers to have security context, if enabled MinIO will run as this
@@ -508,8 +520,20 @@ minio:
       runAsGroup: 1000
       fsGroup: 1000
     nodeSelector: {}
-    tolerations: []
-    affinity: {}
+    tolerations:
+      - key: noderole.dplplatform
+        operator: Equal
+        value: prod
+        effect: NoSchedule
+    affinity:
+      nodeAffinity:
+        requiredDuringSchedulingIgnoredDuringExecution:
+          nodeSelectorTerms:
+            - matchExpressions:
+                - key: node-role.kubernetes.io/prod
+                  operator: In
+                  values:
+                    - ""
 
   ## Use this field to add environment variables relevant to MinIO server. These fields will be passed on to MinIO container(s)
   ## when Chart is deployed
@@ -552,7 +576,7 @@ minio:
     allowExternal: true
     # only when using flavor: cilium
     egressEntities:
-     - kube-apiserver
+      - kube-apiserver
 
   ## PodDisruptionBudget settings
   ## ref: https://kubernetes.io/docs/concepts/workloads/pods/disruptions/
@@ -598,4 +622,3 @@ minio:
     corednsPathPrefix: ""
     clientCert: ""
     clientCertKey: ""
-
