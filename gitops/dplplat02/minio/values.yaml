@@ -216,10 +216,10 @@ minio:
     path: /
     hosts:
       - files.lagoon.dplplat02.dpl.reload.dk
-    tls: []
-    #  - secretName: chart-example-tls
-    #    hosts:
-    #      - chart-example.local
+    tls:
+      - secretName: minio-tls
+        hosts:
+          - files.lagoon.dplplat02.dpl.reload.dk
 
   consoleService:
     type: ClusterIP
