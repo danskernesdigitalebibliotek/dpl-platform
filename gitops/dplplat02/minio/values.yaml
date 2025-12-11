@@ -387,9 +387,9 @@ minio:
       secretKey: console123
       policy: consoleAdmin
     # Or you can refer to specific secret
-    #- accessKey: externalSecret
-    #  existingSecret: my-secret
-    #  existingSecretKey: password
+    # - accessKey: externalSecret
+    #   existingSecret: my-secret
+    #   existingSecretKey: password
     #  policy: readonly
 
   ## Additional Annotations for the Kubernetes Job makeUserJob
@@ -446,9 +446,9 @@ minio:
   ## List of buckets to be created after minio install
   ##
   buckets:
-    - name: images
+    - name: lagoon-backup
       policy: none
-    - name: files
+    - name: lagoon-files-bucket
       policy: none
     #   # Name of the bucket
     # - name: bucket1
