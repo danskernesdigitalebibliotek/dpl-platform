@@ -416,14 +416,12 @@ harbor:
       # Scrape interval. If not set, the Prometheus default scrape interval is used.
       interval: ""
       # Metric relabel configs to apply to samples before ingestion.
-      metricRelabelings:
-        []
+      metricRelabelings: []
         # - action: keep
       #   regex: 'kube_(daemonset|deployment|pod|namespace|node|statefulset).+'
       #   sourceLabels: [__name__]
       # Relabel configs to apply to samples before ingestion.
-      relabelings:
-        []
+      relabelings: []
         # - sourceLabels: [__meta_kubernetes_pod_node_name]
         #   separator: ;
         #   regex: ^(.*)$
@@ -501,8 +499,20 @@ harbor:
     #    cpu: 100m
     extraEnvVars: []
     nodeSelector: {}
-    tolerations: []
-    affinity: {}
+    tolerations:
+      - key: noderole.dplplatform
+        operator: Equal
+        value: prod
+        effect: NoSchedule
+    affinity:
+      nodeAffinity:
+        requiredDuringSchedulingIgnoredDuringExecution:
+          nodeSelectorTerms:
+            - matchExpressions:
+                - key: node-role.kubernetes.io/prod
+                  operator: In
+                  values:
+                    - ""
     # Spread Pods across failure-domains like regions, availability zones or nodes
     topologySpreadConstraints: []
     # - maxSkew: 1
@@ -532,8 +542,20 @@ harbor:
     #    cpu: 100m
     extraEnvVars: []
     nodeSelector: {}
-    tolerations: []
-    affinity: {}
+    tolerations:
+      - key: noderole.dplplatform
+        operator: Equal
+        value: prod
+        effect: NoSchedule
+    affinity:
+      nodeAffinity:
+        requiredDuringSchedulingIgnoredDuringExecution:
+          nodeSelectorTerms:
+            - matchExpressions:
+                - key: node-role.kubernetes.io/prod
+                  operator: In
+                  values:
+                    - ""
     # Spread Pods across failure-domains like regions, availability zones or nodes
     topologySpreadConstraints: []
     # - maxSkew: 1
@@ -579,8 +601,20 @@ harbor:
         cpu: 500m
     extraEnvVars: []
     nodeSelector: {}
-    tolerations: []
-    affinity: {}
+    tolerations:
+      - key: noderole.dplplatform
+        operator: Equal
+        value: prod
+        effect: NoSchedule
+    affinity:
+      nodeAffinity:
+        requiredDuringSchedulingIgnoredDuringExecution:
+          nodeSelectorTerms:
+            - matchExpressions:
+                - key: node-role.kubernetes.io/prod
+                  operator: In
+                  values:
+                    - ""
     # Spread Pods across failure-domains like regions, availability zones or nodes
     topologySpreadConstraints: []
     # - maxSkew: 1
@@ -662,8 +696,20 @@ harbor:
     #     cpu: 100m
     extraEnvVars: []
     nodeSelector: {}
-    tolerations: []
-    affinity: {}
+    tolerations:
+      - key: noderole.dplplatform
+        operator: Equal
+        value: prod
+        effect: NoSchedule
+    affinity:
+      nodeAffinity:
+        requiredDuringSchedulingIgnoredDuringExecution:
+          nodeSelectorTerms:
+            - matchExpressions:
+                - key: node-role.kubernetes.io/prod
+                  operator: In
+                  values:
+                    - ""
     # Spread Pods across failure-domains like regions, availability zones or nodes
     topologySpreadConstraints:
     # - maxSkew: 1
@@ -734,8 +780,20 @@ harbor:
     replicas: 1
     revisionHistoryLimit: 10
     nodeSelector: {}
-    tolerations: []
-    affinity: {}
+    tolerations:
+      - key: noderole.dplplatform
+        operator: Equal
+        value: prod
+        effect: NoSchedule
+    affinity:
+      nodeAffinity:
+        requiredDuringSchedulingIgnoredDuringExecution:
+          nodeSelectorTerms:
+            - matchExpressions:
+                - key: node-role.kubernetes.io/prod
+                  operator: In
+                  values:
+                    - ""
     # Spread Pods across failure-domains like regions, availability zones or nodes
     topologySpreadConstraints: []
     # - maxSkew: 1
@@ -818,8 +876,20 @@ harbor:
         memory: 1Gi
     extraEnvVars: []
     nodeSelector: {}
-    tolerations: []
-    affinity: {}
+    tolerations:
+      - key: noderole.dplplatform
+        operator: Equal
+        value: prod
+        effect: NoSchedule
+    affinity:
+      nodeAffinity:
+        requiredDuringSchedulingIgnoredDuringExecution:
+          nodeSelectorTerms:
+            - matchExpressions:
+                - key: node-role.kubernetes.io/prod
+                  operator: In
+                  values:
+                    - ""
     # Spread Pods across failure-domains like regions, availability zones or nodes
     topologySpreadConstraints: []
     # - maxSkew: 1
@@ -914,8 +984,20 @@ harbor:
         timeoutSeconds: 1
       extraEnvVars: []
       nodeSelector: {}
-      tolerations: []
-      affinity: {}
+      tolerations:
+        - key: noderole.dplplatform
+          operator: Equal
+          value: prod
+          effect: NoSchedule
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+              - matchExpressions:
+                  - key: node-role.kubernetes.io/prod
+                    operator: In
+                    values:
+                      - ""
       ## The priority class to run the pod as
       priorityClassName:
       # containers to be run before the controller's container starts.
@@ -988,8 +1070,20 @@ harbor:
       #    cpu: 100m
       extraEnvVars: []
       nodeSelector: {}
-      tolerations: []
-      affinity: {}
+      tolerations:
+        - key: noderole.dplplatform
+          operator: Equal
+          value: prod
+          effect: NoSchedule
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+              - matchExpressions:
+                  - key: node-role.kubernetes.io/prod
+                    operator: In
+                    values:
+                      - ""
       ## The priority class to run the pod as
       priorityClassName:
       # containers to be run before the controller's container starts.
@@ -1054,8 +1148,20 @@ harbor:
     ## Additional deployment labels
     podLabels: {}
     nodeSelector: {}
-    tolerations: []
-    affinity: {}
+    tolerations:
+      - key: noderole.dplplatform
+        operator: Equal
+        value: prod
+        effect: NoSchedule
+    affinity:
+      nodeAffinity:
+        requiredDuringSchedulingIgnoredDuringExecution:
+          nodeSelectorTerms:
+            - matchExpressions:
+                - key: node-role.kubernetes.io/prod
+                  operator: In
+                  values:
+                    - ""
     # Spread Pods across failure-domains like regions, availability zones or nodes
     topologySpreadConstraints: []
     ## The priority class to run the pod as
@@ -1066,4 +1172,3 @@ harbor:
     #   whenUnsatisfiable: DoNotSchedule
     cacheDuration: 23
     cacheCleanInterval: 14400
-
