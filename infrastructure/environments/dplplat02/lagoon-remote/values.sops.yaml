@@ -80,10 +80,10 @@ dockerHost:
             requiredDuringSchedulingIgnoredDuringExecution:
                 nodeSelectorTerms:
                     - matchExpressions:
-                        - key: noderole.dplplatform
+                        - key: node-role.kubernetes.io/build
                           operator: In
                           values:
-                            - build
+                            - ""
 # sshCore creates a restricted, non-expiring ServiceAccount token for use by
 # lagoon-core.
 sshCore:
@@ -154,7 +154,7 @@ lagoon-build-deploy:
     #ENCRYPT
     rabbitMQPassword: ENC[AES256_GCM,data:pm3NS8HHcKxY56xA0cb6E7/T5/kIoGIXFvcYL/4T,iv:6l0WuToo+7vcIunvbGXqYE5OEDC0Zwr5sIt5S51Y+vg=,tag:65XNPAHRXIqc/YIdxgbcdA==,type:str]
     rabbitMQHostname: lagoon-core-broker.lagoon-core.svc.cluster.local
-    lagoonTargetName: lagoon-remote
+    lagoonTargetName: lagoon
     lagoonFeatureFlagDefaultRootlessWorkload: enabled
     # See the parent chart for the full range of values that can be passed here to control builds
     # https://github.com/uselagoon/lagoon-charts/blob/main/charts/lagoon-build-deploy/values.yaml
@@ -168,17 +168,19 @@ lagoon-build-deploy:
         - --enable-qos
         - --qos-max-builds=8
     tolerations:
-        - key: CriticalAddonsOnly
-          operator: Exists
+        - key: noderole.dplplatform
+          operator: Equal
+          value: prod
+          effect: NoSchedule
     affinity:
         nodeAffinity:
             requiredDuringSchedulingIgnoredDuringExecution:
                 nodeSelectorTerms:
                     - matchExpressions:
-                        - key: noderole.dplplatform
+                        - key: node-role.kubernetes.io/prod
                           operator: In
                           values:
-                            - system
+                            - ""
 # dbaas-operator provisions database-as-a-service accounts for projects.
 # Example provider configuration can be found in the dbaas-operator values.yaml
 # https://github.com/amazeeio/charts/blob/main/charts/dbaas-operator/values.yaml
@@ -211,8 +213,10 @@ dbaas-operator:
             #ENCRYPT
             user: ENC[AES256_GCM,data:2JiZhQ==,iv:SAIGmxR/XOpbPwscbqaF5PvNXyU8TueQfWHYsQCGBP8=,tag:y0bRx/HYv5cujKv5UrQPxg==,type:str]
     tolerations:
-        - key: CriticalAddonsOnly
-          operator: Exists
+        - key: noderole.dplplatform
+          operator: Equal
+          value: prod
+          effect: NoSchedule
     affinity:
         nodeAffinity:
             requiredDuringSchedulingIgnoredDuringExecution:
@@ -221,7 +225,7 @@ dbaas-operator:
                         - key: noderole.dplplatform
                           operator: In
                           values:
-                            - system
+                            - ""
 # if you are using the dbaas-operator in a different release, you can define the http endpoint to use here
 # setting this will always override whatever `dbaas-operator` would set, useful if you want to target a different endpoint
 dbaasHTTPEndpoint: ""
