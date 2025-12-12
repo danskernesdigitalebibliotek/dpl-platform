@@ -29,7 +29,7 @@ spec:
 
   storage:
     size: {{ .Values.storageSize }}
-    storageClassName: default
+    storageClassName: ceph-block
     resizeInUseVolumes: true
     waitForVolumeResize: true
   # volumes:
