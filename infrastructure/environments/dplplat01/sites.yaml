@@ -11,9 +11,9 @@ x-webmasters-on-weekly-release-cycle: &webmasters-on-weekly-release-cycle
   # production
   releaseImageRepository: ghcr.io/danskernesdigitalebibliotek
   releaseImageName: dpl-cms-source
-  dpl-cms-release: 2025.48.2
-  moduletest-dpl-cms-release: 2025.50.0
-  go-release: 2025.48.1
+  dpl-cms-release: 2025.48.3
+  moduletest-dpl-cms-release: 2025.50.1
+  go-release: 2025.48.2
   php-version: 8.3
 x-eager-50: &eager-50
   # Herning and København has asked to get 50.0 right away.
