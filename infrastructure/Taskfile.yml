@@ -2,7 +2,7 @@
 #
 # Provisions and configures Azure infrastructure and support software that is
 # required by the DPL Platform.
-version: '3'
+version: "3"
 
 # Pull in defaults that are used across the tasks.
 dotenv:
@@ -37,445 +37,442 @@ vars:
   # the branch used for moduletest environments
   moduletest_branch: moduletest
 
-
 tasks:
-    default:
-      silent: true
-      cmds:
-        - task -l
+  default:
+    silent: true
+    cmds:
+      - task -l
 
-    # Internal task for initializing Terraform.
-    _infra:terraform:init:
-      deps:
-        - _req_env
-      dir: "{{.dir_infra}}"
-      sources:
-        - "*.tf"
-      generates:
-        - ".terraform.lock.hcl"
-      cmds:
-        - terraform init -upgrade
+  # Internal task for initializing Terraform.
+  _infra:terraform:init:
+    deps:
+      - _req_env
+    dir: "{{.dir_infra}}"
+    sources:
+      - "*.tf"
+    generates:
+      - ".terraform.lock.hcl"
+    cmds:
+      - terraform init -upgrade
 
-    infra:terraform:init-upgrade:
-      desc: Init and upgrade local Terraform state
-      summary: |
-        Use this task when the local state needs to be updated. This happens eg.
-        when terraform is upgraded.
-      deps:
-        - _req_env
-      dir: "{{.dir_infra}}"
-      cmds:
-        - terraform init -upgrade
+  infra:terraform:init-upgrade:
+    desc: Init and upgrade local Terraform state
+    summary: |
+      Use this task when the local state needs to be updated. This happens eg.
+      when terraform is upgraded.
+    deps:
+      - _req_env
+    dir: "{{.dir_infra}}"
+    cmds:
+      - terraform init -upgrade
 
-    infra:terraform:output:
-      deps: [_req_env, _infra:terraform:init]
-      cmds:
-        - terraform -chdir={{.dir_infra}} output -json
+  infra:terraform:output:
+    deps: [_req_env, _infra:terraform:init]
+    cmds:
+      - terraform -chdir={{.dir_infra}} output -json
 
-    infra:provision:
-      deps: [_req_env, _infra:terraform:init]
-      desc: Provision infrastructure for an environment
-      summary: |
-        Use Terraform to provision the infrastructure for an environment.
-      dir: "{{.dir_infra}}"
-      cmds:
-        - terraform apply {{.OPTIONS}}
+  infra:provision:
+    deps: [_req_env, _infra:terraform:init]
+    desc: Provision infrastructure for an environment
+    summary: |
+      Use Terraform to provision the infrastructure for an environment.
+    dir: "{{.dir_infra}}"
+    cmds:
+      - terraform apply {{.OPTIONS}}
 
-    infra:keyvault:secret:set:
-      deps: [_req_env, _infra:terraform:init]
-      desc: Sets a keyvault secret
-      cmds:
-        # Don't print secrets
-        - silent: true
-          cmd: az keyvault secret set
-              --subscription "{{.AZURE_SUBSCRIPTION_ID}}"
-              --name "{{.SECRET_KEY}}"
-              --vault-name
-                $(
-                  terraform -chdir={{.dir_infra}} output -json | jq --raw-output ".keyvault_name.value | select (.!=null)"
-                )
-              --value "{{.SECRET_VALUE}}"
-              --query id -o tsv
+  infra:keyvault:secret:set:
+    deps: [_req_env, _infra:terraform:init]
+    desc: Sets a keyvault secret
+    cmds:
+      # Don't print secrets
+      - silent: true
+        cmd: az keyvault secret set
+          --subscription "{{.AZURE_SUBSCRIPTION_ID}}"
+          --name "{{.SECRET_KEY}}"
+          --vault-name
+          $(
+          terraform -chdir={{.dir_infra}} output -json | jq --raw-output ".keyvault_name.value | select (.!=null)"
+          )
+          --value "{{.SECRET_VALUE}}"
+          --query id -o tsv
 
-      preconditions:
+    preconditions:
       - sh: '[ ! -z "{{.SECRET_KEY}}" ]'
         msg: "Env variable SECRET_KEY is not set or empty."
       - sh: '[ ! -z "{{.SECRET_VALUE}}" ]'
         msg: "Env variable SECRET_VALUE is not set or empty."
 
-    _env_repos:terraform:init:
-      dir: "{{.dir_env_repos}}"
-      cmds:
-        - terraform init
+  _env_repos:terraform:init:
+    dir: "{{.dir_env_repos}}"
+    cmds:
+      - terraform init
 
-    env_repos:provision:
-      deps: [_req_env, _env_repos:terraform:init]
-      desc: Provision infrastructure for an environment
-      silent: true
-      summary: |
-        Use Terraform to provision the repositories for our environments.
-      env:
-        GITHUB_TOKEN:
-          sh: az keyvault secret show
-              --subscription "{{.AZURE_SUBSCRIPTION_ID}}"
-              --name github-infra-admin-pat
-              --vault-name
-                $(
-                  terraform -chdir={{.dir_infra}} output -json | jq --raw-output ".keyvault_name.value | select (.!=null)"
-                )
-              --query value -o tsv
-      cmds:
-        - cmd: |
-            if [ -z "{{.SKIP}}" ]; then
-              terraform -chdir={{.dir_env_repos}} apply {{.OPTIONS}}
-            else
-              echo "Skipped provisioning."
-            fi
+  env_repos:provision:
+    deps: [_req_env, _env_repos:terraform:init]
+    desc: Provision infrastructure for an environment
+    silent: true
+    summary: |
+      Use Terraform to provision the repositories for our environments.
+    env:
+      GITHUB_TOKEN:
+        sh: az keyvault secret show
+          --subscription "{{.AZURE_SUBSCRIPTION_ID}}"
+          --name github-infra-admin-pat
+          --vault-name
+          $(
+          terraform -chdir={{.dir_infra}} output -json | jq --raw-output ".keyvault_name.value | select (.!=null)"
+          )
+          --query value -o tsv
+    cmds:
+      - cmd: |
+          if [ -z "{{.SKIP}}" ]; then
+            terraform -chdir={{.dir_env_repos}} apply {{.OPTIONS}}
+          else
+            echo "Skipped provisioning."
+          fi
 
+  terraform:import:
+    deps: [_req_env, _env_repos:terraform:init]
+    desc: Provision infrastructure for an environment
+    summary: |
+      Import existing ressources into terraform state
+    env:
+      GITHUB_TOKEN:
+        sh: az keyvault secret show
+          --subscription "{{.AZURE_SUBSCRIPTION_ID}}"
+          --name github-infra-admin-pat
+          --vault-name
+          $(
+          terraform -chdir={{.dir_infra}} output -json | jq --raw-output ".keyvault_name.value | select (.!=null)"
+          )
+          --query value -o tsv
+    cmds:
+      - cmd: terraform -chdir={{.dir_env_repos}} import '{{.OPTIONS}}' '{{.ADDRESS_ID}}'
 
-    terraform:import:
-      deps: [_req_env, _env_repos:terraform:init]
-      desc: Provision infrastructure for an environment
-      summary: |
-        Import existing ressources into terraform state
-      env:
-        GITHUB_TOKEN:
-          sh: az keyvault secret show
-              --subscription "{{.AZURE_SUBSCRIPTION_ID}}"
-              --name github-infra-admin-pat
-              --vault-name
-                $(
-                  terraform -chdir={{.dir_infra}} output -json | jq --raw-output ".keyvault_name.value | select (.!=null)"
-                )
-              --query value -o tsv
-      cmds:
-        - cmd: terraform -chdir={{.dir_env_repos}} import '{{.OPTIONS}}' '{{.ADDRESS_ID}}'
-
-    terraform:import:repo:
-      desc: Imports a Github repository for a site by passing the site name
-      cmds:
-        - task: terraform:import
-          vars:
-            OPTIONS: module.env_repos.github_repository.site["{{.SITE}}"]
-            ADDRESS_ID: env-{{.SITE}}
-      preconditions:
+  terraform:import:repo:
+    desc: Imports a Github repository for a site by passing the site name
+    cmds:
+      - task: terraform:import
+        vars:
+          OPTIONS: module.env_repos.github_repository.site["{{.SITE}}"]
+          ADDRESS_ID: env-{{.SITE}}
+    preconditions:
       - &require_site {
-          sh: "[ ! -z \"{{.SITE}}\" ]",
-          msg: "Variable SITE is not set or empty."
+          sh: '[ ! -z "{{.SITE}}" ]',
+          msg: "Variable SITE is not set or empty.",
         }
 
-    cluster:auth:
-        deps: [_req_env, _infra:terraform:init]
-        desc: "Authenticate against AKS and setup a functional kubecontext."
-        status:
-          - "[ $(kubectl config current-context) == '{{.CLUSTER_NAME}}' ] || exit 1"
-        # We normally handle variables via dynamic task variables, but as terraform.
-        # Variables are interpolated before dependencies are resolved, so
-        # in cases where Terraform is not initialized, this task will break.
-        # A lot of other tasks are in the exact same situations.
-        # So, to mitigate this, we instead export the variables we need as
-        # commands.
-        # We sneakily rely on the fact that most procedures starts off with a
-        # cluster:auth, which means most people will have their terraform workspace
-        # initialized before the run the next task which can then extract variables
-        # the "normal" way.
-        cmds:
-          -
-            export CLUSTER_NAME=$(terraform -chdir={{.dir_infra}} output -json | jq --raw-output ".cluster_name.value | select (.!=null)") &&
-            export RESOURCEGROUP_NAME=$(terraform -chdir={{.dir_infra}} output -json | jq --raw-output ".resourcegroup_name.value | select (.!=null)") &&
-            az aks get-credentials --only-show-errors --subscription {{.AZURE_SUBSCRIPTION_ID}} --resource-group $RESOURCEGROUP_NAME --name $CLUSTER_NAME &&
-            echo "CLUSTER_NAME=$CLUSTER_NAME" >> {{.instance_vars_file}}
-        preconditions:
-          - sh: "[ ! -z {{.AZURE_SUBSCRIPTION_ID}} ]"
-            msg: "Env variable AZURE_SUBSCRIPTION_ID is not set or empty."
+  cluster:auth:
+    deps: [_req_env, _infra:terraform:init]
+    desc: "Authenticate against AKS and setup a functional kubecontext."
+    status:
+      - "[ $(kubectl config current-context) == '{{.CLUSTER_NAME}}' ] || exit 1"
+    # We normally handle variables via dynamic task variables, but as terraform.
+    # Variables are interpolated before dependencies are resolved, so
+    # in cases where Terraform is not initialized, this task will break.
+    # A lot of other tasks are in the exact same situations.
+    # So, to mitigate this, we instead export the variables we need as
+    # commands.
+    # We sneakily rely on the fact that most procedures starts off with a
+    # cluster:auth, which means most people will have their terraform workspace
+    # initialized before the run the next task which can then extract variables
+    # the "normal" way.
+    cmds:
+      - export CLUSTER_NAME=$(terraform -chdir={{.dir_infra}} output -json | jq --raw-output ".cluster_name.value | select (.!=null)") &&
+        export RESOURCEGROUP_NAME=$(terraform -chdir={{.dir_infra}} output -json | jq --raw-output ".resourcegroup_name.value | select (.!=null)") &&
+        az aks get-credentials --only-show-errors --subscription {{.AZURE_SUBSCRIPTION_ID}} --resource-group $RESOURCEGROUP_NAME --name $CLUSTER_NAME &&
+        echo "CLUSTER_NAME=$CLUSTER_NAME" >> {{.instance_vars_file}}
+    preconditions:
+      - sh: "[ ! -z {{.AZURE_SUBSCRIPTION_ID}} ]"
+        msg: "Env variable AZURE_SUBSCRIPTION_ID is not set or empty."
 
-    cluster:get-upgrades:
-        deps: [_req_env]
-        desc: "Get available upgrades for the cluster."
+  cluster:get-upgrades:
+    deps: [_req_env]
+    desc: "Get available upgrades for the cluster."
+    vars:
+      CLUSTER_NAME:
+        sh: terraform -chdir={{.dir_infra}} output -json | jq --raw-output ".cluster_name.value | select (.!=null)"
+      RESOURCEGROUP_NAME:
+        sh: terraform -chdir={{.dir_infra}} output -json | jq --raw-output ".resourcegroup_name.value | select (.!=null)"
+    cmds:
+      - az aks get-upgrades
+        --subscription {{.AZURE_SUBSCRIPTION_ID}}
+        --resource-group {{.RESOURCEGROUP_NAME}}
+        --name {{.CLUSTER_NAME}}
+        --output table
+    preconditions:
+      - sh: "[ ! -z {{.AZURE_SUBSCRIPTION_ID}} ]"
+        msg: "Env variable AZURE_SUBSCRIPTION_ID is not set or empty."
+
+  cluster:adjust:resource-request:
+    deps: [cluster:auth, lagoon:cli:config]
+    desc: "Adjust resource requests for a every pod inside a library namespace"
+    cmds:
+      - task/scripts/adjust-resource-requests.sh
+
+  cluster:delete-all-completed-pods:
+    deps: [cluster:auth, lagoon:cli:config]
+    desc: "Deletes all pods in completed state to clear room on nodes"
+    cmds:
+      - task/scripts/delete-all-completed-pods.sh
+
+  cluster:promote-workloads-to-prod:
+    deps: [cluster:auth, lagoon:cli:config]
+    desc: "Promotes selected workloads to production node pool"
+    cmds:
+      - task/scripts/promote-workloads-to-prod-nodes.sh
+
+  cluster:mode:release:
+    deps: [cluster:auth, lagoon:cli:config]
+    desc: "Set the cluster in release mode by adding additional nodes to release critical node pools"
+    cmds:
+      - az aks nodepool scale
+        --cluster-name aks-dplplat01-01
+        --nodepool-name app6
+        --resource-group rg-env-dplplat01
+        --node-count 4
+      - az aks nodepool scale
+        --cluster-name aks-dplplat01-01
+        --nodepool-name system2
+        --resource-group
+        $(
+        terraform -chdir={{.dir_infra}} output -json | jq --raw-output ".resourcegroup_name.value | select (.!=null)"
+        )
+        --node-count 5
+
+  cluster:mode:reset:
+    deps: [cluster:auth, lagoon:cli:config]
+    desc: "Reset changes to the cluster mode returning it to standard operations."
+    cmds:
+      - az aks nodepool scale
+        --cluster-name aks-dplplat01-01
+        --nodepool-name app6
+        --resource-group rg-env-dplplat01
+        --node-count 2
+      - az aks nodepool scale
+        --cluster-name aks-dplplat01-01
+        --nodepool-name system2
+        --resource-group
+        $(
+        terraform -chdir={{.dir_infra}} output -json | jq --raw-output ".resourcegroup_name.value | select (.!=null)"
+        )
+        --node-count 3
+
+  support:provision:minio:
+    deps: [cluster:auth]
+    summary: Set the DIFF environment variable to any value to switch to diffing instead of an actual upgrade.
+    desc: Install and configure two minio gateways for backups and lagoon files
+    vars:
+      INGRESS_CLASS: nginx
+      API_HOSTNAME: files.lagoon.{{.platform_env}}.{{.global_environment_suffix}}
+      LAGOON_FILES_CLIENT_ACCESS_KEY:
+        sh: az keyvault secret show --subscription "{{.AZURE_SUBSCRIPTION_ID}}" --name $(terraform -chdir={{.dir_infra}} output -json | jq --raw-output ".lagoon_files_blob_storage_client_access_key_name.value | select (.!=null)") --vault-name $(terraform -chdir={{.dir_infra}} output -json | jq --raw-output ".keyvault_name.value | select (.!=null)") --query value -o tsv
+      LAGOON_FILES_CLIENT_SECRET_KEY:
+        sh: az keyvault secret show --subscription "{{.AZURE_SUBSCRIPTION_ID}}" --name $(terraform -chdir={{.dir_infra}} output -json | jq --raw-output ".lagoon_files_blob_storage_client_secret_key_name.value | select (.!=null)") --vault-name $(terraform -chdir={{.dir_infra}} output -json | jq --raw-output ".keyvault_name.value | select (.!=null)") --query value -o tsv
+      LAGOON_FILES_STORAGE_ACCOUNT_NAME:
+        sh: terraform -chdir={{.dir_infra}} output -json | jq --raw-output ".lagoon_files_storage_account_name.value | select (.!=null)"
+      LAGOON_FILES_STORAGE_ACCOUNT_KEY:
+        sh: az keyvault secret show --subscription "{{.AZURE_SUBSCRIPTION_ID}}" --name $(terraform -chdir={{.dir_infra}} output -json | jq --raw-output ".lagoon_files_primary_access_key_name.value | select (.!=null)") --vault-name $(terraform -chdir={{.dir_infra}} output -json | jq --raw-output ".keyvault_name.value | select (.!=null)") --query value -o tsv
+      BAAS_STORAGE_CLIENT_ACCESS_KEY:
+        sh: az keyvault secret show --subscription "{{.AZURE_SUBSCRIPTION_ID}}" --name $(terraform -chdir={{.dir_infra}} output -json | jq --raw-output ".backup_blob_storage_client_access_key_name.value | select (.!=null)") --vault-name $(terraform -chdir={{.dir_infra}} output -json | jq --raw-output ".keyvault_name.value | select (.!=null)") --query value -o tsv
+      BAAS_STORAGE_CLIENT_SECRET_KEY:
+        sh: az keyvault secret show --subscription "{{.AZURE_SUBSCRIPTION_ID}}" --name $(terraform -chdir={{.dir_infra}} output -json | jq --raw-output ".backup_blob_storage_client_secret_key_name.value | select (.!=null)") --vault-name $(terraform -chdir={{.dir_infra}} output -json | jq --raw-output ".keyvault_name.value | select (.!=null)") --query value -o tsv
+      BAAS_STORAGE_ACCOUNT_NAME:
+        sh: terraform -chdir={{.dir_infra}} output -json | jq --raw-output ".backup_storage_account_name.value | select (.!=null)"
+      BAAS_STORAGE_ACCOUNT_KEY:
+        sh: az keyvault secret show --subscription "{{.AZURE_SUBSCRIPTION_ID}}" --name $(terraform -chdir={{.dir_infra}} output -json | jq --raw-output ".backup_primary_access_key_name.value | select (.!=null)") --vault-name $(terraform -chdir={{.dir_infra}} output -json | jq --raw-output ".keyvault_name.value | select (.!=null)") --query value -o tsv
+    cmds:
+      # We're doing this twice, so we use a separate task for invoking the
+      # installation script.
+
+      # Install lagoon files.
+      - task: _support:provision:minio:install
         vars:
-          CLUSTER_NAME:
-            sh: terraform -chdir={{.dir_infra}} output -json | jq --raw-output ".cluster_name.value | select (.!=null)"
-          RESOURCEGROUP_NAME:
-            sh: terraform -chdir={{.dir_infra}} output -json | jq --raw-output ".resourcegroup_name.value | select (.!=null)"
-        cmds:
-          - az aks get-upgrades
-              --subscription {{.AZURE_SUBSCRIPTION_ID}}
-              --resource-group {{.RESOURCEGROUP_NAME}}
-              --name {{.CLUSTER_NAME}}
-              --output table
-        preconditions:
-          - sh: "[ ! -z {{.AZURE_SUBSCRIPTION_ID}} ]"
-            msg: "Env variable AZURE_SUBSCRIPTION_ID is not set or empty."
+          HOSTNAME_PREFIX: "files"
+          HELM_RELEASE_NAME: "minio-lagoon-files"
+          CLIENT_ACCESS_KEY: "{{.LAGOON_FILES_CLIENT_ACCESS_KEY}}"
+          CLIENT_SECRET_KEY: "{{.LAGOON_FILES_CLIENT_SECRET_KEY}}"
+          STORAGE_ACCOUNT_NAME: "{{.LAGOON_FILES_STORAGE_ACCOUNT_NAME}}"
+          STORAGE_ACCOUNT_KEY: "{{.LAGOON_FILES_STORAGE_ACCOUNT_KEY}}"
+      - task: _support:provision:minio:install
+        vars:
+          HOSTNAME_PREFIX: "backup-storage"
+          HELM_RELEASE_NAME: "minio-backup"
+          CLIENT_ACCESS_KEY: "{{.BAAS_STORAGE_CLIENT_ACCESS_KEY}}"
+          CLIENT_SECRET_KEY: "{{.BAAS_STORAGE_CLIENT_SECRET_KEY}}"
+          STORAGE_ACCOUNT_NAME: "{{.BAAS_STORAGE_ACCOUNT_NAME}}"
+          STORAGE_ACCOUNT_KEY: "{{.BAAS_STORAGE_ACCOUNT_KEY}}"
 
-    cluster:adjust:resource-request:
-      deps: [cluster:auth, lagoon:cli:config]
-      desc: "Adjust resource requests for a every pod inside a library namespace"
-      cmds:
-        - task/scripts/adjust-resource-requests.sh
+  _support:provision:minio:install:
+    summary: Do one of the two minio installations.
+    env:
+      INGRESS_CLASS: nginx
+      HELM_RELEASE_NAME: "{{.HELM_RELEASE_NAME}}"
+      API_HOSTNAME: "{{.HOSTNAME_PREFIX}}.lagoon.{{.platform_env}}.{{.global_environment_suffix}}"
+      # Copy the task variables we've been passed into environment variables
+      # that the script can read.
+      CLIENT_ACCESS_KEY: "{{.CLIENT_ACCESS_KEY}}"
+      CLIENT_SECRET_KEY: "{{.CLIENT_SECRET_KEY}}"
+      STORAGE_ACCOUNT_NAME: "{{.STORAGE_ACCOUNT_NAME}}"
+      STORAGE_ACCOUNT_KEY: "{{.STORAGE_ACCOUNT_KEY}}"
+    cmds:
+      - task/scripts/provision-minio.sh
 
-    cluster:delete-all-completed-pods:
-      deps: [cluster:auth, lagoon:cli:config]
-      desc: "Deletes all pods in completed state to clear room on nodes"
-      cmds:
-        - task/scripts/delete-all-completed-pods.sh
+  support:provision:k8up:
+    deps: [cluster:auth]
+    summary: Set the DIFF environment variable to any value to switch to diffing instead of an actual upgrade.
+    desc: Install and configure the K8up backup operator
+    env:
+      # Specify the two endpoints k8up will use for backup and restore.
+      # We specify a cluster service for backups to keep performance as
+      # good as possible.
+      BACKUP_API_URL: http://minio-backup.minio.svc.cluster.local:9000
+      # And the same endpoint now behind an Ingress as we need it to be
+      # available from a browser.
+      RESTORE_API_URL: https://backup-storage.lagoon.{{.platform_env}}.{{.global_environment_suffix}}
+      # As specified in the values file for lagoon-core
+      LAGOON_BACKUP_HANDLER_URL: https://backuphandler.lagoon.{{.platform_env}}.{{.global_environment_suffix}}
+      K8UP_GLOBALSTATSURL: https://k8up.lagoon.{{.platform_env}}.{{.global_environment_suffix}}
+      BACKUP_CLIENT_ACCESS_KEY:
+        sh: az keyvault secret show --subscription "{{.AZURE_SUBSCRIPTION_ID}}" --name $(terraform -chdir={{.dir_infra}} output -json | jq --raw-output ".backup_blob_storage_client_access_key_name.value | select (.!=null)") --vault-name $(terraform -chdir={{.dir_infra}} output -json | jq --raw-output ".keyvault_name.value | select (.!=null)") --query value -o tsv
+      BACKUP_CLIENT_SECRET_KEY:
+        sh: az keyvault secret show --subscription "{{.AZURE_SUBSCRIPTION_ID}}" --name $(terraform -chdir={{.dir_infra}} output -json | jq --raw-output ".backup_blob_storage_client_secret_key_name.value | select (.!=null)") --vault-name $(terraform -chdir={{.dir_infra}} output -json | jq --raw-output ".keyvault_name.value | select (.!=null)") --query value -o tsv
+      RESTORE_CLIENT_ACCESS_KEY:
+        sh: az keyvault secret show --subscription "{{.AZURE_SUBSCRIPTION_ID}}" --name $(terraform -chdir={{.dir_infra}} output -json | jq --raw-output ".backup_blob_storage_client_access_key_name.value | select (.!=null)") --vault-name $(terraform -chdir={{.dir_infra}} output -json | jq --raw-output ".keyvault_name.value | select (.!=null)") --query value -o tsv
+      RESTORE_CLIENT_SECRET_KEY:
+        sh: az keyvault secret show --subscription "{{.AZURE_SUBSCRIPTION_ID}}" --name $(terraform -chdir={{.dir_infra}} output -json | jq --raw-output ".backup_blob_storage_client_secret_key_name.value | select (.!=null)") --vault-name $(terraform -chdir={{.dir_infra}} output -json | jq --raw-output ".keyvault_name.value | select (.!=null)") --query value -o tsv
+    cmds:
+      - task/scripts/provision-k8up.sh
 
-    cluster:promote-workloads-to-prod:
-      deps: [cluster:auth, lagoon:cli:config]
-      desc: "Promotes selected workloads to production node pool"
-      cmds:
-        - task/scripts/promote-workloads-to-prod-nodes.sh
-
-    cluster:mode:release:
-      deps: [cluster:auth , lagoon:cli:config]
-      desc: "Set the cluster in release mode by adding additional nodes to release critical node pools"
-      cmds:
-        - az aks nodepool scale
-          --cluster-name aks-dplplat01-01
-          --nodepool-name app6
-          --resource-group rg-env-dplplat01
-          --node-count 4
-        - az aks nodepool scale
-          --cluster-name aks-dplplat01-01
-          --nodepool-name system2
-          --resource-group
-            $(
-              terraform -chdir={{.dir_infra}} output -json | jq --raw-output ".resourcegroup_name.value | select (.!=null)"
-            )
-          --node-count 5
-
-    cluster:mode:reset:
-      deps: [cluster:auth , lagoon:cli:config]
-      desc: "Reset changes to the cluster mode returning it to standard operations."
-      cmds:
-        - az aks nodepool scale
-          --cluster-name aks-dplplat01-01
-          --nodepool-name app6
-          --resource-group rg-env-dplplat01
-          --node-count 2
-        - az aks nodepool scale
-          --cluster-name aks-dplplat01-01
-          --nodepool-name system2
-          --resource-group
-            $(
-              terraform -chdir={{.dir_infra}} output -json | jq --raw-output ".resourcegroup_name.value | select (.!=null)"
-            )
-          --node-count 3
-
-    support:provision:minio:
-      deps: [cluster:auth]
-      summary: Set the DIFF environment variable to any value to switch to diffing instead of an actual upgrade.
-      desc: Install and configure two minio gateways for backups and lagoon files
-      vars:
-        INGRESS_CLASS: nginx
-        API_HOSTNAME: files.lagoon.{{.platform_env}}.{{.global_environment_suffix}}
-        LAGOON_FILES_CLIENT_ACCESS_KEY:
-          sh: az keyvault secret show --subscription "{{.AZURE_SUBSCRIPTION_ID}}" --name $(terraform -chdir={{.dir_infra}} output -json | jq --raw-output ".lagoon_files_blob_storage_client_access_key_name.value | select (.!=null)") --vault-name $(terraform -chdir={{.dir_infra}} output -json | jq --raw-output ".keyvault_name.value | select (.!=null)") --query value -o tsv
-        LAGOON_FILES_CLIENT_SECRET_KEY:
-          sh: az keyvault secret show --subscription "{{.AZURE_SUBSCRIPTION_ID}}" --name $(terraform -chdir={{.dir_infra}} output -json | jq --raw-output ".lagoon_files_blob_storage_client_secret_key_name.value | select (.!=null)") --vault-name $(terraform -chdir={{.dir_infra}} output -json | jq --raw-output ".keyvault_name.value | select (.!=null)") --query value -o tsv
-        LAGOON_FILES_STORAGE_ACCOUNT_NAME:
-          sh: terraform -chdir={{.dir_infra}} output -json | jq --raw-output ".lagoon_files_storage_account_name.value | select (.!=null)"
-        LAGOON_FILES_STORAGE_ACCOUNT_KEY:
-          sh: az keyvault secret show --subscription "{{.AZURE_SUBSCRIPTION_ID}}" --name $(terraform -chdir={{.dir_infra}} output -json | jq --raw-output ".lagoon_files_primary_access_key_name.value | select (.!=null)") --vault-name $(terraform -chdir={{.dir_infra}} output -json | jq --raw-output ".keyvault_name.value | select (.!=null)") --query value -o tsv
-        BAAS_STORAGE_CLIENT_ACCESS_KEY:
-          sh: az keyvault secret show --subscription "{{.AZURE_SUBSCRIPTION_ID}}" --name $(terraform -chdir={{.dir_infra}} output -json | jq --raw-output ".backup_blob_storage_client_access_key_name.value | select (.!=null)") --vault-name $(terraform -chdir={{.dir_infra}} output -json | jq --raw-output ".keyvault_name.value | select (.!=null)") --query value -o tsv
-        BAAS_STORAGE_CLIENT_SECRET_KEY:
-          sh: az keyvault secret show --subscription "{{.AZURE_SUBSCRIPTION_ID}}" --name $(terraform -chdir={{.dir_infra}} output -json | jq --raw-output ".backup_blob_storage_client_secret_key_name.value | select (.!=null)") --vault-name $(terraform -chdir={{.dir_infra}} output -json | jq --raw-output ".keyvault_name.value | select (.!=null)") --query value -o tsv
-        BAAS_STORAGE_ACCOUNT_NAME:
-          sh: terraform -chdir={{.dir_infra}} output -json | jq --raw-output ".backup_storage_account_name.value | select (.!=null)"
-        BAAS_STORAGE_ACCOUNT_KEY:
-          sh: az keyvault secret show --subscription "{{.AZURE_SUBSCRIPTION_ID}}" --name $(terraform -chdir={{.dir_infra}} output -json | jq --raw-output ".backup_primary_access_key_name.value | select (.!=null)") --vault-name $(terraform -chdir={{.dir_infra}} output -json | jq --raw-output ".keyvault_name.value | select (.!=null)") --query value -o tsv
-      cmds:
-        # We're doing this twice, so we use a separate task for invoking the
-        # installation script.
-
-        # Install lagoon files.
-        - task: _support:provision:minio:install
-          vars:
-            HOSTNAME_PREFIX: "files"
-            HELM_RELEASE_NAME: "minio-lagoon-files"
-            CLIENT_ACCESS_KEY: "{{.LAGOON_FILES_CLIENT_ACCESS_KEY}}"
-            CLIENT_SECRET_KEY: "{{.LAGOON_FILES_CLIENT_SECRET_KEY}}"
-            STORAGE_ACCOUNT_NAME: "{{.LAGOON_FILES_STORAGE_ACCOUNT_NAME}}"
-            STORAGE_ACCOUNT_KEY: "{{.LAGOON_FILES_STORAGE_ACCOUNT_KEY}}"
-        - task: _support:provision:minio:install
-          vars:
-            HOSTNAME_PREFIX: "backup-storage"
-            HELM_RELEASE_NAME: "minio-backup"
-            CLIENT_ACCESS_KEY: "{{.BAAS_STORAGE_CLIENT_ACCESS_KEY}}"
-            CLIENT_SECRET_KEY: "{{.BAAS_STORAGE_CLIENT_SECRET_KEY}}"
-            STORAGE_ACCOUNT_NAME: "{{.BAAS_STORAGE_ACCOUNT_NAME}}"
-            STORAGE_ACCOUNT_KEY: "{{.BAAS_STORAGE_ACCOUNT_KEY}}"
-
-    _support:provision:minio:install:
-      summary: Do one of the two minio installations.
-      env:
-        INGRESS_CLASS: nginx
-        HELM_RELEASE_NAME: "{{.HELM_RELEASE_NAME}}"
-        API_HOSTNAME: "{{.HOSTNAME_PREFIX}}.lagoon.{{.platform_env}}.{{.global_environment_suffix}}"
-        # Copy the task variables we've been passed into environment variables
-        # that the script can read.
-        CLIENT_ACCESS_KEY: "{{.CLIENT_ACCESS_KEY}}"
-        CLIENT_SECRET_KEY: "{{.CLIENT_SECRET_KEY}}"
-        STORAGE_ACCOUNT_NAME: "{{.STORAGE_ACCOUNT_NAME}}"
-        STORAGE_ACCOUNT_KEY: "{{.STORAGE_ACCOUNT_KEY}}"
-      cmds:
-        - task/scripts/provision-minio.sh
-
-    support:provision:k8up:
-      deps: [cluster:auth]
-      summary: Set the DIFF environment variable to any value to switch to diffing instead of an actual upgrade.
-      desc: Install and configure the K8up backup operator
-      env:
-        # Specify the two endpoints k8up will use for backup and restore.
-        # We specify a cluster service for backups to keep performance as
-        # good as possible.
-        BACKUP_API_URL: http://minio-backup.minio.svc.cluster.local:9000
-        # And the same endpoint now behind an Ingress as we need it to be
-        # available from a browser.
-        RESTORE_API_URL: https://backup-storage.lagoon.{{.platform_env}}.{{.global_environment_suffix}}
-        # As specified in the values file for lagoon-core
-        LAGOON_BACKUP_HANDLER_URL: https://backuphandler.lagoon.{{.platform_env}}.{{.global_environment_suffix}}
-        K8UP_GLOBALSTATSURL: https://k8up.lagoon.{{.platform_env}}.{{.global_environment_suffix}}
-        BACKUP_CLIENT_ACCESS_KEY:
-          sh: az keyvault secret show --subscription "{{.AZURE_SUBSCRIPTION_ID}}" --name $(terraform -chdir={{.dir_infra}} output -json | jq --raw-output ".backup_blob_storage_client_access_key_name.value | select (.!=null)") --vault-name $(terraform -chdir={{.dir_infra}} output -json | jq --raw-output ".keyvault_name.value | select (.!=null)") --query value -o tsv
-        BACKUP_CLIENT_SECRET_KEY:
-          sh: az keyvault secret show --subscription "{{.AZURE_SUBSCRIPTION_ID}}" --name $(terraform -chdir={{.dir_infra}} output -json | jq --raw-output ".backup_blob_storage_client_secret_key_name.value | select (.!=null)") --vault-name $(terraform -chdir={{.dir_infra}} output -json | jq --raw-output ".keyvault_name.value | select (.!=null)") --query value -o tsv
-        RESTORE_CLIENT_ACCESS_KEY:
-          sh: az keyvault secret show --subscription "{{.AZURE_SUBSCRIPTION_ID}}" --name $(terraform -chdir={{.dir_infra}} output -json | jq --raw-output ".backup_blob_storage_client_access_key_name.value | select (.!=null)") --vault-name $(terraform -chdir={{.dir_infra}} output -json | jq --raw-output ".keyvault_name.value | select (.!=null)") --query value -o tsv
-        RESTORE_CLIENT_SECRET_KEY:
-          sh: az keyvault secret show --subscription "{{.AZURE_SUBSCRIPTION_ID}}" --name $(terraform -chdir={{.dir_infra}} output -json | jq --raw-output ".backup_blob_storage_client_secret_key_name.value | select (.!=null)") --vault-name $(terraform -chdir={{.dir_infra}} output -json | jq --raw-output ".keyvault_name.value | select (.!=null)") --query value -o tsv
-      cmds:
-        - task/scripts/provision-k8up.sh
-
-    lagoon:provision:core:
-      deps: [cluster:auth]
-      desc: Install and configure Lagoon core
-      vars:
-        # If DIFF is set, use the diff helm plugin
-        DIFF_COMMAND: '{{empty .DIFF | ternary "" "diff"}}'
-      env:
-        # Collect the values we'll render into the values-file for the chart.
-        KEYCLOAK_ADMIN_PASS:
-          sh: az keyvault secret show --subscription "{{.AZURE_SUBSCRIPTION_ID}}" --name $(terraform -chdir={{.dir_infra}} output -json | jq --raw-output ".keycloak_admin_pass_key_name.value | select (.!=null)") --vault-name $(terraform -chdir={{.dir_infra}} output -json | jq --raw-output ".keyvault_name.value | select (.!=null)") --query value -o tsv
-        HARBOR_ADMIN_PASS:
-          sh: az keyvault secret show --subscription "{{.AZURE_SUBSCRIPTION_ID}}" --name $(terraform -chdir={{.dir_infra}} output -json | jq --raw-output ".harbor_admin_pass_key_name.value | select (.!=null)") --vault-name $(terraform -chdir={{.dir_infra}} output -json | jq --raw-output ".keyvault_name.value | select (.!=null)") --query value -o tsv
-        LAGOON_FILES_API_URL: https://files.lagoon.{{.platform_env}}.{{.global_environment_suffix}}
-        LAGOON_FILES_HOSTNAME:
-          sh: az keyvault secret show --subscription "{{.AZURE_SUBSCRIPTION_ID}}" --name $(terraform -chdir={{.dir_infra}} output -json | jq --raw-output ".lagoon_files_blob_storage_client_access_key_name.value | select (.!=null)") --vault-name $(terraform -chdir={{.dir_infra}} output -json | jq --raw-output ".keyvault_name.value | select (.!=null)") --query value -o tsv
-        LAGOON_FILES_ACCESS_KEY:
-          sh: az keyvault secret show --subscription "{{.AZURE_SUBSCRIPTION_ID}}" --name $(terraform -chdir={{.dir_infra}} output -json | jq --raw-output ".lagoon_files_blob_storage_client_access_key_name.value | select (.!=null)") --vault-name $(terraform -chdir={{.dir_infra}} output -json | jq --raw-output ".keyvault_name.value | select (.!=null)") --query value -o tsv
-        LAGOON_FILES_SECRET_KEY:
-          sh: az keyvault secret show --subscription "{{.AZURE_SUBSCRIPTION_ID}}" --name $(terraform -chdir={{.dir_infra}} output -json | jq --raw-output ".lagoon_files_blob_storage_client_secret_key_name.value | select (.!=null)") --vault-name $(terraform -chdir={{.dir_infra}} output -json | jq --raw-output ".keyvault_name.value | select (.!=null)") --query value -o tsv
-        LAGOON_FILES_BUCKET:
-          sh: terraform -chdir={{.dir_infra}} output -json | jq --raw-output ".lagoon_files_blob_storage_container_name.value | select (.!=null)"
-        BAAS_STORAGE_ACCESS_KEY:
-          sh: az keyvault secret show --subscription "{{.AZURE_SUBSCRIPTION_ID}}" --name $(terraform -chdir={{.dir_infra}} output -json | jq --raw-output ".backup_blob_storage_client_access_key_name.value | select (.!=null)") --vault-name $(terraform -chdir={{.dir_infra}} output -json | jq --raw-output ".keyvault_name.value | select (.!=null)") --query value -o tsv
-        BAAS_STORAGE_SECRET_KEY:
-          sh: az keyvault secret show --subscription "{{.AZURE_SUBSCRIPTION_ID}}" --name $(terraform -chdir={{.dir_infra}} output -json | jq --raw-output ".backup_blob_storage_client_secret_key_name.value | select (.!=null)") --vault-name $(terraform -chdir={{.dir_infra}} output -json | jq --raw-output ".keyvault_name.value | select (.!=null)") --query value -o tsv
-        CHART_VERSION_LAGOON_CORE:
-          sh: source "{{.dir_lagoon}}/lagoon-versions.env" && echo $VERSION_LAGOON_CORE
-      cmds:
-        - |
-          envsubst '$HARBOR_ADMIN_PASS $KEYCLOAK_ADMIN_PASS $LAGOON_FILES_API_URL $LAGOON_FILES_ACCESS_KEY $LAGOON_FILES_BUCKET $LAGOON_FILES_SECRET_KEY $BAAS_STORAGE_ACCESS_KEY $BAAS_STORAGE_SECRET_KEY' \
-          < "{{.dir_lagoon}}/lagoon-core-values.template.yaml" \
-          > "{{.dir_lagoon}}/lagoon-core-values.yaml"
-        # Setup the namespace manually to control eg. labels on the namespace.
-        - kubectl apply -f {{.dir_lagoon}}/lagoon-core-namespace.yaml
-        - helm repo add lagoon https://uselagoon.github.io/lagoon-charts/
-        - |
-          helm {{.DIFF_COMMAND}} upgrade \
-          --install \
-          --namespace lagoon-core \
-          -f {{.dir_lagoon}}/lagoon-core-values.yaml \
-          --version $CHART_VERSION_LAGOON_CORE \
-          lagoon-core \
-          lagoon/lagoon-core
-      preconditions:
+  lagoon:provision:core:
+    deps: [cluster:auth]
+    desc: Install and configure Lagoon core
+    vars:
+      # If DIFF is set, use the diff helm plugin
+      DIFF_COMMAND: '{{empty .DIFF | ternary "" "diff"}}'
+    env:
+      # Collect the values we'll render into the values-file for the chart.
+      KEYCLOAK_ADMIN_PASS:
+        sh: az keyvault secret show --subscription "{{.AZURE_SUBSCRIPTION_ID}}" --name $(terraform -chdir={{.dir_infra}} output -json | jq --raw-output ".keycloak_admin_pass_key_name.value | select (.!=null)") --vault-name $(terraform -chdir={{.dir_infra}} output -json | jq --raw-output ".keyvault_name.value | select (.!=null)") --query value -o tsv
+      HARBOR_ADMIN_PASS:
+        sh: az keyvault secret show --subscription "{{.AZURE_SUBSCRIPTION_ID}}" --name $(terraform -chdir={{.dir_infra}} output -json | jq --raw-output ".harbor_admin_pass_key_name.value | select (.!=null)") --vault-name $(terraform -chdir={{.dir_infra}} output -json | jq --raw-output ".keyvault_name.value | select (.!=null)") --query value -o tsv
+      LAGOON_FILES_API_URL: https://files.lagoon.{{.platform_env}}.{{.global_environment_suffix}}
+      LAGOON_FILES_HOSTNAME:
+        sh: az keyvault secret show --subscription "{{.AZURE_SUBSCRIPTION_ID}}" --name $(terraform -chdir={{.dir_infra}} output -json | jq --raw-output ".lagoon_files_blob_storage_client_access_key_name.value | select (.!=null)") --vault-name $(terraform -chdir={{.dir_infra}} output -json | jq --raw-output ".keyvault_name.value | select (.!=null)") --query value -o tsv
+      LAGOON_FILES_ACCESS_KEY:
+        sh: az keyvault secret show --subscription "{{.AZURE_SUBSCRIPTION_ID}}" --name $(terraform -chdir={{.dir_infra}} output -json | jq --raw-output ".lagoon_files_blob_storage_client_access_key_name.value | select (.!=null)") --vault-name $(terraform -chdir={{.dir_infra}} output -json | jq --raw-output ".keyvault_name.value | select (.!=null)") --query value -o tsv
+      LAGOON_FILES_SECRET_KEY:
+        sh: az keyvault secret show --subscription "{{.AZURE_SUBSCRIPTION_ID}}" --name $(terraform -chdir={{.dir_infra}} output -json | jq --raw-output ".lagoon_files_blob_storage_client_secret_key_name.value | select (.!=null)") --vault-name $(terraform -chdir={{.dir_infra}} output -json | jq --raw-output ".keyvault_name.value | select (.!=null)") --query value -o tsv
+      LAGOON_FILES_BUCKET:
+        sh: terraform -chdir={{.dir_infra}} output -json | jq --raw-output ".lagoon_files_blob_storage_container_name.value | select (.!=null)"
+      BAAS_STORAGE_ACCESS_KEY:
+        sh: az keyvault secret show --subscription "{{.AZURE_SUBSCRIPTION_ID}}" --name $(terraform -chdir={{.dir_infra}} output -json | jq --raw-output ".backup_blob_storage_client_access_key_name.value | select (.!=null)") --vault-name $(terraform -chdir={{.dir_infra}} output -json | jq --raw-output ".keyvault_name.value | select (.!=null)") --query value -o tsv
+      BAAS_STORAGE_SECRET_KEY:
+        sh: az keyvault secret show --subscription "{{.AZURE_SUBSCRIPTION_ID}}" --name $(terraform -chdir={{.dir_infra}} output -json | jq --raw-output ".backup_blob_storage_client_secret_key_name.value | select (.!=null)") --vault-name $(terraform -chdir={{.dir_infra}} output -json | jq --raw-output ".keyvault_name.value | select (.!=null)") --query value -o tsv
+      CHART_VERSION_LAGOON_CORE:
+        sh: source "{{.dir_lagoon}}/lagoon-versions.env" && echo $VERSION_LAGOON_CORE
+    cmds:
+      - |
+        envsubst '$HARBOR_ADMIN_PASS $KEYCLOAK_ADMIN_PASS $LAGOON_FILES_API_URL $LAGOON_FILES_ACCESS_KEY $LAGOON_FILES_BUCKET $LAGOON_FILES_SECRET_KEY $BAAS_STORAGE_ACCESS_KEY $BAAS_STORAGE_SECRET_KEY' \
+        < "{{.dir_lagoon}}/lagoon-core-values.template.yaml" \
+        > "{{.dir_lagoon}}/lagoon-core-values.yaml"
+      # Setup the namespace manually to control eg. labels on the namespace.
+      - kubectl apply -f {{.dir_lagoon}}/lagoon-core-namespace.yaml
+      - helm repo add lagoon https://uselagoon.github.io/lagoon-charts/
+      - |
+        helm {{.DIFF_COMMAND}} upgrade \
+        --install \
+        --namespace lagoon-core \
+        -f {{.dir_lagoon}}/lagoon-core-values.yaml \
+        --version $CHART_VERSION_LAGOON_CORE \
+        lagoon-core \
+        lagoon/lagoon-core
+    preconditions:
       - sh: "[ ! -z ${KEYCLOAK_ADMIN_PASS} ]"
         msg: "Could not extract the password for the keycloak admin from keyvault."
       - sh: "[ ! -z ${HARBOR_ADMIN_PASS} ]"
         msg: "Could not extract the password for the harbor admin from keyvault."
 
-    lagoon:backup:core-and-keycloak:
-      deps: [cluster:auth]
-      desc: Backs up the Lagoon Core API DB and Lagoon's Keycloak to local machine
-      cmds:
-        - ./task/scripts/backup-lagoon-core-db-pre-upgrade.mjs
-        - ./task/scripts/backup-keycloak-pre-upgrade.mjs
+  lagoon:backup:core-and-keycloak:
+    deps: [cluster:auth]
+    desc: Backs up the Lagoon Core API DB and Lagoon's Keycloak to local machine
+    cmds:
+      - ./task/scripts/backup-lagoon-core-db-pre-upgrade.mjs
+      - ./task/scripts/backup-keycloak-pre-upgrade.mjs
 
-    lagoon:cli:config:
-      deps: [cluster:auth]
-      desc: Configure a lagoon cli with the knowledge of a lagoon core.
-      summary: |
-        In order for the cli to auth your public ssh-key must have been added to
-        the core and must be available to ssh eg via "eval $(ssh-agent); ssh-add"
-      vars:
-        ssh_loadbalancer_ip:
-          sh: task cluster:auth && kubectl get -o jsonpath='{.status.loadBalancer.ingress[0].ip}' -n lagoon-core service lagoon-core-ssh
-      status:
-        - test -f {{.HOME}}/.lagoon.yml
+  lagoon:cli:config:
+    deps: [cluster:auth]
+    desc: Configure a lagoon cli with the knowledge of a lagoon core.
+    summary: |
+      In order for the cli to auth your public ssh-key must have been added to
+      the core and must be available to ssh eg via "eval $(ssh-agent); ssh-add"
+    vars:
+      ssh_loadbalancer_ip:
+        sh: task cluster:auth && kubectl get -o jsonpath='{.status.loadBalancer.ingress[0].ip}' -n lagoon-core service lagoon-core-ssh
+    status:
+      - test -f {{.HOME}}/.lagoon.yml
 
-      cmds:
-        - |
-            lagoon config add \
-            --graphql https://api.lagoon.{{.platform_env}}.{{.global_environment_suffix}}/graphql \
-            --force \
-            --ui https://ui.lagoon.{{.platform_env}}.{{.global_environment_suffix}} \
-            --hostname {{.ssh_loadbalancer_ip}} \
-            --port 22 \
-            --lagoon {{.platform_env}}
-        - lagoon config default --lagoon {{.platform_env}}
-        - lagoon login
-      preconditions:
+    cmds:
+      - |
+        lagoon config add \
+        --graphql https://api.lagoon.{{.platform_env}}.{{.global_environment_suffix}}/graphql \
+        --force \
+        --ui https://ui.lagoon.{{.platform_env}}.{{.global_environment_suffix}} \
+        --hostname {{.ssh_loadbalancer_ip}} \
+        --port 22 \
+        --lagoon {{.platform_env}}
+      - lagoon config default --lagoon {{.platform_env}}
+      - lagoon login
+    preconditions:
       - sh: "[ ! -z {{.ssh_loadbalancer_ip}} ]"
         msg: "Could not determine IP of the ssh-endpoint for Lagoon. The Kubernetes lagoon-core/lagoon-core-ssh service may not have been provisioned yet."
 
-    lagoon:provision:remote:
-      deps: [cluster:auth]
-      desc: Install and configure Lagoon remote
-      vars:
-        # If DIFF is set, use the diff helm plugin
-        DIFF_COMMAND: '{{empty .DIFF | ternary "" "diff"}}'
-      env:
-        # Fetch a number of variables we'll need to add to a values-file.
-        SSH_LOADBALANCER_IP:
-          sh: task cluster:auth && kubectl get -o jsonpath='{.status.loadBalancer.ingress[0].ip}' -n lagoon-core service lagoon-core-ssh
-        RABBITMQ_PASS:
-          sh: task cluster:auth && kubectl -n lagoon-core get secret lagoon-core-broker -o jsonpath="{.data.RABBITMQ_PASSWORD}" | base64 -d
-        HARBOR_ADMIN_PASS:
-          sh: az keyvault secret show --subscription "{{.AZURE_SUBSCRIPTION_ID}}" --name $(terraform -chdir={{.dir_infra}} output -json | jq --raw-output ".harbor_admin_pass_key_name.value | select (.!=null)") --vault-name $(terraform -chdir={{.dir_infra}} output -json | jq --raw-output ".keyvault_name.value | select (.!=null)") --query value -o tsv
-        SQL_HOSTNAME:
-          sh: terraform -chdir={{.dir_infra}} output -json | jq --raw-output ".sql_hostname.value | select (.!=null)"
-        SQL_SERVERNAME:
-          sh: terraform -chdir={{.dir_infra}} output -json | jq --raw-output ".sql_servername.value | select (.!=null)"
-        SQL_USER:
-          sh: terraform -chdir={{.dir_infra}} output -json | jq --raw-output ".sql_user.value | select (.!=null)"
-        SQL_PASSWORD:
-          sh: az keyvault secret show --subscription "{{.AZURE_SUBSCRIPTION_ID}}" --name $(terraform -chdir={{.dir_infra}} output -json | jq --raw-output ".sql_password_key_name.value | select (.!=null)") --vault-name $(terraform -chdir={{.dir_infra}} output -json | jq --raw-output ".keyvault_name.value | select (.!=null)") --query value -o tsv
-        CHART_VERSION_LAGOON_REMOTE:
-          sh: source "{{.dir_lagoon}}/lagoon-versions.env" && echo $VERSION_LAGOON_REMOTE
-        BUILD_DEPLOY_DIND_IMAGE_VER:
-          sh: source "{{.dir_lagoon}}/lagoon-versions.env" && echo $BUILD_DEPLOY_DIND_IMAGE_VER
-        ACS_CONNECTION_STRING:
-          sh: terraform -chdir={{.dir_infra}} output -json | jq --raw-output ".acs_connection_string.value | select (.!=null)"
-      cmds:
-        # Render the variables we've collected into a values file we can install.
-        - |
-          envsubst '$SSH_LOADBALANCER_IP $RABBITMQ_PASS $HARBOR_ADMIN_PASS $SQL_HOSTNAME $SQL_SERVERNAME $SQL_USER $SQL_PASSWORD $BUILD_DEPLOY_DIND_IMAGE_VER $ACS_CONNECTION_STRING $TEST_DATABASE_SERVER_PASSWORD $TEST_DATABASE_SERVER_USER $TEST_DATABASE_SERVER_HOST' \
-          < "{{.dir_lagoon}}/lagoon-remote-values.template.yaml" \
-          > "{{.dir_lagoon}}/lagoon-remote-values.yaml"
-        # Setup the namespace manually to control eg. labels on the namespace.
-        - kubectl apply -f {{.dir_lagoon}}/lagoon-remote-namespace.yaml
-        # Add the lagoon helm repo and install or upgrade the chart.
-        - helm repo add lagoon https://uselagoon.github.io/lagoon-charts/
-        - |
-          helm {{.DIFF_COMMAND}} \
-            upgrade --install \--namespace lagoon \
-            -f {{.dir_lagoon}}/lagoon-remote-values.yaml \
-            --version $CHART_VERSION_LAGOON_REMOTE \
-            lagoon-remote \
-            lagoon/lagoon-remote
-      preconditions:
+  lagoon:provision:remote:
+    deps: [cluster:auth]
+    desc: Install and configure Lagoon remote
+    vars:
+      # If DIFF is set, use the diff helm plugin
+      DIFF_COMMAND: '{{empty .DIFF | ternary "" "diff"}}'
+    env:
+      # Fetch a number of variables we'll need to add to a values-file.
+      SSH_LOADBALANCER_IP:
+        sh: task cluster:auth && kubectl get -o jsonpath='{.status.loadBalancer.ingress[0].ip}' -n lagoon-core service lagoon-core-ssh
+      RABBITMQ_PASS:
+        sh: task cluster:auth && kubectl -n lagoon-core get secret lagoon-core-broker -o jsonpath="{.data.RABBITMQ_PASSWORD}" | base64 -d
+      HARBOR_ADMIN_PASS:
+        sh: az keyvault secret show --subscription "{{.AZURE_SUBSCRIPTION_ID}}" --name $(terraform -chdir={{.dir_infra}} output -json | jq --raw-output ".harbor_admin_pass_key_name.value | select (.!=null)") --vault-name $(terraform -chdir={{.dir_infra}} output -json | jq --raw-output ".keyvault_name.value | select (.!=null)") --query value -o tsv
+      SQL_HOSTNAME:
+        sh: terraform -chdir={{.dir_infra}} output -json | jq --raw-output ".sql_hostname.value | select (.!=null)"
+      SQL_SERVERNAME:
+        sh: terraform -chdir={{.dir_infra}} output -json | jq --raw-output ".sql_servername.value | select (.!=null)"
+      SQL_USER:
+        sh: terraform -chdir={{.dir_infra}} output -json | jq --raw-output ".sql_user.value | select (.!=null)"
+      SQL_PASSWORD:
+        sh: az keyvault secret show --subscription "{{.AZURE_SUBSCRIPTION_ID}}" --name $(terraform -chdir={{.dir_infra}} output -json | jq --raw-output ".sql_password_key_name.value | select (.!=null)") --vault-name $(terraform -chdir={{.dir_infra}} output -json | jq --raw-output ".keyvault_name.value | select (.!=null)") --query value -o tsv
+      CHART_VERSION_LAGOON_REMOTE:
+        sh: source "{{.dir_lagoon}}/lagoon-versions.env" && echo $VERSION_LAGOON_REMOTE
+      BUILD_DEPLOY_DIND_IMAGE_VER:
+        sh: source "{{.dir_lagoon}}/lagoon-versions.env" && echo $BUILD_DEPLOY_DIND_IMAGE_VER
+      ACS_CONNECTION_STRING:
+        sh: terraform -chdir={{.dir_infra}} output -json | jq --raw-output ".acs_connection_string.value | select (.!=null)"
+    cmds:
+      # Render the variables we've collected into a values file we can install.
+      - |
+        envsubst '$SSH_LOADBALANCER_IP $RABBITMQ_PASS $HARBOR_ADMIN_PASS $SQL_HOSTNAME $SQL_SERVERNAME $SQL_USER $SQL_PASSWORD $BUILD_DEPLOY_DIND_IMAGE_VER $ACS_CONNECTION_STRING $TEST_DATABASE_SERVER_PASSWORD $TEST_DATABASE_SERVER_USER $TEST_DATABASE_SERVER_HOST' \
+        < "{{.dir_lagoon}}/lagoon-remote-values.template.yaml" \
+        > "{{.dir_lagoon}}/lagoon-remote-values.yaml"
+      # Setup the namespace manually to control eg. labels on the namespace.
+      - kubectl apply -f {{.dir_lagoon}}/lagoon-remote-namespace.yaml
+      # Add the lagoon helm repo and install or upgrade the chart.
+      - helm repo add lagoon https://uselagoon.github.io/lagoon-charts/
+      - |
+        helm {{.DIFF_COMMAND}} \
+          upgrade --install \--namespace lagoon \
+          -f {{.dir_lagoon}}/lagoon-remote-values.yaml \
+          --version $CHART_VERSION_LAGOON_REMOTE \
+          lagoon-remote \
+          lagoon/lagoon-remote
+    preconditions:
       - sh: "[ ! -z ${RABBITMQ_PASS} ]"
         msg: "Could not extract the password for the rabbitmq admin from Kubernetes."
       - sh: "[ ! -z ${SSH_LOADBALANCER_IP} ]"
@@ -483,34 +480,34 @@ tasks:
       - sh: "[ ! -z ${HARBOR_ADMIN_PASS} ]"
         msg: "Could not extract the password for the Harbor admin from keyvault."
 
-    lagoon:run-mutation:
-      deps: [lagoon:cli:config]
-      desc: Executes a specified mutation against the Lagoon GraphQL API
-      vars:
-        # Collect the values we'll need for a graphql invocation.
-        lagoon_hostname_api:
-          sh: terraform -chdir={{.dir_infra}} output -json | jq --raw-output ".lagoon_hostname_api.value | select (.!=null)"
-        cluster_api_url:
-          sh: terraform -chdir={{.dir_infra}} output -json | jq --raw-output ".cluster_api_url.value | select (.!=null)"
-        lagoon_domain_base:
-          sh: terraform -chdir={{.dir_infra}} output -json | jq --raw-output ".lagoon_domain_base.value | select (.!=null)"
-        user_token:
-          sh: lagoon login > /dev/null && yq eval ".lagoons.{{.platform_env}}.token" - < ~/.lagoon.yml
-        VARIABLES_JSON:
-          sh: |
-            if [ ! -z "{{.VARIABLES}}" ]; then
-              echo -n ",\"variables\":{{.VARIABLES | default "" | replace "\n" ""}}"
-            fi
-      # Send the mutation request against graphql, using the bearer token passed
-      # by the user.
-      cmds:
-        - |
-          curl \
-            -H 'Content-Type: application/json' \
-            -H "Authorization: Bearer {{.user_token}}" \
-            -d '{"query":"{{.MUTATION | replace "\n" ""}}"{{.VARIABLES_JSON}} }' \
-            https://{{.lagoon_hostname_api}}/graphql
-      preconditions:
+  lagoon:run-mutation:
+    deps: [lagoon:cli:config]
+    desc: Executes a specified mutation against the Lagoon GraphQL API
+    vars:
+      # Collect the values we'll need for a graphql invocation.
+      lagoon_hostname_api:
+        sh: terraform -chdir={{.dir_infra}} output -json | jq --raw-output ".lagoon_hostname_api.value | select (.!=null)"
+      cluster_api_url:
+        sh: terraform -chdir={{.dir_infra}} output -json | jq --raw-output ".cluster_api_url.value | select (.!=null)"
+      lagoon_domain_base:
+        sh: terraform -chdir={{.dir_infra}} output -json | jq --raw-output ".lagoon_domain_base.value | select (.!=null)"
+      user_token:
+        sh: lagoon login > /dev/null && yq eval ".lagoons.{{.platform_env}}.token" - < ~/.lagoon.yml
+      VARIABLES_JSON:
+        sh: |
+          if [ ! -z "{{.VARIABLES}}" ]; then
+            echo -n ",\"variables\":{{.VARIABLES | default "" | replace "\n" ""}}"
+          fi
+    # Send the mutation request against graphql, using the bearer token passed
+    # by the user.
+    cmds:
+      - |
+        curl \
+          -H 'Content-Type: application/json' \
+          -H "Authorization: Bearer {{.user_token}}" \
+          -d '{"query":"{{.MUTATION | replace "\n" ""}}"{{.VARIABLES_JSON}} }' \
+          https://{{.lagoon_hostname_api}}/graphql
+    preconditions:
       - sh: "[ ! -z {{.lagoon_hostname_api}} ]"
         msg: "Could not determine the api hostname for Lagoon from Kubernetes"
       - sh: "[ ! -z {{.cluster_api_url}} ]"
@@ -520,39 +517,39 @@ tasks:
       - sh: "[ ! -z '{{.MUTATION}}' ]"
         msg: "Missing mutation to execute"
 
-    lagoon:delete-user-by-id:
-      desc: Deletes a user with a given ID
-      cmds:
-        - task: lagoon:run-mutation
-          vars:
-            MUTATION: |
-              mutation deleteUser($id: String!) { deleteUser(input: {user: {id: $id}}) }
-            VARIABLES: |
-              {"id":"{{.ID}}"}
-      preconditions:
+  lagoon:delete-user-by-id:
+    desc: Deletes a user with a given ID
+    cmds:
+      - task: lagoon:run-mutation
+        vars:
+          MUTATION: |
+            mutation deleteUser($id: String!) { deleteUser(input: {user: {id: $id}}) }
+          VARIABLES: |
+            {"id":"{{.ID}}"}
+    preconditions:
       - sh: "[ ! -z '{{.ID}}' ]"
         msg: "Missing ID of user to delete"
 
-    lagoon:set:environment-variable:
-      desc: Sets an environment variable on a lagoon site. This task automates the instructions from https://docs.lagoon.sh/lagoon/using-lagoon-advanced/environment-variables
-      cmds:
-        - task: lagoon:run-mutation
-          vars:
-            MUTATION: |
-              mutation addEnvironmentVariable {
-                addEnvVariable(
-                  input:{
-                    type:{{.VARIABLE_TYPE}},
-                    typeId:{{.VARIABLE_TYPE_ID}},
-                    scope:{{.VARIABLE_SCOPE}},
-                    name:\"{{.VARIABLE_NAME}}\",
-                    value:\"{{.VARIABLE_VALUE}}\"
-                  }
-                ) {
-                  id
+  lagoon:set:environment-variable:
+    desc: Sets an environment variable on a lagoon site. This task automates the instructions from https://docs.lagoon.sh/lagoon/using-lagoon-advanced/environment-variables
+    cmds:
+      - task: lagoon:run-mutation
+        vars:
+          MUTATION: |
+            mutation addEnvironmentVariable {
+              addEnvVariable(
+                input:{
+                  type:{{.VARIABLE_TYPE}},
+                  typeId:{{.VARIABLE_TYPE_ID}},
+                  scope:{{.VARIABLE_SCOPE}},
+                  name:\"{{.VARIABLE_NAME}}\",
+                  value:\"{{.VARIABLE_VALUE}}\"
                 }
+              ) {
+                id
               }
-      preconditions:
+            }
+    preconditions:
       - sh: "[ ! -z {{.VARIABLE_VALUE}} ]"
         msg: "Missing VARIABLE_VALUE"
       - sh: "[ ! -z {{.VARIABLE_TYPE_ID}} ]"
@@ -564,102 +561,102 @@ tasks:
       - sh: "[ ! -z {{.VARIABLE_TYPE}} ]"
         msg: "Missing VARIABLE_TYPE"
 
-    lagoon:ensure:environment-variable:
-      desc: |
-        Ensures (creates or updates) the state of a particular environment variable.
-        Based on this mutation resolver: https://github.com/uselagoon/lagoon/blob/1ef8e57ffbc969a308e9a16bb53929edac562a4d/services/api/src/resources/env-variables/resolvers.ts#L300
-      vars:
-        ENVIRONMENT_NAME_INPUT:
-          sh: |
-            if [ ! -z \"{{.ENVIRONMENT_NAME}}\" ]; then
-              echo -n "";
-            else
-              echo -n 'environment: \"{{.ENVIRONMENT_NAME}}\",';
-            fi
-      cmds:
-        - task: lagoon:run-mutation
-          vars:
-            MUTATION: |
-              mutation ensureEnvironmentVariable {
-                addOrUpdateEnvVariableByName(
-                  input:{
-                    project:\"{{.PROJECT_NAME}}\",{{.ENVIRONMENT_NAME_INPUT}}
-                    scope:{{.VARIABLE_SCOPE}},
-                    name:\"{{.VARIABLE_NAME}}\",
-                    value:\"{{.VARIABLE_VALUE}}\"
-                  }
-                ) {
-                  id
+  lagoon:ensure:environment-variable:
+    desc: |
+      Ensures (creates or updates) the state of a particular environment variable.
+      Based on this mutation resolver: https://github.com/uselagoon/lagoon/blob/1ef8e57ffbc969a308e9a16bb53929edac562a4d/services/api/src/resources/env-variables/resolvers.ts#L300
+    vars:
+      ENVIRONMENT_NAME_INPUT:
+        sh: |
+          if [ ! -z \"{{.ENVIRONMENT_NAME}}\" ]; then
+            echo -n "";
+          else
+            echo -n 'environment: \"{{.ENVIRONMENT_NAME}}\",';
+          fi
+    cmds:
+      - task: lagoon:run-mutation
+        vars:
+          MUTATION: |
+            mutation ensureEnvironmentVariable {
+              addOrUpdateEnvVariableByName(
+                input:{
+                  project:\"{{.PROJECT_NAME}}\",{{.ENVIRONMENT_NAME_INPUT}}
+                  scope:{{.VARIABLE_SCOPE}},
+                  name:\"{{.VARIABLE_NAME}}\",
+                  value:\"{{.VARIABLE_VALUE}}\"
                 }
+              ) {
+                id
               }
-      preconditions:
-      - sh: "[ ! -z \"{{.VARIABLE_VALUE}}\" ]"
+            }
+    preconditions:
+      - sh: '[ ! -z "{{.VARIABLE_VALUE}}" ]'
         msg: "Missing VARIABLE_VALUE"
-      - sh: "[ ! -z \"{{.VARIABLE_NAME}}\" ]"
+      - sh: '[ ! -z "{{.VARIABLE_NAME}}" ]'
         msg: "Missing VARIABLE_NAME"
-      - sh: "[ ! -z \"{{.VARIABLE_SCOPE}}\" ]"
+      - sh: '[ ! -z "{{.VARIABLE_SCOPE}}" ]'
         msg: "Missing VARIABLE_SCOPE"
-      - sh: "[ ! -z \"{{.PROJECT_NAME}}\" ]"
+      - sh: '[ ! -z "{{.PROJECT_NAME}}" ]'
         msg: "Missing PROJECT_NAME"
 
-    lagoon:project:ensure:github-registry-credentials:
-      vars:
-        GITHUB_TOKEN:
-          sh: az keyvault secret show
-              --subscription "{{.AZURE_SUBSCRIPTION_ID}}"
-              --name github-infra-admin-pat
-              --vault-name
-                $(
-                  terraform -chdir={{.dir_infra}} output -json | jq --raw-output ".keyvault_name.value | select (.!=null)"
-                )
-              --query value -o tsv
-      cmds:
+  lagoon:project:ensure:github-registry-credentials:
+    vars:
+      GITHUB_TOKEN:
+        sh: az keyvault secret show
+          --subscription "{{.AZURE_SUBSCRIPTION_ID}}"
+          --name github-infra-admin-pat
+          --vault-name
+          $(
+          terraform -chdir={{.dir_infra}} output -json | jq --raw-output ".keyvault_name.value | select (.!=null)"
+          )
+          --query value -o tsv
+    cmds:
       - task: lagoon:ensure:environment-variable
         vars:
           VARIABLE_SCOPE: "CONTAINER_REGISTRY"
           VARIABLE_NAME: "GITHUB_REGISTRY_CREDENTIALS"
           VARIABLE_VALUE: "{{.GITHUB_TOKEN}}"
           PROJECT_NAME: "{{.PROJECT_NAME}}"
-      preconditions:
-      - sh: "[ ! -z \"{{.PROJECT_NAME}}\" ]"
+    preconditions:
+      - sh: '[ ! -z "{{.PROJECT_NAME}}" ]'
         msg: "Missing PROJECT_ID or PROJECT_NAME - at least one must be set"
 
-    lagoon:project:ensure:azure-mail-connection-string:
-      vars:
-        ACS_CONNECTION_STRING:
-          sh: az keyvault secret show
-              --subscription "{{.AZURE_SUBSCRIPTION_ID}}"
-              --name azure-communications-connection-string
-              --vault-name
-                $(
-                  terraform -chdir={{.dir_infra}} output -json | jq --raw-output ".keyvault_name.value | select (.!=null)"
-                )
-              --query value -o tsv
-      cmds:
+  lagoon:project:ensure:azure-mail-connection-string:
+    vars:
+      ACS_CONNECTION_STRING:
+        sh: az keyvault secret show
+          --subscription "{{.AZURE_SUBSCRIPTION_ID}}"
+          --name azure-communications-connection-string
+          --vault-name
+          $(
+          terraform -chdir={{.dir_infra}} output -json | jq --raw-output ".keyvault_name.value | select (.!=null)"
+          )
+          --query value -o tsv
+    cmds:
       - task: lagoon:ensure:environment-variable
         vars:
           VARIABLE_SCOPE: "RUNTIME"
           VARIABLE_NAME: "AZURE_MAIL_CONNECTION_STRING"
           VARIABLE_VALUE: "{{.ACS_CONNECTION_STRING}}"
           PROJECT_NAME: "{{.PROJECT_NAME}}"
-      preconditions:
-      - sh: "[ ! -z \"{{.PROJECT_NAME}}\" ]"
+    preconditions:
+      - sh: '[ ! -z "{{.PROJECT_NAME}}" ]'
         msg: "Missing PROJECT_NAME"
 
-    #These are secrets which are identical across prjects, so ie. Copenhagen has the same value as Ballerup
-    lagoon:projects:env-variables:ensure:identical-across-projects:
-      cmds:
-        - |
-          ./task/scripts/create-go-and-bnf-consumer-and-secrets.mjs
+  #These are secrets which are identical across prjects, so ie. Copenhagen has the same value as Ballerup
+  lagoon:projects:env-variables:ensure:identical-across-projects:
+    cmds:
+      - |
+        ./task/scripts/create-go-and-bnf-consumer-and-secrets.mjs
 
-    # These secrets are unique per secret as well as per project
-    lagoon:projects:env-variables:ensure:unique-per-site:
-      cmds:
-        - |
-          ./task/scripts/create-update-node-env-variables.mjs
+  # These secrets are unique per secret as well as per project
+  lagoon:projects:env-variables:ensure:unique-per-site:
+    cmds:
+      - |
+        ./task/scripts/create-update-node-env-variables.mjs
 
-    lagoon:project:ensure:consumer-secrets-n-passwords:
-      cmds:
+  lagoon:project:ensure:consumer-secrets-n-passwords:
+    cmds:
       - task: lagoon:ensure:environment-variable
         vars:
           VARIABLE_NAME: "BNF_GRAPHQL_CONSUMER_SECRET"
@@ -688,73 +685,73 @@ tasks:
           VARIABLE_SCOPE: "GLOBAL"
           # TODO: The variable values should be generated and stored in a secret manager.
           VARIABLE_VALUE: "foo"
-      preconditions:
-      - sh: "[ ! -z \"{{.PROJECT_NAME}}\" ]"
+    preconditions:
+      - sh: '[ ! -z "{{.PROJECT_NAME}}" ]'
         msg: "Missing PROJECT_NAME"
 
-    lagoon:projects:ensure:next-env-variables-across-projects:
-      cmds:
-        - task: lagoon:ensure:environment-variable
-          vars:
-            VARIABLE_NAME: "DRUPAL_REVALIDATE_SECRET"
-            PROJECT_NAME: "{{.PROJECT_NAME}}"
-            VARIABLE_SCOPE: "GLOBAL"
-            # TODO: The variable values should be generated and stored in a secret manager.
-            VARIABLE_VALUE: "foo"
-        - task: lagoon:ensure:environment-variable
-          vars:
-            VARIABLE_NAME: "GO_SESSION_SECRET"
-            PROJECT_NAME: "{{.PROJECT_NAME}}"
-            VARIABLE_SCOPE: "GLOBAL"
-            # TODO: The variable values should be generated and stored in a secret manager.
-            VARIABLE_VALUE: "foo"
+  lagoon:projects:ensure:next-env-variables-across-projects:
+    cmds:
+      - task: lagoon:ensure:environment-variable
+        vars:
+          VARIABLE_NAME: "DRUPAL_REVALIDATE_SECRET"
+          PROJECT_NAME: "{{.PROJECT_NAME}}"
+          VARIABLE_SCOPE: "GLOBAL"
+          # TODO: The variable values should be generated and stored in a secret manager.
+          VARIABLE_VALUE: "foo"
+      - task: lagoon:ensure:environment-variable
+        vars:
+          VARIABLE_NAME: "GO_SESSION_SECRET"
+          PROJECT_NAME: "{{.PROJECT_NAME}}"
+          VARIABLE_SCOPE: "GLOBAL"
+          # TODO: The variable values should be generated and stored in a secret manager.
+          VARIABLE_VALUE: "foo"
 
-    lagoon:add:cluster:
-      deps: [cluster:auth]
-      desc: Add a Kubernetes cluster (Lagoon Remote) to the Lagoon Core.
-      summary: |
-       You must provide a valid bearer token for a lagoon user via the USER_TOKEN environment variable.
-       It can be found under the token property in $HOME/.lagoon.yml after you've done a lagoon login
+  lagoon:add:cluster:
+    deps: [cluster:auth]
+    desc: Add a Kubernetes cluster (Lagoon Remote) to the Lagoon Core.
+    summary: |
+      You must provide a valid bearer token for a lagoon user via the USER_TOKEN environment variable.
+      It can be found under the token property in $HOME/.lagoon.yml after you've done a lagoon login
 
-      vars:
-        # Collect the values we'll need for a graphql invocation.
-        lagoon_hostname_api:
-          sh: terraform -chdir={{.dir_infra}} output -json | jq --raw-output ".lagoon_hostname_api.value | select (.!=null)"
-        cluster_api_url:
-          sh: terraform -chdir={{.dir_infra}} output -json | jq --raw-output ".cluster_api_url.value | select (.!=null)"
-        lagoon_domain_base:
-          sh: terraform -chdir={{.dir_infra}} output -json | jq --raw-output ".lagoon_domain_base.value | select (.!=null)"
-        builddeploy_token:
-          sh: "kubectl -n lagoon describe secret $(kubectl -n lagoon get secret | grep kubernetes-build-deploy | awk '{print $1}') | grep token: | awk '{print $2}'"
+    vars:
+      # Collect the values we'll need for a graphql invocation.
+      lagoon_hostname_api:
+        sh: terraform -chdir={{.dir_infra}} output -json | jq --raw-output ".lagoon_hostname_api.value | select (.!=null)"
+      cluster_api_url:
+        sh: terraform -chdir={{.dir_infra}} output -json | jq --raw-output ".cluster_api_url.value | select (.!=null)"
+      lagoon_domain_base:
+        sh: terraform -chdir={{.dir_infra}} output -json | jq --raw-output ".lagoon_domain_base.value | select (.!=null)"
+      builddeploy_token:
+        sh: "kubectl -n lagoon describe secret $(kubectl -n lagoon get secret | grep kubernetes-build-deploy | awk '{print $1}') | grep token: | awk '{print $2}'"
 
-        # Prepare the mutation.
-        mutation: |
-          {
-          "query": "mutation addKubernetes {
-              addKubernetes(input:
-                {
-                  id: 1,
-                  name: \"lagoon\",
-                  consoleUrl: \"{{.cluster_api_url}}\",
-                  token: \"{{.builddeploy_token}}\",
-                  routerPattern: \"${environment}.${project}.{{.lagoon_domain_base}}\"
-                }
-              )
-              {id}
-            }"
-          }
+      # Prepare the mutation.
+      mutation: |
+        {
+        "query": "mutation addKubernetes {
+            addKubernetes(input:
+              {
+                id: 1,
+                name: \"lagoon\",
+                consoleUrl: \"{{.cluster_api_url}}\",
+                token: \"{{.builddeploy_token}}\",
+                routerPattern: \"${environment}.${project}.{{.lagoon_domain_base}}\"
+              }
+            )
+            {id}
+          }"
+        }
 
-      # Send the mutation request against graphql, using the bearer token passed
-      # by the user.
-      cmds:
-        - |
-          curl \
-            -H 'Content-Type: application/json' \
-            -H "Authorization: Bearer {{.USER_TOKEN}}" \
-            -d '{{.mutation | replace "\n" ""}}' \
-            https://{{.lagoon_hostname_api}}/graphql
+    # Send the mutation request against graphql, using the bearer token passed
+    # by the user.
+    cmds:
+      - |
+        curl \
+          -H 'Content-Type: application/json' \
+          -H "Authorization: Bearer {{.USER_TOKEN}}" \
+          -d '{{.mutation | replace "\n" ""}}' \
+          https://{{.lagoon_hostname_api}}/graphql
 
-      preconditions:
+    preconditions:
       - sh: "[ ! -z {{.lagoon_hostname_api}} ]"
         msg: "Could not determine the api hostname for Lagoon from Kubernetes"
       - sh: "[ ! -z {{.cluster_api_url}} ]"
@@ -766,39 +763,39 @@ tasks:
       - sh: "[ ! -z {{.USER_TOKEN}} ]"
         msg: "Missing USER_TOKEN"
 
-    lagoon:project:set:
-      desc: Set a project state in lagoon using a command, either "add" or "update"
-      deps: [lagoon:cli:config]
-      vars:
-        BRANCHES: '{{ .BRANCHES | default "main" }}'
-      cmds:
-        # - We assume that there will only be a single remote pr core, so we
-        #   hardcode --openshift (aka remote) to 1.
-        # - We deploy the relevant (default: main) branches
-        # - We configure the main branch to be the production environment,
-        #   This primarily means that develop will auto-idle
-        # - We bump the max allowed dev environments (default is 5)
-        - |
-            lagoon {{.COMMAND}} project \
-            --git-url {{.GIT_URL}} \
-            --deploytarget 1 \
-            --production-environment {{.production_branch}} \
-            --development-environments-limit 25 \
-            --branches "^({{ .BRANCHES }})$" \
-            --project {{.PROJECT_NAME}}
-        - task: lagoon:project:ensure:github-registry-credentials
-          vars:
-            PROJECT_NAME: "{{.PROJECT_NAME}}"
-        - task: lagoon:project:ensure:azure-mail-connection-string
-          vars:
-            PROJECT_NAME: "{{.PROJECT_NAME}}"
-        - task: lagoon:project:ensure:consumer-secrets-n-passwords
-          vars:
-            PROJECT_NAME: "{{.PROJECT_NAME}}"
-        - task: lagoon:projects:ensure:next-env-variables-across-projects
-          vars:
-            PROJECT_NAME: "{{.PROJECT_NAME}}"
-      preconditions:
+  lagoon:project:set:
+    desc: Set a project state in lagoon using a command, either "add" or "update"
+    deps: [lagoon:cli:config]
+    vars:
+      BRANCHES: '{{ .BRANCHES | default "main" }}'
+    cmds:
+      # - We assume that there will only be a single remote pr core, so we
+      #   hardcode --openshift (aka remote) to 1.
+      # - We deploy the relevant (default: main) branches
+      # - We configure the main branch to be the production environment,
+      #   This primarily means that develop will auto-idle
+      # - We bump the max allowed dev environments (default is 5)
+      - |
+        lagoon {{.COMMAND}} project \
+        --git-url {{.GIT_URL}} \
+        --deploytarget 1 \
+        --production-environment {{.production_branch}} \
+        --development-environments-limit 25 \
+        --branches "^({{ .BRANCHES }})$" \
+        --project {{.PROJECT_NAME}}
+      - task: lagoon:project:ensure:github-registry-credentials
+        vars:
+          PROJECT_NAME: "{{.PROJECT_NAME}}"
+      - task: lagoon:project:ensure:azure-mail-connection-string
+        vars:
+          PROJECT_NAME: "{{.PROJECT_NAME}}"
+      - task: lagoon:project:ensure:consumer-secrets-n-passwords
+        vars:
+          PROJECT_NAME: "{{.PROJECT_NAME}}"
+      - task: lagoon:projects:ensure:next-env-variables-across-projects
+        vars:
+          PROJECT_NAME: "{{.PROJECT_NAME}}"
+    preconditions:
       - sh: "[ ! -z {{.GIT_URL}} ]"
         msg: "Env variable GIT_URL is not set or empty."
       - sh: "[ ! -z {{.PROJECT_NAME}} ]"
@@ -806,434 +803,432 @@ tasks:
       - sh: "[ {{.COMMAND}} = 'add' ] || [ {{.COMMAND}} = 'update' ]"
         msg: "Variable COMMAND must be set to 'add' or 'update'"
 
-    lagoon:project:add:
-      desc: Add a project to a lagoon remote
-      cmds:
-        - task: lagoon:project:set
-          vars:
-            COMMAND: "add"
-            GIT_URL: "{{.GIT_URL}}"
-            PROJECT_NAME: "{{.PROJECT_NAME}}"
-            BRANCHES: "{{.BRANCHES}}"
+  lagoon:project:add:
+    desc: Add a project to a lagoon remote
+    cmds:
+      - task: lagoon:project:set
+        vars:
+          COMMAND: "add"
+          GIT_URL: "{{.GIT_URL}}"
+          PROJECT_NAME: "{{.PROJECT_NAME}}"
+          BRANCHES: "{{.BRANCHES}}"
 
-    lagoon:project:deploykey:
-      desc: Gets the deployment key for a project
-      deps: [lagoon:cli:config]
-      cmds:
-        - lagoon get project-key --project {{.PROJECT_NAME}}
-      preconditions:
+  lagoon:project:deploykey:
+    desc: Gets the deployment key for a project
+    deps: [lagoon:cli:config]
+    cmds:
+      - lagoon get project-key --project {{.PROJECT_NAME}}
+    preconditions:
       - sh: "[ ! -z {{.PROJECT_NAME}} ]"
         msg: "Env variable PROJECT_NAME is not set or empty."
 
-    lagoon:project:update:
-      desc: Add a project to a lagoon remote
-      cmds:
-        - task: lagoon:project:set
-          vars:
-            COMMAND: "update"
-            GIT_URL: "{{.GIT_URL}}"
-            PROJECT_NAME: "{{.PROJECT_NAME}}"
-            BRANCHES: "{{.BRANCHES}}"
+  lagoon:project:update:
+    desc: Add a project to a lagoon remote
+    cmds:
+      - task: lagoon:project:set
+        vars:
+          COMMAND: "update"
+          GIT_URL: "{{.GIT_URL}}"
+          PROJECT_NAME: "{{.PROJECT_NAME}}"
+          BRANCHES: "{{.BRANCHES}}"
 
-    support:provision:bulk-storage:
-      deps: [cluster:auth]
-      summary: Set the DIFF environment variable to any value to switch to diffing instead of an actual upgrade.
-      desc: Install and configure a bulk storage class
-      env:
-        STORAGE_ACCOUNT_NAME:
-          sh: terraform -chdir={{.dir_infra}} output -json | jq --raw-output ".storage_account_name.value | select (.!=null)"
-        STORAGE_ACCOUNT_KEY:
-          sh: az keyvault secret show --subscription "{{.AZURE_SUBSCRIPTION_ID}}" --name $(terraform -chdir={{.dir_infra}} output -json | jq --raw-output ".storage_primary_access_key_name.value | select (.!=null)") --vault-name $(terraform -chdir={{.dir_infra}} output -json | jq --raw-output ".keyvault_name.value | select (.!=null)") --query value -o tsv
-        RESOURCE_GROUP:
-          sh: terraform -chdir={{.dir_infra}} output -json | jq --raw-output ".resourcegroup_name.value | select (.!=null)"
-      cmds:
-        - task/scripts/provision-bulk-storage.sh
+  support:provision:bulk-storage:
+    deps: [cluster:auth]
+    summary: Set the DIFF environment variable to any value to switch to diffing instead of an actual upgrade.
+    desc: Install and configure a bulk storage class
+    env:
+      STORAGE_ACCOUNT_NAME:
+        sh: terraform -chdir={{.dir_infra}} output -json | jq --raw-output ".storage_account_name.value | select (.!=null)"
+      STORAGE_ACCOUNT_KEY:
+        sh: az keyvault secret show --subscription "{{.AZURE_SUBSCRIPTION_ID}}" --name $(terraform -chdir={{.dir_infra}} output -json | jq --raw-output ".storage_primary_access_key_name.value | select (.!=null)") --vault-name $(terraform -chdir={{.dir_infra}} output -json | jq --raw-output ".keyvault_name.value | select (.!=null)") --query value -o tsv
+      RESOURCE_GROUP:
+        sh: terraform -chdir={{.dir_infra}} output -json | jq --raw-output ".resourcegroup_name.value | select (.!=null)"
+    cmds:
+      - task/scripts/provision-bulk-storage.sh
 
-    ops:get-versions:
-      deps: [cluster:auth]
-      summary: Extract the current and latest version for the things we've installed into the cluster.
-      desc: Extract the current and latest versions
-      env:
-        GET_AVAILABLE_VERSION: 1
-      silent: true
-      cmds:
-        # TODO - get Lagoon version
-        # A bit silly we have to invoke Task this way, but it is the only way
-        # to pass in an environment variable to another task.
-        - echo "Running support:provision in get version mode to retrive versions"
-        - task --silent support:provision
+  ops:get-versions:
+    deps: [cluster:auth]
+    summary: Extract the current and latest version for the things we've installed into the cluster.
+    desc: Extract the current and latest versions
+    env:
+      GET_AVAILABLE_VERSION: 1
+    silent: true
+    cmds:
+      # TODO - get Lagoon version
+      # A bit silly we have to invoke Task this way, but it is the only way
+      # to pass in an environment variable to another task.
+      - echo "Running support:provision in get version mode to retrive versions"
+      - task --silent support:provision
 
-    support:provision:
-      deps: [cluster:auth]
-      desc: Install and configure the support tools Lagoon and DPL Platform builds on
-      summary: Set the DIFF environment variable to any value to switch to diffing instead of an actual upgrade.
-      dir: "{{.dir_configuration}}"
-      vars:
-        DIFF_COMMAND: '{{empty .DIFF | ternary "" "diff"}}'
-      cmds:
-        - task: support:provision:bulk-storage
-        - task: support:provision:k8up
-        - task: support:provision:minio
+  support:provision:
+    deps: [cluster:auth]
+    desc: Install and configure the support tools Lagoon and DPL Platform builds on
+    summary: Set the DIFF environment variable to any value to switch to diffing instead of an actual upgrade.
+    dir: "{{.dir_configuration}}"
+    vars:
+      DIFF_COMMAND: '{{empty .DIFF | ternary "" "diff"}}'
+    cmds:
+      - task: support:provision:bulk-storage
+      - task: support:provision:k8up
+      - task: support:provision:minio
 
-    site:sync:
-      deps: [lagoon:cli:config]
-      desc: Runs the a dpladm sync of a site which eg. can be used to deploy a new release
-      summary: Run the task without additional variables to see required arguments
-      silent: true
-      env:
-        SITES_CONFIG: "{{.dir_env}}/sites.yaml"
-        SITE: "{{.SITE}}"
-        GITHUB_TOKEN:
-          sh: az keyvault secret show
-              --subscription "{{.AZURE_SUBSCRIPTION_ID}}"
-              --name github-infra-admin-pat
-              --vault-name
-                $(
-                  terraform -chdir={{.dir_infra}} output -json | jq --raw-output ".keyvault_name.value | select (.!=null)"
-                )
-              --query value -o tsv
-      cmds:
-        - |
-          if [ -z "{{.SKIP}}" ]; then
-            ./dpladm/bin/sync-site.sh
+  site:sync:
+    deps: [lagoon:cli:config]
+    desc: Runs the a dpladm sync of a site which eg. can be used to deploy a new release
+    summary: Run the task without additional variables to see required arguments
+    silent: true
+    env:
+      SITES_CONFIG: "{{.dir_env}}/sites.yaml"
+      SITE: "{{.SITE}}"
+      GITHUB_TOKEN:
+        sh: az keyvault secret show
+          --subscription "{{.AZURE_SUBSCRIPTION_ID}}"
+          --name github-infra-admin-pat
+          --vault-name
+          $(
+          terraform -chdir={{.dir_infra}} output -json | jq --raw-output ".keyvault_name.value | select (.!=null)"
+          )
+          --query value -o tsv
+    cmds:
+      - |
+        if [ -z "{{.SKIP}}" ]; then
+          ./dpladm/bin/sync-site.sh
+        else
+          echo "Skipped repo sync."
+        fi
+    preconditions:
+      - *require_site
+
+  sites:list-keys:
+    desc: List keys for sites in sites.yaml config
+    dir: "{{.dir_env}}"
+    cmds:
+      - cat sites.yaml | yq '.sites | keys | .[]'
+
+  sites:check:
+    desc: Simply checks that all sites defined in sites.yaml are running and responding
+    dir: "{{.dir_env}}"
+    vars:
+      sites:
+        sh: cat {{.dir_env}}/sites.yaml | yq '.sites | keys | .[]'
+    cmds:
+      - touch statusnow.txt
+      - for: { var: sites }
+        cmd: |
+          if [[ "$(curl -I https://varnish.main.{{.ITEM}}.dplplat01.dpl.reload.dk | head -1)" == "HTTP/2 200"* ]]; then
+            echo "{{.ITEM}}: OK" >> statusnow.txt;
           else
-            echo "Skipped repo sync."
+            echo "{{.ITEM}}: ERROR! Not up." >> statusnow.txt;
           fi
-      preconditions:
+      - cat statusnow.txt
+      - rm statusnow.txt
+
+  sites:sync:
+    desc: Performs a full synchronization from sites.yaml to running state
+    dir: "{{.dir_env}}"
+    vars:
+      sites:
+        sh: cat {{.dir_env}}/sites.yaml | yq '.sites | keys | .[]'
+      START_FROM_SITE: "{{.START_FROM_SITE}}"
+    cmds:
+      - task: env_repos:provision
+        vars:
+          OPTIONS: "{{.INITIAL_TERRAFORM_OPTIONS}}"
+          SKIP: "{{.SKIP_PROVISION}}"
+      - for: { var: sites }
+        task: site:full-sync
+        vars:
+          SITE: "{{.ITEM}}"
+          SKIP_ENSURE_PROJECT: '{{.SKIP_ENSURE_PROJECT | default "TRUE"}}'
+          SKIP_CAPTURE_DEPLOY_KEY: '{{.SKIP_CAPTURE_DEPLOY_KEY | default "TRUE"}}'
+          SKIP_PROVISION: '{{.SKIP_PROVISION | default "TRUE"}}'
+          SKIP_FIRST_DEPLOYMENT: '{{.SKIP_FIRST_DEPLOYMENT | default "TRUE"}}'
+          SKIP_REPO_SYNC: "{{.SKIP_REPO_SYNC}}"
+          SKIP:
+            sh: |
+              if [ -z "{{.START_FROM_SITE}}" ]; then
+                exit 0
+              fi
+              pos_startfrom=$(echo "{{.sites}}" | awk -v item="{{.START_FROM_SITE}}" '{if($0 == item) print NR}')
+              pos_currentsite=$(echo "{{.sites}}" | awk -v item="{{.ITEM}}" '{if($0 == item) print NR}')
+
+              if [ -z "$pos_startfrom" ] || [ -z "$pos_currentsite" ]; then
+                exit 0
+              fi
+
+              if [ "$pos_startfrom" -le "$pos_currentsite" ]; then
+                exit 0
+              else
+                echo -n "true"
+                exit 0
+              fi
+
+  site:full-sync:
+    desc: Performs a full syncrhonization from sites.yaml for a single site to running state
+    dir: "{{.dir_env}}"
+    cmds:
+      - task: site:lagoon:project:ensure
+        vars:
+          SITE: "{{.SITE}}"
+          SKIP: "{{.SKIP_ENSURE_PROJECT}}{{.SKIP}}"
+      - task: site:lagoon:project:capture-deploy-key
+        vars:
+          SITE: "{{.SITE}}"
+          SKIP: "{{.SKIP_CAPTURE_DEPLOY_KEY}}{{.SKIP}}"
+      - task: env_repos:provision
+        vars:
+          OPTIONS: -refresh=false
+          SKIP: "{{.SKIP_PROVISION}}{{.SKIP}}"
+      - task: site:lagoon:ensure-first-deployment
+        vars:
+          SITE: "{{.SITE}}"
+          SKIP: "{{.SKIP_FIRST_DEPLOYMENT}}{{.SKIP}}"
+      - task: site:sync
+        vars:
+          SITE: "{{.SITE}}"
+          SKIP: "{{.SKIP_REPO_SYNC}}{{.SKIP}}"
+    preconditions:
       - *require_site
 
-
-
-    sites:list-keys:
-      desc: List keys for sites in sites.yaml config
-      dir: "{{.dir_env}}"
-      cmds:
-        - cat sites.yaml | yq '.sites | keys | .[]'
-
-    sites:check:
-      desc: Simply checks that all sites defined in sites.yaml are running and responding
-      dir: "{{.dir_env}}"
-      vars:
-        sites:
-          sh: cat {{.dir_env}}/sites.yaml | yq '.sites | keys | .[]'
-      cmds:
-        - touch statusnow.txt
-        - for: { var: sites }
-          cmd: |
-            if [[ "$(curl -I https://varnish.main.{{.ITEM}}.dplplat01.dpl.reload.dk | head -1)" == "HTTP/2 200"* ]]; then
-              echo "{{.ITEM}}: OK" >> statusnow.txt;
-            else
-              echo "{{.ITEM}}: ERROR! Not up." >> statusnow.txt;
-            fi
-        - cat statusnow.txt
-        - rm statusnow.txt
-
-    sites:sync:
-      desc: Performs a full synchronization from sites.yaml to running state
-      dir: "{{.dir_env}}"
-      vars:
-        sites:
-          sh: cat {{.dir_env}}/sites.yaml | yq '.sites | keys | .[]'
-        START_FROM_SITE: "{{.START_FROM_SITE}}"
-      cmds:
-        - task: env_repos:provision
-          vars:
-            OPTIONS: "{{.INITIAL_TERRAFORM_OPTIONS}}"
-            SKIP: "{{.SKIP_PROVISION}}"
-        - for: { var: sites }
-          task: site:full-sync
-          vars:
-            SITE: "{{.ITEM}}"
-            SKIP_ENSURE_PROJECT: "{{.SKIP_ENSURE_PROJECT | default \"TRUE\"}}"
-            SKIP_CAPTURE_DEPLOY_KEY: "{{.SKIP_CAPTURE_DEPLOY_KEY | default \"TRUE\"}}"
-            SKIP_PROVISION: "{{.SKIP_PROVISION | default \"TRUE\"}}"
-            SKIP_FIRST_DEPLOYMENT: "{{.SKIP_FIRST_DEPLOYMENT | default \"TRUE\"}}"
-            SKIP_REPO_SYNC: "{{.SKIP_REPO_SYNC}}"
-            SKIP:
-              sh: |
-                if [ -z "{{.START_FROM_SITE}}" ]; then
-                  exit 0
-                fi
-                pos_startfrom=$(echo "{{.sites}}" | awk -v item="{{.START_FROM_SITE}}" '{if($0 == item) print NR}')
-                pos_currentsite=$(echo "{{.sites}}" | awk -v item="{{.ITEM}}" '{if($0 == item) print NR}')
-
-                if [ -z "$pos_startfrom" ] || [ -z "$pos_currentsite" ]; then
-                  exit 0
-                fi
-
-                if [ "$pos_startfrom" -le "$pos_currentsite" ]; then
-                  exit 0
-                else
-                  echo -n "true"
-                  exit 0
-                fi
-
-    site:full-sync:
-      desc: Performs a full syncrhonization from sites.yaml for a single site to running state
-      dir: "{{.dir_env}}"
-      cmds:
-        - task: site:lagoon:project:ensure
-          vars:
-            SITE: "{{.SITE}}"
-            SKIP: "{{.SKIP_ENSURE_PROJECT}}{{.SKIP}}"
-        - task: site:lagoon:project:capture-deploy-key
-          vars:
-            SITE: "{{.SITE}}"
-            SKIP: "{{.SKIP_CAPTURE_DEPLOY_KEY}}{{.SKIP}}"
-        - task: env_repos:provision
-          vars:
-            OPTIONS: -refresh=false
-            SKIP: "{{.SKIP_PROVISION}}{{.SKIP}}"
-        - task: site:lagoon:ensure-first-deployment
-          vars:
-            SITE: "{{.SITE}}"
-            SKIP: "{{.SKIP_FIRST_DEPLOYMENT}}{{.SKIP}}"
-        - task: site:sync
-          vars:
-            SITE: "{{.SITE}}"
-            SKIP: "{{.SKIP_REPO_SYNC}}{{.SKIP}}"
-      preconditions:
-      - *require_site
-
-    site:lagoon:project:ensure:
-      desc: |
-        Ensures a lagoon project is set up and configured correctly for a
-        given site as specified by sites.yaml
-      deps: [lagoon:cli:config]
-      silent: true
-      vars:
-        GIT_URL: "git@github.com:danishpubliclibraries/env-{{.SITE}}.git"
-        SITE_PLAN:
-          sh: cat {{.dir_env}}/sites.yaml | yq ".sites[\"{{.SITE}}\"].plan"
-        BRANCHES:
-          sh: if [ "{{.SITE_PLAN}}" = "{{.webmaster_plan_name}}" ]; then echo "{{.production_branch}}|{{.moduletest_branch}}"; else echo "{{.production_branch}}"; fi
-      cmds:
-        - |
-          if [ -z "{{.SKIP}}" ]; then
-            if [ "$(lagoon get project --project "{{.SITE}}" --output-json | jq '.data[0].id' --raw-output)" = "0" ]; then
-              PROJECT_NAME="{{.SITE}}" GIT_URL="{{.GIT_URL}}" BRANCHES="{{.BRANCHES}}" task lagoon:project:add;
-            else
-              PROJECT_NAME="{{.SITE}}" GIT_URL="{{.GIT_URL}}" BRANCHES="{{.BRANCHES}}" task lagoon:project:update;
-            fi
+  site:lagoon:project:ensure:
+    desc: |
+      Ensures a lagoon project is set up and configured correctly for a
+      given site as specified by sites.yaml
+    deps: [lagoon:cli:config]
+    silent: true
+    vars:
+      GIT_URL: "git@github.com:danishpubliclibraries/env-{{.SITE}}.git"
+      SITE_PLAN:
+        sh: cat {{.dir_env}}/sites.yaml | yq ".sites[\"{{.SITE}}\"].plan"
+      BRANCHES:
+        sh: if [ "{{.SITE_PLAN}}" = "{{.webmaster_plan_name}}" ]; then echo "{{.production_branch}}|{{.moduletest_branch}}"; else echo "{{.production_branch}}"; fi
+    cmds:
+      - |
+        if [ -z "{{.SKIP}}" ]; then
+          if [ "$(lagoon get project --project "{{.SITE}}" --output-json | jq '.data[0].id' --raw-output)" = "0" ]; then
+            PROJECT_NAME="{{.SITE}}" GIT_URL="{{.GIT_URL}}" BRANCHES="{{.BRANCHES}}" task lagoon:project:add;
           else
-            echo "Skipped project ensure."
+            PROJECT_NAME="{{.SITE}}" GIT_URL="{{.GIT_URL}}" BRANCHES="{{.BRANCHES}}" task lagoon:project:update;
           fi
-      preconditions:
+        else
+          echo "Skipped project ensure."
+        fi
+    preconditions:
       - *require_site
 
-    site:backup:restore:db:
-      desc: Restore the database backup for a site/environment to the same or another site/environment.
-      deps: [lagoon:cli:config]
-      vars:
-        PROJECT: "{{.PROJECT}}"
-        PROJECT_ENV: '{{.PROJECT_ENV | default "main" }}'
-        SOURCE_PROJECT: "{{.SOURCE_PROJECT | default .PROJECT }}"
-        SOURCE_ENV: "{{.SOURCE_ENV | default .PROJECT_ENV }}"
-        TARGET_PROJECT: "{{.TARGET_PROJECT | default .SOURCE_PROJECT }}"
-        TARGET_ENV: "{{.TARGET_ENV | default .PROJECT_ENV }}"
-        TARGET_NAMESPACE: "{{.TARGET_PROJECT}}-{{.TARGET_ENV}}"
-        LOCAL_BACKUP_DESTINATION: "/tmp/{{.SOURCE_PROJECT}}-mariadb-backup.tar.gz"
-        REMOTE_BACKUP_DESTINATION: "/tmp/{{.SOURCE_PROJECT}}-{{.SOURCE_ENV}}-mariadb-prebackuppod.mariadb.sql"
-        BACKUP_ENTRY: '{{.BACKUP_ENTRY | default "1" }}'
-      prompt:
-        - Restore {{.BACKUP_ENTRY}}. most recent database backup from {{.SOURCE_PROJECT}}-{{.SOURCE_ENV}} to {{.TARGET_PROJECT}}-{{.TARGET_ENV}}
-      cmds:
-        - LAGOON_PROJECT={{.SOURCE_PROJECT}} BACKUP_TYPE=mariadb BACKUP_ENTRY={{.BACKUP_ENTRY}} BACKUP_DESTINATION={{.LOCAL_BACKUP_DESTINATION}} ./task/scripts/lagoon-get-backup.sh
-        - kubectl cp -n {{.TARGET_NAMESPACE}} $(tar -xvzf {{.LOCAL_BACKUP_DESTINATION}}) $(kubectl -n {{.TARGET_NAMESPACE}} get pod -l app.kubernetes.io/instance=cli -o jsonpath="{.items[0].metadata.name}"):{{.REMOTE_BACKUP_DESTINATION}}
-        - kubectl exec -n {{.TARGET_NAMESPACE}} deployment/cli -- bash -c "echo Verifying file && test -s {{.REMOTE_BACKUP_DESTINATION}} || (echo {{.REMOTE_BACKUP_DESTINATION}} is missing or empty && exit 1) && echo Dropping database && drush sql-drop -y && echo Importing backup && drush sql:query --file={{.REMOTE_BACKUP_DESTINATION}} && echo Deleting backup && rm {{.REMOTE_BACKUP_DESTINATION}}"
-        - lagoon deploy latest --project {{.TARGET_PROJECT}} --environment {{.TARGET_ENV}} --force
+  site:backup:restore:db:
+    desc: Restore the database backup for a site/environment to the same or another site/environment.
+    deps: [lagoon:cli:config]
+    vars:
+      PROJECT: "{{.PROJECT}}"
+      PROJECT_ENV: '{{.PROJECT_ENV | default "main" }}'
+      SOURCE_PROJECT: "{{.SOURCE_PROJECT | default .PROJECT }}"
+      SOURCE_ENV: "{{.SOURCE_ENV | default .PROJECT_ENV }}"
+      TARGET_PROJECT: "{{.TARGET_PROJECT | default .SOURCE_PROJECT }}"
+      TARGET_ENV: "{{.TARGET_ENV | default .PROJECT_ENV }}"
+      TARGET_NAMESPACE: "{{.TARGET_PROJECT}}-{{.TARGET_ENV}}"
+      LOCAL_BACKUP_DESTINATION: "/tmp/{{.SOURCE_PROJECT}}-mariadb-backup.tar.gz"
+      REMOTE_BACKUP_DESTINATION: "/tmp/{{.SOURCE_PROJECT}}-{{.SOURCE_ENV}}-mariadb-prebackuppod.mariadb.sql"
+      BACKUP_ENTRY: '{{.BACKUP_ENTRY | default "1" }}'
+    prompt:
+      - Restore {{.BACKUP_ENTRY}}. most recent database backup from {{.SOURCE_PROJECT}}-{{.SOURCE_ENV}} to {{.TARGET_PROJECT}}-{{.TARGET_ENV}}
+    cmds:
+      - LAGOON_PROJECT={{.SOURCE_PROJECT}} BACKUP_TYPE=mariadb BACKUP_ENTRY={{.BACKUP_ENTRY}} BACKUP_DESTINATION={{.LOCAL_BACKUP_DESTINATION}} ./task/scripts/lagoon-get-backup.sh
+      - kubectl cp -n {{.TARGET_NAMESPACE}} $(tar -xvzf {{.LOCAL_BACKUP_DESTINATION}}) $(kubectl -n {{.TARGET_NAMESPACE}} get pod -l app.kubernetes.io/instance=cli -o jsonpath="{.items[0].metadata.name}"):{{.REMOTE_BACKUP_DESTINATION}}
+      - kubectl exec -n {{.TARGET_NAMESPACE}} deployment/cli -- bash -c "echo Verifying file && test -s {{.REMOTE_BACKUP_DESTINATION}} || (echo {{.REMOTE_BACKUP_DESTINATION}} is missing or empty && exit 1) && echo Dropping database && drush sql-drop -y && echo Importing backup && drush sql:query --file={{.REMOTE_BACKUP_DESTINATION}} && echo Deleting backup && rm {{.REMOTE_BACKUP_DESTINATION}}"
+      - lagoon deploy latest --project {{.TARGET_PROJECT}} --environment {{.TARGET_ENV}} --force
 
-    site:environment:sync:
-      desc: |
-        Synchonizes all file and database tables from environment
-        to another on make on environment a complete copy of the source.
-      deps: [lagoon:cli:config]
-      dir: "{{.dir_env}}"
-      vars:
-        SOURCE_PROJECT: "{{.SOURCE_PROJECT}}"
-        SOURCE_ENV: "{{.SOURCE_ENV}}"
-        TARGET_PROJECT: "{{.TARGET_PROJECT}}"
-        TARGET_ENV: "{{.TARGET_ENV}}"
-      cmds:
-        - lagoon ssh --project {{.TARGET_PROJECT}} --environment {{.TARGET_ENV}} -C "drush -y rsync @lagoon.{{.SOURCE_PROJECT}}-{{.SOURCE_ENV}}:%files @self:%files -- --omit-dir-times --no-perms --no-group --no-owner --no-times --chmod=ugo=rwX --delete --exclude=/styles/* --delete-excluded"
-        - lagoon ssh --project {{.TARGET_PROJECT}} --environment {{.TARGET_ENV}} -C "drush sql-drop -y; drush -y sql-sync @lagoon.{{.SOURCE_PROJECT}}-{{.SOURCE_ENV}} @self --create-db"
-        - lagoon deploy latest --project {{.TARGET_PROJECT}} --environment {{.TARGET_ENV}} --force
+  site:environment:sync:
+    desc: |
+      Synchonizes all file and database tables from environment
+      to another on make on environment a complete copy of the source.
+    deps: [lagoon:cli:config]
+    dir: "{{.dir_env}}"
+    vars:
+      SOURCE_PROJECT: "{{.SOURCE_PROJECT}}"
+      SOURCE_ENV: "{{.SOURCE_ENV}}"
+      TARGET_PROJECT: "{{.TARGET_PROJECT}}"
+      TARGET_ENV: "{{.TARGET_ENV}}"
+    cmds:
+      - lagoon ssh --project {{.TARGET_PROJECT}} --environment {{.TARGET_ENV}} -C "drush -y rsync @lagoon.{{.SOURCE_PROJECT}}-{{.SOURCE_ENV}}:%files @self:%files -- --omit-dir-times --no-perms --no-group --no-owner --no-times --chmod=ugo=rwX --delete --exclude=/styles/* --delete-excluded"
+      - lagoon ssh --project {{.TARGET_PROJECT}} --environment {{.TARGET_ENV}} -C "drush sql-drop -y; drush -y sql-sync @lagoon.{{.SOURCE_PROJECT}}-{{.SOURCE_ENV}} @self --create-db"
+      - lagoon deploy latest --project {{.TARGET_PROJECT}} --environment {{.TARGET_ENV}} --force
 
-    sites:webmaster:reset-moduletest:
-      desc: Reset webmaster moduletest
-      deps: [lagoon:cli:config]
-      vars:
-        PROJECT: "{{.PROJECT}}"
-      cmds:
-        - task: site:environment:sync
-          vars:
-            TARGET_PROJECT: "{{.PROJECT}}"
-            TARGET_ENV: "moduletest"
-            SOURCE_PROJECT: "{{.PROJECT}}"
-            SOURCE_ENV: "main"
+  sites:webmaster:reset-moduletest:
+    desc: Reset webmaster moduletest
+    deps: [lagoon:cli:config]
+    vars:
+      PROJECT: "{{.PROJECT}}"
+    cmds:
+      - task: site:environment:sync
+        vars:
+          TARGET_PROJECT: "{{.PROJECT}}"
+          TARGET_ENV: "moduletest"
+          SOURCE_PROJECT: "{{.PROJECT}}"
+          SOURCE_ENV: "main"
 
-    sites:webmaster:reset-moduletests:
-      desc: Reset all webmaster moduletests
-      deps: [lagoon:cli:config]
-      vars:
-        webmasters:
-          sh: yq '... comments="" | .sites | with_entries(select(.value | has("plan"))) | keys | .[]' {{.dir_env}}/sites.yaml
-      cmds:
-        - for: { var: webmasters }
-          task: sites:webmaster:reset-moduletest
-          vars:
-            PROJECT: "{{.ITEM}}"
+  sites:webmaster:reset-moduletests:
+    desc: Reset all webmaster moduletests
+    deps: [lagoon:cli:config]
+    vars:
+      webmasters:
+        sh: yq '... comments="" | .sites | with_entries(select(.value | has("plan"))) | keys | .[]' {{.dir_env}}/sites.yaml
+    cmds:
+      - for: { var: webmasters }
+        task: sites:webmaster:reset-moduletest
+        vars:
+          PROJECT: "{{.ITEM}}"
 
-    sites:check-caa:
-      desc: |
-        Checks if a site's primary and secondary domains have CAA records registered, and if they do report it.
-        If a site has these records they must be updated to allow zerossl to provision certificates for the site.
-      cmds:
-        - |
-          cat {{.dir_env}}/sites.yaml \
-            | yq '.sites[] | [ .primary-domain ] + .secondary-domains | .[] | select(. | contains("dplplat01.dpl.reload.dk") | not)' \
-            | xargs -I % -n 1 bash -c 'if (( $(dig % CAA | grep issue | wc -l) > 0 )); then echo "There are CAAs for domain %"; fi'
+  sites:check-caa:
+    desc: |
+      Checks if a site's primary and secondary domains have CAA records registered, and if they do report it.
+      If a site has these records they must be updated to allow zerossl to provision certificates for the site.
+    cmds:
+      - |
+        cat {{.dir_env}}/sites.yaml \
+          | yq '.sites[] | [ .primary-domain ] + .secondary-domains | .[] | select(. | contains("dplplat01.dpl.reload.dk") | not)' \
+          | xargs -I % -n 1 bash -c 'if (( $(dig % CAA | grep issue | wc -l) > 0 )); then echo "There are CAAs for domain %"; fi'
 
-    sites:incomplete-deployments:
-      deps: [lagoon:cli:config]
-      desc: |
-        Gets the latest deployment for each production environment and prints its status if it is *not* complete.
-      cmds:
-        - |
-          lagoon raw --raw "query allProjects {
-            allProjects {
-            name
-              environments(type: PRODUCTION) {
-                name
-                deployments(limit: 1) {
-                  status
-                  created
-                }
+  sites:incomplete-deployments:
+    deps: [lagoon:cli:config]
+    desc: |
+      Gets the latest deployment for each production environment and prints its status if it is *not* complete.
+    cmds:
+      - |
+        lagoon raw --raw "query allProjects {
+          allProjects {
+          name
+            environments(type: PRODUCTION) {
+              name
+              deployments(limit: 1) {
+                status
+                created
               }
             }
-          }" | jq -r '.allProjects[] | .name as $name | .environments[].deployments[] | select(.status != "complete") | ($name) + ": " + (.status)'
+          }
+        }" | jq -r '.allProjects[] | .name as $name | .environments[].deployments[] | select(.status != "complete") | ($name) + ": " + (.status)'
 
-    sites:redeploy-failed-deployments:
-      deps: [lagoon:cli:config]
-      desc: Redeploys all failed deployments
-      cmds:
-        - task/scripts/redeploy-failed-deployments.sh
+  sites:redeploy-failed-deployments:
+    deps: [lagoon:cli:config]
+    desc: Redeploys all failed deployments
+    cmds:
+      - task/scripts/redeploy-failed-deployments.sh
 
-    sites:grep-in-deploy-log:
-      desc: |
-        Given a needle `NEEDLE` this task finds all sites whose *latest* deployment log contains a given string
-      cmds:
-        - |
-          set -e
-          lagoon list projects --output-json \
-            | jq -r '.data[].projectname'  \
-            | while read -r projectname; do \
-                buildname=$(lagoon list deployments -e main -p $projectname --output-json | jq '.data[0].name' --raw-output)
-                echo "$projectname: $(lagoon get deployment -e main -p $projectname --name $buildname --logs | grep -E '{{ .NEEDLE }}' | wc -l) matches"
-              done \
-            | grep -v ": 0 matches"
-          echo "done"
+  sites:grep-in-deploy-log:
+    desc: |
+      Given a needle `NEEDLE` this task finds all sites whose *latest* deployment log contains a given string
+    cmds:
+      - |
+        set -e
+        lagoon list projects --output-json \
+          | jq -r '.data[].projectname'  \
+          | while read -r projectname; do \
+              buildname=$(lagoon list deployments -e main -p $projectname --output-json | jq '.data[0].name' --raw-output)
+              echo "$projectname: $(lagoon get deployment -e main -p $projectname --name $buildname --logs | grep -E '{{ .NEEDLE }}' | wc -l) matches"
+            done \
+          | grep -v ": 0 matches"
+        echo "done"
 
-    sites:latest-backup:
-      desc: Show the timestamp for the last successful backup for each site
-      vars:
-        SITES:
-          sh: lagoon list projects --output-json | jq -r ".data[].projectname"
-      cmds:
-        - for: { var: SITES }
-          cmd: |
-            DATE=$(lagoon list backups -p {{.ITEM}} -e main --output-json | jq -r '.data[0].created')
-            echo "{{.ITEM}}: ${DATE}"
-          silent: true
+  sites:latest-backup:
+    desc: Show the timestamp for the last successful backup for each site
+    vars:
+      SITES:
+        sh: lagoon list projects --output-json | jq -r ".data[].projectname"
+    cmds:
+      - for: { var: SITES }
+        cmd: |
+          DATE=$(lagoon list backups -p {{.ITEM}} -e main --output-json | jq -r '.data[0].created')
+          echo "{{.ITEM}}: ${DATE}"
+        silent: true
 
-    site:lagoon:project:capture-deploy-key:
-      # TODO: print a big message if a deploy key is newly captured, so we know to commit changes!
-      desc: Gets the deploy key for a particular project from Lagoon and persists it in sites.yaml
-      deps: [lagoon:cli:config]
-      dir: "{{.dir_env}}"
-      silent: true
-      vars:
-        DEPLOY_KEY:
-          sh: lagoon get project-key --project "{{.SITE}}" --output-json | jq '.data[0].publickey' --raw-output
-        SITE: "{{.SITE}}"
-      cmds:
-        - |
-          if [ -z "{{.SKIP}}" ]; then
-            yq -i e '.sites["{{.SITE}}"].deploy_key |= "{{.DEPLOY_KEY}}" | (... | select(tag == "!!merge")) tag = ""' sites.yaml
-          else
-            echo "Skipped capture deploy key."
-          fi
-      preconditions:
+  site:lagoon:project:capture-deploy-key:
+    # TODO: print a big message if a deploy key is newly captured, so we know to commit changes!
+    desc: Gets the deploy key for a particular project from Lagoon and persists it in sites.yaml
+    deps: [lagoon:cli:config]
+    dir: "{{.dir_env}}"
+    silent: true
+    vars:
+      DEPLOY_KEY:
+        sh: lagoon get project-key --project "{{.SITE}}" --output-json | jq '.data[0].publickey' --raw-output
+      SITE: "{{.SITE}}"
+    cmds:
+      - |
+        if [ -z "{{.SKIP}}" ]; then
+          yq -i e '.sites["{{.SITE}}"].deploy_key |= "{{.DEPLOY_KEY}}" | (... | select(tag == "!!merge")) tag = ""' sites.yaml
+        else
+          echo "Skipped capture deploy key."
+        fi
+    preconditions:
       - *require_site
 
-    site:lagoon:ensure-first-deployment:
-      desc: Ensures that a site has at least one deployment on required branches, so they are tracked by Lagoon
-      deps: [lagoon:cli:config]
-      dir: "{{.dir_env}}"
-      silent: true
-      env:
-        SITE: "{{.SITE}}"
-      cmds:
-        - |
-          if [ -z "{{.SKIP}}" ]; then
-            if [ "$(lagoon list deployments --project "{{.SITE}}" --environment {{.production_branch}} --output-json | jq '.data | length')" = "0" ]; then
-              lagoon deploy branch --project "{{.SITE}}" --branch "{{.production_branch}}";
-            fi
-          else
-            echo "Skipped deploying branch."
+  site:lagoon:ensure-first-deployment:
+    desc: Ensures that a site has at least one deployment on required branches, so they are tracked by Lagoon
+    deps: [lagoon:cli:config]
+    dir: "{{.dir_env}}"
+    silent: true
+    env:
+      SITE: "{{.SITE}}"
+    cmds:
+      - |
+        if [ -z "{{.SKIP}}" ]; then
+          if [ "$(lagoon list deployments --project "{{.SITE}}" --environment {{.production_branch}} --output-json | jq '.data | length')" = "0" ]; then
+            lagoon deploy branch --project "{{.SITE}}" --branch "{{.production_branch}}";
           fi
-        - |
-          if [ -z "{{.SKIP}}" ]; then
-            if [ "$(yq '.sites[env(SITE)].plan' sites.yaml)" = "{{.webmaster_plan_name}}" -a "$(lagoon list deployments --project "{{.SITE}}" --environment {{.moduletest_branch}} --output-json | jq '.data | length')" = "0" ]; then
-              lagoon deploy branch --project "{{.SITE}}" --branch "{{.moduletest_branch}}";
-            fi
+        else
+          echo "Skipped deploying branch."
+        fi
+      - |
+        if [ -z "{{.SKIP}}" ]; then
+          if [ "$(yq '.sites[env(SITE)].plan' sites.yaml)" = "{{.webmaster_plan_name}}" -a "$(lagoon list deployments --project "{{.SITE}}" --environment {{.moduletest_branch}} --output-json | jq '.data | length')" = "0" ]; then
+            lagoon deploy branch --project "{{.SITE}}" --branch "{{.moduletest_branch}}";
           fi
-      preconditions:
+        fi
+    preconditions:
       - *require_site
 
-    sites:report-is-set-up:
-      desc: |
-        Loops through all the sites in sites.yaml and reports whether their logo or logotext has been changed.
-        We use this as an indication for whether the site owners have startet setting up the site.
-      cmds:
-        - |
-          cat {{.dir_env}}/sites.yaml | yq '.sites | keys | .[]' \
-          | xargs -n 1 -I % bash -c 'set -e; if (( $(curl -s https://varnish.main.%.dplplat01.dpl.reload.dk/ | grep "\"header__logo-desktop-link\"" -A 8 | grep "\"logo-fallback\s*\"" -A 4 | grep "Logo title (bold)" | wc -l) > 0 )); then echo "% not yet set up"; fi'
+  sites:report-is-set-up:
+    desc: |
+      Loops through all the sites in sites.yaml and reports whether their logo or logotext has been changed.
+      We use this as an indication for whether the site owners have startet setting up the site.
+    cmds:
+      - |
+        cat {{.dir_env}}/sites.yaml | yq '.sites | keys | .[]' \
+        | xargs -n 1 -I % bash -c 'set -e; if (( $(curl -s https://varnish.main.%.dplplat01.dpl.reload.dk/ | grep "\"header__logo-desktop-link\"" -A 8 | grep "\"logo-fallback\s*\"" -A 4 | grep "Logo title (bold)" | wc -l) > 0 )); then echo "% not yet set up"; fi'
 
-    site:db:migrate:
-      desc: |
-        Migrates site from Azure managed database for MariaDB to our incluster MariaDB
-      env:
-        PROJECT: "{{.PROJECT}}"
-        ENVIRONMENT: "{{.ENVIRONMENT}}"
-        DRYRUN: "{{.DRYRUN}}"
-      cmds:
-        - |
-          ./dpladm/bin/migrate-site-database-to-incluster-db.mjs --project={{.PROJECT}} --env={{.ENVIRONMENT}} --dryrun={{.DRYRUN}}
+  site:db:migrate:
+    desc: |
+      Migrates site from Azure managed database for MariaDB to our incluster MariaDB
+    env:
+      PROJECT: "{{.PROJECT}}"
+      ENVIRONMENT: "{{.ENVIRONMENT}}"
+      DRYRUN: "{{.DRYRUN}}"
+    cmds:
+      - |
+        ./dpladm/bin/migrate-site-database-to-incluster-db.mjs --project={{.PROJECT}} --env={{.ENVIRONMENT}} --dryrun={{.DRYRUN}}
 
-    certs:clear-queue:
-      deps: [cluster:auth]
-      desc: |
-        Because cert-manager sometimes hangs while provisioning certificates it helps to clear the whole queue
-        of uncompleted certificates. This command removes any certificate that has an order not in either
-        valid (certificate is good!) or ready (almost ready, will be provisioned in seconds) state.
-      cmds:
-        - |
-          kubectl get order -A -o yaml | \
-          yq '.items | filter(.status.state != "valid" and .status.state != "ready") | .[].metadata | .namespace + " " + .name' | \
-          xargs -n 2 bash -c 'kubectl delete certificate -n $0 $(echo "$1" | sed -r "s/^([0-9a-z\.\-]+-tls)-[a-z0-9]+-[a-z0-9]+$/\1/i")'
+  certs:clear-queue:
+    deps: [cluster:auth]
+    desc: |
+      Because cert-manager sometimes hangs while provisioning certificates it helps to clear the whole queue
+      of uncompleted certificates. This command removes any certificate that has an order not in either
+      valid (certificate is good!) or ready (almost ready, will be provisioned in seconds) state.
+    cmds:
+      - |
+        kubectl get order -A -o yaml | \
+        yq '.items | filter(.status.state != "valid" and .status.state != "ready") | .[].metadata | .namespace + " " + .name' | \
+        xargs -n 2 bash -c 'kubectl delete certificate -n $0 $(echo "$1" | sed -r "s/^([0-9a-z\.\-]+-tls)-[a-z0-9]+-[a-z0-9]+$/\1/i")'
 
-    ui-password:
-      deps: [cluster:auth]
-      desc: Get the password to access a given user interface
-      cmds:
+  ui-password:
+    deps: [cluster:auth]
+    desc: Get the password to access a given user interface
+    cmds:
       - task/scripts/ui-password.sh
-      preconditions:
+    preconditions:
       - sh: "[ ! -z {{.UI_NAME}} ]"
         msg: "Env variable UI_NAME is not set or empty."
 
-    _req_env:
-      preconditions:
+  _req_env:
+    preconditions:
       - sh: "[ ! -z {{.DPLPLAT_ENV}} ]"
         msg: "Env variable DPLPLAT_ENV is not set or empty."
       - sh: "[ -d {{.dir_env}} ]"
@@ -1243,178 +1238,176 @@ tasks:
       - sh: "[ -d {{.dir_configuration}} ]"
         msg: "Could not find directory {{.dir_configuration}}"
 
-    site:admin:password:set:
-      desc: Sets the password for the admin of the selected site
-      deps: [lagoon:cli:config, cluster:auth]
-      dir: "{{.dir_env}}"
-      vars:
-        PROJECT: "{{.PROJECT}}"
-        PASSWORD: "{{.PASSWORD}}"
-        contacts:
-          sh: yq '.sites.{{.PROJECT}}.contacts[] | path | .[-1]' "{{.dir_env}}/contacts-and-their-sites.yaml"
-      cmds:
-        - lagoon ssh --project {{.PROJECT}} --environment main -C "drush user:password admin '{{.PASSWORD}}'"
-        - for: { var: contacts, as: INDEX}
-          task: mail:send
-          vars:
-            SUBJECT: "Logininformation til jeres nye bibliotekssite"
-            RECIPIENT:
-              sh: yq '.sites.{{.PROJECT}}.contacts[{{.INDEX}}].email' "{{.dir_env}}/contacts-and-their-sites.yaml"
-            CONTACTNAME:
-              sh: yq '.sites.{{.PROJECT}}.contacts[{{.INDEX}}].name' "{{.dir_env}}/contacts-and-their-sites.yaml"
-            PASSWORD: "{{.PASSWORD}}"
-            PROJECT: "{{.PROJECT}}"
+  site:admin:password:set:
+    desc: Sets the password for the admin of the selected site
+    deps: [lagoon:cli:config, cluster:auth]
+    dir: "{{.dir_env}}"
+    vars:
+      PROJECT: "{{.PROJECT}}"
+      PASSWORD: "{{.PASSWORD}}"
+      contacts:
+        sh: yq '.sites.{{.PROJECT}}.contacts[] | path | .[-1]' "{{.dir_env}}/contacts-and-their-sites.yaml"
+    cmds:
+      - lagoon ssh --project {{.PROJECT}} --environment main -C "drush user:password admin '{{.PASSWORD}}'"
+      - for: { var: contacts, as: INDEX }
+        task: mail:send
+        vars:
+          SUBJECT: "Logininformation til jeres nye bibliotekssite"
+          RECIPIENT:
+            sh: yq '.sites.{{.PROJECT}}.contacts[{{.INDEX}}].email' "{{.dir_env}}/contacts-and-their-sites.yaml"
+          CONTACTNAME:
+            sh: yq '.sites.{{.PROJECT}}.contacts[{{.INDEX}}].name' "{{.dir_env}}/contacts-and-their-sites.yaml"
+          PASSWORD: "{{.PASSWORD}}"
+          PROJECT: "{{.PROJECT}}"
 
+  site:local-admin:password:create-and-notify:
+    desc: Sets the password for the admin of the selected site
+    deps: [lagoon:cli:config, cluster:auth]
+    dir: "{{.dir_env}}"
+    vars:
+      PROJECT: "{{.PROJECT}}"
+      PASSWORD: "{{.PASSWORD}}"
+      MAIL: "{{.MAIL}}"
+      USERNAME: "{{.USERNAME}}"
+      CONTACTNAME: "{{.CONTACTNAME}}"
+    cmds:
+      - lagoon ssh --project {{.PROJECT}} --environment main -C "drush user:create '{{.USERNAME}}' --mail='{{.MAIL}}' --password='{{.PASSWORD}}'"
+      - lagoon ssh --project {{.PROJECT}} --environment main -C "drush user:role:add 'local_administrator' '{{.USERNAME}}'"
+      - task: mail:send
+        vars:
+          SUBJECT: "Logininformation til jeres nye bibliotekssite"
+          RECIPIENT: "{{.MAIL}}"
+          CONTACTNAME: "{{.CONTACTNAME}}"
+          PASSWORD: "{{.PASSWORD}}"
+          PROJECT: "{{.PROJECT}}"
+          CONTENT: |
+            Kære {{.CONTACTNAME}}
 
-    site:local-admin:password:create-and-notify:
-      desc: Sets the password for the admin of the selected site
-      deps: [lagoon:cli:config, cluster:auth]
-      dir: "{{.dir_env}}"
-      vars:
-        PROJECT: "{{.PROJECT}}"
-        PASSWORD: "{{.PASSWORD}}"
-        MAIL: "{{.MAIL}}"
-        USERNAME: "{{.USERNAME}}"
-        CONTACTNAME: "{{.CONTACTNAME}}"
-      cmds:
-        - lagoon ssh --project {{.PROJECT}} --environment main -C "drush user:create '{{.USERNAME}}' --mail='{{.MAIL}}' --password='{{.PASSWORD}}'"
-        - lagoon ssh --project {{.PROJECT}} --environment main -C "drush user:role:add 'local_administrator' '{{.USERNAME}}'"
-        - task: mail:send
-          vars:
-            SUBJECT: "Logininformation til jeres nye bibliotekssite"
-            RECIPIENT: "{{.MAIL}}"
-            CONTACTNAME: "{{.CONTACTNAME}}"
-            PASSWORD: "{{.PASSWORD}}"
-            PROJECT: "{{.PROJECT}}"
-            CONTENT: |
-                Kære {{.CONTACTNAME}}
+            Læs venligst hele mailen før du går i gang. Den indeholder 2 afsnit:
 
-                Læs venligst hele mailen før du går i gang. Den indeholder 2 afsnit:
-
-                1. Instruktion om opsætning af brugere
-                2. Loginoplysninger
-
-
-
-                Instruktion om opsætning af brugere:
-
-                Du får hermed adgang til jeres nyt bibliotekssite. Bemærk at medsendte bruger er ens for begge jer, der er kontaktpersoner. Så den første af jer der går ind på sitet skal skifte kodeord og oprette den anden som bruger. Det er vigtigt, at I vælger egne kodeord, så det kun er jer selv der kender det.
-
-                Den brugerkonto der følger med denne mail er af typen Admin, og dermed den brugertype der har flest rettigheder i løsningen (se manualen for beskrivelse af de forskellige brugertyper). Overvej grundigt hvilke brugertyper I giver andre brugere. Af sikkerhedshensyn er det bedre at starte med færre rettigheder for den enkelte, og så "opgradere" dem hvis det bliver nødvendigt.
-
-                Så helt kort:
-
-                - Nulstil kodeord så snart du er logget ind, så det kun er dig der kender det
-
-                - Brug admin-brugeren til at oprette andre brugere, men begræns deres muligheder
-
-                Du kan se mere omkring dette i manualen her:
-                https://www.folkebibliotekernescms.dk/main/startopsaetning/systembrugere/
+            1. Instruktion om opsætning af brugere
+            2. Loginoplysninger
 
 
 
-                Loginoplysninger:
+            Instruktion om opsætning af brugere:
 
-                Brugernavn: {{.USERNAME}}
-                Password: {{.PASSWORD}}
+            Du får hermed adgang til jeres nyt bibliotekssite. Bemærk at medsendte bruger er ens for begge jer, der er kontaktpersoner. Så den første af jer der går ind på sitet skal skifte kodeord og oprette den anden som bruger. Det er vigtigt, at I vælger egne kodeord, så det kun er jer selv der kender det.
 
-                Disse login-oplysninger kan bruges på følgende web-addresse: https://varnish.main.{{.PROJECT}}.dplplat01.dpl.reload.dk
+            Den brugerkonto der følger med denne mail er af typen Admin, og dermed den brugertype der har flest rettigheder i løsningen (se manualen for beskrivelse af de forskellige brugertyper). Overvej grundigt hvilke brugertyper I giver andre brugere. Af sikkerhedshensyn er det bedre at starte med færre rettigheder for den enkelte, og så "opgradere" dem hvis det bliver nødvendigt.
+
+            Så helt kort:
+
+            - Nulstil kodeord så snart du er logget ind, så det kun er dig der kender det
+
+            - Brug admin-brugeren til at oprette andre brugere, men begræns deres muligheder
+
+            Du kan se mere omkring dette i manualen her:
+            https://www.folkebibliotekernescms.dk/main/startopsaetning/systembrugere/
 
 
-                Vi håber I kommer godt igang med vores nye løsning.
 
-                Med venlig hilsen
-                Det Digitale Folkebibliotek
+            Loginoplysninger:
 
-    site:local-admin:password:reset:
-      desc: Resets the password for the local admin of a site
-      deps: [cluster:auth, lagoon:cli:config]
-      dir: "{{.dir_env}}"
-      vars:
-        PROJECT: "{{.PROJECT}}"
-        USERNAME: "{{.USERNAME}}"
-        EMAIL: "{{.EMAIL}}"
-        PASSWORD:
-          sh: $RANDOM  | md5sum | head -c 20
-      cmds:
-        - lagoon ssh --project {{.PROJECT}} --environment main -C "drush user:password {{.USERNAME}} '{{.PASSWORD}}'"
-        - task: mail:send
-          vars:
-            SUBJECT: "Nulstilling af bibliotekssite password"
-            RECIPIENT: "{{.EMAIL}}"
-            PASSWORD: "{{.PASSWORD}}"
-            CONTENT: |
-              Hej,
+            Brugernavn: {{.USERNAME}}
+            Password: {{.PASSWORD}}
 
-              Du har bedt om at få nulstillet dit password til jeres bibliotekssite.
-              Dit nye password er: {{.PASSWORD}}
-              Vi anbefaler at du ændrer passwordet til noget du selv kan huske.
+            Disse login-oplysninger kan bruges på følgende web-addresse: https://varnish.main.{{.PROJECT}}.dplplat01.dpl.reload.dk
 
-              Med venlig hilsen
-              Det Digitale Folkebibliotek
 
-    mail:send:
-      desc: Sends an email from DoNotReply@folkebibliotekernescms.dk
-      deps: [cluster:auth]
-      vars:
-        RECIPIENT: "{{.RECIPIENT}}"
-        SUBJECT: "{{.SUBJECT}}"
-        CONTENT: "{{.CONTENT}}"
-        CONNECTION_STRING:
-          sh: az communication list-key
-              --name communication-servicesa5e3
-              --resource-group
-                $(
-                  terraform -chdir={{.dir_infra}} output -json | jq --raw-output ".resourcegroup_name.value | select (.!=null)"
-                )
-              --query "primaryConnectionString"
-              --output tsv
-      cmd:
-        -|
-          az communication email send --sender "DoNotReply@folkebibliotekernescms.dk"
-          --subject "{{.SUBJECT}}"
-          --to "{{.RECIPIENT}}"
-          --text "{{.CONTENT}}"
-          --connection-string "{{.CONNECTION_STRING}}"
+            Vi håber I kommer godt igang med vores nye løsning.
 
-    site:admins:credentials:mail:
-      desc: Sent email with credentials and site info to admin user on a library site
-      deps: [cluster:auth, lagoon:cli:config]
-      dir: "{{.dir_env}}"
-      vars:
-        siteadmins:
-          sh: cat {{.dir_env}}/contacts-and-their-sites.yaml | yq '.sites | keys | .[]'
-      cmds:
-        - for: { var: siteadmins }
-          task: site:admin:password:set
-          vars:
-            PROJECT: "{{.ITEM}}"
-            PASSWORD:
-              sh: $RANDOM  | md5sum | head -c 20
+            Med venlig hilsen
+            Det Digitale Folkebibliotek
 
-    site:local-admin:admin:
-      desc: Switches the local admin user to an admin user
-      deps: [cluster:auth, lagoon:cli:config]
-      dir: "{{.dir_env}}"
-      vars:
-        PROJECT: "{{.PROJECT}}"
-        ENVIRONMENT: "{{.ENVIRONMENT}}"
-        ADMINS:
-          sh: lagoon ssh -p {{.PROJECT}} -e {{.ENVIRONMENT}} -C "drush sqlq 'SELECT GROUP_CONCAT(entity_id) FROM user__roles WHERE roles_target_id=\"local_administrator\"'" | sed 's/,/\n/g'
-      cmds:
-        - for: { var: ADMINS, as: ITEM }
-          task: site:local-admin:admin:execute
-          vars:
-            ADMINID: "{{.ITEM}}"
+  site:local-admin:password:reset:
+    desc: Resets the password for the local admin of a site
+    deps: [cluster:auth, lagoon:cli:config]
+    dir: "{{.dir_env}}"
+    vars:
+      PROJECT: "{{.PROJECT}}"
+      USERNAME: "{{.USERNAME}}"
+      EMAIL: "{{.EMAIL}}"
+      PASSWORD:
+        sh: $RANDOM  | md5sum | head -c 20
+    cmds:
+      - lagoon ssh --project {{.PROJECT}} --environment main -C "drush user:password {{.USERNAME}} '{{.PASSWORD}}'"
+      - task: mail:send
+        vars:
+          SUBJECT: "Nulstilling af bibliotekssite password"
+          RECIPIENT: "{{.EMAIL}}"
+          PASSWORD: "{{.PASSWORD}}"
+          CONTENT: |
+            Hej,
 
-    site:local-admin:admin:execute:
-      desc: Switches the local admin user to an admin user
-      dir: "{{.dir_env}}"
-      vars:
-        PROJECT: "{{.PROJECT}}"
-        ENVIRONMENT: "{{.ENVIRONMENT}}"
-        ADMIN:
-          sh: lagoon ssh -p {{.PROJECT}} -e {{.ENVIRONMENT}} -C "drush uinf --field='name' --uid='{{.ADMINID}}'"
-      cmds:
-        - lagoon ssh --project {{.PROJECT}} --environment {{.ENVIRONMENT}} -C "drush user:role:add 'administrator' '{{.ADMIN}}'"
-        - lagoon ssh --project {{.PROJECT}} --environment {{.ENVIRONMENT}} -C "drush user:role:remove 'local_administrator' '{{.ADMIN}}'"
+            Du har bedt om at få nulstillet dit password til jeres bibliotekssite.
+            Dit nye password er: {{.PASSWORD}}
+            Vi anbefaler at du ændrer passwordet til noget du selv kan huske.
+
+            Med venlig hilsen
+            Det Digitale Folkebibliotek
+
+  mail:send:
+    desc: Sends an email from DoNotReply@folkebibliotekernescms.dk
+    deps: [cluster:auth]
+    vars:
+      RECIPIENT: "{{.RECIPIENT}}"
+      SUBJECT: "{{.SUBJECT}}"
+      CONTENT: "{{.CONTENT}}"
+      CONNECTION_STRING:
+        sh: az communication list-key
+          --name communication-servicesa5e3
+          --resource-group
+          $(
+          terraform -chdir={{.dir_infra}} output -json | jq --raw-output ".resourcegroup_name.value | select (.!=null)"
+          )
+          --query "primaryConnectionString"
+          --output tsv
+    cmd: -|
+      az communication email send --sender "DoNotReply@folkebibliotekernescms.dk"
+      --subject "{{.SUBJECT}}"
+      --to "{{.RECIPIENT}}"
+      --text "{{.CONTENT}}"
+      --connection-string "{{.CONNECTION_STRING}}"
+
+  site:admins:credentials:mail:
+    desc: Sent email with credentials and site info to admin user on a library site
+    deps: [cluster:auth, lagoon:cli:config]
+    dir: "{{.dir_env}}"
+    vars:
+      siteadmins:
+        sh: cat {{.dir_env}}/contacts-and-their-sites.yaml | yq '.sites | keys | .[]'
+    cmds:
+      - for: { var: siteadmins }
+        task: site:admin:password:set
+        vars:
+          PROJECT: "{{.ITEM}}"
+          PASSWORD:
+            sh: $RANDOM  | md5sum | head -c 20
+
+  site:local-admin:admin:
+    desc: Switches the local admin user to an admin user
+    deps: [cluster:auth, lagoon:cli:config]
+    dir: "{{.dir_env}}"
+    vars:
+      PROJECT: "{{.PROJECT}}"
+      ENVIRONMENT: "{{.ENVIRONMENT}}"
+      ADMINS:
+        sh: lagoon ssh -p {{.PROJECT}} -e {{.ENVIRONMENT}} -C "drush sqlq 'SELECT GROUP_CONCAT(entity_id) FROM user__roles WHERE roles_target_id=\"local_administrator\"'" | sed 's/,/\n/g'
+    cmds:
+      - for: { var: ADMINS, as: ITEM }
+        task: site:local-admin:admin:execute
+        vars:
+          ADMINID: "{{.ITEM}}"
+
+  site:local-admin:admin:execute:
+    desc: Switches the local admin user to an admin user
+    dir: "{{.dir_env}}"
+    vars:
+      PROJECT: "{{.PROJECT}}"
+      ENVIRONMENT: "{{.ENVIRONMENT}}"
+      ADMIN:
+        sh: lagoon ssh -p {{.PROJECT}} -e {{.ENVIRONMENT}} -C "drush uinf --field='name' --uid='{{.ADMINID}}'"
+    cmds:
+      - lagoon ssh --project {{.PROJECT}} --environment {{.ENVIRONMENT}} -C "drush user:role:add 'administrator' '{{.ADMIN}}'"
+      - lagoon ssh --project {{.PROJECT}} --environment {{.ENVIRONMENT}} -C "drush user:role:remove 'local_administrator' '{{.ADMIN}}'"
