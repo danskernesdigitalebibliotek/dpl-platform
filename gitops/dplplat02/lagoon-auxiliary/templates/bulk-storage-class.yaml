@@ -2,20 +2,38 @@ allowVolumeExpansion: true
 apiVersion: storage.k8s.io/v1
 kind: StorageClass
 metadata:
+  annotations:
+    meta.helm.sh/release-name: csi-driver-nfs
+    meta.helm.sh/release-namespace: kube-system
+  labels:
+    app.kubernetes.io/instance: csi-driver-nfs
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/name: csi-driver-nfs
+    app.kubernetes.io/version: 4.12.1
+    helm.sh/chart: csi-driver-nfs-4.12.1
   name: bulk
+mountOptions:
+- async
+- hard
+- intr
+- nolock
+- noatime
+- nodev
+- nosuid
+- proto=tcp
+- retrans=2
+- rsize=131072
+- rw
+- timeo=600
+- vers=3
+- wsize=524288
+- x-systemd.automount
+- x-systemd.device-timeout=10
 parameters:
-  clusterID: rook-ceph
-  csi.storage.k8s.io/controller-expand-secret-name: rook-csi-cephfs-provisioner
-  csi.storage.k8s.io/controller-expand-secret-namespace: rook-ceph
-  csi.storage.k8s.io/controller-publish-secret-name: rook-csi-cephfs-provisioner
-  csi.storage.k8s.io/controller-publish-secret-namespace: rook-ceph
-  csi.storage.k8s.io/fstype: ext4
-  csi.storage.k8s.io/node-stage-secret-name: rook-csi-cephfs-node
-  csi.storage.k8s.io/node-stage-secret-namespace: rook-ceph
-  csi.storage.k8s.io/provisioner-secret-name: rook-csi-cephfs-provisioner
-  csi.storage.k8s.io/provisioner-secret-namespace: rook-ceph
-  fsName: ceph-filesystem
-  pool: ceph-filesystem-data0
-provisioner: rook-ceph.cephfs.csi.ceph.com
+  mountPermissions: "0"
+  server: dataome.storage
+  share: /ess/delphi/projects/dpdpl01
+  subDir: data/raw/k8s-nfs/${pvc.metadata.namespace}/${pv.metadata.name}--${pvc.metadata.name}
+provisioner: nfs.csi.k8s.io
 reclaimPolicy: Delete
 volumeBindingMode: Immediate
