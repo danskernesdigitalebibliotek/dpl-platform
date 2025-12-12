@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 
+kubectl config use-context aks-dplplat01-01
 helm repo add lagoon https://uselagoon.github.io/lagoon-charts/
 helm repo update
 
