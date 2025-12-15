@@ -413,9 +413,9 @@ minio:
     #   secretKey: console123
     #   user: console
     ## Or you can refer to specific secret
-    - accessKey: externalSecret
-      existingSecret: my-secret
-      existingSecretKey: password
+    - accessKey: HnfboLfo4DkufUsug9keBvYkoRGn
+      existingSecret: minio-secret-key
+      existingSecretKey: secretKey
       user: console
     ## You also can pass custom policy
     # - accessKey: console-svcacct
