@@ -388,9 +388,9 @@ minio:
     #   policy: consoleAdmin
     # Or you can refer to specific secret
     - accessKey: HnfboLfo4DkufUsug9keBvYkoRGn
-      existingSecret: minio-access-secrets
-      existingSecretKey: accessKey
-      policy: readonly
+      existingSecret: minio-secret-key
+      existingSecretKey: secretKey
+      policy: readwrite
 
   ## Additional Annotations for the Kubernetes Job makeUserJob
   makeUserJob:
