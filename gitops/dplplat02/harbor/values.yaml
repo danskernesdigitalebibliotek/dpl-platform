@@ -224,10 +224,10 @@ harbor:
         bucket: harbor-images
         #accesskey: awsaccesskey
         #secretkey: awssecretkey
-        regionendpoint: files.lagoon.dplplat02.dpl.reload.dk:9001
+        regionendpoint: https://files.lagoon.dplplat02.dpl.reload.dk
         #encrypt: false
         #keyid: mykeyid
-        secure: false
+        secure: true
         skipverify: false
         #v4auth: true
         # chunksize: "5242880"
