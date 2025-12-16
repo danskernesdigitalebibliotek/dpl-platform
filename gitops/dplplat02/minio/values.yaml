@@ -387,10 +387,10 @@ minio:
     #   secretKey: console123
     #   policy: consoleAdmin
     # Or you can refer to specific secret
-    # - accessKey: HnfboLfo4DkufUsug9keBvYkoRGn
-    #   existingSecret: minio-secret-key
-    #   existingSecretKey: secretKey
-    #   policy: readwrite
+    - accessKey: HnfboLfo4DkufUsug9keBvYkoRGn
+      existingSecret: minio-secret-key
+      existingSecretKey: secretKey
+      policy: readwrite
 
   ## Additional Annotations for the Kubernetes Job makeUserJob
   makeUserJob:
