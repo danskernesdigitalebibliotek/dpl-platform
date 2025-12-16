@@ -158,7 +158,7 @@ harbor:
         storageClass: ""
         subPath: ""
         accessMode: ReadWriteOnce
-        size: 1Gi
+        size: 4Gi
         annotations: {}
       # If external Redis is used, the following settings for Redis will
       # be ignored
@@ -167,7 +167,7 @@ harbor:
         storageClass: ""
         subPath: ""
         accessMode: ReadWriteOnce
-        size: 1Gi
+        size: 2Gi
         annotations: {}
       trivy:
         existingClaim: ""
@@ -196,7 +196,7 @@ harbor:
       # Specify the type of storage: "filesystem", "azure", "gcs", "s3", "swift",
       # "oss" and fill the information needed in the corresponding section. The type
       # must be "filesystem" if you want to use persistent volumes for registry
-      type: filesystem
+      type: s3
       filesystem:
         rootdirectory: /storage
         #maxthreads: 100
@@ -219,18 +219,18 @@ harbor:
       s3:
         # Set an existing secret for S3 accesskey and secretkey
         # keys in the secret should be REGISTRY_STORAGE_S3_ACCESSKEY and REGISTRY_STORAGE_S3_SECRETKEY for registry
-        #existingSecret: ""
-        region: us-west-1
-        bucket: bucketname
+        existingSecret: minio-access-secret-keys
+        # region: us-west-1
+        bucket: harbor-images
         #accesskey: awsaccesskey
         #secretkey: awssecretkey
         #regionendpoint: http://myobjects.local
         #encrypt: false
         #keyid: mykeyid
-        #secure: true
-        #skipverify: false
+        secure: true
+        skipverify: false
         #v4auth: true
-        #chunksize: "5242880"
+        # chunksize: "5242880"
         #rootdirectory: /s3/object/name/prefix
         #storageclass: STANDARD
         #multipartcopychunksize: "33554432"
