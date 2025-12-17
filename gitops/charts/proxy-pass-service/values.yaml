@@ -3,11 +3,7 @@ replicas: 2
 # the domain this services should be served on
 ingress:
   host:
-
-  ingressClassName:
-
-  certManager:
-    clusterIssuer:
+  goHost:
 
 # possible values are "internal", "external" or "static"
 target:
@@ -15,12 +11,12 @@ target:
 # the external service and ip we route to if "target" is set to "external"
 externalService:
   domain:
-  ipAddress:
+  goDomain:
+  ipAddress: 130.226.25.93
 
 # the internal service and port we route to if "target" is set to "internal"
 internalService:
   name:
-  port:
 
 # the static html we return if "target" is set to "static"
 static:

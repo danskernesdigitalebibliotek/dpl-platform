@@ -1,7 +1,7 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: {{ .Values.ingress.host }}
+  name: {{ .Values.ingress.goHost }}
   annotations:
     cert-manager.io/cluster-issuer: zerossl-production
     fastly.amazee.io/watch: 'false'
@@ -15,7 +15,7 @@ metadata:
 spec:
   ingressClassName: nginx
   rules:
-    - host: {{ .Values.ingress.host }}
+    - host: {{ .Values.ingress.goHost }}
       http:
         paths:
           - path: /
@@ -23,16 +23,16 @@ spec:
             backend:
               {{- if eq .Values.target "internal" }}
               service:
-                name: varnish
+                name: node
                 port:
                   name: http
               {{- else }}
               service:
-                name: {{ .Release.Name }}-proxy-pass
+                name: {{ .Release.Name }}-proxy-pass-go
                 port:
                   number: 80
               {{- end }}
   tls:
     - hosts:
-        - {{ .Values.ingress.host }}
-      secretName: {{ .Values.ingress.host }}-tls
+        - {{ .Values.ingress.goHost }}
+      secretName: {{ .Values.ingress.goHost }}-tls
