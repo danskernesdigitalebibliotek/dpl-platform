@@ -80,4 +80,6 @@ automateSites: true
 sites:
   - name: canary-main
 
+  - name: customizable-canary-main
+
   - name: kobenhavn-main
