@@ -104,7 +104,7 @@ minio:
   ## All mentioned variables will be ignored in values file.
   ## .data.rootUser and .data.rootPassword are mandatory,
   ## others depend on enabled status of corresponding sections.
-  existingSecret: ""
+  existingSecret: minio-root-user-secret
 
   ## Directory on the MinIO pof
   certsPath: "/etc/minio/certs/"
