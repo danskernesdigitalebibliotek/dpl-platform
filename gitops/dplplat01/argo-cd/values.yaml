@@ -792,7 +792,7 @@ argo-cd:
     # Additional replicas will cause sharding of managed clusters across number of replicas.
     ## With dynamic cluster distribution turned on, sharding of the clusters will gracefully
     ## rebalance if the number of replica's changes or one becomes unhealthy. (alpha)
-    replicas: 1
+    replicas: 5
 
     # -- Enable dynamic cluster distribution (alpha)
     # Ref: https://argo-cd.readthedocs.io/en/stable/operator-manual/dynamic-cluster-distribution
