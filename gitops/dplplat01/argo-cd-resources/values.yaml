@@ -84,9 +84,6 @@ sites:
       proxy-pass-service:
         ingress:
           host: bibliotest.deranged.dk
-          ingressClassName: nginx
-          certManager:
-            clusterIssuer: zerossl-production
         target: internal
         externalService:
           domain: bibliotest.deranged.dk
