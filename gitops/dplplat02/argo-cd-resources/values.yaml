@@ -79,3 +79,4 @@ automateSites: true
 
 sites:
   - name: canary-main
+    namespace: canary-main
