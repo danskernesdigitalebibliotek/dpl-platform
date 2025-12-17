@@ -83,7 +83,7 @@ sites:
       proxy-pass-service:
         ingress:
           host: bibliotest.deranged.dk
-        target: static
+        target: external
         externalService:
           domain: bibliotest.deranged.dk
           ipAddress: 130.226.25.93
