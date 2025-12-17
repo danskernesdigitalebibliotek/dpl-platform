@@ -79,12 +79,11 @@ automateSites: true
 
 sites:
   - name: canary-main
-    automated: false
     values:
       proxy-pass-service:
         ingress:
           host: bibliotest.deranged.dk
-        target: internal
+        target: static
         externalService:
           domain: bibliotest.deranged.dk
           ipAddress: 130.226.25.93
