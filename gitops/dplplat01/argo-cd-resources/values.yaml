@@ -84,7 +84,7 @@ sites:
         ingress:
           host: bibliotest.deranged.dk
           goHost: go.bibliotest.deranged.dk
-        target: internal
+        target: static
         externalService:
           domain: bibliotest.deranged.dk
           goDomain: go.bibliotest.deranged.dk
