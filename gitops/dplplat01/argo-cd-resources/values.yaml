@@ -80,6 +80,8 @@ automateSites: true
 sites:
   - name: canary-main
 
+  - name: canary-moduletest
+
   - name: aabenraa-main
 
   - name: aalborg-main
