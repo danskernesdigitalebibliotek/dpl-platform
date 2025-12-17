@@ -1,0 +1,26 @@
+{{- range $.Values.sites }}
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: {{ .name }}
+  namespace: argo-cd
+spec:
+  project: sites
+  source:
+    repoURL: https://github.com/danskernesdigitalebibliotek/dpl-platform.git
+    path: gitops/dplplat01/sites/{{ .name }}
+    targetRevision: HEAD
+    helm:
+      {{- if .values }}
+      valuesObject:
+        {{- .values | toYaml | nindent 8 }}
+      {{- end }}
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: {{ .name }}
+  syncPolicy:
+    {{- if $.Values.automateSites }}
+    automated: {}
+    {{- end }}
+{{- end }}
