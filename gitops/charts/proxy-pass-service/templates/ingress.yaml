@@ -3,11 +3,17 @@ kind: Ingress
 metadata:
   name: {{ .Values.ingress.host }}
   annotations:
-    cert-manager.io/cluster-issuer: {{ .Values.ingress.certManager.clusterIssuer }}
-    nginx.ingress.kubernetes.io/proxy-body-size: 50m
-    nginx.ingress.kubernetes.io/proxy-read-timeout: "3600"
+    cert-manager.io/cluster-issuer: zerossl-production
+    fastly.amazee.io/watch: 'false'
+    ingress.kubernetes.io/ssl-redirect: 'true'
+    kubernetes.io/tls-acme: 'true'
+    lagoon.sh/branch: main
+    lagoon.sh/version: 24.5.1
+    monitor.stakater.com/enabled: 'false'
+    monitor.stakater.com/overridePath: /
+    nginx.ingress.kubernetes.io/ssl-redirect: 'true'
 spec:
-  ingressClassName: {{ .Values.ingress.ingressClassName }}
+  ingressClassName: nginx
   rules:
     - host: {{ .Values.ingress.host }}
       http:
