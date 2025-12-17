@@ -28,7 +28,7 @@ spec:
                   number: {{ .Values.internalService.port }}
               {{- else }}
               service:
-                name: {{ .Release.Name }}
+                name: {{ .Release.Name }}-proxy-pass
                 port:
                   number: 80
               {{- end }}

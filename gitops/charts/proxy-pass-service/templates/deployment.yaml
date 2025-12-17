@@ -1,16 +1,16 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ .Release.Name }}
+  name: {{ .Release.Name }}-proxy-pass
 spec:
   replicas: {{ .Values.replicas }}
   selector:
     matchLabels:
-      app: {{ .Release.Name }}
+      app: {{ .Release.Name }}-proxy-pass
   template:
     metadata:
       labels:
-        app: {{ .Release.Name }}
+        app: {{ .Release.Name }}-proxy-pass
       annotations:
         checksum/values: {{ .Values | toYaml | sha256sum }}
     spec:
@@ -30,7 +30,7 @@ spec:
       volumes:
       - name: config
         configMap:
-          name: {{ .Release.Name }}
+          name: {{ .Release.Name }}-proxy-pass
           items:
           - key: default.conf
             path: default.conf
