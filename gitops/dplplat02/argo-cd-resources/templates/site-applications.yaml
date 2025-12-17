@@ -9,7 +9,7 @@ spec:
   project: sites
   source:
     repoURL: https://github.com/danskernesdigitalebibliotek/dpl-platform.git
-    path: gitops/dplplat01/sites/{{ .name }}
+    path: gitops/dplplat02/sites/{{ .name }}
     targetRevision: HEAD
     helm:
       {{- if .values }}
