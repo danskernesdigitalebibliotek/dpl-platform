@@ -1,0 +1,36 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ .Release.Name }}
+data:
+  default.conf: |
+    server {
+        listen 80;
+        listen [::]:80;
+        server_name localhost;
+
+        location / {
+            {{ if eq .Values.target "external" }}
+
+            set $domain "{{ .Values.externalService.domain }}";
+
+            proxy_set_header Host $domain;
+            proxy_pass https://{{ .Values.externalService.ipAddress }};
+            proxy_ssl_server_name on;
+
+            {{ else }}
+            {{- /* target must now be "static" */}}
+
+            root /usr/share/nginx/html;
+            try_files $uri $uri/ /index.html;
+
+            {{ end }}
+        }
+
+        error_page 500 502 503 504 /50x.html;
+        location = /50x.html {
+            root /usr/share/nginx/html;
+        }
+    }
+  index.html: |
+    {{- .Values.static.html | nindent 4 }}

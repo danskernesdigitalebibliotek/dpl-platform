@@ -1,0 +1,34 @@
+replicas: 2
+
+# the domain this services should be served on
+ingress:
+  host:
+
+  ingressClassName:
+
+  certManager:
+    clusterIssuer:
+
+# possible values are "internal", "external" or "static"
+target:
+
+# the external service and ip we route to if "target" is set to "external"
+externalService:
+  domain:
+  ipAddress:
+
+# the internal service and port we route to if "target" is set to "internal"
+internalService:
+  name:
+  port:
+
+# the static html we return if "target" is set to "static"
+static:
+  html: |
+    <!DOCTYPE html>
+    <html lang="en">
+      <body>
+        <h1>Site is under maintenance</h1>
+        <p>We are currently performing maintenance on the site. Please check back later.</p>
+      </body>
+    </html>
