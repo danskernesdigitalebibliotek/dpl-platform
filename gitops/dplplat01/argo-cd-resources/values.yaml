@@ -81,6 +81,7 @@ sites:
   - name: canary-main
 
   - name: canary-moduletest
+    automated: false
 
   - name: aabenraa-main
 
