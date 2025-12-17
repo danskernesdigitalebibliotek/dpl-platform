@@ -83,23 +83,11 @@ sites:
       proxy-pass-service:
         ingress:
           host: bibliotest.deranged.dk
-        target: external
+          goHost: go.bibliotest.deranged.dk
+        target: internal
         externalService:
           domain: bibliotest.deranged.dk
-          ipAddress: 130.226.25.93
-        internalService:
-          name: varnish
-          port: 8080
-      proxy-pass-service-go:
-        ingress:
-          host: go.bibliotest.deranged.dk
-        target: external
-        externalService:
-          domain: go.bibliotest.deranged.dk
-          ipAddress: 130.226.25.93
-        internalService:
-          name: node
-          port: 8080
+          goDomain: go.bibliotest.deranged.dk
 
   - name: canary-moduletest
 
