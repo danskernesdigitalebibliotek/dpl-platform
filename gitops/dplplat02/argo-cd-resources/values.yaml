@@ -50,19 +50,14 @@ apps:
     project: crds
     automated: false
 
-  - name: mariadb-development-v10-06-22
-    project: databases
-    namespace: mariadb-development-v10-06-22
-    automated: false
-
-  - name: mariadb-production-v10-06-22
-    project: databases
-    namespace: mariadb-production-v10-06-22
-    automated: false
-
   - name: mariadb-10-06-01-test
     project: databases
     namespace: mariadb-10-06-01-test
+    automated: false
+
+  - name: mariadb-10-6-22-production-1
+    project: databases
+    namespace: mariadb-10-6-22-production-1
     automated: false
 
   - name: lagoon-auxiliary
