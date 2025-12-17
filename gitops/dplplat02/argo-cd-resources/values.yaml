@@ -82,4 +82,6 @@ sites:
 
   - name: customizable-canary-main
 
+  - name: customizable-canary-moduletest
+
   - name: kobenhavn-main
