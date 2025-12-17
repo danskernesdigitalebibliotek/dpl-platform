@@ -69,3 +69,8 @@ apps:
     project: k8up
     namespace: k8up
     automated: false
+
+automateSites: true
+
+sites:
+  - name: canary-main
