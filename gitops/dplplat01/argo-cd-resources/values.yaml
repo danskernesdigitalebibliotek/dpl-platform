@@ -82,6 +82,20 @@ sites:
 
   - name: canary-moduletest
     automated: false
+    values:
+      proxy-pass-service:
+        ingress:
+          host: bibliotest.deranged.dk
+          ingressClassName: nginx
+          certManager:
+            clusterIssuer: zerossl-production
+        target: internal
+        externalService:
+          domain: bibliotest.deranged.dk
+          ipAddress: 130.226.25.93
+        internalService:
+          name: varnish
+          port: 8080
 
   - name: aabenraa-main
 

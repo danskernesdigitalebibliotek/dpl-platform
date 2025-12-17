@@ -1,3 +1,7 @@
 apiVersion: v2
 name: canary-moduletest
 version: 0.0.0
+dependencies:
+  - name: proxy-pass-service
+    version: 0.0.1
+    repository: oci://ghcr.io/danskernesdigitalebibliotek/dpl-platform/charts
