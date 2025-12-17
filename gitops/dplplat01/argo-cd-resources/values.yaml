@@ -79,8 +79,6 @@ automateSites: true
 
 sites:
   - name: canary-main
-
-  - name: canary-moduletest
     automated: false
     values:
       proxy-pass-service:
@@ -96,6 +94,8 @@ sites:
         internalService:
           name: varnish
           port: 8080
+
+  - name: canary-moduletest
 
   - name: aabenraa-main
 
