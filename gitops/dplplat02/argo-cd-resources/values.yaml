@@ -80,8 +80,272 @@ automateSites: true
 sites:
   - name: canary-main
 
-  - name: customizable-canary-main
+  - name: canary-moduletest
 
-  - name: customizable-canary-moduletest
+  - name: aabenraa-main
+
+  - name: aalborg-main
+
+  - name: aalborg-moduletest
+    values:
+      autoscalers:
+        node:
+          enabled: false
+
+  - name: aarhus-main
+
+  - name: aarhus-moduletest
+    values:
+      autoscalers:
+        node:
+          enabled: false
+
+  - name: aero-main
+
+  - name: albertslund-main
+
+  - name: albertslund-moduletest
+
+  - name: allerod-main
+
+  - name: assens-main
+
+  - name: ballerup-main
+
+  - name: ballerup-moduletest
+    values:
+      autoscalers:
+        node:
+          enabled: false
+
+  - name: billund-main
+
+  - name: bornholm-main
+
+  - name: brondby-main
+
+  - name: bronderslev-main
+
+  - name: dragor-main
+
+  - name: egedal-main
+
+  - name: esbjerg-main
+
+  - name: faaborg-midtfyn-main
+
+  - name: favrskov-main
+
+  - name: fredensborg-main
+
+  - name: fredericia-main
+
+  - name: frederiksberg-main
+
+  - name: frederikssund-main
+
+  - name: faxe-main
+
+  - name: faxe-moduletest
+    values:
+      autoscalers:
+        node:
+          enabled: false
+
+  - name: fureso-main
+
+  - name: gentofte-main
+
+  - name: gladsaxe-main
+
+  - name: glostrup-main
+
+  - name: greve-main
+
+  - name: gribskov-main
+
+  - name: guldborgsund-main
+
+  - name: halsnaes-main
+
+  - name: haderslev-main
+
+  - name: hedensted-main
+
+  - name: helsingor-main
+
+  - name: herlev-main
+
+  - name: herning-main
+
+  - name: herning-moduletest
+
+  - name: hillerod-main
+
+  - name: hjorring-main
+
+  - name: holbaek-main
+
+  - name: holstebro-main
+
+  - name: horsens-main
+
+  - name: hoje-taastrup-main
+
+  - name: horsholm-main
+
+  - name: hvidovre-main
+
+  - name: ikast-brande-main
+
+  - name: ishoj-main
+
+  - name: kalundborg-main
+
+  - name: kerteminde-main
 
   - name: kobenhavn-main
+
+  - name: kobenhavn-moduletest
+    values:
+      autoscalers:
+        node:
+          enabled: false
+
+  - name: koge-main
+
+  - name: kolding-main
+
+  - name: langeland-main
+
+  - name: lejre-main
+
+  - name: lolland-main
+
+  - name: lyngby-taarbaek-main
+
+  - name: mariagerfjord-main
+
+  - name: middelfart-main
+
+  - name: morso-main
+
+  - name: naestved-main
+
+  - name: norddjurs-main
+
+  - name: nordfyn-main
+
+  - name: nyborg-main
+
+  - name: odder-main
+
+  - name: odense-main
+
+  - name: odense-moduletest
+    values:
+      autoscalers:
+        node:
+          enabled: false
+
+  - name: odsherred-main
+
+  - name: randers-main
+
+  - name: rebild-main
+
+  - name: ringkobing-skjern-main
+
+  - name: ringsted-main
+
+  - name: roskilde-main
+
+  - name: roskilde-moduletest
+    values:
+      autoscalers:
+        node:
+          enabled: false
+
+  - name: rudersdal-main
+
+  - name: rodovre-main
+
+  - name: samso-main
+
+  - name: silkeborg-main
+
+  - name: silkeborg-moduletest
+
+  - name: skanderborg-main
+
+  - name: skive-main
+
+  - name: soro-main
+
+  - name: stevns-main
+
+  - name: struer-main
+
+  - name: svendborg-main
+
+  - name: syddjurs-main
+
+  - name: taarnby-main
+
+  - name: taarnby-moduletest
+    values:
+      autoscalers:
+        node:
+          enabled: false
+
+  - name: vallensbaek-main
+
+  - name: varde-main
+
+  - name: vejen-main
+
+  - name: vejle-main
+
+  - name: vesthimmerland-main
+
+  - name: viborg-main
+
+  - name: vordingborg-main
+
+  - name: laeso-main
+
+  - name: torshavn-main
+
+  - name: frederikshavn-main
+
+  - name: bnf-main
+
+  - name: bnf-moduletest
+
+  - name: cms-school-main
+
+  - name: cms-school-moduletest
+    values:
+      autoscalers:
+        node:
+          enabled: false
+
+  - name: solrod2-main
+
+  - name: sonderborg-main
+
+  - name: sonderborg-moduletest
+    values:
+      autoscalers:
+        node:
+          enabled: false
+
+  - name: sydslesvig-main
+
+  - name: sydslesvig-moduletest
+    values:
+      autoscalers:
+        node:
+          enabled: false
+
+  - name: thisted-main
