@@ -82,7 +82,7 @@ sites:
     values:
       proxy-pass-service:
         host: bibliotest.deranged.dk
-        target: internal
+        target: external
 
   - name: canary-moduletest
 
