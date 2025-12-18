@@ -81,13 +81,8 @@ sites:
   - name: canary-main
     values:
       proxy-pass-service:
-        ingress:
-          host: bibliotest.deranged.dk
-          goHost: go.bibliotest.deranged.dk
+        host: bibliotest.deranged.dk
         target: external
-        externalService:
-          domain: bibliotest.deranged.dk
-          goDomain: go.bibliotest.deranged.dk
 
   - name: canary-moduletest
 
