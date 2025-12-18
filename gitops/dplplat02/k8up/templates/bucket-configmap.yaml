@@ -1,0 +1,11 @@
+apiVersion: v1
+data:
+  BUCKET_HOST: files.lagoon.dplplat02.dpl.reload.dk
+  BUCKET_NAME: lagoon-backup
+  BUCKET_PORT: "80"
+  BUCKET_REGION: ""
+  BUCKET_SUBREGION: ""
+kind: ConfigMap
+metadata:
+  name: lagoon-bucket
+  namespace: k8up

@@ -23,48 +23,48 @@ k8up:
 
   k8up:
     envVars:
-    # Secret values
-     - name: BACKUP_GLOBALACCESSKEYID
-       valueFrom:
-        secretKeyRef:
-          name: lagoon-bucket
-          key: AWS_ACCESS_KEY_ID
-     - name: BACKUP_GLOBALSECRETACCESSKEY
-       valueFrom:
-        secretKeyRef:
-          name: lagoon-bucket
-          key: AWS_SECRET_ACCESS_KEY
-     - name: BACKUP_GLOBALRESTORES3ACCESSKEYID
-       valueFrom:
-        secretKeyRef:
-          name: lagoon-bucket
-          key: AWS_ACCESS_KEY_ID
-     - name: BACKUP_GLOBALRESTORES3SECRETACCESSKEY
-       valueFrom:
-        secretKeyRef:
-          name: lagoon-bucket
-          key: AWS_SECRET_ACCESS_KEY
-    # Config values
-     - name: BACKUP_GLOBALS3BUCKET
-       valueFrom:
-        configMapKeyRef:
-          name: lagoon-bucket
-          key: BUCKET_NAME
-     - name: BACKUP_GLOBALS3ENDPOINT
-       valueFrom:
-        configMapKeyRef:
-          name: lagoon-bucket
-          key: BUCKET_HOST
-     - name: BACKUP_GLOBALKEEPJOBS
-       value: "1"
-     - name: BACKUP_GLOBALSTATSURL
-       value: https://backup-stats.lagoon.dplplat02.dpl.reload.dk
-     - name: BACKUP_BACKOFFLIMIT
-       value: "2"
-     - name: BACKUP_GLOBALRESTORES3BUCKET
-       value: restore
-     - name: BACKUP_GLOBALRESTORES3ENDPOINT
-       value: https://backuphandler.lagoon.dplplat02.dpl.reload.dk
+      # Secret values
+      - name: BACKUP_GLOBALACCESSKEYID
+        valueFrom:
+          secretKeyRef:
+            name: accesskey-secretkey
+            key: AWS_ACCESS_KEY_ID
+      - name: BACKUP_GLOBALSECRETACCESSKEY
+        valueFrom:
+          secretKeyRef:
+            name: accesskey-secretkey
+            key: AWS_SECRET_ACCESS_KEY
+      - name: BACKUP_GLOBALRESTORES3ACCESSKEYID
+        valueFrom:
+          secretKeyRef:
+            name: accesskey-secretkey
+            key: AWS_ACCESS_KEY_ID
+      - name: BACKUP_GLOBALRESTORES3SECRETACCESSKEY
+        valueFrom:
+          secretKeyRef:
+            name: accesskey-secretkey
+            key: AWS_SECRET_ACCESS_KEY
+      # Config values
+      - name: BACKUP_GLOBALS3BUCKET
+        valueFrom:
+          configMapKeyRef:
+            name: lagoon-bucket
+            key: BUCKET_NAME
+      - name: BACKUP_GLOBALS3ENDPOINT
+        valueFrom:
+          configMapKeyRef:
+            name: lagoon-bucket
+            key: BUCKET_HOST
+      - name: BACKUP_GLOBALKEEPJOBS
+        value: "1"
+      - name: BACKUP_GLOBALSTATSURL
+        value: https://backup-stats.lagoon.dplplat02.dpl.reload.dk
+      - name: BACKUP_BACKOFFLIMIT
+        value: "2"
+      - name: BACKUP_GLOBALRESTORES3BUCKET
+        value: restore
+      - name: BACKUP_GLOBALRESTORES3ENDPOINT
+        value: https://backuphandler.lagoon.dplplat02.dpl.reload.dk
 
     backupImage:
       # -- The backup runner image repository
@@ -162,4 +162,3 @@ k8up:
       cpu: 20m
       # -- Memory request of K8up operator. See [supported units][resource-units].
       memory: 128Mi
-
