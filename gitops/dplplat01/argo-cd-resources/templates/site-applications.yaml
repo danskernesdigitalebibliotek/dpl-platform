@@ -21,6 +21,7 @@ spec:
     namespace: {{ .name }}
   syncPolicy:
     {{- if and (ne .automated false) $.Values.automateSites }}
-    automated: {}
+    automated:
+      selfHeal: true
     {{- end }}
 {{- end }}
