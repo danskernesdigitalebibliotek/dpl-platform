@@ -1,0 +1,10 @@
+apiVersion: v2
+name: kerteminde-main
+version: 0.0.0
+dependencies:
+  - name: mariadb
+    version: 0.0.3
+    repository: oci://ghcr.io/danskernesdigitalebibliotek/dpl-platform/charts
+  - name: autoscalers
+    version: 0.0.13
+    repository: oci://ghcr.io/danskernesdigitalebibliotek/dpl-platform/charts
