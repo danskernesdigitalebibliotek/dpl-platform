@@ -1,7 +1,7 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: {{ .Values.ingress.host }}
+  name: {{ .Values.host }}
   annotations:
     cert-manager.io/cluster-issuer: zerossl-production
     fastly.amazee.io/watch: 'false'
@@ -15,7 +15,7 @@ metadata:
 spec:
   ingressClassName: nginx
   rules:
-    - host: {{ .Values.ingress.host }}
+    - host: {{ .Values.host }}
       http:
         paths:
           - path: /
@@ -34,5 +34,5 @@ spec:
               {{- end }}
   tls:
     - hosts:
-        - {{ .Values.ingress.host }}
-      secretName: {{ .Values.ingress.host }}-tls
+        - {{ .Values.host }}
+      secretName: {{ .Values.host }}-tls

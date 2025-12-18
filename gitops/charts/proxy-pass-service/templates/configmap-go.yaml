@@ -13,7 +13,7 @@ data:
         location / {
             {{ if eq .Values.target "external" }}
 
-            set $domain "{{ .Values.externalService.goDomain }}";
+            set $domain go."{{ .Values.host }}";
 
             proxy_set_header Host $domain;
             proxy_pass https://{{ .Values.externalService.ipAddress }};
