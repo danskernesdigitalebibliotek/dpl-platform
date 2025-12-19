@@ -413,10 +413,16 @@ minio:
     #   secretKey: console123
     #   user: console
     ## Or you can refer to specific secret
-    # - accessKey: HnfboLfo4DkufUsug9keBvYkoRGn
-    #   existingSecret: minio-secret-key
-    #   existingSecretKey: secretKey
-    #   user: console
+    - user: loki
+      accessKey: loki-minio-access-key
+      existingSecret: loki-minio-secret-key
+      existingSecretKey: secretKey
+      policy:
+        statements:
+          - resources:
+              - arn:aws:s3:::loki-*-bucket/*
+            actions:
+              - s3:*
     ## You also can pass custom policy
     # - accessKey: console-svcacct
     #   secretKey: console123
@@ -451,6 +457,12 @@ minio:
     - name: lagoon-files-bucket
       policy: none
     - name: harbor-images
+      policy: none
+    - name: loki-chunks-bucket
+      policy: none
+    - name: loki-ruler-bucket
+      policy: none
+    - name: loki-admin-bucket
       policy: none
     #   # Name of the bucket
     # - name: bucket1
