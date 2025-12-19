@@ -304,7 +304,13 @@ minio:
   ##
   ## In addition to default policies [readonly|readwrite|writeonly|consoleAdmin|diagnostics]
   ## you can define additional policies with custom supported actions and resources
-  policies: []
+  policies:
+    - name: loki-policy
+      statements:
+        - resources:
+            - arn:aws:s3:::loki-*-bucket/*
+          actions:
+            - s3:*
   ## writeexamplepolicy policy grants creation or deletion of buckets with name
   ## starting with example. In addition, grants objects write permissions on buckets starting with
   ## example.
@@ -388,6 +394,10 @@ minio:
       existingSecret: minio-secret-key
       existingSecretKey: secretKey
       policy: readwrite
+    - accessKey: loki-minio-access-key
+      existingSecret: loki-minio-secret-key
+      existingSecretKey: secretKey
+      policy: loki-policy
 
   ## Additional Annotations for the Kubernetes Job makeUserJob
   makeUserJob:
@@ -403,17 +413,7 @@ minio:
 
   ## List of service accounts to be created after minio install
   ##
-  svcaccts:
-    - user: loki
-      accessKey: loki-minio-access-key
-      existingSecret: loki-minio-secret-key
-      existingSecretKey: secretKey
-      policy:
-        statements:
-          - resources:
-              - arn:aws:s3:::loki-*-bucket/*
-            actions:
-              - s3:*
+  svcaccts: []
     ## accessKey, secretKey and parent user to be assigned to the service accounts
     ## Add new service accounts as explained here https://min.io/docs/minio/kubernetes/upstream/administration/identity-access-management/minio-user-management.html#service-accounts
     # - accessKey: console-svcacct
