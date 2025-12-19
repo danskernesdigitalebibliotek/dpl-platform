@@ -4316,7 +4316,7 @@ kube-prometheus-stack:
       resources:
         requests:
           memory: 6Gi
-        limit:
+        limits:
           memory: 8Gi
       # requests:
       #   memory: 400Mi
