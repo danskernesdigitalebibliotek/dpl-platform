@@ -1320,18 +1320,18 @@ kube-prometheus-stack:
     ingress:
       ## If true, Grafana Ingress will be created
       ##
-      enabled: false
+      enabled: true
 
       ## IngressClassName for Grafana Ingress.
       ## Should be provided if Ingress is enable.
       ##
-      # ingressClassName: nginx
+      ingressClassName: nginx
 
       ## Annotations for Grafana Ingress
       ##
-      annotations: {}
+      annotations:
         # kubernetes.io/ingress.class: nginx
-        # kubernetes.io/tls-acme: "true"
+        kubernetes.io/tls-acme: "true"
 
       ## Labels to be added to the Ingress
       ##
@@ -1342,7 +1342,8 @@ kube-prometheus-stack:
       ##
       # hosts:
       #   - grafana.domain.com
-      hosts: []
+      hosts:
+        - grafana.dplplat02.dpl.reload.dk
 
       ## Path for grafana ingress
       path: /
@@ -1350,20 +1351,20 @@ kube-prometheus-stack:
       ## TLS configuration for grafana Ingress
       ## Secret must be manually created in the namespace
       ##
-      tls: []
-      # - secretName: grafana-general-tls
-      #   hosts:
-      #   - grafana.example.com
+      tls:
+        - secretName: grafana.dplplat02.dpl.reload.dk-tls
+          hosts:
+          - grafana.dplplat02.dpl.reload.dk
 
     # # To make Grafana persistent (Using Statefulset)
     # #
-    # persistence:
-    #   enabled: true
-    #   type: sts
-    #   storageClassName: "storageClassName"
+    persistence:
+      enabled: true
+      # type: sts
+      # storageClassName: "storageClassName"
     #   accessModes:
     #     - ReadWriteOnce
-    #   size: 20Gi
+      size: 2Gi
     #   finalizers:
     #     - kubernetes.io/pvc-protection
 
