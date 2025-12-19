@@ -24,6 +24,13 @@ apps:
     namespace: cert-manager
     automated: true
 
+  - name: kube-prometheus-stack
+    project: monitoring
+    namespace: monitoring
+    automated: true
+    syncOptions:
+      - ServerSideApply=true
+
   - name: harbor
     project: harbor
     namespace: harbor
