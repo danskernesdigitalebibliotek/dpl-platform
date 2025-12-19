@@ -394,7 +394,7 @@ minio:
       existingSecret: minio-secret-key
       existingSecretKey: secretKey
       policy: readwrite
-    - accessKey: loki-minio-access-key
+    - accessKey: loki-user
       existingSecret: loki-minio-secret-key
       existingSecretKey: secretKey
       policy: loki-policy
