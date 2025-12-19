@@ -163,7 +163,7 @@ minio:
     storageClass: computerome-nfs
     volumeName: ""
     accessMode: ReadWriteOnce
-    size: 300Gi
+    size: 500Gi
 
     ## If subPath is set mount a sub folder of a volume instead of the root of the volume.
     ## This is especially handy for volume plugins that don't natively support sub mounting (like glusterfs).
@@ -217,7 +217,7 @@ minio:
     hosts:
       - files.lagoon.dplplat02.dpl.reload.dk
     tls:
-      - secretName: minio-tls
+      - secretName: files.lagoon.dplplat02.dpl.reload.dk-tls
         hosts:
           - files.lagoon.dplplat02.dpl.reload.dk
 
@@ -265,21 +265,14 @@ minio:
   ## Node labels for pod assignment
   ## Ref: https://kubernetes.io/docs/user-guide/node-selection/
   ##
-  nodeSelector: {}
+  nodeSelector: 
+    node-role.kubernetes.io/prod: ""
   tolerations:
     - key: noderole.dplplatform
       operator: Equal
       value: prod
       effect: NoSchedule
-  affinity:
-    nodeAffinity:
-      requiredDuringSchedulingIgnoredDuringExecution:
-        nodeSelectorTerms:
-          - matchExpressions:
-              - key: node-role.kubernetes.io/prod
-                operator: In
-                values:
-                  - ""
+  affinity: {}
   topologySpreadConstraints: []
 
   ## Add stateful containers to have security context, if enabled MinIO will run as this
@@ -387,6 +380,10 @@ minio:
     #   secretKey: console123
     #   policy: consoleAdmin
     # Or you can refer to specific secret
+    #- accessKey: externalSecret
+    #  existingSecret: my-secret
+    #  existingSecretKey: password
+    #  policy: readonly
     - accessKey: HnfboLfo4DkufUsug9keBvYkoRGn
       existingSecret: minio-secret-key
       existingSecretKey: secretKey
@@ -407,12 +404,6 @@ minio:
   ## List of service accounts to be created after minio install
   ##
   svcaccts:
-    ## accessKey, secretKey and parent user to be assigned to the service accounts
-    ## Add new service accounts as explained here https://min.io/docs/minio/kubernetes/upstream/administration/identity-access-management/minio-user-management.html#service-accounts
-    # - accessKey: console-svcacct
-    #   secretKey: console123
-    #   user: console
-    ## Or you can refer to specific secret
     - user: loki
       accessKey: loki-minio-access-key
       existingSecret: loki-minio-secret-key
@@ -423,6 +414,16 @@ minio:
               - arn:aws:s3:::loki-*-bucket/*
             actions:
               - s3:*
+    ## accessKey, secretKey and parent user to be assigned to the service accounts
+    ## Add new service accounts as explained here https://min.io/docs/minio/kubernetes/upstream/administration/identity-access-management/minio-user-management.html#service-accounts
+    # - accessKey: console-svcacct
+    #   secretKey: console123
+    #   user: console
+    ## Or you can refer to specific secret
+    # - accessKey: externalSecret
+    #   existingSecret: my-secret
+    #   existingSecretKey: password
+    #   user: console
     ## You also can pass custom policy
     # - accessKey: console-svcacct
     #   secretKey: console123
@@ -536,9 +537,7 @@ minio:
     nodeSelector: {}
     tolerations:
       - key: noderole.dplplatform
-        operator: Equal
-        value: prod
-        effect: NoSchedule
+        operator: Exists
     affinity:
       nodeAffinity:
         requiredDuringSchedulingIgnoredDuringExecution:
@@ -590,7 +589,7 @@ minio:
     allowExternal: true
     # only when using flavor: cilium
     egressEntities:
-      - kube-apiserver
+    - kube-apiserver
 
   ## PodDisruptionBudget settings
   ## ref: https://kubernetes.io/docs/concepts/workloads/pods/disruptions/
@@ -622,7 +621,7 @@ minio:
         # metricRelabelings:
         #   - regex: (server|pod)
         #     action: labeldrop
-      namespace: minio
+      namespace: ~
       # Scrape interval, for example `interval: 30s`
       interval: ~
       # Scrape timeout, for example `scrapeTimeout: 10s`
