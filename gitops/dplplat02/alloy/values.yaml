@@ -400,7 +400,8 @@ alloy:
     nodeSelector: {}
 
     # -- Tolerations to apply to Grafana Alloy pods.
-    tolerations: []
+    tolerations:
+    - effect: NoSchedule
 
     # -- Topology Spread Constraints to apply to Grafana Alloy pods.
     topologySpreadConstraints: []
