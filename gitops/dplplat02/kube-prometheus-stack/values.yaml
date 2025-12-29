@@ -1471,7 +1471,7 @@ kube-prometheus-stack:
       access: proxy
       basicAuth: false
       editable: false
-      url: http://loki-read-headless.svc.loki.cluster.local:3100
+      url: http://loki-read-headless.loki.svc.cluster.local:3100
       jsonData:
         maxLines: 1000
         queryTimeout: 60s
