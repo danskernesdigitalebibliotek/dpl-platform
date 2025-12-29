@@ -442,7 +442,7 @@ loki:
       type: s3
       s3:
         s3: http://minio-svc.minio.svc.cluster.local:9000
-        endpoint: http://minio-svc.minio.svc.cluster.local:9000
+        endpoint: null
         region: null
         secretAccessKey: loki-user
         accessKeyId: "${LOKI_MINIO_SECRET_KEY}"
