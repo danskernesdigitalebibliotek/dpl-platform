@@ -21,10 +21,15 @@ loki:
     dnsNamespace: "kube-system"
     # -- Common additional CLI arguments for all jobs (that is, -log.level debug, -config.expand-env=true or -log-config-reverse-order)
     # scope: admin-api, backend, bloom-builder, bloom-gateway, bloom-planner, compactor, distributor, index-gateway, ingester, overrides-exporter, pattern-ingester, querier, query-frontend, query-scheduler, read, ruler, write.
-    extraArgs: []
+    extraArgs: [-config.expand-env=true]
     # -- Common environment variables to add to all pods directly managed by this chart.
     # scope: admin-api, backend, bloom-builder, bloom-gateway, bloom-planner, compactor, distributor, index-gateway, ingester, overrides-exporter, pattern-ingester, querier, query-frontend, query-scheduler, read, ruler, write.
-    extraEnv: []
+    extraEnv:
+    - name: LOKI_MINIO_SECRET_KEY
+      valueFrom:
+        secretKeyRef:
+          name: loki-minio-secret-key
+          key: secretKey
     # -- Common source of environment injections to add to all pods directly managed by this chart.
     # scope: admin-api, backend, bloom-builder, bloom-gateway, bloom-planner, compactor, distributor, index-gateway, ingester, overrides-exporter, pattern-ingester, querier, query-frontend, query-scheduler, read, ruler, write.
     # For example to inject values from a Secret, use:
@@ -431,9 +436,9 @@ loki:
       # Loki requires a bucket for chunks and the ruler. GEL requires a third bucket for the admin API.
       # Please provide these values if you are using object storage.
       # bucketNames:
-      #   chunks: FIXME
-      #   ruler: FIXME
-      #   admin: FIXME
+      chunks: loki-chunks
+      ruler: loki-chunks
+      admin: loki-chunks
       type: s3
       s3:
         s3: null
@@ -498,15 +503,15 @@ loki:
         # S3 configuration (when type is "s3")
         s3:
           # S3 endpoint URL
-          endpoint: null
+          endpoint: minio-svc
           # Optional region
           region: null
           # Optional access key
-          access_key_id: null
+          access_key_id: loki-user
           # Optional secret key
-          secret_access_key: null
+          secret_access_key: "${LOKI_MINIO_SECRET_KEY}"
           # Optional. Enable if using self-signed TLS
-          insecure: false
+          insecure: true
           # Optional server-side encryption configuration
           sse: {}
           # Optional HTTP client configuration
