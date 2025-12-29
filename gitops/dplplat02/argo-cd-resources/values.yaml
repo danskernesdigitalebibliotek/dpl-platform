@@ -43,6 +43,11 @@ apps:
     syncOptions:
       - ServerSideApply=true
 
+  - name: alloy
+    project: monitoring
+    namespace: alloy
+    automated: true
+
   - name: minio
     project: minio
     namespace: minio
