@@ -1231,6 +1231,7 @@ kube-prometheus-stack:
     namespaceOverride: ""
 
     deploymentStrategy:
+      rollingUpdate: null
       type: Recreate
 
     ## ForceDeployDatasources Create datasource configmap even if grafana deployment has been disabled
