@@ -1234,6 +1234,9 @@ kube-prometheus-stack:
       type: Recreate
 
     grafana.ini:
+      server:
+        domain: grafana.dplplat02.dpl.reload.dk
+        root_url: https://grafana.dplplat02.dpl.reload.dk
       auth.anonymous:
         enabled: false
       auth.basic:
