@@ -445,7 +445,7 @@ loki:
         endpoint: null
         region: null
         secretAccessKey: "${LOKI_MINIO_SECRET_KEY}"
-        accessKeyId: loki-user
+        accessKeyId: loki-minio-access-key
         signatureVersion: null
         s3ForcePathStyle: true
         insecure: true
@@ -507,7 +507,7 @@ loki:
           # Optional region
           region: null
           # Optional access key
-          access_key_id: loki-user
+          access_key_id: loki-minio-access-key
           # Optional secret key
           secret_access_key: "${LOKI_MINIO_SECRET_KEY}"
           # Optional. Enable if using self-signed TLS
