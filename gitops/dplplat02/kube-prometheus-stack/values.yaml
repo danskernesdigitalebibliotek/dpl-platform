@@ -1231,8 +1231,26 @@ kube-prometheus-stack:
     namespaceOverride: ""
 
     deploymentStrategy:
-      rollingUpdate: null
       type: Recreate
+
+    grafana.ini:
+      auth.anonymous:
+        enabled: false
+      auth.basic:
+        disable_login_form: true
+      auth.generic_oauth:
+        name: Lagoon Keycloak SSO
+        enabled: true
+        client_id: grafana-oauth
+        client_secret: ${grafana-oauth-secret}
+        scopes: openid
+        auth_url: https://keycloak.lagoon.dplplat02.dpl.reload.dk/auth/realms/lagoon/protocol/openid-connect/auth
+        token_url: https://keycloak.lagoon.dplplat02.dpl.reload.dk/auth/realms/lagoon/protocol/openid-connect/token
+        api_url: https://keycloak.lagoon.dplplat02.dpl.reload.dk/auth/realms/lagoon/protocol/openid-connect/userinfo
+        allowed_domains: deranged.dk reload.dk
+        role_attribute_path: "contains(groups[*], 'operators-owner') && 'Admin' || 'Viewer'"
+
+    envFromSecret: grafana-oauth-client-secret
 
     ## ForceDeployDatasources Create datasource configmap even if grafana deployment has been disabled
     ##
@@ -1493,7 +1511,7 @@ kube-prometheus-stack:
     # Flag to mark provisioned data sources for deletion if they are no longer configured.
     # It takes no effect if data sources are already listed in the deleteDatasources section.
     # ref: https://grafana.com/docs/grafana/latest/administration/provisioning/#example-data-source-configuration-file
-    prune: false
+    prune: true
 
     ## Passed to grafana subchart and used by servicemonitor below
     ##
