@@ -1472,6 +1472,7 @@ kube-prometheus-stack:
       basicAuth: false
       editable: false
       url: http://loki-read-headless.loki.svc.cluster.local:3100
+      orgId: 1
       jsonData:
         maxLines: 1000
         queryTimeout: 60s
