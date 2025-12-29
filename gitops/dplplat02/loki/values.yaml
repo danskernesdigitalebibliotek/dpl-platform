@@ -532,7 +532,16 @@ loki:
           account_key: null
 
     # -- Check https://grafana.com/docs/loki/latest/configuration/#schema_config for more info on how to configure schemas
-    schemaConfig: {}
+    schemaConfig:
+      configs:
+        - from: 2024-12-01
+          object_store: s3
+          store: tsdb
+          schema: v13
+          index:
+            prefix: loki_index_
+            period: 24h
+
     # -- a real Loki install requires a proper schemaConfig defined above this, however for testing or playing around
     # you can enable useTestSchema
     useTestSchema: false
