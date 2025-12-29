@@ -444,8 +444,8 @@ loki:
         s3: http://minio-svc.minio.svc.cluster.local:9000
         endpoint: null
         region: null
-        secretAccessKey: loki-user
-        accessKeyId: "${LOKI_MINIO_SECRET_KEY}"
+        secretAccessKey: "${LOKI_MINIO_SECRET_KEY}"
+        accessKeyId: loki-user
         signatureVersion: null
         s3ForcePathStyle: true
         insecure: true
