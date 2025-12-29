@@ -41,6 +41,11 @@ apps:
     syncOptions:
       - ServerSideApply=true
 
+  - name: alloy
+    project: monitoring
+    namespace: alloy
+    automated: true
+
   - name: promstack
     project: monitoring
     namespace: prometheus
