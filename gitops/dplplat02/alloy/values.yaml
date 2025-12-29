@@ -38,7 +38,6 @@ alloy:
         loki.write "default" {
           endpoint {
             url = "http://loki-write-headless.loki.svc.cluster.local:3100/loki/api/v1/push"
-            tenant_id = "1"
           }
         }
 
