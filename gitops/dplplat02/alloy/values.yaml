@@ -401,7 +401,8 @@ alloy:
 
     # -- Tolerations to apply to Grafana Alloy pods.
     tolerations:
-    - effect: NoSchedule
+    - operator: Exists
+      effect: NoSchedule
 
     # -- Topology Spread Constraints to apply to Grafana Alloy pods.
     topologySpreadConstraints: []
