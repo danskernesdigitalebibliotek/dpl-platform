@@ -441,14 +441,14 @@ loki:
         admin: loki-chunks
       type: s3
       s3:
-        s3: null
-        endpoint: null
+        s3: http://minio-svc.minio.svc.cluster.local:9000
+        endpoint: http://minio-svc.minio.svc.cluster.local:9000
         region: null
-        secretAccessKey: null
-        accessKeyId: null
+        secretAccessKey: loki-user
+        accessKeyId: "${LOKI_MINIO_SECRET_KEY}"
         signatureVersion: null
         s3ForcePathStyle: false
-        insecure: false
+        insecure: true
         http_config: {}
         # -- Check https://grafana.com/docs/loki/latest/configure/#s3_storage_config for more info on how to provide a backoff_config
         backoff_config: {}
