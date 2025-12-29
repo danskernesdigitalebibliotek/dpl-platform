@@ -1363,7 +1363,7 @@ kube-prometheus-stack:
     # # To make Grafana persistent (Using Statefulset)
     # #
     persistence:
-      enabled: true
+      enabled: false
       # type: sts
       # storageClassName: "storageClassName"
     #   accessModes:
