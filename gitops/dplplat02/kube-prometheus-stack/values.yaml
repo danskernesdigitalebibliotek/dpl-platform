@@ -1465,7 +1465,16 @@ kube-prometheus-stack:
 
     ## Configure additional grafana datasources (passed through tpl)
     ## ref: https://grafana.com/docs/grafana/latest/administration/provisioning/#datasources
-    additionalDataSources: []
+    additionalDataSources:
+    - name: loki
+      type: loki
+      access: proxy
+      basicAuth: false
+      editable: false
+      url: http://loki-read-headless.svc.loki.cluster.local:3100
+      jsonData:
+        maxLines: 1000
+        queryTimeout: 60s
     # - name: prometheus-sample
     #   access: proxy
     #   basicAuth: true
