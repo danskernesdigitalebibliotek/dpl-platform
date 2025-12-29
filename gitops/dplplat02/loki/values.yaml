@@ -793,7 +793,7 @@ loki:
   # The Loki canary pushes logs to and queries from this loki installation to test
   # that it's working correctly
   lokiCanary:
-    enabled: true
+    enabled: false
     # -- The type of the loki canary k8s rollout. This can be a DaemonSet or Deployment.
     kind: DaemonSet
     # -- If true, the canary will send directly to Loki via the address configured for verification --
