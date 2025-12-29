@@ -436,9 +436,9 @@ loki:
       # Loki requires a bucket for chunks and the ruler. GEL requires a third bucket for the admin API.
       # Please provide these values if you are using object storage.
       bucketNames:
-        chunks: loki-chunks
-        ruler: loki-chunks
-        admin: loki-chunks
+        chunks: loki-chunks-bucket
+        ruler: loki-ruler-bucket
+        admin: loki-admin-bucket
       type: s3
       s3:
         s3: http://minio-svc.minio.svc.cluster.local:9000
