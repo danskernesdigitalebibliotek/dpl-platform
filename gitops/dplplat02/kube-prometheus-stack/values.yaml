@@ -1252,9 +1252,6 @@ kube-prometheus-stack:
         api_url: https://keycloak.lagoon.dplplat02.dpl.reload.dk/auth/realms/lagoon/protocol/openid-connect/userinfo
         allowed_domains: deranged.dk reload.dk
         role_attribute_path: "contains(groups[*], 'operators-owner') && 'Admin' || 'Viewer'"
-      log:
-        level: debug
-
 
     envFromSecret: grafana-oauth-client-secret
 
