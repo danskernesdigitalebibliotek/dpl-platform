@@ -503,7 +503,7 @@ loki:
         # S3 configuration (when type is "s3")
         s3:
           # S3 endpoint URL
-          endpoint: minio-svc
+          endpoint: http://minio-svc.minio.svc.cluster.local:9000
           # Optional region
           region: null
           # Optional access key
