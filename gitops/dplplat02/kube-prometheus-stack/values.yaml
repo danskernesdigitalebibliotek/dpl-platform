@@ -1257,7 +1257,7 @@ kube-prometheus-stack:
 
     ## ForceDeployDatasources Create datasource configmap even if grafana deployment has been disabled
     ##
-    forceDeployDatasources: false
+    forceDeployDatasources: true
 
     ## ForceDeployDashboard Create dashboard configmap even if grafana deployment has been disabled
     ##
