@@ -36,6 +36,13 @@ apps:
     namespace: harbor
     automated: false
 
+  - name: grafana-operator
+    project: grafana-operator
+    namespace: grafana-operator
+    automated: true
+    syncOptions:
+      - ServerSideApply=true
+
   - name: loki
     project: monitoring
     namespace: loki
