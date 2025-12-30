@@ -1261,7 +1261,7 @@ kube-prometheus-stack:
 
     ## ForceDeployDashboard Create dashboard configmap even if grafana deployment has been disabled
     ##
-    forceDeployDashboards: false
+    forceDeployDashboards: true
 
     ## Deploy default dashboards
     ##
