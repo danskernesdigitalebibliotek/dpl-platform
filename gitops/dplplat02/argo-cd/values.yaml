@@ -122,9 +122,14 @@ argo-cd:
     # -- Default node selector for all components
     nodeSelector:
       kubernetes.io/os: linux
+      node-role.kubernetes.io/prod: ""
 
     # -- Default tolerations for all components
-    tolerations: []
+    tolerations:
+      - key: noderole.dplplatform
+        operator: Equal
+        value: prod
+        effect: NoSchedule
 
     # Default affinity preset for all components
     affinity:
