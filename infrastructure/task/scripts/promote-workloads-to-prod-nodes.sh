@@ -147,6 +147,9 @@ for NS in "${NAMESPACES[@]}"; do
         "spec": {
           "template": {
             "spec": {
+              "nodeselector": {
+                "node-role.kubernetes.io/prod": ""
+              },
               "tolerations": [
                 {
                   "key": "noderole.dplplatform",
@@ -154,24 +157,7 @@ for NS in "${NAMESPACES[@]}"; do
                   "value": "prod",
                   "effect": "NoSchedule"
                 }
-              ],
-              "affinity": {
-                "nodeAffinity": {
-                  "requiredDuringSchedulingIgnoredDuringExecution": {
-                    "nodeSelectorTerms": [
-                      {
-                        "matchExpressions": [
-                          {
-                            "key": "noderole.dplplatform",
-                            "operator": "In",
-                            "values": [ "prod" ]
-                          }
-                        ]
-                      }
-                    ]
-                  }
-                }
-              }
+              ]
             }
           }
         }
