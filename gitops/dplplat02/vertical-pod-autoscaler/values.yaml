@@ -121,8 +121,13 @@ vpa:
       requests:
         cpu: 50m
         memory: 500Mi
-    nodeSelector: {}
-    tolerations: []
+    nodeSelector:
+      node-role.kubernetes.io/prod: ""
+    tolerations:
+      - key: noderole.dplplatform
+        operator: Equal
+        value: prod
+        effect: NoSchedule
     affinity: {}
     # -- Enables a prometheus operator podMonitor for the recommender
     podMonitor:
