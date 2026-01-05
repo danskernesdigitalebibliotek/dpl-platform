@@ -34,7 +34,7 @@ dockerHost:
     extraEnvs: null
     storage:
         create: true
-        size: 750Gi
+        size: 400Gi
         # className sets the storageClassName for the docker-host PVC. This is
         # useful if the docker-host requires a specific storage class for features
         # such as increased IOPS.
@@ -48,7 +48,7 @@ dockerHost:
         # If className is not defined the chart will not set any specify storage
         # class on the PVC, effectively falling back to the cluster default.
         #
-        # className: managed-premium
+        # className: computerome-nfs
     networkPolicy:
         # Specifies whether the docker-host network policy should be enabled
         enabled: true
@@ -141,7 +141,7 @@ lagoon-build-deploy:
     # sensible defaults.
     # lagoonTargetName:
     #ENCRYPT
-    taskSSHHost: ENC[AES256_GCM,data:UXlyIDsy38KsJFGCOg==,iv:OA6oxT2vb35nzQFL9Z0dRp/msfmvs2BSUyCGmci91uI=,tag:YNgL0sbHjlPArNnyYK7mqQ==,type:str]
+    taskSSHHost: ENC[AES256_GCM,data:dVjP4G45iwjPEZOQ6A==,iv:Im6Srw13t41vpXxqxngnUkHN/DeiV1wMvjppPvOSePY=,tag:2cGNODHqIWYZ9AjUSYqB1Q==,type:str]
     taskSSHPort: 22
     taskAPIHost: api.lagoon.dplplat02.dpl.reload.dk
     # lagoonTokenHost: ""
@@ -150,9 +150,9 @@ lagoon-build-deploy:
     # sshPortalHost: ""
     # sshPortalPort: ""
     #ENCRYPT
-    rabbitMQUsername: ENC[AES256_GCM,data:VjaE8nc4,iv:JaFDQxbcnd1RiLgbZc3pIh1rCsPdlfZmymQEU2mczd4=,tag:Um5dvnJYGk8qaM9US/oyBw==,type:str]
+    rabbitMQUsername: ENC[AES256_GCM,data:UUqHZc2d,iv:TVeXtNsuHJwWF+WpeuB9pwPvtprcNgt3E5vxb4jPp8g=,tag:pVqyYYPSHRhgq7DR0Q0p3A==,type:str]
     #ENCRYPT
-    rabbitMQPassword: ENC[AES256_GCM,data:MReURvumo7jmBf6AjbRH4aPWGc0pbSQ5vZd1qHpe,iv:J2VcUHe2F13NHSAU56xVCiAcI52KvYBawstlbyxTE8o=,tag:iBliO4G8qss3iNzaNyoIpw==,type:str]
+    rabbitMQPassword: ENC[AES256_GCM,data:PHM6wtFQKxTEA1DWMNIwjlypQJL5nUEJagslj5X/,iv:PfMPnuk7U8hJatQA9jroIWs3EkiPmgElQZ0xnEcQLec=,tag:1YNCCSpETEpFv8OUDdTBpw==,type:str]
     rabbitMQHostname: lagoon-core-broker.lagoon-core.svc.cluster.local
     lagoonTargetName: lagoon
     lagoonFeatureFlagDefaultRootlessWorkload: enabled
@@ -163,9 +163,9 @@ lagoon-build-deploy:
         - --harbor-url=https://harbor.lagoon.dplplat02.dpl.reload.dk
         - --harbor-api=https://harbor.lagoon.dplplat02.dpl.reload.dk/api/
         #ENCRYPT
-        - ENC[AES256_GCM,data:2h/2ulYZQ0vELuj71wbWetA7lr4vfyY=,iv:Ho7Ax4uwMNH42Z8PqJ6vmxtSz/RkY+3KfjKIZ7cW0jQ=,tag:w1oAUw6RUwMI+hdMF08nXA==,type:str]
+        - ENC[AES256_GCM,data:p5qDLHMwjhoBp9NVoKDujAbQIyeDZjE=,iv:Ni5BTscmUibA2LrSSeZurFwMGCZ3nqXibNsVaKRGyD0=,tag:l4SKzdqmpizShKRaIiXBFg==,type:str]
         #ENCRYPT
-        - ENC[AES256_GCM,data:l4EIQzZxSoviwZPZttG3YlBl6KGz04xXNTMGlUmIXfJFznyvJDw=,iv:Cu/baWZrNnQDvZqSTA/S0rVZGcGlUzMXghHC2SQ/0aM=,tag:BrS9b93eccvtdvWhsLRQZw==,type:str]
+        - ENC[AES256_GCM,data:Hs4DYfWNRtfapnARbv0CA/59XuEmXplvAl2QLFsIFJO4NEEa11s=,iv:7k5bv2bX0D4bnhmXyGjimFZe6Q0wdVX3TPwMzDP0JnM=,tag:qYXGzGFXojHxpKB85CXMOg==,type:str]
         - --enable-qos
         - --qos-max-builds=8
     tolerations:
@@ -199,20 +199,20 @@ dbaas-operator:
             readReplicaHostnames:
                 - mariadb-10-6-22-production-1.mariadb-10-6-22-production-1.svc.cluster.local
             #ENCRYPT
-            password: ENC[AES256_GCM,data:3p28czuDcbZRKTnU3dXyVF2vGedGc/gY,iv:Hts9mL75R4fGqPUvS9NajyEXnO+i7irn0Ala5Jp9OpI=,tag:bBdxaiZ1qMjSRc6Z89cexA==,type:str]
+            password: ENC[AES256_GCM,data:qVY+3qfglcxj6L4uYYW38Qe7wyEIbCLv,iv:lsYKXpjYeMtaiU5itwq4jMvFRfvoHxiHAcCXNWSBIns=,tag:V44f4D9/2sTBvQlybIlvlQ==,type:str]
             port: 3306
             #ENCRYPT
-            user: ENC[AES256_GCM,data:4oaefw==,iv:xF6lrT0KZdnIvBterlBo6L8LRAqyT6/I4pDyDyFEqV8=,tag:UzUpkHrm9zLgJifMb8y0LQ==,type:str]
+            user: ENC[AES256_GCM,data:OaSK8A==,iv:YvB+y9MjTBXhbdRh2mjFAqC7RKVf0xVQK0CD5VGux2g=,tag:qKJKLmOUH2m35MxFT1FYLQ==,type:str]
         development:
             environment: development
             hostname: mariadb-10-06-01-test.mariadb-10-06-01-test.svc.cluster.local
             readReplicaHostnames:
                 - mariadb-10-06-01-test.mariadb-10-06-01-test.svc.cluster.local
             #ENCRYPT
-            password: ENC[AES256_GCM,data:2W7Ir5IPdZeZmGV9HTEF7EIEw20CnyPse//gcQ==,iv:HbWfS4+kh7WfvaoGJjELiVU2vJLFJMV4cZ1Mfp9lRX0=,tag:gwhL4fLS12b0in+7aEP64g==,type:str]
+            password: ENC[AES256_GCM,data:4FXihv7ckCkYjP8eR5YAe1JWvk1tPQNDDjw/8Q==,iv:7euE5NbYh1liS9g6mf0G+QUd7Wr4UqP7qEBwnMGiSf0=,tag:SwcME+ChOhQvRu1b2MxIdg==,type:str]
             port: 3306
             #ENCRYPT
-            user: ENC[AES256_GCM,data:Ps4Ylg==,iv:mAc0VEGCfpFwYw2iPthBUmwdOr3pkXOwJHuTsWc+SAA=,tag:MYCrFMYGXmuWYVsU11YcJg==,type:str]
+            user: ENC[AES256_GCM,data:ATXKuQ==,iv:FKzEkx54YX7WXilfX0liEpov8+KkSAELbwWR9My+kfs=,tag:rwafIdfEXytEm1P28doFPw==,type:str]
     tolerations:
         - key: noderole.dplplatform
           operator: Equal
@@ -387,19 +387,19 @@ sops:
         - vault_url: https://kv-dplplat01-c3b2.vault.azure.net
           name: sops-key
           version: d82fe2456d6e4c4aaaaf808226bd5769
-          created_at: "2025-12-17T20:59:27Z"
-          enc: EEE9duXFXJo2gSg0pFHV8e3xFnZ2NxO_vXL6LtaYntmGe4i6zzQrOE0TzbSuHu0jC5auvLbZoH9VnL4ImNH44MHzHbwJcef36gLGolaRJ9sNttgWqUq6f1GmhRT5vob7mCpd6q4Phz0TU9HN51MdcXnK6IzF72K6qxbZ8vX9bxokGXrEdWbniToCQOuYzju8N8B0ZZjPftk19Zx-KfOg9rIRP94YEuNz2edWYmuazz7H7cLDz9j-_eLluwWeat6S_Jk_qNzOdfjC_Tb-a2hAdKkuksqGJ8GQsB_P7v3NNgyGpjXQF1lInwO_oVE0Lf-NztosJEugvuuPTBaKxR-JnQQM49ECN7o3iOtMYSfA2cj88UBaDp8SZAbLbaitVbuOSJw4u3CyQ_iI4LqGrA278XNObaUGv_F3M93w78YYMs4pPJJOsGvwN0FAXRng2gX1iiH-GLpNZ_uxh3N5Ks_pGgCeba2HoiHK0VNAZ-9KQ8X-rbpiBXIksO0nSuDNBE-14vH8wqtRNPbkNIFwJWY5v9rYDEO5qb12j_D2zAnQ_8DYPhCMZvQBukpy3Yd8VHt4VOCBwN_BB93tYus1sy8T9wa3d0z90huC9QYbadGMaLxlMNdSDWV-KWQb-2zorjOh_TmvSzyex_L0nSr-PVAXXN05ndI7lYAxJ4y5uGVmc5c
+          created_at: "2026-01-05T11:32:17Z"
+          enc: ns84VZ0yi-rHIRRIg9XX3SBj7MBepqZrewcCIs9xtz330eyK7etvuMlCTFs7wCcOQxW9O5dLWaskmFOGkhz7Gthz2oVJOqG9Ld6A6gs0z7wDhYxhgQirNBsFROF3B-P0kNghE1I9Y1n9wgD7dCN3gM7PzgDAA4l-UEFtSX1qW-9XWUHthOqYE5CeFiWIQw-DPaVtkUf2g_0IgACUGWKAP_SH7pC8ZrHXfXJtWH1UpXR9-0mG_jnTDk9x8Mx7ZM7R9MEIcPECnvFWV3WELEBtX2Y5RbrKFNvzZHiNfvI1c5XPg-AMqw0SRuv_Fyqiv2V04bFKWtK4Q0FaCmmTLml7O18UNuzShDxjw2GUAPraMO_suawjEpHnUeelShBxN_gC-r0wlGSU1f1CArb7jZu7SSZXFmloA-DldAfZuyNBT2UdFmCjW3F29fzq9lrBlRfQ2dyR-9GEVrueDdbJyxAMlwvDW80vpYjq2fixwR0cWhLw7bEQ-D-r_pbHvEcYYmALqS9GwWQ_B52jUu_xQcXFnCjovd5ZR5MLTEj7Xbntf6BJxXCUKspb6iki9gL3UiZjGXMj-rTJ3t8yUVDzNxObDRIZ5h80apHTc2skqH9Sd4Cg8hqM6118yDfpy1FuKgb-woS67cHnfC32ffd4I_vZAzUhm456dxzPYSrza-J-NTM
     age:
         - recipient: age1q8yqc5jvhkk7ufj95tw25u3es0846pkrwgcd4pn9ctermr7e6cesn6l0gd
           enc: |
             -----BEGIN AGE ENCRYPTED FILE-----
-            YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSAvR1gzNnJYSWgzRUh5QWVh
-            aVF5UHdKWTEzaHRyZ3JmVUxndXBRUWt0WkN3CmlnV3hicDNPQktLZ0RDSjJrdnlz
-            OFlBZmJMZVBTbzVzaXJpamt2TjFFZ0kKLS0tIGlsemNjeFRmY2diVjVMeXMwSWhC
-            SHAxMFNrazZvZUFlb1V1SG9uUGJubGcKMGCTPDZR92s/EJ8grVSfhh+8ZpRKn455
-            chRJ0Ad3v6f/SPESAFR94xifwVDN6q6pDIfHTvoXf9xI+wIgj3vi/w==
+            YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSBaZ3NsVVN3dk9XdUU4d0Fk
+            Y2xUdEI3aVZzMlR4YU50N2U1ajRWVHBuWEJnCm5WaE95VzFuQWJCdWdteXRQYUFR
+            ZHZWbHg4QmJJOFZpUGVMTVN1ckFiYTQKLS0tIE94dDR4aU9hUFFCUFZJWVFzWU9K
+            QXBrOFBiSDJKdTZnQXEzNmtTSXNMRkkKtyQcLHacZ8jVoapspP1lD2sqbYyw0j+u
+            R+QKsCBCOx681C7Njvxct4CPvf9Up4vSKGrgJAvybmA8dpkKPK7jOQ==
             -----END AGE ENCRYPTED FILE-----
-    lastmodified: "2025-12-17T20:59:28Z"
-    mac: ENC[AES256_GCM,data:rwZkB5BDjhw3lp02RIxXDUd/QXiJlS6FnWOXsOBpJwhCudN/vH5tAyhFecc+a98yIgsxKA74kEz1EBqxBqHwFMzpgbmAkXS8IutKT/aRHxW2LcE3dKqe1E4n/OceK9tdRVPg4LmI77+Ymd13u1fym3Tt6r5G0VB7veAnCTVMorw=,iv:b+bZ3CWH5fKGwO1ThDShn42F6UNXLZuSvzbrq/jwebs=,tag:TVoqA7h5TaaGhCQbk6WIPg==,type:str]
+    lastmodified: "2026-01-05T11:32:19Z"
+    mac: ENC[AES256_GCM,data:mw0dcdH+kqdmnQcB+Jk9EfbMTf5K3gX+fhtqgfdehNL0ExEuk5KAXB6QqFXUm9JR4n61gEBuKPCj4exqbmVJSMLat0GQqsUEFJmZ7ISwicDuIcIX9jWR+HIRsPS2FyoNpr3yMTK+1dxAMXBs6YYQ26i0cnA4Dn+h9TomQKq1qQA=,iv:y9BBMfAIepr8pr2Fet4JZSlfZh8cRU8IyjmWwHSgTYA=,tag:yZOQms6ZEKs1SWj+kRawWg==,type:str]
     encrypted_comment_regex: ENCRYPT
     version: 3.11.0
