@@ -186,10 +186,15 @@ grafana-operator:
       port: 8081
 
   # -- pod node selector
-  nodeSelector: {}
+  nodeSelector:
+    node-role.kubernetes.io/prod: ""
 
   # -- pod tolerations
-  tolerations: []
+  tolerations:
+    - key: noderole.dplplatform
+      operator: Equal
+      value: prod
+      effect: NoSchedule
 
   # -- pod affinity
   affinity: {}
