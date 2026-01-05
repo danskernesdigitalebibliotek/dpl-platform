@@ -46,7 +46,7 @@ k8up:
             key: AWS_SECRET_ACCESS_KEY
       # Config values
       - name: BACKUP_GLOBALS3BUCKET
-        value: lagoon
+        value: lagoon-backup
       - name: BACKUP_GLOBALS3ENDPOINT
         value: http://minio-console.minio.svc.cluster.local:9001
       - name: BACKUP_GLOBALKEEPJOBS
