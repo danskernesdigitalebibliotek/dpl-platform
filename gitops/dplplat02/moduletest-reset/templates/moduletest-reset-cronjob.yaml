@@ -1,0 +1,92 @@
+# This manifest will fire up a customer Kubernetes Job in moduletest namepaces.
+# It will synchronize all files as well as the database from the corresponding main environment to the moduletest environment
+
+{{ range .Values.projects }}
+
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: moduletest-reset-{{ . }}
+spec:
+  schedule: "0 23 * * 3"  # Every Wednesday at 23:00
+  jobTemplate:
+    spec:
+      ttlSecondsAfterFinished: 50400 # 14 hours leaving time to investigate failed jobs
+      backoffLimit: 3
+      template:
+        spec:
+          restartPolicy: Never
+          containers:
+            - name: moduletest-reset-container
+              image: ghcr.io/danskernesdigitalebibliotek/dpl-platform/moduletest-reset-job:mr-1.2.1
+              command:
+                - /bin/bash
+                - -c
+                - ./moduletest-reset-job.mjs {{ . }}
+              env:
+                - name: AZURE_DATABASE_HOST
+                  valueFrom:
+                    secretKeyRef:
+                      name: azure-database-host
+                      key: host
+              resources:
+                requests:
+                  memory: 256Mi
+                  cpu: 250m
+                limits:
+                  memory: 512Mi
+          serviceAccountName: moduletest-reset-serviceaccount
+          tolerations:
+            - key: noderole.dplplatform
+              operator: Equal
+              value: prod
+              effect: NoSchedule
+          affinity:
+            nodeAffinity:
+              requiredDuringSchedulingIgnoredDuringExecution:
+                nodeSelectorTerms:
+                  - matchExpressions:
+                    - key: noderole.dplplatform
+                      operator: In
+                      values:
+                       - prod
+---
+{{ end }}
+
+---
+
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: moduletest-reset-serviceaccount
+  namespace: moduletest-reset
+
+---
+
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: deployments-get-cluster-role
+  namespace: moduletest-reset
+rules:
+- apiGroups: [""]
+  resources: [ "namespaces", "pods", "pods/exec", "configmaps", "services" ]
+  verbs: [ "get", "list", "create" ]
+- apiGroups: [ "apps", "configmaps" ]
+  resources: [ "deployments", "pods", "services" ]
+  verbs: [ "get", "list" ]
+
+---
+
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: namespace-deployments-getter-binding
+subjects:
+- kind: ServiceAccount
+  name: moduletest-reset-serviceaccount
+  namespace: moduletest-reset
+roleRef:
+  kind: ClusterRole
+  name: deployments-get-cluster-role
+  apiGroup: rbac.authorization.k8s.io

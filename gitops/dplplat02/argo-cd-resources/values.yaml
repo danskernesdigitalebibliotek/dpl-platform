@@ -86,6 +86,11 @@ apps:
     namespace: mariadb-10-6-22-production-1
     automated: false
 
+  - name: moduletest-reset
+    project: moduletest-reset
+    namespace: moduletest-reset
+    automated: false
+
   - name: lagoon-auxiliary
     project: lagoon-auxiliary
     namespace: lagoon-auxiliary
