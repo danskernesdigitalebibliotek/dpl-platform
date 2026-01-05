@@ -1,19 +1,19 @@
 # These values must be set on install, as they don't have sensible defaults.
 #ENCRYPT
-harborAdminPassword: ENC[AES256_GCM,data:seeXBayd2gS0iC6IOKa2T1ziMYw=,iv:QldmmR+iX3IJytdrAKOhibVXboK/VAfjvQOHa+aeKZg=,tag:J1ejAosr7chQq5K2wfHs3w==,type:str]
+harborAdminPassword: ENC[AES256_GCM,data:TXyOEbipQ+0ZbMq+siAMLMsDs5U=,iv:9KgPx+KWCCbqvhwYDVtff7THUtTCur3KS0/j8Ij7KCE=,tag:0asQ1BHg3etdO2OxmectbA==,type:str]
 elasticsearchURL: none
 harborURL: https://habor.lagoon.dplplat02.dpl.reload.dk
 kibanaURL: none
 #ENCRYPT
-s3BAASSecretAccessKey: ENC[AES256_GCM,data:hbqNVZtljNM8dvF+fp7UVC8v3FW7vgal7ael+oJ7OkaV8i1hrZvPzA==,iv:LtYDB6FT8qQXjjMOB92ht6wDGf6eE3aE8SNXsUtPxbg=,tag:oDSw+/8qZgjVv4wPSZo0OQ==,type:str]
+s3BAASSecretAccessKey: ENC[AES256_GCM,data:eJFCmcR47HgkmFkaPzlRtO0TLkg/rv7haJ2V7hW2i63Lji2YMjO/vg==,iv:J6J5OHKOjrcvbbPuFnKhFcbffoXMV/nAQq9CqRGOBWA=,tag:da+Vb+RMkObXqBdDY4PvUg==,type:str]
 #ENCRYPT
-s3BAASAccessKeyID: ENC[AES256_GCM,data:2AuMeZc/EgWO6fNLiUutQKy8xGw=,iv:U6GKLNUcbGJyIGup1Q+abC5kfJ8PX4WMauf20VDq0Ys=,tag:TS8g+PCHrElHpgx7Eg8Qtw==,type:str]
+s3BAASAccessKeyID: ENC[AES256_GCM,data:g6lnbNpBYnNvDUPN7o9C3LGBsKo=,iv:t/igo0pX904K3f9+Yv/WEwvkRJ1M8dpgKhzE1Pbce1o=,tag:nILbVF6ZItjvxmnmYcfrnA==,type:str]
 #ENCRYPT
-s3FilesAccessKeyID: ENC[AES256_GCM,data:U8qGSDsvXgs1bOKFXcj+6JR0/9M=,iv:ZUovCoFMaIOXHg1A7G26zljh7nThy+a8OM8WkFvxSDc=,tag:1si5XhUgdF0ooNBl9NfhIA==,type:str]
+s3FilesAccessKeyID: ENC[AES256_GCM,data:G+zXzdZt4qSNL4K0E0UIoWExlgM=,iv:jGNNHi4mOanR80VqVwqZ5VroqW85brorv0tu+vdFXNE=,tag:8vhwMTVEF5CWDi632k9Epg==,type:str]
 s3FilesBucket: lagoon-files-bucket
 s3FilesHost: https://files.lagoon.dplplat02.dpl.reload.dk
 #ENCRYPT
-s3FilesSecretAccessKey: ENC[AES256_GCM,data:yK4GtTFMbhphrftJXo9PblsNu4XLsOEcQl+a8MVFQ3Jvix4ioae1VA==,iv:JWKNEB3j1yfQELjZ1pgnwUJizDpO6u9clWbP+qWUk4M=,tag:ubXwgOBdl69TB3BHWxQ+rg==,type:str]
+s3FilesSecretAccessKey: ENC[AES256_GCM,data:CZtthKBj7PkNVpcimERDV6fxq91Jl6EIJZpysysb+ukCNrDf6rSDEw==,iv:FngFDqraxfAyvF4MMSiYhQmhdhl64tlbDx+ZrJ2KKb0=,tag:W6Rv+oFidNe3w9W3oE6X+g==,type:str]
 # These values are optional.
 # overwriteActiveStandbyTaskImage:
 # appspecific discovery.json settings
@@ -37,45 +37,45 @@ s3FilesSecretAccessKey: ENC[AES256_GCM,data:yK4GtTFMbhphrftJXo9PblsNu4XLsOEcQl+a
 # lagoonWebhookURL: https://webhook-handler.example.com
 # These values are randomly generated on install if not otherwise defined.
 #ENCRYPT
-apiDBPassword: ENC[AES256_GCM,data:2EeNWDgV7UCcA5LKhoA2TKRpPTs3O21F3DB54D/b,iv:CaGbKBfeD/3VdunmJd8Z22ILKaA6LxXqTA7LozI34F8=,tag:IvA75cFSdYKmmtFezYTLgw==,type:str]
+apiDBPassword: ENC[AES256_GCM,data:4ch7iisWOr6VOl0YJoRXow4f9fxO/Ohgc/5vsnJf,iv:ibDWcc8g2wcgFYdNgWs0EnlMQjw8CvPDeXzmfqQ99ns=,tag:5zSHSr/M8XVMupz2Z7gSKA==,type:str]
 #ENCRYPT
-jwtSecret: ENC[AES256_GCM,data:BtAj2/ARCxPYcOn1ZsCdieyQ2Mq6tUspyJxkbDcw,iv:gB80QAvB/OlDmU6v/zV6WccxL41WmMwuL9ysT8G3MA4=,tag:K2j8gFigttLSIQu1+tD5mA==,type:str]
+jwtSecret: ENC[AES256_GCM,data:q813MScID2XpaUX/apdj536GCGy2yTPfUi4lYJFZ,iv:SPiFHbPZ3SYs9u8wI3HhrxLDrt6jbcII4lXlYa57cxw=,tag:qIZOp9b1WmUNMRpzIKC+iQ==,type:str]
 #ENCRYPT
-keycloakAdminPassword: ENC[AES256_GCM,data:U4U50WKJ5+oaPyBuVYxIHg==,iv:CiyM3pbY0F+yJHSH4HLdOYNxmDSKog3TV/hOTWSRhj8=,tag:0rmI1GvnsaMsyN7I9lPUxA==,type:str]
+keycloakAdminPassword: ENC[AES256_GCM,data:DWmKgm0aeH/lIX6liu201Q==,iv:oJAaQLWZG2IMJQjILw6GaxxEBqu0TROgobO5WPqMklc=,tag:S1RQEMWCmnSWDgSYOUowOg==,type:str]
 #ENCRYPT
-keycloakAPIClientSecret: ENC[AES256_GCM,data:2U0e460i+LBHCt5XXaTofIuv712U0L16kgveAGCP,iv:EDkw79Ks3LgP4cO8MoeMZOkkcTg6zJ2uC82WFmavHE0=,tag:dEkv9Vq7YjH13D2UimTItA==,type:str]
+keycloakAPIClientSecret: ENC[AES256_GCM,data:7aa+TaQOJVF+OPpENlmNHYwtLZf8bL5a6IjqBtcT,iv:2FHXauFf8kjs7/u9aFUVXGA3XzjamgjH+x28HHJ6bgk=,tag:XdEvBh1a+o9VnfPlRQ4b2w==,type:str]
 #ENCRYPT
-keycloakAuthServerClientSecret: ENC[AES256_GCM,data:KInBikNylP8XTXbyle1b+jvV5kzc0yiARbaiFW0/,iv:D6nPsHReoMAeSb9LhRlqfCzoXvAROANgfwN6MfXslGM=,tag:kuQcjcqhVxLR7/snInPc+Q==,type:str]
+keycloakAuthServerClientSecret: ENC[AES256_GCM,data:LLFAodLtXd9nh4KdUE0e72HgfH2NkDo+CLlnXXce,iv:Ps90lL5s559N4lBIGlUdquDmdFO+Z8efe59IXtWeOpM=,tag:koTj3IPBtBzigUto/3nzxg==,type:str]
 #ENCRYPT
-keycloakDBPassword: ENC[AES256_GCM,data:V1VBpBbi39HMB0n3/1VNj8qRcCPJ8Tjpx6MqfFXn,iv:MHzHiQY3lPkNssgPpaootYYlhL6YIfIwRHqMT468uNI=,tag:TrooRtnaqbAIVlUfAYLD9w==,type:str]
+keycloakDBPassword: ENC[AES256_GCM,data:gXETlOY0qAR/43c433QpPxW4Gq1DiVNoEVFQKHUm,iv:UulT08TrQVlyGU079n6VjoWwlbMqqmpr7/JzcQa/GZw=,tag:6B4u/cGe5Spm51aT0FQpgw==,type:str]
 #ENCRYPT
-keycloakLagoonAdminPassword: ENC[AES256_GCM,data:cSQOMOQcJliFrJaqgdd2L2vYB07hQTghfTPBw07F,iv:xH30RPPH4VjIBNL6pEcBCvhCOKScB9UPPUJGhvmAqtc=,tag:Om+gQMBcwnLAVL0gELyG2Q==,type:str]
+keycloakLagoonAdminPassword: ENC[AES256_GCM,data:dB69doMzj3CDQhV+8KT/rnvODBYkZaq3mphIWe7h,iv:ER++6phi+onbyU/Ox0eYcdo1rQ2VFDK48liAnFynins=,tag:NPhD6PzxXu+3mr2j2D3gmw==,type:str]
 #ENCRYPT
-logsDBAdminPassword: ENC[AES256_GCM,data:njeKpeq99i10dFkFJjibujLpzO+IJuNEXwfkMHwz,iv:9ImX6Gjrfcl3lSTr3fmBqBgghM6uDQT8K2PKgmpiWLY=,tag:ClAKpbau6GVbB/P4Quyoug==,type:str]
+logsDBAdminPassword: ENC[AES256_GCM,data:wcS32uU4zlVMXzBqUGUagQvaAvjNO5SmC4TpBK4W,iv:x2UpPb7vtfX2nxEoBaYyh+QPwLfzTH0LVsKuizVt2Nk=,tag:Bzd3dhOxzJm/A9ELG8SzGQ==,type:str]
 #ENCRYPT
-keycloakLagoonOpensearchSyncClientSecret: ENC[AES256_GCM,data:7vJlNuTYo7vihaZJnwBu7pM7VhBo+67alpPKcZKK,iv:WGLuc0XYm6v5thibGUZuW+GbSWwMJwSfAr9dUuzCnBw=,tag:88R/YSVHmS6365tmOWjnbA==,type:str]
+keycloakLagoonOpensearchSyncClientSecret: ENC[AES256_GCM,data:k7xcIk1mZ/PCAvyVlT5/vRffrqNSI5ogxapqe789,iv:JyslEW48/zIMtynPbeVEnNAI4a8LNK7L6o2zPKrf+T4=,tag:7cpi9dB7FBJE5Qnyk96lzw==,type:str]
 #ENCRYPT
-keycloakServiceAPIClientSecret: ENC[AES256_GCM,data:tPF/yaKJs77cqYUYDEl13Y6zo9CShXBNPV+02EU/,iv:Y60XCiBRYXLwMm/b7fxWsu3WEMUR5PfBfu4zm1M7/3s=,tag:Frwbzxbjy9FE/lfcrc0OHg==,type:str]
+keycloakServiceAPIClientSecret: ENC[AES256_GCM,data:xoLNbY7QIRHQDxIVpjWXo4N+UUXf4sXK/s/3Cl8c,iv:4V1cs3x8S68sYwCB32tOUMs6hWh5BnNvM672JZyqdw8=,tag:2WX1xgFVIE5Q75B2KqBuNA==,type:str]
 #ENCRYPT
-rabbitMQPassword: ENC[AES256_GCM,data:MErM8O6D58BtozPbb/knsd1Dw0OL16Bp4JWMvFmr,iv:AqY2wlE6vriYadPu7LB4+wpSLbVzl+WuSHuO5Y7HdjM=,tag:4itmagVzR+IpbHd8GlWiGg==,type:str]
+rabbitMQPassword: ENC[AES256_GCM,data:XOX04kEB+02ZvPAvWH8VdSH88+2VIbM3RWOeBSXk,iv:RQWW5NBwUnxgLJy+enilYmrKHbjHGayvM0ATQqaTSfc=,tag:LH/YW6i2Qovsn9FKrfcTmw==,type:str]
 #ENCRYPT
-redisPassword: ENC[AES256_GCM,data:z2eLbE6Sl0HHpvfYtCj9UQqrWPeT8OSzfmFS5zHw,iv:eB92ilBAMQfndiBlkwy4NFfAoz+srdUPBqgJ1bXRE5Y=,tag:aWfoh4OgoSHGXtdJ8bIyXg==,type:str]
+redisPassword: ENC[AES256_GCM,data:lt4vEDvk8JDCAQpfjUU2Ja6VKYGy0SW+UrWGAa9I,iv:4T+FR1BSJZpSMkzUalykPXbbkYqgGuohYRKT8NB9bsE=,tag:qY7CsESHil+V0ILsa0F/gA==,type:str]
 k8upBackupBucketName: lagoon-backup
 # This value is set to match jwtSecret on existing installs if not defined.
 # It should only ever be set here for backwards compatibility.
 #ENCRYPT
-projectSeed: ENC[AES256_GCM,data:d7xxPYJcD8n/xUhe9FkcFpAcmomS+tGw/SUe6OyL,iv:99CNhlKjMBpfua3kZJuwqFM5x//nofiJFooF7/G4jUs=,tag:JYFTKgWE4019S8veYB8B2w==,type:str]
+projectSeed: ENC[AES256_GCM,data:7+u6Y3q4A5ai67EzgJffkXHP69ZrRgFe4R3tzlkf,iv:UF7FFzzfjIHbRcA5XNdtwMkeSRRWNroLjwc8iPv4kDI=,tag:u99IjE/TxOrT6KeTHOcDkQ==,type:str]
 lagoonSeedOrganization: Danish Public Libraries
 #ENCRYPT
-lagoonSeedUsername: ENC[AES256_GCM,data:5A4p3Wgf,iv:bH/W/FGgj1cw5NY8lK7bVvjNPc5yU7SNXrB4/DZ9jwU=,tag:U8Yq8QMcDpZNHXvM+rHuxw==,type:str]
+lagoonSeedUsername: ENC[AES256_GCM,data:5Z6aGiA5,iv:U4JIpVkIO7W+xtp+Ks4iLDirpq8gmVgYbtHnKDYhk/Y=,tag:R+MLelBCzn+kYpB0RyqHYQ==,type:str]
 #ENCRYPT
-lagoonSeedPassword: ENC[AES256_GCM,data:5EbiBqcsdBQ92vwvgQlWGX+NbTq1aZ4jsLeCN9b0,iv:GMQtMYdHFaeFUZsJgRUGuWwrjZ4W4Zj643/U75jCPhs=,tag:bfk7ZPc/fnzqQ5mS0QOA7A==,type:str]
+lagoonSeedPassword: ENC[AES256_GCM,data:rBq19dHo9+DTt469/0b4NiJzwq4tR2yw5v78OeAt,iv:ONduiu6LtoiJyOD8s/xwnzvG/8/CP2ZW4HxmBb/DFwc=,tag:n/ualTpORO78dz0Df2iQzw==,type:str]
 # These values are the chart defaults, but can be overridden.
 imagePullSecrets: []
 rabbitMQUsername: lagoon
 k8upS3Endpoint: ""
 #ENCRYPT
-keycloakAdminUser: ENC[AES256_GCM,data:2jf2yTE=,iv:ohuCCLAwPP2XhaYwdiDeXmKJER177BbBlGqddr+pnuI=,tag:wvZPRQpYu127iRMhzJsE0A==,type:str]
+keycloakAdminUser: ENC[AES256_GCM,data:vMcyUBo=,iv:uvF2NVtq7Tw3HizWkA1V4KkzC5vCPmBf70jkIHFI15k=,tag:ewC2Xm36Fix7H/nMNcgqnA==,type:str]
 # this is required if email sending is to be enabled in keycloak
 # keycloakAdminEmail: admin@example.com
 buildDeployImage:
@@ -143,6 +143,8 @@ api:
         maxReplicas: 100
         targetCPUUtilizationPercentage: 80
         # targetMemoryUtilizationPercentage: 80
+    nodeSelector:
+        node-role.kubernetes.io/prod: ""
     tolerations:
         - key: noderole.dplplatform
           operator: Equal
@@ -189,6 +191,8 @@ apiDB:
         exec:
             command:
                 - /usr/share/container-scripts/mysql/readiness-probe.sh
+    nodeSelector:
+        node-role.kubernetes.io/prod: ""
     tolerations:
         - key: noderole.dplplatform
           operator: Equal
@@ -215,6 +219,8 @@ apiRedis:
     service:
         type: ClusterIP
         port: 6379
+    nodeSelector:
+        node-role.kubernetes.io/prod: ""
     tolerations:
         - key: noderole.dplplatform
           operator: Equal
@@ -270,6 +276,8 @@ keycloak:
             - secretName: keycloak-tls
               hosts:
                 - keycloak.lagoon.dplplat02.dpl.reload.dk
+    nodeSelector:
+        node-role.kubernetes.io/prod: ""
     tolerations:
         - key: noderole.dplplatform
           operator: Equal
@@ -313,6 +321,8 @@ keycloakDB:
         exec:
             command:
                 - /usr/share/container-scripts/mysql/readiness-probe.sh
+    nodeSelector:
+        node-role.kubernetes.io/prod: ""
     tolerations:
         - key: noderole.dplplatform
           operator: Equal
@@ -378,6 +388,8 @@ broker:
         failureThreshold: 60
         tcpSocket:
             port: amqp
+    nodeSelector:
+        node-role.kubernetes.io/prod: ""
     tolerations:
         - key: noderole.dplplatform
           operator: Equal
@@ -409,6 +421,8 @@ authServer:
         maxReplicas: 100
         targetCPUUtilizationPercentage: 80
         # targetMemoryUtilizationPercentage: 80
+    nodeSelector:
+        node-role.kubernetes.io/prod: ""
     tolerations:
         - key: noderole.dplplatform
           operator: Equal
@@ -437,6 +451,8 @@ webhooks2tasks:
         maxReplicas: 100
         targetCPUUtilizationPercentage: 80
         # targetMemoryUtilizationPercentage: 80
+    nodeSelector:
+        node-role.kubernetes.io/prod: ""
     tolerations:
         - key: noderole.dplplatform
           operator: Equal
@@ -475,6 +491,8 @@ webhookHandler:
             - secretName: webhookhandler-tls
               hosts:
                 - webhookhandler.lagoon.dplplat02.dpl.reload.dk
+    nodeSelector:
+        node-role.kubernetes.io/prod: ""
     tolerations:
         - key: noderole.dplplatform
           operator: Equal
@@ -525,6 +543,8 @@ ui:
         maxReplicas: 100
         targetCPUUtilizationPercentage: 80
         # targetMemoryUtilizationPercentage: 80
+    nodeSelector:
+        node-role.kubernetes.io/prod: ""
     tolerations:
         - key: noderole.dplplatform
           operator: Equal
@@ -551,6 +571,8 @@ actionsHandler:
         requests:
             memory: 16Mi
             cpu: 10m
+    nodeSelector:
+        node-role.kubernetes.io/prod: ""
     tolerations:
         - key: noderole.dplplatform
           operator: Equal
@@ -595,6 +617,8 @@ backupHandler:
         maxReplicas: 100
         targetCPUUtilizationPercentage: 80
         # targetMemoryUtilizationPercentage: 80
+    nodeSelector:
+        node-role.kubernetes.io/prod: ""
     tolerations:
         - key: noderole.dplplatform
           operator: Equal
@@ -665,6 +689,8 @@ logs2notifications:
         maxReplicas: 100
         targetCPUUtilizationPercentage: 80
         # targetMemoryUtilizationPercentage: 80
+    nodeSelector:
+        node-role.kubernetes.io/prod: ""
     tolerations:
         - key: noderole.dplplatform
           operator: Equal
@@ -709,6 +735,8 @@ drushAlias:
         maxReplicas: 100
         targetCPUUtilizationPercentage: 80
         # targetMemoryUtilizationPercentage: 80
+    nodeSelector:
+        node-role.kubernetes.io/prod: ""
     tolerations:
         - key: noderole.dplplatform
           operator: Equal
@@ -734,6 +762,8 @@ ssh:
     service:
         type: LoadBalancer
         port: 22
+    nodeSelector:
+        node-role.kubernetes.io/prod: ""
     tolerations:
         - key: noderole.dplplatform
           operator: Equal
@@ -768,6 +798,8 @@ workflows:
         maxReplicas: 100
         targetCPUUtilizationPercentage: 80
         # targetMemoryUtilizationPercentage: 80
+    nodeSelector:
+        node-role.kubernetes.io/prod: ""
     tolerations:
         - key: noderole.dplplatform
           operator: Equal
@@ -933,19 +965,19 @@ sops:
         - vault_url: https://kv-dplplat01-c3b2.vault.azure.net
           name: sops-key
           version: d82fe2456d6e4c4aaaaf808226bd5769
-          created_at: "2026-01-04T23:59:52Z"
-          enc: a8CxO06-lOLgmMrj6uYLsDjBCzw0XVxCLm8E47shPeuV2NLwkaSjramM32v-QDONF0EuN53oVihkAUm0MEnsz5vkTSfItfz9hsaw1R6C4l2pr_ILf6wucUgGO6ezc0YcDnQlJmQY20obucQ21kc3EXoVER7VIn4mUSOdTsLCpcMicjZNLenqe3GvvrMHuXQdtbzfoFTXT47gmDfrD0_f-dM2aQAtB8AQ_8mpImp91-PHoKo5sR9vYVrWxhIDhy8p6LJoXbJog2B7HrG0XN_Maxf75EOwJUjrygA2f2G-6w6421tl8AwpwtcQwanW6S7J7QKpmxjvjzRyhAmBGmMwDZtnIx9kX0-MndDo4aE7aIjcNgHin8gUcaGyxH7KCUGmAmwqsCtiYgz6mYoIyU0kdlZoSq0bqE8nnppN4tzWHKR_ihNqryJyjyM9IOU57QnBa-K5vPVWkkCcMP7dykSJsw-7MYIJs0cw7j1qZAaUS6Dg3B9VW4GXsvUF8GIrl6866nKUd_px_SFu02fMKeDx6IC559wuT4_NedafXjbs9LmaZ69P_KbtjuCeCKeobkdn3mPwn0ZLxvepuQTOR9Ck1oTu3EYEXKtqCfjfSlvllmdqRhlhgH-RUaGpQmNDOHg1sHLEiH5Oan_K7BZnnTyeutgeEPeGb21LgoXOwA7sBTw
+          created_at: "2026-01-05T13:48:17Z"
+          enc: Pu6jPFA0dNe_FMB7ikmYxT8-CTy26PS8KfwKulTYhFY0LqU69THhGOOO-WbdygMSsGH_pnvmtFcfWbKnCTUcfa5f0U61C7WmfqVOPUYLvV7NfKv3IZIJxwYZcmGGD_ILTxGHKfUMtH6l-sCJhu69bT4ooHsYYcjR9vayQ-B9_rCNVC59_ZplfWRiFZEXjNDTVvFXtMreZ2SZvSAoAtokxKdTruLSHDsbt5PJhCJBHMNwgeloJmomMyA7sqKPj-8uxH3llMvAWFawHqiNZb0gTF0briTFaS0rspzNfPfs-QTKURGfBSbbe9US1P4TnCxvp8Kve-Xpgtk6loZfyiUMk7CVdvJ-xRZaP6DyFD_qFPHXhmkLY0VEa9tIPplhlxFxzyElDug5NGM2Tal-RXrSqCi35qaTPAAR_OuOwvzD7sDkzrH82TajyfFb60ocq7OsamaoPeQCAxY5aCE2QPIlEPSXzl8rkRAoM84LZoebW0M9cLgdWHbEccPpjhgzGXl3BQnY5A1RH39XPZ6qJuUxAA6J_8HcEuXjPVq3FwJ88eUvQcb4OwIihlrGqtdI1BE_VbFHxVXMqvkWiUYdeK11UEnjv5jNkupWIdkPOh22DUAUOWFwcxGfRYVbMd-fB3X7xN-F1pqOcsdZRo1HBgnC0Lr-VqY-2O-g2hp0ROrP0fw
     age:
         - recipient: age1q8yqc5jvhkk7ufj95tw25u3es0846pkrwgcd4pn9ctermr7e6cesn6l0gd
           enc: |
             -----BEGIN AGE ENCRYPTED FILE-----
-            YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSBsRHhhZWQzMHh0QTlZLzZB
-            ZGw4Z0FhMHFYMVZUc0F2YWJUT0hkaEpVYkRJClJzaVNXUUxzWGJZU2pHUDFFbUxT
-            ak9uTlF4dnA4Wk93VGdFcjBIaFdZSnMKLS0tIG9LeUF6Q0tzdW8xcXNmTGkyWEtP
-            Y1BabStyQ25ySmFxVGNmY2xObERSOGMKKRdbd49Sjidik3LHj7P8tSg9tBSZ1NPm
-            0xqjwYAlYY0Kgmmk/JuQsTwAxOvJGp44L5MVwAL1cE5HXcdqkgn0lw==
+            YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSAxYUFwd28zYnVwWUxJNnhy
+            Y0lpQkdtVVRiQUVJUWo5bFJxRE5SRW9tOW04CjZWRkpoYWFxMEQ0bjhWRU44dFAv
+            UXQ3eUk5ekExYndaSmViZk5BRzlpSjgKLS0tIDdqdGlCdi9SdnFFNzFKVHFPSmtH
+            OTNkcEozYVFJcWloV3I0Ty95dldUdjAKeMLGtX35fdWDjZcLQY6vb5cxFfDD8v/J
+            l5QbcTskAH47pLMvgECtBWXOYR9vny5OgTiRA/p230A1/mtZizzo4A==
             -----END AGE ENCRYPTED FILE-----
-    lastmodified: "2026-01-04T23:59:55Z"
-    mac: ENC[AES256_GCM,data:SMPhGpNiuiTTvZ7npBRdHNmuLYvq0x+e+my5I45i2ZCXyOf6RopeD8vbkJ9LWMrU5zmxHqeG+Z3qhFjCwypPi+nGjMewmhLQ5mFH/VhFNhKgBR+vH3QRBpRHVCRvcRQT6iynTAAoaGIefbkTULWmNW4b69H9yIq8LK5PBeI9r6s=,iv:YKR9iZPs4OWRHYYtL9g+aY22EmKg0YLvNbUkziq0f/U=,tag:VC56FQC+BwkI91vtoLFY/w==,type:str]
+    lastmodified: "2026-01-05T13:48:19Z"
+    mac: ENC[AES256_GCM,data:4xXOtuPIPpHmK1K68LCGcqwJreAeNlYSWdKAOBHhe/ByT+68Dsh51QxqxERv2XIwfcvazSk1PI4JVba/WtEkthMrrg0ndLvrZV8Opd8ZGKbRs4a/gDHAoZI2rb16t/tPDpVapQYGpeuPuIVcUBPc38w98z1NMWKFIwByR0Yt/2Q=,iv:ejXI4UD8XqFDZ2Qzod922gXnpRlc5fI94BNVjMspPwo=,tag:MXZDBae6nNtr1C8RVDg6pA==,type:str]
     encrypted_comment_regex: ENCRYPT
     version: 3.11.0
