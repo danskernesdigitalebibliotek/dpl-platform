@@ -48,7 +48,7 @@ k8up:
       - name: BACKUP_GLOBALS3BUCKET
         value: lagoon-backup
       - name: BACKUP_GLOBALS3ENDPOINT
-        value: http://minio.minio.svc.cluster.local
+        value: http://minio.minio.svc.cluster.local:9000
       - name: BACKUP_GLOBALKEEPJOBS
         value: "1"
       - name: BACKUP_GLOBALSTATSURL
