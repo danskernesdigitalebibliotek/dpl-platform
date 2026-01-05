@@ -1681,7 +1681,7 @@ loki:
     dnsConfig: {}
     # -- Node selector for write pods
     nodeSelector:
-      noderole.dplplatform: prod
+      node-role.kubernetes.io/prod: ""
     # -- Topology Spread Constraints for write pods
     # The value will be passed through tpl.
     topologySpreadConstraints: []
