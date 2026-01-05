@@ -329,8 +329,13 @@ vpa:
       #   path: serverCert.pem
       # - key: tls.key
       #   path: serverKey.pem
-    nodeSelector: {}
-    tolerations: []
+    nodeSelector:
+      node-role.kubernetes.io/prod: ""
+    tolerations:
+      - key: noderole.dplplatform
+        operator: Equal
+        value: prod
+        effect: NoSchedule
     affinity: {}
     # admissionController.useHostNetwork -- Whether to use host network, this is required on EKS with custom CNI
     useHostNetwork: false
