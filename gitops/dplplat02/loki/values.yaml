@@ -1705,7 +1705,7 @@ loki:
       # -- Enable StatefulSetAutoDeletePVC feature
       enableStatefulSetAutoDeletePVC: false
       # -- Size of persistent disk
-      size: 10Gi
+      size: 20Gi
       # -- Storage class to be used.
       # If defined, storageClassName: <storageClass>.
       # If set to "-", storageClassName: "", which disables dynamic provisioning.
