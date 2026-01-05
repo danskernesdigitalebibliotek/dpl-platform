@@ -1680,12 +1680,17 @@ loki:
     # -- DNS config for write pods
     dnsConfig: {}
     # -- Node selector for write pods
-    nodeSelector: {}
+    nodeSelector:
+      noderole.dplplatform: prod
     # -- Topology Spread Constraints for write pods
     # The value will be passed through tpl.
     topologySpreadConstraints: []
     # -- Tolerations for write pods
-    tolerations: []
+    tolerations:
+      - key: noderole.dplplatform
+        operator: Equal
+        value: prod
+        effect: NoSchedule
     # -- The default is to deploy all pods in parallel.
     podManagementPolicy: "Parallel"
     persistence:
