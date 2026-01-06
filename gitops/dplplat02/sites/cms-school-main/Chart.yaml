@@ -10,4 +10,4 @@ dependencies:
     repository: oci://ghcr.io/danskernesdigitalebibliotek/dpl-platform/charts
   - name: site-state-transfer
     version: 0.0.1
-    repository: https://github.com/danskernesdigitalebibliotek/dpl-platform.git
+    repository: oci://ghcr.io/danskernesdigitalebibliotek/dpl-platform/charts
