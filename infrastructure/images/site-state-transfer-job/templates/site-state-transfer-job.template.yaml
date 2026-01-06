@@ -14,17 +14,11 @@ spec:
           restartPolicy: Never
           containers:
             - name: site-state-transfer-container
-              image: ghcr.io/danskernesdigitalebibliotek/dpl-platform/site-state-transfer-job:sst-0.0.2
+              image: ghcr.io/danskernesdigitalebibliotek/dpl-platform/site-state-transfer-job:sst-{{ .Chart.Version }}
               command:
                 - /bin/bash
                 - -c
                 - ./site-state-transfer-job.mjs {{ .Release.Namespace }} "20.238.202.21" {{ .Release.Namespace }}
-              env:
-                - name: AZURE_DATABASE_HOST
-                  valueFrom:
-                    secretKeyRef:
-                      name: azure-database-host
-                      key: host
           serviceAccountName: site-state-transfer-serviceaccount
           nodeSelector:
             node-role.kubernetes.io/prod: ""
