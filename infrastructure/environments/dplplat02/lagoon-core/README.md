@@ -27,8 +27,8 @@ commiting to git - this makes the script more fat-finger-proof.
 ## How to make changes to the encrypted lagoon-core.values.sops.yaml file
 
 To make changes to the SOPS encrypted lagoon-core.values.sops.yaml file requires
-having the sops cli tool installed. Installation instructions can be found
-[here](https://getsops.io/docs/#download)
+having the sops cli tool installed. Installation instructions can be
+found [here](https://getsops.io/docs/#download)
 
 With SOPS installed you can now run `sops edit lagoon-core.values.sops.yaml` and
 make the changes needed.
