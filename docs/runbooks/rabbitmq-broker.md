@@ -23,7 +23,8 @@ perform its Mnesia sync correctly.
 Exec into the pod:
 
 ```shell
-dplsh:~/host_mount$ kubectl -n lagoon-core exec -ti pod/lagoon-core-broker-0 -- sh
+dplsh:~/host_mount$ kubectl -n lagoon-core exec -ti pod/lagoon-core-broker-0
+ -- sh
 ```
 
 Stop RabbitMQ:

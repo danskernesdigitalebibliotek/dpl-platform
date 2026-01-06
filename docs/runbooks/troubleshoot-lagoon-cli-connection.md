@@ -12,9 +12,13 @@ Someone could be eavesdropping on you right now (man-in-the-middle attack)!
 It is also possible that a host key has just been changed.
 The fingerprint for the ssh-ed25519 key sent by the remote host is
 SHA256:HpeJZyqXUSwShXoHwY0vx2r02QGzAR4anHw1WoHCrNA
-Add correct host key in /home/dplsh/.ssh/known_hosts to get rid of this messagecouldn't refresh token: unable to authenticate or connect to host 20.238.202.21:22
-there may be an issue determining which ssh-key to use, or there may be an issue establishing a connection to the host
-the error returned was: ssh: handshake failed: knownhosts: host key verification failed`
+Add correct host key in /home/dplsh/.ssh/known_hosts to get rid of this
+messagecouldn't refresh token: unable to authenticate or connect to
+host 20.238.202.21:22
+there may be an issue determining which ssh-key to use, or there may be an
+issue establishing a connection to the host
+the error returned was: ssh: handshake failed: knownhosts: host key
+verification failed`
 
 This error occurs because the Lagoon SSH server had its key rolled, most
 likely during an upgrade to the Lagoon Chart.
@@ -27,7 +31,8 @@ wrong.
 This can be discovered by running the following command:
 `ssh -t lagoon@<external IP of lagoon-core-ssh> token`
 The IP can be found by running the following command:
-`kubectl get -o jsonpath='{.status.loadBalancer.ingress[0].ip}' -n lagoon-core service lagoon-core-ssh`
+`kubectl get -o jsonpath='{.status.loadBalancer.ingress[0].ip}' -n lagoon-core
+service lagoon-core-ssh`
 
 Next, run the command `ssh·-t·lagoon@<external·IP·of·lagoon-core-ssh>·token`
 with the populated IP of the SSH server.

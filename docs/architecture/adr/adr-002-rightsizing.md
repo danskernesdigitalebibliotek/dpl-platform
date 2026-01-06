@@ -118,7 +118,8 @@ The Redis deployment would request 100Mi instead of the previous default of 10Mi
 Building upon the modification described in the previous chapter, we could go
 even further and modify the build-script itself. By inspecting project variables
 we could have the build-script pass in eg. a configurable value for
-[replicaCount][nginx-replica-count] for a pod. This would allow us to introduce a
+[replicaCount][nginx-replica-count] for a pod. This would allow us to
+introduce a
 small/medium/large concept for sites. This could be taken even further to eg.
 introduce whole new services into Lagoon.
 
