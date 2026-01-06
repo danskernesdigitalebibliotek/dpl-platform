@@ -1,8 +1,8 @@
 #!/usr/bin/env zx
 
 const sourceNamespace = `${process.argv[3]}`;
-if (!sourceProject) {
-  throw Error("missing 'sourceProject'");
+if (!sourceNamespace) {
+  throw Error("missing 'sourceNamespace'");
 }
 
 const sourceSshHost = `${process.argv[4]}`;
@@ -11,8 +11,8 @@ if (!sourceSshHost) {
 }
 
 const targetNamespace = `${process.argv[5]}`;
-if (!targetProject) {
-  throw Error("missing 'targetProject'");
+if (!targetNamespace) {
+  throw Error("missing 'targetNamespace'");
 }
 
 const sshHost = sourceSshHost;
