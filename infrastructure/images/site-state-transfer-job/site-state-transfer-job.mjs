@@ -114,5 +114,5 @@ async function syncDatabaseDumpToTarget(sourceNamespace, sshHost, databaseConnec
     throw Error(`Failed to import dump into ${sourceNamespace} database`, { cause: error });
   }
 
-  echo(`Database reset for ${projectName} complete`);
+  echo(`database has been transfered from ${sourceNamespace} has been transfered from 01 to 02`);
 }
