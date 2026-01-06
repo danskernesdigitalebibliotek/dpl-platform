@@ -46,7 +46,7 @@ async function syncFileFromSourceToTarget(sourceNamespace, targetNamespace, sshH
   }
 }
 
-async function getDatabaseConnectionInfo() {
+async function getDatabaseConnectionInfo(namespace) {
   echo(`Getting ${namespace}'s database connection details`);
   let configMapJson;
   try {
@@ -79,7 +79,6 @@ async function getDatabaseConnectionInfo() {
 
 async function makeDatabaseDump(sourceNamespace, sshHost) {
   echo(`Dumping ${sourceNamespace} database to /tmp/${sourceNamespace}-dump.sql`);
-
 
   try {
     await $`kubectl exec -n ${sourceNamespace} deploy/cli -- ssh ${sourceNamespace}@${sshHost} "drush sql:dump --result-file=/tmp/${sourceNamespace}-dump.sql"`
