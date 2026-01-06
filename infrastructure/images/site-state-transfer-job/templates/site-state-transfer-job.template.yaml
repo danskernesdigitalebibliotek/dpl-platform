@@ -45,9 +45,9 @@ metadata:
   namespace: {{ .Release.Namespace }}
 rules:
 - apiGroups: [""]
-  resources: [ "namespaces", "pods", "pods/exec", "configmaps" ]
+  resources: [ "namespaces", "pods", "pods/exec", "configmaps", "services" ]
   verbs: [ "get", "list", "create" ]
-- apiGroups: [ "apps", "configmaps" ]
+- apiGroups: [ "apps", "configmaps", "services" ]
   resources: [ "deployments", "pods" ]
   verbs: [ "get", "list" ]
 
