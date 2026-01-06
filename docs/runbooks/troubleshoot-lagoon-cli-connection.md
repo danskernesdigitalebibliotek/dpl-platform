@@ -69,4 +69,3 @@ lagoon config add \
 
 now run `lagoon login`. There might be another bad key that needs to be removed
 else it should now log you in again.
-
