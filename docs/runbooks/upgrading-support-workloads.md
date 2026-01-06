@@ -42,8 +42,9 @@ followed by specific instructions for each workload (linked above).
    We currently track the chart versions, and not the actual version of the
    application inside the chart. In order to determine the change
    in `appVersion`
-   between chart releases you can do a diff between releases, and keep track of the
-   `appVersion` property in the charts `Chart.yaml`. Using using grafana as an example:
+   between chart releases you can do a diff between releases, and keep track of
+   the `appVersion` property in the charts `Chart.yaml`. Using using grafana as
+   an example:
    <https://github.com/grafana/helm-charts/compare/grafana-6.55.1...grafana-6.56.0>.
    The exact way to do this differs from chart to chart, and is documented in the
    [Specific producedures and tests](#specific-producedures-and-tests) below.
