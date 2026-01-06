@@ -1,0 +1,27 @@
+apiVersion: argoproj.io/v1alpha1
+kind: AppProject
+metadata:
+  name: site-state-transfer
+spec:
+  destinations:
+  - name: in-cluster
+    namespace: "*-main"
+    server: https://kubernetes.default.svc
+  - name: in-cluster
+    namespace: "*-moduletest"
+    server: https://kubernetes.default.svc
+  clusterResourceWhitelist:
+  - group: ''
+    kind: Namespace
+  - group: rbac.authorization.k8s.io
+    kind: ClusterRole
+  - group: rbac.authorization.k8s.io
+    kind: ClusterRoleBinding
+  namespaceResourceWhitelist:
+  - group: '*'
+    kind: '*'
+  orphanedResources:
+    warn: true
+  sourceRepos:
+  - https://github.com/danskernesdigitalebibliotek/dpl-platform.git # git repository
+  - ghcr.io/danskernesdigitalebibliotek/dpl-platform/charts
