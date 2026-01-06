@@ -23,7 +23,8 @@ followed by specific instructions for each workload (linked above).
 
 ## General Procedure
 
-1. Identify the version you want to bump in the `environment/configuration` directory
+1. Identify the version you want to bump in the `environment/configuration`
+   directory
    eg. for dplplat01 [infrastructure/environments/dplplat01/configuration/versions.env](https://github.com/danskernesdigitalebibliotek/dpl-platform/blob/main/infrastructure/environments/dplplat01/configuration/versions.env).
    The file contains links to the relevant Artifact Hub pages for the individual
    projects and can often be used to determine both the latest version, but also
@@ -39,7 +40,8 @@ followed by specific instructions for each workload (linked above).
    between the [chart version](https://helm.sh/docs/topics/charts/#charts-and-versioning)
    and the [app version](https://helm.sh/docs/topics/charts/#the-apiversion-field).
    We currently track the chart versions, and not the actual version of the
-   application inside the chart. In order to determine the change in `appVersion`
+   application inside the chart. In order to determine the change
+   in `appVersion`
    between chart releases you can do a diff between releases, and keep track of the
    `appVersion` property in the charts `Chart.yaml`. Using using grafana as an example:
    <https://github.com/grafana/helm-charts/compare/grafana-6.55.1...grafana-6.56.0>.
