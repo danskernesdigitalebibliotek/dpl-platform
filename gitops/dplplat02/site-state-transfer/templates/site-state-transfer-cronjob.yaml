@@ -19,27 +19,14 @@ spec:
                 - /bin/bash
                 - -c
                 - ./site-state-transfer-job.mjs {{ .Release.Namespace }} "20.238.202.21" {{ .Release.Namespace }}
-              env:
-                - name: AZURE_DATABASE_HOST
-                  valueFrom:
-                    secretKeyRef:
-                      name: azure-database-host
-                      key: host
           serviceAccountName: site-state-transfer-serviceaccount
+          nodeSelector:
+            node-role.kubernetes.io/prod: ""
           tolerations:
             - key: noderole.dplplatform
               operator: Equal
               value: prod
               effect: NoSchedule
-          affinity:
-            nodeAffinity:
-              requiredDuringSchedulingIgnoredDuringExecution:
-                nodeSelectorTerms:
-                  - matchExpressions:
-                    - key: noderole.dplplatform
-                      operator: In
-                      values:
-                       - prod
 
 ---
 
