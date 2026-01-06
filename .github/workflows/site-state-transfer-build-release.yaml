@@ -18,7 +18,7 @@ on:
       - "/infrastructure/images/site-state-transfer-job/**"
       - ".github/workflows/site-state-transfer-build-release.yaml"
     tags:
-      - "mr-*"
+      - "sst-*"
 
 name: Build, test and publish Site State Transfer Job image
 jobs:
