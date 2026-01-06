@@ -1,0 +1,17 @@
+# Moduletest Reset Job Taskfile (task.dev)
+#
+# Builds, tests and pushes builds of container-images for the Moduletest Reset Job
+
+version: "3"
+
+vars:
+  repository: '{{.IMAGE_URL | default "ghcr.io/danskernesdigitalebibliotek/dpl-platform/site-state-transfer-job"}}'
+  tag: '{{.IMAGE_TAG | default "latest"}}'
+  image: "{{.repository}}:{{.tag}}"
+
+tasks:
+  build:
+    desc: Build an image for the Site State Transfer Job
+    summary: Tag can  be specified via the tag environment variable. If omitted the build will assume "latest".
+    cmds:
+      - docker build -t {{.image}} .
