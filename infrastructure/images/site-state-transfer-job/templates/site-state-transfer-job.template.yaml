@@ -1,5 +1,3 @@
-{{ range .Values.projects }}
-
 apiVersion: batch/v1
 kind: CronJob
 metadata:
@@ -20,7 +18,7 @@ spec:
               command:
                 - /bin/bash
                 - -c
-                - ./site-state-transfer-job.mjs {{ .Release.Namespace }} "130.226.25.97" {{ .Release.Namespace }}
+                - ./site-state-transfer-job.mjs {{ .Release.Namespace }} "20.238.202.21" {{ .Release.Namespace }}
               env:
                 - name: AZURE_DATABASE_HOST
                   valueFrom:
@@ -42,9 +40,6 @@ spec:
                       operator: In
                       values:
                        - prod
-
----
-{{ end }}
 
 ---
 
