@@ -14,7 +14,7 @@ spec:
           restartPolicy: Never
           containers:
             - name: site-state-transfer-container
-              image: ghcr.io/danskernesdigitalebibliotek/dpl-platform/site-state-transfer-job:mr-1.0.40
+              image: ghcr.io/danskernesdigitalebibliotek/dpl-platform/site-state-transfer-job:sst-0.0.2
               command:
                 - /bin/bash
                 - -c
