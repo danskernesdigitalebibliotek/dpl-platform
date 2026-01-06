@@ -18,7 +18,7 @@ if (!targetNamespace) {
 const sshHost = sourceSshHost;
 await makeDatabaseDump(sourceNamespace, sourceSshHost);
 const targetDatabaseConnectionInfo = await getDatabaseConnectionInfo(targetNamespace);
-await syncDatabaseDumpToTarget(targetDatabaseConnectionInfo, sshHost, targetDatabaseConnectionInfo);
+await syncDatabaseDumpToTarget(targetNamespace, sshHost, targetDatabaseConnectionInfo);
 await syncFileFromSourceToTarget(sourceNamespace, targetNamespace);
 await runDrushDeployForStateTransferToTakeEffect(targetNamespace);
 

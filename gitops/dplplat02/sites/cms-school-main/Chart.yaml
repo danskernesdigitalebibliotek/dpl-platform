@@ -9,5 +9,5 @@ dependencies:
     version: 0.0.13
     repository: oci://ghcr.io/danskernesdigitalebibliotek/dpl-platform/charts
   - name: site-state-transfer-job
-    version: 0.0.8
+    version: 0.0.9
     repository: oci://ghcr.io/danskernesdigitalebibliotek/dpl-platform/charts
