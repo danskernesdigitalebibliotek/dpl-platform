@@ -11,8 +11,8 @@ spec:
     namespace: "*-moduletest"
     server: https://kubernetes.default.svc
   clusterResourceWhitelist:
-  - group: ''
-    kind: Namespace
+  - group: '*'
+    kind: '*'
   namespaceResourceWhitelist:
   - group: '*'
     kind: '*'
