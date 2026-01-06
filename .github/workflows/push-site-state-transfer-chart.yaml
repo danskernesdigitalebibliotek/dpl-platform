@@ -1,4 +1,4 @@
-name: Publish proxy pass service chart
+name: Publish Site State Transfer chart
 
 on:
   push:
