@@ -101,10 +101,10 @@ async function syncDatabaseDumpToTarget(sourceNamespace, sshHost, databaseConnec
   } = databaseConnectionInfo;
 
   try {
-    await $`kubectl exec -n ${sourceNamespace} deployment/cli -- bash -c "rsync -vz ${sourceNamespace}@${sshHost}:/tmp/${sourceNamespace}-dump.sql /tmp/${sourceNamespace}-dump.sql"`;
+    await $`kubectl exec -n ${sourceNamespace} deployment/cli -- rsync -vz ${sourceNamespace}@${sshHost}:/tmp/${sourceNamespace}-dump.sql /tmp/${sourceNamespace}-dump.sql`;
   } catch(error) {
     echo(`Failed to move ${sourceNamespace} dump from 01 to 02`, error.stderr);
-    throw Erro(`Failed to move ${sourceNamespace} dump from 01 to 02`, { cause: error })
+    throw Error(`Failed to move ${sourceNamespace} dump from 01 to 02`, { cause: error })
   }
 
   try {
