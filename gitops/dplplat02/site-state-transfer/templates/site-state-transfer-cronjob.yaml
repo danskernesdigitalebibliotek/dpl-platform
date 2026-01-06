@@ -1,0 +1,80 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: site-state-transfer-{{ randAlphaNum 4 | lower }}
+  namespace: {{ .Release.Namespace }}
+spec:
+  schedule: "55 11 * * *"
+  jobTemplate:
+    spec:
+      ttlSecondsAfterFinished: 50400 # 14 hours leaving time to investigate failed jobs
+      backoffLimit: 3
+      template:
+        spec:
+          restartPolicy: Never
+          containers:
+            - name: site-state-transfer-container
+              image: ghcr.io/danskernesdigitalebibliotek/dpl-platform/site-state-transfer-job:mr-1.0.40
+              command:
+                - /bin/bash
+                - -c
+                - ./site-state-transfer-job.mjs {{ .Release.Namespace }} "20.238.202.21" {{ .Release.Namespace }}
+              env:
+                - name: AZURE_DATABASE_HOST
+                  valueFrom:
+                    secretKeyRef:
+                      name: azure-database-host
+                      key: host
+          serviceAccountName: site-state-transfer-serviceaccount
+          tolerations:
+            - key: noderole.dplplatform
+              operator: Equal
+              value: prod
+              effect: NoSchedule
+          affinity:
+            nodeAffinity:
+              requiredDuringSchedulingIgnoredDuringExecution:
+                nodeSelectorTerms:
+                  - matchExpressions:
+                    - key: noderole.dplplatform
+                      operator: In
+                      values:
+                       - prod
+
+---
+
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: site-state-transfer-serviceaccount
+  namespace: {{ .Release.Namespace }}
+
+---
+
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: deployments-get-cluster-role
+  namespace: {{ .Release.Namespace }}
+rules:
+- apiGroups: [""]
+  resources: [ "namespaces", "pods", "pods/exec", "configmaps" ]
+  verbs: [ "get", "list", "create" ]
+- apiGroups: [ "apps", "configmaps" ]
+  resources: [ "deployments", "pods" ]
+  verbs: [ "get", "list" ]
+
+---
+
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: namespace-deployments-getter-binding
+subjects:
+- kind: ServiceAccount
+  name: site-state-transfer-serviceaccount
+  namespace: {{ .Release.Namespace }}
+roleRef:
+  kind: ClusterRole
+  name: deployments-get-cluster-role
+  apiGroup: rbac.authorization.k8s.io
