@@ -58,7 +58,7 @@ k8up:
       - name: BACKUP_GLOBALRESTORES3BUCKET
         value: restore
       - name: BACKUP_GLOBALRESTORES3ENDPOINT
-        value: https://backuphandler.lagoon.dplplat02.dpl.reload.dk
+        value: http://minio.minio.svc.cluster.local:9000
 
     backupImage:
       # -- The backup runner image repository
