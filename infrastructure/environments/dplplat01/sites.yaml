@@ -15,13 +15,6 @@ x-webmasters-on-weekly-release-cycle: &webmasters-on-weekly-release-cycle
   moduletest-dpl-cms-release: 2026.2.1
   go-release: 2025.50.1
   php-version: 8.3
-x-eager-50: &eager-50
-  releaseImageRepository: ghcr.io/danskernesdigitalebibliotek
-  releaseImageName: dpl-cms-source
-  dpl-cms-release: 2025.50.1
-  moduletest-dpl-cms-release: 2025.50.1
-  go-release: 2025.50.1
-  php-version: 8.3
 sites:
   # Site objects are indexed by a unique key that must be a valid lagoon, and
   # github project name. That is, alphanumeric and dashes.
@@ -488,7 +481,7 @@ sites:
       - herningbib.dk
     autogenerateRoutes: true
     plan: webmaster
-    <<: *eager-50
+    <<: *webmasters-on-weekly-release-cycle
     diskSize: 20
   hillerod:
     name: "Hillerød Bibliotekerne"
@@ -620,7 +613,7 @@ sites:
       - varnish.main.kobenhavn.dplplat01.dpl.reload.dk
     plan: webmaster
     deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHaTkDvjLW/b2qVj8FIvtX9x3TxFFZTENn+w2CFELeoC"
-    <<: *eager-50
+    <<: *webmasters-on-weekly-release-cycle
     diskSize: 20
   koge:
     name: "KøgeBibliotekerne"
