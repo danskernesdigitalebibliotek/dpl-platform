@@ -28,10 +28,10 @@ echo(`${sourceNamespace} has been transfered from 01 to 02`);
 async function runDrushDeployForStateTransferToTakeEffect(targetNamespace) {
   echo(`Starting 'drush deploy' in ${targetNamespace}`);
   try {
-      await $`kubectl exec -n ${targetNamespace} deployment/cli -- bash -c "drush deploy"`;
+    await $`kubectl exec -n ${targetNamespace} deployment/cli -- bash -c "drush deploy"`;
   } catch (error) {
-      echo(`Failed to run drush deploy from CLI pod in target namespace ${targetNamespace}`, error.stderr);
-      throw Error(`Failed to run drush deploy from CLI pod in target namespace ${targetNamespace}`, { cause: error });
+    echo(`Failed to run drush deploy from CLI pod in target namespace ${targetNamespace}`, error.stderr);
+    throw Error(`Failed to run drush deploy from CLI pod in target namespace ${targetNamespace}`, { cause: error });
   }
 }
 
@@ -39,10 +39,10 @@ async function syncFileFromSourceToTarget(sourceNamespace, targetNamespace, sshH
   echo(`Now moving files from ${sourceNamespace} to ${targetNamespace}`);
   // The IP here is the lagoon SSH host and it is documented here: https://github.com/danskernesdigitalebibliotek/dpl-platform/blob/main/docs/runbooks/connecting-the-lagoon-cli.md#configure-your-local-lagoon-cli
   try {
-      await $`kubectl exec -n ${targetNamespace} deployment/cli -- rsync --omit-dir-times --recursive --no-perms --no-group --no-owner --no-times --chmod=ugo=rwX --delete --exclude=/styles/* --delete-excluded ${sourceNamespace}@${sshHost}:/app/web/sites/default/files/ /app/web/sites/default/files`;
+    await $`kubectl exec -n ${targetNamespace} deployment/cli -- rsync --omit-dir-times --recursive --no-perms --no-group --no-owner --no-times --chmod=ugo=rwX --delete --exclude=/styles/* --delete-excluded ${sourceNamespace}@${sshHost}:/app/web/sites/default/files/ /app/web/sites/default/files`;
   } catch (error) {
-      echo(`Failed to rsync files from ${targetNamespace} to ${sourceNamespace}`, error.stderr);
-      throw Error(`Failed to rsync files from ${targetNamespace} to ${sourceNamespace}`, { cause: error });
+    echo(`Failed to rsync files from ${targetNamespace} to ${sourceNamespace}`, error.stderr);
+    throw Error(`Failed to rsync files from ${targetNamespace} to ${sourceNamespace}`, { cause: error });
   }
 }
 
@@ -51,7 +51,7 @@ async function getDatabaseConnectionInfo(namespace) {
   let configMapJson;
   try {
     configMapJson = await $`kubectl get -n ${namespace} configmap lagoon-env -o json`
-  } catch(error) {
+  } catch (error) {
     echo(`Failed to get configmap "lagoon-env" in namespace ${namespace}`, error.stderr);
     throw Error(`Failed to get configmap "lagoon-env" in namespace ${namespace}`, { cause: error });
   }
@@ -62,11 +62,11 @@ async function getDatabaseConnectionInfo(namespace) {
   const databaseConnectionInfo = {
     databaseName: data.MARIADB_DATABASE,
     databaseHost: await $`kubectl get svc ${data.MARIADB_HOST} -n ${namespace} --template={{.spec.externalName}}`,
-    databaseUser:  data.MARIADB_USERNAME,
+    databaseUser: data.MARIADB_USERNAME,
     databasePassword: data.MARIADB_PASSWORD,
   };
 
-  if(data.MARIADB_DATABASE_OVERRIDE) {
+  if (data.MARIADB_DATABASE_OVERRIDE) {
     echo('using OVERRIDE variables');
     databaseConnectionInfo.databaseName = data.MARIADB_DATABASE_OVERRIDE;
     databaseConnectionInfo.databaseHost = data.MARIADB_HOST_OVERRIDE;
@@ -82,7 +82,7 @@ async function makeDatabaseDump(sourceNamespace, sshHost) {
 
   try {
     await $`kubectl exec -n ${sourceNamespace} deploy/cli -- ssh ${sourceNamespace}@${sshHost} "drush sql:dump --result-file=/tmp/${sourceNamespace}-dump.sql"`
-  } catch(error) {
+  } catch (error) {
     echo(`Failed to make database dump in ${sourceNamespace} CLI pod`, error.stderr);
     throw Error(`Failed to make database dump in ${sourceNamespace} CLI pod`, { cause: error });
   }
@@ -102,14 +102,14 @@ async function syncDatabaseDumpToTarget(sourceNamespace, sshHost, databaseConnec
 
   try {
     await $`kubectl exec -n ${sourceNamespace} deployment/cli -- rsync -vz ${sourceNamespace}@${sshHost}:/tmp/${sourceNamespace}-dump.sql /tmp/${sourceNamespace}-dump.sql`;
-  } catch(error) {
+  } catch (error) {
     echo(`Failed to move ${sourceNamespace} dump from 01 to 02`, error.stderr);
     throw Error(`Failed to move ${sourceNamespace} dump from 01 to 02`, { cause: error })
   }
 
   try {
     await $`kubectl exec -n ${sourceNamespace} deployment/cli -- bash -c "drush sql-drop && mariadb --user=${databaseUser} --host=${databaseHost} --password=${databasePassword} ${databaseName} < /tmp/${sourceNamespace}-dump.sql"`
-  } catch(error) {
+  } catch (error) {
     echo(`Failed to import dump into 02's ${sourceNamespace} database`, error.stderr);
     throw Error(`Failed to import dump into ${sourceNamespace} database`, { cause: error });
   }
