@@ -15,20 +15,13 @@ x-webmasters-on-weekly-release-cycle: &webmasters-on-weekly-release-cycle
   moduletest-dpl-cms-release: 2025.50.1
   go-release: 2025.48.2
   php-version: 8.3
-x-eager-50: &eager-50 # Herning and København has asked to get 50.0 right away.
+x-eager-50: &eager-50
   releaseImageRepository: ghcr.io/danskernesdigitalebibliotek
   releaseImageName: dpl-cms-source
   dpl-cms-release: 2025.50.1
   moduletest-dpl-cms-release: 2025.50.1
   go-release: 2025.50.1
   php-version: 8.3
-# Mounted Disk sizes
-x-disk-size-small: &disk-size-small
-  diskSize: 10
-x-disk-size-medium: &disk-size-medium
-  diskSize: 15
-x-disk-size-large: &disk-size-large
-  diskSize: 20
 sites:
   # Site objects are indexed by a unique key that must be a valid lagoon, and
   # github project name. That is, alphanumeric and dashes.
@@ -43,7 +36,7 @@ sites:
     moduletest-dpl-cms-release: 2025.50.1
     go-release: 2025.50.1
     php-version: 8.3
-    diskSize: 11
+    diskSize: 20
     primary-domain: canary.dplplat01.dpl.reload.dk
     # TODO: Remove this once the the Adgangsplatformen OpenID client used here
     # has been updated to use the primary domain.
@@ -59,8 +52,8 @@ sites:
     moduletest-dpl-cms-release: 2025.50.1
     go-release: 2025.50.1
     php-version: 8.3
+    diskSize: 20
     deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAILj8lXv7C/7s7te9sEpwcHQhgDWfzsCkAN7rqQ4sdTzk"
-    <<: *disk-size-small
   staging:
     name: "Staging"
     description: "A site to test new releases on"
@@ -77,8 +70,8 @@ sites:
     # TODO: Remove this once the the Adgangsplatformen OpenID client used here
     # has been updated to use the primary domain.
     autogenerateRoutes: true
+    diskSize: 20
     deploy_key: ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBLUrrxfwsfwz4nkn/WCbMUbLHkTFvyYB2uusHLA7NlH
-    <<: *disk-size-medium
   cms-school:
     name: "CMS-skole"
     description: "Et site til undervisning i CMSet"
@@ -92,7 +85,12 @@ sites:
     # This site is a webmaster site but we usually want the latest release
     # deployed to production. Our YAML handling chokes on duplicates to we
     # follow the default release plan and update the module test site manually.
+<<<<<<< HEAD
     <<: [*default-release-image-source, *disk-size-small]
+=======
+    diskSize: 20
+    <<: *default-release-image-source
+>>>>>>> e233bd07 (Fix parseability of sites.yaml for terraform)
   bibliotek-test:
     name: "Bibliotekstest"
     description: "Et site hvor bibliotekerne kan teste"
@@ -100,7 +98,12 @@ sites:
     plan: webmaster
     go-release: 2025.50.1
     deploy_key: ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHvhy79hHjLcQJCcMNwci1Q/P/O2LwD4IzBVfkmRGKom
+<<<<<<< HEAD
     <<: [*webmasters-on-weekly-release-cycle, *disk-size-small]
+=======
+    diskSize: 5
+    <<: *webmasters-on-weekly-release-cycle
+>>>>>>> e233bd07 (Fix parseability of sites.yaml for terraform)
   # BNF site.
   bnf:
     name: "Bibliotekernes Nationale Formidling"
@@ -123,7 +126,12 @@ sites:
     # environment should use the latest version.
     # Our YAML handling chokes on duplicates so we follow the default release
     # plan and update the module test site manually.
+<<<<<<< HEAD
     <<: [*default-release-image-source, *disk-size-large]
+=======
+    diskSize: 20
+    <<: *default-release-image-source
+>>>>>>> e233bd07 (Fix parseability of sites.yaml for terraform)
   # Production sites
   aabenraa:
     name: "Aabenraa Biblioteker og Kulturhuse"
@@ -133,7 +141,12 @@ sites:
     secondary-domains:
       - aabenraabib.dk
     autogenerateRoutes: true
+<<<<<<< HEAD
     <<: [*default-release-image-source, *disk-size-medium]
+=======
+    diskSize: 20
+    <<: *default-release-image-source
+>>>>>>> e233bd07 (Fix parseability of sites.yaml for terraform)
   aalborg:
     name: "Aalborg Bibliotekerne"
     description: "The main library site for Aalborg"
@@ -143,7 +156,12 @@ sites:
       - aalborgbibliotekerne.dk
     autogenerateRoutes: "redirect"
     plan: webmaster
+<<<<<<< HEAD
     <<: [*webmasters-on-weekly-release-cycle, *disk-size-medium]
+=======
+    diskSize: 20
+    <<: *webmasters-on-weekly-release-cycle
+>>>>>>> e233bd07 (Fix parseability of sites.yaml for terraform)
   aarhus:
     name: "Aarhus Kommunes Biblioteker"
     description: "The library site for Aarhus"
@@ -153,7 +171,12 @@ sites:
     secondary-domains:
       - aakb.dk
     autogenerateRoutes: true
+<<<<<<< HEAD
     <<: [*webmasters-on-weekly-release-cycle, *disk-size-medium]
+=======
+    diskSize: 20
+    <<: *webmasters-on-weekly-release-cycle
+>>>>>>> e233bd07 (Fix parseability of sites.yaml for terraform)
   aero:
     name: "Ærø Folkebibliotek"
     description: "The library site for Ærø"
@@ -162,7 +185,12 @@ sites:
     secondary-domains:
       - arrebib.dk
     autogenerateRoutes: true
+<<<<<<< HEAD
     <<: [*default-release-image-source, *disk-size-medium]
+=======
+    diskSize: 20
+    <<: *default-release-image-source
+>>>>>>> e233bd07 (Fix parseability of sites.yaml for terraform)
   albertslund:
     name: "Albertslund Bibliotek"
     description: "The library site for Albertslund"
@@ -172,7 +200,12 @@ sites:
       - www.albertslundbibliotek.dk
     autogenerateRoutes: true
     plan: webmaster
+<<<<<<< HEAD
     <<: [*webmasters-on-weekly-release-cycle, *disk-size-medium]
+=======
+    diskSize: 20
+    <<: *webmasters-on-weekly-release-cycle
+>>>>>>> e233bd07 (Fix parseability of sites.yaml for terraform)
   allerod:
     name: "Allerød Biblioteker"
     description: "The library site for Allerød"
@@ -181,7 +214,12 @@ sites:
     secondary-domains:
       - bibliotek.alleroed.dk
     autogenerateRoutes: true
+<<<<<<< HEAD
     <<: [*default-release-image-source, *disk-size-medium]
+=======
+    diskSize: 20
+    <<: *default-release-image-source
+>>>>>>> e233bd07 (Fix parseability of sites.yaml for terraform)
   assens:
     name: "AssensBibliotekerne"
     description: "The library site for Assens"
@@ -190,7 +228,12 @@ sites:
     secondary-domains:
       - assensbib.dk
     autogenerateRoutes: true
+<<<<<<< HEAD
     <<: [*default-release-image-source, *disk-size-medium]
+=======
+    diskSize: 20
+    <<: *default-release-image-source
+>>>>>>> e233bd07 (Fix parseability of sites.yaml for terraform)
   ballerup:
     name: "Ballerup Bibliotekerne"
     description: "The library site for Ballerup"
@@ -200,7 +243,12 @@ sites:
       - www.bib.ballerup.dk
     autogenerateRoutes: true
     plan: webmaster
+<<<<<<< HEAD
     <<: [*webmasters-on-weekly-release-cycle, *disk-size-medium]
+=======
+    diskSize: 20
+    <<: *webmasters-on-weekly-release-cycle
+>>>>>>> e233bd07 (Fix parseability of sites.yaml for terraform)
   billund:
     name: "Billund Bibliotekerne og Borgerservice"
     description: "The main library site for Billund"
@@ -211,14 +259,24 @@ sites:
       - www.billundbibliotek.dk
     autogenerateRoutes: "redirect"
     deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOsUy+dVkL+KxOYz8zSel7mNkcKrEnqDZPHmsU4sfMv/"
+<<<<<<< HEAD
     <<: [*default-release-image-source, *disk-size-medium]
+=======
+    diskSize: 20
+    <<: *default-release-image-source
+>>>>>>> e233bd07 (Fix parseability of sites.yaml for terraform)
   bornholm:
     name: "Bornholms Folkebiblioteker"
     description: "The library site for Bornholm"
     deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIApUNh71neiuKAsO3OL4jEzxnPCXt9gvl66gDRiYLnLw"
     primary-domain: bibliotek.brk.dk
     autogenerateRoutes: true
+<<<<<<< HEAD
     <<: [*default-release-image-source, *disk-size-medium]
+=======
+    diskSize: 20
+    <<: *default-release-image-source
+>>>>>>> e233bd07 (Fix parseability of sites.yaml for terraform)
   brondby:
     name: "Brøndby-Bibliotekerne"
     description: "The library site for Brøndby"
@@ -227,7 +285,12 @@ sites:
     secondary-domains:
       - brondby-bibliotekerne.dk
     autogenerateRoutes: true
+<<<<<<< HEAD
     <<: [*default-release-image-source, *disk-size-medium]
+=======
+    diskSize: 20
+    <<: *default-release-image-source
+>>>>>>> e233bd07 (Fix parseability of sites.yaml for terraform)
   bronderslev:
     name: "Brønderslev Bibliotek"
     description: "The library site for Brønderslev"
@@ -236,7 +299,12 @@ sites:
     secondary-domains:
       - bronderslevbib.dk
     autogenerateRoutes: true
+<<<<<<< HEAD
     <<: [*default-release-image-source, *disk-size-medium]
+=======
+    diskSize: 20
+    <<: *default-release-image-source
+>>>>>>> e233bd07 (Fix parseability of sites.yaml for terraform)
   dragor:
     name: "Dragør Bibliotek"
     description: "The library site for Dragør"
@@ -245,7 +313,12 @@ sites:
     secondary-domains:
       - drabib.dk
     autogenerateRoutes: true
+<<<<<<< HEAD
     <<: [*default-release-image-source, *disk-size-medium]
+=======
+    diskSize: 20
+    <<: *default-release-image-source
+>>>>>>> e233bd07 (Fix parseability of sites.yaml for terraform)
   egedal:
     name: "Egedal Bibliotekerne"
     description: "The library site for Egedal"
@@ -254,7 +327,12 @@ sites:
     secondary-domains:
       - www.egedalbibliotekerne.dk
     autogenerateRoutes: true
+<<<<<<< HEAD
     <<: [*default-release-image-source, *disk-size-medium]
+=======
+    diskSize: 20
+    <<: *default-release-image-source
+>>>>>>> e233bd07 (Fix parseability of sites.yaml for terraform)
   esbjerg:
     name: "Esbjerg Kommunes Biblioteker"
     description: "The library site for Esbjerg"
@@ -267,7 +345,12 @@ sites:
       - esbbib.dk
       - www.esbbib.dk
     autogenerateRoutes: true
+<<<<<<< HEAD
     <<: [*default-release-image-source, *disk-size-medium]
+=======
+    diskSize: 20
+    <<: *default-release-image-source
+>>>>>>> e233bd07 (Fix parseability of sites.yaml for terraform)
   faaborg-midtfyn:
     name: "Faaborg-Midtfyn Bibliotekerne"
     description: "The library site for Faaborg-Midtfyn"
@@ -276,7 +359,12 @@ sites:
     secondary-domains:
       - www.fmbib.dk
     autogenerateRoutes: true
+<<<<<<< HEAD
     <<: [*default-release-image-source, *disk-size-medium]
+=======
+    diskSize: 20
+    <<: *default-release-image-source
+>>>>>>> e233bd07 (Fix parseability of sites.yaml for terraform)
   favrskov:
     name: "Favrskov Bibliotekerne"
     description: "The library site for Favrskov"
@@ -287,7 +375,12 @@ sites:
       - favrskovbibliotekerne.dk
       - www.favrskovbibliotekerne.dk
     autogenerateRoutes: true
+<<<<<<< HEAD
     <<: [*default-release-image-source, *disk-size-medium]
+=======
+    diskSize: 20
+    <<: *default-release-image-source
+>>>>>>> e233bd07 (Fix parseability of sites.yaml for terraform)
   faxe:
     name: "Faxe Kommunes Bibliotek & Borgerservice"
     description: "The library site for Faxe"
@@ -296,7 +389,12 @@ sites:
     secondary-domains:
       - "faxebibliotek.dk"
     autogenerateRoutes: true
+<<<<<<< HEAD
     <<: [*default-release-image-source, *disk-size-medium]
+=======
+    diskSize: 20
+    <<: *default-release-image-source
+>>>>>>> e233bd07 (Fix parseability of sites.yaml for terraform)
   fredensborg:
     name: "Fredensborg Bibliotekerne"
     description: "The library site for Fredensborg"
@@ -305,7 +403,12 @@ sites:
     secondary-domains:
       - fredensborgbibliotekerne.dk
     autogenerateRoutes: true
+<<<<<<< HEAD
     <<: [*default-release-image-source, *disk-size-medium]
+=======
+    diskSize: 20
+    <<: *default-release-image-source
+>>>>>>> e233bd07 (Fix parseability of sites.yaml for terraform)
   fredericia:
     name: "Fredericia Bibliotek"
     description: "The library site for Fredericia"
@@ -314,7 +417,12 @@ sites:
     secondary-domains:
       - www.fredericiabib.dk
     autogenerateRoutes: true
+<<<<<<< HEAD
     <<: [*default-release-image-source, *disk-size-medium]
+=======
+    diskSize: 20
+    <<: *default-release-image-source
+>>>>>>> e233bd07 (Fix parseability of sites.yaml for terraform)
   frederiksberg:
     name: "Biblioteket Frederiksberg"
     description: "The library site for Frederiksberg"
@@ -322,14 +430,24 @@ sites:
     secondary-domains:
       - www.fkb.dk
     deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIGatN86NGcfXHefEFAACwDVkDxob2SW+N8R+8/rANnvF"
+<<<<<<< HEAD
     <<: [*default-release-image-source, *disk-size-medium]
+=======
+    diskSize: 20
+    <<: *default-release-image-source
+>>>>>>> e233bd07 (Fix parseability of sites.yaml for terraform)
   frederikshavn:
     name: "Frederikshavn Kommunes Biblioteker"
     description: "The library site for Frederikshavn"
     deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAICZcYBGIGrw0aei4UFmWcNMiQ4ZbJbBR7OU7q5Bsu/lz"
     primary-domain: bibl.frederikshavn.dk
     autogenerateRoutes: true
+<<<<<<< HEAD
     <<: [*default-release-image-source, *disk-size-medium]
+=======
+    diskSize: 20
+    <<: *default-release-image-source
+>>>>>>> e233bd07 (Fix parseability of sites.yaml for terraform)
   frederikssund:
     name: "Frederikssund Bibliotekerne"
     description: "The library site for Frederikssund"
@@ -338,7 +456,12 @@ sites:
     secondary-domains:
       - bibliotekerne.frederikssund.dk
     autogenerateRoutes: true
+<<<<<<< HEAD
     <<: [*default-release-image-source, *disk-size-medium]
+=======
+    diskSize: 20
+    <<: *default-release-image-source
+>>>>>>> e233bd07 (Fix parseability of sites.yaml for terraform)
   fureso:
     name: "Furesø Bibliotek & Borgerservice"
     description: "The library site for Furesø"
@@ -347,7 +470,12 @@ sites:
     secondary-domains:
       - www.furbib.dk
     autogenerateRoutes: true
+<<<<<<< HEAD
     <<: [*default-release-image-source, *disk-size-medium]
+=======
+    diskSize: 20
+    <<: *default-release-image-source
+>>>>>>> e233bd07 (Fix parseability of sites.yaml for terraform)
   gentofte:
     name: "Gentofte Bibliotekerne"
     description: "The library site for Gentofte"
@@ -356,7 +484,12 @@ sites:
     secondary-domains:
       - www.genbib.dk
     autogenerateRoutes: true
+<<<<<<< HEAD
     <<: [*default-release-image-source, *disk-size-medium]
+=======
+    diskSize: 20
+    <<: *default-release-image-source
+>>>>>>> e233bd07 (Fix parseability of sites.yaml for terraform)
   gladsaxe:
     name: "Gladsaxe Bibliotekerne"
     description: "The library site for Gladsaxe"
@@ -365,7 +498,12 @@ sites:
     secondary-domains:
       - www.gladbib.dk
     autogenerateRoutes: true
+<<<<<<< HEAD
     <<: [*default-release-image-source, *disk-size-medium]
+=======
+    diskSize: 20
+    <<: *default-release-image-source
+>>>>>>> e233bd07 (Fix parseability of sites.yaml for terraform)
   glostrup:
     name: "Glostrup Bibliotek"
     description: "The library site for Glostrup"
@@ -374,7 +512,12 @@ sites:
     secondary-domains:
       - glostrupbib.dk
     autogenerateRoutes: true
+<<<<<<< HEAD
     <<: [*default-release-image-source, *disk-size-medium]
+=======
+    diskSize: 20
+    <<: *default-release-image-source
+>>>>>>> e233bd07 (Fix parseability of sites.yaml for terraform)
   greve:
     name: "Greve Bibliotek"
     description: "The library site for Greve"
@@ -384,7 +527,12 @@ sites:
       - grevebib.dk
       - www.grevebib.dk
     autogenerateRoutes: true
+<<<<<<< HEAD
     <<: [*default-release-image-source, *disk-size-medium]
+=======
+    diskSize: 20
+    <<: *default-release-image-source
+>>>>>>> e233bd07 (Fix parseability of sites.yaml for terraform)
   gribskov:
     name: "Gribskov Biblioteker"
     description: "The library site for Gribskov"
@@ -393,7 +541,12 @@ sites:
     secondary-domains:
       - gribskovbib.dk
     autogenerateRoutes: true
+<<<<<<< HEAD
     <<: [*default-release-image-source, *disk-size-medium]
+=======
+    diskSize: 20
+    <<: *default-release-image-source
+>>>>>>> e233bd07 (Fix parseability of sites.yaml for terraform)
   guldborgsund:
     name: "Guldborgsund-bibliotekerne"
     description: "The library site for Guldborgsund"
@@ -402,7 +555,12 @@ sites:
     secondary-domains:
       - www.guldbib.dk
     autogenerateRoutes: true
+<<<<<<< HEAD
     <<: [*default-release-image-source, *disk-size-medium]
+=======
+    diskSize: 20
+    <<: *default-release-image-source
+>>>>>>> e233bd07 (Fix parseability of sites.yaml for terraform)
   haderslev:
     name: "Haderslev Bibliotekerne"
     description: "The library site for Haderslev"
@@ -411,7 +569,12 @@ sites:
     secondary-domains:
       - www.haderslevbibliotekerne.dk
     autogenerateRoutes: true
+<<<<<<< HEAD
     <<: [*default-release-image-source, *disk-size-medium]
+=======
+    diskSize: 20
+    <<: *default-release-image-source
+>>>>>>> e233bd07 (Fix parseability of sites.yaml for terraform)
   halsnaes:
     name: "Halsnæs Bibliotekerne"
     description: "The library site for Halsnæs"
@@ -420,7 +583,12 @@ sites:
     secondary-domains:
       - www.bibliotekerne.halsnaes.dk
     autogenerateRoutes: true
+<<<<<<< HEAD
     <<: [*default-release-image-source, *disk-size-medium]
+=======
+    diskSize: 20
+    <<: *default-release-image-source
+>>>>>>> e233bd07 (Fix parseability of sites.yaml for terraform)
   hedensted:
     name: "Hedensted Bibliotekerne"
     description: "The library site for Hedensted"
@@ -429,7 +597,12 @@ sites:
     secondary-domains:
       - www.hedenstedbib.dk
     autogenerateRoutes: true
+<<<<<<< HEAD
     <<: [*default-release-image-source, *disk-size-medium]
+=======
+    diskSize: 20
+    <<: *default-release-image-source
+>>>>>>> e233bd07 (Fix parseability of sites.yaml for terraform)
   helsingor:
     name: "Helsingør Kommunes Biblioteker"
     description: "The library site for Helsingør"
@@ -438,7 +611,12 @@ sites:
     secondary-domains:
       - www.helsbib.dk
     autogenerateRoutes: true
+<<<<<<< HEAD
     <<: [*default-release-image-source, *disk-size-medium]
+=======
+    diskSize: 20
+    <<: *default-release-image-source
+>>>>>>> e233bd07 (Fix parseability of sites.yaml for terraform)
   herlev:
     name: "Herlev Bibliotek"
     description: "The library site for Herlev"
@@ -447,7 +625,12 @@ sites:
       - herlevbibliotek.dk
     autogenerateRoutes: "redirect"
     deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAICsQ7blUGjtlSdPU4AV7PR21o2Eqg5IMKTCFX3PV/2Mf"
+<<<<<<< HEAD
     <<: [*default-release-image-source, *disk-size-medium]
+=======
+    diskSize: 20
+    <<: *default-release-image-source
+>>>>>>> e233bd07 (Fix parseability of sites.yaml for terraform)
   herning:
     name: "Herning Bibliotekerne"
     description: "The main library site for Herning"
@@ -457,7 +640,12 @@ sites:
       - herningbib.dk
     autogenerateRoutes: true
     plan: webmaster
+<<<<<<< HEAD
     <<: [*eager-50, *disk-size-medium]
+=======
+    <<: *eager-50
+    diskSize: 20
+>>>>>>> e233bd07 (Fix parseability of sites.yaml for terraform)
   hillerod:
     name: "Hillerød Bibliotekerne"
     description: "The library site for Hillerød"
@@ -466,7 +654,12 @@ sites:
     secondary-domains:
       - www.hilbib.dk
     autogenerateRoutes: true
+<<<<<<< HEAD
     <<: [*default-release-image-source, *disk-size-medium]
+=======
+    diskSize: 20
+    <<: *default-release-image-source
+>>>>>>> e233bd07 (Fix parseability of sites.yaml for terraform)
   hjorring:
     name: "Hjørring Bibliotekerne"
     description: "The library site for Hjørring"
@@ -475,7 +668,12 @@ sites:
     secondary-domains:
       - www.hjbib.dk
     autogenerateRoutes: true
+<<<<<<< HEAD
     <<: [*default-release-image-source, *disk-size-medium]
+=======
+    diskSize: 20
+    <<: *default-release-image-source
+>>>>>>> e233bd07 (Fix parseability of sites.yaml for terraform)
   hoje-taastrup:
     name: "Høje-Taastrup Kommunes Biblioteker"
     description: "The library site for Høje-Taastrup"
@@ -484,14 +682,24 @@ sites:
     secondary-domains:
       - www.bibliotek.htk.dk
     autogenerateRoutes: true
+<<<<<<< HEAD
     <<: [*default-release-image-source, *disk-size-medium]
+=======
+    diskSize: 20
+    <<: *default-release-image-source
+>>>>>>> e233bd07 (Fix parseability of sites.yaml for terraform)
   holbaek:
     name: "Holbæk Bibliotekerne"
     description: "The library site for Holbæk"
     deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIL6uSbRiMzeDVejoPx5+YlAPCHebnY0XwF/zDd3YZtQ+"
     primary-domain: bibliotek.holbaek.dk
     autogenerateRoutes: true
+<<<<<<< HEAD
     <<: [*default-release-image-source, *disk-size-medium]
+=======
+    diskSize: 20
+    <<: *default-release-image-source
+>>>>>>> e233bd07 (Fix parseability of sites.yaml for terraform)
   holstebro:
     name: "Holstebro Bibliotek"
     description: "The library site for Holstebro"
@@ -500,7 +708,12 @@ sites:
     secondary-domains:
       - holstebrobibliotek.dk
     autogenerateRoutes: true
+<<<<<<< HEAD
     <<: [*default-release-image-source, *disk-size-medium]
+=======
+    diskSize: 20
+    <<: *default-release-image-source
+>>>>>>> e233bd07 (Fix parseability of sites.yaml for terraform)
   horsens:
     name: "Horsens Bibliotek"
     description: "The library site for Horsens"
@@ -509,7 +722,12 @@ sites:
     secondary-domains:
       - www.horsensbibliotek.dk
     autogenerateRoutes: true
+<<<<<<< HEAD
     <<: [*default-release-image-source, *disk-size-medium]
+=======
+    diskSize: 20
+    <<: *default-release-image-source
+>>>>>>> e233bd07 (Fix parseability of sites.yaml for terraform)
   horsholm:
     name: "Hørsholm Bibliotek"
     description: "The library site for Hørsholm"
@@ -518,7 +736,12 @@ sites:
     secondary-domains:
       - www.biblioteket.horsholm.dk
     autogenerateRoutes: redirect
+<<<<<<< HEAD
     <<: [*default-release-image-source, *disk-size-medium]
+=======
+    diskSize: 20
+    <<: *default-release-image-source
+>>>>>>> e233bd07 (Fix parseability of sites.yaml for terraform)
   hvidovre:
     name: "HvidovreBibliotekerne"
     description: "The library site for Hvidovre"
@@ -529,7 +752,12 @@ sites:
       - www.hvidovrebibliotekerne.dk
       - hvidovrebibliotekerne.dk
     autogenerateRoutes: true
+<<<<<<< HEAD
     <<: [*default-release-image-source, *disk-size-medium]
+=======
+    diskSize: 20
+    <<: *default-release-image-source
+>>>>>>> e233bd07 (Fix parseability of sites.yaml for terraform)
   ikast-brande:
     name: "Ikast-Brande Bibliotek"
     description: "The library site for Ikast-Brande"
@@ -538,7 +766,12 @@ sites:
     secondary-domains:
       - ikast-brandebibliotek.dk
     autogenerateRoutes: true
+<<<<<<< HEAD
     <<: [*default-release-image-source, *disk-size-medium]
+=======
+    diskSize: 20
+    <<: *default-release-image-source
+>>>>>>> e233bd07 (Fix parseability of sites.yaml for terraform)
   ishoj:
     name: "Ishøj Bibliotek"
     description: "The library site for Ishøj"
@@ -547,7 +780,12 @@ sites:
     secondary-domains:
       - ishojbib.dk
     autogenerateRoutes: true
+<<<<<<< HEAD
     <<: [*default-release-image-source, *disk-size-medium]
+=======
+    diskSize: 20
+    <<: *default-release-image-source
+>>>>>>> e233bd07 (Fix parseability of sites.yaml for terraform)
   kalundborg:
     name: "Kalundborg Biblioteker"
     description: "The library site for Kallundborg"
@@ -556,7 +794,12 @@ sites:
     secondary-domains:
       - kalundborgbib.dk
     autogenerateRoutes: true
+<<<<<<< HEAD
     <<: [*default-release-image-source, *disk-size-medium]
+=======
+    diskSize: 20
+    <<: *default-release-image-source
+>>>>>>> e233bd07 (Fix parseability of sites.yaml for terraform)
   kerteminde:
     name: "Kerteminde Bibliotekerne"
     description: "The library site for Kerteminde"
@@ -565,7 +808,12 @@ sites:
     secondary-domains:
       - www.kertemindebibliotekerne.dk
     autogenerateRoutes: true
+<<<<<<< HEAD
     <<: [*default-release-image-source, *disk-size-medium]
+=======
+    diskSize: 20
+    <<: *default-release-image-source
+>>>>>>> e233bd07 (Fix parseability of sites.yaml for terraform)
   kobenhavn:
     name: "Københavns Biblioteker"
     description: "The main library site for København"
@@ -576,7 +824,12 @@ sites:
       - varnish.main.kobenhavn.dplplat01.dpl.reload.dk
     plan: webmaster
     deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHaTkDvjLW/b2qVj8FIvtX9x3TxFFZTENn+w2CFELeoC"
+<<<<<<< HEAD
     <<: [*eager-50, *disk-size-large]
+=======
+    <<: *eager-50
+    diskSize: 20
+>>>>>>> e233bd07 (Fix parseability of sites.yaml for terraform)
   koge:
     name: "KøgeBibliotekerne"
     description: "The library site for Køge"
@@ -585,7 +838,12 @@ sites:
     secondary-domains:
       - koegebib.dk
     autogenerateRoutes: true
+<<<<<<< HEAD
     <<: [*default-release-image-source, *disk-size-medium]
+=======
+    diskSize: 20
+    <<: *default-release-image-source
+>>>>>>> e233bd07 (Fix parseability of sites.yaml for terraform)
   kolding:
     name: "Koldingbibliotekerne"
     description: "The library site for Kolding"
@@ -596,14 +854,24 @@ sites:
       - koldingbibliotekerne.dk
       - www.koldingbibliotekerne.dk
     autogenerateRoutes: true
+<<<<<<< HEAD
     <<: [*default-release-image-source, *disk-size-medium]
+=======
+    diskSize: 20
+    <<: *default-release-image-source
+>>>>>>> e233bd07 (Fix parseability of sites.yaml for terraform)
   laeso:
     name: "Læsø Bibliotek"
     description: "The library site for Læsø"
     deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIGBAqZWP02LnFU7Iwlj9ebWeX3efwl9tkRzidSIjo6FF"
     primary-domain: biblioteket.laesoe.dk
     autogenerateRoutes: true
+<<<<<<< HEAD
     <<: [*default-release-image-source, *disk-size-medium]
+=======
+    diskSize: 20
+    <<: *default-release-image-source
+>>>>>>> e233bd07 (Fix parseability of sites.yaml for terraform)
   langeland:
     name: "Langeland Bibliotek"
     description: "The library site for Langeland"
@@ -612,7 +880,12 @@ sites:
     secondary-domains:
       - www.langelandbibliotek.dk
     autogenerateRoutes: true
+<<<<<<< HEAD
     <<: [*default-release-image-source, *disk-size-medium]
+=======
+    diskSize: 20
+    <<: *default-release-image-source
+>>>>>>> e233bd07 (Fix parseability of sites.yaml for terraform)
   lejre:
     name: "Lejre Bibliotek & Arkiv"
     description: "The library site for Lejre"
@@ -623,7 +896,12 @@ sites:
       - lejrebibliotek.dk
       - www.lejrebibliotek.dk
     autogenerateRoutes: true
+<<<<<<< HEAD
     <<: [*default-release-image-source, *disk-size-medium]
+=======
+    diskSize: 20
+    <<: *default-release-image-source
+>>>>>>> e233bd07 (Fix parseability of sites.yaml for terraform)
   lolland:
     name: "LollandBibliotekerne"
     description: "The library site for Lolland"
@@ -632,7 +910,12 @@ sites:
     secondary-domains:
       - www.lollandbib.dk
     autogenerateRoutes: true
+<<<<<<< HEAD
     <<: [*default-release-image-source, *disk-size-medium]
+=======
+    diskSize: 20
+    <<: *default-release-image-source
+>>>>>>> e233bd07 (Fix parseability of sites.yaml for terraform)
   lyngby-taarbaek:
     name: "Lyngby-Taarbæk Bibliotekerne"
     description: "The library site for Lyngby-Taarbæk"
@@ -641,7 +924,12 @@ sites:
     secondary-domains:
       - lyngbybib.dk
     autogenerateRoutes: true
+<<<<<<< HEAD
     <<: [*default-release-image-source, *disk-size-medium]
+=======
+    diskSize: 20
+    <<: *default-release-image-source
+>>>>>>> e233bd07 (Fix parseability of sites.yaml for terraform)
   mariagerfjord:
     name: "Mariagerfjord Bibliotekerne"
     description: "The library site for Mariagerfjord"
@@ -652,7 +940,12 @@ sites:
       - mariagerfjordbibliotekerne.dk
       - www.mariagerfjordbibliotekerne.dk
     autogenerateRoutes: true
+<<<<<<< HEAD
     <<: [*default-release-image-source, *disk-size-medium]
+=======
+    diskSize: 20
+    <<: *default-release-image-source
+>>>>>>> e233bd07 (Fix parseability of sites.yaml for terraform)
   middelfart:
     name: "Middelfart Bibliotek"
     description: "The library site for Middelfart"
@@ -661,7 +954,12 @@ sites:
     secondary-domains:
       - middelfartbibliotek.dk
     autogenerateRoutes: true
+<<<<<<< HEAD
     <<: [*default-release-image-source, *disk-size-medium]
+=======
+    diskSize: 20
+    <<: *default-release-image-source
+>>>>>>> e233bd07 (Fix parseability of sites.yaml for terraform)
   morso:
     name: "Morsø Folkebibliotek"
     description: "The library site for Morsø"
@@ -670,7 +968,12 @@ sites:
     secondary-domains:
       - bibliotekmorsoe.dk
     autogenerateRoutes: true
+<<<<<<< HEAD
     <<: [*default-release-image-source, *disk-size-medium]
+=======
+    diskSize: 20
+    <<: *default-release-image-source
+>>>>>>> e233bd07 (Fix parseability of sites.yaml for terraform)
   naestved:
     name: "Næstved Bibliotek og Borgerservice"
     description: "The library site for Næstved"
@@ -679,7 +982,12 @@ sites:
     secondary-domains:
       - naesbib.dk
     autogenerateRoutes: true
+<<<<<<< HEAD
     <<: [*default-release-image-source, *disk-size-medium]
+=======
+    diskSize: 20
+    <<: *default-release-image-source
+>>>>>>> e233bd07 (Fix parseability of sites.yaml for terraform)
   norddjurs:
     name: "Norddjurs Biblioteker"
     description: "The library site for Norddjurs"
@@ -688,7 +996,12 @@ sites:
     secondary-domains:
       - www.norddjursbib.dk
     autogenerateRoutes: true
+<<<<<<< HEAD
     <<: [*default-release-image-source, *disk-size-medium]
+=======
+    diskSize: 20
+    <<: *default-release-image-source
+>>>>>>> e233bd07 (Fix parseability of sites.yaml for terraform)
   nordfyn:
     name: "Bibliotek og Borgerservice Nordfyns Kommune"
     description: "The library site for Nordfyn"
@@ -697,7 +1010,12 @@ sites:
     secondary-domains:
       - nordfynsbib.dk
     autogenerateRoutes: true
+<<<<<<< HEAD
     <<: [*default-release-image-source, *disk-size-medium]
+=======
+    diskSize: 20
+    <<: *default-release-image-source
+>>>>>>> e233bd07 (Fix parseability of sites.yaml for terraform)
   nyborg:
     name: "Nyborg Bibliotek"
     description: "The library site for Nyborg"
@@ -706,7 +1024,12 @@ sites:
     secondary-domains:
       - nyborgbibliotek.dk
     autogenerateRoutes: true
+<<<<<<< HEAD
     <<: [*default-release-image-source, *disk-size-medium]
+=======
+    diskSize: 20
+    <<: *default-release-image-source
+>>>>>>> e233bd07 (Fix parseability of sites.yaml for terraform)
   odder:
     name: "Odder Bibliotek"
     description: "The library site for Odder"
@@ -715,7 +1038,12 @@ sites:
     secondary-domains:
       - bibliotek.odder.dk
     autogenerateRoutes: true
+<<<<<<< HEAD
     <<: [*default-release-image-source, *disk-size-medium]
+=======
+    diskSize: 20
+    <<: *default-release-image-source
+>>>>>>> e233bd07 (Fix parseability of sites.yaml for terraform)
   odense:
     name: "Odense Biblioteker og Borgerservice"
     description: "The library site for Odense"
@@ -725,7 +1053,12 @@ sites:
     secondary-domains:
       - odensebib.dk
     autogenerateRoutes: true
+<<<<<<< HEAD
     <<: [*webmasters-on-weekly-release-cycle, *disk-size-medium]
+=======
+    diskSize: 20
+    <<: *webmasters-on-weekly-release-cycle
+>>>>>>> e233bd07 (Fix parseability of sites.yaml for terraform)
   odsherred:
     name: "Odsherred Bibliotek og Kulturhuse"
     description: "The library site for Odsherred"
@@ -734,7 +1067,12 @@ sites:
     secondary-domains:
       - www.odsbib.dk
     autogenerateRoutes: true
+<<<<<<< HEAD
     <<: [*default-release-image-source, *disk-size-medium]
+=======
+    diskSize: 20
+    <<: *default-release-image-source
+>>>>>>> e233bd07 (Fix parseability of sites.yaml for terraform)
   randers:
     name: "Randers Bibliotek"
     description: "The library site for Randers"
@@ -745,7 +1083,12 @@ sites:
       - randersbibliotek.dk
       - www.randersbibliotek.dk
     autogenerateRoutes: true
+<<<<<<< HEAD
     <<: [*default-release-image-source, *disk-size-medium]
+=======
+    diskSize: 20
+    <<: *default-release-image-source
+>>>>>>> e233bd07 (Fix parseability of sites.yaml for terraform)
   rebild:
     name: "Rebild Bibliotekerne"
     description: "The library site for Rebild"
@@ -754,7 +1097,12 @@ sites:
     secondary-domains:
       - rebildbib.dk
     autogenerateRoutes: true
+<<<<<<< HEAD
     <<: [*default-release-image-source, *disk-size-medium]
+=======
+    diskSize: 20
+    <<: *default-release-image-source
+>>>>>>> e233bd07 (Fix parseability of sites.yaml for terraform)
   ringkobing-skjern:
     name: "Ringkøbing-Skjern Bibliotekerne"
     description: "The library site for Ringkøbing-Skjern"
@@ -763,7 +1111,12 @@ sites:
     secondary-domains:
       - www.riskbib.dk
     autogenerateRoutes: true
+<<<<<<< HEAD
     <<: [*default-release-image-source, *disk-size-medium]
+=======
+    diskSize: 20
+    <<: *default-release-image-source
+>>>>>>> e233bd07 (Fix parseability of sites.yaml for terraform)
   ringsted:
     name: "Ringsted Bibliotek & Borgerservice"
     description: "The library site for Ringsted"
@@ -772,7 +1125,12 @@ sites:
     secondary-domains:
       - www.ringstedbib.dk
     autogenerateRoutes: true
+<<<<<<< HEAD
     <<: [*default-release-image-source, *disk-size-medium]
+=======
+    diskSize: 20
+    <<: *default-release-image-source
+>>>>>>> e233bd07 (Fix parseability of sites.yaml for terraform)
   rodovre:
     name: "Rødovre Bibliotek"
     description: "The library site for Rødovre"
@@ -781,7 +1139,12 @@ sites:
     secondary-domains:
       - rdb.dk
     autogenerateRoutes: true
+<<<<<<< HEAD
     <<: [*default-release-image-source, *disk-size-medium]
+=======
+    diskSize: 20
+    <<: *default-release-image-source
+>>>>>>> e233bd07 (Fix parseability of sites.yaml for terraform)
   roskilde:
     name: "Roskilde Bibliotekerne"
     description: "The library site for Roskilde"
@@ -791,7 +1154,12 @@ sites:
     secondary-domains:
       - roskildebib.dk
     autogenerateRoutes: true
+<<<<<<< HEAD
     <<: [*webmasters-on-weekly-release-cycle, *disk-size-medium]
+=======
+    diskSize: 20
+    <<: *webmasters-on-weekly-release-cycle
+>>>>>>> e233bd07 (Fix parseability of sites.yaml for terraform)
   rudersdal:
     name: "Rudersdal Bibliotekerne"
     description: "The library site for Rudersdal"
@@ -802,7 +1170,12 @@ sites:
       - rudersdalbibliotekerne.dk
       - www.rudersdalbibliotekerne.dk
     autogenerateRoutes: true
+<<<<<<< HEAD
     <<: [*default-release-image-source, *disk-size-medium]
+=======
+    diskSize: 20
+    <<: *default-release-image-source
+>>>>>>> e233bd07 (Fix parseability of sites.yaml for terraform)
   samso:
     name: "Samsø Bibliotek"
     description: "The library site for Samsø"
@@ -811,7 +1184,12 @@ sites:
     secondary-domains:
       - "www.bibliotek.samsoe.dk"
     autogenerateRoutes: true
+<<<<<<< HEAD
     <<: [*default-release-image-source, *disk-size-medium]
+=======
+    diskSize: 20
+    <<: *default-release-image-source
+>>>>>>> e233bd07 (Fix parseability of sites.yaml for terraform)
   silkeborg:
     name: "Silkeborg Bibliotekerne"
     description: "The library site for Silkeborg"
@@ -821,7 +1199,12 @@ sites:
       - www.silkeborgbib.dk
     autogenerateRoutes: true
     plan: webmaster
+<<<<<<< HEAD
     <<: [*webmasters-on-weekly-release-cycle, *disk-size-medium]
+=======
+    diskSize: 20
+    <<: *webmasters-on-weekly-release-cycle
+>>>>>>> e233bd07 (Fix parseability of sites.yaml for terraform)
   skanderborg:
     name: "Skanderborg Bibliotek"
     description: "The library site for Skanderborg"
@@ -830,7 +1213,12 @@ sites:
     secondary-domains:
       - bibliotek.skanderborg.dk
     autogenerateRoutes: true
+<<<<<<< HEAD
     <<: [*default-release-image-source, *disk-size-medium]
+=======
+    diskSize: 20
+    <<: *default-release-image-source
+>>>>>>> e233bd07 (Fix parseability of sites.yaml for terraform)
   skive:
     name: "Skive Bibliotek"
     description: "The library site for Skive"
@@ -839,7 +1227,12 @@ sites:
     secondary-domains:
       - skivebibliotek.dk
     autogenerateRoutes: true
+<<<<<<< HEAD
     <<: [*default-release-image-source, *disk-size-medium]
+=======
+    diskSize: 20
+    <<: *default-release-image-source
+>>>>>>> e233bd07 (Fix parseability of sites.yaml for terraform)
   solrod2:
     # This site superseded the original solrod site which datase was corrupted
     name: "Solrød Bibliotek og Kulturhus"
@@ -849,7 +1242,12 @@ sites:
     secondary-domains:
       - www.solbib.dk
     autogenerateRoutes: true
+<<<<<<< HEAD
     <<: [*default-release-image-source, *disk-size-medium]
+=======
+    diskSize: 20
+    <<: *default-release-image-source
+>>>>>>> e233bd07 (Fix parseability of sites.yaml for terraform)
   sonderborg:
     name: "Biblioteket Sønderborg"
     description: "The library site for Sønderborg"
@@ -859,7 +1257,12 @@ sites:
       - www.biblioteket.sonderborg.dk
     autogenerateRoutes: true
     plan: webmaster
+<<<<<<< HEAD
     <<: [*webmasters-on-weekly-release-cycle, *disk-size-medium]
+=======
+    diskSize: 20
+    <<: *webmasters-on-weekly-release-cycle
+>>>>>>> e233bd07 (Fix parseability of sites.yaml for terraform)
   soro:
     name: "Sorø Bibliotek"
     description: "The library site for Sorø"
@@ -868,7 +1271,12 @@ sites:
     secondary-domains:
       - soroebib.dk
     autogenerateRoutes: true
+<<<<<<< HEAD
     <<: [*default-release-image-source, *disk-size-medium]
+=======
+    diskSize: 20
+    <<: *default-release-image-source
+>>>>>>> e233bd07 (Fix parseability of sites.yaml for terraform)
   stevns:
     name: "Stevns Bibliotekerne"
     description: "The library site for Stevns"
@@ -877,7 +1285,12 @@ sites:
     secondary-domains:
       - stevnsbib.dk
     autogenerateRoutes: true
+<<<<<<< HEAD
     <<: [*default-release-image-source, *disk-size-medium]
+=======
+    diskSize: 20
+    <<: *default-release-image-source
+>>>>>>> e233bd07 (Fix parseability of sites.yaml for terraform)
   struer:
     name: "Struer Bibliotek"
     description: "The library site for Struer"
@@ -886,7 +1299,12 @@ sites:
     secondary-domains:
       - "struerbibliotek.dk"
     autogenerateRoutes: "redirect"
+<<<<<<< HEAD
     <<: [*default-release-image-source, *disk-size-medium]
+=======
+    diskSize: 20
+    <<: *default-release-image-source
+>>>>>>> e233bd07 (Fix parseability of sites.yaml for terraform)
   sydslesvig:
     name: "Dansk Centralbibliotek for Sydslesvig e.V."
     description: "The library site for Dansk Centralbibliotek for Sydslesvig e.V."
@@ -896,7 +1314,12 @@ sites:
       - dcbib.dk
     autogenerateRoutes: true
     plan: webmaster
+<<<<<<< HEAD
     <<: [*webmasters-on-weekly-release-cycle, *disk-size-medium]
+=======
+    diskSize: 20
+    <<: *webmasters-on-weekly-release-cycle
+>>>>>>> e233bd07 (Fix parseability of sites.yaml for terraform)
   svendborg:
     name: "Svendborg Bibliotek"
     description: "The library site for Svendborg"
@@ -905,7 +1328,12 @@ sites:
     secondary-domains:
       - www.svendborgbibliotek.dk
     autogenerateRoutes: true
+<<<<<<< HEAD
     <<: [*default-release-image-source, *disk-size-medium]
+=======
+    diskSize: 20
+    <<: *default-release-image-source
+>>>>>>> e233bd07 (Fix parseability of sites.yaml for terraform)
   syddjurs:
     name: "Syddjurs Bibliotek"
     description: "The library site for Syddjurs"
@@ -914,7 +1342,12 @@ sites:
     secondary-domains:
       - www.syddjursbibliotek.dk
     autogenerateRoutes: true
+<<<<<<< HEAD
     <<: [*default-release-image-source, *disk-size-medium]
+=======
+    diskSize: 20
+    <<: *default-release-image-source
+>>>>>>> e233bd07 (Fix parseability of sites.yaml for terraform)
   taarnby:
     name: "Tårnby Kommunebiblioteker"
     description: "The library site for Tårnby"
@@ -924,14 +1357,24 @@ sites:
     secondary-domains:
       - www.taarnbybib.dk
     autogenerateRoutes: true
+<<<<<<< HEAD
     <<: [*webmasters-on-weekly-release-cycle, *disk-size-medium]
+=======
+    diskSize: 20
+    <<: *webmasters-on-weekly-release-cycle
+>>>>>>> e233bd07 (Fix parseability of sites.yaml for terraform)
   thisted:
     name: "Biblioteket i Thy"
     description: "The library site for Thisted"
     deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAII8zoNSiwkKmOSHvtKxSMJiDC9EWbTzhkAUd1+csvnne"
     primary-domain: bib.kulturrummet.dk
     autogenerateRoutes: true
+<<<<<<< HEAD
     <<: [*default-release-image-source, *disk-size-medium]
+=======
+    diskSize: 20
+    <<: *default-release-image-source
+>>>>>>> e233bd07 (Fix parseability of sites.yaml for terraform)
   torshavn:
     name: "Bibliotekerne i Torshavn kommune"
     description: "The library site for Torshavn municipality"
@@ -940,7 +1383,12 @@ sites:
     secondary-domains:
       - bbs.fo
     autogenerateRoutes: true
+<<<<<<< HEAD
     <<: [*default-release-image-source, *disk-size-medium]
+=======
+    diskSize: 20
+    <<: *default-release-image-source
+>>>>>>> e233bd07 (Fix parseability of sites.yaml for terraform)
   vallensbaek:
     name: "Vallensbæk Bibliotek"
     description: "The library site for Vallensbæk"
@@ -949,7 +1397,12 @@ sites:
     secondary-domains:
       - www.kulturogborgerhus.vallensbaek.dk
     autogenerateRoutes: true
+<<<<<<< HEAD
     <<: [*default-release-image-source, *disk-size-medium]
+=======
+    diskSize: 20
+    <<: *default-release-image-source
+>>>>>>> e233bd07 (Fix parseability of sites.yaml for terraform)
   varde:
     name: "Varde Bibliotek"
     description: "The library site for Varde"
@@ -958,7 +1411,12 @@ sites:
     secondary-domains:
       - vardebib.dk
     autogenerateRoutes: true
+<<<<<<< HEAD
     <<: [*default-release-image-source, *disk-size-medium]
+=======
+    diskSize: 20
+    <<: *default-release-image-source
+>>>>>>> e233bd07 (Fix parseability of sites.yaml for terraform)
   vejen:
     name: "Vejen Kommunes Biblioteker"
     description: "The library site for Vejen"
@@ -967,7 +1425,12 @@ sites:
     secondary-domains:
       - www.vejbib.dk
     autogenerateRoutes: true
+<<<<<<< HEAD
     <<: [*default-release-image-source, *disk-size-medium]
+=======
+    diskSize: 20
+    <<: *default-release-image-source
+>>>>>>> e233bd07 (Fix parseability of sites.yaml for terraform)
   vejle:
     name: "Vejle Bibliotekerne"
     description: "The library site for Vejle"
@@ -976,7 +1439,12 @@ sites:
     secondary-domains:
       - www.vejlebib.dk
     autogenerateRoutes: true
+<<<<<<< HEAD
     <<: [*default-release-image-source, *disk-size-medium]
+=======
+    diskSize: 20
+    <<: *default-release-image-source
+>>>>>>> e233bd07 (Fix parseability of sites.yaml for terraform)
   vesthimmerland:
     name: "Vesthimmerlands Biblioteker"
     description: "The library site for Vesthimmerland"
@@ -985,7 +1453,12 @@ sites:
     secondary-domains:
       - "vhbib.dk"
     autogenerateRoutes: "redirect"
+<<<<<<< HEAD
     <<: [*default-release-image-source, *disk-size-medium]
+=======
+    diskSize: 20
+    <<: *default-release-image-source
+>>>>>>> e233bd07 (Fix parseability of sites.yaml for terraform)
   viborg:
     name: "Viborg Bibliotekerne"
     description: "The library site for Viborg"
@@ -994,7 +1467,12 @@ sites:
     secondary-domains:
       - www.viborgbib.dk
     autogenerateRoutes: true
+<<<<<<< HEAD
     <<: [*default-release-image-source, *disk-size-medium]
+=======
+    diskSize: 20
+    <<: *default-release-image-source
+>>>>>>> e233bd07 (Fix parseability of sites.yaml for terraform)
   vordingborg:
     name: "Vordingborg Bibliotekerne"
     description: "The library site for Vordingborg"
@@ -1003,4 +1481,9 @@ sites:
     secondary-domains:
       - vordingborgbibliotekerne.dk
     autogenerateRoutes: true
+<<<<<<< HEAD
     <<: [*default-release-image-source, *disk-size-medium]
+=======
+    diskSize: 20
+    <<: *default-release-image-source
+>>>>>>> e233bd07 (Fix parseability of sites.yaml for terraform)
