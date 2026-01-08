@@ -874,7 +874,11 @@ cert-manager:
     #     operator: Equal
     #     value: master
     #     effect: NoSchedule
-    tolerations: []
+    tolerations:
+    - key: noderole.dplplatform
+      operator: Equal
+      value: prod
+      effect: NoSchedule
 
     # A list of Kubernetes TopologySpreadConstraints, if required. For more information, see [Topology spread constraint v1 core](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.27/#topologyspreadconstraint-v1-core).
     #
@@ -1193,8 +1197,11 @@ cert-manager:
     #     operator: Equal
     #     value: master
     #     effect: NoSchedule
-    tolerations: []
-
+    tolerations:
+    - key: noderole.dplplatform
+      operator: Equal
+      value: prod
+      effect: NoSchedule
     # A list of Kubernetes TopologySpreadConstraints, if required. For more information, see [Topology spread constraint v1 core](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.27/#topologyspreadconstraint-v1-core).
     #
     # For example:
@@ -1401,7 +1408,11 @@ cert-manager:
     #     operator: Equal
     #     value: master
     #     effect: NoSchedule
-    tolerations: []
+    tolerations:
+    - key: noderole.dplplatform
+      operator: Equal
+      value: prod
+      effect: NoSchedule
 
     # Optional additional labels to add to the startupapicheck Pods.
     podLabels: {}
