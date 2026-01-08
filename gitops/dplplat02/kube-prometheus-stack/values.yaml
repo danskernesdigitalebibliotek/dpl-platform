@@ -4362,6 +4362,7 @@ kube-prometheus-stack:
       storageSpec:
         volumeClaimTemplate:
           spec:
+            storageClassName: computerome-nfs
             accessModes: ["ReadWriteOnce"]
             resources:
               requests:
