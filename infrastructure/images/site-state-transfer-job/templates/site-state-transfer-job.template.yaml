@@ -1,14 +1,14 @@
 apiVersion: batch/v1
 kind: CronJob
 metadata:
-  name: site-state-transfer-{{ randAlphaNum 4 | lower }}
+  name: site-state-transfer
   namespace: {{ .Release.Namespace }}
 spec:
-  schedule: "37 14 * * 3"  # Every Wednesday at 23:00
+  schedule: "0 22 * * *"
   jobTemplate:
     spec:
       ttlSecondsAfterFinished: 50400 # 14 hours leaving time to investigate failed jobs
-      backoffLimit: 3
+      backoffLimit: 4
       template:
         spec:
           restartPolicy: Never
@@ -39,13 +39,13 @@ metadata:
 ---
 
 apiVersion: rbac.authorization.k8s.io/v1
-kind: ClusterRole
+kind: Role
 metadata:
-  name: deployments-get-cluster-role
+  name: state-transfer-cluster-role
   namespace: {{ .Release.Namespace }}
 rules:
 - apiGroups: [""]
-  resources: [ "namespaces", "pods", "pods/exec", "configmaps", "services" ]
+  resources: [ "namespaces", "pods", "pods/exec", "configmaps", "services", "deployment" ]
   verbs: [ "get", "list", "create" ]
 - apiGroups: [ "apps", "configmaps", "services" ]
   resources: [ "deployments", "pods" ]
@@ -54,14 +54,14 @@ rules:
 ---
 
 apiVersion: rbac.authorization.k8s.io/v1
-kind: ClusterRoleBinding
+kind: RoleBinding
 metadata:
-  name: namespace-deployments-getter-binding
+  name: state-transfer-role-binding
 subjects:
 - kind: ServiceAccount
   name: site-state-transfer-serviceaccount
   namespace: {{ .Release.Namespace }}
 roleRef:
-  kind: ClusterRole
-  name: deployments-get-cluster-role
+  kind: Role
+  name: state-transfer-cluster-role
   apiGroup: rbac.authorization.k8s.io
