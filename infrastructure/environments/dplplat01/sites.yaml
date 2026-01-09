@@ -5,6 +5,14 @@ x-defaults: &default-release-image-source
   dpl-cms-release: 2026.2.1
   go-release: 2026.2.0
   php-version: 8.3
+# Hotfix to fix out of memory error in deploy hook. Only applied to
+# production sites affected.
+x-hotfix-2026-2-2: &hotfix-2026-2-2
+  releaseImageRepository: ghcr.io/danskernesdigitalebibliotek
+  releaseImageName: dpl-cms-source
+  dpl-cms-release: 2026.2.2
+  go-release: 2026.2.0
+  php-version: 8.3
 x-webmasters-on-weekly-release-cycle: &webmasters-on-weekly-release-cycle
   # This release cycle releases the newest release, which has been
   # tested on webmaster moduletests in the previous week, on to
@@ -12,7 +20,7 @@ x-webmasters-on-weekly-release-cycle: &webmasters-on-weekly-release-cycle
   releaseImageRepository: ghcr.io/danskernesdigitalebibliotek
   releaseImageName: dpl-cms-source
   dpl-cms-release: 2025.50.1
-  moduletest-dpl-cms-release: 2026.2.1
+  moduletest-dpl-cms-release: 2026.2.2
   go-release: 2025.50.1
   php-version: 8.3
 sites:
@@ -209,7 +217,7 @@ sites:
     autogenerateRoutes: "redirect"
     deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOsUy+dVkL+KxOYz8zSel7mNkcKrEnqDZPHmsU4sfMv/"
     diskSize: 20
-    <<: *default-release-image-source
+    <<: *hotfix-2026-2-2
   bornholm:
     name: "Bornholms Folkebiblioteker"
     description: "The library site for Bornholm"
@@ -380,7 +388,7 @@ sites:
       - www.gladbib.dk
     autogenerateRoutes: true
     diskSize: 20
-    <<: *default-release-image-source
+    <<: *hotfix-2026-2-2
   glostrup:
     name: "Glostrup Bibliotek"
     description: "The library site for Glostrup"
@@ -471,7 +479,7 @@ sites:
     autogenerateRoutes: "redirect"
     deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAICsQ7blUGjtlSdPU4AV7PR21o2Eqg5IMKTCFX3PV/2Mf"
     diskSize: 20
-    <<: *default-release-image-source
+    <<: *hotfix-2026-2-2
   herning:
     name: "Herning Bibliotekerne"
     description: "The main library site for Herning"
@@ -562,7 +570,7 @@ sites:
       - hvidovrebibliotekerne.dk
     autogenerateRoutes: true
     diskSize: 20
-    <<: *default-release-image-source
+    <<: *hotfix-2026-2-2
   ikast-brande:
     name: "Ikast-Brande Bibliotek"
     description: "The library site for Ikast-Brande"
@@ -801,7 +809,7 @@ sites:
       - www.randersbibliotek.dk
     autogenerateRoutes: true
     diskSize: 20
-    <<: *default-release-image-source
+    <<: *hotfix-2026-2-2
   rebild:
     name: "Rebild Bibliotekerne"
     description: "The library site for Rebild"
