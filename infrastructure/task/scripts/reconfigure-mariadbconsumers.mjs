@@ -3,25 +3,26 @@
 echo(chalk.yellow("Will now reconfigure MariaDBConsumers"));
 echo("");
 
-const sites = await $`cat ../../../host_mount/environments/dplplat01/sites.yaml | yq '.sites | ... comments="" | keys | .[]'`;
-
+const sites = await $`cat ../../environments/dplplat01/sites.yaml | yq '.sites | ... comments="" | keys | .[]'`;
 // These sites was setup differently than the production sites.
 const blackList = [
   "customizable-canary",
   "staging",
   "canary",
   "staging",
-  "bibliotek-test"
+  "bibliotek-test",
+  "bnf"
 ];
 
 for await (const site of sites.lines()) {
   if(blackList.includes(site)) {
     continue;
    }
+   console.log(`configuring ${site}`);
     await reconfigureMariaDbConsumerAndServices(site, "main");
   if (await isWebmaster(site)) {
     await reconfigureMariaDbConsumerAndServices(site, "moduletest");
-    break;
+    // break;
   }
 }
 
@@ -40,7 +41,7 @@ async function reconfigureMariaDbConsumerAndServices(site, environmentType = "ma
 }
 
 async function isWebmaster(project) {
-   const result = await $`cat ../../../host_mount/environments/dplplat01/sites.yaml | yq '.sites.${project}.plan'`;
+   const result = await $`cat ../../environments/dplplat01/sites.yaml | yq '.sites.${project}.plan'`;
    return result.stdout === "webmaster\n" ? true : false;
 }
 
