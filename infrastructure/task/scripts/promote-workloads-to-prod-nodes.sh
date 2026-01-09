@@ -147,7 +147,7 @@ for NS in "${NAMESPACES[@]}"; do
         "spec": {
           "template": {
             "spec": {
-              "nodeselector": {
+              "nodeSelector": {
                 "node-role.kubernetes.io/prod": ""
               },
               "tolerations": [
