@@ -8,7 +8,7 @@ spec:
     kind: Deployment
     name: nginx
   updatePolicy:
-    updateMode: InPlaceOrRecreate
+    updateMode: Recreate
   resourcePolicy:
     containerPolicies:
     - containerName: nginx

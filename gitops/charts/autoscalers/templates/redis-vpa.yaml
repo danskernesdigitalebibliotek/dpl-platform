@@ -8,7 +8,7 @@ spec:
     kind: Deployment
     name: redis
   updatePolicy:
-    updateMode: InPlaceOrRecreate
+    updateMode: Recreate
   resourcePolicy:
     containerPolicies:
     - containerName: redis

@@ -9,7 +9,7 @@ spec:
     kind: Deployment
     name: node
   updatePolicy:
-    updateMode: InPlaceOrRecreate
+    updateMode: Recreate
   resourcePolicy:
     containerPolicies:
     - containerName: node
