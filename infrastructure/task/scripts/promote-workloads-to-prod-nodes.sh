@@ -104,7 +104,7 @@ PROMOTED_NAMESPACES=(
   "silkeborg-moduletest"
   "skanderborg-main"
   "skive-main"
-  "solrod-main"
+  "solrod2-main"
   "sonderborg-main"
   "sonderborg-moduletest"
   "soro-main"
