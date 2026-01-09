@@ -327,6 +327,10 @@ sites:
   - name: bnf-moduletest
 
   - name: cms-school-main
+    values:
+      proxy-pass-service:
+        host: cms-school.dplplat01.dpl.reload.dk
+        target: external
 
   - name: cms-school-moduletest
     values:
