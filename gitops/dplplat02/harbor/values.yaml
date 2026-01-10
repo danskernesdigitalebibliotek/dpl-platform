@@ -17,7 +17,7 @@ harbor:
       # The tls certificate can be generated manually or by cert manager
       # 3) none: configure no tls certificate for the ingress. If the default
       # tls certificate is configured in the ingress controller, choose this option
-      certSource: secret
+      certSource: auto
       auto:
         # The common name used to generate the certificate, it's necessary
         # when the type isn't "ingress"
@@ -44,6 +44,7 @@ harbor:
         # note different ingress controllers may require a different ssl-redirect annotation
         # for Envoy, use ingress.kubernetes.io/force-ssl-redirect: "true" and remove the nginx lines below
         ingress.kubernetes.io/ssl-redirect: "true"
+        cert-manager.io/cluster-issuer: "zerossl-production"
         ingress.kubernetes.io/proxy-body-size: "0"
         nginx.ingress.kubernetes.io/ssl-redirect: "true"
         nginx.ingress.kubernetes.io/proxy-body-size: "0"
