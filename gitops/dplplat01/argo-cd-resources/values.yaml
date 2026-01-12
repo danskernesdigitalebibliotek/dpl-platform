@@ -803,7 +803,7 @@ sites:
     values:
       proxy-pass-service:
         host: solbib.dk
-        target: internal
+        target: external
 
   - name: sonderborg-main
     automated: false
