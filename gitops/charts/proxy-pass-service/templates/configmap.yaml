@@ -9,6 +9,7 @@ data:
         listen 80;
         listen [::]:80;
         server_name localhost;
+        client_max_body_size 8M;
 
         location / {
             {{ if eq .Values.target "external" }}
