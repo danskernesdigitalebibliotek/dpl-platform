@@ -177,12 +177,6 @@ sites:
 
   - name: faxe-main
 
-  - name: faxe-moduletest
-    values:
-      autoscalers:
-        node:
-          enabled: false
-
   - name: fureso-main
 
   - name: gentofte-main

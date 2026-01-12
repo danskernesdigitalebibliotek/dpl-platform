@@ -1,7 +1,0 @@
-apiVersion: v2
-name: faxe-moduletest
-version: 0.0.0
-dependencies:
-  - name: autoscalers
-    version: 0.0.14
-    repository: oci://ghcr.io/danskernesdigitalebibliotek/dpl-platform/charts
