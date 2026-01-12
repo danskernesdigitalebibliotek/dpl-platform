@@ -468,7 +468,7 @@ sites:
     values:
       proxy-pass-service:
         host: koldingbib.dk
-        target: internal
+        target: external
 
   - name: langeland-main
     automated: false
