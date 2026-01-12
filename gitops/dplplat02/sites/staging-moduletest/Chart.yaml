@@ -3,7 +3,7 @@ name: staging-moduletest
 version: 0.0.0
 dependencies:
   - name: autoscalers
-    version: 0.0.13
+    version: 0.0.14
     repository: oci://ghcr.io/danskernesdigitalebibliotek/dpl-platform/charts
   - name: site-state-transfer-job
     version: 0.0.12
