@@ -432,7 +432,10 @@ cert-manager:
     kubernetes.io/os: linux
 
   # +docs:ignore
-  ingressShim: {}
+  ingressShim:
+    defaultIssuerName: zerossl-production
+    defaultIssuerKind: ClusterIssuer
+    defaultIssuerGroup: cert-manager.io
 
     # Optional default issuer to use for ingress resources.
     # +docs:property=ingressShim.defaultIssuerName
