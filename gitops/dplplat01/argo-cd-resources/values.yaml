@@ -127,11 +127,11 @@ sites:
         target: internal
 
   - name: albertslund-main
-    automated: false
+    automated: true
     values:
       proxy-pass-service:
         host: albertslundbibliotek.dk
-        target: internal
+        target: external
 
   - name: albertslund-moduletest
 
@@ -143,18 +143,18 @@ sites:
         target: internal
 
   - name: assens-main
-    automated: false
+    automated: true
     values:
       proxy-pass-service:
         host: www.assensbib.dk
-        target: internal
+        target: external
 
   - name: ballerup-main
-    automated: false
+    automated: true
     values:
       proxy-pass-service:
         host: bib.ballerup.dk
-        target: internal
+        target: external
 
   - name: ballerup-moduletest
     values:
@@ -163,18 +163,18 @@ sites:
           enabled: false
 
   - name: billund-main
-    automated: false
+    automated: true
     values:
       proxy-pass-service:
         host: billundbib.dk
-        target: internal
+        target: external
 
   - name: bornholm-main
-    automated: false
+    automated: true
     values:
       proxy-pass-service:
         host: bibliotek.brk.dk
-        target: internal
+        target: extermaæ
 
   - name: brondby-main
     automated: false
@@ -240,11 +240,11 @@ sites:
         target: internal
 
   - name: frederiksberg-main
-    automated: false
+    automated: true
     values:
       proxy-pass-service:
         host: fkb.dk
-        target: internal
+        target: extnernal
 
   - name: frederikssund-main
     automated: false
@@ -534,11 +534,11 @@ sites:
         target: internal
 
   - name: nordfyn-main
-    automated: false
+    automated: true
     values:
       proxy-pass-service:
         host: www.nordfynsbib.dk
-        target: internal
+        target: external
 
   - name: nyborg-main
     automated: false
@@ -806,11 +806,11 @@ sites:
         target: external
 
   - name: sonderborg-main
-    automated: false
+    automated: true
     values:
       proxy-pass-service:
         host: biblioteket.sonderborg.dk
-        target: internal
+        target: external
 
   - name: sonderborg-moduletest
     values:
@@ -832,8 +832,8 @@ sites:
           enabled: false
 
   - name: thisted-main
-    automated: false
+    automated: true
     values:
       proxy-pass-service:
         host: bib.kulturrummet.dk
-        target: internal
+        target: external
