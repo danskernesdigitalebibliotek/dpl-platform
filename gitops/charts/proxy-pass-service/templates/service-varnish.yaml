@@ -1,0 +1,14 @@
+{{- if ne .Values.target "internal" }}
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Release.Name }}-proxy-pass-varnish
+spec:
+  selector:
+    app: {{ .Release.Name }}-proxy-pass-varnish
+  ports:
+  - protocol: TCP
+    name: http
+    port: 80
+    targetPort: 8080
+{{- end }}
