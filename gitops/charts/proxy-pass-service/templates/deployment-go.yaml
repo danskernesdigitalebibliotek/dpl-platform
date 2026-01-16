@@ -37,11 +37,11 @@ spec:
             path: default.conf
           - key: index.html
             path: index.html
-    nodeSelector:
-      noderole.dplplatform: prod
-    tolerations:
-    - key: noderole.dplplatform
-      operator: Equal
-      value: prod
-      effect: NoSchedule
+      nodeSelector:
+        noderole.dplplatform: prod
+      tolerations:
+      - key: noderole.dplplatform
+        operator: Equal
+        value: prod
+        effect: NoSchedule
 {{- end }}
