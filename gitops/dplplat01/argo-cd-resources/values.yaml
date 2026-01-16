@@ -244,7 +244,7 @@ sites:
     values:
       proxy-pass-service:
         host: fkb.dk
-        target: extnernal
+        target: external
 
   - name: frederikssund-main
     automated: false
