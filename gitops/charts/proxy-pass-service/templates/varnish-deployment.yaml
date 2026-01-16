@@ -25,7 +25,7 @@ spec:
       - envFrom:
         - configMapRef:
             name: lagoon-env
-        image: varnish:6.0.16-alpine
+        image: varnish:6.0.16
         name: proxy-pass-varnish
         ports:
         - containerPort: 8080
