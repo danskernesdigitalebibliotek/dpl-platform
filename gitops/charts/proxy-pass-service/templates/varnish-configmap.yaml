@@ -358,6 +358,7 @@ data:
     if (req.http.grace) {
         set resp.http.X-Varnish-Grace = req.http.grace;
     }
+    }
 
     sub vcl_hash {
     hash_data(req.url);
