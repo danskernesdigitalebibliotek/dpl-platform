@@ -28,6 +28,20 @@ spec:
         - name: config
           mountPath: /usr/share/nginx/html/index.html
           subPath: index.html
+      tolerations:
+        - key: noderole.dplplatform
+          operator: Equal
+          value: prod
+          effect: NoSchedule
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+              - matchExpressions:
+                - key: noderole.dplplatform
+                  operator: In
+                  values:
+                   - prod
       volumes:
       - name: config
         configMap:
