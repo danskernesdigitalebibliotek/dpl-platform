@@ -46,7 +46,7 @@ spec:
         operator: Equal
         value: prod
         effect: NoSchedule
-      antiAffinity:
+      affinity:
         podAntiAffinity:
           requiredDuringSchedulingIgnoredDuringExecution:
           - labelSelector:
