@@ -1,3 +1,4 @@
+{{- $parts := split "-" .Release.Namespace }}
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -28,7 +29,7 @@ spec:
       - envFrom:
         - configMapRef:
             name: lagoon-env
-        image: harbor.lagoon.dplplat01.dpl.reload.dk/canary/main/varnish@sha256:349957461b1696999651c03217832ef52e36fa70ba401889bdce3d3bb1b5c406
+        image: harbor.lagoon.dplplat01.dpl.reload.dk/{{ $parts._0 }}/main/varnish
         name: proxy-pass-varnish
         ports:
         - containerPort: 8080
