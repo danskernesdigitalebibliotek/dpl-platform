@@ -17,13 +17,6 @@ spec:
       annotations:
         checksum/revision: {{ .Release.Revision | toYaml | sha256sum }}
     spec:
-      resources:
-        requests:
-          memory: 128Mi
-          cpu: 300m
-        limits:
-          memory: 128Mi
-          cpu: 300m
       containers:
       - name: nginx-proxy-pass
         image: docker.io/nginx:1.27.4-alpine
@@ -37,6 +30,13 @@ spec:
         - name: config
           mountPath: /usr/share/nginx/html/index.html
           subPath: index.html
+        resources:
+          requests:
+            memory: 128Mi
+            cpu: 300m
+          limits:
+            memory: 128Mi
+            cpu: 300m
       volumes:
       - name: config
         configMap:
