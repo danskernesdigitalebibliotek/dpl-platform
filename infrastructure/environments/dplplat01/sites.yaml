@@ -99,8 +99,6 @@ sites:
     primary-domain: delingstjenesten.dk
     secondary-domains:
       - www.delingstjenesten.dk
-      - bibliotekernesnationaleformidling.dk
-      - www.bibliotekernesnationaleformidling.dk
       - bibliotekernesdelingstjeneste.dk
       - www.bibliotekernesdelingstjeneste.dk
       - delingstjeneste.dk
