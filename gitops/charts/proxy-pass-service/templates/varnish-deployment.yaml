@@ -68,3 +68,4 @@ spec:
           name: {{ .Release.Name }}-proxy-pass-varnish
           items:
           - key: default.vcl
+            path: default.vcl
