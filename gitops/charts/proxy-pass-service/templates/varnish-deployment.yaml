@@ -53,10 +53,6 @@ spec:
         - name: config
           mountPath: /etc/varnish/default.vcl
           subPath: default.vcl
-      securityContext:
-        fsGroup: 10001
-        runAsGroup: 0
-        runAsUser: 10000
       tolerations:
       - effect: NoSchedule
         key: noderole.dplplatform
