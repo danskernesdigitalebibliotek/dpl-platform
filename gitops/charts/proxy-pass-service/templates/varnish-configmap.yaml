@@ -13,7 +13,7 @@ data:
     # set backend default
     backend default {
     .host = "{{ .Release.Name }}-proxy-pass";
-    .port = "8080";
+    .port = "80";
     .first_byte_timeout = 35m;
     .between_bytes_timeout = 10m;
     }
@@ -48,7 +48,7 @@ data:
         return (synth(200,"OK"));
     }
     # set the backend, which should be used:
-    set req.backend_hint = www_dir.backend("nginx");
+    # set req.backend_hint = www_dir.backend("nginx");
 
     # Always set the forward ip.
     if (req.restarts == 0) {
@@ -60,44 +60,11 @@ data:
         }
     }
 
-    if (req.http.X-LAGOON-VARNISH ) {
-        # Pass all Requests which are handled via an upstream Varnish
-        set req.http.X-LAGOON-VARNISH = "varnish-6588bcc7fd-z6rqb-main-aabenraa, " + req.http.X-LAGOON-VARNISH;
-        set req.http.X-LAGOON-VARNISH-BYPASS = "true";
-    }
-    else if (req.http.Fastly-FF) {
-        # Pass all Requests which are handled via Fastly
-        set req.http.X-LAGOON-VARNISH = "varnish-6588bcc7fd-z6rqb-main-aabenraa, fastly";
-        set req.http.X-LAGOON-VARNISH-BYPASS = "true";
-        set req.http.X-Forwarded-For = req.http.Fastly-Client-IP;
-    }
-    else if (req.http.CF-RAY) {
-        # Pass all Requests which are handled via CloudFlare
-        set req.http.X-LAGOON-VARNISH = "varnish-6588bcc7fd-z6rqb-main-aabenraa, cloudflare";
-        set req.http.X-LAGOON-VARNISH-BYPASS = "true";
-        set req.http.X-Forwarded-For = req.http.CF-Connecting-IP;
-    }
-    else if (req.http.X-Pull) {
-        # Pass all Requests which are handled via KeyCDN
-        set req.http.X-LAGOON-VARNISH = "varnish-6588bcc7fd-z6rqb-main-aabenraa, keycdn";
-        set req.http.X-LAGOON-VARNISH-BYPASS = "true";
-    }
-    else {
-        # We set a header to let a Varnish chain know that it already has been varnishcached
-        set req.http.X-LAGOON-VARNISH = "varnish-6588bcc7fd-z6rqb-main-aabenraa";
-
-        # Allow to bypass based on env variable `VARNISH_BYPASS`
-        set req.http.X-LAGOON-VARNISH-BYPASS = "false";
-    }
-
     # Websockets are piped
     if (req.http.Upgrade ~ "(?i)websocket") {
         return (pipe);
     }
 
-    if (req.http.X-LAGOON-VARNISH-BYPASS == "true" || req.http.X-LAGOON-VARNISH-BYPASS == "TRUE") {
-        return (pass);
-    }
 
     # SA-CORE-2014-004 preventing access to /xmlrpc.php
     if (req.url ~ "^/xmlrpc.php$") {
@@ -315,10 +282,6 @@ data:
     set beresp.http.X-Url = bereq.url;
     set beresp.http.X-Host = bereq.http.host;
 
-    # If the backend sends a X-LAGOON-VARNISH-BACKEND-BYPASS header we directly deliver
-    if (beresp.http.X-LAGOON-VARNISH-BACKEND-BYPASS == "TRUE") {
-        return (deliver);
-    }
 
     # Cache 404 and 403 for 10 seconds
     if (beresp.status == 404 || beresp.status == 403) {
@@ -394,9 +357,6 @@ data:
     # Inject information about grace
     if (req.http.grace) {
         set resp.http.X-Varnish-Grace = req.http.grace;
-    }
-    set resp.http.X-LAGOON = "varnish-6588bcc7fd-z6rqb>" + resp.http.X-LAGOON;
-    return (deliver);
     }
 
     sub vcl_hash {

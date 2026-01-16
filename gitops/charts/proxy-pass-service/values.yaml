@@ -4,7 +4,7 @@ replicas: 2
 host:
 
 # possible values are "internal", "external" or "static"
-target:
+target: external
 
 # the external service and ip we route to if "target" is set to "external"
 externalService:
