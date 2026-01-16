@@ -25,7 +25,7 @@ spec:
       - envFrom:
         - configMapRef:
             name: lagoon-env
-        image: varnish:6.0.16
+        image: harbor.lagoon.dplplat01.dpl.reload.dk/canary/main/varnish@sha256:349957461b1696999651c03217832ef52e36fa70ba401889bdce3d3bb1b5c406
         name: proxy-pass-varnish
         ports:
         - containerPort: 8080
