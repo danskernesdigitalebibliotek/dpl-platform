@@ -464,7 +464,7 @@ sites:
         target: internal
 
   - name: kolding-main
-    automated: false
+    automated: true
     values:
       proxy-pass-service:
         host: koldingbib.dk
@@ -799,7 +799,7 @@ sites:
           enabled: false
 
   - name: solrod2-main
-    automated: false
+    automated: true
     values:
       proxy-pass-service:
         host: solbib.dk
