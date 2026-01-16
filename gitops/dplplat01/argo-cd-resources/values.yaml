@@ -174,7 +174,7 @@ sites:
     values:
       proxy-pass-service:
         host: bibliotek.brk.dk
-        target: extermaæ
+        target: external
 
   - name: brondby-main
     automated: false
