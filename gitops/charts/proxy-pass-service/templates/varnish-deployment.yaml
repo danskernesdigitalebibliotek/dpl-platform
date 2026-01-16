@@ -6,7 +6,7 @@ spec:
   replicas: 1
   selector:
     matchLabels:
-      app: proxy-pass-varnish
+      app: {{ .Release.Name }}-proxy-pass-varnish
   template:
     metadata:
       labels:
