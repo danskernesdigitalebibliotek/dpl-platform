@@ -38,6 +38,11 @@ spec:
         - containerPort: 8080
           name: http
           protocol: TCP
+        startupProbe:
+          tcpSocket:
+            port: http
+          failureThreshold: 30
+          periodSeconds: 1
         readinessProbe:
           failureThreshold: 3
           periodSeconds: 10
