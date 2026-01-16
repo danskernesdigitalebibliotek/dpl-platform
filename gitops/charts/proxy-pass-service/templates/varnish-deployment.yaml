@@ -26,6 +26,9 @@ spec:
         - configMapRef:
             name: lagoon-env
         image: harbor.lagoon.dplplat01.dpl.reload.dk/canary/main/varnish@sha256:349957461b1696999651c03217832ef52e36fa70ba401889bdce3d3bb1b5c406
+        imagePullSecrets:
+        - name: lagoon-internal-registry-secret
+        - name: lagoon-private-registry-0-secret
         name: proxy-pass-varnish
         ports:
         - containerPort: 8080
