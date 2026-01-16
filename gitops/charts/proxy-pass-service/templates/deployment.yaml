@@ -14,8 +14,8 @@ spec:
         app: {{ .Release.Name }}-proxy-pass
       annotations:
         checksum/values: {{ .Values | toYaml | sha256sum }}
-      annotations:
         checksum/revision: {{ .Release.Revision | toYaml | sha256sum }}
+        checksum/config: {{ include (print $.Template.BasePath "/configmap.yaml") . | sha256sum }}
     spec:
       containers:
       - name: nginx-proxy-pass
