@@ -10,7 +10,7 @@ spec:
   template:
     metadata:
       labels:
-        app: proxy-pass-varnish
+        app: {{ .Release.Name }}-proxy-pass-varnish
     spec:
       affinity:
         nodeAffinity:
