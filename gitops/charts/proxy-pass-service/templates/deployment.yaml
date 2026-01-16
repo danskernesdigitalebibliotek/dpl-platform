@@ -46,4 +46,14 @@ spec:
         operator: Equal
         value: prod
         effect: NoSchedule
+      antiAffinity:
+        podAntiAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+          - labelSelector:
+              matchExpressions:
+              - key: app
+                operator: In
+                values:
+                - {{ .Release.Name }}-proxy-pass
+            topologyKey: "kubernetes.io/hostname"
 {{- end }}
