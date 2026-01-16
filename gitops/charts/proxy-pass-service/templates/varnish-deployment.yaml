@@ -25,7 +25,7 @@ spec:
       - envFrom:
         - configMapRef:
             name: lagoon-env
-        image: varnish:7.7.3-alpine
+        image: varnish:6.0.16-alpine
         name: proxy-pass-varnish
         ports:
         - containerPort: 8080
@@ -53,10 +53,6 @@ spec:
         - name: config
           mountPath: /etc/varnish/default.vcl
           subPath: default.vcl
-        securityContext:
-          capabilities:
-            add:
-            - IPC_LOCK
       tolerations:
       - effect: NoSchedule
         key: noderole.dplplatform
