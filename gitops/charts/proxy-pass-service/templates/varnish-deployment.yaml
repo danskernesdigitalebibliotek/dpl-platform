@@ -53,6 +53,10 @@ spec:
         - name: config
           mountPath: /etc/varnish/default.vcl
           subPath: default.vcl
+        securityContext:
+          capabilities:
+            add:
+            - IPC_LOCK
       tolerations:
       - effect: NoSchedule
         key: noderole.dplplatform
