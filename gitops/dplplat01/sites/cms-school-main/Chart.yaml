@@ -9,5 +9,5 @@ dependencies:
     version: 0.0.13
     repository: oci://ghcr.io/danskernesdigitalebibliotek/dpl-platform/charts
   - name: proxy-pass-service
-    version: 0.0.39
+    version: 0.0.40
     repository: oci://ghcr.io/danskernesdigitalebibliotek/dpl-platform/charts
