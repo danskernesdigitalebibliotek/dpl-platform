@@ -210,7 +210,7 @@ ingress-nginx:
     #         name: secret-resource
 
     # -- Use a `DaemonSet` or `Deployment`
-    kind: Deployment
+    kind: DaemonSet
     # -- Annotations to be added to the controller Deployment or DaemonSet
     ##
     annotations: {}
