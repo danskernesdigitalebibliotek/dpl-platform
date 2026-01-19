@@ -839,7 +839,7 @@ ingress-nginx:
       port: 10254
       portName: metrics
       # if this port is changed, change healthz-port: in extraArgs: accordingly
-      enabled: false
+      enabled: true
       service:
         annotations: {}
         # prometheus.io/scrape: "true"
@@ -859,7 +859,7 @@ ingress-nginx:
         # externalTrafficPolicy: ""
         # nodePort: ""
       serviceMonitor:
-        enabled: false
+        enabled: true
         additionalLabels: {}
         annotations: {}
         ## The label to use to retrieve the job name from.
@@ -876,48 +876,48 @@ ingress-nginx:
         relabelings: []
         metricRelabelings: []
       prometheusRule:
-        enabled: false
+        enabled: true
         additionalLabels: {}
         # namespace: ""
-        rules: []
-        # # These are just examples rules, please adapt them to your needs
-        # - alert: NGINXConfigFailed
-        #   expr: count(nginx_ingress_controller_config_last_reload_successful == 0) > 0
-        #   for: 1s
-        #   labels:
-        #     severity: critical
-        #   annotations:
-        #     description: bad ingress config - nginx config test failed
-        #     summary: uninstall the latest ingress changes to allow config reloads to resume
-        # # By default a fake self-signed certificate is generated as default and
-        # # it is fine if it expires. If `--default-ssl-certificate` flag is used
-        # # and a valid certificate passed please do not filter for `host` label!
-        # # (i.e. delete `{host!="_"}` so also the default SSL certificate is
-        # # checked for expiration)
-        # - alert: NGINXCertificateExpiry
-        #   expr: (avg(nginx_ingress_controller_ssl_expire_time_seconds{host!="_"}) by (host) - time()) < 604800
-        #   for: 1s
-        #   labels:
-        #     severity: critical
-        #   annotations:
-        #     description: ssl certificate(s) will expire in less then a week
-        #     summary: renew expiring certificates to avoid downtime
-        # - alert: NGINXTooMany500s
-        #   expr: 100 * ( sum( nginx_ingress_controller_requests{status=~"5.+"} ) / sum(nginx_ingress_controller_requests) ) > 5
-        #   for: 1m
-        #   labels:
-        #     severity: warning
-        #   annotations:
-        #     description: Too many 5XXs
-        #     summary: More than 5% of all requests returned 5XX, this requires your attention
-        # - alert: NGINXTooMany400s
-        #   expr: 100 * ( sum( nginx_ingress_controller_requests{status=~"4.+"} ) / sum(nginx_ingress_controller_requests) ) > 5
-        #   for: 1m
-        #   labels:
-        #     severity: warning
-        #   annotations:
-        #     description: Too many 4XXs
-        #     summary: More than 5% of all requests returned 4XX, this requires your attention
+        rules:
+        # These are just examples rules, please adapt them to your needs
+        - alert: NGINXConfigFailed
+          expr: count(nginx_ingress_controller_config_last_reload_successful == 0) > 0
+          for: 1s
+          labels:
+            severity: critical
+          annotations:
+            description: bad ingress config - nginx config test failed
+            summary: uninstall the latest ingress changes to allow config reloads to resume
+        # By default a fake self-signed certificate is generated as default and
+        # it is fine if it expires. If `--default-ssl-certificate` flag is used
+        # and a valid certificate passed please do not filter for `host` label!
+        # (i.e. delete `{host!="_"}` so also the default SSL certificate is
+        # checked for expiration)
+        - alert: NGINXCertificateExpiry
+          expr: (avg(nginx_ingress_controller_ssl_expire_time_seconds{host!="_"}) by (host) - time()) < 604800
+          for: 1s
+          labels:
+            severity: critical
+          annotations:
+            description: ssl certificate(s) will expire in less then a week
+            summary: renew expiring certificates to avoid downtime
+        - alert: NGINXTooMany500s
+          expr: 100 * ( sum( nginx_ingress_controller_requests{status=~"5.+"} ) / sum(nginx_ingress_controller_requests) ) > 5
+          for: 1m
+          labels:
+            severity: warning
+          annotations:
+            description: Too many 5XXs
+            summary: More than 5% of all requests returned 5XX, this requires your attention
+        - alert: NGINXTooMany400s
+          expr: 100 * ( sum( nginx_ingress_controller_requests{status=~"4.+"} ) / sum(nginx_ingress_controller_requests) ) > 5
+          for: 1m
+          labels:
+            severity: warning
+          annotations:
+            description: Too many 4XXs
+            summary: More than 5% of all requests returned 4XX, this requires your attention
     # -- Improve connection draining when ingress controller pod is deleted using a lifecycle hook:
     # With this new hook, we increased the default terminationGracePeriodSeconds from 30 seconds
     # to 300, allowing the draining of connections up to five minutes.
