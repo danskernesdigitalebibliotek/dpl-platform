@@ -28,7 +28,7 @@ spec:
                   name: http
               {{- else }}
               service:
-                name: {{ .Release.Name }}-proxy-pass-varnish
+                name: {{ .Release.Name }}-proxy-pass
                 port:
                   number: 80
               {{- end }}
