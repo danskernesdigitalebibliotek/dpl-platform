@@ -1036,10 +1036,10 @@ loki:
     # -- Resource requests and limits for the read
     resources:
       requests:
-        memory: 1000Mi
+        memory: 1500Mi
         cpu: 800m
       limits:
-        memory: 1500Mi
+        memory: 2500Mi
     # -- Grace period to allow the read to shutdown before it is killed
     terminationGracePeriodSeconds: 30
     # -- Affinity for read pods. Passed through `tpl` and, thus, to be configured as string
