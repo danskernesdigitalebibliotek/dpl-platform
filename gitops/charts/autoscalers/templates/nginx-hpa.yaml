@@ -4,14 +4,15 @@ metadata:
   name: nginx-hpa
 spec:
   minReplicas: 1
-  maxReplicas: 1
+  maxReplicas: 6
   metrics:
-    - type: Resource
-      resource:
+    - type: ContainerResource
+      containerResource:
         name: cpu
+        container: php
         target:
           type: Utilization
-          averageUtilization: 80
+          averageUtilization: 65
   scaleTargetRef:
     apiVersion: apps/v1
     kind: Deployment
