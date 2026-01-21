@@ -878,8 +878,6 @@ sites:
     description: "The library site for Silkeborg"
     deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHudvU3HuWcnnCOFlQU5Tvgkb/v6b2DttwUTN7Vl0sQV"
     primary-domain: silkeborgbib.dk
-    secondary-domains:
-      - www.silkeborgbib.dk
     autogenerateRoutes: true
     plan: webmaster
     diskSize: 20
