@@ -21,8 +21,8 @@ spec:
   #   - name: mariabackup
   #     mountPath: /var/mariadb/backup/
 
-  galera:
-    enabled: false
+  # galera:
+  #   enabled: false
 
   myCnf: |
     [mariadb]
