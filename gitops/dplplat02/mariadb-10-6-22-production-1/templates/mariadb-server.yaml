@@ -109,14 +109,7 @@ spec:
     - effect: NoSchedule
       key: noderole.dplplatform
       operator: Equal
-      value: prod
+      value: database
 
-  affinity:
-    nodeAffinity:
-      requiredDuringSchedulingIgnoredDuringExecution:
-        nodeSelectorTerms:
-        - matchExpressions:
-          - key: noderole.dplplatform
-            operator: In
-            values:
-            - prod
+  nodeSelector:
+    node-role.kubernetes.io/database: ""
