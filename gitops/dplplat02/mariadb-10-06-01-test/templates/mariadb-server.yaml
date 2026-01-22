@@ -68,7 +68,7 @@ spec:
 
   resources:
     requests:
-      cpu: 1000m
+      cpu: '1'
       memory: 8Gi
 
   env:
