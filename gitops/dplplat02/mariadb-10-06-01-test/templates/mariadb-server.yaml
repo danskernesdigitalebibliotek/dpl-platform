@@ -107,9 +107,6 @@ spec:
   podDisruptionBudget:
     maxUnavailable: 40%
 
-  updatestrategy:
-    type: ReplicasFirstPrimaryLast
-
   metrics:
     enabled: true
 
