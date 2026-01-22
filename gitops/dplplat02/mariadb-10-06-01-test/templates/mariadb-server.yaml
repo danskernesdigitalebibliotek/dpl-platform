@@ -68,8 +68,8 @@ spec:
 
   resources:
     requests:
-      cpu: {{ .Values.resReqCpu }}
-      memory: {{ .Values.resReqMemory }}
+      cpu: 1000m
+      memory: 8Gi
 
   env:
     - name: TZ
