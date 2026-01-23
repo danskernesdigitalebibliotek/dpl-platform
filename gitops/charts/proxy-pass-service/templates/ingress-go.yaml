@@ -13,6 +13,7 @@ metadata:
     monitor.stakater.com/overridePath: /
     nginx.ingress.kubernetes.io/ssl-redirect: 'true'
     nginx.ingress.kubernetes.io/denylist-source-range: 95.111.211.210/32
+    nginx.ingress.kubernetes.io/proxy-buffer-size: 32k
 spec:
   ingressClassName: nginx
   rules:
