@@ -87,14 +87,14 @@ sites:
   - name: canary-moduletest
 
   - name: aabenraa-main
-    automated: false
+    automated: true
     values:
       proxy-pass-service:
         host: www.aabenraabib.dk
         target: internal
 
   - name: aalborg-main
-    automated: false
+    automated: true
     values:
       proxy-pass-service:
         host: www.aalborgbibliotekerne.dk
@@ -107,7 +107,7 @@ sites:
           enabled: false
 
   - name: aarhus-main
-    automated: false
+    automated: true
     values:
       proxy-pass-service:
         host: www.aakb.dk
@@ -120,7 +120,7 @@ sites:
           enabled: false
 
   - name: aero-main
-    automated: false
+    automated: true
     values:
       proxy-pass-service:
         host: www.arrebib.dk
@@ -136,7 +136,7 @@ sites:
   - name: albertslund-moduletest
 
   - name: allerod-main
-    automated: false
+    automated: true
     values:
       proxy-pass-service:
         host: www.bibliotek.alleroed.dk
@@ -177,63 +177,63 @@ sites:
         target: external
 
   - name: brondby-main
-    automated: false
+    automated: true
     values:
       proxy-pass-service:
         host: www.brondby-bibliotekerne.dk
         target: internal
 
   - name: bronderslev-main
-    automated: false
+    automated: true
     values:
       proxy-pass-service:
         host: www.bronderslevbib.dk
         target: internal
 
   - name: dragor-main
-    automated: false
+    automated: true
     values:
       proxy-pass-service:
         host: www.drabib.dk
         target: internal
 
   - name: egedal-main
-    automated: false
+    automated: true
     values:
       proxy-pass-service:
         host: egedalbibliotekerne.dk
         target: internal
 
   - name: esbjerg-main
-    automated: false
+    automated: true
     values:
       proxy-pass-service:
         host: www.esbjergbibliotek.dk
         target: internal
 
   - name: faaborg-midtfyn-main
-    automated: false
+    automated: true
     values:
       proxy-pass-service:
         host: fmbib.dk
         target: internal
 
   - name: favrskov-main
-    automated: false
+    automated: true
     values:
       proxy-pass-service:
         host: favrskovbib.dk
         target: internal
 
   - name: fredensborg-main
-    automated: false
+    automated: true
     values:
       proxy-pass-service:
         host: www.fredensborgbibliotekerne.dk
         target: internal
 
   - name: fredericia-main
-    automated: false
+    automated: true
     values:
       proxy-pass-service:
         host: fredericiabib.dk
@@ -247,111 +247,105 @@ sites:
         target: external
 
   - name: frederikssund-main
-    automated: false
+    automated: true
     values:
       proxy-pass-service:
         host: www.bibliotekerne.frederikssund.dk
         target: internal
 
   - name: faxe-main
-    automated: false
+    automated: true
     values:
       proxy-pass-service:
         host: www.faxebibliotek.dk
         target: internal
 
-  - name: faxe-moduletest
-    values:
-      autoscalers:
-        node:
-          enabled: false
-
   - name: fureso-main
-    automated: false
+    automated: true
     values:
       proxy-pass-service:
         host: furbib.dk
         target: internal
 
   - name: gentofte-main
-    automated: false
+    automated: true
     values:
       proxy-pass-service:
         host: genbib.dk
         target: internal
 
   - name: gladsaxe-main
-    automated: false
+    automated: true
     values:
       proxy-pass-service:
         host: gladbib.dk
         target: internal
 
   - name: glostrup-main
-    automated: false
+    automated: true
     values:
       proxy-pass-service:
         host: www.glostrupbib.dk
         target: internal
 
   - name: greve-main
-    automated: false
+    automated: true
     values:
       proxy-pass-service:
         host: www.grevebibliotek.dk
         target: internal
 
   - name: gribskov-main
-    automated: false
+    automated: true
     values:
       proxy-pass-service:
         host: www.gribskovbib.dk
         target: internal
 
   - name: guldborgsund-main
-    automated: false
+    automated: true
     values:
       proxy-pass-service:
         host: guldbib.dk
         target: internal
 
   - name: halsnaes-main
-    automated: false
+    automated: true
     values:
       proxy-pass-service:
         host: bibliotekerne.halsnaes.dk
         target: internal
 
   - name: haderslev-main
-    automated: false
+    automated: true
     values:
       proxy-pass-service:
         host: haderslevbibliotekerne.dk
         target: internal
 
   - name: hedensted-main
-    automated: false
+    automated: true
     values:
       proxy-pass-service:
         host: hedenstedbib.dk
         target: internal
 
   - name: helsingor-main
-    automated: false
+    automated: true
     values:
       proxy-pass-service:
         host: helsbib.dk
         target: internal
 
   - name: herlev-main
-    automated: false
+    automated: true
     values:
       proxy-pass-service:
         host: www.herlevbibliotek.dk
         target: internal
 
   - name: herning-main
-    automated: false
+    automated: true
     values:
       proxy-pass-service:
         host: www.herningbib.dk
@@ -360,91 +354,91 @@ sites:
   - name: herning-moduletest
 
   - name: hillerod-main
-    automated: false
+    automated: true
     values:
       proxy-pass-service:
         host: hilbib.dk
         target: internal
 
   - name: hjorring-main
-    automated: false
+    automated: true
     values:
       proxy-pass-service:
         host: hjbib.dk
         target: internal
 
   - name: holbaek-main
-    automated: false
+    automated: true
     values:
       proxy-pass-service:
         host: bibliotek.holbaek.dk
         target: internal
 
   - name: holstebro-main
-    automated: false
+    automated: true
     values:
       proxy-pass-service:
         host: www.holstebrobibliotek.dk
         target: internal
 
   - name: horsens-main
-    automated: false
+    automated: true
     values:
       proxy-pass-service:
         host: horsensbibliotek.dk
         target: internal
 
   - name: hoje-taastrup-main
-    automated: false
+    automated: true
     values:
       proxy-pass-service:
         host: bibliotek.htk.dk
         target: internal
 
   - name: horsholm-main
-    automated: false
+    automated: true
     values:
       proxy-pass-service:
         host: biblioteket.horsholm.dk
         target: internal
 
   - name: hvidovre-main
-    automated: false
+    automated: true
     values:
       proxy-pass-service:
         host: www.hvidovrebib.dk
         target: internal
 
   - name: ikast-brande-main
-    automated: false
+    automated: true
     values:
       proxy-pass-service:
         host: www.ikast-brandebibliotek.dk
         target: internal
 
   - name: ishoj-main
-    automated: false
+    automated: true
     values:
       proxy-pass-service:
         host: www.ishojbib.dk
         target: internal
 
   - name: kalundborg-main
-    automated: false
+    automated: true
     values:
       proxy-pass-service:
         host: www.kalundborgbib.dk
         target: internal
 
   - name: kerteminde-main
-    automated: false
+    automated: true
     values:
       proxy-pass-service:
         host: kertemindebibliotekerne.dk
         target: internal
 
   - name: kobenhavn-main
-    automated: false
+    automated: true
     values:
       proxy-pass-service:
         host: bibliotek.kk.dk
@@ -457,7 +451,7 @@ sites:
           enabled: false
 
   - name: koge-main
-    automated: false
+    automated: true
     values:
       proxy-pass-service:
         host: www.koegebib.dk
@@ -471,63 +465,63 @@ sites:
         target: external
 
   - name: langeland-main
-    automated: false
+    automated: true
     values:
       proxy-pass-service:
         host: langelandbibliotek.dk
         target: internal
 
   - name: lejre-main
-    automated: false
+    automated: true
     values:
       proxy-pass-service:
         host: lejrebib.dk
         target: internal
 
   - name: lolland-main
-    automated: false
+    automated: true
     values:
       proxy-pass-service:
         host: lollandbib.dk
         target: internal
 
   - name: lyngby-taarbaek-main
-    automated: false
+    automated: true
     values:
       proxy-pass-service:
         host: www.lyngbybib.dk
         target: internal
 
   - name: mariagerfjord-main
-    automated: false
+    automated: true
     values:
       proxy-pass-service:
         host: mfbib.dk
         target: internal
 
   - name: middelfart-main
-    automated: false
+    automated: true
     values:
       proxy-pass-service:
         host: www.middelfartbibliotek.dk
         target: internal
 
   - name: morso-main
-    automated: false
+    automated: true
     values:
       proxy-pass-service:
         host: www.bibliotekmorsoe.dk
         target: internal
 
   - name: naestved-main
-    automated: false
+    automated: true
     values:
       proxy-pass-service:
         host: www.naesbib.dk
         target: internal
 
   - name: norddjurs-main
-    automated: false
+    automated: true
     values:
       proxy-pass-service:
         host: norddjursbib.dk
@@ -541,21 +535,21 @@ sites:
         target: external
 
   - name: nyborg-main
-    automated: false
+    automated: true
     values:
       proxy-pass-service:
         host: www.nyborgbibliotek.dk
         target: internal
 
   - name: odder-main
-    automated: false
+    automated: true
     values:
       proxy-pass-service:
         host: www.bibliotek.odder.dk
         target: internal
 
   - name: odense-main
-    automated: false
+    automated: true
     values:
       proxy-pass-service:
         host: www.odensebib.dk
@@ -568,42 +562,42 @@ sites:
           enabled: false
 
   - name: odsherred-main
-    automated: false
+    automated: true
     values:
       proxy-pass-service:
         host: odsbib.dk
         target: internal
 
   - name: randers-main
-    automated: false
+    automated: true
     values:
       proxy-pass-service:
         host: www.randersbib.dk
         target: internal
 
   - name: rebild-main
-    automated: false
+    automated: true
     values:
       proxy-pass-service:
         host: www.rebildbib.dk
         target: internal
 
   - name: ringkobing-skjern-main
-    automated: false
+    automated: true
     values:
       proxy-pass-service:
         host: riskbib.dk
         target: internal
 
   - name: ringsted-main
-    automated: false
+    automated: true
     values:
       proxy-pass-service:
         host: ringstedbib.dk
         target: internal
 
   - name: roskilde-main
-    automated: false
+    automated: true
     values:
       proxy-pass-service:
         host: www.roskildebib.dk
@@ -616,28 +610,28 @@ sites:
           enabled: false
 
   - name: rudersdal-main
-    automated: false
+    automated: true
     values:
       proxy-pass-service:
         host: rudbib.dk
         target: internal
 
   - name: rodovre-main
-    automated: false
+    automated: true
     values:
       proxy-pass-service:
         host: www.rdb.dk
         target: internal
 
   - name: samso-main
-    automated: false
+    automated: true
     values:
       proxy-pass-service:
         host: bibliotek.samsoe.dk
         target: internal
 
   - name: silkeborg-main
-    automated: false
+    automated: true
     values:
       proxy-pass-service:
         host: silkeborgbib.dk
@@ -646,56 +640,56 @@ sites:
   - name: silkeborg-moduletest
 
   - name: skanderborg-main
-    automated: false
+    automated: true
     values:
       proxy-pass-service:
         host: www.bibliotek.skanderborg.dk
         target: internal
 
   - name: skive-main
-    automated: false
+    automated: true
     values:
       proxy-pass-service:
         host: www.skivebibliotek.dk
         target: internal
 
   - name: soro-main
-    automated: false
+    automated: true
     values:
       proxy-pass-service:
         host: www.soroebib.dk
         target: internal
 
   - name: stevns-main
-    automated: false
+    automated: true
     values:
       proxy-pass-service:
         host: www.stevnsbib.dk
         target: internal
 
   - name: struer-main
-    automated: false
+    automated: true
     values:
       proxy-pass-service:
         host: www.struerbibliotek.dk
         target: internal
 
   - name: svendborg-main
-    automated: false
+    automated: true
     values:
       proxy-pass-service:
         host: svendborgbibliotek.dk
         target: internal
 
   - name: syddjurs-main
-    automated: false
+    automated: true
     values:
       proxy-pass-service:
         host: syddjursbibliotek.dk
         target: internal
 
   - name: taarnby-main
-    automated: false
+    automated: true
     values:
       proxy-pass-service:
         host: taarnbybib.dk
@@ -708,77 +702,77 @@ sites:
           enabled: false
 
   - name: vallensbaek-main
-    automated: false
+    automated: true
     values:
       proxy-pass-service:
         host: kulturogborgerhus.vallensbaek.dk
         target: internal
 
   - name: varde-main
-    automated: false
+    automated: true
     values:
       proxy-pass-service:
         host: www.vardebib.dk
         target: internal
 
   - name: vejen-main
-    automated: false
+    automated: true
     values:
       proxy-pass-service:
         host: vejbib.dk
         target: internal
 
   - name: vejle-main
-    automated: false
+    automated: true
     values:
       proxy-pass-service:
         host: vejlebib.dk
         target: internal
 
   - name: vesthimmerland-main
-    automated: false
+    automated: true
     values:
       proxy-pass-service:
         host: www.vhbib.dk
         target: internal
 
   - name: viborg-main
-    automated: false
+    automated: true
     values:
       proxy-pass-service:
         host: viborgbib.dk
         target: internal
 
   - name: vordingborg-main
-    automated: false
+    automated: true
     values:
       proxy-pass-service:
         host: www.vordingborgbibliotekerne.dk
         target: internal
 
   - name: laeso-main
-    automated: false
+    automated: true
     values:
       proxy-pass-service:
         host: biblioteket.laesoe.dk
         target: internal
 
   - name: torshavn-main
-    automated: false
+    automated: true
     values:
       proxy-pass-service:
         host: www.bbs.fo
         target: internal
 
   - name: frederikshavn-main
-    automated: false
+    automated: true
     values:
       proxy-pass-service:
         host: bibl.frederikshavn.dk
         target: internal
 
   - name: bnf-main
-    automated: false
+    automated: true
     values:
       proxy-pass-service:
         host: delingstjenesten.dk
@@ -787,6 +781,7 @@ sites:
   - name: bnf-moduletest
 
   - name: cms-school-main
+    automated: true
     values:
       proxy-pass-service:
         host: cms-school.dplplat01.dpl.reload.dk
@@ -819,7 +814,7 @@ sites:
           enabled: false
 
   - name: sydslesvig-main
-    automated: false
+    automated: true
     values:
       proxy-pass-service:
         host: www.dcbib.dk
