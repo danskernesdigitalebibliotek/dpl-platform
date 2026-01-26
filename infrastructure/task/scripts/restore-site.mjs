@@ -76,8 +76,10 @@ async function copyFileToCliPod(file, project, environment) {
 }
 
 async function importBackupIntoDatabase(file, project, environment) {
+  console.log(file);
+  let uncompressedBackup;
   try {
-    await $`kubectl exec -n ${project}-${environment} deploy/cli -- bash -c "tar -zxvf /tmp/${file}"`
+    uncompressedBackup = await $`kubectl exec -n ${project}-${environment} deploy/cli -- bash -c "tar -zxvf /tmp/${file} --directory /tmp"`
   } catch(error) {
     echo(error);
     throw Error("failed to extract database backup", { cause: error });
@@ -85,7 +87,7 @@ async function importBackupIntoDatabase(file, project, environment) {
   echo("Database backup file was unpacked");
 
   try {
-    await $`kubectl exec -n ${project}-${environment} deploy/cli -- sh -c "drush sql:connect < /tmp/database-backup.mariadb.sql"`
+    await $`kubectl exec -n ${project}-${environment} deploy/cli -- sh -c "drush sql:drop -y && drush sql:connect < /tmp/${uncompressedBackup}"`
   } catch(error) {
     echo(error);
     throw Error("Import of database backup failed", { cause: error });
@@ -94,8 +96,9 @@ async function importBackupIntoDatabase(file, project, environment) {
 }
 
 async function importFiles(file, project, environment) {
+    await $`kubectl exec -n ${project}-${environment} deploy/cli -- sh -c "shopt -s extglob"`
   try {
-    await $`kubectl exec -n ${project}-${environment} deploy/cli -- sh -c "cd /app/web/sites/default/files && find . -mindepth 1 ! -path "./php" -exec rm -rf {} +"`
+    await $`kubectl exec -n ${project}-${environment} deploy/cli -- sh -c "rm -rf /app/web/sites/default/files/!(php) && shopt -u extglob"`
   } catch(error) {
     echo(error);
     throw Error("Import of database backup failed", { cause: error });
