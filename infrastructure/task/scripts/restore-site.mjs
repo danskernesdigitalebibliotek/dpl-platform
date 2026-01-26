@@ -96,12 +96,11 @@ async function importBackupIntoDatabase(file, project, environment) {
 }
 
 async function importFiles(file, project, environment) {
-    await $`kubectl exec -n ${project}-${environment} deploy/cli -- sh -c "shopt -s extglob"`
+    await $`kubectl exec -n ${project}-${environment} deploy/cli -- bash -c "shopt -s extglob"`
   try {
-    await $`kubectl exec -n ${project}-${environment} deploy/cli -- sh -c "rm -rf /app/web/sites/default/files/!(php) && shopt -u extglob"`
+    await $`kubectl exec -n ${project}-${environment} deploy/cli -- bash -c "rm -rf /app/web/sites/default/files/"`
   } catch(error) {
     echo(error);
-    throw Error("Import of database backup failed", { cause: error });
   }
   echo("Existing files removed from /web/sites/default/files");
 
@@ -110,7 +109,7 @@ async function importFiles(file, project, environment) {
     await $`kubectl exec -n ${project}-${environment} deploy/cli -- bash -c "tar --strip 2 --gzip --extract --file /tmp/${file} --directory /app/web/sites/default/files data/nginx"`
   } catch(error) {
     echo(error);
-    throw Error("failed to extract files backup", { cause: error });
+    throw Error("Failed to extract files backup. The task succeeded if the error is a utime error", { cause: error });
   }
   echo("Files restored");
 } 
