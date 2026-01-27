@@ -365,7 +365,7 @@ sites:
     values:
       proxy-pass-service:
         host: hjbib.dk
-        target: internal
+        target: external
 
   - name: holbaek-main
     automated: true
@@ -769,7 +769,7 @@ sites:
     values:
       proxy-pass-service:
         host: bibl.frederikshavn.dk
-        target: internal
+        target: external
 
   - name: bnf-main
     automated: true
