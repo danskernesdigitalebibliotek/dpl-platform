@@ -17,7 +17,12 @@ metadata:
 spec:
   ingressClassName: nginx
   rules:
-    - host: go.{{ .Values.host }}
+    - host:  >
+        {{- if contains "www." .Values.host -}}
+        {{ .Values.host | replace "www." "www.go." 1 }}
+        {{- else -}}
+        go.{{ .Values.host }}
+        {{- end -}}
       http:
         paths:
           - path: /
