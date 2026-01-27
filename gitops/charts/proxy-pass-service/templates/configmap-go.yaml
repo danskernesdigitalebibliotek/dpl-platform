@@ -32,7 +32,7 @@ data:
             proxy_cache nginx-cache;
             {{ if eq .Values.target "external" }}
 
-            set $domain "go.{{ .Values.host }}";
+            set $domain "{{ if hasPrefix "www." .Values.host }}{{ .Values.host | replace "www." "www.go." }}{{ else }}go.{{ .Values.host }}{{ end }}";
 
             proxy_set_header Host $domain;
             proxy_pass https://http_backend;
