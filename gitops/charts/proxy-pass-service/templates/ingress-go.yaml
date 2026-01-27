@@ -1,7 +1,7 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: go.{{ .Values.host }}
+  name: {{ if hasPrefix "www." .Values.host }}{{ .Values.host | replace "www." "www.go." }}{{ else }}go.{{ .Values.host }}{{ end }}
   annotations:
     cert-manager.io/cluster-issuer: zerossl-production
     fastly.amazee.io/watch: 'false'
@@ -36,5 +36,5 @@ spec:
               {{- end }}
   tls:
     - hosts:
-        - go.{{ .Values.host }}
-      secretName: go.{{ .Values.host }}-tls
+        - {{ if hasPrefix "www." .Values.host }}{{ .Values.host | replace "www." "www.go." }}{{ else }}go.{{ .Values.host }}{{ end }}
+      secretName: {{ if hasPrefix "www." .Values.host }}{{ .Values.host | replace "www." "www.go." }}{{ else }}go.{{ .Values.host }}{{ end }}-tls
