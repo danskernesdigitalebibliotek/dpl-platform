@@ -140,7 +140,7 @@ sites:
     values:
       proxy-pass-service:
         host: www.bibliotek.alleroed.dk
-        target: internal
+        target: external
 
   - name: assens-main
     automated: true
@@ -188,56 +188,56 @@ sites:
     values:
       proxy-pass-service:
         host: www.bronderslevbib.dk
-        target: internal
+        target: external
 
   - name: dragor-main
     automated: true
     values:
       proxy-pass-service:
         host: www.drabib.dk
-        target: internal
+        target: external
 
   - name: egedal-main
     automated: true
     values:
       proxy-pass-service:
         host: egedalbibliotekerne.dk
-        target: internal
+        target: external
 
   - name: esbjerg-main
     automated: true
     values:
       proxy-pass-service:
         host: www.esbjergbibliotek.dk
-        target: internal
+        target: external
 
   - name: faaborg-midtfyn-main
     automated: true
     values:
       proxy-pass-service:
         host: fmbib.dk
-        target: internal
+        target: external
 
   - name: favrskov-main
     automated: true
     values:
       proxy-pass-service:
         host: favrskovbib.dk
-        target: internal
+        target: external
 
   - name: fredensborg-main
     automated: true
     values:
       proxy-pass-service:
         host: www.fredensborgbibliotekerne.dk
-        target: internal
+        target: external
 
   - name: fredericia-main
     automated: true
     values:
       proxy-pass-service:
         host: fredericiabib.dk
-        target: internal
+        target: external
 
   - name: frederiksberg-main
     automated: true
@@ -251,98 +251,98 @@ sites:
     values:
       proxy-pass-service:
         host: www.bibliotekerne.frederikssund.dk
-        target: internal
+        target: external
 
   - name: faxe-main
     automated: true
     values:
       proxy-pass-service:
         host: www.faxebibliotek.dk
-        target: internal
+        target: external
 
   - name: fureso-main
     automated: true
     values:
       proxy-pass-service:
         host: furbib.dk
-        target: internal
+        target: external
 
   - name: gentofte-main
     automated: true
     values:
       proxy-pass-service:
         host: genbib.dk
-        target: internal
+        target: external
 
   - name: gladsaxe-main
     automated: true
     values:
       proxy-pass-service:
         host: gladbib.dk
-        target: internal
+        target: external
 
   - name: glostrup-main
     automated: true
     values:
       proxy-pass-service:
         host: www.glostrupbib.dk
-        target: internal
+        target: external
 
   - name: greve-main
     automated: true
     values:
       proxy-pass-service:
         host: www.grevebibliotek.dk
-        target: internal
+        target: external
 
   - name: gribskov-main
     automated: true
     values:
       proxy-pass-service:
         host: www.gribskovbib.dk
-        target: internal
+        target: external
 
   - name: guldborgsund-main
     automated: true
     values:
       proxy-pass-service:
         host: guldbib.dk
-        target: internal
+        target: external
 
   - name: halsnaes-main
     automated: true
     values:
       proxy-pass-service:
         host: bibliotekerne.halsnaes.dk
-        target: internal
+        target: external
 
   - name: haderslev-main
     automated: true
     values:
       proxy-pass-service:
         host: haderslevbibliotekerne.dk
-        target: internal
+        target: external
 
   - name: hedensted-main
     automated: true
     values:
       proxy-pass-service:
         host: hedenstedbib.dk
-        target: internal
+        target: external
 
   - name: helsingor-main
     automated: true
     values:
       proxy-pass-service:
         host: helsbib.dk
-        target: internal
+        target: external
 
   - name: herlev-main
     automated: true
     values:
       proxy-pass-service:
         host: www.herlevbibliotek.dk
-        target: internal
+        target: external
 
   - name: herning-main
     automated: true
@@ -358,7 +358,7 @@ sites:
     values:
       proxy-pass-service:
         host: hilbib.dk
-        target: internal
+        target: external
 
   - name: hjorring-main
     automated: true
@@ -762,7 +762,7 @@ sites:
     values:
       proxy-pass-service:
         host: www.bbs.fo
-        target: internal
+        target: external
 
   - name: frederikshavn-main
     automated: true
@@ -818,7 +818,7 @@ sites:
     values:
       proxy-pass-service:
         host: www.dcbib.dk
-        target: internal
+        target: external
 
   - name: sydslesvig-moduletest
     values:
