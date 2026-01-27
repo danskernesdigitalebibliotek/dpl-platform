@@ -181,7 +181,7 @@ sites:
     values:
       proxy-pass-service:
         host: www.brondby-bibliotekerne.dk
-        target: external
+        target: internal
 
   - name: bronderslev-main
     automated: true
