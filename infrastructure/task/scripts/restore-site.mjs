@@ -1,6 +1,5 @@
 #!/usr/bin/env zx
 
-cd('../../../infrastructure');
 const project = `${argv.project}`;
 if (!project || typeof project === "undefined") {
   throw Error("No 'project' provided, exiting.");
@@ -86,8 +85,24 @@ async function importBackupIntoDatabase(file, project, environment) {
   }
   echo("Database backup file was unpacked");
 
+  echo("Dropping database and getting connection string for database");
+  let dbConnectionString;
   try {
-    await $`kubectl exec -n ${project}-${environment} deploy/cli -- sh -c "drush sql:drop -y && drush sql:connect < /tmp/${uncompressedBackup}"`
+    dbConnectionString = await $`kubectl exec -n ${project}-${environment} deploy/cli -- bash -c "drush sql:connect"`
+  } catch(error) {
+    echo(error);
+    throw Error("Import of database backup failed", { cause: error });
+  }
+
+  try {
+    await $`kubectl exec -n ${project}-${environment} deploy/cli -- bash -c "drush sql:drop -y"`
+  } catch(error) {
+    echo(error);
+    throw Error("Import of database backup failed", { cause: error });
+  }
+
+  try {
+    await $`kubectl exec -n ${project}-${environment} deploy/cli -- sh -c "drush sql:connect < /tmp/${uncompressedBackup}"`
   } catch(error) {
     echo(error);
     throw Error("Import of database backup failed", { cause: error });

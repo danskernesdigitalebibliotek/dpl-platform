@@ -656,6 +656,17 @@ tasks:
       - task: support:provision:k8up
       - task: support:provision:minio
 
+  site:restore:
+    desc: Restores a site's database and/or files
+    summary: Run the task with either or both of --dbBackup and --nginxBackup
+    silent: true
+    # vars:
+    #   DB: "{{.DB_BACKUP}}"
+    #   FILE: "{{.FILE_BACKUP}}"
+    #   PROJECT: "{{.PROJECT}}"
+    #   ENV: "{{.ENV}}"
+    cmd: ./task/scripts/restore-site.mjs --dbBackup "{{.DB}}" --nginxBackup "{{.FILE}}" --project "{{.PROJECT}}" --environment "{{.ENV}}"
+
   site:sync:
     deps: [lagoon:cli:config]
     desc: Runs the a dpladm sync of a site which eg. can be used to deploy a new release
