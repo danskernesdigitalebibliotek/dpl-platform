@@ -37,6 +37,7 @@ if (nginxBackup) {
 }
 
 echo("Your restore has now completed");
+echo(`You should now run a deployment through Lagoon UI to make the restore take effect: https://ui.lagoon.dplplat02.dpl.reload.dk/projects/${project}/${project}-${environment}`);
 
 
 async function restoreFiles(nginxBackup, project, environment) {
@@ -48,7 +49,8 @@ async function restoreFiles(nginxBackup, project, environment) {
 async function restoreDatabase(dbBackup, project, environment) {
   const databaseBackup = await findBackupFile(dbBackup);
   await copyFileToCliPod(databaseBackup, project, environment);
-  await importBackupIntoDatabase(databaseBackup, project, environment);
+  const dbConnectionInfo = await getDatabaseConnectionInfo(`${project}-${environment}`);
+  await importBackupIntoDatabase(databaseBackup, dbConnectionInfo, project, environment);
 }
 
 async function findBackupFile(backupFile) {
@@ -74,7 +76,38 @@ async function copyFileToCliPod(file, project, environment) {
   echo(`${file} was moved to /tmp in CLI pod`);
 }
 
-async function importBackupIntoDatabase(file, project, environment) {
+async function getDatabaseConnectionInfo(namespace) {
+  echo(`Getting ${namespace}'s database connection details`);
+  let configMapJson;
+  try {
+    configMapJson = await $`kubectl get -n ${namespace} configmap lagoon-env -o json`
+  } catch (error) {
+    echo(`Failed to get configmap "lagoon-env" in namespace ${namespace}`, error.stderr);
+    throw Error(`Failed to get configmap "lagoon-env" in namespace ${namespace}`, { cause: error });
+  }
+
+  const configmap = JSON.parse(configMapJson);
+  const { data } = configmap;
+
+  const databaseConnectionInfo = {
+    databaseName: data.MARIADB_DATABASE,
+    databaseHost: await $`kubectl get svc ${data.MARIADB_HOST} -n ${namespace} --template={{.spec.externalName}}`,
+    databaseUser: data.MARIADB_USERNAME,
+    databasePassword: data.MARIADB_PASSWORD,
+  };
+
+  if (data.MARIADB_DATABASE_OVERRIDE) {
+    echo('using OVERRIDE variables');
+    databaseConnectionInfo.databaseName = data.MARIADB_DATABASE_OVERRIDE;
+    databaseConnectionInfo.databaseHost = data.MARIADB_HOST_OVERRIDE;
+    databaseConnectionInfo.databasePassword = data.MARIADB_PASSWORD_OVERRIDE;
+    databaseConnectionInfo.databaseUser = data.MARIADB_USERNAME_OVERRIDE;
+  }
+
+  return databaseConnectionInfo;
+}
+
+async function importBackupIntoDatabase(file, connectionInfo, project, environment) {
   console.log(file);
   let uncompressedBackup;
   try {
@@ -85,24 +118,16 @@ async function importBackupIntoDatabase(file, project, environment) {
   }
   echo("Database backup file was unpacked");
 
-  echo("Dropping database and getting connection string for database");
-  let dbConnectionString;
-  try {
-    dbConnectionString = await $`kubectl exec -n ${project}-${environment} deploy/cli -- bash -c "drush sql:connect"`
-  } catch(error) {
-    echo(error);
-    throw Error("Import of database backup failed", { cause: error });
-  }
+  const {
+    databaseName,
+    databaseHost,
+    databaseUser,
+    databasePassword,
+  } = connectionInfo;
 
+  echo("dropping existing database and importing backup");
   try {
-    await $`kubectl exec -n ${project}-${environment} deploy/cli -- bash -c "drush sql:drop -y"`
-  } catch(error) {
-    echo(error);
-    throw Error("Import of database backup failed", { cause: error });
-  }
-
-  try {
-    await $`kubectl exec -n ${project}-${environment} deploy/cli -- sh -c "drush sql:connect < /tmp/${uncompressedBackup}"`
+    await $`kubectl exec -n ${project}-${environment} deploy/cli -- sh -c "drush sql-drop -y && mariadb --user=${databaseUser} --host=${databaseHost} --password=${databasePassword} ${databaseName} < /tmp/${uncompressedBackup}"`
   } catch(error) {
     echo(error);
     throw Error("Import of database backup failed", { cause: error });
@@ -111,7 +136,7 @@ async function importBackupIntoDatabase(file, project, environment) {
 }
 
 async function importFiles(file, project, environment) {
-    await $`kubectl exec -n ${project}-${environment} deploy/cli -- bash -c "shopt -s extglob"`
+  await $`kubectl exec -n ${project}-${environment} deploy/cli -- bash -c "shopt -s extglob"`
   try {
     await $`kubectl exec -n ${project}-${environment} deploy/cli -- bash -c "rm -rf /app/web/sites/default/files/"`
   } catch(error) {
