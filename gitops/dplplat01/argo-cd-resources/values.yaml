@@ -755,7 +755,7 @@ sites:
     values:
       proxy-pass-service:
         host: biblioteket.laesoe.dk
-        target: internal
+        target: external
 
   - name: torshavn-main
     automated: true
