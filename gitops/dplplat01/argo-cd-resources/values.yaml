@@ -349,7 +349,7 @@ sites:
     values:
       proxy-pass-service:
         host: www.herningbib.dk
-        target: internal
+        target: external
 
   - name: herning-moduletest
 
@@ -372,77 +372,77 @@ sites:
     values:
       proxy-pass-service:
         host: bibliotek.holbaek.dk
-        target: internal
+        target: external
 
   - name: holstebro-main
     automated: true
     values:
       proxy-pass-service:
         host: www.holstebrobibliotek.dk
-        target: internal
+        target: external
 
   - name: horsens-main
     automated: true
     values:
       proxy-pass-service:
         host: horsensbibliotek.dk
-        target: internal
+        target: external
 
   - name: hoje-taastrup-main
     automated: true
     values:
       proxy-pass-service:
         host: bibliotek.htk.dk
-        target: internal
+        target: external
 
   - name: horsholm-main
     automated: true
     values:
       proxy-pass-service:
         host: biblioteket.horsholm.dk
-        target: internal
+        target: external
 
   - name: hvidovre-main
     automated: true
     values:
       proxy-pass-service:
         host: www.hvidovrebib.dk
-        target: internal
+        target: external
 
   - name: ikast-brande-main
     automated: true
     values:
       proxy-pass-service:
         host: www.ikast-brandebibliotek.dk
-        target: internal
+        target: external
 
   - name: ishoj-main
     automated: true
     values:
       proxy-pass-service:
         host: www.ishojbib.dk
-        target: internal
+        target: external
 
   - name: kalundborg-main
     automated: true
     values:
       proxy-pass-service:
         host: www.kalundborgbib.dk
-        target: internal
+        target: external
 
   - name: kerteminde-main
     automated: true
     values:
       proxy-pass-service:
         host: kertemindebibliotekerne.dk
-        target: internal
+        target: external
 
   - name: kobenhavn-main
     automated: true
     values:
       proxy-pass-service:
         host: bibliotek.kk.dk
-        target: internal
+        target: external
 
   - name: kobenhavn-moduletest
     values:
@@ -455,7 +455,7 @@ sites:
     values:
       proxy-pass-service:
         host: www.koegebib.dk
-        target: internal
+        target: external
 
   - name: kolding-main
     automated: true
@@ -469,63 +469,63 @@ sites:
     values:
       proxy-pass-service:
         host: langelandbibliotek.dk
-        target: internal
+        target: external
 
   - name: lejre-main
     automated: true
     values:
       proxy-pass-service:
         host: lejrebib.dk
-        target: internal
+        target: external
 
   - name: lolland-main
     automated: true
     values:
       proxy-pass-service:
         host: lollandbib.dk
-        target: internal
+        target: external
 
   - name: lyngby-taarbaek-main
     automated: true
     values:
       proxy-pass-service:
         host: www.lyngbybib.dk
-        target: internal
+        target: external
 
   - name: mariagerfjord-main
     automated: true
     values:
       proxy-pass-service:
         host: mfbib.dk
-        target: internal
+        target: external
 
   - name: middelfart-main
     automated: true
     values:
       proxy-pass-service:
         host: www.middelfartbibliotek.dk
-        target: internal
+        target: external
 
   - name: morso-main
     automated: true
     values:
       proxy-pass-service:
         host: www.bibliotekmorsoe.dk
-        target: internal
+        target: external
 
   - name: naestved-main
     automated: true
     values:
       proxy-pass-service:
         host: www.naesbib.dk
-        target: internal
+        target: external
 
   - name: norddjurs-main
     automated: true
     values:
       proxy-pass-service:
         host: norddjursbib.dk
-        target: internal
+        target: external
 
   - name: nordfyn-main
     automated: true
@@ -539,21 +539,21 @@ sites:
     values:
       proxy-pass-service:
         host: www.nyborgbibliotek.dk
-        target: internal
+        target: external
 
   - name: odder-main
     automated: true
     values:
       proxy-pass-service:
         host: www.bibliotek.odder.dk
-        target: internal
+        target: external
 
   - name: odense-main
     automated: true
     values:
       proxy-pass-service:
         host: www.odensebib.dk
-        target: internal
+        target: external
 
   - name: odense-moduletest
     values:
@@ -566,7 +566,7 @@ sites:
     values:
       proxy-pass-service:
         host: odsbib.dk
-        target: internal
+        target: external
 
   - name: randers-main
     automated: true
@@ -755,7 +755,7 @@ sites:
     values:
       proxy-pass-service:
         host: biblioteket.laesoe.dk
-        target: internal
+        target: external
 
   - name: torshavn-main
     automated: true
