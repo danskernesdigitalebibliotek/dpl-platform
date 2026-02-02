@@ -91,14 +91,14 @@ sites:
     values:
       proxy-pass-service:
         host: www.aabenraabib.dk
-        target: internal
+        target: external
 
   - name: aalborg-main
     automated: true
     values:
       proxy-pass-service:
         host: www.aalborgbibliotekerne.dk
-        target: internal
+        target: external
 
   - name: aalborg-moduletest
     values:
@@ -111,7 +111,7 @@ sites:
     values:
       proxy-pass-service:
         host: www.aakb.dk
-        target: internal
+        target: external
 
   - name: aarhus-moduletest
     values:
@@ -124,7 +124,7 @@ sites:
     values:
       proxy-pass-service:
         host: www.arrebib.dk
-        target: internal
+        target: external
 
   - name: albertslund-main
     automated: true
@@ -573,35 +573,35 @@ sites:
     values:
       proxy-pass-service:
         host: www.randersbib.dk
-        target: internal
+        target: external
 
   - name: rebild-main
     automated: true
     values:
       proxy-pass-service:
         host: www.rebildbib.dk
-        target: internal
+        target: external
 
   - name: ringkobing-skjern-main
     automated: true
     values:
       proxy-pass-service:
         host: riskbib.dk
-        target: internal
+        target: external
 
   - name: ringsted-main
     automated: true
     values:
       proxy-pass-service:
         host: ringstedbib.dk
-        target: internal
+        target: external
 
   - name: roskilde-main
     automated: true
     values:
       proxy-pass-service:
         host: www.roskildebib.dk
-        target: internal
+        target: external
 
   - name: roskilde-moduletest
     values:
@@ -614,28 +614,28 @@ sites:
     values:
       proxy-pass-service:
         host: rudbib.dk
-        target: internal
+        target: external
 
   - name: rodovre-main
     automated: true
     values:
       proxy-pass-service:
         host: www.rdb.dk
-        target: internal
+        target: external
 
   - name: samso-main
     automated: true
     values:
       proxy-pass-service:
         host: bibliotek.samsoe.dk
-        target: internal
+        target: external
 
   - name: silkeborg-main
     automated: true
     values:
       proxy-pass-service:
         host: silkeborgbib.dk
-        target: internal
+        target: external
 
   - name: silkeborg-moduletest
 
@@ -644,56 +644,56 @@ sites:
     values:
       proxy-pass-service:
         host: www.bibliotek.skanderborg.dk
-        target: internal
+        target: external
 
   - name: skive-main
     automated: true
     values:
       proxy-pass-service:
         host: www.skivebibliotek.dk
-        target: internal
+        target: external
 
   - name: soro-main
     automated: true
     values:
       proxy-pass-service:
         host: www.soroebib.dk
-        target: internal
+        target: external
 
   - name: stevns-main
     automated: true
     values:
       proxy-pass-service:
         host: www.stevnsbib.dk
-        target: internal
+        target: external
 
   - name: struer-main
     automated: true
     values:
       proxy-pass-service:
         host: www.struerbibliotek.dk
-        target: internal
+        target: external
 
   - name: svendborg-main
     automated: true
     values:
       proxy-pass-service:
         host: svendborgbibliotek.dk
-        target: internal
+        target: external
 
   - name: syddjurs-main
     automated: true
     values:
       proxy-pass-service:
         host: syddjursbibliotek.dk
-        target: internal
+        target: external
 
   - name: taarnby-main
     automated: true
     values:
       proxy-pass-service:
         host: taarnbybib.dk
-        target: internal
+        target: external
 
   - name: taarnby-moduletest
     values:
@@ -706,49 +706,49 @@ sites:
     values:
       proxy-pass-service:
         host: kulturogborgerhus.vallensbaek.dk
-        target: internal
+        target: external
 
   - name: varde-main
     automated: true
     values:
       proxy-pass-service:
         host: www.vardebib.dk
-        target: internal
+        target: external
 
   - name: vejen-main
     automated: true
     values:
       proxy-pass-service:
         host: vejbib.dk
-        target: internal
+        target: external
 
   - name: vejle-main
     automated: true
     values:
       proxy-pass-service:
         host: vejlebib.dk
-        target: internal
+        target: external
 
   - name: vesthimmerland-main
     automated: true
     values:
       proxy-pass-service:
         host: www.vhbib.dk
-        target: internal
+        target: external
 
   - name: viborg-main
     automated: true
     values:
       proxy-pass-service:
         host: viborgbib.dk
-        target: internal
+        target: external
 
   - name: vordingborg-main
     automated: true
     values:
       proxy-pass-service:
         host: www.vordingborgbibliotekerne.dk
-        target: internal
+        target: external
 
   - name: laeso-main
     automated: true
