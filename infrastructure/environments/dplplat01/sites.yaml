@@ -30,7 +30,7 @@ sites:
     go-release: 2026.4.0
     php-version: 8.3
     diskSize: 20
-    primary-domain: canary.dplplat01.dpl.reload.dk
+    primary-domain: canary.dplplat02.dpl.reload.dk
     # TODO: Remove this once the the Adgangsplatformen OpenID client used here
     # has been updated to use the primary domain.
     autogenerateRoutes: true
@@ -607,8 +607,8 @@ sites:
     primary-domain: bibliotek.kk.dk
     secondary-domains:
       - www.bibliotek.kk.dk
-      - nginx.main.kobenhavn.dplplat01.dpl.reload.dk
-      - varnish.main.kobenhavn.dplplat01.dpl.reload.dk
+      - nginx.main.kobenhavn.dplplat02.dpl.reload.dk
+      - varnish.main.kobenhavn.dplplat02.dpl.reload.dk
     plan: webmaster
     deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHaTkDvjLW/b2qVj8FIvtX9x3TxFFZTENn+w2CFELeoC"
     <<: *webmasters-on-weekly-release-cycle
