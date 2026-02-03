@@ -873,6 +873,16 @@ tasks:
           | yq '.sites[] | [ .primary-domain ] + .secondary-domains | .[] | select(. | contains("dplplat01.dpl.reload.dk") | not)' \
           | xargs -I % -n 1 bash -c 'if (( $(dig % CAA | grep issue | wc -l) > 0 )); then echo "There are CAAs for domain %"; fi'
 
+  sites:check-pointing-to-aks:
+    desc: |
+      Check for sites not pointing to the new cluster yet and report them so we
+      we know who to contact incase.
+    cmds:
+      - |
+        cat {{.dir_env}}/sites.yaml \
+          | yq '.sites[] | [ .primary-domain ] + .secondary-domains | .[] | select(. | contains("dplplat01.dpl.reload.dk") | not)' \
+          | xargs -I % -n 1 bash -c 'if (( $(dig % A | grep "20.86.109.250" | wc -l) > 0 )); then echo "% is pointing to old AKS cluster"; fi'
+
   sites:incomplete-deployments:
     deps: [lagoon:cli:config]
     desc: |
