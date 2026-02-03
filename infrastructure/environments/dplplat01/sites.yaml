@@ -59,7 +59,7 @@ sites:
     go-release: 2026.6.0
     php-version: 8.3
     plan: webmaster
-    primary-domain: staging.dplplat01.dpl.reload.dk
+    primary-domain: staging.dplplat02.dpl.reload.dk
     # TODO: Remove this once the the Adgangsplatformen OpenID client used here
     # has been updated to use the primary domain.
     autogenerateRoutes: true
