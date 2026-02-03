@@ -70,7 +70,7 @@ sites:
     description: "Et site til undervisning i CMSet"
     deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJ6SzfPFf/XeLeqI342kxuJAlATpDMtgAfqlrLTTbW2m"
     plan: webmaster
-    primary-domain: cms-school.dplplat01.dpl.reload.dk
+    primary-domain: cms-school.dplplat02.dpl.reload.dk
     # TODO: Remove this once the the Adgangsplatformen OpenID client used here
     # has been updated to use the primary domain.
     autogenerateRoutes: true
