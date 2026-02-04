@@ -8,6 +8,3 @@ dependencies:
   - name: autoscalers
     version: 0.0.14
     repository: oci://ghcr.io/danskernesdigitalebibliotek/dpl-platform/charts
-  - name: site-state-transfer-job
-    version: 0.0.12
-    repository: oci://ghcr.io/danskernesdigitalebibliotek/dpl-platform/charts
