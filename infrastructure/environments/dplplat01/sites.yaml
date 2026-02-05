@@ -2,8 +2,8 @@
 x-defaults: &default-release-image-source
   releaseImageRepository: ghcr.io/danskernesdigitalebibliotek
   releaseImageName: dpl-cms-source
-  dpl-cms-release: 2026.4.1
-  go-release: 2026.4.0
+  dpl-cms-release: 2026.6.0
+  go-release: 2026.6.0
   php-version: 8.3
 x-webmasters-on-weekly-release-cycle: &webmasters-on-weekly-release-cycle
   # This release cycle releases the newest release, which has been
@@ -11,9 +11,9 @@ x-webmasters-on-weekly-release-cycle: &webmasters-on-weekly-release-cycle
   # production
   releaseImageRepository: ghcr.io/danskernesdigitalebibliotek
   releaseImageName: dpl-cms-source
-  dpl-cms-release: 2026.2.4
-  moduletest-dpl-cms-release: 2026.4.1
-  go-release: 2026.2.0
+  dpl-cms-release: 2026.4.1
+  moduletest-dpl-cms-release: 2026.6.0
+  go-release: 2026.4.0
   php-version: 8.3
 sites:
   # Site objects are indexed by a unique key that must be a valid lagoon, and
@@ -25,9 +25,9 @@ sites:
     releaseImageRepository: ghcr.io/danskernesdigitalebibliotek
     releaseImageName: dpl-cms-source
     plan: webmaster
-    dpl-cms-release: 2026.4.1
-    moduletest-dpl-cms-release: 2026.4.1
-    go-release: 2026.4.0
+    dpl-cms-release: 2026.6.0
+    moduletest-dpl-cms-release: 2026.6.0
+    go-release: 2026.6.0
     php-version: 8.3
     diskSize: 20
     primary-domain: canary.dplplat02.dpl.reload.dk
@@ -41,9 +41,9 @@ sites:
     releaseImageRepository: ghcr.io/danskernesdigitalebibliotek
     releaseImageName: dpl-cms-source
     plan: webmaster
-    dpl-cms-release: 2026.4.1
-    moduletest-dpl-cms-release: 2026.4.1
-    go-release: 2026.4.0
+    dpl-cms-release: 2026.6.0
+    moduletest-dpl-cms-release: 2026.6.0
+    go-release: 2026.6.0
     php-version: 8.3
     diskSize: 20
     deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAILj8lXv7C/7s7te9sEpwcHQhgDWfzsCkAN7rqQ4sdTzk"
@@ -74,7 +74,7 @@ sites:
     # TODO: Remove this once the the Adgangsplatformen OpenID client used here
     # has been updated to use the primary domain.
     autogenerateRoutes: true
-    moduletest-dpl-cms-release: 2026.4.1
+    moduletest-dpl-cms-release: 2026.6.0
     # This site is a webmaster site but we usually want the latest release
     # deployed to production. Our YAML handling chokes on duplicates to we
     # follow the default release plan and update the module test site manually.
@@ -85,7 +85,7 @@ sites:
     description: "Et site hvor bibliotekerne kan teste"
     importTranslationsCron: "0 * * * *"
     plan: webmaster
-    go-release: 2026.4.0
+    go-release: 2026.6.0
     deploy_key: ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHvhy79hHjLcQJCcMNwci1Q/P/O2LwD4IzBVfkmRGKom
     diskSize: 5
     <<: *webmasters-on-weekly-release-cycle
