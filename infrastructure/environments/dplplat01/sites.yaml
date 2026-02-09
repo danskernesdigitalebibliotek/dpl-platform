@@ -75,6 +75,7 @@ sites:
     # has been updated to use the primary domain.
     autogenerateRoutes: true
     moduletest-dpl-cms-release: 2026.6.0
+    go-release: use-fbscms-go-profile.1
     # This site is a webmaster site but we usually want the latest release
     # deployed to production. Our YAML handling chokes on duplicates to we
     # follow the default release plan and update the module test site manually.
