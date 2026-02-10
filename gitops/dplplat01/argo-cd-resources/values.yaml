@@ -776,7 +776,7 @@ sites:
     values:
       proxy-pass-service:
         host: delingstjenesten.dk
-        target: internal
+        target: external
 
   - name: bnf-moduletest
 
