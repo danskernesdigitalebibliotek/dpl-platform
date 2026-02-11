@@ -84,19 +84,11 @@ sites:
     automated: true
 
   - name: aalborg-moduletest
-    values:
-      autoscalers:
-        node:
-          enabled: false
 
   - name: aarhus-main
     automated: true
 
   - name: aarhus-moduletest
-    values:
-      autoscalers:
-        node:
-          enabled: false
 
   - name: aero-main
     automated: true
@@ -116,10 +108,6 @@ sites:
     automated: true
 
   - name: ballerup-moduletest
-    values:
-      autoscalers:
-        node:
-          enabled: false
 
   - name: billund-main
     automated: true
@@ -244,10 +232,6 @@ sites:
     automated: true
 
   - name: kobenhavn-moduletest
-    values:
-      autoscalers:
-        node:
-          enabled: false
 
   - name: koge-main
     automated: true
@@ -295,10 +279,6 @@ sites:
     automated: true
 
   - name: odense-moduletest
-    values:
-      autoscalers:
-        node:
-          enabled: false
 
   - name: odsherred-main
     automated: true
@@ -319,10 +299,6 @@ sites:
     automated: true
 
   - name: roskilde-moduletest
-    values:
-      autoscalers:
-        node:
-          enabled: false
 
   - name: rudersdal-main
     automated: true
@@ -363,10 +339,6 @@ sites:
     automated: true
 
   - name: taarnby-moduletest
-    values:
-      autoscalers:
-        node:
-          enabled: false
 
   - name: vallensbaek-main
     automated: true
@@ -407,10 +379,6 @@ sites:
     automated: true
 
   - name: cms-school-moduletest
-    values:
-      autoscalers:
-        node:
-          enabled: false
 
   - name: solrod2-main
     automated: true
@@ -419,19 +387,11 @@ sites:
     automated: true
 
   - name: sonderborg-moduletest
-    values:
-      autoscalers:
-        node:
-          enabled: false
 
   - name: sydslesvig-main
     automated: true
 
   - name: sydslesvig-moduletest
-    values:
-      autoscalers:
-        node:
-          enabled: false
 
   - name: thisted-main
     automated: true
