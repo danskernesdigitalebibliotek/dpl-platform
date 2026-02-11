@@ -49,11 +49,6 @@ apps:
       - ServerSideApply=true
 
   # Support workloads
-  - name: harbor
-    project: harbor
-    namespace: harbor
-    automated: false
-
   - name: moduletest-reset
     project: moduletest-reset
     namespace: moduletest-reset
