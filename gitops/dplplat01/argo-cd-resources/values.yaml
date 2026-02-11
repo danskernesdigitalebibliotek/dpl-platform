@@ -14,11 +14,6 @@ apps:
     namespace: kube-system
     automated: true
 
-  - name: vertical-pod-autoscaler
-    project: vertical-pod-autoscaler
-    namespace: vpa
-    automated: true
-
   - name: ingress-nginx
     project: ingress-nginx
     namespace: ingress-nginx
