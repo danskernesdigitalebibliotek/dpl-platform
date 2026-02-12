@@ -149,36 +149,36 @@ harbor:
           # The actual size of the disk Azure will give us if we ask for a 1Gi
           size: 4Gi
           annotations: {}
-      # If external database is used, the following settings for database will
-      # be ignored
-    # It was not possible to change the values below after the initial provisioning
-    # as they are stateful sets, but the PVCs has been modified manually to
-    # match these values.
-    # database:
+        # If external database is used, the following settings for database will
+        # be ignored
+        # It was not possible to change the values below after the initial provisioning
+        # as they are stateful sets, but the PVCs has been modified manually to
+        # match these values.
+        # database:
         existingClaim: ""
         storageClass: ""
         subPath: ""
         accessMode: ReadWriteOnce
-    #   # The actual size of the disk Azure will give us if we ask for a 1Gi
+        #   # The actual size of the disk Azure will give us if we ask for a 1Gi
         size: 4Gi
         annotations: {}
       # If external Redis is used, the following settings for Redis will
       # be ignored
     # redis:
-        # existingClaim: ""
-        # storageClass: ""
-        # subPath: ""
-        # accessMode: ReadWriteOnce
+    # existingClaim: ""
+    # storageClass: ""
+    # subPath: ""
+    # accessMode: ReadWriteOnce
     #   # The actual size of the disk Azure will give us if we ask for a 1Gi
-        # size: 4Gi
-        # annotations: {}
-      # trivy:
-      #   existingClaim: ""
-      #   storageClass: ""
-      #   subPath: ""
-      #   accessMode: ReadWriteOnce
-      #   size: 5Gi
-      #   annotations: {}
+    # size: 4Gi
+    # annotations: {}
+    # trivy:
+    #   existingClaim: ""
+    #   storageClass: ""
+    #   subPath: ""
+    #   accessMode: ReadWriteOnce
+    #   size: 5Gi
+    #   annotations: {}
     # Define which storage backend is used for registry to store
     # images and charts. Refer to
     # https://github.com/distribution/distribution/blob/release/2.8/docs/configuration.md#storage
@@ -420,14 +420,12 @@ harbor:
       # Scrape interval. If not set, the Prometheus default scrape interval is used.
       interval: ""
       # Metric relabel configs to apply to samples before ingestion.
-      metricRelabelings:
-        []
+      metricRelabelings: []
         # - action: keep
       #   regex: 'kube_(daemonset|deployment|pod|namespace|node|statefulset).+'
       #   sourceLabels: [__name__]
       # Relabel configs to apply to samples before ingestion.
-      relabelings:
-        []
+      relabelings: []
         # - sourceLabels: [__meta_kubernetes_pod_node_name]
         #   separator: ;
         #   regex: ^(.*)$
@@ -497,7 +495,7 @@ harbor:
     serviceAccountName: ""
     # mount the service account token
     automountServiceAccountToken: false
-    replicas: 1
+    replicas: 0
     revisionHistoryLimit: 10
     # resources:
     #  requests:
@@ -528,7 +526,7 @@ harbor:
     serviceAccountName: ""
     # mount the service account token
     automountServiceAccountToken: false
-    replicas: 1
+    replicas: 0
     revisionHistoryLimit: 10
     # resources:
     #  requests:
@@ -579,7 +577,7 @@ harbor:
     serviceAccountName: ""
     # mount the service account token
     automountServiceAccountToken: false
-    replicas: 2
+    replicas: 0
     revisionHistoryLimit: 10
     ## Startup probe values
     startupProbe:
@@ -679,7 +677,7 @@ harbor:
     serviceAccountName: ""
     # mount the service account token
     automountServiceAccountToken: false
-    replicas: 1
+    replicas: 0
     revisionHistoryLimit: 10
     # resources:
     #   requests:
@@ -766,7 +764,7 @@ harbor:
     serviceAccountName: ""
     # mount the service account token
     automountServiceAccountToken: false
-    replicas: 3
+    replicas: 0
     revisionHistoryLimit: 10
     nodeSelector: {}
     tolerations:
@@ -853,7 +851,7 @@ harbor:
     # mount the service account token
     automountServiceAccountToken: false
     # replicas the number of Pod replicas
-    replicas: 1
+    replicas: 0
     resources:
       requests:
         cpu: 200m
@@ -1110,7 +1108,7 @@ harbor:
     serviceAccountName: ""
     # mount the service account token
     automountServiceAccountToken: false
-    replicas: 1
+    replicas: 0
     revisionHistoryLimit: 10
     # resources:
     #  requests:
