@@ -54,11 +54,6 @@ apps:
     namespace: harbor
     automated: false
 
-  - name: moduletest-reset
-    project: moduletest-reset
-    namespace: moduletest-reset
-    automated: false
-
   # Databases
   - name: mariadb-10-6-22-production-1
     project: databases
