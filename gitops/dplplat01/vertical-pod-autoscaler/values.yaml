@@ -63,7 +63,7 @@ vpa:
       # recommendation-lower-bound-memory-percentile: 0.4 // causes an error when running the recommender
       # target-memory-percentile: 0.87 // causes an error when running the recommender
       # recommender-interval: 1*time.Minute // causes an error when running the recommender
-    replicaCount: 1
+    replicaCount: 0
     # recommender.revisionHistoryLimit -- The number of old replicasets to retain, default is 10, 0 will garbage-collect old replicasets
     revisionHistoryLimit: 10
     # recommender.podDisruptionBudget -- This is the setting for the pod disruption budget
@@ -137,7 +137,7 @@ vpa:
     annotations: {}
     # updater.extraArgs -- A key-value map of flags to pass to the updater
     extraArgs: {}
-    replicaCount: 1
+    replicaCount: 0
     # updater.revisionHistoryLimit -- The number of old replicasets to retain, default is 10, 0 will garbage-collect old replicasets
     revisionHistoryLimit: 10
     # updater.podDisruptionBudget -- This is the setting for the pod disruption budget
@@ -258,7 +258,7 @@ vpa:
       # admissionController.mutatingWebhookConfiguration.timeout -- Sets the amount of time the API server will wait on a response from the webhook service.
       timeoutSeconds: 5
 
-    replicaCount: 1
+    replicaCount: 0
     # admissionController.revisionHistoryLimit -- The number of old replicasets to retain, default is 10, 0 will garbage-collect old replicasets
     revisionHistoryLimit: 10
     # admissionController.podDisruptionBudget -- This is the setting for the pod disruption budget
