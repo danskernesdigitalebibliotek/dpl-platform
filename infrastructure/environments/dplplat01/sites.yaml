@@ -81,7 +81,7 @@ sites:
     diskSize: 20
     <<: *default-release-image-source
     # Need to go after the above to override the default.
-    go-release: use-fbscms-go-profile.20260212.1
+    go-release: usefbscmsgoprofile.20260212.1
   bibliotek-test:
     name: "Bibliotekstest"
     description: "Et site hvor bibliotekerne kan teste"
