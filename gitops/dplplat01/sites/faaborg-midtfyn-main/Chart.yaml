@@ -2,9 +2,6 @@ apiVersion: v2
 name: faaborg-midtfyn-main
 version: 0.0.0
 dependencies:
-  - name: autoscalers
-    version: 0.0.13
-    repository: oci://ghcr.io/danskernesdigitalebibliotek/dpl-platform/charts
   - name: proxy-pass-service
     version: 0.0.53
     repository: oci://ghcr.io/danskernesdigitalebibliotek/dpl-platform/charts

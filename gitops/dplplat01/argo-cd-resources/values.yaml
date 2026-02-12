@@ -14,11 +14,6 @@ apps:
     namespace: kube-system
     automated: true
 
-  - name: vertical-pod-autoscaler
-    project: vertical-pod-autoscaler
-    namespace: vpa
-    automated: true
-
   - name: ingress-nginx
     project: ingress-nginx
     namespace: ingress-nginx
@@ -96,10 +91,6 @@ sites:
         target: external
 
   - name: aalborg-moduletest
-    values:
-      autoscalers:
-        node:
-          enabled: false
 
   - name: aarhus-main
     automated: true
@@ -109,10 +100,6 @@ sites:
         target: external
 
   - name: aarhus-moduletest
-    values:
-      autoscalers:
-        node:
-          enabled: false
 
   - name: aero-main
     automated: true
@@ -152,10 +139,6 @@ sites:
         target: external
 
   - name: ballerup-moduletest
-    values:
-      autoscalers:
-        node:
-          enabled: false
 
   - name: billund-main
     automated: true
@@ -440,10 +423,6 @@ sites:
         target: external
 
   - name: kobenhavn-moduletest
-    values:
-      autoscalers:
-        node:
-          enabled: false
 
   - name: koge-main
     automated: true
@@ -551,10 +530,6 @@ sites:
         target: external
 
   - name: odense-moduletest
-    values:
-      autoscalers:
-        node:
-          enabled: false
 
   - name: odsherred-main
     automated: true
@@ -599,10 +574,6 @@ sites:
         target: external
 
   - name: roskilde-moduletest
-    values:
-      autoscalers:
-        node:
-          enabled: false
 
   - name: rudersdal-main
     automated: true
@@ -691,10 +662,6 @@ sites:
         target: external
 
   - name: taarnby-moduletest
-    values:
-      autoscalers:
-        node:
-          enabled: false
 
   - name: vallensbaek-main
     automated: true
@@ -783,10 +750,6 @@ sites:
         target: external
 
   - name: cms-school-moduletest
-    values:
-      autoscalers:
-        node:
-          enabled: false
 
   - name: solrod2-main
     automated: true
@@ -803,10 +766,6 @@ sites:
         target: external
 
   - name: sonderborg-moduletest
-    values:
-      autoscalers:
-        node:
-          enabled: false
 
   - name: sydslesvig-main
     automated: true
@@ -816,10 +775,6 @@ sites:
         target: external
 
   - name: sydslesvig-moduletest
-    values:
-      autoscalers:
-        node:
-          enabled: false
 
   - name: thisted-main
     automated: true
