@@ -75,12 +75,13 @@ sites:
     # has been updated to use the primary domain.
     autogenerateRoutes: true
     moduletest-dpl-cms-release: 2026.6.0
-    go-release: use-fbscms-go-profile.2
     # This site is a webmaster site but we usually want the latest release
     # deployed to production. Our YAML handling chokes on duplicates to we
     # follow the default release plan and update the module test site manually.
     diskSize: 20
     <<: *default-release-image-source
+    # Need to go after the above to override the default.
+    go-release: use-fbscms-go-profile.2
   bibliotek-test:
     name: "Bibliotekstest"
     description: "Et site hvor bibliotekerne kan teste"
