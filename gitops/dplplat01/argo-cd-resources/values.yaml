@@ -60,11 +60,6 @@ apps:
     automated: false
 
   # Databases
-  - name: mariadb-10-6-22-production-1
-    project: databases
-    namespace: mariadb-10-6-22-production-1
-    automated: false
-
   - name: mariadb-10-6-22-tmp-test-1
     project: databases
     namespace: mariadb-10-6-22-tmp-test-1
