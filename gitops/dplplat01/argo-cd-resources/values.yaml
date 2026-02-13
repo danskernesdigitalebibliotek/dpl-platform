@@ -79,10 +79,6 @@ automateSites: true
 
 sites:
   - name: canary-main
-    values:
-      proxy-pass-service:
-        host: bibliotest.deranged.dk
-        target: external
 
   - name: canary-moduletest
 
@@ -500,10 +496,6 @@ sites:
 
   - name: silkeborg-main
     automated: true
-    values:
-      proxy-pass-service:
-        host: silkeborgbib.dk
-        target: external
 
   - name: silkeborg-moduletest
 
@@ -523,10 +515,6 @@ sites:
 
   - name: soro-main
     automated: true
-    values:
-      proxy-pass-service:
-        host: www.soroebib.dk
-        target: external
 
   - name: stevns-main
     automated: true
@@ -596,10 +584,6 @@ sites:
 
   - name: laeso-main
     automated: true
-    values:
-      proxy-pass-service:
-        host: biblioteket.laesoe.dk
-        target: external
 
   - name: torshavn-main
     automated: true
@@ -614,10 +598,6 @@ sites:
 
   - name: cms-school-main
     automated: true
-    values:
-      proxy-pass-service:
-        host: cms-school.dplplat01.dpl.reload.dk
-        target: external
 
   - name: cms-school-moduletest
     values:
