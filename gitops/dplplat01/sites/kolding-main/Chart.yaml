@@ -5,5 +5,5 @@ dependencies:
   - name: autoscalers
     version: 0.0.13
     repository: oci://ghcr.io/danskernesdigitalebibliotek/dpl-platform/charts
-0.0.53
+
 
