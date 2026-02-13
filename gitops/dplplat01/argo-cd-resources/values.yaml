@@ -95,10 +95,6 @@ sites:
 
   - name: aalborg-main
     automated: true
-    values:
-      proxy-pass-service:
-        host: www.aalborgbibliotekerne.dk
-        target: external
 
   - name: aalborg-moduletest
     values:
@@ -108,10 +104,6 @@ sites:
 
   - name: aarhus-main
     automated: true
-    values:
-      proxy-pass-service:
-        host: www.aakb.dk
-        target: external
 
   - name: aarhus-moduletest
     values:
@@ -137,10 +129,6 @@ sites:
 
   - name: allerod-main
     automated: true
-    values:
-      proxy-pass-service:
-        host: www.bibliotek.alleroed.dk
-        target: external
 
   - name: assens-main
     automated: true
@@ -151,10 +139,6 @@ sites:
 
   - name: ballerup-main
     automated: true
-    values:
-      proxy-pass-service:
-        host: bib.ballerup.dk
-        target: external
 
   - name: ballerup-moduletest
     values:
@@ -164,10 +148,6 @@ sites:
 
   - name: billund-main
     automated: true
-    values:
-      proxy-pass-service:
-        host: billundbib.dk
-        target: external
 
   - name: bornholm-main
     automated: true
@@ -185,10 +165,6 @@ sites:
 
   - name: bronderslev-main
     automated: true
-    values:
-      proxy-pass-service:
-        host: www.bronderslevbib.dk
-        target: external
 
   - name: dragor-main
     automated: true
@@ -220,10 +196,6 @@ sites:
 
   - name: favrskov-main
     automated: true
-    values:
-      proxy-pass-service:
-        host: favrskovbib.dk
-        target: external
 
   - name: fredensborg-main
     automated: true
@@ -262,24 +234,12 @@ sites:
 
   - name: fureso-main
     automated: true
-    values:
-      proxy-pass-service:
-        host: furbib.dk
-        target: external
 
   - name: gentofte-main
     automated: true
-    values:
-      proxy-pass-service:
-        host: genbib.dk
-        target: external
 
   - name: gladsaxe-main
     automated: true
-    values:
-      proxy-pass-service:
-        host: gladbib.dk
-        target: external
 
   - name: glostrup-main
     automated: true
@@ -346,47 +306,23 @@ sites:
 
   - name: herning-main
     automated: true
-    values:
-      proxy-pass-service:
-        host: www.herningbib.dk
-        target: external
 
   - name: herning-moduletest
 
   - name: hillerod-main
     automated: true
-    values:
-      proxy-pass-service:
-        host: hilbib.dk
-        target: external
 
   - name: hjorring-main
     automated: true
-    values:
-      proxy-pass-service:
-        host: hjbib.dk
-        target: external
 
   - name: holbaek-main
     automated: true
-    values:
-      proxy-pass-service:
-        host: bibliotek.holbaek.dk
-        target: external
 
   - name: holstebro-main
     automated: true
-    values:
-      proxy-pass-service:
-        host: www.holstebrobibliotek.dk
-        target: external
 
   - name: horsens-main
     automated: true
-    values:
-      proxy-pass-service:
-        host: horsensbibliotek.dk
-        target: external
 
   - name: hoje-taastrup-main
     automated: true
@@ -404,17 +340,9 @@ sites:
 
   - name: hvidovre-main
     automated: true
-    values:
-      proxy-pass-service:
-        host: www.hvidovrebib.dk
-        target: external
 
   - name: ikast-brande-main
     automated: true
-    values:
-      proxy-pass-service:
-        host: www.ikast-brandebibliotek.dk
-        target: external
 
   - name: ishoj-main
     automated: true
@@ -425,17 +353,9 @@ sites:
 
   - name: kalundborg-main
     automated: true
-    values:
-      proxy-pass-service:
-        host: www.kalundborgbib.dk
-        target: external
 
   - name: kerteminde-main
     automated: true
-    values:
-      proxy-pass-service:
-        host: kertemindebibliotekerne.dk
-        target: external
 
   - name: kobenhavn-main
     automated: true
@@ -452,17 +372,9 @@ sites:
 
   - name: koge-main
     automated: true
-    values:
-      proxy-pass-service:
-        host: www.koegebib.dk
-        target: external
 
   - name: kolding-main
     automated: true
-    values:
-      proxy-pass-service:
-        host: koldingbib.dk
-        target: external
 
   - name: langeland-main
     automated: true
@@ -473,17 +385,9 @@ sites:
 
   - name: lejre-main
     automated: true
-    values:
-      proxy-pass-service:
-        host: lejrebib.dk
-        target: external
 
   - name: lolland-main
     automated: true
-    values:
-      proxy-pass-service:
-        host: lollandbib.dk
-        target: external
 
   - name: lyngby-taarbaek-main
     automated: true
@@ -501,10 +405,6 @@ sites:
 
   - name: middelfart-main
     automated: true
-    values:
-      proxy-pass-service:
-        host: www.middelfartbibliotek.dk
-        target: external
 
   - name: morso-main
     automated: true
@@ -515,10 +415,6 @@ sites:
 
   - name: naestved-main
     automated: true
-    values:
-      proxy-pass-service:
-        host: www.naesbib.dk
-        target: external
 
   - name: norddjurs-main
     automated: true
@@ -529,10 +425,6 @@ sites:
 
   - name: nordfyn-main
     automated: true
-    values:
-      proxy-pass-service:
-        host: www.nordfynsbib.dk
-        target: external
 
   - name: nyborg-main
     automated: true
@@ -550,10 +442,6 @@ sites:
 
   - name: odense-main
     automated: true
-    values:
-      proxy-pass-service:
-        host: www.odensebib.dk
-        target: external
 
   - name: odense-moduletest
     values:
@@ -577,31 +465,15 @@ sites:
 
   - name: rebild-main
     automated: true
-    values:
-      proxy-pass-service:
-        host: www.rebildbib.dk
-        target: external
 
   - name: ringkobing-skjern-main
     automated: true
-    values:
-      proxy-pass-service:
-        host: riskbib.dk
-        target: external
 
   - name: ringsted-main
     automated: true
-    values:
-      proxy-pass-service:
-        host: ringstedbib.dk
-        target: external
 
   - name: roskilde-main
     automated: true
-    values:
-      proxy-pass-service:
-        host: www.roskildebib.dk
-        target: external
 
   - name: roskilde-moduletest
     values:
@@ -611,10 +483,6 @@ sites:
 
   - name: rudersdal-main
     automated: true
-    values:
-      proxy-pass-service:
-        host: rudbib.dk
-        target: external
 
   - name: rodovre-main
     automated: true
@@ -676,24 +544,12 @@ sites:
 
   - name: svendborg-main
     automated: true
-    values:
-      proxy-pass-service:
-        host: svendborgbibliotek.dk
-        target: external
 
   - name: syddjurs-main
     automated: true
-    values:
-      proxy-pass-service:
-        host: syddjursbibliotek.dk
-        target: external
 
   - name: taarnby-main
     automated: true
-    values:
-      proxy-pass-service:
-        host: taarnbybib.dk
-        target: external
 
   - name: taarnby-moduletest
     values:
@@ -703,17 +559,9 @@ sites:
 
   - name: vallensbaek-main
     automated: true
-    values:
-      proxy-pass-service:
-        host: kulturogborgerhus.vallensbaek.dk
-        target: external
 
   - name: varde-main
     automated: true
-    values:
-      proxy-pass-service:
-        host: www.vardebib.dk
-        target: external
 
   - name: vejen-main
     automated: true
@@ -724,10 +572,6 @@ sites:
 
   - name: vejle-main
     automated: true
-    values:
-      proxy-pass-service:
-        host: vejlebib.dk
-        target: external
 
   - name: vesthimmerland-main
     automated: true
@@ -759,24 +603,12 @@ sites:
 
   - name: torshavn-main
     automated: true
-    values:
-      proxy-pass-service:
-        host: www.bbs.fo
-        target: external
 
   - name: frederikshavn-main
     automated: true
-    values:
-      proxy-pass-service:
-        host: bibl.frederikshavn.dk
-        target: external
 
   - name: bnf-main
     automated: true
-    values:
-      proxy-pass-service:
-        host: delingstjenesten.dk
-        target: external
 
   - name: bnf-moduletest
 
@@ -795,17 +627,9 @@ sites:
 
   - name: solrod2-main
     automated: true
-    values:
-      proxy-pass-service:
-        host: solbib.dk
-        target: external
 
   - name: sonderborg-main
     automated: true
-    values:
-      proxy-pass-service:
-        host: biblioteket.sonderborg.dk
-        target: external
 
   - name: sonderborg-moduletest
     values:
