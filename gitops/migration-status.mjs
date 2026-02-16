@@ -7,7 +7,7 @@ const dplplat02Ip = '130.226.25.93';
 let sites = YAML.parse(await fs.readFileSync("../infrastructure/environments/dplplat01/sites.yaml", "utf-8")).sites;
 
 let siteResults = await Promise.all(Object.entries(sites).map(async ([name, site]) => {
-    // if (name !== 'kolding') return;
+    // if (name !== 'kobenhavn') return;
 
     const status = { site: name };
 
@@ -31,18 +31,23 @@ let siteResults = await Promise.all(Object.entries(sites).map(async ([name, site
             dnsStatus = 'partially migrated';
         }
 
-        status.resolvedIps = domains;
+        status.domains = {};
+        Object.entries(domains).forEach(([domain, ip]) => status.domains[domain] = { ip: ip === dplplat01Ip ? `${dplplat01Ip} !!!` : ip });
+
         status.dns = dnsStatus;
     }
 
     { // determine dplplat01 status
         let dplplat01Status = 'unknown';
-        const result = await Promise.all(status.domains.map(async (domain) => {
+        const result = await Promise.all(Object.keys(status.domains).map(async (domain) => {
             try {
                 const response = await $`curl -w "%{http_code}" -o /dev/null -s https://${dplplat01Ip} --insecure -H "Host: ${domain}"`;
-                if (["200", "301", "302", "308"].includes(response.stdout.trim())) {
+                const statusCode = response.stdout.trim();
+                if (["200", "301", "302", "308"].includes(statusCode)) {
+                    status.domains[domain].dplplat01 = statusCode;
                     return `running`;
                 }
+                status.domains[domain].dplplat01 = `${statusCode} !!!`;
                 return `not running`;
             } catch (error) {
                 return `${domain} error`;
@@ -61,13 +66,16 @@ let siteResults = await Promise.all(Object.entries(sites).map(async ([name, site
 
     { // determine dplplat02 status
         let dplplat02Status = 'unknown';
-        const result = await Promise.all(status.domains.map(async (domain) => {
+        const result = await Promise.all(Object.keys(status.domains).map(async (domain) => {
             try {
                 const response = await $`curl -w "%{http_code}" -o /dev/null -s https://${dplplat02Ip} --insecure -H "Host: ${domain}"`;
-                if (["200", "301", "302", "308"].includes(response.stdout.trim())) {
-                    return `${domain} running`;
+                const statusCode = response.stdout.trim();
+                if (["200", "301", "302", "308"].includes(statusCode)) {
+                    status.domains[domain].dplplat02 = statusCode;
+                    return `running`;
                 }
-                return `${domain} not running`;
+                status.domains[domain].dplplat02 = `${statusCode} !!!`;
+                return `not running`;
             } catch (error) {
                 return `${domain} error`;
             }
@@ -141,9 +149,9 @@ Site: ${site.site}
     Actions:
 ${site.actions.map(action => `    - ${action}`).join("\n")}
 
-    Resolved IPs:
-${Object.entries(site.resolvedIps).map(([domain, ip]) => `    - ${domain}: ${ip} ${ip !== dplplat02Ip ? "<- !!!" : "" }`).join("\n")}
-
+    Resolved domains:`;
+    console.table(site.domains)
+    echo`
     Should resolve to dplplat02 IP: ${dplplat02Ip}
     `;
 }
