@@ -295,10 +295,6 @@ sites:
 
   - name: herlev-main
     automated: true
-    values:
-      proxy-pass-service:
-        host: www.herlevbibliotek.dk
-        target: external
 
   - name: herning-main
     automated: true
@@ -414,10 +410,6 @@ sites:
 
   - name: norddjurs-main
     automated: true
-    values:
-      proxy-pass-service:
-        host: norddjursbib.dk
-        target: external
 
   - name: nordfyn-main
     automated: true
@@ -447,10 +439,6 @@ sites:
 
   - name: odsherred-main
     automated: true
-    values:
-      proxy-pass-service:
-        host: odsbib.dk
-        target: external
 
   - name: randers-main
     automated: true
@@ -482,17 +470,9 @@ sites:
 
   - name: rodovre-main
     automated: true
-    values:
-      proxy-pass-service:
-        host: www.rdb.dk
-        target: external
 
   - name: samso-main
     automated: true
-    values:
-      proxy-pass-service:
-        host: bibliotek.samsoe.dk
-        target: external
 
   - name: silkeborg-main
     automated: true
@@ -508,10 +488,6 @@ sites:
 
   - name: skive-main
     automated: true
-    values:
-      proxy-pass-service:
-        host: www.skivebibliotek.dk
-        target: external
 
   - name: soro-main
     automated: true
@@ -525,10 +501,6 @@ sites:
 
   - name: struer-main
     automated: true
-    values:
-      proxy-pass-service:
-        host: www.struerbibliotek.dk
-        target: external
 
   - name: svendborg-main
     automated: true
