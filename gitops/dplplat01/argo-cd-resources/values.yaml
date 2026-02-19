@@ -84,10 +84,6 @@ sites:
 
   - name: aabenraa-main
     automated: true
-    values:
-      proxy-pass-service:
-        host: www.aabenraabib.dk
-        target: external
 
   - name: aalborg-main
     automated: true
@@ -109,10 +105,6 @@ sites:
 
   - name: aero-main
     automated: true
-    values:
-      proxy-pass-service:
-        host: www.arrebib.dk
-        target: external
 
   - name: albertslund-main
     automated: true
@@ -154,10 +146,6 @@ sites:
 
   - name: brondby-main
     automated: true
-    values:
-      proxy-pass-service:
-        host: www.brondby-bibliotekerne.dk
-        target: external
 
   - name: bronderslev-main
     automated: true
@@ -171,24 +159,12 @@ sites:
 
   - name: egedal-main
     automated: true
-    values:
-      proxy-pass-service:
-        host: egedalbibliotekerne.dk
-        target: external
 
   - name: esbjerg-main
     automated: true
-    values:
-      proxy-pass-service:
-        host: www.esbjergbibliotek.dk
-        target: external
 
   - name: faaborg-midtfyn-main
     automated: true
-    values:
-      proxy-pass-service:
-        host: fmbib.dk
-        target: external
 
   - name: favrskov-main
     automated: true
@@ -202,10 +178,6 @@ sites:
 
   - name: fredericia-main
     automated: true
-    values:
-      proxy-pass-service:
-        host: fredericiabib.dk
-        target: external
 
   - name: frederiksberg-main
     automated: true
@@ -216,17 +188,9 @@ sites:
 
   - name: frederikssund-main
     automated: true
-    values:
-      proxy-pass-service:
-        host: www.bibliotekerne.frederikssund.dk
-        target: external
 
   - name: faxe-main
     automated: true
-    values:
-      proxy-pass-service:
-        host: www.faxebibliotek.dk
-        target: external
 
   - name: fureso-main
     automated: true
@@ -239,10 +203,6 @@ sites:
 
   - name: glostrup-main
     automated: true
-    values:
-      proxy-pass-service:
-        host: www.glostrupbib.dk
-        target: external
 
   - name: greve-main
     automated: true
@@ -253,10 +213,6 @@ sites:
 
   - name: gribskov-main
     automated: true
-    values:
-      proxy-pass-service:
-        host: www.gribskovbib.dk
-        target: external
 
   - name: guldborgsund-main
     automated: true
@@ -274,10 +230,6 @@ sites:
 
   - name: haderslev-main
     automated: true
-    values:
-      proxy-pass-service:
-        host: haderslevbibliotekerne.dk
-        target: external
 
   - name: hedensted-main
     automated: true
@@ -288,10 +240,6 @@ sites:
 
   - name: helsingor-main
     automated: true
-    values:
-      proxy-pass-service:
-        host: helsbib.dk
-        target: external
 
   - name: herlev-main
     automated: true
@@ -318,10 +266,6 @@ sites:
 
   - name: hoje-taastrup-main
     automated: true
-    values:
-      proxy-pass-service:
-        host: bibliotek.htk.dk
-        target: external
 
   - name: horsholm-main
     automated: true
@@ -383,10 +327,6 @@ sites:
 
   - name: lyngby-taarbaek-main
     automated: true
-    values:
-      proxy-pass-service:
-        host: www.lyngbybib.dk
-        target: external
 
   - name: mariagerfjord-main
     automated: true
@@ -494,10 +434,6 @@ sites:
 
   - name: stevns-main
     automated: true
-    values:
-      proxy-pass-service:
-        host: www.stevnsbib.dk
-        target: external
 
   - name: struer-main
     automated: true
@@ -525,27 +461,15 @@ sites:
 
   - name: vejen-main
     automated: true
-    values:
-      proxy-pass-service:
-        host: vejbib.dk
-        target: external
 
   - name: vejle-main
     automated: true
 
   - name: vesthimmerland-main
     automated: true
-    values:
-      proxy-pass-service:
-        host: www.vhbib.dk
-        target: external
 
   - name: viborg-main
     automated: true
-    values:
-      proxy-pass-service:
-        host: viborgbib.dk
-        target: external
 
   - name: vordingborg-main
     automated: true
