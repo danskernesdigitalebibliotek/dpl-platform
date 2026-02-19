@@ -125,9 +125,17 @@ async function importBackupIntoDatabase(file, connectionInfo, project, environme
     databasePassword,
   } = connectionInfo;
 
-  echo("dropping existing database and importing backup");
+  echo("dropping existing database");
   try {
-    await $`kubectl exec -n ${project}-${environment} deploy/cli -- sh -c "drush sql-drop -y && mariadb --user=${databaseUser} --host=${databaseHost} --password=${databasePassword} ${databaseName} < /tmp/${uncompressedBackup}"`
+    await $`kubectl exec -n ${project}-${environment} deploy/cli -- sh -c "drush sql-drop -y"`
+  } catch(error) {
+    echo(error);
+    throw Error("drop of database failed", { cause: error });
+  }
+
+  echo(`importing '${uncompressedBackup}' into database`);
+  try {
+    await $`kubectl exec -n ${project}-${environment} deploy/cli -- sh -c "drush sql-drop -y && mariadb --user=${databaseUser} --host=${databaseHost} --password=${databasePassword} --database=${databaseName} < /tmp/${uncompressedBackup}"`
   } catch(error) {
     echo(error);
     throw Error("Import of database backup failed", { cause: error });
