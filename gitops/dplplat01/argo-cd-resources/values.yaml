@@ -152,10 +152,6 @@ sites:
 
   - name: dragor-main
     automated: true
-    values:
-      proxy-pass-service:
-        host: www.drabib.dk
-        target: external
 
   - name: egedal-main
     automated: true
@@ -340,10 +336,6 @@ sites:
 
   - name: morso-main
     automated: true
-    values:
-      proxy-pass-service:
-        host: www.bibliotekmorsoe.dk
-        target: external
 
   - name: naestved-main
     automated: true
