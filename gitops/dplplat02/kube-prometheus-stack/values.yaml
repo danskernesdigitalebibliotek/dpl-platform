@@ -546,7 +546,7 @@ kube-prometheus-stack:
       - name: 'null'
         - name: zulip-alerts
           webhook_config:
-            - url_file: /etc/alertmanager/secrets/alertmanager-secrets/zulip-channel-url
+            - url_file: /etc/alertmanager/secrets/alertmanager-secrets/url
       templates:
       - '/etc/alertmanager/config/*.tmpl'
 
