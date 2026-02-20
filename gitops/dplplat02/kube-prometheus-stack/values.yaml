@@ -4272,7 +4272,7 @@ kube-prometheus-stack:
       ## Number of replicas of each shard to deploy for a Prometheus deployment.
       ## Number of replicas multiplied by shards is the total number of Pods created.
       ##
-      replicas: 1
+      replicas: 2
 
       ## EXPERIMENTAL: Number of shards to distribute targets onto.
       ## Number of replicas multiplied by shards is the total number of Pods created.
