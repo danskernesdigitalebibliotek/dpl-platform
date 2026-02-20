@@ -545,7 +545,7 @@ kube-prometheus-stack:
       receivers:
       - name: 'null'
         - name: zulip-alerts
-          webhook_config:
+          webhook_configs:
             - url_file: /etc/alertmanager/secrets/alertmanager-secrets/url
       templates:
       - '/etc/alertmanager/config/*.tmpl'
