@@ -543,7 +543,6 @@ kube-prometheus-stack:
           matchers:
             - alertname = "Watchdog"
       receivers:
-      - name: 'null'
         - name: zulip-alerts
           webhook_configs:
             - url_file: /etc/alertmanager/secrets/alertmanager-secrets/url
