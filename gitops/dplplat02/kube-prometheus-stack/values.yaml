@@ -544,6 +544,9 @@ kube-prometheus-stack:
             - alertname = "Watchdog"
       receivers:
       - name: 'null'
+        - name: zulip-alerts
+          webhook_config:
+            - url_file: /etc/alertmanager/secrets/alertmanager-secrets/zulip-channel-url
       templates:
       - '/etc/alertmanager/config/*.tmpl'
 
@@ -926,7 +929,8 @@ kube-prometheus-stack:
       ## Secrets is a list of Secrets in the same namespace as the Alertmanager object, which shall be mounted into the
       ## Alertmanager Pods. The Secrets are mounted into /etc/alertmanager/secrets/.
       ##
-      secrets: []
+      secrets:
+        - alertmanager-secrets
 
       ## If false then the user will opt out of automounting API credentials.
       ##
