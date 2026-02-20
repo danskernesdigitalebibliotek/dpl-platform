@@ -186,7 +186,7 @@ kube-prometheus-stack:
       kubeApiserverSlos: true
       kubeControllerManager: true
       kubelet: true
-      kubeProxy: true
+      kubeProxy: false
       kubePrometheusGeneral: true
       kubePrometheusNodeRecording: true
       kubernetesApps: true
@@ -2398,7 +2398,7 @@ kube-prometheus-stack:
   ## Component scraping kube proxy
   ##
   kubeProxy:
-    enabled: true
+    enabled: false
 
     # Overrides the job selector in Grafana dashboards and Prometheus rules
     # For k3s clusters, change to k3s-server
