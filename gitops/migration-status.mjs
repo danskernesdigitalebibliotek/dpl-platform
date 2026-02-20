@@ -18,7 +18,17 @@ let siteResults = await Promise.all(Object.entries(sites).map(async ([name, site
     }
 
     { // determine dns status
-        const result = await Promise.all(status.domains.map(async (domain) => ({ [domain]: (await dns.resolve(domain))[0] })));
+        const result = await Promise.all(
+          status.domains.map(async (domain) => {
+            try {
+              const addresses = await dns.resolve(domain);
+              return { [domain]: addresses[0] };
+            } catch(error) {
+              console.log(`${domain} failed DNS lookup - probably not registered or not propergated`, error);
+              return { [domain]: null};
+            }
+          })
+        );
         const domains = Object.assign({}, ...result);
         const ips = Object.values(domains);
 
