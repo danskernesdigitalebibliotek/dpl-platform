@@ -539,9 +539,7 @@ kube-prometheus-stack:
         repeat_interval: 12h
         receiver: 'null'
         routes:
-        - receiver: 'null'
-          matchers:
-            - alertname = "Watchdog"
+          - receiver: zulip-alerts
       receivers:
         - name: zulip-alerts
           webhook_configs:
