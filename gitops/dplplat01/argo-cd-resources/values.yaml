@@ -250,10 +250,6 @@ sites:
 
   - name: ishoj-main
     automated: true
-    values:
-      proxy-pass-service:
-        host: www.ishojbib.dk
-        target: external
 
   - name: kalundborg-main
     automated: true
@@ -381,10 +377,6 @@ sites:
 
   - name: skanderborg-main
     automated: true
-    values:
-      proxy-pass-service:
-        host: www.bibliotek.skanderborg.dk
-        target: external
 
   - name: skive-main
     automated: true
