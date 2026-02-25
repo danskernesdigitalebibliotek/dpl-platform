@@ -108,10 +108,6 @@ sites:
 
   - name: albertslund-main
     automated: true
-    values:
-      proxy-pass-service:
-        host: albertslundbibliotek.dk
-        target: external
 
   - name: albertslund-moduletest
 
@@ -120,10 +116,6 @@ sites:
 
   - name: assens-main
     automated: true
-    values:
-      proxy-pass-service:
-        host: www.assensbib.dk
-        target: external
 
   - name: ballerup-main
     automated: true
@@ -139,10 +131,6 @@ sites:
 
   - name: bornholm-main
     automated: true
-    values:
-      proxy-pass-service:
-        host: bibliotek.brk.dk
-        target: external
 
   - name: brondby-main
     automated: true
@@ -167,10 +155,6 @@ sites:
 
   - name: fredensborg-main
     automated: true
-    values:
-      proxy-pass-service:
-        host: www.fredensborgbibliotekerne.dk
-        target: external
 
   - name: fredericia-main
     automated: true
@@ -212,27 +196,15 @@ sites:
 
   - name: guldborgsund-main
     automated: true
-    values:
-      proxy-pass-service:
-        host: guldbib.dk
-        target: external
 
   - name: halsnaes-main
     automated: true
-    values:
-      proxy-pass-service:
-        host: bibliotekerne.halsnaes.dk
-        target: external
 
   - name: haderslev-main
     automated: true
 
   - name: hedensted-main
     automated: true
-    values:
-      proxy-pass-service:
-        host: hedenstedbib.dk
-        target: external
 
   - name: helsingor-main
     automated: true
@@ -374,10 +346,6 @@ sites:
 
   - name: randers-main
     automated: true
-    values:
-      proxy-pass-service:
-        host: www.randersbib.dk
-        target: external
 
   - name: rebild-main
     automated: true
@@ -507,10 +475,6 @@ sites:
 
   - name: sydslesvig-main
     automated: true
-    values:
-      proxy-pass-service:
-        host: www.dcbib.dk
-        target: external
 
   - name: sydslesvig-moduletest
     values:
@@ -520,7 +484,3 @@ sites:
 
   - name: thisted-main
     automated: true
-    values:
-      proxy-pass-service:
-        host: bib.kulturrummet.dk
-        target: external
