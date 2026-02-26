@@ -237,10 +237,6 @@ sites:
 
   - name: horsholm-main
     automated: true
-    values:
-      proxy-pass-service:
-        host: biblioteket.horsholm.dk
-        target: external
 
   - name: hvidovre-main
     automated: true
@@ -294,10 +290,6 @@ sites:
 
   - name: mariagerfjord-main
     automated: true
-    values:
-      proxy-pass-service:
-        host: mfbib.dk
-        target: external
 
   - name: middelfart-main
     automated: true
