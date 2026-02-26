@@ -8,7 +8,7 @@ kind: CronJob
 metadata:
   name: moduletest-reset-{{ . }}
 spec:
-  schedule: "0 23 * * 3"  # Every Wednesday at 23:00
+  schedule: "0 23 * * 3"  # This actually runs every other Wednesday at 23:00. Check jobTemplate.spec.template.spec.containers.command
   jobTemplate:
     spec:
       ttlSecondsAfterFinished: 50400 # 14 hours leaving time to investigate failed jobs
@@ -22,7 +22,7 @@ spec:
               command:
                 - /bin/bash
                 - -c
-                - ./moduletest-reset-job.mjs {{ . }}
+                - "[[ $((date +%W % 2)) == 1 ]] && ./moduletest-reset-job.mjs {{ . }}"
               env:
                 - name: AZURE_DATABASE_HOST
                   valueFrom:
