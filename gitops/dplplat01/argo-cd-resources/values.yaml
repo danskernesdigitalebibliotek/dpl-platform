@@ -308,10 +308,6 @@ sites:
 
   - name: nyborg-main
     automated: true
-    values:
-      proxy-pass-service:
-        host: www.nyborgbibliotek.dk
-        target: external
 
   - name: odder-main
     automated: true
@@ -417,10 +413,6 @@ sites:
 
   - name: vordingborg-main
     automated: true
-    values:
-      proxy-pass-service:
-        host: www.vordingborgbibliotekerne.dk
-        target: external
 
   - name: laeso-main
     automated: true
