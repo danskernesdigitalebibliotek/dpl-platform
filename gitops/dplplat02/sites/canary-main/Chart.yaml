@@ -5,3 +5,6 @@ dependencies:
   - name: autoscalers
     version: 0.0.14
     repository: oci://ghcr.io/danskernesdigitalebibliotek/dpl-platform/charts
+  - name: moduletest-reset
+    version: 0.0.2
+    repository: oci://ghcr.io/danskernesdigitalebibliotek/dpl-platform/charts
