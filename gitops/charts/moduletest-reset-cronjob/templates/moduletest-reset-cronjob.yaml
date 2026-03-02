@@ -63,7 +63,7 @@ metadata:
   name: deployments-get-cluster-role
 rules:
 - apiGroups: [""]
-  resources: [ "namespaces", "pods", "pods/exec", "configmaps", "services" ]
+  resources: [ "pods", "pods/exec", "configmaps", "services" ]
   verbs: [ "get", "list", "create" ]
 - apiGroups: [ "apps", "configmaps" ]
   resources: [ "deployments", "pods", "services" ]
