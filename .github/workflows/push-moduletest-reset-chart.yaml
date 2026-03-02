@@ -32,8 +32,8 @@ jobs:
         env:
           VERSION: ${{ steps.version.outputs.value }}
         run: |
-          VERSION=$(yq '.version' gitops/charts/moduletest-reset/Chart.yaml)
-          NAME=$(yq '.name' gitops/charts/moduletest-reset/Chart.yaml)
-          helm dependency update gitops/charts/moduletest-reset || true
-          helm package gitops/charts/moduletest-reset
+          VERSION=$(yq '.version' gitops/charts/moduletest-reset-cronjob/Chart.yaml)
+          NAME=$(yq '.name' gitops/charts/moduletest-reset-cronjob/Chart.yaml)
+          helm dependency update gitops/charts/moduletest-reset-cronjob || true
+          helm package gitops/charts/moduletest-reset-cronjob
           helm push $NAME-$VERSION.tgz oci://ghcr.io/danskernesdigitalebibliotek/dpl-platform/charts
