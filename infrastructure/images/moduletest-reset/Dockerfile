@@ -5,8 +5,8 @@ RUN apk add --no-cache bash kubectl && npm install -g zx
 
 WORKDIR /usr/src/app
 
-COPY moduletest-reset-job.mjs .
+COPY moduletest-reset.mjs .
 
 ENTRYPOINT []
 
-CMD ["./moduletest-reset-job.mjs"]
+CMD ["./moduletest-reset.mjs"]
