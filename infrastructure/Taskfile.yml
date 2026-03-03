@@ -342,8 +342,7 @@ tasks:
       In order for the cli to auth your public ssh-key must have been added to
       the core and must be available to ssh eg via "eval $(ssh-agent); ssh-add"
     vars:
-      ssh_loadbalancer_ip:
-        sh: task cluster:auth && kubectl get -o jsonpath='{.status.loadBalancer.ingress[0].ip}' -n lagoon-core service lagoon-core-ssh
+      ssh_loadbalancer_ip: "{{.SSH_HOSTNAME}}"
     status:
       - test -f {{.HOME}}/.lagoon.yml
 
