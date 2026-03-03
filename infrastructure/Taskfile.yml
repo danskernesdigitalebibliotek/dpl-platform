@@ -114,15 +114,7 @@ tasks:
     summary: |
       Use Terraform to provision the repositories for our environments.
     env:
-      GITHUB_TOKEN:
-        sh: az keyvault secret show
-          --subscription "{{.AZURE_SUBSCRIPTION_ID}}"
-          --name github-infra-admin-pat
-          --vault-name
-          $(
-          terraform -chdir={{.dir_infra}} output -json | jq --raw-output ".keyvault_name.value | select (.!=null)"
-          )
-          --query value -o tsv
+      GITHUB_TOKEN: "{{.GITHUB_TOKEN}}"
     cmds:
       - cmd: |
           if [ -z "{{.SKIP}}" ]; then
@@ -137,15 +129,7 @@ tasks:
     summary: |
       Import existing ressources into terraform state
     env:
-      GITHUB_TOKEN:
-        sh: az keyvault secret show
-          --subscription "{{.AZURE_SUBSCRIPTION_ID}}"
-          --name github-infra-admin-pat
-          --vault-name
-          $(
-          terraform -chdir={{.dir_infra}} output -json | jq --raw-output ".keyvault_name.value | select (.!=null)"
-          )
-          --query value -o tsv
+      GITHUB_TOKEN: "{{.GITHUB_TOKEN}}"
     cmds:
       - cmd: terraform -chdir={{.dir_env_repos}} import '{{.OPTIONS}}' '{{.ADDRESS_ID}}'
 
@@ -499,15 +483,7 @@ tasks:
 
   lagoon:project:ensure:github-registry-credentials:
     vars:
-      GITHUB_TOKEN:
-        sh: az keyvault secret show
-          --subscription "{{.AZURE_SUBSCRIPTION_ID}}"
-          --name github-infra-admin-pat
-          --vault-name
-          $(
-          terraform -chdir={{.dir_infra}} output -json | jq --raw-output ".keyvault_name.value | select (.!=null)"
-          )
-          --query value -o tsv
+      GITHUB_TOKEN: "{{.GITHUB_TOKEN}}"
     cmds:
       - task: lagoon:ensure:environment-variable
         vars:
@@ -670,15 +646,7 @@ tasks:
     env:
       SITES_CONFIG: "{{.dir_env}}/sites.yaml"
       SITE: "{{.SITE}}"
-      GITHUB_TOKEN:
-        sh: az keyvault secret show
-          --subscription "{{.AZURE_SUBSCRIPTION_ID}}"
-          --name github-infra-admin-pat
-          --vault-name
-          $(
-          terraform -chdir={{.dir_infra}} output -json | jq --raw-output ".keyvault_name.value | select (.!=null)"
-          )
-          --query value -o tsv
+      GITHUB_TOKEN: "{{.GITHUB_TOKEN}}"
     cmds:
       - |
         if [ -z "{{.SKIP}}" ]; then
