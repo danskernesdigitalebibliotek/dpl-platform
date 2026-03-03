@@ -344,8 +344,13 @@ tasks:
     vars:
       ssh_loadbalancer_ip: "{{.SSH_HOSTNAME}}"
     status:
-      - test -f {{.HOME}}/.lagoon.yml
+      - |
+        CURRENT_LAGOON="$(lagoon config current)"
 
+        if [[ "$CURRENT_LAGOON" != "dplplat02" ]]; then
+          echo "Wrong lagoon config: $CURRENT_LAGOON"
+          exit 1
+        fi
     cmds:
       - |
         lagoon config add \
