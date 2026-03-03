@@ -55,6 +55,7 @@ apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
 metadata:
   name: deployments-get-cluster-role
+  namespace: {{ .Release.Namespace }}
 rules:
 - apiGroups: [""]
   resources: [ "pods", "pods/exec", "configmaps", "services" ]
@@ -69,6 +70,7 @@ apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding
 metadata:
   name: namespace-deployments-getter-binding
+  namespace: {{ .Release.Namespace }}
 subjects:
 - kind: ServiceAccount
   name: moduletest-reset-serviceaccount
