@@ -336,7 +336,7 @@ tasks:
       - ./task/scripts/backup-keycloak-pre-upgrade.mjs
 
   lagoon:cli:config:
-    deps: [cluster:auth]
+    #deps: [cluster:auth]
     desc: Configure a lagoon cli with the knowledge of a lagoon core.
     summary: |
       In order for the cli to auth your public ssh-key must have been added to
