@@ -74,6 +74,7 @@ metadata:
 subjects:
 - kind: ServiceAccount
   name: moduletest-reset-serviceaccount
+  namespace: {{ .Release.Namespace }}
 roleRef:
   kind: ClusterRole
   name: deployments-get-cluster-role
