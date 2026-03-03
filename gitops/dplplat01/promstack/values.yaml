@@ -1009,7 +1009,7 @@ kube-prometheus-stack:
 
       ## Size is the expected size of the alertmanager cluster. The controller will eventually make the size of the
       ## running cluster equal to the expected size.
-      replicas: 2
+      replicas: 0
 
       ## Time duration Alertmanager shall retain data for. Default is '120h', and must match the regular expression
       ## [0-9]+(ms|s|m|h) (milliseconds seconds minutes hours).
@@ -2699,7 +2699,7 @@ kube-prometheus-stack:
 
         ## Number of replicas
         ##
-        replicas: 1
+        replicas: 0
 
         ## Strategy of the deployment
         ##
@@ -4262,7 +4262,7 @@ kube-prometheus-stack:
       ## Number of replicas of each shard to deploy for a Prometheus deployment.
       ## Number of replicas multiplied by shards is the total number of Pods created.
       ##
-      replicas: 2
+      replicas: 0
 
       ## EXPERIMENTAL: Number of shards to distribute targets onto.
       ## Number of replicas multiplied by shards is the total number of Pods created.
@@ -5171,7 +5171,7 @@ kube-prometheus-stack:
 
       ## Size is the expected size of the thanosRuler cluster. The controller will eventually make the size of the
       ## running cluster equal to the expected size.
-      replicas: 1
+      replicas: 0
 
       ## Time duration ThanosRuler shall retain data for. Default is '24h', and must match the regular expression
       ## [0-9]+(ms|s|m|h) (milliseconds seconds minutes hours).
