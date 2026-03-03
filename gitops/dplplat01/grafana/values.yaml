@@ -2,7 +2,7 @@ grafana:
   # https://github.com/grafana/helm-charts/blob/main/charts/grafana/values.yaml
 
   # One instance of Grafana should be enough.
-  replicas: 1
+  replicas: 0
 
   ingress:
     # Make Grafana accessible to the outside world over https via an ingress.
