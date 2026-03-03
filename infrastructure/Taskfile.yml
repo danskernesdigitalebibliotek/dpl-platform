@@ -460,21 +460,12 @@ tasks:
             echo -n 'environment: \"{{.ENVIRONMENT_NAME}}\",';
           fi
     cmds:
-      - task: lagoon:run-mutation
-        vars:
-          MUTATION: |
-            mutation ensureEnvironmentVariable {
-              addOrUpdateEnvVariableByName(
-                input:{
-                  project:\"{{.PROJECT_NAME}}\",{{.ENVIRONMENT_NAME_INPUT}}
-                  scope:{{.VARIABLE_SCOPE}},
-                  name:\"{{.VARIABLE_NAME}}\",
-                  value:\"{{.VARIABLE_VALUE}}\"
-                }
-              ) {
-                id
-              }
-            }
+      - |
+        lagoon update variable --project "{{.PROJECT_NAME}}"
+          --environment "{{.ENVIRONMENT_NAME_INPUT}}"
+          --name "{{.VARIABLE_NAME}}"
+          --value "{{.VARIABLE_VALUE}}"
+          --scope "{{.VARIABLE_SCOPE}}"
     preconditions:
       - sh: '[ ! -z "{{.VARIABLE_VALUE}}" ]'
         msg: "Missing VARIABLE_VALUE"
