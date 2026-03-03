@@ -161,10 +161,6 @@ sites:
 
   - name: frederiksberg-main
     automated: true
-    values:
-      proxy-pass-service:
-        host: fkb.dk
-        target: external
 
   - name: frederikssund-main
     automated: true
@@ -186,10 +182,6 @@ sites:
 
   - name: greve-main
     automated: true
-    values:
-      proxy-pass-service:
-        host: www.grevebibliotek.dk
-        target: external
 
   - name: gribskov-main
     automated: true
@@ -255,10 +247,6 @@ sites:
 
   - name: kobenhavn-main
     automated: true
-    values:
-      proxy-pass-service:
-        host: bibliotek.kk.dk
-        target: external
 
   - name: kobenhavn-moduletest
     values:
@@ -274,10 +262,6 @@ sites:
 
   - name: langeland-main
     automated: true
-    values:
-      proxy-pass-service:
-        host: langelandbibliotek.dk
-        target: external
 
   - name: lejre-main
     automated: true
@@ -311,10 +295,6 @@ sites:
 
   - name: odder-main
     automated: true
-    values:
-      proxy-pass-service:
-        host: www.bibliotek.odder.dk
-        target: external
 
   - name: odense-main
     automated: true
