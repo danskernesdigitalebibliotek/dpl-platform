@@ -461,10 +461,10 @@ tasks:
           fi
     cmds:
       - |
-        lagoon update variable --project "{{.PROJECT_NAME}}"
-          --environment "{{.ENVIRONMENT_NAME_INPUT}}"
-          --name "{{.VARIABLE_NAME}}"
-          --value "{{.VARIABLE_VALUE}}"
+        lagoon update variable --project "{{.PROJECT_NAME}}" \
+          --environment "{{.ENVIRONMENT_NAME_INPUT}}" \
+          --name "{{.VARIABLE_NAME}}" \
+          --value "{{.VARIABLE_VALUE}}" \
           --scope "{{.VARIABLE_SCOPE}}"
     preconditions:
       - sh: '[ ! -z "{{.VARIABLE_VALUE}}" ]'
