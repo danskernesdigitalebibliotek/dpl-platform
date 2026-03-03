@@ -188,11 +188,6 @@ tasks:
       - sh: "[ ! -z {{.AZURE_SUBSCRIPTION_ID}} ]"
         msg: "Env variable AZURE_SUBSCRIPTION_ID is not set or empty."
 
-  cluster:adjust:resource-request:
-    deps: [cluster:auth, lagoon:cli:config]
-    desc: "Adjust resource requests for a every pod inside a library namespace"
-    cmds:
-      - task/scripts/adjust-resource-requests.sh
 
   cluster:delete-all-completed-pods:
     deps: [cluster:auth, lagoon:cli:config]
