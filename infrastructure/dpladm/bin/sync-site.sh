@@ -224,11 +224,6 @@ function getSiteImportTranslationsCron {
     return
 }
 
-function adjustPersistentVolume {
-    volumeName=$(kubectl get pvc -n "${1}"-"${2}" nginx --template={{.spec.volumeName}})
-    az storage share update -n "$volumeName" --quota "${3}" --account-name stdpldplplat01585708af
-}
-
 if [[ -z "${SITES_CONFIG:-}" ]]; then
     print_usage "SITES_CONFIG"
 fi
@@ -279,9 +274,7 @@ set -o errexit
 
 # Synchronise the sites environment repository.
 syncEnvRepo "${SITE}" "${releaseTag}" "${BRANCH}" "${siteImageRepository}" "${siteReleaseImageName}" "${importTranslationsCron}" "${autogenerateRoutes}" "${primaryDomain}" "${secondaryDomains}" "${diskSize}" "${phpVersionMain}" "${primaryGoSubDomain}" "${secondaryGoSubDomains}" "${goRelease}"
-adjustPersistentVolume "${SITE}" "main" "${diskSize}"
 
 if [ "${plan}" = "webmaster" ] && [ "${BRANCH}" = "main" ]; then
     syncEnvRepo "${SITE}" "${wmReleaseTag}" "moduletest" "${siteImageRepository}" "${siteReleaseImageName}" "${importTranslationsCron}" "${autogenerateRoutes}" "${primaryDomain}" "${secondaryDomains}" "${diskSize}" "${phpVersionModuletest}"
-    adjustPersistentVolume "${SITE}" "moduletest" "${diskSize}"
 fi
