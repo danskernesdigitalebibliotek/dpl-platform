@@ -20,7 +20,11 @@ spec:
               command:
                 - /bin/bash
                 - -c
-                - "[[ $((date +%W % 2)) == 0 ]] && ./moduletest-reset.mjs --source {{ .Values.syncConfig.source }} --target {{ .Values.syncConfig.target }}"
+                - |
+                    WEEK=$(date +%W)
+                    if (( WEEK % 2 == 0 )); then
+                      ./moduletest-reset.mjs --source {{ .Values.syncConfig.source }} --target {{ .Values.syncConfig.target }}
+                    fi
               resources:
                 requests:
                   memory: 256Mi
