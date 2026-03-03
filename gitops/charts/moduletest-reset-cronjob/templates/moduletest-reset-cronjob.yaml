@@ -21,12 +21,6 @@ spec:
                 - /bin/bash
                 - -c
                 - "[[ $((date +%W % 2)) == 1 ]] && ./moduletest-reset.mjs --source {{ .Values.syncConfig.source }} --target {{ .Values.syncConfig.target }}"
-              env:
-                - name: AZURE_DATABASE_HOST
-                  valueFrom:
-                    secretKeyRef:
-                      name: azure-database-host
-                      key: host
               resources:
                 requests:
                   memory: 256Mi
