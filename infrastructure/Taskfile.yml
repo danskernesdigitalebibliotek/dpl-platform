@@ -108,21 +108,13 @@ tasks:
       - terraform init
 
   env_repos:provision:
-    deps: [_req_env, _env_repos:terraform:init]
+    # deps: [_req_env, _env_repos:terraform:init] # INFO: This need to be commented out until terraform state has been fixed or removed
     desc: Provision infrastructure for an environment
     silent: true
     summary: |
       Use Terraform to provision the repositories for our environments.
     env:
-      GITHUB_TOKEN:
-        sh: az keyvault secret show
-          --subscription "{{.AZURE_SUBSCRIPTION_ID}}"
-          --name github-infra-admin-pat
-          --vault-name
-          $(
-          terraform -chdir={{.dir_infra}} output -json | jq --raw-output ".keyvault_name.value | select (.!=null)"
-          )
-          --query value -o tsv
+      GITHUB_TOKEN: "{{.GITHUB_TOKEN}}"
     cmds:
       - cmd: |
           if [ -z "{{.SKIP}}" ]; then
@@ -137,15 +129,7 @@ tasks:
     summary: |
       Import existing ressources into terraform state
     env:
-      GITHUB_TOKEN:
-        sh: az keyvault secret show
-          --subscription "{{.AZURE_SUBSCRIPTION_ID}}"
-          --name github-infra-admin-pat
-          --vault-name
-          $(
-          terraform -chdir={{.dir_infra}} output -json | jq --raw-output ".keyvault_name.value | select (.!=null)"
-          )
-          --query value -o tsv
+      GITHUB_TOKEN: "{{.GITHUB_TOKEN}}"
     cmds:
       - cmd: terraform -chdir={{.dir_env_repos}} import '{{.OPTIONS}}' '{{.ADDRESS_ID}}'
 
@@ -163,7 +147,7 @@ tasks:
         }
 
   cluster:auth:
-    deps: [_req_env, _infra:terraform:init]
+    # deps: [_req_env, _infra:terraform:init] INFO: This need to be commented out until terraform state has been fixed or removed
     desc: "Authenticate against AKS and setup a functional kubecontext."
     status:
       - "[ $(kubectl config current-context) == '{{.CLUSTER_NAME}}' ] || exit 1"
@@ -352,17 +336,21 @@ tasks:
       - ./task/scripts/backup-keycloak-pre-upgrade.mjs
 
   lagoon:cli:config:
-    deps: [cluster:auth]
+    #deps: [cluster:auth]
     desc: Configure a lagoon cli with the knowledge of a lagoon core.
     summary: |
       In order for the cli to auth your public ssh-key must have been added to
       the core and must be available to ssh eg via "eval $(ssh-agent); ssh-add"
     vars:
-      ssh_loadbalancer_ip:
-        sh: task cluster:auth && kubectl get -o jsonpath='{.status.loadBalancer.ingress[0].ip}' -n lagoon-core service lagoon-core-ssh
+      ssh_loadbalancer_ip: "{{.SSH_HOSTNAME}}"
     status:
-      - test -f {{.HOME}}/.lagoon.yml
+      - |
+        CURRENT_LAGOON="$(lagoon config current)"
 
+        if [[ "$CURRENT_LAGOON" != "dplplat02" ]]; then
+          echo "Wrong lagoon config: $CURRENT_LAGOON"
+          exit 1
+        fi
     cmds:
       - |
         lagoon config add \
@@ -472,21 +460,12 @@ tasks:
             echo -n 'environment: \"{{.ENVIRONMENT_NAME}}\",';
           fi
     cmds:
-      - task: lagoon:run-mutation
-        vars:
-          MUTATION: |
-            mutation ensureEnvironmentVariable {
-              addOrUpdateEnvVariableByName(
-                input:{
-                  project:\"{{.PROJECT_NAME}}\",{{.ENVIRONMENT_NAME_INPUT}}
-                  scope:{{.VARIABLE_SCOPE}},
-                  name:\"{{.VARIABLE_NAME}}\",
-                  value:\"{{.VARIABLE_VALUE}}\"
-                }
-              ) {
-                id
-              }
-            }
+      - |
+        lagoon update variable --project "{{.PROJECT_NAME}}" \
+          --environment "{{.ENVIRONMENT_NAME_INPUT}}" \
+          --name "{{.VARIABLE_NAME}}" \
+          --value "{{.VARIABLE_VALUE}}" \
+          --scope "{{.VARIABLE_SCOPE}}"
     preconditions:
       - sh: '[ ! -z "{{.VARIABLE_VALUE}}" ]'
         msg: "Missing VARIABLE_VALUE"
@@ -499,15 +478,7 @@ tasks:
 
   lagoon:project:ensure:github-registry-credentials:
     vars:
-      GITHUB_TOKEN:
-        sh: az keyvault secret show
-          --subscription "{{.AZURE_SUBSCRIPTION_ID}}"
-          --name github-infra-admin-pat
-          --vault-name
-          $(
-          terraform -chdir={{.dir_infra}} output -json | jq --raw-output ".keyvault_name.value | select (.!=null)"
-          )
-          --query value -o tsv
+      GITHUB_TOKEN: "{{.GITHUB_TOKEN}}"
     cmds:
       - task: lagoon:ensure:environment-variable
         vars:
@@ -520,22 +491,22 @@ tasks:
         msg: "Missing PROJECT_ID or PROJECT_NAME - at least one must be set"
 
   lagoon:project:ensure:azure-mail-connection-string:
-    vars:
-      ACS_CONNECTION_STRING:
-        sh: az keyvault secret show
-          --subscription "{{.AZURE_SUBSCRIPTION_ID}}"
-          --name azure-communications-connection-string
-          --vault-name
-          $(
-          terraform -chdir={{.dir_infra}} output -json | jq --raw-output ".keyvault_name.value | select (.!=null)"
-          )
-          --query value -o tsv
+    # vars:
+    #   ACS_CONNECTION_STRING:
+    #     sh: az keyvault secret show
+    #       --subscription "{{.AZURE_SUBSCRIPTION_ID}}"
+    #       --name azure-communications-connection-string
+    #       --vault-name
+    #       $(
+    #       terraform -chdir={{.dir_infra}} output -json | jq --raw-output ".keyvault_name.value | select (.!=null)"
+    #       )
+    #       --query value -o tsv
     cmds:
       - task: lagoon:ensure:environment-variable
         vars:
           VARIABLE_SCOPE: "RUNTIME"
           VARIABLE_NAME: "AZURE_MAIL_CONNECTION_STRING"
-          VARIABLE_VALUE: "{{.ACS_CONNECTION_STRING}}"
+          VARIABLE_VALUE: "{{.AZURE_MAIL_CONNECTION_STRING}}"
           PROJECT_NAME: "{{.PROJECT_NAME}}"
     preconditions:
       - sh: '[ ! -z "{{.PROJECT_NAME}}" ]'
@@ -670,15 +641,7 @@ tasks:
     env:
       SITES_CONFIG: "{{.dir_env}}/sites.yaml"
       SITE: "{{.SITE}}"
-      GITHUB_TOKEN:
-        sh: az keyvault secret show
-          --subscription "{{.AZURE_SUBSCRIPTION_ID}}"
-          --name github-infra-admin-pat
-          --vault-name
-          $(
-          terraform -chdir={{.dir_infra}} output -json | jq --raw-output ".keyvault_name.value | select (.!=null)"
-          )
-          --query value -o tsv
+      GITHUB_TOKEN: "{{.GITHUB_TOKEN}}"
     cmds:
       - |
         if [ -z "{{.SKIP}}" ]; then
