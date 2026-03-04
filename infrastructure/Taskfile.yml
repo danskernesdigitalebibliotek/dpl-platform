@@ -602,7 +602,7 @@ tasks:
       - touch statusnow.txt
       - for: { var: sites }
         cmd: |
-          if [[ "$(curl -I https://varnish.main.{{.ITEM}}.dplplat01.dpl.reload.dk | head -1)" == "HTTP/2 200"* ]]; then
+          if [[ "$(curl -I https://varnish.main.{{.ITEM}}.dplplat02.dpl.reload.dk | head -1)" == "HTTP/2 200"* ]]; then
             echo "{{.ITEM}}: OK" >> statusnow.txt;
           else
             echo "{{.ITEM}}: ERROR! Not up." >> statusnow.txt;
@@ -773,7 +773,7 @@ tasks:
     cmds:
       - |
         cat {{.dir_env}}/sites.yaml \
-          | yq '.sites[] | [ .primary-domain ] + .secondary-domains | .[] | select(. | contains("dplplat01.dpl.reload.dk") | not)' \
+          | yq '.sites[] | [ .primary-domain ] + .secondary-domains | .[] | select(. | contains("dplplat02.dpl.reload.dk") | not)' \
           | xargs -I % -n 1 bash -c 'if (( $(dig % CAA | grep issue | wc -l) > 0 )); then echo "There are CAAs for domain %"; fi'
 
   sites:check-pointing-to-aks:
@@ -783,7 +783,7 @@ tasks:
     cmds:
       - |
         cat {{.dir_env}}/sites.yaml \
-          | yq '.sites[] | [ .primary-domain ] + .secondary-domains | .[] | select(. | contains("dplplat01.dpl.reload.dk") | not)' \
+          | yq '.sites[] | [ .primary-domain ] + .secondary-domains | .[] | select(. | contains("dplplat02.dpl.reload.dk") | not)' \
           | xargs -I % -n 1 bash -c 'if (( $(dig % A | grep "20.86.109.250" | wc -l) > 0 )); then echo "% is pointing to old AKS cluster"; fi'
 
   sites:incomplete-deployments:
@@ -890,7 +890,7 @@ tasks:
     cmds:
       - |
         cat {{.dir_env}}/sites.yaml | yq '.sites | keys | .[]' \
-        | xargs -n 1 -I % bash -c 'set -e; if (( $(curl -s https://varnish.main.%.dplplat01.dpl.reload.dk/ | grep "\"header__logo-desktop-link\"" -A 8 | grep "\"logo-fallback\s*\"" -A 4 | grep "Logo title (bold)" | wc -l) > 0 )); then echo "% not yet set up"; fi'
+        | xargs -n 1 -I % bash -c 'set -e; if (( $(curl -s https://varnish.main.%.dplplat02.dpl.reload.dk/ | grep "\"header__logo-desktop-link\"" -A 8 | grep "\"logo-fallback\s*\"" -A 4 | grep "Logo title (bold)" | wc -l) > 0 )); then echo "% not yet set up"; fi'
 
   site:db:migrate:
     desc: |
@@ -1009,7 +1009,7 @@ tasks:
             Brugernavn: {{.USERNAME}}
             Password: {{.PASSWORD}}
 
-            Disse login-oplysninger kan bruges på følgende web-addresse: https://varnish.main.{{.PROJECT}}.dplplat01.dpl.reload.dk
+            Disse login-oplysninger kan bruges på følgende web-addresse: https://varnish.main.{{.PROJECT}}.dplplat02.dpl.reload.dk
 
 
             Vi håber I kommer godt igang med vores nye løsning.
