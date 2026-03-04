@@ -16,15 +16,11 @@ spec:
           restartPolicy: Never
           containers:
             - name: moduletest-reset-container
-              image: ghcr.io/danskernesdigitalebibliotek/dpl-platform/moduletest-reset-job:mr-2.0.0
+              image: ghcr.io/danskernesdigitalebibliotek/dpl-platform/moduletest-reset-job:mr-2.0.1
               command:
                 - /bin/bash
                 - -c
-                - |
-                    WEEK=$(date +%W)
-                    if (( WEEK % 2 == 0 )); then
-                      ./moduletest-reset.mjs --source {{ .Values.syncConfig.source }} --target {{ .Values.syncConfig.target }}
-                    fi
+                - ./moduletest-reset.mjs --source {{ .Values.syncConfig.source }} --target {{ .Values.syncConfig.target }}
               resources:
                 requests:
                   memory: 256Mi
