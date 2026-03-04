@@ -6,7 +6,7 @@
 on:
   pull_request:
     paths:
-      - "/infrastructure/images/moduletest-reset-jobs/**"
+      - "/infrastructure/images/moduletest-reset/**"
       - ".github/workflows/moduletest-reset-build-release.yaml"
     tags:
       - "mr-*-rc" # pull_requst builds are release candidates mfr-[semver versioning]-rc, and they are triggered when this format is used
@@ -15,7 +15,7 @@ on:
       - main
     # Limit pushes on main to only build if these files has changed.
     paths:
-      - "/infrastructure/images/moduletest-reset-jobs/**"
+      - "/infrastructure/images/moduletest-reset/**"
       - ".github/workflows/moduletest-reset-build-release.yaml"
     tags:
       - "mr-*"
@@ -34,7 +34,7 @@ jobs:
       # Registry to push the image to.
       repo: ghcr.io
       # Complete registry url for image. (omitting image name).
-      image-url: ghcr.io/danskernesdigitalebibliotek/dpl-platform/moduletest-reset-job
+      image-url: ghcr.io/danskernesdigitalebibliotek/dpl-platform/moduletest-reset
     steps:
       - name: Checkout
         uses: actions/checkout@v6
@@ -64,7 +64,7 @@ jobs:
       - name: Build and push
         uses: docker/build-push-action@v6
         with:
-          context: infrastructure/images/moduletest-reset-job
+          context: infrastructure/images/moduletest-reset
           platforms: linux/amd64,linux/arm64
           push: true
           labels: ${{ steps.meta.outputs.labels }}
