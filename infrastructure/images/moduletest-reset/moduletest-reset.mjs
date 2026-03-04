@@ -1,5 +1,11 @@
 #!/usr/bin/env zx
 
+const week = $`date +%W`;
+if ( week % 2 != 0 ) {
+  echo("Not even week and thus not running");
+  process.exit(0);
+}
+
 const sourceNamespace = `${argv.source}`;
 if (!sourceNamespace ) {
   throw Error("No 'sourceNamespace' provided");
