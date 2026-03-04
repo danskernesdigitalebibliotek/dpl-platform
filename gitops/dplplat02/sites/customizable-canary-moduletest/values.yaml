@@ -1,4 +1,4 @@
 moduletest-reset:
   syncConfig:
     target: customizable-canary-moduletest
-    source: customizable-canary-main
+    source: canary-main
