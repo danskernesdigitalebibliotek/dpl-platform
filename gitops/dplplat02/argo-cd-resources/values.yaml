@@ -108,6 +108,10 @@ sites:
 
   - name: canary-moduletest
 
+  - name: customizable-canary-main
+
+  - name: customizable-canary-moduletest
+
   - name: aabenraa-main
 
   - name: aalborg-main
