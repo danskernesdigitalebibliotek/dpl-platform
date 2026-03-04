@@ -5,6 +5,12 @@ x-defaults: &default-release-image-source
   dpl-cms-release: 2026.6.0
   go-release: 2026.6.0
   php-version: 8.3
+x-spearpoint: &spearpoint
+  releaseImageRepository: ghcr.io/danskernesdigitalebibliotek
+  releaseImageName: dpl-cms-source
+  dpl-cms-release: 2026.10.0
+  go-release: 2026.10.0
+  php-version: 8.3
 x-webmasters-on-weekly-release-cycle: &webmasters-on-weekly-release-cycle
   # This release cycle releases the newest release, which has been
   # tested on webmaster moduletests in the previous week, on to
@@ -655,7 +661,7 @@ sites:
       - www.langelandbibliotek.dk
     autogenerateRoutes: true
     diskSize: 20
-    <<: *default-release-image-source
+    <<: *spearpoint
   lejre:
     name: "Lejre Bibliotek & Arkiv"
     description: "The library site for Lejre"
