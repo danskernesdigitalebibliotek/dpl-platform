@@ -40,6 +40,7 @@ sites:
     description: "Eksempel på bibliotek der kører på 'webmaster' plan, og derfor har et modultest-miljø"
     releaseImageRepository: ghcr.io/danskernesdigitalebibliotek
     releaseImageName: dpl-cms-source
+    primary-domain: customizable.dplplat02.dpl.reload.dk
     plan: webmaster
     dpl-cms-release: 2026.6.0
     moduletest-dpl-cms-release: 2026.6.0
