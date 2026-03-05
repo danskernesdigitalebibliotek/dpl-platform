@@ -431,20 +431,6 @@ tasks:
           PROJECT_NAME: "{{.PROJECT_NAME}}"
           BRANCHES: "{{.BRANCHES}}"
 
-  ops:get-versions:
-    deps: [cluster:auth]
-    summary: Extract the current and latest version for the things we've installed into the cluster.
-    desc: Extract the current and latest versions
-    env:
-      GET_AVAILABLE_VERSION: 1
-    silent: true
-    cmds:
-      # TODO - get Lagoon version
-      # A bit silly we have to invoke Task this way, but it is the only way
-      # to pass in an environment variable to another task.
-      - echo "Running support:provision in get version mode to retrive versions"
-      - task --silent support:provision
-
   site:restore:
     desc: Restores a site's database and/or files
     summary: Run the task with either or both of --dbBackup and --nginxBackup
