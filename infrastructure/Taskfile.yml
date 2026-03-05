@@ -292,9 +292,7 @@ tasks:
         msg: "Missing VARIABLE_TYPE"
 
   lagoon:ensure:environment-variable:
-    desc: |
-      Ensures (creates or updates) the state of a particular environment variable.
-      Based on this mutation resolver: https://github.com/uselagoon/lagoon/blob/1ef8e57ffbc969a308e9a16bb53929edac562a4d/services/api/src/resources/env-variables/resolvers.ts#L300
+    desc: Ensures (creates or updates) the state of a particular environment variable.
     vars:
       ENVIRONMENT_NAME_INPUT:
         sh: |
