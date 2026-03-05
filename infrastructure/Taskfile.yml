@@ -146,29 +146,17 @@ tasks:
           msg: "Variable SITE is not set or empty.",
         }
 
-  cluster:auth:
-    # deps: [_req_env, _infra:terraform:init] INFO: This need to be commented out until terraform state has been fixed or removed
-    desc: "Authenticate against AKS and setup a functional kubecontext."
-    status:
-      - "[ $(kubectl config current-context) == '{{.CLUSTER_NAME}}' ] || exit 1"
-    # We normally handle variables via dynamic task variables, but as terraform.
-    # Variables are interpolated before dependencies are resolved, so
-    # in cases where Terraform is not initialized, this task will break.
-    # A lot of other tasks are in the exact same situations.
-    # So, to mitigate this, we instead export the variables we need as
-    # commands.
-    # We sneakily rely on the fact that most procedures starts off with a
-    # cluster:auth, which means most people will have their terraform workspace
-    # initialized before the run the next task which can then extract variables
-    # the "normal" way.
+  kubecontext:check:
+    desc: "Checks if you're using the the correct context; fails if not"
+    vars:
+      CONTEXT:
+        sh: kubectl config current-context
     cmds:
-      - export CLUSTER_NAME=$(terraform -chdir={{.dir_infra}} output -json | jq --raw-output ".cluster_name.value | select (.!=null)") &&
-        export RESOURCEGROUP_NAME=$(terraform -chdir={{.dir_infra}} output -json | jq --raw-output ".resourcegroup_name.value | select (.!=null)") &&
-        az aks get-credentials --only-show-errors --subscription {{.AZURE_SUBSCRIPTION_ID}} --resource-group $RESOURCEGROUP_NAME --name $CLUSTER_NAME &&
-        echo "CLUSTER_NAME=$CLUSTER_NAME" >> {{.instance_vars_file}}
-    preconditions:
-      - sh: "[ ! -z {{.AZURE_SUBSCRIPTION_ID}} ]"
-        msg: "Env variable AZURE_SUBSCRIPTION_ID is not set or empty."
+      - |
+        if [[ {{.CONTEXT}} != "{{.CLUSTER_NAME}}" ]]; then
+          echo "Wrong kubecontext configured {{.CONTEXT}} should be {{.CLUSTER_NAME}} - exiting"
+          exit 1
+        fi
 
   cluster:promote-workloads-to-prod:
     deps: [cluster:auth, lagoon:cli:config]
