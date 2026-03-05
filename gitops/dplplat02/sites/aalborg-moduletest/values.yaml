@@ -1,0 +1,4 @@
+moduletest-reset:
+  syncConfig:
+    target: aalborg-moduletest
+    source: aalborg-main

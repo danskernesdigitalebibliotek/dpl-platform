@@ -1,0 +1,4 @@
+moduletest-reset:
+  syncConfig:
+    target: silkeborg-moduletest
+    source: silkeborg-main
