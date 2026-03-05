@@ -257,6 +257,17 @@ tasks:
       - ./task/scripts/backup-lagoon-core-db-pre-upgrade.mjs
       - ./task/scripts/backup-keycloak-pre-upgrade.mjs
 
+  lagoon:cli:check:
+    desc: Checks if lagoon cli has been configured and is pointing to dplplat02
+    status:
+      - |
+        CURRENT_LAGOON="$(lagoon config current)"
+
+        if [[ "$CURRENT_LAGOON" != "dplplat02" ]]; then
+          echo "Wrong lagoon config: $CURRENT_LAGOON"
+          exit 1
+        fi
+
   lagoon:cli:config:
     #deps: [cluster:auth]
     desc: Configure a lagoon cli with the knowledge of a lagoon core.
