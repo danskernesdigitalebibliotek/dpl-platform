@@ -157,13 +157,13 @@ tasks:
         fi
 
   cluster:promote-workloads-to-prod:
-    deps: [cluster:auth, lagoon:cli:config]
+    deps: [kubecontext:check, lagoon:cli:check]
     desc: "Promotes selected workloads to production node pool"
     cmds:
       - task/scripts/promote-workloads-to-prod-nodes.sh
 
   lagoon:backup:core-and-keycloak:
-    deps: [cluster:auth]
+    deps: [kubecontext:check]
     desc: Backs up the Lagoon Core API DB and Lagoon's Keycloak to local machine
     cmds:
       - ./task/scripts/backup-lagoon-core-db-pre-upgrade.mjs
@@ -181,7 +181,6 @@ tasks:
         fi
 
   lagoon:cli:config:
-    #deps: [cluster:auth]
     desc: Configure a lagoon cli with the knowledge of a lagoon core.
     summary: |
       In order for the cli to auth your public ssh-key must have been added to
@@ -212,7 +211,7 @@ tasks:
         msg: "Could not determine IP of the ssh-endpoint for Lagoon. The Kubernetes lagoon-core/lagoon-core-ssh service may not have been provisioned yet."
 
   lagoon:run-mutation:
-    deps: [lagoon:cli:config]
+    deps: [lagoon:cli:check]
     desc: Executes a specified mutation against the Lagoon GraphQL API
     vars:
       # Collect the values we'll need for a graphql invocation.
@@ -371,7 +370,7 @@ tasks:
 
   lagoon:project:set:
     desc: Set a project state in lagoon using a command, either "add" or "update"
-    deps: [lagoon:cli:config]
+    deps: [lagoon:cli:check]
     vars:
       BRANCHES: '{{ .BRANCHES | default "main" }}'
     cmds:
@@ -415,7 +414,7 @@ tasks:
 
   lagoon:project:deploykey:
     desc: Gets the deployment key for a project
-    deps: [lagoon:cli:config]
+    deps: [lagoon:cli:check]
     cmds:
       - lagoon get project-key --project {{.PROJECT_NAME}}
     preconditions:
@@ -453,7 +452,7 @@ tasks:
     cmd: ./task/scripts/restore-site.mjs --dbBackup "{{.DB}}" --nginxBackup "{{.FILE}}" --project "{{.PROJECT}}" --environment "{{.ENV}}"
 
   site:sync:
-    deps: [lagoon:cli:config]
+    deps: [lagoon:cli:check]
     desc: Runs the a dpladm sync of a site which eg. can be used to deploy a new release
     summary: Run the task without additional variables to see required arguments
     silent: true
@@ -566,7 +565,7 @@ tasks:
     desc: |
       Ensures a lagoon project is set up and configured correctly for a
       given site as specified by sites.yaml
-    deps: [lagoon:cli:config]
+    deps: [lagoon:cli:check]
     silent: true
     vars:
       GIT_URL: "git@github.com:danishpubliclibraries/env-{{.SITE}}.git"
@@ -590,7 +589,7 @@ tasks:
 
   site:backup:restore:db:
     desc: Restore the database backup for a site/environment to the same or another site/environment.
-    deps: [lagoon:cli:config]
+    deps: [lagoon:cli:check]
     vars:
       PROJECT: "{{.PROJECT}}"
       PROJECT_ENV: '{{.PROJECT_ENV | default "main" }}'
@@ -614,7 +613,7 @@ tasks:
     desc: |
       Synchonizes all file and database tables from environment
       to another on make on environment a complete copy of the source.
-    deps: [lagoon:cli:config]
+    deps: [lagoon:cli:check]
     dir: "{{.dir_env}}"
     vars:
       SOURCE_PROJECT: "{{.SOURCE_PROJECT}}"
@@ -628,7 +627,7 @@ tasks:
 
   sites:webmaster:reset-moduletest:
     desc: Reset webmaster moduletest
-    deps: [lagoon:cli:config]
+    deps: [lagoon:cli:check]
     vars:
       PROJECT: "{{.PROJECT}}"
     cmds:
@@ -641,7 +640,7 @@ tasks:
 
   sites:webmaster:reset-moduletests:
     desc: Reset all webmaster moduletests
-    deps: [lagoon:cli:config]
+    deps: [lagoon:cli:check]
     vars:
       webmasters:
         sh: yq '... comments="" | .sites | with_entries(select(.value | has("plan"))) | keys | .[]' {{.dir_env}}/sites.yaml
@@ -672,7 +671,7 @@ tasks:
           | xargs -I % -n 1 bash -c 'if (( $(dig % A | grep "20.86.109.250" | wc -l) > 0 )); then echo "% is pointing to old AKS cluster"; fi'
 
   sites:incomplete-deployments:
-    deps: [lagoon:cli:config]
+    deps: [lagoon:cli:check]
     desc: |
       Gets the latest deployment for each production environment and prints its status if it is *not* complete.
     cmds:
@@ -691,7 +690,7 @@ tasks:
         }" | jq -r '.allProjects[] | .name as $name | .environments[].deployments[] | select(.status != "complete") | ($name) + ": " + (.status)'
 
   sites:redeploy-failed-deployments:
-    deps: [lagoon:cli:config]
+    deps: [lagoon:cli:check]
     desc: Redeploys all failed deployments
     cmds:
       - task/scripts/redeploy-failed-deployments.sh
@@ -726,7 +725,7 @@ tasks:
   site:lagoon:project:capture-deploy-key:
     # TODO: print a big message if a deploy key is newly captured, so we know to commit changes!
     desc: Gets the deploy key for a particular project from Lagoon and persists it in sites.yaml
-    deps: [lagoon:cli:config]
+    deps: [lagoon:cli:check]
     dir: "{{.dir_env}}"
     silent: true
     vars:
@@ -745,7 +744,7 @@ tasks:
 
   site:lagoon:ensure-first-deployment:
     desc: Ensures that a site has at least one deployment on required branches, so they are tracked by Lagoon
-    deps: [lagoon:cli:config]
+    deps: [lagoon:cli:check]
     dir: "{{.dir_env}}"
     silent: true
     env:
@@ -789,7 +788,7 @@ tasks:
         ./dpladm/bin/migrate-site-database-to-incluster-db.mjs --project={{.PROJECT}} --env={{.ENVIRONMENT}} --dryrun={{.DRYRUN}}
 
   certs:clear-queue:
-    deps: [cluster:auth]
+    deps: [kubecontext:check]
     desc: |
       Because cert-manager sometimes hangs while provisioning certificates it helps to clear the whole queue
       of uncompleted certificates. This command removes any certificate that has an order not in either
@@ -801,7 +800,7 @@ tasks:
         xargs -n 2 bash -c 'kubectl delete certificate -n $0 $(echo "$1" | sed -r "s/^([0-9a-z\.\-]+-tls)-[a-z0-9]+-[a-z0-9]+$/\1/i")'
 
   ui-password:
-    deps: [cluster:auth]
+    deps: [kubecontext:check]
     desc: Get the password to access a given user interface
     cmds:
       - task/scripts/ui-password.sh
@@ -822,7 +821,7 @@ tasks:
 
   site:admin:password:set:
     desc: Sets the password for the admin of the selected site
-    deps: [lagoon:cli:config, cluster:auth]
+    deps: [lagoon:cli:check, kubecontext:check]
     dir: "{{.dir_env}}"
     vars:
       PROJECT: "{{.PROJECT}}"
@@ -844,7 +843,7 @@ tasks:
 
   site:local-admin:password:create-and-notify:
     desc: Sets the password for the admin of the selected site
-    deps: [lagoon:cli:config, cluster:auth]
+    deps: [lagoon:cli:check, kubecontext:check]
     dir: "{{.dir_env}}"
     vars:
       PROJECT: "{{.PROJECT}}"
@@ -904,7 +903,7 @@ tasks:
 
   site:local-admin:password:reset:
     desc: Resets the password for the local admin of a site
-    deps: [cluster:auth, lagoon:cli:config]
+    deps: [kubecontext:check, lagoon:cli:check]
     dir: "{{.dir_env}}"
     vars:
       PROJECT: "{{.PROJECT}}"
@@ -931,7 +930,7 @@ tasks:
 
   mail:send:
     desc: Sends an email from DoNotReply@folkebibliotekernescms.dk
-    deps: [cluster:auth]
+    deps: [kubecontext:check]
     vars:
       RECIPIENT: "{{.RECIPIENT}}"
       SUBJECT: "{{.SUBJECT}}"
@@ -954,7 +953,7 @@ tasks:
 
   site:admins:credentials:mail:
     desc: Sent email with credentials and site info to admin user on a library site
-    deps: [cluster:auth, lagoon:cli:config]
+    deps: [kubecontext:check, lagoon:cli:check]
     dir: "{{.dir_env}}"
     vars:
       siteadmins:
@@ -969,7 +968,7 @@ tasks:
 
   site:local-admin:admin:
     desc: Switches the local admin user to an admin user
-    deps: [cluster:auth, lagoon:cli:config]
+    deps: [kubecontext:check, lagoon:cli:check]
     dir: "{{.dir_env}}"
     vars:
       PROJECT: "{{.PROJECT}}"
