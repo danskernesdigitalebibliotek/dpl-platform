@@ -1,0 +1,4 @@
+moduletest-reset:
+  syncConfig:
+    target: bnf-moduletest
+    source: bnf-main

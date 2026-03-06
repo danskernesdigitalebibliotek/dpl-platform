@@ -1,0 +1,4 @@
+moduletest-reset:
+  syncConfig:
+    target: aarhus-moduletest
+    source: aarhus-main

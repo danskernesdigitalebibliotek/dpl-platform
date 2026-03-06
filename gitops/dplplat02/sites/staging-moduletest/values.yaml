@@ -1,0 +1,4 @@
+moduletest-reset:
+  syncConfig:
+    target: staging-moduletest
+    source: staging-main

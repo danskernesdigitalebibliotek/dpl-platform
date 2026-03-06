@@ -1,0 +1,4 @@
+moduletest-reset:
+  syncConfig:
+    target: ballerup-moduletest
+    source: ballerup-main

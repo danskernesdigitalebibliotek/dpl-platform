@@ -1,0 +1,4 @@
+moduletest-reset:
+  syncConfig:
+    target: sonderborg-moduletest
+    source: sonderborg-main

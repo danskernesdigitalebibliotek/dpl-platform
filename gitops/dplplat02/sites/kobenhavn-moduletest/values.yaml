@@ -1,0 +1,4 @@
+moduletest-reset:
+  syncConfig:
+    target: kobenhavn-moduletest
+    source: kobenhavn-main

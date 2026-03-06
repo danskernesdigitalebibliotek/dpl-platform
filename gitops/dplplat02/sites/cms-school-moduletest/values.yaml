@@ -1,0 +1,4 @@
+moduletest-reset:
+  syncConfig:
+    target: cms-school-moduletest
+    source: cms-school-main
