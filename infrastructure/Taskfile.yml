@@ -590,10 +590,6 @@ tasks:
         sh: cat {{.dir_env}}/sites.yaml | yq '.sites | keys | .[]'
       START_FROM_SITE: "{{.START_FROM_SITE}}"
     cmds:
-      - task: env_repos:provision
-        vars:
-          OPTIONS: "{{.INITIAL_TERRAFORM_OPTIONS}}"
-          SKIP: "{{.SKIP_PROVISION}}"
       - for: { var: sites }
         task: site:full-sync
         vars:
