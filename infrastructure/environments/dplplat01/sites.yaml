@@ -86,6 +86,7 @@ sites:
   bibliotek-test:
     name: "Bibliotekstest"
     description: "Et site hvor bibliotekerne kan teste"
+    primary-domain: bibliotek-test.dplplat02.dpl.reload.dk
     importTranslationsCron: "0 * * * *"
     plan: webmaster
     go-release: 2026.10.0
