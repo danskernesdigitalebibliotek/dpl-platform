@@ -13,3 +13,8 @@ the following tools installed on your machine:
 - yq: https://mikefarah.gitbook.io/yq/
 - jq: https://jqlang.org/
 - taskfile: https://taskfile.dev/docs/installation
+
+## Secrets and access
+
+As a new user of the platform projekt, you will need access to the .env file.
+This file can be found in Reloads OnePass vault
