@@ -57,7 +57,7 @@ sites:
     # to make client and server use the same version.
     dpl-cms-release: 2026.11.0
     moduletest-dpl-cms-release: 2026.11.0
-    go-release: 2026.10.0
+    go-release: 2026.11.0
     php-version: 8.3
     plan: webmaster
     primary-domain: staging.dplplat02.dpl.reload.dk
