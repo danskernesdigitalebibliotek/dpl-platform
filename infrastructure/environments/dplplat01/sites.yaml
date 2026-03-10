@@ -52,7 +52,7 @@ sites:
     name: "Staging"
     description: "A site to test new releases on"
     releaseImageRepository: ghcr.io/danskernesdigitalebibliotek
-    releaseImageName: dpl-cms-source
+    releaseImageName: dpl-web-cms-source
     # Remember to update bnf.moduletest-dpl-cms-release to the same release
     # to make client and server use the same version.
     dpl-cms-release: 2026.11.0
