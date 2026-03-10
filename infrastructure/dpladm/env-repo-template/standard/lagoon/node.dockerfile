@@ -1,4 +1,4 @@
-FROM ghcr.io/danskernesdigitalebibliotek/dpl-go-node:${GO_RELEASE} as builder
+FROM ghcr.io/danskernesdigitalebibliotek/dpl-web-go-node:${GO_RELEASE} as builder
 
 # Lagoon propagates build and global env variables as build-args.
 ARG DRUPAL_REVALIDATE_SECRET
