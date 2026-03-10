@@ -516,10 +516,10 @@ tasks:
         vars:
           SITE: "{{.SITE}}"
           SKIP: "{{.SKIP_CAPTURE_DEPLOY_KEY}}{{.SKIP}}"
-      # - task: env_repos:provision INFO: The terraform state is out of sorts right now. Uncomment when fixed
-      #   vars:
-      #     OPTIONS: -refresh=false
-      #     SKIP: "{{.SKIP_PROVISION}}{{.SKIP}}"
+      - task: env_repos:provision
+        vars:
+          OPTIONS: -refresh=false
+          SKIP: "{{.SKIP_PROVISION}}{{.SKIP}}"
       - task: site:lagoon:ensure-first-deployment
         vars:
           SITE: "{{.SITE}}"
