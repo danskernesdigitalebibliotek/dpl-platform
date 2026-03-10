@@ -108,7 +108,7 @@ tasks:
       - terraform init
 
   env_repos:provision:
-    # deps: [_req_env, _env_repos:terraform:init] # INFO: This need to be commented out until terraform state has been fixed or removed
+    deps: [_req_env, _env_repos:terraform:init] # INFO: This need to be commented out until terraform state has been fixed or removed
     desc: Provision infrastructure for an environment
     silent: true
     summary: |
