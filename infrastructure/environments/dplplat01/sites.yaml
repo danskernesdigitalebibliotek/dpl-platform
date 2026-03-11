@@ -11,9 +11,9 @@ x-webmasters-on-weekly-release-cycle: &webmasters-on-weekly-release-cycle
   # production
   releaseImageRepository: ghcr.io/danskernesdigitalebibliotek
   releaseImageName: dpl-cms-source
-  dpl-cms-release: 2026.6.2
-  moduletest-dpl-cms-release: 2026.10.2
-  go-release: 2026.6.0
+  dpl-cms-release: 2026.10.2
+  moduletest-dpl-cms-release: 2026.11.2
+  go-release: 2026.10.0
   php-version: 8.3
 sites:
   # Site objects are indexed by a unique key that must be a valid lagoon, and
