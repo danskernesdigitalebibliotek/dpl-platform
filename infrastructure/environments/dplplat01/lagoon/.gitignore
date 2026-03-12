@@ -1,5 +1,0 @@
-# This directory contains a number of template-files that will be rendered
-# into actual files before use.
-harbor-values.yaml
-lagoon-core-values.yaml
-lagoon-remote-values.yaml
