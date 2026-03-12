@@ -447,18 +447,6 @@ tasks:
       - echo "Running support:provision in get version mode to retrive versions"
       - task --silent support:provision
 
-  support:provision:
-    deps: [cluster:auth]
-    desc: Install and configure the support tools Lagoon and DPL Platform builds on
-    summary: Set the DIFF environment variable to any value to switch to diffing instead of an actual upgrade.
-    dir: "{{.dir_configuration}}"
-    vars:
-      DIFF_COMMAND: '{{empty .DIFF | ternary "" "diff"}}'
-    cmds:
-      - task: support:provision:bulk-storage
-      - task: support:provision:k8up
-      - task: support:provision:minio
-
   site:restore:
     desc: Restores a site's database and/or files
     summary: Run the task with either or both of --dbBackup and --nginxBackup
