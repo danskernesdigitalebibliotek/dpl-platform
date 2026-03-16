@@ -82,7 +82,7 @@ $SECONDARY_GO_SUBDOMAINS
         command: drush dpl_po:import-remote-config-po da https://danskernesdigitalebibliotek.github.io/dpl-cms/translations/da.config.po
         service: cli
       - name: drush err:purge
-        schedule: "M * * * *"
+        schedule: "M H(6-22) * * *"
         command: drush err:purge paragraph
         service: cli
   moduletest:
