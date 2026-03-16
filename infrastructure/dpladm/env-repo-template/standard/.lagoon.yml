@@ -74,11 +74,11 @@ $SECONDARY_GO_SUBDOMAINS
         command: drush cron
         service: cli
       - name: import translations
-        schedule: "${IMPORT_TRANSLATIONS_CRON}"
+        schedule: "M H(23-2) * * *"
         command: drush locale-check && drush locale-update
         service: cli
       - name: import danish config translations
-        schedule: "${IMPORT_TRANSLATIONS_CRON}"
+        schedule: "M H(2-5) * * *"
         command: drush dpl_po:import-remote-config-po da https://danskernesdigitalebibliotek.github.io/dpl-cms/translations/da.config.po
         service: cli
       - name: drush err:purge
