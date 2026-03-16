@@ -66,11 +66,11 @@ $PRIMARY_GO_SUBDOMAIN_AND_ANNOTATION
 $SECONDARY_GO_SUBDOMAINS
     cronjobs:
       - name: drush cron
-        schedule: "M/15 H(6-23) * * *"
+        schedule: "M/15 6-23 * * *"
         command: drush cron
         service: cli
       - name: drush cron
-        schedule: "M H(0-5) * * *"
+        schedule: "M 0-5 * * *"
         command: drush cron
         service: cli
       - name: import translations
@@ -82,7 +82,7 @@ $SECONDARY_GO_SUBDOMAINS
         command: drush dpl_po:import-remote-config-po da https://danskernesdigitalebibliotek.github.io/dpl-cms/translations/da.config.po
         service: cli
       - name: drush err:purge
-        schedule: "M H(6-22) * * *"
+        schedule: "M 6-22 * * *"
         command: drush err:purge paragraph
         service: cli
   moduletest:
