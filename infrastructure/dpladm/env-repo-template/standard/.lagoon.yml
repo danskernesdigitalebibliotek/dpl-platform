@@ -88,19 +88,23 @@ $SECONDARY_GO_SUBDOMAINS
   moduletest:
     cronjobs:
       - name: drush cron
-        schedule: "M/15 * * * *"
+        schedule: "M/15 6-23 * * *"
+        command: drush cron
+        service: cli
+      - name: drush cron
+        schedule: "M 0-5 * * *"
         command: drush cron
         service: cli
       - name: import translations
-        schedule: "${IMPORT_TRANSLATIONS_CRON}"
+        schedule: "M H(23-2) * * *"
         command: drush locale-check && drush locale-update
         service: cli
       - name: import danish config translations
-        schedule: "${IMPORT_TRANSLATIONS_CRON}"
+        schedule: "M H(2-5) * * *"
         command: drush dpl_po:import-remote-config-po da https://danskernesdigitalebibliotek.github.io/dpl-cms/translations/da.config.po
         service: cli
       - name: drush err:purge
-        schedule: "M * * * *"
+        schedule: "M 6-22 * * *"
         command: drush err:purge paragraph
         service: cli
 
