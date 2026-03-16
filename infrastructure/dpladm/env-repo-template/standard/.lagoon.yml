@@ -54,7 +54,7 @@ tasks:
         service: cli
     - run:
         name: Import config translations
-        command: drush dpl_po:import-remote-config-po da https://danskernesdigitalebibliotek.github.io/dpl-cms/translations/da.config.po
+        command: drush dpl_po:import-remote-config-po da https://danskernesdigitalebibliotek.github.io/dpl-web/cms/translations/da.config.po
         service: cli
 
 environments:
@@ -75,7 +75,7 @@ $SECONDARY_GO_SUBDOMAINS
         service: cli
       - name: import danish config translations
         schedule: "${IMPORT_TRANSLATIONS_CRON}"
-        command: drush dpl_po:import-remote-config-po da https://danskernesdigitalebibliotek.github.io/dpl-cms/translations/da.config.po
+        command: drush dpl_po:import-remote-config-po da https://danskernesdigitalebibliotek.github.io/dpl-web/cms/translations/da.config.po
         service: cli
       - name: drush err:purge
         schedule: "M * * * *"
@@ -93,7 +93,7 @@ $SECONDARY_GO_SUBDOMAINS
         service: cli
       - name: import danish config translations
         schedule: "${IMPORT_TRANSLATIONS_CRON}"
-        command: drush dpl_po:import-remote-config-po da https://danskernesdigitalebibliotek.github.io/dpl-cms/translations/da.config.po
+        command: drush dpl_po:import-remote-config-po da https://danskernesdigitalebibliotek.github.io/dpl-web/cms/translations/da.config.po
         service: cli
       - name: drush err:purge
         schedule: "M * * * *"
