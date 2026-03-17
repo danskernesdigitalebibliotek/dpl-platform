@@ -115,10 +115,15 @@ EndOfMessage
     ENABLE_ROUTES=$(cat << EndOfMessage
 ${routesIndent}autogenerateRoutes: ${autogenerateRoutes}
 ${routesIndent}routes:
-${routesIndent}  - varnish:
 EndOfMessage
 )
-    PRIMARY_DOMAIN="${singleRouteIndent}- \"${primaryDomain}\""
+    PRIMARY_DOMAIN+=$(cat << EndOfMessage
+${routesIndent}  - varnish:
+${singleRouteIndent}- "${primaryDomain}":
+${singleRouteIndent}    annotations:
+${singleRouteIndent}      nginx.ingress.kubernetes.io/client-max-body-size: 25M
+EndOfMessage
+)
   fi
 
 
