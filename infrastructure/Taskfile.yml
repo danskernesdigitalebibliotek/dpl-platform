@@ -106,7 +106,7 @@ tasks:
       - terraform init
 
   env_repos:provision:
-    # deps: [_req_env, _env_repos:terraform:init] # INFO: This need to be commented out until terraform state has been fixed or removed
+    deps: [_req_env, _env_repos:terraform:init] # INFO: This need to be commented out until terraform state has been fixed or removed
     desc: Provision infrastructure for an environment
     silent: true
     summary: |
@@ -144,45 +144,43 @@ tasks:
           msg: "Variable SITE is not set or empty.",
         }
 
-  cluster:auth:
-    # deps: [_req_env, _infra:terraform:init] INFO: This need to be commented out until terraform state has been fixed or removed
-    desc: "Authenticate against AKS and setup a functional kubecontext."
-    status:
-      - "[ $(kubectl config current-context) == '{{.CLUSTER_NAME}}' ] || exit 1"
-    # We normally handle variables via dynamic task variables, but as terraform.
-    # Variables are interpolated before dependencies are resolved, so
-    # in cases where Terraform is not initialized, this task will break.
-    # A lot of other tasks are in the exact same situations.
-    # So, to mitigate this, we instead export the variables we need as
-    # commands.
-    # We sneakily rely on the fact that most procedures starts off with a
-    # cluster:auth, which means most people will have their terraform workspace
-    # initialized before the run the next task which can then extract variables
-    # the "normal" way.
+  kubecontext:check:
+    desc: "Checks if you're using the the correct context; fails if not"
+    vars:
+      CONTEXT:
+        sh: kubectl config current-context
     cmds:
-      - export CLUSTER_NAME=$(terraform -chdir={{.dir_infra}} output -json | jq --raw-output ".cluster_name.value | select (.!=null)") &&
-        export RESOURCEGROUP_NAME=$(terraform -chdir={{.dir_infra}} output -json | jq --raw-output ".resourcegroup_name.value | select (.!=null)") &&
-        az aks get-credentials --only-show-errors --subscription {{.AZURE_SUBSCRIPTION_ID}} --resource-group $RESOURCEGROUP_NAME --name $CLUSTER_NAME &&
-        echo "CLUSTER_NAME=$CLUSTER_NAME" >> {{.instance_vars_file}}
-    preconditions:
-      - sh: "[ ! -z {{.AZURE_SUBSCRIPTION_ID}} ]"
-        msg: "Env variable AZURE_SUBSCRIPTION_ID is not set or empty."
+      - |
+        if [[ {{.CONTEXT}} != "{{.CLUSTER_NAME}}" ]]; then
+          echo "Wrong kubecontext configured {{.CONTEXT}} should be {{.CLUSTER_NAME}} - exiting"
+          exit 1
+        fi
 
   cluster:promote-workloads-to-prod:
-    deps: [cluster:auth, lagoon:cli:config]
+    deps: [kubecontext:check, lagoon:cli:check]
     desc: "Promotes selected workloads to production node pool"
     cmds:
       - task/scripts/promote-workloads-to-prod-nodes.sh
 
   lagoon:backup:core-and-keycloak:
-    deps: [cluster:auth]
+    deps: [kubecontext:check]
     desc: Backs up the Lagoon Core API DB and Lagoon's Keycloak to local machine
     cmds:
       - ./task/scripts/backup-lagoon-core-db-pre-upgrade.mjs
       - ./task/scripts/backup-keycloak-pre-upgrade.mjs
 
+  lagoon:cli:check:
+    desc: Checks if lagoon cli has been configured and is pointing to dplplat02
+    status:
+      - |
+        CURRENT_LAGOON="$(lagoon config current)"
+
+        if [[ "$CURRENT_LAGOON" != "dplplat02" ]]; then
+          echo "Wrong lagoon config: $CURRENT_LAGOON"
+          exit 1
+        fi
+
   lagoon:cli:config:
-    #deps: [cluster:auth]
     desc: Configure a lagoon cli with the knowledge of a lagoon core.
     summary: |
       In order for the cli to auth your public ssh-key must have been added to
@@ -213,7 +211,7 @@ tasks:
         msg: "Could not determine IP of the ssh-endpoint for Lagoon. The Kubernetes lagoon-core/lagoon-core-ssh service may not have been provisioned yet."
 
   lagoon:run-mutation:
-    deps: [lagoon:cli:config]
+    deps: [lagoon:cli:check]
     desc: Executes a specified mutation against the Lagoon GraphQL API
     vars:
       # Collect the values we'll need for a graphql invocation.
@@ -294,9 +292,7 @@ tasks:
         msg: "Missing VARIABLE_TYPE"
 
   lagoon:ensure:environment-variable:
-    desc: |
-      Ensures (creates or updates) the state of a particular environment variable.
-      Based on this mutation resolver: https://github.com/uselagoon/lagoon/blob/1ef8e57ffbc969a308e9a16bb53929edac562a4d/services/api/src/resources/env-variables/resolvers.ts#L300
+    desc: Ensures (creates or updates) the state of a particular environment variable.
     vars:
       ENVIRONMENT_NAME_INPUT:
         sh: |
@@ -337,16 +333,6 @@ tasks:
         msg: "Missing PROJECT_ID or PROJECT_NAME - at least one must be set"
 
   lagoon:project:ensure:azure-mail-connection-string:
-    # vars:
-    #   ACS_CONNECTION_STRING:
-    #     sh: az keyvault secret show
-    #       --subscription "{{.AZURE_SUBSCRIPTION_ID}}"
-    #       --name azure-communications-connection-string
-    #       --vault-name
-    #       $(
-    #       terraform -chdir={{.dir_infra}} output -json | jq --raw-output ".keyvault_name.value | select (.!=null)"
-    #       )
-    #       --query value -o tsv
     cmds:
       - task: lagoon:ensure:environment-variable
         vars:
@@ -372,7 +358,7 @@ tasks:
 
   lagoon:project:set:
     desc: Set a project state in lagoon using a command, either "add" or "update"
-    deps: [lagoon:cli:config]
+    deps: [lagoon:cli:check]
     vars:
       BRANCHES: '{{ .BRANCHES | default "main" }}'
     cmds:
@@ -416,7 +402,7 @@ tasks:
 
   lagoon:project:deploykey:
     desc: Gets the deployment key for a project
-    deps: [lagoon:cli:config]
+    deps: [lagoon:cli:check]
     cmds:
       - lagoon get project-key --project {{.PROJECT_NAME}}
     preconditions:
@@ -433,20 +419,6 @@ tasks:
           PROJECT_NAME: "{{.PROJECT_NAME}}"
           BRANCHES: "{{.BRANCHES}}"
 
-  ops:get-versions:
-    deps: [cluster:auth]
-    summary: Extract the current and latest version for the things we've installed into the cluster.
-    desc: Extract the current and latest versions
-    env:
-      GET_AVAILABLE_VERSION: 1
-    silent: true
-    cmds:
-      # TODO - get Lagoon version
-      # A bit silly we have to invoke Task this way, but it is the only way
-      # to pass in an environment variable to another task.
-      - echo "Running support:provision in get version mode to retrive versions"
-      - task --silent support:provision
-
   site:restore:
     desc: Restores a site's database and/or files
     summary: Run the task with either or both of --dbBackup and --nginxBackup
@@ -454,7 +426,7 @@ tasks:
     cmd: ./task/scripts/restore-site.mjs --dbBackup "{{.DB}}" --nginxBackup "{{.FILE}}" --project "{{.PROJECT}}" --environment "{{.ENV}}"
 
   site:sync:
-    deps: [lagoon:cli:config]
+    deps: [lagoon:cli:check]
     desc: Runs the a dpladm sync of a site which eg. can be used to deploy a new release
     summary: Run the task without additional variables to see required arguments
     silent: true
@@ -504,10 +476,6 @@ tasks:
         sh: cat {{.dir_env}}/sites.yaml | yq '.sites | keys | .[]'
       START_FROM_SITE: "{{.START_FROM_SITE}}"
     cmds:
-      - task: env_repos:provision
-        vars:
-          OPTIONS: "{{.INITIAL_TERRAFORM_OPTIONS}}"
-          SKIP: "{{.SKIP_PROVISION}}"
       - for: { var: sites }
         task: site:full-sync
         vars:
@@ -567,7 +535,7 @@ tasks:
     desc: |
       Ensures a lagoon project is set up and configured correctly for a
       given site as specified by sites.yaml
-    deps: [lagoon:cli:config]
+    deps: [lagoon:cli:check]
     silent: true
     vars:
       GIT_URL: "git@github.com:danishpubliclibraries/env-{{.SITE}}.git"
@@ -591,7 +559,7 @@ tasks:
 
   site:backup:restore:db:
     desc: Restore the database backup for a site/environment to the same or another site/environment.
-    deps: [lagoon:cli:config]
+    deps: [lagoon:cli:check]
     vars:
       PROJECT: "{{.PROJECT}}"
       PROJECT_ENV: '{{.PROJECT_ENV | default "main" }}'
@@ -615,7 +583,7 @@ tasks:
     desc: |
       Synchonizes all file and database tables from environment
       to another on make on environment a complete copy of the source.
-    deps: [lagoon:cli:config]
+    deps: [lagoon:cli:check]
     dir: "{{.dir_env}}"
     vars:
       SOURCE_PROJECT: "{{.SOURCE_PROJECT}}"
@@ -629,7 +597,7 @@ tasks:
 
   sites:webmaster:reset-moduletest:
     desc: Reset webmaster moduletest
-    deps: [lagoon:cli:config]
+    deps: [lagoon:cli:check]
     vars:
       PROJECT: "{{.PROJECT}}"
     cmds:
@@ -642,7 +610,7 @@ tasks:
 
   sites:webmaster:reset-moduletests:
     desc: Reset all webmaster moduletests
-    deps: [lagoon:cli:config]
+    deps: [lagoon:cli:check]
     vars:
       webmasters:
         sh: yq '... comments="" | .sites | with_entries(select(.value | has("plan"))) | keys | .[]' {{.dir_env}}/sites.yaml
@@ -673,7 +641,7 @@ tasks:
           | xargs -I % -n 1 bash -c 'if (( $(dig % A | grep "20.86.109.250" | wc -l) > 0 )); then echo "% is pointing to old AKS cluster"; fi'
 
   sites:incomplete-deployments:
-    deps: [lagoon:cli:config]
+    deps: [lagoon:cli:check]
     desc: |
       Gets the latest deployment for each production environment and prints its status if it is *not* complete.
     cmds:
@@ -692,7 +660,7 @@ tasks:
         }" | jq -r '.allProjects[] | .name as $name | .environments[].deployments[] | select(.status != "complete") | ($name) + ": " + (.status)'
 
   sites:redeploy-failed-deployments:
-    deps: [lagoon:cli:config]
+    deps: [lagoon:cli:check]
     desc: Redeploys all failed deployments
     cmds:
       - task/scripts/redeploy-failed-deployments.sh
@@ -727,7 +695,7 @@ tasks:
   site:lagoon:project:capture-deploy-key:
     # TODO: print a big message if a deploy key is newly captured, so we know to commit changes!
     desc: Gets the deploy key for a particular project from Lagoon and persists it in sites.yaml
-    deps: [lagoon:cli:config]
+    deps: [lagoon:cli:check]
     dir: "{{.dir_env}}"
     silent: true
     vars:
@@ -746,7 +714,7 @@ tasks:
 
   site:lagoon:ensure-first-deployment:
     desc: Ensures that a site has at least one deployment on required branches, so they are tracked by Lagoon
-    deps: [lagoon:cli:config]
+    deps: [lagoon:cli:check]
     dir: "{{.dir_env}}"
     silent: true
     env:
@@ -790,7 +758,7 @@ tasks:
         ./dpladm/bin/migrate-site-database-to-incluster-db.mjs --project={{.PROJECT}} --env={{.ENVIRONMENT}} --dryrun={{.DRYRUN}}
 
   certs:clear-queue:
-    deps: [cluster:auth]
+    deps: [kubecontext:check]
     desc: |
       Because cert-manager sometimes hangs while provisioning certificates it helps to clear the whole queue
       of uncompleted certificates. This command removes any certificate that has an order not in either
@@ -802,7 +770,7 @@ tasks:
         xargs -n 2 bash -c 'kubectl delete certificate -n $0 $(echo "$1" | sed -r "s/^([0-9a-z\.\-]+-tls)-[a-z0-9]+-[a-z0-9]+$/\1/i")'
 
   ui-password:
-    deps: [cluster:auth]
+    deps: [kubecontext:check]
     desc: Get the password to access a given user interface
     cmds:
       - task/scripts/ui-password.sh
@@ -823,7 +791,7 @@ tasks:
 
   site:admin:password:set:
     desc: Sets the password for the admin of the selected site
-    deps: [lagoon:cli:config, cluster:auth]
+    deps: [lagoon:cli:check, kubecontext:check]
     dir: "{{.dir_env}}"
     vars:
       PROJECT: "{{.PROJECT}}"
@@ -845,7 +813,7 @@ tasks:
 
   site:local-admin:password:create-and-notify:
     desc: Sets the password for the admin of the selected site
-    deps: [lagoon:cli:config, cluster:auth]
+    deps: [lagoon:cli:check, kubecontext:check]
     dir: "{{.dir_env}}"
     vars:
       PROJECT: "{{.PROJECT}}"
@@ -905,7 +873,7 @@ tasks:
 
   site:local-admin:password:reset:
     desc: Resets the password for the local admin of a site
-    deps: [cluster:auth, lagoon:cli:config]
+    deps: [kubecontext:check, lagoon:cli:check]
     dir: "{{.dir_env}}"
     vars:
       PROJECT: "{{.PROJECT}}"
@@ -932,7 +900,7 @@ tasks:
 
   mail:send:
     desc: Sends an email from DoNotReply@folkebibliotekernescms.dk
-    deps: [cluster:auth]
+    deps: [kubecontext:check]
     vars:
       RECIPIENT: "{{.RECIPIENT}}"
       SUBJECT: "{{.SUBJECT}}"
@@ -955,7 +923,7 @@ tasks:
 
   site:admins:credentials:mail:
     desc: Sent email with credentials and site info to admin user on a library site
-    deps: [cluster:auth, lagoon:cli:config]
+    deps: [kubecontext:check, lagoon:cli:check]
     dir: "{{.dir_env}}"
     vars:
       siteadmins:
@@ -970,7 +938,7 @@ tasks:
 
   site:local-admin:admin:
     desc: Switches the local admin user to an admin user
-    deps: [cluster:auth, lagoon:cli:config]
+    deps: [kubecontext:check, lagoon:cli:check]
     dir: "{{.dir_env}}"
     vars:
       PROJECT: "{{.PROJECT}}"
