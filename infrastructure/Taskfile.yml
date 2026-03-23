@@ -776,8 +776,6 @@ tasks:
         msg: "Could not find directory {{.dir_env}}"
       - sh: "[ -d {{.dir_infra}} ]"
         msg: "Could not find directory {{.dir_infra}}"
-      - sh: "[ -d {{.dir_configuration}} ]"
-        msg: "Could not find directory {{.dir_configuration}}"
 
   site:admin:password:set:
     desc: Sets the password for the admin of the selected site
