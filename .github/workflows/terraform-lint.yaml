@@ -17,3 +17,4 @@ jobs:
         id: fmt
         run: terraform fmt -recursive -check infrastructure/terraform
         continue-on-error: false
+

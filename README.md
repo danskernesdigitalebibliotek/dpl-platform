@@ -5,7 +5,7 @@ application platform.
 
 The main entrypoints for this repository are:
 
-* The collection of operational [runbooks](docs/runbooks), use these
+* The collection of operational [runbooks](docs/runbooks) - use these
   if you with to perform any operations on environments.
 * The [architecture](docs/architecture) use this if you want to gain
   an understanding for how the platform is built.
