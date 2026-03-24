@@ -30,7 +30,7 @@ resource "azurerm_kubernetes_cluster" "cluster" {
     zones = ["1"]
 
     node_labels = {
-      "noderole.dplplatform" : "system"
+      "noderole.dplplatform" = "system"
     }
   }
 
@@ -40,9 +40,9 @@ resource "azurerm_kubernetes_cluster" "cluster" {
 
     # The Azure Network Policy handling is not mature enough as pr
     # september 2021.
-    network_policy     = "calico"
-    dns_service_ip     = "10.10.0.10"
-    service_cidr       = "10.10.0.0/16"
+    network_policy = "calico"
+    dns_service_ip = "10.10.0.10"
+    service_cidr   = "10.10.0.0/16"
     # The Standard load balancer provides all the feature we need at this point.
     load_balancer_sku = "standard"
     load_balancer_profile {
@@ -70,12 +70,12 @@ resource "azurerm_kubernetes_cluster_node_pool" "pool" {
   orchestrator_version  = var.control_plane_version
   kubernetes_cluster_id = azurerm_kubernetes_cluster.cluster.id
   vnet_subnet_id        = azurerm_subnet.aks.id
+
   node_labels = {
-    "noderole.dplplatform" : try(each.value.role, "application")
+    "noderole.dplplatform" = try(each.value.role, "application")
   }
-  zones = [
-    "1",
-  ]
+
+  zones = ["1"]
 
   # The default for AKS is 30 pods pr node. This can be a rather low number
   # of pods depending on the workload, but as we know Lagoon to run with quite
@@ -87,7 +87,7 @@ resource "azurerm_kubernetes_cluster_node_pool" "pool" {
   vm_size = each.value.vm
 
   # Enable autoscaling.
-  min_count           = try(each.value.min, null)
-  max_count           = try(each.value.max, null)
-  node_count          = try(each.value.count, null)
+  min_count  = try(each.value.min, null)
+  max_count  = try(each.value.max, null)
+  node_count = try(each.value.count, null)
 }

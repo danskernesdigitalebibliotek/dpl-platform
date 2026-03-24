@@ -31,5 +31,4 @@ jobs:
           # Set the default filter-mode which only reports violations caused by
           # added/modified lines.
           # Read more about filter-mode: https://github.com/reviewdog/reviewdog#filter-mode
-          filter_mode: nofilter
-
+          filter_mode: added
