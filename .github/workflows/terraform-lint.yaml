@@ -15,5 +15,5 @@ jobs:
       - uses: hashicorp/setup-terraform@v3.1.2
       - name: Terraform fmt
         id: fmt
-        run: terraform fmt -recursive -check infrastructure/terraform
+        run: terraform fmt -recursive -check -diff infrastructure/terraform
         continue-on-error: false
