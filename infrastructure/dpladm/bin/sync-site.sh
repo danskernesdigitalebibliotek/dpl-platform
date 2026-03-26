@@ -211,19 +211,6 @@ function getSiteAutogenerateRoutes {
     echo "${autogenerateRoutes}"
 }
 
-function getSiteImportTranslationsCron {
-    local importTranslationsCron
-    importTranslationsCron=$(yq eval ".sites.${1}.importTranslationsCron" "${2}")
-
-    if [[ "${importTranslationsCron}" == "null" ]]; then
-        echo "M H(2-5) * * *"
-        return
-    fi
-
-    echo "${importTranslationsCron}"
-    return
-}
-
 if [[ -z "${SITES_CONFIG:-}" ]]; then
     print_usage "SITES_CONFIG"
 fi
@@ -263,7 +250,6 @@ failOnErr $? "${siteImageRepository}"
 siteReleaseImageName=$(getSiteReleaseImageName "${SITE}" "${SITES_CONFIG}")
 failOnErr $? "${siteReleaseImageName}"
 plan=$(getSitePlan "${SITE}" "${SITES_CONFIG}")
-importTranslationsCron=$(getSiteImportTranslationsCron "${SITE}" "${SITES_CONFIG}")
 goRelease=$(getGoRelease "${SITE}" "${SITES_CONFIG}")
 diskSize=$(getDiskSize "${SITE}" "${SITES_CONFIG}")
 phpVersionMain=$(getPhpVersion "${SITE}" "main" "${SITES_CONFIG}")
@@ -273,8 +259,8 @@ failOnErr $? "${phpVersionModuletest}"
 set -o errexit
 
 # Synchronise the sites environment repository.
-syncEnvRepo "${SITE}" "${releaseTag}" "${BRANCH}" "${siteImageRepository}" "${siteReleaseImageName}" "${importTranslationsCron}" "${autogenerateRoutes}" "${primaryDomain}" "${secondaryDomains}" "${diskSize}" "${phpVersionMain}" "${primaryGoSubDomain}" "${secondaryGoSubDomains}" "${goRelease}"
+syncEnvRepo "${SITE}" "${releaseTag}" "${BRANCH}" "${siteImageRepository}" "${siteReleaseImageName}" "${autogenerateRoutes}" "${primaryDomain}" "${secondaryDomains}" "${diskSize}" "${phpVersionMain}" "${primaryGoSubDomain}" "${secondaryGoSubDomains}" "${goRelease}"
 
 if [ "${plan}" = "webmaster" ] && [ "${BRANCH}" = "main" ]; then
-    syncEnvRepo "${SITE}" "${wmReleaseTag}" "moduletest" "${siteImageRepository}" "${siteReleaseImageName}" "${importTranslationsCron}" "${autogenerateRoutes}" "${primaryDomain}" "${secondaryDomains}" "${diskSize}" "${phpVersionModuletest}"
+    syncEnvRepo "${SITE}" "${wmReleaseTag}" "moduletest" "${siteImageRepository}" "${siteReleaseImageName}" "${autogenerateRoutes}" "${primaryDomain}" "${secondaryDomains}" "${diskSize}" "${phpVersionModuletest}"
 fi
