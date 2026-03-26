@@ -156,6 +156,25 @@ function getPhpVersion {
     exit 1
 }
 
+function getNodeVersion {
+    local branchNodeVersion nodeVersion
+
+    branchNodeVersion=$(yq eval ".sites.${1}.${2}-node-version" "${3}")
+    if [[ -n "${branchNodeVersion}" && "${branchNodeVersion}" != "null" ]]; then
+        echo "${branchNodeVersion}"
+        return
+    fi
+
+    nodeVersion=$(yq eval ".sites.${1}.node-version" "${3}")
+    if [[ -n "${nodeVersion}" && "${nodeVersion}" != "null" ]]; then
+        echo "${nodeVersion}"
+        return
+    fi
+
+    echo "Error: Neither specific or general node-version is defined for environment ${2}"
+    exit 1
+}
+
 function calculatePrimaryGoSubdomain {
     local hasGo=$(getGoRelease "${1}" "${2}")
     if [[ "${hasGo}" = "" ]]; then
@@ -270,11 +289,15 @@ phpVersionMain=$(getPhpVersion "${SITE}" "main" "${SITES_CONFIG}")
 failOnErr $? "${phpVersionMain}"
 phpVersionModuletest=$(getPhpVersion "${SITE}" "moduletest" "${SITES_CONFIG}")
 failOnErr $? "${phpVersionModuletest}"
+nodeVersionMain=$(getNodeVersion "${SITE}" "main" "${SITES_CONFIG}")
+failOnErr $? "${nodeVersionMain}"
+nodeVersionModuletest=$(getNodeVersion "${SITE}" "moduletest" "${SITES_CONFIG}")
+failOnErr $? "${nodeVersionModuletest}"
 set -o errexit
 
 # Synchronise the sites environment repository.
-syncEnvRepo "${SITE}" "${releaseTag}" "${BRANCH}" "${siteImageRepository}" "${siteReleaseImageName}" "${importTranslationsCron}" "${autogenerateRoutes}" "${primaryDomain}" "${secondaryDomains}" "${diskSize}" "${phpVersionMain}" "${primaryGoSubDomain}" "${secondaryGoSubDomains}" "${goRelease}"
+syncEnvRepo "${SITE}" "${releaseTag}" "${BRANCH}" "${siteImageRepository}" "${siteReleaseImageName}" "${importTranslationsCron}" "${autogenerateRoutes}" "${primaryDomain}" "${secondaryDomains}" "${diskSize}" "${phpVersionMain}" "${nodeVersionMain}" "${primaryGoSubDomain}" "${secondaryGoSubDomains}" "${goRelease}"
 
 if [ "${plan}" = "webmaster" ] && [ "${BRANCH}" = "main" ]; then
-    syncEnvRepo "${SITE}" "${wmReleaseTag}" "moduletest" "${siteImageRepository}" "${siteReleaseImageName}" "${importTranslationsCron}" "${autogenerateRoutes}" "${primaryDomain}" "${secondaryDomains}" "${diskSize}" "${phpVersionModuletest}"
+    syncEnvRepo "${SITE}" "${wmReleaseTag}" "moduletest" "${siteImageRepository}" "${siteReleaseImageName}" "${importTranslationsCron}" "${autogenerateRoutes}" "${primaryDomain}" "${secondaryDomains}" "${diskSize}" "${phpVersionModuletest}" "${nodeVersionModuletest}"
 fi

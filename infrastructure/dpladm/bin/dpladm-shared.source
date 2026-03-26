@@ -80,12 +80,14 @@ function renderProfileTemplate {
   local diskSize=${10:-}
   # The version of PHP to use
   local phpVersion=${11:-}
+  # The version of Node to use
+  local nodeVersion=${12:-}
   # The primary GO subdomain (optional)
-  local primaryGoSubDomain=${12:-}
+  local primaryGoSubDomain=${13:-}
   # A space seperated list of secondary GO sub domains (optional)
-  local secondaryGoSubDomains=${13:-}
+  local secondaryGoSubDomains=${14:-}
   #GO release version
-  local GO_RELEASE=${14:-}
+  local GO_RELEASE=${15:-}
 
   PRIMARY_DOMAIN=""
 
@@ -184,12 +186,13 @@ EndOfMessage
   export CMS_DOMAIN="${primaryDomain}"
   export DISK_SIZE="${diskSize}"
   export PHP_VERSION="${phpVersion}"
+  export NODE_VERSION="${nodeVersion}"
 
   # TODO this templating could be quite a bit more flexible.
   # Tell envsubst which variables to replace. This allows other variables to
   # remain untouched.
   # shellcheck disable=SC2016
-  local variablesToSubst='$RELEASE_IMAGE_REPOSITORY $RELEASE_IMAGE_NAME $RELEASE_TAG $ENABLE_ROUTES $LAGOON_IMAGES_RELEASE_TAG $LAGOON_PROJECT_NAME $LAGOON_ENVIRONMENT $PRIMARY_DOMAIN $SECONDARY_DOMAINS $IMPORT_TRANSLATIONS_CRON $PRIMARY_GO_SUBDOMAIN_AND_ANNOTATION $SECONDARY_GO_SUBDOMAINS $GO_RELEASE $PRIMARY_GO_DOMAIN $CMS_DOMAIN $DISK_SIZE $PHP_VERSION'
+  local variablesToSubst='$RELEASE_IMAGE_REPOSITORY $RELEASE_IMAGE_NAME $RELEASE_TAG $ENABLE_ROUTES $LAGOON_IMAGES_RELEASE_TAG $LAGOON_PROJECT_NAME $LAGOON_ENVIRONMENT $PRIMARY_DOMAIN $SECONDARY_DOMAINS $IMPORT_TRANSLATIONS_CRON $PRIMARY_GO_SUBDOMAIN_AND_ANNOTATION $SECONDARY_GO_SUBDOMAINS $GO_RELEASE $PRIMARY_GO_DOMAIN $CMS_DOMAIN $DISK_SIZE $PHP_VERSION $NODE_VERSION'
 
   # Loop through the files we know to contain variables that needs replacing.
   local templateFiles=(
@@ -231,9 +234,10 @@ function syncEnvRepo {
   local secondaryDomains="${9:-}"
   local diskSize="${10:-}"
   local phpVersion="${11:-}"
-  local primaryGoSubDomain="${12:-}"
-  local secondaryGoSubDomains="${13:-}"
-  local goRelease="${14:-}"
+  local nodeVersion="${12:-}"
+  local primaryGoSubDomain="${13:-}"
+  local secondaryGoSubDomains="${14:-}"
+  local goRelease="${15:-}"
 
   if [[ -z $siteName ]]; then
       echo "Missing site name"
@@ -291,7 +295,7 @@ function syncEnvRepo {
 
   # Enter the template and rendered it
   cd "${repoName}"
-  renderProfileTemplate "${siteName}" "${branchName}" "${releaseTag}" "${releaseImageRepository}" "${releaseImageName}" "${importTranslationsCron}" "${autogenerateRoutes}" "${primaryDomain}" "${secondaryDomains}" "${diskSize}" "${phpVersion}" "${primaryGoSubDomain}" "${secondaryGoSubDomains}" "${goRelease}"
+  renderProfileTemplate "${siteName}" "${branchName}" "${releaseTag}" "${releaseImageRepository}" "${releaseImageName}" "${importTranslationsCron}" "${autogenerateRoutes}" "${primaryDomain}" "${secondaryDomains}" "${diskSize}" "${phpVersion}" "${nodeVersion}" "${primaryGoSubDomain}" "${secondaryGoSubDomains}" "${goRelease}"
 
   # If we have GO use the docker-compose which set the node service
   if [ "$goRelease" ]; then
