@@ -36,6 +36,7 @@ if (nginxBackup) {
   await restoreFiles(nginxBackup, project, environment);
 }
 
+await $`lagoon deploy latest -p ${project} -e ${environment} --force`
 echo("Your restore has now completed");
 
 
