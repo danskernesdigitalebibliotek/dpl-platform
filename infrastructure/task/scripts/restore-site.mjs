@@ -161,6 +161,7 @@ async function importFiles(file, project, environment) {
       echo(chalk.green("Successfully imported files backup and restored them"));
       return;
     }
+    throw Error("Failed to extract files backup", { cause: error });
   }
   echo("Files restored");
 } 
