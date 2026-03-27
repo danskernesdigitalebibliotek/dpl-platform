@@ -37,6 +37,7 @@ if (nginxBackup) {
 }
 
 await $`lagoon deploy latest -p ${project} -e ${environment} --force`
+echo(chalk.blue("now deploying for restore to take effect"));
 echo("Your restore has now completed");
 
 
