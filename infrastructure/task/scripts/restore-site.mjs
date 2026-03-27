@@ -163,5 +163,4 @@ async function importFiles(file, project, environment) {
     }
     throw Error("Failed to extract files backup", { cause: error });
   }
-  echo("Files restored");
 } 
