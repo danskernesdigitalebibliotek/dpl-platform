@@ -154,7 +154,7 @@ async function importFiles(file, project, environment) {
 
   try {
     // await $`kubectl exec -n ${project}-${environment} deploy/cli -- bash -c "tar -zxvf /tmp/${file} --directory /tmp data/nginx"`
-    await $`kubectl exec -n ${project}-${environment} deploy/cli -- bash -c "tar --strip 2 --gzip --extract --file /tmp/${file} --directory /app/web/sites/default/files data/nginx"`
+    await $`kubectl exec -n ${project}-${environment} deploy/cli -- bash -c "tar --strip 2 --gzip --extract -m --no-overwrite-dir --file /tmp/${file} --directory /app/web/sites/default/files data/nginx"`
   } catch(error) {
     echo(error);
     throw Error("Failed to extract files backup. The task succeeded if the error is a utime error", { cause: error });
