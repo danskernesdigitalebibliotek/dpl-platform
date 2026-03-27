@@ -37,7 +37,6 @@ if (nginxBackup) {
 }
 
 echo("Your restore has now completed");
-echo(`You should now run a deployment through Lagoon UI to make the restore take effect: https://ui.lagoon.dplplat02.dpl.reload.dk/projects/${project}/${project}-${environment}`);
 
 
 async function restoreFiles(nginxBackup, project, environment) {
