@@ -119,7 +119,7 @@ EndOfMessage
 ${routesIndent}  - varnish:
 ${singleRouteIndent}- "${primaryDomain}":
 ${singleRouteIndent}    annotations:
-${singleRouteIndent}      nginx.ingress.kubernetes.io/client-max-body-size: 25M
+${singleRouteIndent}      nginx.ingress.kubernetes.io/client-max-body-size: 50M
 EndOfMessage
 )
   fi
