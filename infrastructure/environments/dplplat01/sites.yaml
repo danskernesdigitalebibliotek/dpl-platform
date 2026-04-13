@@ -17,7 +17,6 @@ x-webmasters-on-weekly-release-cycle: &webmasters-on-weekly-release-cycle
   go-release: 2026.11.3
   php-version: 8.3
   node-version: 20
-  moduletest-node-version: 20
 sites:
   # Site objects are indexed by a unique key that must be a valid lagoon, and
   # github project name. That is, alphanumeric and dashes.
