@@ -156,6 +156,19 @@ function getPhpVersion {
     exit 1
 }
 
+function getNodeVersion {
+    local nodeVersion
+
+    nodeVersion=$(yq eval ".sites.${1}.node-version" "${2}")
+    if [[ -n "${nodeVersion}" && "${nodeVersion}" != "null" ]]; then
+        echo "${nodeVersion}"
+        return
+    fi
+
+    echo "Error: node-version is not defined"
+    exit 1
+}
+
 function calculatePrimaryGoSubdomain {
     local hasGo=$(getGoRelease "${1}" "${2}")
     if [[ "${hasGo}" = "" ]]; then
@@ -256,10 +269,12 @@ phpVersionMain=$(getPhpVersion "${SITE}" "main" "${SITES_CONFIG}")
 failOnErr $? "${phpVersionMain}"
 phpVersionModuletest=$(getPhpVersion "${SITE}" "moduletest" "${SITES_CONFIG}")
 failOnErr $? "${phpVersionModuletest}"
+nodeVersion=$(getNodeVersion "${SITE}" "${SITES_CONFIG}")
+failOnErr $? "${nodeVersion}"
 set -o errexit
 
 # Synchronise the sites environment repository.
-syncEnvRepo "${SITE}" "${releaseTag}" "${BRANCH}" "${siteImageRepository}" "${siteReleaseImageName}" "${autogenerateRoutes}" "${primaryDomain}" "${secondaryDomains}" "${diskSize}" "${phpVersionMain}" "${primaryGoSubDomain}" "${secondaryGoSubDomains}" "${goRelease}"
+syncEnvRepo "${SITE}" "${releaseTag}" "${BRANCH}" "${siteImageRepository}" "${siteReleaseImageName}" "${autogenerateRoutes}" "${primaryDomain}" "${secondaryDomains}" "${diskSize}" "${phpVersionMain}" "${nodeVersion}" "${primaryGoSubDomain}" "${secondaryGoSubDomains}" "${goRelease}"
 
 if [ "${plan}" = "webmaster" ] && [ "${BRANCH}" = "main" ]; then
     syncEnvRepo "${SITE}" "${wmReleaseTag}" "moduletest" "${siteImageRepository}" "${siteReleaseImageName}" "${autogenerateRoutes}" "${primaryDomain}" "${secondaryDomains}" "${diskSize}" "${phpVersionModuletest}"

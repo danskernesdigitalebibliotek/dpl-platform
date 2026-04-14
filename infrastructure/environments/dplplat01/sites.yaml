@@ -5,6 +5,7 @@ x-defaults: &default-release-image-source
   dpl-cms-release: 2026.13.0
   go-release: 2026.13.0
   php-version: 8.3
+  node-version: 20
 x-webmasters-on-weekly-release-cycle: &webmasters-on-weekly-release-cycle
   # This release cycle releases the newest release, which has been
   # tested on webmaster moduletests in the previous week, on to
@@ -15,6 +16,7 @@ x-webmasters-on-weekly-release-cycle: &webmasters-on-weekly-release-cycle
   moduletest-dpl-cms-release: 2026.13.0
   go-release: 2026.11.3
   php-version: 8.3
+  node-version: 20
 sites:
   # Site objects are indexed by a unique key that must be a valid lagoon, and
   # github project name. That is, alphanumeric and dashes.
