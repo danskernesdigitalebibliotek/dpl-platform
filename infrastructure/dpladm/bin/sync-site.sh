@@ -277,5 +277,5 @@ set -o errexit
 syncEnvRepo "${SITE}" "${releaseTag}" "${BRANCH}" "${siteImageRepository}" "${siteReleaseImageName}" "${autogenerateRoutes}" "${primaryDomain}" "${secondaryDomains}" "${diskSize}" "${phpVersionMain}" "${nodeVersion}" "${primaryGoSubDomain}" "${secondaryGoSubDomains}" "${goRelease}"
 
 if [ "${plan}" = "webmaster" ] && [ "${BRANCH}" = "main" ]; then
-    syncEnvRepo "${SITE}" "${wmReleaseTag}" "moduletest" "${siteImageRepository}" "${siteReleaseImageName}" "${autogenerateRoutes}" "${primaryDomain}" "${secondaryDomains}" "${diskSize}" "${phpVersionModuletest}" "${nodeVersion}"
+    syncEnvRepo "${SITE}" "${wmReleaseTag}" "moduletest" "${siteImageRepository}" "${siteReleaseImageName}" "${autogenerateRoutes}" "${primaryDomain}" "${secondaryDomains}" "${diskSize}" "${phpVersionModuletest}"
 fi
