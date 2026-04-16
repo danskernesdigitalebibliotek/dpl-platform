@@ -15,10 +15,7 @@ ENV NEXT_TELEMETRY_DISABLED=1
 RUN yarn run build
 
 # Production image, copy all the files and run next
-# TODO: Replace the fixed version, 26.3.0, with ${LAGOON_IMAGES_RELEASE_TAG}
-# when ${LAGOON_IMAGES_RELEASE_TAG} has caught up so all images are updated in
-# lockstep.
-FROM uselagoon/node-${NODE_VERSION}:26.3.0 AS runner
+FROM uselagoon/node-${NODE_VERSION}:${LAGOON_IMAGES_RELEASE_TAG} AS runner
 WORKDIR /app
 
 ENV NODE_ENV=production
