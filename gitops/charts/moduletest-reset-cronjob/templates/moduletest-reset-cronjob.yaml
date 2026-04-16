@@ -6,7 +6,7 @@ kind: CronJob
 metadata:
   name: moduletest-reset
   labels:
-    app.kubernetes/version: {{ .Release.version }}
+    app.kubernetes/version: {{ .Chart.Version }}
 spec:
   schedule: "0 23 * * 3"  # This actually runs every other Wednesday at 23:00. Check jobTemplate.spec.template.spec.containers.command
   jobTemplate:
