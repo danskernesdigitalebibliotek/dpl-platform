@@ -2,6 +2,8 @@
 x-defaults: &default-release-image-source
   releaseImageRepository: ghcr.io/danskernesdigitalebibliotek
   releaseImageName: dpl-cms-source
+  # IMPORTANT! When updating to 2026.18.x, the node-version below needs to be updated to 24.
+  # See https://github.com/danskernesdigitalebibliotek/dpl-platform/pull/1085
   dpl-cms-release: 2026.16.0
   go-release: 2026.16.0
   php-version: 8.3
