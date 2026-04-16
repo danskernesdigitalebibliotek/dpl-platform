@@ -31,6 +31,7 @@ sites:
     moduletest-dpl-cms-release: 2026.16.0
     go-release: 2026.16.0
     php-version: 8.3
+    node-version: 20
     diskSize: 20
     primary-domain: canary.dplplat02.dpl.reload.dk
     # TODO: Remove this once the the Adgangsplatformen OpenID client used here
@@ -48,6 +49,7 @@ sites:
     moduletest-dpl-cms-release: 2026.16.0
     go-release: 2026.16.0
     php-version: 8.3
+    node-version: 20
     diskSize: 20
     deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAILj8lXv7C/7s7te9sEpwcHQhgDWfzsCkAN7rqQ4sdTzk"
   staging:
