@@ -69,13 +69,14 @@ rules:
 ---
 
 apiVersion: rbac.authorization.k8s.io/v1
-kind: ClusterRoleBinding
+kind: RoleBinding
 metadata:
   name: namespace-deployments-getter-binding
   namespace: {{ .Release.Namespace }}
 subjects:
 - kind: ServiceAccount
   name: moduletest-reset-serviceaccount
+  namespace: {{ .Release.Namespace }}
 roleRef:
   kind: ClusterRole
   name: deployments-get-cluster-role
