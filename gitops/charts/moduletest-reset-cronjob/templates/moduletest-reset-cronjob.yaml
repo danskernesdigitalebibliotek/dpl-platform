@@ -29,7 +29,7 @@ spec:
                   cpu: 250m
                 limits:
                   memory: 512Mi
-          serviceAccountName: moduletest-reset-serviceaccount
+          serviceAccountName: moduletest-reset-service-account
           tolerations:
             - key: noderole.dplplatform
               operator: Equal
@@ -49,21 +49,21 @@ spec:
 apiVersion: v1
 kind: ServiceAccount
 metadata:
-  name: moduletest-reset-serviceaccount
+  name: moduletest-reset-service-account
   namespace: {{ .Release.Namespace }}
 
 ---
 
 apiVersion: rbac.authorization.k8s.io/v1
-kind: ClusterRole
+kind: Role
 metadata:
-  name: deployments-get-cluster-role
+  name: moduletest-reset-role
 rules:
 - apiGroups: [""]
-  resources: [ "pods", "pods/exec", "configmaps", "services" ]
-  verbs: [ "get", "list", "create" ]
+  resources: [ "pods/exec" ]
+  verbs: [ "create" ]
 - apiGroups: [ "apps", "" ]
-  resources: [ "deployments", "pods", "services", "namespaces" ]
+  resources: [ "deployments", "pods", "services", "configmaps" ]
   verbs: [ "get", "list" ]
 
 ---
@@ -71,13 +71,47 @@ rules:
 apiVersion: rbac.authorization.k8s.io/v1
 kind: RoleBinding
 metadata:
-  name: namespace-deployments-getter-binding
+  name: moduletest-reset-role-binding
   namespace: {{ .Release.Namespace }}
 subjects:
 - kind: ServiceAccount
-  name: moduletest-reset-serviceaccount
+  name: moduletest-reset-service-account
   namespace: {{ .Release.Namespace }}
 roleRef:
-  kind: ClusterRole
-  name: deployments-get-cluster-role
+  kind: Role
+  name: moduletest-reset-role
   apiGroup: rbac.authorization.k8s.io
+
+---
+
+# INFO Roles and binding allowing the moduletest-reset to gain access to the main configMap, database and CLI-pod
+
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: moduletest-reset-role
+  namespace: {{ .Release.Namespace | replace "moduletest" "main" }}
+rules:
+- apiGroups: [""]
+  resources: [ "pods/exec" ]
+  verbs: [ "create" ]
+- apiGroups: [ "apps", "" ]
+  resources: [ "deployments", "pods", "services", "configmaps" ]
+  verbs: [ "get", "list" ]
+
+---
+
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: moduletest-reset-role-binding
+  namespace: {{ .Release.Namespace | replace "moduletest" "main" }}
+subjects:
+- kind: ServiceAccount
+  name: moduletest-reset-service-account
+  namespace: {{ .Release.Namespace }}
+roleRef:
+  kind: Role
+  name: moduletest-reset-role
+  apiGroup: rbac.authorization.k8s.io
+
