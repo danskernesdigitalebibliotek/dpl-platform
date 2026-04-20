@@ -18,11 +18,17 @@ spec:
           restartPolicy: Never
           containers:
             - name: moduletest-reset-container
-              image: ghcr.io/danskernesdigitalebibliotek/dpl-platform/moduletest-reset:mr-2.0.4
+              image: ghcr.io/danskernesdigitalebibliotek/dpl-platform/moduletest-reset:mr-2.1.0
               command:
                 - /bin/bash
                 - -c
-                - ./moduletest-reset.mjs --source {{ .Values.syncConfig.source }} --target {{ .Values.syncConfig.target }}
+                - |
+                  week=$(date +%W)
+                  if (( week % 2 == 0 )); then
+                    ./moduletest-reset.mjs --source {{ .Values.syncConfig.source }} --target {{ .Values.syncConfig.target }}
+                  else
+                    echo "Not release week and thus not running"
+                  fi
               resources:
                 requests:
                   memory: 256Mi
