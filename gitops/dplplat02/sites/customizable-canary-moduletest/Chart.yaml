@@ -9,5 +9,5 @@ dependencies:
     version: 0.0.14
     repository: oci://ghcr.io/danskernesdigitalebibliotek/dpl-platform/charts
   - name: moduletest-reset
-    version: 0.0.19
+    version: 0.0.20
     repository: oci://ghcr.io/danskernesdigitalebibliotek/dpl-platform/charts
