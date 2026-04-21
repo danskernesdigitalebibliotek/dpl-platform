@@ -69,10 +69,6 @@ $SECONDARY_GO_SUBDOMAINS
         schedule: "M/15 6-23 * * *"
         command: drush cron
         service: cli
-      - name: drush cron
-        schedule: "M 0-5 * * *"
-        command: drush cron
-        service: cli
       - name: import translations
         schedule: "M H(23-2) * * *"
         command: drush locale-check && drush locale-update
@@ -89,10 +85,6 @@ $SECONDARY_GO_SUBDOMAINS
     cronjobs:
       - name: drush cron
         schedule: "M/15 6-23 * * *"
-        command: drush cron
-        service: cli
-      - name: drush cron
-        schedule: "M 0-5 * * *"
         command: drush cron
         service: cli
       - name: import translations
