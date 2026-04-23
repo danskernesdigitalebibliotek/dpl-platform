@@ -29,12 +29,12 @@ This part needs to be run outside of the DPL shell.
 The first thing we need to know, is which entry in the `known_hosts` file is
 wrong.
 This can be discovered by running the following command:
-`ssh -t lagoon@<external IP of lagoon-core-ssh> token`
+`ssh -t lagoon@130.226.25.97 token`
 The IP can be found by running the following command:
 `kubectl get -o jsonpath='{.status.loadBalancer.ingress[0].ip}' -n lagoon-core
 service lagoon-core-ssh`
 
-Next, run the command `ssh·-t·lagoon@<external·IP·of·lagoon-core-ssh>·token`
+Next, run the command `ssh -t lagoon@130.226.25.97 token`
 with the populated IP of the SSH server.
 
 This should trigger the following error:
@@ -53,7 +53,7 @@ Host key for 20.238.202.21 has changed and you have requested strict checking.
 Host key verification failed.`
 
 We need the following part of the eror:
-`Offending ED25519 key in /home/dplsh/.ssh/known_hosts:7`
+`Offending ED25519 key in ~/.ssh/known_hosts:7`
 The number at the end is the entry index number of the known_hosts file which
 has gone bad.
 
@@ -65,12 +65,12 @@ while outside of the shell. Otherwise, open the shell, but don't log in yet.
 Now readd the Lagoon Config, but add a pointer to which ssh key to use:
 `lagoon config add --lagoon dplplat01
 lagoon config add \
-    --graphql https://api.lagoon.dplplat01.dpl.reload.dk/graphql \
+    --graphql https://api.lagoon.dplplat02.dpl.reload.dk/graphql \
     --force \
-    --ui https://ui.lagoon.dplplat01.dpl.reload.dk \
-    --hostname 20.238.147.183 \
+    --ui https://ui.lagoon.dplplat02.dpl.reload.dk \
+    --hostname 130.226.25.97 \
     --port 22 \
-    --ssh-key <path to ssh key, which in DPLSH is located at /home/dplsh/.ssh/somkey>`
+    --ssh-key <path to ssh key, which in DPLSH is located at ~/.ssh/somkey>`
 
 now run `lagoon login`. There might be another bad key that needs to be removed
 else it should now log you in again.
