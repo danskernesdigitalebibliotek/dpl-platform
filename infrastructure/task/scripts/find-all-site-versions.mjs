@@ -20,7 +20,13 @@ for await (const site of sites.lines()) {
   } catch(error) {
     console.log(error);
   }
-  console.log(`${res.site}: ${res.imageVersion.tag}`);
+
+  const cmsVersion = await $`cat ../../environments/dplplat01/sites.yaml | yq --yaml-fix-merge-anchor-to-spec=true '.sites.${site}.dpl-cms-release'`.text();
+  if (cmsVersion.trim() == res.imageVersion.tag) {
+    console.log(`${res.site}: ${res.imageVersion.tag}`);
+  } else {
+    console.log(chalk.red(`${res.site}: ${res.imageVersion.tag}`));
+  }
 }
 
 async function isWebmaster(project) {
