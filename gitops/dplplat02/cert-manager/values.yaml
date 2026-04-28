@@ -537,7 +537,7 @@ cert-manager:
     # cert-manager-webhook Deployments.
     # Note that you cannot enable both PodMonitor and ServiceMonitor as they are
     # mutually exclusive. Enabling both will result in an error.
-    enabled: false
+    enabled: true
 
     servicemonitor:
       # Create a ServiceMonitor to add cert-manager to Prometheus.
