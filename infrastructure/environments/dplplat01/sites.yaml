@@ -77,7 +77,7 @@ sites:
     moduletest-dpl-cms-release: 2026.18.0
     go-release: 2026.18.0
     php-version: 8.3
-    node-version: 20
+    node-version: 24
     plan: webmaster
     primary-domain: staging.dplplat02.dpl.reload.dk
     # TODO: Remove this once the the Adgangsplatformen OpenID client used here
