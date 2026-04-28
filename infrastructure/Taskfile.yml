@@ -344,6 +344,18 @@ tasks:
       - sh: '[ ! -z "{{.PROJECT_NAME}}" ]'
         msg: "Missing PROJECT_NAME"
 
+  lagoon:project:ensure:lagoon-routes-clean-up:
+    cmds:
+      - task: lagoon:ensure:environment-variable
+        vars:
+          VARIABLE_SCOPE: "GLOBAL"
+          VARIABLE_NAME: "LAGOON_FEATURE_FLAG_CLEANUP_REMOVED_LAGOON_ROUTES"
+          VARIABLE_VALUE: "enabled"
+          PROJECT_NAME: "{{.PROJECT_NAME}}"
+    preconditions:
+      - sh: '[ ! -z "{{.PROJECT_NAME}}" ]'
+        msg: "Missing PROJECT_NAME"
+
   #These are secrets which are identical across prjects, so ie. Copenhagen has the same value as Ballerup
   lagoon:projects:env-variables:ensure:identical-across-projects:
     cmds:
@@ -380,6 +392,9 @@ tasks:
         vars:
           PROJECT_NAME: "{{.PROJECT_NAME}}"
       - task: lagoon:project:ensure:azure-mail-connection-string
+        vars:
+          PROJECT_NAME: "{{.PROJECT_NAME}}"
+      - task: lagoon:project:ensure:lagoon-routes-clean-up
         vars:
           PROJECT_NAME: "{{.PROJECT_NAME}}"
     preconditions:
