@@ -66,7 +66,7 @@ $PRIMARY_GO_SUBDOMAIN_AND_ANNOTATION
 $SECONDARY_GO_SUBDOMAINS
     cronjobs:
       - name: drush cron
-        schedule: "M 0-5 * * *"
+        schedule: "M/15 H(6-23) * * *"
         command: drush cron
         service: cli
       - name: import translations
@@ -84,7 +84,7 @@ $SECONDARY_GO_SUBDOMAINS
   moduletest:
     cronjobs:
       - name: drush cron
-        schedule: "M 0-5 * * *"
+        schedule: "M/15 H(6-23) * * *"
         command: drush cron
         service: cli
       - name: import translations
