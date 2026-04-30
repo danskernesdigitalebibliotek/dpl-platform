@@ -483,6 +483,13 @@ tasks:
       - cat statusnow.txt
       - rm statusnow.txt
 
+  sites:check-versions:
+    deps: [kubecontext:check, lagoon:cli:check]
+    desc: "Checks all CMS prod sites for version mismatch between sites.yaml and running site version"
+    dir: ./task/scripts
+    cmds:
+      - ./find-all-site-versions.mjs
+
   sites:sync:
     desc: Performs a full synchronization from sites.yaml to running state
     dir: "{{.dir_env}}"
