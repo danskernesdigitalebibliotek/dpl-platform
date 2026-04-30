@@ -36,8 +36,9 @@ if (nginxBackup) {
   await restoreFiles(nginxBackup, project, environment);
 }
 
+await $`lagoon deploy latest -p ${project} -e ${environment} --force`
+echo(chalk.blue("now deploying for restore to take effect"));
 echo("Your restore has now completed");
-echo(`You should now run a deployment through Lagoon UI to make the restore take effect: https://ui.lagoon.dplplat02.dpl.reload.dk/projects/${project}/${project}-${environment}`);
 
 
 async function restoreFiles(nginxBackup, project, environment) {
@@ -154,10 +155,13 @@ async function importFiles(file, project, environment) {
 
   try {
     // await $`kubectl exec -n ${project}-${environment} deploy/cli -- bash -c "tar -zxvf /tmp/${file} --directory /tmp data/nginx"`
-    await $`kubectl exec -n ${project}-${environment} deploy/cli -- bash -c "tar --strip 2 --gzip --extract --file /tmp/${file} --directory /app/web/sites/default/files data/nginx"`
+    await $`kubectl exec -n ${project}-${environment} deploy/cli -- bash -c "tar --strip 2 --gzip --extract -m --no-overwrite-dir --file /tmp/${file} --directory /app/web/sites/default/files data/nginx"`
   } catch(error) {
-    echo(error);
-    throw Error("Failed to extract files backup. The task succeeded if the error is a utime error", { cause: error });
+    // INFO: if the function fails with a message that "php: Cannot change mode", that means the function ran as successfully as possible. The utime operation fails due to persmissions in the container.
+    if (error.stderr.includes('php: Cannot change mode to rwxrwxrwx')) {
+      echo(chalk.green("Successfully imported files backup and restored them"));
+      return;
+    }
+    throw Error("Failed to extract files backup", { cause: error });
   }
-  echo("Files restored");
 } 
