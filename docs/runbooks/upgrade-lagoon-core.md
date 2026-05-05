@@ -2,7 +2,7 @@
 
 This runbook describes how to safely upgrade Lagoon Core.
 
-## Prerequisites:
+## Prerequisites
 
 - Access to out kubernetes cluster
 - [Meld](https://meldmerge.org/)
@@ -28,7 +28,7 @@ Run `helm show values lagoon/lagoon-core --version x.y.z > values-x-y-z.yaml`
 The file is encrypted because it contains credentials to all of the Lagoon
 services. These can't be handled differently at this point in time.
 Decrypt the file by running: `sops -d -i lagoon-core.values.sops.yaml`.
-This decrypts the file in place. 
+This decrypts the file in place.
 
 ## Compare the old against the new Values file
 
