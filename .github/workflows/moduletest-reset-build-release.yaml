@@ -62,7 +62,7 @@ jobs:
       - name: Checkout again
         uses: actions/checkout@v6
       - name: Build and push
-        uses: docker/build-push-action@v6
+        uses: docker/build-push-action@v7
         with:
           context: infrastructure/images/moduletest-reset
           platforms: linux/amd64,linux/arm64

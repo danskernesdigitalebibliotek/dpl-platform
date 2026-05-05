@@ -68,14 +68,14 @@ jobs:
       # run som tests on the image, while still avoiding to have to rebuild the
       # image when we do the final build.
       - name: Build and export to Docker
-        uses: docker/build-push-action@v6
+        uses: docker/build-push-action@v7
         with:
           context: infrastructure/images/lagoon-redeploy-controller
           load: true
           tags: working-image:0.0.0
 
       - name: Build and push
-        uses: docker/build-push-action@v6
+        uses: docker/build-push-action@v7
         with:
           context: infrastructure/images/lagoon-redeploy-controller
           platforms: linux/amd64,linux/arm64
