@@ -65,7 +65,7 @@ $SECONDARY_DOMAINS
 $PRIMARY_GO_SUBDOMAIN_AND_ANNOTATION
 $SECONDARY_GO_SUBDOMAINS
     cronjobs:
-      - name: run drush cron
+      - name: drush cron
         schedule: "M/15 * * * *"
         command: drush cron
         service: cli
