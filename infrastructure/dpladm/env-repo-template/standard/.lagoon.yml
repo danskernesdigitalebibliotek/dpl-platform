@@ -70,15 +70,15 @@ $SECONDARY_GO_SUBDOMAINS
         command: drush cron
         service: cli
       - name: import translations
-        schedule: "M * * * *"
+        schedule: "M H(00-04) * * *"
         command: drush locale-check && drush locale-update
         service: cli
       - name: import danish config translations
-        schedule: "M * * * *"
+        schedule: "M H(00-04) * * *"
         command: drush dpl_po:import-remote-config-po da https://danskernesdigitalebibliotek.github.io/dpl-web/cms/translations/da.config.po
         service: cli
       - name: drush err:purge
-        schedule: "M * * * *"
+        schedule: "M H(00-04) * * *"
         command: drush err:purge paragraph
         service: cli
   moduletest:
@@ -88,15 +88,15 @@ $SECONDARY_GO_SUBDOMAINS
         command: drush cron
         service: cli
       - name: import translations
-        schedule: "M * * * *"
+        schedule: "M H(00-04) * * *"
         command: drush locale-check && drush locale-update
         service: cli
       - name: import danish config translations
-        schedule: "M * * * *"
+        schedule: "M H(00-04) * * *"
         command: drush dpl_po:import-remote-config-po da https://danskernesdigitalebibliotek.github.io/dpl-web/cms/translations/da.config.po
         service: cli
       - name: drush err:purge
-        schedule: "M * * * *"
+        schedule: "M H(00-04) * * *"
         command: drush err:purge paragraph
         service: cli
 
