@@ -10,7 +10,7 @@ FROM hashicorp/terraform:1.9.5 as terraform
 # We use the official azure cli as a base-image. It is itself based on alpine
 # and is quite minimal.
 # https://mcr.microsoft.com/v2/azure-cli/tags/list
-FROM mcr.microsoft.com/azure-cli:2.63.0
+FROM alpine:3.19
 
 # See https://github.com/go-task/task/releases
 ARG TASK_VERSION=v3.40.0
@@ -19,17 +19,13 @@ ARG LAGOON_CLI_RELEASE=v0.31.1
 
 # The kubectl version can be bumped as we upgrade the cluster minor version.
 ARG KUBECTL_VERSION=v1.29.5
-# kubelogin is a client-go credential plugin implementing azure authentication.
-# https://github.com/Azure/kubelogin/releases
-ARG KUBELOGIN_VERSION=v0.0.34
 
 LABEL org.opencontainers.image.source https://github.com/danskernesdigitalebibliotek/dpl-platform
 
-SHELL ["/bin/bash", "-ox", "pipefail", "-c"]
 WORKDIR /tmp
 
-RUN az aks install-cli --kubelogin-version ${KUBELOGIN_VERSION} --client-version ${KUBECTL_VERSION}
 RUN apk add --no-cache \
+  bash \
   bash-completion \
   ca-certificates \
   curl \
@@ -41,10 +37,17 @@ RUN apk add --no-cache \
   shadow \
   vim \
   yq \
+  jq \
   openssh \
   bind-tools \
   nodejs \
   npm
+
+SHELL ["/bin/bash", "-ox", "pipefail", "-c"]
+
+RUN curl -LO "https://dl.k8s.io/release/${KUBECTL_VERSION}/bin/linux/amd64/kubectl" && \
+    chmod +x kubectl && \
+    mv kubectl /usr/local/bin/
 
 # Install zx
 RUN npm install -g zx
@@ -79,9 +82,6 @@ RUN helm plugin install https://github.com/databus23/helm-diff
 # Append our profile to the current one.
 COPY files/dot.profile.sh /tmp/.profile.tmp
 RUN cat /tmp/.profile.tmp >> /home/dplsh/.profile
-
-# Entrypoint will copy mounted .azure-host to this dir if available
-RUN mkdir /home/dplsh/.azure
 
 # Place a copy of dplsh.sh in the image to support bootstrapping without
 # installation.
