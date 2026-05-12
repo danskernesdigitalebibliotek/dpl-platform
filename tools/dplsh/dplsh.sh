@@ -161,8 +161,8 @@ function export-docker-creds() {
     for (( i=0; i<${#creds_array[@]}; i++ )); do
       cred_key=${creds_array[$i]}
 
-      # To keep the number of creds lower we only import github and acr creds
-      if [[ $cred_key != *".github.com"* && $cred_key != *"azurecr.io"* ]]; then
+      # To keep the number of creds lower we only import github creds
+      if [[ $cred_key != *".github.com"* ]]; then
         continue
       fi
 
@@ -235,9 +235,9 @@ docker run --hostname=dplsh \
     "${ADDITIONAL_ARGS[@]}" \
     -t \
     -e "HOST_UID=$(id -u)" \
-    -v "${HOME}/.azure:/opt/.azure-host:ro" \
     "${GITCONFIG[@]}" \
     -v "${HOME}/.ssh:/opt/.ssh-host:ro" \
     -v "${SHELL_ROOT}:/home/dplsh/host_mount" \
     -w "/home/dplsh/host_mount/${CHDIR}" \
     "${CONTAINER_IMAGE}" "$@"
+

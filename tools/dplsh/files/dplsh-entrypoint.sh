@@ -19,22 +19,9 @@ if [[ -f /opt/.gitconfig-host ]] ; then
     cp /opt/.gitconfig-host /home/dplsh/.gitconfig
 fi
 
-# Copy the host' azure state into the current shell.
-# By working off of a copy, we can feel free to eg. deauth without affecting
-# the host.
-if [[ -d /opt/.azure-host ]] ; then
-    mkdir -p /home/dplsh/.azure
-    rsync \
-      --archive \
-      --exclude=logs \
-      --exclude=commands \
-      --exclude=telemetry \
-      --exclude=.git \
-      /opt/.azure-host/ /home/dplsh/.azure/
-fi
-
 if [[ -d /opt/.ssh-host ]] ; then
     mkdir -p /home/dplsh/.ssh
+
     rsync --archive \
       --exclude=commands \
       --exclude=.git \
