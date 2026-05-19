@@ -11,8 +11,8 @@
 # environments in Lagoon where the corresponding pull request has been either
 # closed or merged.
 
-LAGOON_PROJECT="dpl-cms"
-REPO="danskernesdigitalebibliotek/dpl-cms"
+LAGOON_PROJECT="dpl-web"
+REPO="danskernesdigitalebibliotek/dpl-web"
 
 if ! gh auth status >/dev/null 2>&1; then
   echo "Error: You are not logged into GitHub. Please log in using 'gh auth login' and try again."
