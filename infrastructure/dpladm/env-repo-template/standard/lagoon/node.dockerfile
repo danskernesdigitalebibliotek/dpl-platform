@@ -1,27 +1,33 @@
-FROM ghcr.io/danskernesdigitalebibliotek/dpl-go-node:${GO_RELEASE} as builder
+FROM ghcr.io/danskernesdigitalebibliotek/dpl-web-go:${GO_RELEASE} as builder
 
 # Lagoon propagates build and global env variables as build-args.
 ARG DRUPAL_REVALIDATE_SECRET
+ARG DPL_GO_BASE_URL="https://${PRIMARY_GO_DOMAIN}"
+ARG DPL_CMS_BASE_URL="https://${CMS_DOMAIN}"
 ARG GO_SESSION_SECRET
-ARG NEXT_PUBLIC_APP_URL="https://${PRIMARY_GO_DOMAIN}"
-ARG NEXT_PUBLIC_DPL_CMS_HOSTNAME="${CMS_DOMAIN}"
+ARG LAGOON_ENVIRONMENT
+ARG LAGOON_PROJECT
+ARG LAGOON_ROUTE
+ARG LAGOON_ROUTES
 ARG NEXT_PUBLIC_GO_GRAPHQL_CONSUMER_USER_PASSWORD
-ARG NEXT_PUBLIC_GRAPHQL_SCHEMA_ENDPOINT_DPL_CMS="https://${CMS_DOMAIN}/graphql"
 ARG UNLILOGIN_PUBHUB_RETAILER_ID
 ARG UNLILOGIN_PUBHUB_RETAILER_KEY_CODE
 
+ENV NODE_ENV=production
 ENV NEXT_TELEMETRY_DISABLED=1
 
-RUN yarn run build
+RUN node ./scripts/prepare-docker-env-vars.mjs && \
+    yarn run build:stage2
 
 # Production image, copy all the files and run next
 FROM uselagoon/node-${NODE_VERSION}:${LAGOON_IMAGES_RELEASE_TAG} AS runner
-WORKDIR /app
+
+WORKDIR /app/go
 
 ENV NODE_ENV=production
-# Uncomment the following line in case you want to disable telemetry during runtime.
 ENV NEXT_TELEMETRY_DISABLED=1
 
-COPY --from=builder --chown=10000:10000 /app .
+COPY --from=builder --chown=10000:10000 /app /app
+WORKDIR /app/go
 
-CMD ["/app/lagoon/start.sh"]
+CMD ["lagoon/start.sh"]
