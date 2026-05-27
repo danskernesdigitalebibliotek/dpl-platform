@@ -51,7 +51,7 @@ automated deployment process which renderers the various files contained in the
 repository including a reference to which release of DPL-CMS Lagoon should use.
 
 It is still possible to create and maintain sites on Lagoon independent of this
-approach. We can for instance create a separate project for the [dpl-cms](https://github.com/danskernesdigitalebibliotek/dpl-cms)
+approach. We can for instance create a separate project for the [dpl-web](https://github.com/danskernesdigitalebibliotek/dpl-web)
 repository to support core development.
 
 ## Status
