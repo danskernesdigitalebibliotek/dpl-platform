@@ -240,7 +240,7 @@ kubectl -n harbor get pods
 ```
 
 When Harbor seems to be working, you can verify that the UI is working by
-accessing <https://harbor.lagoon.dplplat01.dpl.reload.dk/>. The password for
+accessing <https://harbor.lagoon.dplplat02.dpl.reload.dk/>. The password for
 the user `admin` can be retrived with the following command:
 
 ```bash
@@ -311,7 +311,7 @@ kubectl -n ingress-nginx get pods
 Then verify that the ingress-controller is able to serve traffic. This can be
 done by accessing the UI of one of the apps that are deployed in the platform.
 
-Access eg. <https://ui.lagoon.dplplat01.dpl.reload.dk/>.
+Access eg. <https://ui.lagoon.dplplat02.dpl.reload.dk/>.
 
 ### K8up
 

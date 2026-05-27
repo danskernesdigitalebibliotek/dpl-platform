@@ -9,9 +9,9 @@
 
 ### URLs
 
-* Base domain: `dplplat01.dpl.reload.dk`
-* Grafana: <https://grafana.lagoon.dplplat01.dpl.reload.dk/>
-* Lagoon UI: <https://ui.lagoon.dplplat01.dpl.reload.dk/>
+* Base domain: `dplplat02.dpl.reload.dk`
+* Grafana: <https://grafana.lagoon.dplplat02.dpl.reload.dk/>
+* Lagoon UI: <https://ui.lagoon.dplplat02.dpl.reload.dk/>
 
 ### DNS setup for library sites
 
@@ -22,10 +22,10 @@ CNAME: cluster-1.folkebibliotekernescms.dk
 
 ### Lagoon CLI configuration
 
-* Lagoon name: dplplat01
-* Lagoon UI: <https://ui.lagoon.dplplat01.dpl.reload.dk/>
-* GraphQL endpoint: <https://api.lagoon.dplplat01.dpl.reload.dk/graphql>
-* SSH host: 20.238.147.183
+* Lagoon name: dplplat02
+* Lagoon UI: <https://ui.lagoon.dplplat02.dpl.reload.dk/>
+* GraphQL endpoint: <https://api.lagoon.dplplat02.dpl.reload.dk/graphql>
+* SSH host: 130.226.25.97
 * SSH port: 22
 
 ## Obtaining Lagoon CLI configuration

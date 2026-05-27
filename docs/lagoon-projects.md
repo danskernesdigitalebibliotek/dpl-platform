@@ -1,6 +1,6 @@
 # Lagoon projects
 
-The Lagoon instance at `dplplat01.dpl.reload.dk` contains a range of
+The Lagoon instance at `dplplat02.dpl.reload.dk` contains a range of
 sites of a slightly different nature.
 
 ## Development sites

@@ -2,8 +2,8 @@ docker-compose-yaml: docker-compose.yml
 
 project: ${LAGOON_PROJECT_NAME}
 
-ssh: 20.238.147.183:22
-api: https://api.lagoon.dplplat01.dpl.reload.dk/graphql
+ssh: 130.226.25.97:22
+api: https://api.lagoon.dplplat02.dpl.reload.dk/graphql
 
 tasks:
   post-rollout:

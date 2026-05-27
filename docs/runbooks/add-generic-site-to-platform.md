@@ -58,8 +58,8 @@ $ PROJECT_NAME=dpl-web task lagoon:project:deploykey
 # Configure Github to post events to Lagoons webhook url.
 # The webhook url for the environment will be
 #  https://webhookhandler.lagoon.<environment>.dpl.reload.dk
-# eg for the environment dplplat01
-#  https://webhookhandler.lagoon.dplplat01.dpl.reload.dk
+# eg for the environment dplplat02
+#  https://webhookhandler.lagoon.dplplat02.dpl.reload.dk
 #
 # Referer to the official documentation linked above for an example on how to
 # set up webhooks in github.

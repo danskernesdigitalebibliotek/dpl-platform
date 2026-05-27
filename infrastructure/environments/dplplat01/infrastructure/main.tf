@@ -5,7 +5,7 @@ module "environment" {
   environment_name = "dplplat01"
   # This variable current _has_ to match the pattern
   # <environment_name>.dpl.reload.dk
-  lagoon_domain_base = "dplplat01.dpl.reload.dk"
+  lagoon_domain_base = "dplplat02.dpl.reload.dk"
   random_seed        = "LahYegheePhohGeew9Fa"
   node_pools = {
     "app4" : { min : 11, max : 20, vm : "Standard_E4s_v3", max_pods : 70 },

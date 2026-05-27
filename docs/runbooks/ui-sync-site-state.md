@@ -13,7 +13,7 @@ moduletest environment, if requested by the customer.
 ## Prerequisites
 
 - A user with access to the relevant project through the
-  [Lagoon UI](https://ui.lagoon.dplplat01.dpl.reload.dk/)
+  [Lagoon UI](https://ui.lagoon.dplplat02.dpl.reload.dk/)
 
 If you have access to the dpl-platform setup and can run task in the taskfile
 (for platform engineers, not developers of the CMS) you may want to synchronize
