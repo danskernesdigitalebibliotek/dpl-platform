@@ -75,12 +75,12 @@ $ lagoon config add \
 
 # Eg.
 $ lagoon config add \
-    --graphql https://api.lagoon.dplplat01.dpl.reload.dk/graphql \
+    --graphql https://api.lagoon.dplplat02.dpl.reload.dk/graphql \
     --force \
-    --ui https://ui.lagoon.dplplat01.dpl.reload.dk \
-    --hostname 20.238.147.183 \
+    --ui https://ui.lagoon.dplplat02.dpl.reload.dk \
+    --hostname 130.226.25.97 \
     --port 22 \
-    --lagoon dplplat01
+    --lagoon dplplat02
 ```
 
 Then log in:
@@ -92,7 +92,7 @@ lagoon login
 lagoon whoami
 
 # Eg.
-lagoon config default --lagoon dplplat01
+lagoon config default --lagoon dplplat02
 lagoon login
 lagoon whoami
 ```

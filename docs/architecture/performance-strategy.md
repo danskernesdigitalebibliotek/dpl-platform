@@ -35,7 +35,7 @@ docs.lagoon.sh documentation on [the Varnish service](https://docs.lagoon.sh/lag
 and the [varnish-drupal image](https://docs.lagoon.sh/lagoon/docker-images/varnish/varnish-drupal)
 for the specifics on the service.
 
-Refer to the caching documentation in [dpl-cms](https://github.com/danskernesdigitalebibliotek/dpl-cms)
+Refer to the caching documentation in [dpl-web](https://github.com/danskernesdigitalebibliotek/dpl-web)
 for specifics on how DPL-CMS is integrated with Varnish.
 
 ## Redis as caching backend

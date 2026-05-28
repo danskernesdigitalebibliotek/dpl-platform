@@ -6,22 +6,21 @@ const time = function() {
 }
 
 console.log("### Starting controller");
-console.log("adding dplplat01 lagoon config");
+console.log("adding dplplat02 lagoon config");
 await $`lagoon config add \
-  --graphql https://api.lagoon.dplplat01.dpl.reload.dk/graphql \
+  --graphql https://api.lagoon.dplplat02.dpl.reload.dk/graphql \
   --force \
-  --ui https://ui.lagoon.dplplat01.dpl.reload.dk \
-  --hostname 20.238.147.183 \
+  --ui https://ui.lagoon.dplplat02.dpl.reload.dk \
+  --hostname 130.226.25.97 \
   --port 22 \
-  --lagoon dplplat01 \
+  --lagoon dplplat02 \
   --ssh-key /root/.ssh/id_rsa`;
 
 await $`lagoon config feature --strict-host-key-checking "no"`;
 
-await $`lagoon config default --lagoon dplplat01`;
+await $`lagoon config default --lagoon dplplat02`;
 
-
-// verify that dplplat01 is the active lagoon
+// verify that dplplat02 is the active lagoon
 console.log("### Show current Lagoon");
 echo(await $`lagoon config list`);
 
