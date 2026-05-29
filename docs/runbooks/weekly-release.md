@@ -8,12 +8,12 @@ release.
 
 ## Prerequisites
 
-* A local checkout of the [`dpl-platform` repository](https://github.com/danskernesdigitalebibliotek/dpl-platform)
-* A running [dplsh](using-dplsh.md) with `DPLPLAT_ENV` set to the platform
+- A local checkout of the [`dpl-platform` repository](https://github.com/danskernesdigitalebibliotek/dpl-platform)
+- A running [dplsh](using-dplsh.md) with `DPLPLAT_ENV` set to the platform
   environment name.
-* The version tag you want to deploy. This must correspond to a
+- The version tag you want to deploy. This must correspond to a
   tagged version of the [`dpl-cms-source` image](https://github.com/danskernesdigitalebibliotek/dpl-cms/pkgs/container/dpl-cms-source).
-* The second latest version
+- The second latest version
 
 ## Procedure: Make the release Pull Request
 
@@ -21,12 +21,12 @@ release.
    branch for `dpl-platform` is up to date, by doing a `git pull origin main`.
 2. Create a new branch from `main`.
 3. Now update `infrastructure/environments/dplplat01/sites.yaml`. The
-    `x-defaults` anchors' `dpl-cms-release` tag should be bumped to
-    the latest version. Then update the `moduletest-dpl-cms-release` of
-    `x-webmasters-on-weekly-release-cycle` to the same version. Now update
-    `dpl-cms-release` of `x-webmasters-on-weekly-release-cycle` to the second
-    latest release. Lastly update cms-school's, the canary sites' and
-    bibliotek-test's to the lastest release for both moduletest and production.
+   `x-defaults` anchors' `dpl-cms-release` tag should be bumped to
+   the latest version. Then update the `moduletest-dpl-cms-release` of
+   `x-webmasters-on-weekly-release-cycle` to the same version. Now update
+   `dpl-cms-release` of `x-webmasters-on-weekly-release-cycle` to the second
+   latest release. Lastly update cms-school's, the canary sites' and
+   bibliotek-test's to the lastest release for both moduletest and production.
 4. Commit the change and push your branch to GitHub and create a pull
    request.
 5. Request a review for the change and wait for approval.
@@ -43,11 +43,11 @@ release.
    running and queued deployments.
 6. Wait for all the deployment to complete.
 7. Run `sites:redeploy-failed-deployments` to identify and redeploy any failed
-    deployments.
+   deployments.
 8. If some deployments did not complete determine if the error
-    relates to the platform or the application.
+   relates to the platform or the application.
 9. For all platform-related errors try to redeploy the environment
-    from the Lagoon UI.
+   from the Lagoon UI.
 10. Run `task cluster:promote-workloads-to-prod` from `dplsh`.
 11. The moduletest sites should now be reset so their state matches their
     production counter parts. This is done by running the synchonization tasks

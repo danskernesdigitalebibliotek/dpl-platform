@@ -6,8 +6,8 @@ When you need to update the support workload version sheet.
 
 ## Prerequisites
 
-* Access to the [version status sheet](https://docs.google.com/spreadsheets/d/15xLv-zhIL0g_gQaUfsslYVzAclrG-T5gkjII8mbRHoU)
-* Access to run [dplsh](using-dplsh.md)
+- Access to the [version status sheet](https://docs.google.com/spreadsheets/d/15xLv-zhIL0g_gQaUfsslYVzAclrG-T5gkjII8mbRHoU)
+- Access to run [dplsh](using-dplsh.md)
 
 ## Procedure
 

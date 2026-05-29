@@ -139,10 +139,7 @@ tasks:
           OPTIONS: module.env_repos.github_repository.site["{{.SITE}}"]
           ADDRESS_ID: env-{{.SITE}}
     preconditions:
-      - &require_site {
-          sh: '[ ! -z "{{.SITE}}" ]',
-          msg: "Variable SITE is not set or empty.",
-        }
+      - &require_site { sh: '[ ! -z "{{.SITE}}" ]', msg: "Variable SITE is not set or empty." }
 
   kubecontext:check:
     desc: "Checks if you're using the the correct context; fails if not"

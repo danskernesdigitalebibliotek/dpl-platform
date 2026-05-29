@@ -6,14 +6,14 @@ spec:
   cleanupPolicy: Delete
   database: database-{{ .Release.Name }}
   grantOption: true
-  host: '%'
+  host: "%"
   mariaDbRef:
     name: mariadb-10-6-22-production-1
     namespace: mariadb-10-6-22-production-1
     waitForIt: true
   privileges:
-  - ALL PRIVILEGES
+    - ALL PRIVILEGES
   requeueInterval: 30s
   retryInterval: 5s
-  table: '*'
+  table: "*"
   username: database-user-{{ .Release.Name }}

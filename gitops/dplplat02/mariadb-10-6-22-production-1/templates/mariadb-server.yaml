@@ -1,15 +1,15 @@
 apiVersion: k8s.mariadb.com/v1alpha1
 kind: MariaDB
 metadata:
-  name: {{ .Release.Name }}
+  name: { { .Release.Name } }
 spec:
   image: docker-registry1.mariadb.com/library/mariadb:{{ .Values.imageTag }}
   rootPasswordSecretKeyRef:
     name: mariadb-root-password-secret
     key: root-password
-  replicas: {{ .Values.replicas }}
+  replicas: { { .Values.replicas } }
   storage:
-    size: {{ .Values.storageSize }}
+    size: { { .Values.storageSize } }
     storageClassName: ceph-block
     resizeInUseVolumes: true
     waitForVolumeResize: true

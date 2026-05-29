@@ -11,7 +11,7 @@ This situation is caused by the RabbitMQ broker not starting correctly.
 
 ## Prerequisites
 
-* A [dplsh session](using-dplsh.md) with DPLPLAT_ENV exported .
+- A [dplsh session](using-dplsh.md) with DPLPLAT_ENV exported .
 
 ## Procedure
 

@@ -50,7 +50,7 @@ kube-prometheus-stack:
         kubectl:
           registry: registry.k8s.io
           repository: kubectl
-          tag: ""  # defaults to the Kubernetes version
+          tag: "" # defaults to the Kubernetes version
           sha: ""
           pullPolicy: IfNotPresent
 
@@ -383,7 +383,6 @@ kube-prometheus-stack:
   ## ref: https://prometheus.io/docs/alerting/alertmanager/
   ##
   alertmanager:
-
     ## Deploy alertmanager
     ##
     enabled: true
@@ -511,29 +510,29 @@ kube-prometheus-stack:
         resolve_timeout: 5m
       inhibit_rules:
         - source_matchers:
-            - 'severity = critical'
+            - "severity = critical"
           target_matchers:
-            - 'severity =~ warning|info'
+            - "severity =~ warning|info"
           equal:
-            - 'namespace'
-            - 'alertname'
+            - "namespace"
+            - "alertname"
         - source_matchers:
-            - 'severity = warning'
+            - "severity = warning"
           target_matchers:
-            - 'severity = info'
+            - "severity = info"
           equal:
-            - 'namespace'
-            - 'alertname'
+            - "namespace"
+            - "alertname"
         - source_matchers:
-            - 'alertname = InfoInhibitor'
+            - "alertname = InfoInhibitor"
           target_matchers:
-            - 'severity = info'
+            - "severity = info"
           equal:
-            - 'namespace'
+            - "namespace"
         - target_matchers:
-            - 'alertname = InfoInhibitor'
+            - "alertname = InfoInhibitor"
       route:
-        group_by: ['namespace']
+        group_by: ["namespace"]
         group_wait: 30s
         group_interval: 5m
         repeat_interval: 12h
@@ -545,7 +544,7 @@ kube-prometheus-stack:
           webhook_configs:
             - url_file: /etc/alertmanager/secrets/alertmanager-secrets/url
       templates:
-      - '/etc/alertmanager/config/*.tmpl'
+        - "/etc/alertmanager/config/*.tmpl"
 
     ## Alertmanager configuration directives (as string type, preferred over the config hash map)
     ## stringConfig will be used only if tplConfig is true
@@ -1030,7 +1029,6 @@ kube-prometheus-stack:
       #         storage: 50Gi
       #     selector: {}
 
-
       ## The external URL the Alertmanager instances will be available under. This is necessary to generate correct URLs. This is necessary if Alertmanager is not served from root of a DNS name. string  false
       ##
       externalUrl:
@@ -1380,7 +1378,7 @@ kube-prometheus-stack:
       tls:
         - secretName: grafana.dplplat02.dpl.reload.dk-tls
           hosts:
-          - grafana.dplplat02.dpl.reload.dk
+            - grafana.dplplat02.dpl.reload.dk
 
     # # To make Grafana persistent (Using Statefulset)
     # #
@@ -1388,8 +1386,8 @@ kube-prometheus-stack:
       enabled: false
       # type: sts
       # storageClassName: "storageClassName"
-    #   accessModes:
-    #     - ReadWriteOnce
+      #   accessModes:
+      #     - ReadWriteOnce
       size: 2Gi
     #   finalizers:
     #     - kubernetes.io/pvc-protection
@@ -1488,16 +1486,16 @@ kube-prometheus-stack:
     ## Configure additional grafana datasources (passed through tpl)
     ## ref: https://grafana.com/docs/grafana/latest/administration/provisioning/#datasources
     additionalDataSources:
-    - name: loki
-      type: loki
-      access: proxy
-      basicAuth: false
-      editable: false
-      url: http://loki-read-headless.loki.svc.cluster.local:3100
-      orgId: 1
-      jsonData:
-        maxLines: 1000
-        queryTimeout: 60s
+      - name: loki
+        type: loki
+        access: proxy
+        basicAuth: false
+        editable: false
+        url: http://loki-read-headless.loki.svc.cluster.local:3100
+        orgId: 1
+        jsonData:
+          maxLines: 1000
+          queryTimeout: 60s
     # - name: prometheus-sample
     #   access: proxy
     #   basicAuth: true
@@ -1742,38 +1740,38 @@ kube-prometheus-stack:
         # Drop less useful container CPU metrics.
         - sourceLabels: [__name__]
           action: drop
-          regex: 'container_cpu_(cfs_throttled_seconds_total|load_average_10s|system_seconds_total|user_seconds_total)'
+          regex: "container_cpu_(cfs_throttled_seconds_total|load_average_10s|system_seconds_total|user_seconds_total)"
         # Drop less useful container / always zero filesystem metrics.
         - sourceLabels: [__name__]
           action: drop
-          regex: 'container_fs_(io_current|io_time_seconds_total|io_time_weighted_seconds_total|reads_merged_total|sector_reads_total|sector_writes_total|writes_merged_total)'
+          regex: "container_fs_(io_current|io_time_seconds_total|io_time_weighted_seconds_total|reads_merged_total|sector_reads_total|sector_writes_total|writes_merged_total)"
         # Drop less useful / always zero container memory metrics.
         - sourceLabels: [__name__]
           action: drop
-          regex: 'container_memory_(mapped_file|swap)'
+          regex: "container_memory_(mapped_file|swap)"
         # Drop less useful container process metrics.
         - sourceLabels: [__name__]
           action: drop
-          regex: 'container_(file_descriptors|tasks_state|threads_max)'
+          regex: "container_(file_descriptors|tasks_state|threads_max)"
         # Drop container_memory_failures_total{scope="hierarchy"} metrics,
         # we only need the container scope.
         - sourceLabels: [__name__, scope]
           action: drop
-          regex: 'container_memory_failures_total;hierarchy'
+          regex: "container_memory_failures_total;hierarchy"
         # Drop container_network_... metrics that match various interfaces that
         # correspond to CNI and similar interfaces. This avoids capturing network
         # metrics for host network containers.
         - sourceLabels: [__name__, interface]
           action: drop
-          regex: 'container_network_.*;(cali|cilium|cni|lxc|nodelocaldns|tunl).*'
+          regex: "container_network_.*;(cali|cilium|cni|lxc|nodelocaldns|tunl).*"
         # Drop container spec metrics that overlap with kube-state-metrics.
         - sourceLabels: [__name__]
           action: drop
-          regex: 'container_spec.*'
+          regex: "container_spec.*"
         # Drop cgroup metrics with no pod.
         - sourceLabels: [id, pod]
           action: drop
-          regex: '.+;'
+          regex: ".+;"
       # - sourceLabels: [__name__, image]
       #   separator: ;
       #   regex: container_([a-z_]+);
@@ -2837,7 +2835,6 @@ kube-prometheus-stack:
         ## Decrease log verbosity to errors only
         # logLevel: error
 
-
         ## Liveness probe
         ##
         livenessProbe:
@@ -2978,7 +2975,7 @@ kube-prometheus-stack:
           readOnlyRootFilesystem: true
           capabilities:
             drop:
-            - ALL
+              - ALL
 
         # Security context for patch job container
       patchWebhookJob:
@@ -2987,20 +2984,20 @@ kube-prometheus-stack:
           readOnlyRootFilesystem: true
           capabilities:
             drop:
-            - ALL
+              - ALL
 
       # Use certmanager to generate webhook certs
       certManager:
         enabled: false
         # self-signed root certificate
         rootCert:
-          duration: ""  # default to be 5y
+          duration: "" # default to be 5y
           # -- Set the revisionHistoryLimit on the Certificate. See
           # https://cert-manager.io/docs/reference/api-docs/#cert-manager.io/v1.CertificateSpec
           # Defaults to nil.
           revisionHistoryLimit:
         admissionCert:
-          duration: ""  # default to be 1y
+          duration: "" # default to be 1y
           # -- Set the revisionHistoryLimit on the Certificate. See
           # https://cert-manager.io/docs/reference/api-docs/#cert-manager.io/v1.CertificateSpec
           # Defaults to nil.
@@ -3075,21 +3072,21 @@ kube-prometheus-stack:
         ipFamilies: ["IPv6", "IPv4"]
         ipFamilyPolicy: "PreferDualStack"
 
-    ## Port to expose on each node
-    ## Only used if service.type is 'NodePort'
-    ##
+      ## Port to expose on each node
+      ## Only used if service.type is 'NodePort'
+      ##
       nodePort: 30080
 
       nodePortTls: 30443
 
-    ## Additional ports to open for Prometheus operator service
-    ## ref: https://kubernetes.io/docs/concepts/services-networking/service/#multi-port-services
-    ##
+      ## Additional ports to open for Prometheus operator service
+      ## ref: https://kubernetes.io/docs/concepts/services-networking/service/#multi-port-services
+      ##
       additionalPorts: []
 
-    ## Loadbalancer IP
-    ## Only use if service.type is "LoadBalancer"
-    ##
+      ## Loadbalancer IP
+      ## Only use if service.type is "LoadBalancer"
+      ##
       loadBalancerIP: ""
       loadBalancerSourceRanges: []
 
@@ -3097,9 +3094,9 @@ kube-prometheus-stack:
       ##
       externalTrafficPolicy: Cluster
 
-    ## Service type
-    ## NodePort, ClusterIP, LoadBalancer
-    ##
+      ## Service type
+      ## NodePort, ClusterIP, LoadBalancer
+      ##
       type: ClusterIP
 
       ## List of IP addresses at which the Prometheus server service is available
@@ -3292,7 +3289,7 @@ kube-prometheus-stack:
       readOnlyRootFilesystem: true
       capabilities:
         drop:
-        - ALL
+          - ALL
 
     # Enable vertical pod autoscaler support for prometheus-operator
     verticalPodAutoscaler:
@@ -4367,7 +4364,7 @@ kube-prometheus-stack:
             accessModes: ["ReadWriteOnce"]
             resources:
               requests:
-              # Setup a disk for holding the metrics.
+                # Setup a disk for holding the metrics.
                 storage: 500Gi
       ## Using PersistentVolumeClaim
       ##
@@ -4444,7 +4441,6 @@ kube-prometheus-stack:
       #    {{end}}
       #    relabel_configs:
       #    ...
-
 
       ## If additional scrape configurations are already deployed in a single secret file you can use this section.
       ## Expected values are the secret name and key
@@ -4645,7 +4641,6 @@ kube-prometheus-stack:
       ## if either value is zero, in which case the non-zero value will be used. If both values are zero, no limit is enforced.
       enforcedTargetLimit: false
 
-
       ## Per-scrape limit on number of labels that will be accepted for a sample. If more than this number of labels are present
       ## post metric-relabeling, the entire scrape will be treated as failed. 0 means no limit. Only valid in Prometheus versions
       ## 2.27.0 and newer.
@@ -4725,203 +4720,202 @@ kube-prometheus-stack:
     ##
     # - name: ""
 
-      ## Additional labels to set used for the ServiceMonitorSelector. Together with standard labels from
-      ## the chart
-      ##
-      # additionalLabels: {}
+    ## Additional labels to set used for the ServiceMonitorSelector. Together with standard labels from
+    ## the chart
+    ##
+    # additionalLabels: {}
 
-      ## Service label for use in assembling a job name of the form <label value>-<port>
-      ## If no label is specified, the service name is used.
-      ##
-      # jobLabel: ""
+    ## Service label for use in assembling a job name of the form <label value>-<port>
+    ## If no label is specified, the service name is used.
+    ##
+    # jobLabel: ""
 
-      ## labels to transfer from the kubernetes service to the target
-      ##
-      # targetLabels: []
+    ## labels to transfer from the kubernetes service to the target
+    ##
+    # targetLabels: []
 
-      ## labels to transfer from the kubernetes pods to the target
-      ##
-      # podTargetLabels: []
+    ## labels to transfer from the kubernetes pods to the target
+    ##
+    # podTargetLabels: []
 
-      ## Label selector for services to which this ServiceMonitor applies
-      ##
-      # selector: {}
-        ## Example which selects all services to be monitored
-        ## with label "monitoredby" with values any of "example-service-1" or "example-service-2"
-        # matchExpressions:
-        #   - key: "monitoredby"
-        #     operator: In
-        #     values:
-        #       - example-service-1
-        #       - example-service-2
+    ## Label selector for services to which this ServiceMonitor applies
+    ##
+    # selector: {}
+    ## Example which selects all services to be monitored
+    ## with label "monitoredby" with values any of "example-service-1" or "example-service-2"
+    # matchExpressions:
+    #   - key: "monitoredby"
+    #     operator: In
+    #     values:
+    #       - example-service-1
+    #       - example-service-2
 
-        ## label selector for services
-        ##
-        # matchLabels: {}
+    ## label selector for services
+    ##
+    # matchLabels: {}
 
-      ## Namespaces from which services are selected
-      ##
-      # namespaceSelector:
-        ## Match any namespace
-        ##
-        # any: false
+    ## Namespaces from which services are selected
+    ##
+    # namespaceSelector:
+    ## Match any namespace
+    ##
+    # any: false
 
-        ## Explicit list of namespace names to select
-        ##
-        # matchNames: []
+    ## Explicit list of namespace names to select
+    ##
+    # matchNames: []
 
-      ## Endpoints of the selected service to be monitored
-      ##
-      # endpoints: []
-        ## Name of the endpoint's service port
-        ## Mutually exclusive with targetPort
-        # - port: ""
+    ## Endpoints of the selected service to be monitored
+    ##
+    # endpoints: []
+    ## Name of the endpoint's service port
+    ## Mutually exclusive with targetPort
+    # - port: ""
 
-        ## Name or number of the endpoint's target port
-        ## Mutually exclusive with port
-        # - targetPort: ""
+    ## Name or number of the endpoint's target port
+    ## Mutually exclusive with port
+    # - targetPort: ""
 
-        ## File containing bearer token to be used when scraping targets
-        ##
-        #   bearerTokenFile: ""
+    ## File containing bearer token to be used when scraping targets
+    ##
+    #   bearerTokenFile: ""
 
-        ## Interval at which metrics should be scraped
-        ##
-        #   interval: 30s
+    ## Interval at which metrics should be scraped
+    ##
+    #   interval: 30s
 
-        ## HTTP path to scrape for metrics
-        ##
-        #   path: /metrics
+    ## HTTP path to scrape for metrics
+    ##
+    #   path: /metrics
 
-        ## HTTP scheme to use for scraping
-        ##
-        #   scheme: http
+    ## HTTP scheme to use for scraping
+    ##
+    #   scheme: http
 
-        ## TLS configuration to use when scraping the endpoint
-        ##
-        #   tlsConfig:
+    ## TLS configuration to use when scraping the endpoint
+    ##
+    #   tlsConfig:
 
-            ## Path to the CA file
-            ##
-            # caFile: ""
+    ## Path to the CA file
+    ##
+    # caFile: ""
 
-            ## Path to client certificate file
-            ##
-            # certFile: ""
+    ## Path to client certificate file
+    ##
+    # certFile: ""
 
-            ## Skip certificate verification
-            ##
-            # insecureSkipVerify: false
+    ## Skip certificate verification
+    ##
+    # insecureSkipVerify: false
 
-            ## Path to client key file
-            ##
-            # keyFile: ""
+    ## Path to client key file
+    ##
+    # keyFile: ""
 
-            ## Server name used to verify host name
-            ##
-            # serverName: ""
+    ## Server name used to verify host name
+    ##
+    # serverName: ""
 
-        ## MetricRelabelConfigs to apply to samples after scraping, but before ingestion.
-        ## ref: https://github.com/prometheus-operator/prometheus-operator/blob/main/Documentation/api-reference/api.md#relabelconfig
-        ##
-        # metricRelabelings: []
-        # - action: keep
-        #   regex: 'kube_(daemonset|deployment|pod|namespace|node|statefulset).+'
-        #   sourceLabels: [__name__]
+    ## MetricRelabelConfigs to apply to samples after scraping, but before ingestion.
+    ## ref: https://github.com/prometheus-operator/prometheus-operator/blob/main/Documentation/api-reference/api.md#relabelconfig
+    ##
+    # metricRelabelings: []
+    # - action: keep
+    #   regex: 'kube_(daemonset|deployment|pod|namespace|node|statefulset).+'
+    #   sourceLabels: [__name__]
 
-        ## RelabelConfigs to apply to samples before scraping
-        ## ref: https://github.com/prometheus-operator/prometheus-operator/blob/main/Documentation/api-reference/api.md#relabelconfig
-        ##
-        # relabelings: []
-        # - sourceLabels: [__meta_kubernetes_pod_node_name]
-        #   separator: ;
-        #   regex: ^(.*)$
-        #   targetLabel: nodename
-        #   replacement: $1
-        #   action: replace
+    ## RelabelConfigs to apply to samples before scraping
+    ## ref: https://github.com/prometheus-operator/prometheus-operator/blob/main/Documentation/api-reference/api.md#relabelconfig
+    ##
+    # relabelings: []
+    # - sourceLabels: [__meta_kubernetes_pod_node_name]
+    #   separator: ;
+    #   regex: ^(.*)$
+    #   targetLabel: nodename
+    #   replacement: $1
+    #   action: replace
 
-      ## Fallback scrape protocol used by Prometheus for scraping metrics
-      ## ref: https://github.com/prometheus-operator/prometheus-operator/blob/main/Documentation/api-reference/api.md#monitoring.coreos.com/v1.ScrapeProtocol
-      ##
-      # fallbackScrapeProtocol: ""
+    ## Fallback scrape protocol used by Prometheus for scraping metrics
+    ## ref: https://github.com/prometheus-operator/prometheus-operator/blob/main/Documentation/api-reference/api.md#monitoring.coreos.com/v1.ScrapeProtocol
+    ##
+    # fallbackScrapeProtocol: ""
 
-      ## Attaches node metadata to the discovered targets
-      ## ref: https://github.com/prometheus-operator/prometheus-operator/blob/main/Documentation/api-reference/api.md#monitoring.coreos.com/v1.AttachMetadata
-      ##
-      # attachMetadata:
-      #   node: true
+    ## Attaches node metadata to the discovered targets
+    ## ref: https://github.com/prometheus-operator/prometheus-operator/blob/main/Documentation/api-reference/api.md#monitoring.coreos.com/v1.AttachMetadata
+    ##
+    # attachMetadata:
+    #   node: true
 
     additionalPodMonitors: []
     ## Name of the PodMonitor to create
     ##
     # - name: ""
 
-      ## Additional labels to set used for the PodMonitorSelector. Together with standard labels from
-      ## the chart
-      ##
-      # additionalLabels: {}
+    ## Additional labels to set used for the PodMonitorSelector. Together with standard labels from
+    ## the chart
+    ##
+    # additionalLabels: {}
 
-      ## Pod label for use in assembling a job name of the form <label value>-<port>
-      ## If no label is specified, the pod endpoint name is used.
-      ##
-      # jobLabel: ""
+    ## Pod label for use in assembling a job name of the form <label value>-<port>
+    ## If no label is specified, the pod endpoint name is used.
+    ##
+    # jobLabel: ""
 
-      ## Label selector for pods to which this PodMonitor applies
-      ##
-      # selector: {}
-        ## Example which selects all Pods to be monitored
-        ## with label "monitoredby" with values any of "example-pod-1" or "example-pod-2"
-        # matchExpressions:
-        #   - key: "monitoredby"
-        #     operator: In
-        #     values:
-        #       - example-pod-1
-        #       - example-pod-2
+    ## Label selector for pods to which this PodMonitor applies
+    ##
+    # selector: {}
+    ## Example which selects all Pods to be monitored
+    ## with label "monitoredby" with values any of "example-pod-1" or "example-pod-2"
+    # matchExpressions:
+    #   - key: "monitoredby"
+    #     operator: In
+    #     values:
+    #       - example-pod-1
+    #       - example-pod-2
 
-        ## label selector for pods
-        ##
-        # matchLabels: {}
+    ## label selector for pods
+    ##
+    # matchLabels: {}
 
-      ## PodTargetLabels transfers labels on the Kubernetes Pod onto the target.
-      ##
-      # podTargetLabels: {}
+    ## PodTargetLabels transfers labels on the Kubernetes Pod onto the target.
+    ##
+    # podTargetLabels: {}
 
-      ## SampleLimit defines per-scrape limit on number of scraped samples that will be accepted.
-      ##
-      # sampleLimit: 0
+    ## SampleLimit defines per-scrape limit on number of scraped samples that will be accepted.
+    ##
+    # sampleLimit: 0
 
-      ## Namespaces from which pods are selected
-      ##
-      # namespaceSelector:
-        ## Match any namespace
-        ##
-        # any: false
+    ## Namespaces from which pods are selected
+    ##
+    # namespaceSelector:
+    ## Match any namespace
+    ##
+    # any: false
 
-        ## Explicit list of namespace names to select
-        ##
-        # matchNames: []
+    ## Explicit list of namespace names to select
+    ##
+    # matchNames: []
 
-      ## Endpoints of the selected pods to be monitored
-      ## https://github.com/prometheus-operator/prometheus-operator/blob/main/Documentation/api-reference/api.md#podmetricsendpoint
-      ##
-      # podMetricsEndpoints: []
+    ## Endpoints of the selected pods to be monitored
+    ## https://github.com/prometheus-operator/prometheus-operator/blob/main/Documentation/api-reference/api.md#podmetricsendpoint
+    ##
+    # podMetricsEndpoints: []
 
-      ## Fallback scrape protocol used by Prometheus for scraping metrics
-      ## ref: https://github.com/prometheus-operator/prometheus-operator/blob/main/Documentation/api-reference/api.md#monitoring.coreos.com/v1.ScrapeProtocol
-      ##
-      # fallbackScrapeProtocol: ""
+    ## Fallback scrape protocol used by Prometheus for scraping metrics
+    ## ref: https://github.com/prometheus-operator/prometheus-operator/blob/main/Documentation/api-reference/api.md#monitoring.coreos.com/v1.ScrapeProtocol
+    ##
+    # fallbackScrapeProtocol: ""
 
-      ## Attaches node metadata to the discovered targets
-      ## ref: https://github.com/prometheus-operator/prometheus-operator/blob/main/Documentation/api-reference/api.md#monitoring.coreos.com/v1.AttachMetadata
-      ##
-      # attachMetadata:
-      #   node: true
+    ## Attaches node metadata to the discovered targets
+    ## ref: https://github.com/prometheus-operator/prometheus-operator/blob/main/Documentation/api-reference/api.md#monitoring.coreos.com/v1.AttachMetadata
+    ##
+    # attachMetadata:
+    #   node: true
 
   ## Configuration for thanosRuler
   ## ref: https://thanos.io/tip/components/rule.md/
   ##
   thanosRuler:
-
     ## Deploy thanosRuler
     ##
     enabled: false
@@ -5446,7 +5440,8 @@ kube-prometheus-stack:
   ## Extra manifests to deploy.  Can be of type dict or list.
   ## If dict, keys are ignored and only values are used.
   ## Items contained within extraObjects can be defined as dict or string and are passed through tpl.
-  extraManifests: null
+  extraManifests:
+    null
     # - apiVersion: v1
     #   kind: ConfigMap
     #   metadata:

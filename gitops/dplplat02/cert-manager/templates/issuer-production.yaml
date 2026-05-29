@@ -10,6 +10,6 @@ spec:
     privateKeySecretRef:
       name: cm-account-key-prod
     solvers:
-    - http01:
-       ingress:
-         class: nginx
+      - http01:
+          ingress:
+            class: nginx

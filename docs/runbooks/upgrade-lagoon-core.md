@@ -39,7 +39,7 @@ Remember to pull down the changes to the `lagoon-core.values.sops.yaml` file.
 
 ## Encrypt the lagoon-core.values.sops.yaml file again
 
-Run  `sops -e -i lagoon-core.values.sops.yaml`. This encrypts the file in-place.
+Run `sops -e -i lagoon-core.values.sops.yaml`. This encrypts the file in-place.
 
 ## Helm diff the updated values file
 

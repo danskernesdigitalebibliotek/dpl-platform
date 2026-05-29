@@ -19,13 +19,13 @@ site being down.
 3. Log into [StatusCake](https://www.statuscake.com/)
 4. Locate the uptime test for the library site in question
 5. Find the downtime root cause for alert based on the time the alert.
-6. Click *Extra details*
+6. Click _Extra details_
 7. Note the error
 8. Log into Grafana
-9. Click *Explore*
-10. Add a label filter with the label *namespace* and value being the name of
+9. Click _Explore_
+10. Add a label filter with the label _namespace_ and value being the name of
     the site being down.
-11. Add a label filter with the label *app* and value *php*
+11. Add a label filter with the label _app_ and value _php_
 12. Set the time range to include the start of the alert
 13. Note any errors
 
@@ -37,7 +37,7 @@ These are a list of known problems and how to address them.
 
 #### Observations
 
-- StatusCake reports *Request timeout* and `EAI_AGAIN` additional data.
+- StatusCake reports _Request timeout_ and `EAI_AGAIN` additional data.
 
 #### Action
 
@@ -56,8 +56,8 @@ are outside the scope of the platform.
 1. Log into Lagoon UI
 2. Locate the project in question
 3. Locate the environment in question
-4. Locate *Tasks*
-5. Run the task *Clear Drupal caches* for the environment in question
+4. Locate _Tasks_
+5. Run the task _Clear Drupal caches_ for the environment in question
 6. Wait for the task to finish
 7. Verify that `/health` reports HTTP status code 200
 

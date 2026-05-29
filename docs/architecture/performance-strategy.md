@@ -17,18 +17,18 @@ in a Redis key/value store.
    serves any requests for static assets.
 4. If the request is for a dynamic page the request is forwarded to the Drupal-
    installation hosted by PHP-FPM.
-5. Drupal bootstraps, and produces the requested response.  
-    * During this process it will either populate or reuse it cache which is
-      stored in Redis.  
-    * Depending on the request Drupal will execute a number of queries against
-      MariaDB and a search index.
+5. Drupal bootstraps, and produces the requested response.
+   - During this process it will either populate or reuse it cache which is
+     stored in Redis.
+   - Depending on the request Drupal will execute a number of queries against
+     MariaDB and a search index.
 
 ## Caching of http responses
 
 Varnish will cache any http responses that fulfills the following requirements
 
-* Is not associated with a php-session (ie, the user is logged in)
-* Is a 200
+- Is not associated with a php-session (ie, the user is logged in)
+- Is a 200
 
 Refer the [Lagoon drupal.vcl](https://github.com/uselagoon/lagoon-images/blob/main/images/varnish-drupal/drupal.vcl),
 docs.lagoon.sh documentation on [the Varnish service](https://docs.lagoon.sh/lagoon/drupal/services/varnish)
@@ -42,4 +42,4 @@ for specifics on how DPL-CMS is integrated with Varnish.
 
 DPL-CMS is configured to use Redis as the backend for its core cache as an
 alternative to the default use of the sql-database as backend. This ensures that
- a busy site does not overload the shared mariadb-server.
+a busy site does not overload the shared mariadb-server.

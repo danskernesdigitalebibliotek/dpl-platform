@@ -67,7 +67,6 @@ mariadb-operator:
     enabled: true
 
     aggregation:
-
       # -- Specifies whether the cluster roles aggrate to view and edit predefinied roles
       enabled: true
 
@@ -291,4 +290,3 @@ mariadb-operator:
     tolerations: []
     # -- Affinity to add to controller Pod
     affinity: {}
-

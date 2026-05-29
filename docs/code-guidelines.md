@@ -3,9 +3,9 @@
 The following guidelines describe best practices for developing code for the DPL
 Platform project. The guidelines should help achieve:
 
-* A stable, secure and high quality foundation for building and maintaining
+- A stable, secure and high quality foundation for building and maintaining
   the platform and its infrastructure.
-* Consistency across multiple developers participating in the project
+- Consistency across multiple developers participating in the project
 
 Contributions to the core DPL Platform project will be reviewed by members of the
 Core team. These guidelines should inform contributors about what to expect in
@@ -27,22 +27,22 @@ be especially aware of.
 
 ### General
 
-* The default language for all code and comments is English.
+- The default language for all code and comments is English.
 
 ### Shell scripts
 
-* Shell-scripts must pass a shellcheck validation
+- Shell-scripts must pass a shellcheck validation
 
 ### Terraform
 
-* Any Terraform HCL must be formatted to match the format required by
+- Any Terraform HCL must be formatted to match the format required by
   `terraform fmt`
-* Terraform configuration should be organized into submodules instantiated by
+- Terraform configuration should be organized into submodules instantiated by
   root modules.
 
 ### Markdown
 
-* Markdown must pass validation by [markdownlint](https://github.com/DavidAnson/markdownlint-cli2)
+- Markdown must be formatted with [prettier](https://prettier.io/).
 
 ## Code comments
 
@@ -73,8 +73,8 @@ Commit messages must follow these guidelines:
    description in the body is expected.
 5. If the commit is a result of an issue in a public issue tracker,
    platform.dandigbib.dk, then the subject must start with the issue number
-  followed by a colon (:). If the commit is a result of a private issue tracker
-  then the issue id must be kept in the commit body.
+   followed by a colon (:). If the commit is a result of a private issue tracker
+   then the issue id must be kept in the commit body.
 
 When creating a pull request the pull request description should not contain any
 information that is not already available in the commit messages.
@@ -93,8 +93,7 @@ The following tools pay a key part here:
 
 1. [terraform fmt](https://www.terraform.io/docs/cli/commands/fmt.html) for standard
    Terraform formatting.
-2. [markdownlint-cli2](https://github.com/DavidAnson/markdownlint-cli2) for
-   linting markdown files. The tool is configured via /.markdownlint-cli2.yaml
+2. [prettier](https://prettier.io/) for formatting code.
 3. [ShellCheck](https://github.com/koalaman/shellcheck) with its default configuration.
 
 In general all tools must be able to run locally. This allows developers to get
@@ -104,8 +103,7 @@ Tools which provide automated fixes are preferred. This reduces the burden of
 keeping code compliant for developers.
 
 Code which is to be exempt from these standards must be marked accordingly in
-the codebase - usually through inline comments ([markdownlint](https://github.com/DavidAnson/markdownlint/blob/main/README.md#configuration),
-[ShellCheck](https://github.com/koalaman/shellcheck/wiki/Ignore)).
+the codebase - usually through the `.prettierignore` file or [`shellcheckignore` comments](https://github.com/koalaman/shellcheck/wiki/Ignore).
 This must also include a human readable reasoning. This ensures that deviations
 do not affect future analysis and the Core project should always pass through
 static analysis.

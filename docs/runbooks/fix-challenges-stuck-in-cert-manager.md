@@ -21,7 +21,7 @@ on your machine or use it from `DPLSH`.
 
 1. Check how many challenges exists accross namespaces.
 2. Check the logs of the leader Cert-manager pod. If it is handling certicates
-wait until it is not.
+   wait until it is not.
 3. Kill the leader pod. It should now start handling the challenges again.
 
 Step 3 might have to be repeated several times until the challenges has all

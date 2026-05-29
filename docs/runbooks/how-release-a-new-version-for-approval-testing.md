@@ -6,12 +6,12 @@ When deploying a new release, for approval testing by DDF, on the staging projec
 
 ## Prerequisites
 
-* A local checkout of the [`dpl-platform` repository](https://github.com/danskernesdigitalebibliotek/dpl-platform)
-* A running [dplsh](using-dplsh.md) with `DPLPLAT_ENV` set to the platform
+- A local checkout of the [`dpl-platform` repository](https://github.com/danskernesdigitalebibliotek/dpl-platform)
+- A running [dplsh](using-dplsh.md) with `DPLPLAT_ENV` set to the platform
   environment name.
-* The version tag you want to deploy. This must correspond to a
+- The version tag you want to deploy. This must correspond to a
   tagged version of the [`dpl-cms-source` image](https://github.com/danskernesdigitalebibliotek/dpl-cms/pkgs/container/dpl-cms-source).
-* The version tag of Go that you want to deploy. The version generally
+- The version tag of Go that you want to deploy. The version generally
   follows the cms version unless a hotfix is being released.
 
 ## Procedure: New release for approval testing

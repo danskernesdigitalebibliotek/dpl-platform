@@ -10,7 +10,7 @@ To summaries a ADR could contain the following sections (quoted from the above
 article):
 
 - **Title**: These documents have names that are short noun phrases. For example,
- "ADR 1: Deployment on Ruby on Rails 3.0.10" or "ADR 9: LDAP for Multitenant Integration"
+  "ADR 1: Deployment on Ruby on Rails 3.0.10" or "ADR 9: LDAP for Multitenant Integration"
 
 - **Context**: This section describes the forces at play, including technological
   , political, social, and project local. These forces are probably in tension,
@@ -26,9 +26,9 @@ article):
   a reference to its replacement.
 
 - **Consequences**: This section describes the resulting context, after applying
- the decision. All consequences should be listed here, not just the "positive"
- ones. A particular decision may have positive, negative, and neutral consequences,
- but all of them affect the team and project in the future.
+  the decision. All consequences should be listed here, not just the "positive"
+  ones. A particular decision may have positive, negative, and neutral consequences,
+  but all of them affect the team and project in the future.
 
 <!--
 Template

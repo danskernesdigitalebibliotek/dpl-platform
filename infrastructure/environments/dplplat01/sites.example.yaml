@@ -59,8 +59,7 @@ sites:
     name: "Rødovre Bibliotek"
     description: "PoC environment for Rødovre Bibliotek"
     primary-domain: "rdb.dplplat02.dpl.reload.dk"
-    secondary-domains:
-      ["www.rdb.dplplat02.dpl.reload.dk", "www2.rdb.dplplat02.dpl.reload.dk"]
+    secondary-domains: ["www.rdb.dplplat02.dpl.reload.dk", "www2.rdb.dplplat02.dpl.reload.dk"]
     dpl-cms-release: "0.6.0"
     deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIEEqMszAfB6roiO49D1Zu407G2cUvCAhiJkI3sPOzQCs"
     <<: *default-release-image-source

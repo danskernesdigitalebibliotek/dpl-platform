@@ -6,12 +6,12 @@ known problems and how to address them.
 If a problem is not mentioned explicitly it should be raised to team which is
 most likely responsible:
 
-* All deployment steps prefixed with *Post-Rollout*: Application developers
-* All other errors: Platform administrators
+- All deployment steps prefixed with _Post-Rollout_: Application developers
+- All other errors: Platform administrators
 
 ## Platform-related errors
 
-A Lagoon deployment can end up with a *Failed* status. If this is the case then
+A Lagoon deployment can end up with a _Failed_ status. If this is the case then
 the following errors may show up in the log output shown for the deployment in
 the Lagoon UI.
 
@@ -35,8 +35,8 @@ This may be caused by a spike in load during deployment.
 
 ### Harbor authentication failed
 
-If log output for the deployment contains the following during the *Image Push
-to Registry* stage of the deployment then redeploy the environment from the
+If log output for the deployment contains the following during the _Image Push
+to Registry_ stage of the deployment then redeploy the environment from the
 Lagoon UI:
 
 `level=fatal msg="copying system image from manifest list: trying to reuse blob
@@ -48,8 +48,8 @@ It should be addressed in a future update of this part of the platform.
 
 ### MySQL server has gone away
 
-If log output for the deployment contains the following during the *Post-Rollout
-drush deploy* stage of the deployment then redeploy the environment from the
+If log output for the deployment contains the following during the _Post-Rollout
+drush deploy_ stage of the deployment then redeploy the environment from the
 Lagoon UI:
 
 `Drupal\Core\Database\DatabaseExceptionWrapper: SQLSTATE[HY000]: General error:
@@ -60,8 +60,8 @@ during deployments.
 
 ### Service deployment exceeded its progress deadline
 
-If log output for the deployment contains the following during the *Applying
-Deployments* stage of the deployment then redeploy the environment from the
+If log output for the deployment contains the following during the _Applying
+Deployments_ stage of the deployment then redeploy the environment from the
 Lagoon UI:
 
 ```shell
@@ -74,8 +74,8 @@ This may be caused by a spike in load during deployment.
 
 ### Drush bootstrap failed
 
-If log output for the deployment contains the following during the *Post-Rollout
-drush deploy* stage of the deployment then redeploy the environment from the
+If log output for the deployment contains the following during the _Post-Rollout
+drush deploy_ stage of the deployment then redeploy the environment from the
 Lagoon UI:
 
 ```shell

@@ -14,16 +14,16 @@ After an evaluation, [Lagoon](https://docs.lagoon.sh/lagoon/) was chosen.
 
 The main factors behind the decision to use Lagoon where:
 
-* Much lower cost of maintenance than a self-built platform.
-* The platform is continually updated, and the updates are available for free.
-* A well-established platform with a lot of proven functionality right out of
+- Much lower cost of maintenance than a self-built platform.
+- The platform is continually updated, and the updates are available for free.
+- A well-established platform with a lot of proven functionality right out of
   the box.
-* The option of professional support by [Amazee](https://amazee.io)
+- The option of professional support by [Amazee](https://amazee.io)
 
 When using and integrating with Lagoon we should strive to
 
-* Make as little modifications to Lagoon as possible
-* Whenever possible, use the defaults, recommendations and best practices
+- Make as little modifications to Lagoon as possible
+- Whenever possible, use the defaults, recommendations and best practices
   documented on eg. [docs.lagoon.sh](https://docs.lagoon.sh/lagoon/)
 
 We do this to keep true to the initial thought behind choosing Lagoon as a
