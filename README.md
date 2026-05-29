@@ -11,6 +11,7 @@ The main entrypoints for this repository are:
   an understanding for how the platform is built.
 - The [infrastructure as code](infrastructure) root directory from where we
   launch [dplsh](tools/dplsh) whenever we want to interact with environments.
+- The [Nix shell environment](tools/nix) for those preferring that over the Docker-based dplsh.
 
 ## Contributions
 
