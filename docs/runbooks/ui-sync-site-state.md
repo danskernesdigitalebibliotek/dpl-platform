@@ -35,7 +35,6 @@ should look something like this:
 Now we need to execute 3 tasks to synchronize the whole state and make it
 available on visits to the target site:
 
-<!-- markdownlint-disable-next-line MD029 -->
 5. Run task "Copy database between environments \[drush sql-sync\]":
 
     - Select the task in the "Select a task..." dropdown.
@@ -46,7 +45,6 @@ available on visits to the target site:
       log output. Once the task completes verify that the log output states that
       the synchronization worked.
 
-<!-- markdownlint-disable-next-line MD029 -->
 6. Run task "Copy files between environments \[drush rsync\]":
 
     - Select the task in the "Select a task..." dropdown.
@@ -57,7 +55,6 @@ available on visits to the target site:
       `> rsync: [receiver] failed to set times on ...`. As long as these are the
       only errors in the output, the synchronization succeeded.
 
-<!-- markdownlint-disable-next-line MD029 -->
 7. Run task "Clear Drupal caches \[drupal cache-clear\]" to clear the caches:
 
     - Select the task in the "Select a task..." dropdown.

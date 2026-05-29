@@ -42,7 +42,7 @@ be especially aware of.
 
 ### Markdown
 
-* Markdown must pass validation by [markdownlint](https://github.com/DavidAnson/markdownlint-cli2)
+- Markdown must be formatted with [prettier](https://prettier.io/).
 
 ## Code comments
 
@@ -93,8 +93,7 @@ The following tools pay a key part here:
 
 1. [terraform fmt](https://www.terraform.io/docs/cli/commands/fmt.html) for standard
    Terraform formatting.
-2. [markdownlint-cli2](https://github.com/DavidAnson/markdownlint-cli2) for
-   linting markdown files. The tool is configured via /.markdownlint-cli2.yaml
+2. [prettier](https://prettier.io/) for formatting code.
 3. [ShellCheck](https://github.com/koalaman/shellcheck) with its default configuration.
 
 In general all tools must be able to run locally. This allows developers to get
@@ -104,8 +103,7 @@ Tools which provide automated fixes are preferred. This reduces the burden of
 keeping code compliant for developers.
 
 Code which is to be exempt from these standards must be marked accordingly in
-the codebase - usually through inline comments ([markdownlint](https://github.com/DavidAnson/markdownlint/blob/main/README.md#configuration),
-[ShellCheck](https://github.com/koalaman/shellcheck/wiki/Ignore)).
+the codebase - usually through the `.prettierignore` file or [`shellcheckignore` comments](https://github.com/koalaman/shellcheck/wiki/Ignore).
 This must also include a human readable reasoning. This ensures that deviations
 do not affect future analysis and the Core project should always pass through
 static analysis.
