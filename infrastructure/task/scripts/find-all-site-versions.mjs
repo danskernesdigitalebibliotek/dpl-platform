@@ -1,36 +1,38 @@
 #!/usr/bin/env zx
 
-const sites = await $`cat ../../environments/dplplat01/sites.yaml | yq '.sites | ... comments="" | keys | .[]'`;
+const sites =
+  await $`cat ../../environments/dplplat01/sites.yaml | yq '.sites | ... comments="" | keys | .[]'`
 
 for await (const site of sites.lines()) {
   // console.log(site);
-  if(site == "customizable-canary" || site === "bibliotek-test") continue;
-  const domain = await $`cat ../../environments/dplplat01/sites.yaml | yq --yaml-fix-merge-anchor-to-spec=true '.sites.${site}.primary-domain'`;
+  if (site == "customizable-canary" || site === "bibliotek-test") continue
+  const domain =
+    await $`cat ../../environments/dplplat01/sites.yaml | yq --yaml-fix-merge-anchor-to-spec=true '.sites.${site}.primary-domain'`
 
-  let response;
+  let response
   try {
-    response = await fetch(`https://${domain}/_metrics/version.json`);
-  } catch(error) {
-    console.error("error:", error);
+    response = await fetch(`https://${domain}/_metrics/version.json`)
+  } catch (error) {
+    console.error("error:", error)
   }
 
-  let res;
+  let res
   try {
-    res = await response.json();
-  } catch(error) {
-    console.log(error);
+    res = await response.json()
+  } catch (error) {
+    console.log(error)
   }
 
-  const cmsVersion = await $`cat ../../environments/dplplat01/sites.yaml | yq --yaml-fix-merge-anchor-to-spec=true '.sites.${site}.dpl-cms-release'`.text();
+  const cmsVersion =
+    await $`cat ../../environments/dplplat01/sites.yaml | yq --yaml-fix-merge-anchor-to-spec=true '.sites.${site}.dpl-cms-release'`.text()
   if (cmsVersion.trim() == res.imageVersion.tag) {
-    console.log(`${res.site}: ${res.imageVersion.tag}`);
+    console.log(`${res.site}: ${res.imageVersion.tag}`)
   } else {
-    console.log(chalk.red(`${res.site}: ${res.imageVersion.tag}`));
+    console.log(chalk.red(`${res.site}: ${res.imageVersion.tag}`))
   }
 }
 
 async function isWebmaster(project) {
-   const result = await $`cat ../../environments/dplplat01/sites.yaml | yq '.sites.${project}.plan'`;
-   return result.stdout === "webmaster\n" ? true : false;
+  const result = await $`cat ../../environments/dplplat01/sites.yaml | yq '.sites.${project}.plan'`
+  return result.stdout === "webmaster\n" ? true : false
 }
-

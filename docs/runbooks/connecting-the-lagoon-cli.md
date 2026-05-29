@@ -13,15 +13,15 @@ basic connection details a standard user needs to connect to the Lagoon installa
 
 ## Prerequisites
 
-* Your ssh-key associated with a lagoon user. This has to be done via the Lagoon
+- Your ssh-key associated with a lagoon user. This has to be done via the Lagoon
   UI by either you for your personal account, or by an administrator who has
   access to edit your Lagoon account.
-* For local installations of the cli:
-  * The [Lagoon CLI installed locally](https://docs.lagoon.sh/installing-lagoon/lagoon-cli/)
-  * Connectivity details for the [Lagoon environment](../platform-environments.md)
-* For administrative access to extract connection details or use the lagoon cli
+- For local installations of the cli:
+  - The [Lagoon CLI installed locally](https://docs.lagoon.sh/installing-lagoon/lagoon-cli/)
+  - Connectivity details for the [Lagoon environment](../platform-environments.md)
+- For administrative access to extract connection details or use the lagoon cli
   from within the dpl shell:
-  * A valid [dplsh](using-dplsh.md) setup to extract the connectivity details
+  - A valid [dplsh](using-dplsh.md) setup to extract the connectivity details
 
 ## Procedure
 

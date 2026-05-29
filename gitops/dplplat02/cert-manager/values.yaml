@@ -309,8 +309,8 @@ cert-manager:
   # ref: https://cert-manager.io/docs/concepts/certificaterequest/#approval
   # +docs:property
   approveSignerNames:
-  - issuers.cert-manager.io/*
-  - clusterissuers.cert-manager.io/*
+    - issuers.cert-manager.io/*
+    - clusterissuers.cert-manager.io/*
 
   # Additional command line flags to pass to cert-manager controller binary.
   # To see all available flags run `docker run quay.io/jetstack/cert-manager-controller:<version> --help`.
@@ -354,7 +354,7 @@ cert-manager:
     allowPrivilegeEscalation: false
     capabilities:
       drop:
-      - ALL
+        - ALL
     readOnlyRootFilesystem: true
 
   # Additional volumes to add to the cert-manager controller pod.
@@ -487,10 +487,10 @@ cert-manager:
   #     value: master
   #     effect: NoSchedule
   tolerations:
-  - key: noderole.dplplatform
-    operator: Equal
-    value: prod
-    effect: NoSchedule
+    - key: noderole.dplplatform
+      operator: Equal
+      value: prod
+      effect: NoSchedule
 
   # A list of Kubernetes TopologySpreadConstraints, if required. For more information, see [Topology spread constraint v1 core](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.27/#topologyspreadconstraint-v1-core
   #
@@ -727,7 +727,7 @@ cert-manager:
       allowPrivilegeEscalation: false
       capabilities:
         drop:
-        - ALL
+          - ALL
       readOnlyRootFilesystem: true
 
     podDisruptionBudget:
@@ -794,7 +794,6 @@ cert-manager:
       #      operator: NotIn
       #      values:
       #        - kube-system
-
 
     # Additional command line flags to pass to cert-manager webhook binary.
     # To see all available flags run `docker run quay.io/jetstack/cert-manager-webhook:<version> --help`.
@@ -878,10 +877,10 @@ cert-manager:
     #     value: master
     #     effect: NoSchedule
     tolerations:
-    - key: noderole.dplplatform
-      operator: Equal
-      value: prod
-      effect: NoSchedule
+      - key: noderole.dplplatform
+        operator: Equal
+        value: prod
+        effect: NoSchedule
 
     # A list of Kubernetes TopologySpreadConstraints, if required. For more information, see [Topology spread constraint v1 core](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.27/#topologyspreadconstraint-v1-core).
     #
@@ -994,34 +993,34 @@ cert-manager:
       # inbound traffic.
       # +docs:property
       ingress:
-      - from:
-        - ipBlock:
-            cidr: 0.0.0.0/0
-        - ipBlock:
-            cidr: "::/0"
+        - from:
+            - ipBlock:
+                cidr: 0.0.0.0/0
+            - ipBlock:
+                cidr: "::/0"
 
       # Egress rule for the webhook network policy. By default, it allows all
       # outbound traffic to ports 80 and 443, as well as DNS ports.
       # +docs:property
       egress:
-      - ports:
-        - port: 80
-          protocol: TCP
-        - port: 443
-          protocol: TCP
-        - port: 53
-          protocol: TCP
-        - port: 53
-          protocol: UDP
-        # On OpenShift and OKD, the Kubernetes API server listens on.
-        # port 6443.
-        - port: 6443
-          protocol: TCP
-        to:
-        - ipBlock:
-            cidr: 0.0.0.0/0
-        - ipBlock:
-            cidr: "::/0"
+        - ports:
+            - port: 80
+              protocol: TCP
+            - port: 443
+              protocol: TCP
+            - port: 53
+              protocol: TCP
+            - port: 53
+              protocol: UDP
+            # On OpenShift and OKD, the Kubernetes API server listens on.
+            # port 6443.
+            - port: 6443
+              protocol: TCP
+          to:
+            - ipBlock:
+                cidr: 0.0.0.0/0
+            - ipBlock:
+                cidr: "::/0"
 
     # Additional volumes to add to the cert-manager controller pod.
     volumes: []
@@ -1102,7 +1101,7 @@ cert-manager:
       allowPrivilegeEscalation: false
       capabilities:
         drop:
-        - ALL
+          - ALL
       readOnlyRootFilesystem: true
 
     podDisruptionBudget:
@@ -1167,7 +1166,6 @@ cert-manager:
     # For more information, see [Resource Management for Pods and Containers](https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/).
     resources: {}
 
-
     # The nodeSelector on Pods tells Kubernetes to schedule Pods on the nodes with
     # matching labels.
     # For more information, see [Assigning Pods to Nodes](https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/).
@@ -1201,10 +1199,10 @@ cert-manager:
     #     value: master
     #     effect: NoSchedule
     tolerations:
-    - key: noderole.dplplatform
-      operator: Equal
-      value: prod
-      effect: NoSchedule
+      - key: noderole.dplplatform
+        operator: Equal
+        value: prod
+        effect: NoSchedule
     # A list of Kubernetes TopologySpreadConstraints, if required. For more information, see [Topology spread constraint v1 core](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.27/#topologyspreadconstraint-v1-core).
     #
     # For example:
@@ -1332,7 +1330,7 @@ cert-manager:
       allowPrivilegeEscalation: false
       capabilities:
         drop:
-        - ALL
+          - ALL
       readOnlyRootFilesystem: true
 
     # Timeout for 'kubectl check api' command.
@@ -1360,7 +1358,7 @@ cert-manager:
     # the webhook URL, IP address and TCP connect errors for example.
     # +docs:property
     extraArgs:
-    - -v
+      - -v
 
     # Additional environment variables to pass to cert-manager startupapicheck binary.
     # For example:
@@ -1378,7 +1376,6 @@ cert-manager:
     #
     # For more information, see [Resource Management for Pods and Containers](https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/).
     resources: {}
-
 
     # The nodeSelector on Pods tells Kubernetes to schedule Pods on the nodes with
     # matching labels.
@@ -1412,10 +1409,10 @@ cert-manager:
     #     value: master
     #     effect: NoSchedule
     tolerations:
-    - key: noderole.dplplatform
-      operator: Equal
-      value: prod
-      effect: NoSchedule
+      - key: noderole.dplplatform
+        operator: Equal
+        value: prod
+        effect: NoSchedule
 
     # Optional additional labels to add to the startupapicheck Pods.
     podLabels: {}

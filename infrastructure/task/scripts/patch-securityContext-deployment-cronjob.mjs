@@ -122,30 +122,30 @@ const namespaces = [
   "vesthimmerland-main",
   "viborg-main",
   "vordingborg-main",
-];
+]
 
 for await (const namespace of namespaces) {
-  await patchPersistenDeployment(namespace, "cli");
-  await patchPersistenDeployment(namespace, "nginx");
-  await patchCronJob(namespace, "cronjob-cli-drush-err-purge");
-  await patchCronJob(namespace, "cronjob-cli-import-danish-config-translations");
-  await patchCronJob(namespace, "cronjob-cli-import-translations");
+  await patchPersistenDeployment(namespace, "cli")
+  await patchPersistenDeployment(namespace, "nginx")
+  await patchCronJob(namespace, "cronjob-cli-drush-err-purge")
+  await patchCronJob(namespace, "cronjob-cli-import-danish-config-translations")
+  await patchCronJob(namespace, "cronjob-cli-import-translations")
 }
 
 async function patchPersistenDeployment(namespace, deployment) {
-  echo(chalk.blue(`patching ${deployment} in ${namespace}`));
+  echo(chalk.blue(`patching ${deployment} in ${namespace}`))
   try {
     await $`kubectl patch deployment -n ${namespace} ${deployment} -p '{ "spec": { "template": { "spec": { "securityContext": { "fsGroupChangePolicy": "OnRootMismatch"}}}}}'`
-  } catch(error) {
-    console.log(error);
+  } catch (error) {
+    console.log(error)
   }
 }
 
 async function patchCronJob(namespace, cronjob) {
-  echo(chalk.yellow(`patching ${cronjob} in ${namespace}`));
+  echo(chalk.yellow(`patching ${cronjob} in ${namespace}`))
   try {
     await $`kubectl patch cronjob -n ${namespace} ${cronjob} -p '{ "spec": { "jobTemplate": { "spec": { "template": { "spec": { "securityContext": { "fsGroupChangePolicy": "OnRootMismatch"}}}}}}}'`
-  } catch(error) {
-    console.log(error);
+  } catch (error) {
+    console.log(error)
   }
 }

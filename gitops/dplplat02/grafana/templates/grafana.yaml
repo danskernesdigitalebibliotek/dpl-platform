@@ -96,9 +96,9 @@ spec:
                   mountPath: /etc/grafana/provisioning/datasources
           volumes:
             - name: dashboards
-              emptyDir: { }
+              emptyDir: {}
             - name: datasources
-              emptyDir: { }
+              emptyDir: {}
             - name: dashboard-provisioning-config
               configMap:
                 name: dashboard-provisioning-config

@@ -15,10 +15,10 @@ guides on how to perform the actual installation.
 This document describes all the parts that makes up a platform environment
 raging from the infrastructure to the sites.
 
-* [Azure Infrastructure](#azure-infrastructure) describes the raw cloud infrastructure
-* [Software Components](#software-components) describes the base software products
+- [Azure Infrastructure](#azure-infrastructure) describes the raw cloud infrastructure
+- [Software Components](#software-components) describes the base software products
   we install to support the platform including Lagoon
-* [Sites](#sites) describes how we define the individual sites on a platform and
+- [Sites](#sites) describes how we define the individual sites on a platform and
   the approach the platform takes to deployment.
 
 ## Azure Infrastructure
@@ -35,17 +35,17 @@ A platform environment uses the following Azure infrastructure resources.
 
 ![An overview of the Azure Infrastructure](../diagrams/render-png/dpl-platform-azure.png)
 
-* A virtual Network - with a subnet, configured with access to a number of services.
-* Separate storage accounts for
-  * Monitoring data (logs)
-  * Lagoon files (eg. results of running user-triggered administrative actions)
-  * Backups
-  * Drupal site files
-* A MariaDB used to host the sites databases.
-* A Key Vault that holds administrative credentials to resources that Lagoon
+- A virtual Network - with a subnet, configured with access to a number of services.
+- Separate storage accounts for
+  - Monitoring data (logs)
+  - Lagoon files (eg. results of running user-triggered administrative actions)
+  - Backups
+  - Drupal site files
+- A MariaDB used to host the sites databases.
+- A Key Vault that holds administrative credentials to resources that Lagoon
   needs administrative access to.
-* An Azure Kubernetes Service cluster that hosts the platform itself.
-* Two Public IPs: one for ingress one for egress.
+- An Azure Kubernetes Service cluster that hosts the platform itself.
+- Two Public IPs: one for ingress one for egress.
 
 The Azure Kubernetes Service in return creates its own resource group that
 contains a number of resources that are automatically managed by the AKS service.
@@ -65,7 +65,7 @@ Essential configurations such as the urls for the site can be found [in the wiki
 The following sections will describe the overall role of the component and how
 it integrates with other components. For more details on how the component is
 configured, consult the corresponding values-file for the component found in
-the individual [environments](../infrastructure/environments)  configuration
+the individual [environments](../infrastructure/environments) configuration
 folder.
 
 ![Depiction of the support workloads in the cluster](../diagrams/render-png/cluster-support-workloads.png)
@@ -103,13 +103,13 @@ running on the platform.
 
 Prometheus is configured to scrape and ingest the following sources
 
-* [Node Exporter](https://github.com/prometheus/node_exporter) (Kubernetes
+- [Node Exporter](https://github.com/prometheus/node_exporter) (Kubernetes
   runtime metrics)
-* Ingress Nginx
+- Ingress Nginx
 
 Prometheus is installed via an [Operator](https://github.com/prometheus-operator/prometheus-operator)
 which amongst other things allows us to configure Prometheus and Alertmanager via
- `ServiceMonitor` and `AlertmanagerConfig`.
+`ServiceMonitor` and `AlertmanagerConfig`.
 
 [Alertmanager](https://prometheus.io/docs/alerting/latest/alertmanager/) handles
 the delivery of alerts produced by Prometheus.
@@ -123,7 +123,7 @@ values-file, which connects it to Prometheus and Loki.
 ### Loki and Promtail
 
 [Loki](https://grafana.com/oss/loki/) stores and indexes logs produced by the pods
- running in AKS. [Promtail](https://grafana.com/docs/loki/latest/clients/promtail/)
+running in AKS. [Promtail](https://grafana.com/docs/loki/latest/clients/promtail/)
 streams the logs to Loki, and Loki in turn makes the logs available to the
 administrator via Grafana.
 
@@ -136,8 +136,8 @@ file shared by all sites on the platform.
 
 Consult the following runbooks to see the procedures for:
 
-* [Adding a site to the platform](../runbooks/add-library-site-to-platform.md)
-* [Removing a site](../runbooks/remove-site-from-platform.md)
+- [Adding a site to the platform](../runbooks/add-library-site-to-platform.md)
+- [Removing a site](../runbooks/remove-site-from-platform.md)
 
 ### sites.yaml
 
@@ -145,31 +145,31 @@ Consult the following runbooks to see the procedures for:
 The file contains a single map, where the configuration of the
 individual sites are contained under the property `sites.<unique site key>`, eg.
 
- ```yaml
+```yaml
 sites:
-  # Site objects are indexed by a unique key that must be a valid lagoon, and
-  # github project name. That is, alphanumeric and dashes.
-  core-test1:
-    name: "Core test 1"
-    description: "Core test site no. 1"
-    # releaseImageRepository and releaseImageName describes where to pull the
-    # container image a release from.
-    releaseImageRepository: ghcr.io/danskernesdigitalebibliotek
-    releaseImageName: dpl-cms-source
-    # Sites can optionally specify primary and secondary domains.
-    primary-domain: core-test.example.com
-    # Fully configured sites will have a deployment key generated by Lagoon.
-    deploy_key: "ssh-ed25519 <key here>"
-  bib-ros:
-    name: "Roskilde Bibliotek"
-    description: "Webmaster environment for Roskilde Bibliotek"
-    primary-domain: "www.roskildebib.dk"
-    # The secondary domain will redirect to the primary.
-    secondary-domains: ["roskildebib.dk", "www2.roskildebib.dk"]
-    # A series of sites that shares the same image source may choose to reuse
-    # properties via anchors
-    << : *default-release-image-source
- ```
+ # Site objects are indexed by a unique key that must be a valid lagoon, and
+ # github project name. That is, alphanumeric and dashes.
+ core-test1:
+   name: "Core test 1"
+   description: "Core test site no. 1"
+   # releaseImageRepository and releaseImageName describes where to pull the
+   # container image a release from.
+   releaseImageRepository: ghcr.io/danskernesdigitalebibliotek
+   releaseImageName: dpl-cms-source
+   # Sites can optionally specify primary and secondary domains.
+   primary-domain: core-test.example.com
+   # Fully configured sites will have a deployment key generated by Lagoon.
+   deploy_key: "ssh-ed25519 <key here>"
+ bib-ros:
+   name: "Roskilde Bibliotek"
+   description: "Webmaster environment for Roskilde Bibliotek"
+   primary-domain: "www.roskildebib.dk"
+   # The secondary domain will redirect to the primary.
+   secondary-domains: ["roskildebib.dk", "www2.roskildebib.dk"]
+   # A series of sites that shares the same image source may choose to reuse
+   # properties via anchors
+   << : *default-release-image-source
+```
 
 ### Environment Site Git Repositories
 

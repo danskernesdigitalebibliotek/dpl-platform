@@ -8,15 +8,15 @@ exists in the directory which allows you to implement project-specific tweaks.
 
 ## Prerequisites
 
-* Docker
-* [jq](https://stedolan.github.io/jq/download/)
-* Bash 4 or newer
+- Docker
+- [jq](https://stedolan.github.io/jq/download/)
+- Bash 4 or newer
 
 ## Launching the shell
 
 The shell is launched via the `dplsh.sh` shell-script found in the same
 directory as this document. It is advisable to place a symlink to this file
- on your path to make launching the shell easier
+on your path to make launching the shell easier
 
 ```shell
 ln -s /path/to/checkout/tools/dplsh/dplsh.sh /usr/local/bin/dplsh
@@ -65,12 +65,12 @@ cd /project/some/subpath
 dplsh -p my-profile
 ```
 
- dplsh will launch a container and do the following inside it
+dplsh will launch a container and do the following inside it
 
-* mount /project as /home/dplsh/host_mount
-* mount /project/.dplsh.profile.my-profile as  /home/dplsh/.dplsh.profile
-* cd to /home/dplsh/host_mount/some/subpath
-* source /home/dplsh/.dplsh.profile
+- mount /project as /home/dplsh/host_mount
+- mount /project/.dplsh.profile.my-profile as /home/dplsh/.dplsh.profile
+- cd to /home/dplsh/host_mount/some/subpath
+- source /home/dplsh/.dplsh.profile
 
 Notice, CWD while sourcing is the subdirectory the shell was launched for in.
 
@@ -125,4 +125,4 @@ dplsh can perform the update automatically by being launched with
 
 ```shell
 dplsh --fix-docker
-````
+```

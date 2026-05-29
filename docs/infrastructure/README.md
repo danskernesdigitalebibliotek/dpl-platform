@@ -8,15 +8,15 @@ GitHub environments that makes up a single DPL Platform installation.
 
 ## Directory layout
 
-* [dpladm/](dpladm): a tool used for deploying individual sites. The tools _can_
+- [dpladm/](dpladm): a tool used for deploying individual sites. The tools _can_
   be run manually, but the recommended way is via the common infrastructure Taskfile.
-* [environments/](environments): contains a directory for each platform environment.
-* [terraform](terraform): terraform setup and tooling that is shared between
+- [environments/](environments): contains a directory for each platform environment.
+- [terraform](terraform): terraform setup and tooling that is shared between
   environments.
-* [task/](task): Configuration and scripts used by our Taskfile-based automation
+- [task/](task): Configuration and scripts used by our Taskfile-based automation
   The scripts included in this directory _can_ be run by hand in an emergency
   but te recommended way to invoke these via task.
-* [Taskfile.yml](Taskfile.yml): the common infrastructure [task](https://taskfile.dev)
+- [Taskfile.yml](Taskfile.yml): the common infrastructure [task](https://taskfile.dev)
   configuration. Invoke `task` to get a list of targets. Must be run from within
   an instance of [DPL shell](../../../dpl-platform/tools/dplsh) unless otherwise
   noted.
@@ -28,15 +28,15 @@ environment. You generally interact with the files and directories within the
 directory to configure the environment. When a modification has been made, it
 is put in to effect by running the appropiate `task` :
 
-* `configuration`: contains the various configurations the
+- `configuration`: contains the various configurations the
   applications that are installed on top of the infrastructure requires. These
   are used by the `support:provision:*` tasks.
-* `env_repos` contains the Terraform root-module for provisioning GitHub site-
+- `env_repos` contains the Terraform root-module for provisioning GitHub site-
   environment repositories. The module is run via the `env_repos:provision` task.
-* `infrastructure`: contains the Terraform root-module used to provision the basic
+- `infrastructure`: contains the Terraform root-module used to provision the basic
   Azure infrastructure components that the platform requires.The module is run
   via the `infra:provision` task.
-* `lagoon`: contains Kubernetes manifests and Helm values-files used for installing
+- `lagoon`: contains Kubernetes manifests and Helm values-files used for installing
   the Lagoon Core and Remote that is at the heart of a DPL Platform installation.
   THe module is run via the `lagoon:provision:*` tasks.
 
@@ -50,7 +50,7 @@ to how to use dplsh.
 ## Installing a platform environment from scratch
 
 The following describes how to set up a whole new platform environment to host
- platform sites.
+platform sites.
 
 The easiest way to set up a new environment is to create a new `environments/<name>`
 directory and copy the contents of an existing environment replacing any
@@ -148,7 +148,7 @@ The Lagoon core has now been installed, and the remote registered with it.
 
 Prerequisites:
 
-* An properly authenticated azure CLI (`az`). See the section on initial
+- An properly authenticated azure CLI (`az`). See the section on initial
   Terraform setup for more details on the requirements
 
 First create a new administrative github user and create a new organization

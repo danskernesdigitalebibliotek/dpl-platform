@@ -9,10 +9,10 @@ release - 1. This usually mean last weeks release.
 
 ## Prerequisites
 
-* A local checkout of the [`dpl-platform` repository](https://github.com/danskernesdigitalebibliotek/dpl-platform)
-* A running [dplsh](using-dplsh.md) with `DPLPLAT_ENV` set to the platform
+- A local checkout of the [`dpl-platform` repository](https://github.com/danskernesdigitalebibliotek/dpl-platform)
+- A running [dplsh](using-dplsh.md) with `DPLPLAT_ENV` set to the platform
   environment name.
-* The version tag you want to deploy. This must correspond to a
+- The version tag you want to deploy. This must correspond to a
   tagged version of the [`dpl-cms-source` image](https://github.com/danskernesdigitalebibliotek/dpl-cms/pkgs/container/dpl-cms-source).
 
 ## Procedure: New version to editors and moduletest environments
@@ -21,12 +21,12 @@ release - 1. This usually mean last weeks release.
    `dpl-platform` is up to date.
 2. Create a new branch from `main`.
 3. Now update `infrastructure/environments/dplplat01/sites.yaml`:
-    1. The 'x-defaults' anchors' 'dpl-cms-release' tag should be bumped to the
-    new version.
-    2. Then update the 'moduletest-dpl-cms-release' of 'x-webmaster'
-    and 'x-webmaster-with-defaults' anchor.
-    3. Now update 'dpl-cms-release' of the 'x-webmaster' anchor to the penultimate
-    version of the cms.
+   1. The 'x-defaults' anchors' 'dpl-cms-release' tag should be bumped to the
+      new version.
+   2. Then update the 'moduletest-dpl-cms-release' of 'x-webmaster'
+      and 'x-webmaster-with-defaults' anchor.
+   3. Now update 'dpl-cms-release' of the 'x-webmaster' anchor to the penultimate
+      version of the cms.
 4. Commit the change and push your branch to GitHub and create a pull request.
 5. Request a review for the change and wait for approval.
 6. Start `dplsh` from the `/infrastructure` directory of your local
@@ -36,7 +36,7 @@ release - 1. This usually mean last weeks release.
 9. If there are any Terraform changes then do not apply them, abort the
    deployment and consult the platform team.
 10. Open the Deployments list page within the Lagoon UI to see all running and
-   queued deployments.
+    queued deployments.
 11. Wait for all the deployments to complete.
 12. Run `task sites:incomplete-deployments` to identify any failed deployments.
 13. If some deployments did not complete determine if the error relates to the

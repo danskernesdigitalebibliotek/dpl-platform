@@ -14,10 +14,10 @@ picked up and parsed eg. in Drupals `settings.php`.
 
 ## Prerequisites
 
-* A running [dplsh](using-dplsh.md) with `DPLPLAT_ENV` set to the platform
+- A running [dplsh](using-dplsh.md) with `DPLPLAT_ENV` set to the platform
   environment name and ssh-agent running if your ssh-keys are passphrase
   protected.
-* A Lagoon account on the Lagoon core with your ssh-key associated (created
+- A Lagoon account on the Lagoon core with your ssh-key associated (created
   through the Lagoon UI, on the Settings page)
 
 ## Procedure

@@ -8,7 +8,6 @@ metadata:
   name: lagoon-redeploy-controller
 
 ---
-
 apiVersion: v1
 data:
   known_hosts: |
@@ -25,7 +24,6 @@ metadata:
   namespace: lagoon-redeploy-controller
 
 ---
-
 apiVersion: batch/v1
 kind: CronJob
 metadata:
@@ -58,7 +56,7 @@ spec:
                   subPath: id_rsa
                   readOnly: true
               securityContext:
-                  runAsUser: 0
+                runAsUser: 0
           volumes:
             - name: lagoon-known-hosts
               configMap:

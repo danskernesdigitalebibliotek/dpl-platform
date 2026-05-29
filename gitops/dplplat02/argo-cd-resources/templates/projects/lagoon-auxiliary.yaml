@@ -4,18 +4,18 @@ metadata:
   name: lagoon-auxiliary
 spec:
   destinations:
-  - name: in-cluster
-    namespace: lagoon-*
-    server: https://kubernetes.default.svc
+    - name: in-cluster
+      namespace: lagoon-*
+      server: https://kubernetes.default.svc
   clusterResourceWhitelist:
-  - group: ''
-    kind: Namespace
-  - group: storage.k8s.io
-    kind: StorageClass
+    - group: ""
+      kind: Namespace
+    - group: storage.k8s.io
+      kind: StorageClass
   namespaceResourceWhitelist:
-  - group: '*'
-    kind: '*'
+    - group: "*"
+      kind: "*"
   orphanedResources:
     warn: false
   sourceRepos:
-  - https://github.com/danskernesdigitalebibliotek/dpl-platform.git # git repository
+    - https://github.com/danskernesdigitalebibliotek/dpl-platform.git # git repository

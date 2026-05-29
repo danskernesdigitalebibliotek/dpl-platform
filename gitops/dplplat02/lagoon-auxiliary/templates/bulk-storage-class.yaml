@@ -13,22 +13,22 @@ metadata:
     helm.sh/chart: csi-driver-nfs-4.12.1
   name: bulk
 mountOptions:
-- async
-- hard
-- intr
-- nolock
-- noatime
-- nodev
-- nosuid
-- proto=tcp
-- retrans=2
-- rsize=131072
-- rw
-- timeo=600
-- vers=3
-- wsize=524288
-- x-systemd.automount
-- x-systemd.device-timeout=10
+  - async
+  - hard
+  - intr
+  - nolock
+  - noatime
+  - nodev
+  - nosuid
+  - proto=tcp
+  - retrans=2
+  - rsize=131072
+  - rw
+  - timeo=600
+  - vers=3
+  - wsize=524288
+  - x-systemd.automount
+  - x-systemd.device-timeout=10
 parameters:
   mountPermissions: "0"
   server: dataome.storage

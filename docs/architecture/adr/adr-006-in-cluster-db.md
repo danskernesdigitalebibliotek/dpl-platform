@@ -9,14 +9,14 @@ The project has experienced project wide down time due to database crashes on
 multiple occasions:
 
 - 17.01.2025: Database went down due to a restart initiated by the Azure Product
-Group team taking unsanctioned action
+  Group team taking unsanctioned action
 - 15.01.2025: Database went down due to a restart initiated by the Azure Product
-Group team taking unsanctioned action
+  Group team taking unsanctioned action
 - 9.01.2025: Database went down as a result of to many login requests
 - 28.11.2024: Database went down due to too many active connection attempts
 - 7.11.2024: Database went down due to too many connections
 - Summer 2024: Database was restarted by Azure for unscheduled and unnotified
-maintenance
+  maintenance
 
 Microsoft's database server logs are prohibitively expensive.
 Microsoft misconfigured the database provision-time.
@@ -41,7 +41,7 @@ In light of this, we have to consider options.
 
 - Negative experiences from management of Azure Database for MariaDB
 - The project has experienced project wide down time due to database crashes on
-multiple occasions:
+  multiple occasions:
 - Server logs are disproportionately priced. They are too expensive for this
   project. This prevents us from debugging many problems ourselves.
 - The wait time for support can be long and incorrect.
@@ -54,9 +54,9 @@ multiple occasions:
 - Minimal configuration needed from us
 - Azure support
 - Azure can be blamed for downtime, they are directly or indirectly responsible
-for.
+  for.
 - MySql, which is not set to be sunset, might have a noticeably better service
-as that is their chosen flavor to keep offering.
+  as that is their chosen flavor to keep offering.
 - Support for hight-availability with automatic failover to a replica
 
 #### In-Cluster DB
@@ -81,10 +81,10 @@ as that is their chosen flavor to keep offering.
   if we decide to implement this.
 - Performance can be optimized and finetuned to our usecase
 - Databases will be located closer, logically as well as physically, to
-workloads relying on them = faster response time, which should be noticable for
-end-users.
+  workloads relying on them = faster response time, which should be noticable for
+  end-users.
 - We can right-size the database, thereby getting the maximum performance for the
-buck.
+  buck.
 - Direct access to the server itself.
 
 ## Decision

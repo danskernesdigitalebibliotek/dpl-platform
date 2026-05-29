@@ -16,8 +16,7 @@ sharing system).
 
 ## Production/staging sites
 
-Sites managed by
-+[`sites.yml`](./runbooks/add-library-site-to-platform/). This process
+Sites managed by +[`sites.yml`](./runbooks/add-library-site-to-platform/). This process
 creates a GIT repository in the
 [`danishpubliclibraries`](https://github.com/danishpubliclibraries/)
 GitHub organization. These repositories is then updated when running

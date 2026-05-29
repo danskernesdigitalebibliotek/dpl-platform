@@ -7,8 +7,8 @@ restore it into an existing site.
 
 ## Prerequisites
 
-* Administrative access to the site in the Lagoon UI
-* (for restore) administrative cluster-access to the site
+- Administrative access to the site in the Lagoon UI
+- (for restore) administrative cluster-access to the site
 
 ## Procedure
 
@@ -31,19 +31,19 @@ folder.
 
 ### Step 1, downloading the backup
 
- To download the backup access the Lagoon UI and schedule the retrieval of a
- backup. To do this,
+To download the backup access the Lagoon UI and schedule the retrieval of a
+backup. To do this,
 
- 1. Log in to the environments Lagoon UI (consult the
- [environment documentation](../platform-environments.md) for the url)
- 2. Access the site's project
- 3. Access the site's environment ("main" for production)
- 4. Click on the "Backups" tab
- 5. Click on the "Retrieve" button for the backups you wish to download and/or
+1.  Log in to the environments Lagoon UI (consult the
+    [environment documentation](../platform-environments.md) for the url)
+2.  Access the site's project
+3.  Access the site's environment ("main" for production)
+4.  Click on the "Backups" tab
+5.  Click on the "Retrieve" button for the backups you wish to download and/or
     restore. Use to "Source" column to differentiate the types of backups.
     "nginx" are backups of the sites files, while "mariadb" are backups of the
     sites database.
- 6. The Buttons changes to "Downloading..." when pressed, wait for them to
+6.  The Buttons changes to "Downloading..." when pressed, wait for them to
     change to "Download", then click them again to download the backup
 
 ### Step 2a, restore a database

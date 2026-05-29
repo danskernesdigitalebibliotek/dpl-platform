@@ -3,9 +3,9 @@
 The following guidelines describe best practices for developing code for the DPL
 Platform project. The guidelines should help achieve:
 
-* A stable, secure and high quality foundation for building and maintaining
+- A stable, secure and high quality foundation for building and maintaining
   the platform and its infrastructure.
-* Consistency across multiple developers participating in the project
+- Consistency across multiple developers participating in the project
 
 Contributions to the core DPL Platform project will be reviewed by members of the
 Core team. These guidelines should inform contributors about what to expect in
@@ -27,17 +27,17 @@ be especially aware of.
 
 ### General
 
-* The default language for all code and comments is English.
+- The default language for all code and comments is English.
 
 ### Shell scripts
 
-* Shell-scripts must pass a shellcheck validation
+- Shell-scripts must pass a shellcheck validation
 
 ### Terraform
 
-* Any Terraform HCL must be formatted to match the format required by
+- Any Terraform HCL must be formatted to match the format required by
   `terraform fmt`
-* Terraform configuration should be organized into submodules instantiated by
+- Terraform configuration should be organized into submodules instantiated by
   root modules.
 
 ### Markdown
@@ -73,8 +73,8 @@ Commit messages must follow these guidelines:
    description in the body is expected.
 5. If the commit is a result of an issue in a public issue tracker,
    platform.dandigbib.dk, then the subject must start with the issue number
-  followed by a colon (:). If the commit is a result of a private issue tracker
-  then the issue id must be kept in the commit body.
+   followed by a colon (:). If the commit is a result of a private issue tracker
+   then the issue id must be kept in the commit body.
 
 When creating a pull request the pull request description should not contain any
 information that is not already available in the commit messages.

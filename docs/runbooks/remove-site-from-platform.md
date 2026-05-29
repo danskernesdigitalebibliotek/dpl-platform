@@ -6,10 +6,10 @@ When you wish to delete a site and all its data from the platform
 
 Prerequisites:
 
-* A lagoon account with your ssh-key associated (created through
+- A lagoon account with your ssh-key associated (created through
   the Lagoon UI, on the Settings page)
-* The site key (its key in [sites.yaml](../architecture/platform-environment-architecture.md#sitesyaml))
-* A properly authenticated azure CLI (`az`) that has administrative access to
+- The site key (its key in [sites.yaml](../architecture/platform-environment-architecture.md#sitesyaml))
+- A properly authenticated azure CLI (`az`) that has administrative access to
   the cluster running the lagoon installation
 
 ## Procedure
