@@ -59,9 +59,9 @@ sites:
     releaseImageName: dpl-cms-source
     # Remember to update bnf.moduletest-dpl-cms-release to the same release
     # to make client and server use the same version.
-    dpl-cms-release: 2026.22.0
-    moduletest-dpl-cms-release: 2026.22.0
-    go-release: 2026.22.0
+    dpl-cms-release: 2026.23.1
+    moduletest-dpl-cms-release: 2026.23.1
+    go-release: 2026.23.1
     php-version: 8.3
     node-version: 24
     plan: webmaster
