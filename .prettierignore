@@ -1,0 +1,7 @@
+.github/PULL_REQUEST_TEMPLATE.md
+
+# Files with inline VCL or other config.
+gitops/**/templates/*.yaml
+
+# Files with custom templating.
+infrastructure/dpladm/env-repo-template/**/*
