@@ -4,7 +4,7 @@ metadata:
   name: mariadb-backup-scheduled
 spec:
   mariaDbRef:
-    name: { { .Release.Name } }
+    name: {{ .Release.Name }}
   schedule:
     cron: "10 11,18 * * *"
     # At 12:10 and 19:10 every day during winter
