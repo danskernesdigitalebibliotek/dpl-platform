@@ -24,7 +24,7 @@ dockerHost:
     name: docker-host
     registry: registry.lagoon.svc:5000
     repositoryToUpdate: amazeeio|lagoon
-    pruneImagesUntil: 1h
+    pruneImagesUntil: 4h
     replicaCount: 1
     ## proxy configuration
     # httpProxy: ""
@@ -105,7 +105,7 @@ sshPortal:
         repository: ghcr.io/uselagoon/lagoon-ssh-portal/ssh-portal
         pullPolicy: IfNotPresent
         # Overrides the image tag whose default is the chart appVersion.
-        tag: v0.37.0
+        tag: v0.41.3
     service:
         type: LoadBalancer
         ports:
@@ -143,7 +143,7 @@ lagoon-build-deploy:
     # sensible defaults.
     # lagoonTargetName:
     #ENCRYPT
-    taskSSHHost: ENC[AES256_GCM,data:x/CrtOz+MnmdxafXyA==,iv:x+XMsNqqoU2b7xomNYaVfL83hdLs7w+wiNP4iq0xwsI=,tag:XfTdeaUkHqVCRQWAI0a5Jg==,type:str]
+    taskSSHHost: ENC[AES256_GCM,data:kkAmYSwygZzosERsCg==,iv:d8/uEW7w+79EM5vq80T2KwnnoswLNXcSE87vYIeaEh4=,tag:hi/aiKwb67UqI0NRpZJBFQ==,type:str]
     taskSSHPort: 22
     taskAPIHost: api.lagoon.dplplat02.dpl.reload.dk
     # lagoonTokenHost: ""
@@ -152,9 +152,9 @@ lagoon-build-deploy:
     # sshPortalHost: ""
     # sshPortalPort: ""
     #ENCRYPT
-    rabbitMQUsername: ENC[AES256_GCM,data:kism8RbK,iv:EOcYvtRVVMhJ6MyPynaaKfyC52ObKXcYUrgo+1TwcG0=,tag:HhCYZ/sbkwUTLLo5cShayw==,type:str]
+    rabbitMQUsername: ENC[AES256_GCM,data:fihlOWjZ,iv:L09j8hZPdc9FF2xLjG+AedzZ7PPaPUbdVvpxl+qMHgY=,tag:P2Qqrp9fUvby88sVNTp2iA==,type:str]
     #ENCRYPT
-    rabbitMQPassword: ENC[AES256_GCM,data:ORebOSZ8Cgy5nDv95HmtGqzL5ZAbuAzv0xixoHXB,iv:+eBFqTl5Tumu7zcEy7Vk0X0GSiO3I4b3ebg9Vs7r12k=,tag:Jwe9BMScJaYXGEXF3pUDag==,type:str]
+    rabbitMQPassword: ENC[AES256_GCM,data:YnXw/bxPlCzxOSiFqNAbnQ5S421tVm2ve8M5eyOp,iv:APqoR8MgNpyHntNIBeGG2vhqQ35bOZJh+vvDeWTvC04=,tag:EOirINlhDk3p0988mHiqoQ==,type:str]
     rabbitMQHostname: lagoon-core-broker.lagoon-core.svc.cluster.local
     lagoonTargetName: lagoon
     lagoonFeatureFlagDefaultRootlessWorkload: enabled
@@ -165,9 +165,9 @@ lagoon-build-deploy:
         - --harbor-url=https://harbor.lagoon.dplplat02.dpl.reload.dk
         - --harbor-api=https://harbor.lagoon.dplplat02.dpl.reload.dk/api/
         #ENCRYPT
-        - ENC[AES256_GCM,data:IT80YAP7SF8ErOgNgrXQ1JXzAY9tquU=,iv:S5+SFV/HnXlRzWnGTcTXLIwqF627CfTIbKbIkdu3nt0=,tag:1OloLnHRY1anzKtL+plDFQ==,type:str]
+        - ENC[AES256_GCM,data:Bry32nNoDAKbNVxmjV6rNiWo/yTqalo=,iv:B/jaQJGeg+U8sO66NbpJTBOe70f47gLDpGB/BochrC8=,tag:dCYDq+4CFftGwU97h1WkdA==,type:str]
         #ENCRYPT
-        - ENC[AES256_GCM,data:P57KwoWZlnyLSS37HNO+RntM6aKLtR8TkqvKioQEgXsIVgeRkxU=,iv:zolligTvL4ZXqd26ZOXVxPS5qC9lOveBX82zXPXRVDA=,tag:EUcVmswnQYogmgOU4rQFmw==,type:str]
+        - ENC[AES256_GCM,data:r039pk+fTCO3xan8er3z2VjXbu5pO5EwNHtdfsoPMWhtN/VZdXc=,iv:1nMkUm+CQf+RevydDiBl60ApYLn804gZrVCyChilI/Y=,tag:cSR5gnwkyAsOuNF+evHWag==,type:str]
         - --enable-qos
         - --qos-max-builds=8
     nodeSelector:
@@ -203,20 +203,20 @@ dbaas-operator:
             readReplicaHostnames:
                 - mariadb-10-6-22-production-1.mariadb-10-6-22-production-1.svc.cluster.local
             #ENCRYPT
-            password: ENC[AES256_GCM,data:bpNQE568Apu47bZlUXNmBI1V+Bg6JnUh,iv:Kf5mYCfZq8k29yPcrenVMHcAR6dpGxEOEipjIp7xfWE=,tag:uHzvig8X+v47Xv+WpySNjw==,type:str]
+            password: ENC[AES256_GCM,data:fQdmku+q1k5SbQdGq+wWZ9Ljvf9NyvXl,iv:vG0mWjfS5/p6TmZuvNrX1JNs6HDkbgG0rqag38B/eac=,tag:FALqDkqHAVWqUsTMzosqzA==,type:str]
             port: 3306
             #ENCRYPT
-            user: ENC[AES256_GCM,data:snU1dw==,iv:QCQ9NPf3JYT2EouOOCaOM5sw/ILmZMH1CqcmbgLZHFY=,tag:2Js6E4hoLJbv9dKy7geE7g==,type:str]
+            user: ENC[AES256_GCM,data:p0QAhw==,iv:92ix8GNlk8TDcmy7li6y8uD/Z9/hGWW4ynUzOFSjfso=,tag:1Ys/Rd6g/LJ1Ien+jo3Icw==,type:str]
         development:
             environment: development
             hostname: mariadb-10-06-01-test.mariadb-10-06-01-test.svc.cluster.local
             readReplicaHostnames:
                 - mariadb-10-06-01-test.mariadb-10-06-01-test.svc.cluster.local
             #ENCRYPT
-            password: ENC[AES256_GCM,data:ANOdV3Q+eGemQ4ZULRIu71u8FBD9oIZdQ366jg==,iv:UiUduHtdVGR1Ghz5rdVnV+neiwQDY7PcMxeIQUbFZKk=,tag:DY6qu0KPUKYiGYGVSH9CLw==,type:str]
+            password: ENC[AES256_GCM,data:kQ4Wur65ny1ZGr6bw18KBmFROnFQ9lKDYmTodw==,iv:b26b7Ydm/wyZ7OFjDAEenMvP9GGIWHHo+vXTRsx5dSI=,tag:+arJso6kwvWbPXcaB1hcxA==,type:str]
             port: 3306
             #ENCRYPT
-            user: ENC[AES256_GCM,data:L8YzUQ==,iv:KeTsuO2yxuN+jDFNT7EIw7AfS+4lzC++7JTfCOJyc2g=,tag:rjSr/W55E9rpQhDIWCOnyQ==,type:str]
+            user: ENC[AES256_GCM,data:AIROcQ==,iv:+6ozKtaN8bF/VHkXXvDvy6/YXqYmHJSSPKEuqQcpknU=,tag:DFEEmrCHb3mcvmL7qoCdTw==,type:str]
     nodeSelector:
         node-role.kubernetes.io/prod: ""
     tolerations:
@@ -316,59 +316,133 @@ insightsRemote:
         type: ClusterIP
         port: 80
 # the nats chart is a subchart which is configured for use by lagoon-remote
+# nats subchart is configured for use by lagoon-remote
 nats:
     enabled: false
-    # inject additional config
-    additionalVolumes:
-        - name: lagoon-remote-nats-tls
-          secret:
-            secretName: lagoon-remote-nats-tls
-    additionalVolumeMounts:
-        - name: lagoon-remote-nats-tls
-          mountPath: /etc/lagoon-remote-nats-tls
-    nats:
-        config:
-            - name: lagoon-remote
-              secret:
-                secretName: lagoon-remote-nats-conf
-    cluster:
+    # nameOverride provides compatibility for upgrading nats chart versions.
+    # modifying or setting this in local values.yaml will completely recreate
+    # all the nats resources.
+    nameOverride: nats1
+    tlsCA:
         enabled: true
-        name: lagoon-remote
-        # internal cluster IPs are not routable, so don't advertise them
-        noAdvertise: true
-    natsbox:
+        secretName: lagoon-remote-nats-tls
+    # Uncomment this block to enable monitoring if you have Prometheus Operator
+    # installed.
+    # promExporter:
+    #   enabled: true
+    #   podMonitor:
+    #     enabled: true
+    #     # fromNamespaces restricts the namespaces from which monitoring can occur
+    #     # via the NetworkPolicy. At least one namespace name must be listed.
+    #     fromNamespaces:
+    #     - monitoring
+    natsBox:
         enabled: false
+    config:
+        cluster:
+            enabled: true
+            name: lagoon-remote
+            # internal cluster IPs are not routable, so don't advertise them
+            noAdvertise: true
+        merge:
+            00$include: ./lagoon-remote/leafnodes.conf
+    # Uncomment this block if upgrading from lagoon-remote <v0.82.0.
+    # statefulSet:
+    #   patch:
+    #   - op: remove
+    #     path: /spec/selector/matchLabels/app.kubernetes.io~1component
+    podTemplate:
+        patch:
+            - op: add
+              path: /spec/volumes/-
+              value:
+                name: lagoon-remote-nats-conf
+                secret:
+                    secretName: lagoon-remote-nats-conf
+            - op: add
+              path: /spec/volumes/-
+              value:
+                name: lagoon-remote-nats-tls
+                secret:
+                    secretName: lagoon-remote-nats-tls
+    container:
+        patch:
+            - op: add
+              path: /volumeMounts/-
+              value:
+                name: lagoon-remote-nats-conf
+                mountPath: /etc/nats-config/lagoon-remote
+            - op: add
+              path: /volumeMounts/-
+              value:
+                name: lagoon-remote-nats-tls
+                mountPath: /etc/nats-certs/leafnodes
     # to connect to nats, pods must have the right label
-    networkPolicy:
-        enabled: true
-        allowExternal: false
-        # allow outbound leaf connection
-        extraEgress:
-            - ports:
-                - port: 7422
-                  protocol: TCP
+    extraResources:
+        - apiVersion: networking.k8s.io/v1
+          kind: NetworkPolicy
+          metadata:
+            name:
+                $tplYaml: |
+                    {{ include "nats.fullname" $ | quote }}
+            labels:
+                $tplYaml: |
+                    {{ include "nats.labels" $ }}
+          spec:
+            policyTypes:
+                - Ingress
+            podSelector:
+                matchLabels:
+                    $tplYaml: |
+                        {{- include "nats.selectorLabels" $ }}
+            ingress:
+                - from:
+                    # pods in this namespace with the correct label can access NATS pods
+                    - podSelector:
+                        matchLabels:
+                            lagoon-remote-nats-client: "true"
+                    # NATS inter-pod communication is allowed
+                    - podSelector:
+                        matchLabels:
+                            $tplYaml: |
+                                {{- include "nats.selectorLabels" $ }}
+                # conditionally allow metrics collection
+                - $tplYamlSpread: |
+                    {{- if and .Values.promExporter.enabled .Values.promExporter.podMonitor.enabled }}
+                    - from:
+                      {{- range .Values.promExporter.podMonitor.fromNamespaces }}
+                      - namespaceSelector:
+                          matchLabels:
+                            kubernetes.io/metadata.name: {{ . | quote }}
+                      {{- end }}
+                      ports:
+                      - port: 7777
+                        protocol: TCP
+                    {{- end }}
 # Configuration for the nats subchart
 natsConfig:
-    # coreURL format nats://<username>:<password>@<host>:7422
+    # coreURL format tls://<username>:<password>@<host>:7422
     coreURL: ""
     tls: {}
     # If the lagoon-remote-nats-tls secret should be created by the
     # lagoon-remote chart, certificate values can be specified directly in
     # secretData. Configuring TLS this way also allows specifying a custom
-    # ca.crt.
+    # ca.crt. The chart expects expects secretData to be specified unless
+    # nats.tlsCA.enabled is set to false.
     #
     # secretData:
     #   ca.crt: |
     #     ...
-    #   client.crt: |
+    #   tls.crt: |
     #     ...
-    #   client.key: |
+    #   tls.key: |
     #     ...
     #
     # If the TLS secret is created outside the lagoon-remote chart, it should
     # be named lagoon-remote-nats-tls. This secret should contain fields
     # tls.crt and tls.key, and the certificate should be issued by a public
-    # authority.
+    # authority. `nats.tlsCA.enabled: false` should be set in this case (it is
+    # true by default).
 storageCalculator:
     enabled: false
     # cronjob: 5 */12 * * *
@@ -394,19 +468,19 @@ sops:
         - vault_url: https://kv-dplplat01-c3b2.vault.azure.net
           name: sops-key
           version: d82fe2456d6e4c4aaaaf808226bd5769
-          created_at: "2026-05-04T12:01:56Z"
-          enc: jSWbvme_8nWqDEu4MpO609vGaZ0rd-5lqMbQ2Zp-jCw9lLKcR81V6FF9TzAVNkymFO5tH_BsGSg8SAMtKkQ3FMw5I-Tc0-bvDDzaLGDN2gDQcQ6KI0iK4_QslPZ25RK9T2VdjQEN9lZVEKfEIpixZyZkpJw9Ojmbjwt20JLmmH5EpFj99G6l7EHlQZXCn0zvaDRk1UD-pDWfrEQkcf9_6one42ZVvIT6iSNFXMcko2KdwrWNVEsqoM0-rB_HVgDNMZ0xXaeThXSRTCIdoCx4CUiys3GQJDRAUQDCOQVa1QiT_yN8mMGbH8jdgGUHs1LdTCx4rnw_llG7PJglFKxBN_xcqLEF3WhtHI-Vvbss1OpMBuofHPaQC2mH52Nq5lVy8mRdTfHixWsT-s6ZaxggnXE6cu0JLb3C980RWg0hiywUoIXajhp4N0p_J3YSOTxsvk-jiFcPhTftTnNOJ1hm9AcH10dXH_bdN-LKvJtKxTenDgXM-VxjEmkzKVnMdzTic-V-nB3WaQoWzwTwQ6idGO9WQ-sDER0-_voZYe_fk8hHZSEKYj7wovbf-iHWhwE-GyH9zZgITkxefG3gdp4FMAS1nzijs9c8BvDsDUDZOoLw1L4iP_LVKAtVdzwRBeXou2kDdbtlN87wMGoPonQLHUa80YFLv_JJNLzUrqC4dp0
+          created_at: "2026-06-02T12:30:59Z"
+          enc: nKDU5wfzIfv4fWFztuFBsOcGyUWLJDSCKuUiNJxB2RvIrocNJ6LFShANQ7CLjQh_oeOUUVPiAViw863N0h1xVIaC5blU0HCExfzbyvUXCkz0Xt_x5JLIa6F-Inq9WYA-COqIwGXjltHJ9_IO29wjdNsMPRdUDa8QEjvy_c-HWEya1TnzIXHyNkd-m3PKfvFDaNxQBGRzjafEzkqLeQ3LWsS7cnOXBUU4HMn8V2LjeJikPsyvQ-bAgnKxEOSgUslCHXJWvLQxF4z3G_Nsn-8Fmu-f1ATDyUJ3QxVkx_XgS5SA8_9BN_jJWQh_mkej1dT05ZCgVtpB20JTDNtqg7vo5tnQokJeI-23C9omC1fUhotbxqZawMLWJ5kTflKqbxz6EpyXrwsiFxU7BAilrr_1iL1IoGe-mQZ0ENrwMOhcTLvUkGRMS0Uo5JvB-4xAyys9m2e4y3em3d2FJw4RUXzavwu6uIEq_Zk5uQ7WLUrG0_PU1g4ffTaONM5lJbbKUPKjNwwWH3OO5hKX5bnofXr1PQX6SnSpSz_IquVSB_vNaA_56x3CYH2EaR5qsOq586G35PPkiy8DeZahz6V50uvkCQVqW12C37oCxiFyb4sLmgiKuwjM1jFFglTmGGG7eyn6ankWMsXsUIEc33syVsNp_uO1uzoJ3vlw1nQ68N0fNL8
     age:
         - recipient: age1q8yqc5jvhkk7ufj95tw25u3es0846pkrwgcd4pn9ctermr7e6cesn6l0gd
           enc: |
             -----BEGIN AGE ENCRYPTED FILE-----
-            YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSBSK0NoNlJKbDdOaERzNVpO
-            VS9CamRSSFF1cnYzU1VsbDBtazdZTk5zaFJRCm5Zd05ZR250d3k4b25Ucm4vU3N1
-            Nm5IR0l5WGF0KzBOK1ZEYzJwUEhMdWcKLS0tIHdkQkNtVFp4bW5Zb0tWdWcvbGUv
-            R0NQSXo2bWxZYm04MTFZMzczK25sYTgKYs2Yvv9Q0lc1BkIJS2Z+NYm88wSI8ABJ
-            NE0bQP1wHmEXgQfDogtd0N2KjO3R4F6LKAOIzif45r+v04mn/GoUDQ==
+            YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSAvNlRqQ0Z3ZlhpeWdIcnNX
+            L0E2VFhkaFlCd0YvcytudHE4Skd1cHZyd2g4Ci9xZnpEaVJPYlZ6S0lmb2NQNUVh
+            cnRVQ1NBa1IwT1NSd1ZCR3JhY3pIL2cKLS0tIDByVGFZbzVEUGlrenl5Rm16a0xp
+            OHdhdTg2QnNLaWJyaVNNZEVwemJGUDgKnmtjcS4DcK565o3DonJh9aZ3npC+zGMw
+            86epRXEF9z+PLtcyg66rP03oFuspR9S2d1ZtOsuyquc4HCYaG51h2w==
             -----END AGE ENCRYPTED FILE-----
-    lastmodified: "2026-05-04T12:01:58Z"
-    mac: ENC[AES256_GCM,data:t555/iqzFUrG90Df4TWFcargDTE6xxTsUnedjRY/0NaRQqCdZXUoBm/l4huTuv3okWwU3k06lcYF15AJqVOXG/rF9KlLlX3vkmO3uCmM/cUDYDA3nCB6CA9S+ljzL3D7453z6ZUKmBIInRwjq9yinp/0ZWAcSp2eaBYCQL5QLwM=,iv:tS7KhUFeG7zaJ8nVFPOKjkihIC1Dz+LjTPahp20lllk=,tag:zXYa18IHTJtEJ6VOs7wDKg==,type:str]
+    lastmodified: "2026-06-02T12:31:03Z"
+    mac: ENC[AES256_GCM,data:2peuMjVqNibmDdj7B8gci0lBeSwKMjoNYmCQrq+AKSMuWPgW7Za6D47xhX9lz9YChkQt9FsbE8XFLJ9x2Ijm5PtTzU2FBaAvxABwZN64eK945YEzWddrT9GhC1afZWsKWoQoFOonmXPnYI6bTcV4mT/B9HcSarKwfD1+p5SKoHs=,iv:8chvhX44o39bXtxYPYMadKV+ex32Z0pchdpfUgjltoA=,tag:qwxG8bHvDI3PRcpR2CEEiQ==,type:str]
     encrypted_comment_regex: ENCRYPT
     version: 3.11.0
