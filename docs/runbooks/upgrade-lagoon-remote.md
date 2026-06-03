@@ -16,7 +16,7 @@ First take a backup of the API DB and the Keycloak DB and export it to a local
 machine. This will be needed if a roll-back is needed. This is due to various
 migrations Amazee runs in these databases during an upgrade.
 Run the backup and dump with `task lagoon:backup:remote-and-keycloak` which will
-export the dumps to `/infrastructure`.
+export the dumps to the platform project's `/infrastructure` folder.
 
 ## pull down the newest version of the values file
 
