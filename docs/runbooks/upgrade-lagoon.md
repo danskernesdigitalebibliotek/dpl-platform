@@ -20,4 +20,4 @@ Lagoon Core and run them through.
 6. After upgrading both Charts we should now verify the upgrade. Open the
 `Post Lagoon upgrade checklist` and follow the steps described there.
 
-The upgrade of Lagoon should now be comlete.
+The upgrade of Lagoon should now be complete.
