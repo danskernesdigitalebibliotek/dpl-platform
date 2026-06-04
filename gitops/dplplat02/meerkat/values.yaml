@@ -16,7 +16,7 @@ meerkat:
   fullnameOverride: ""
   monitoring:
     grafanaDashboards:
-      create: false
+      create: true
       configMapName: meerkat-grafana-dashboard
       namespace: ""
       # Labels used by Grafana sidecars to discover dashboard ConfigMaps.
@@ -24,7 +24,7 @@ meerkat:
         grafana_dashboard: "1"
       annotations: {}
     grafanaDatasources:
-      create: false
+      create: true
       configMapName: meerkat-grafana-datasources
       namespace: ""
       # Labels used by Grafana sidecars to discover datasource ConfigMaps.
