@@ -10,7 +10,7 @@ meerkat:
     containerPort: 3000
     logLevel: info
     metrics:
-      enabled: false
+      enabled: true
     resources: {}
   nameOverride: ""
   fullnameOverride: ""
