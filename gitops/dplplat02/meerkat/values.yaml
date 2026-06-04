@@ -34,7 +34,7 @@ meerkat:
       deployMeerkatApiDatasource: true
       deployValkeyDatasource: true
   policyControl:
-    enabled: true
+    enabled: false
     mode: webhook
     config:
       baseDir: /etc/meerkat/config
@@ -104,7 +104,7 @@ meerkat:
         caBundle: ""
         # When unset, default rules are generated from src/config/meerkat-cluster-config.ts.
   imageScan:
-    enabled: false
+    enabled: true
     # Empty means use the Helm release namespace.
     namespace: ""
     vulnerabilityReport:
