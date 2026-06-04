@@ -13,7 +13,7 @@ x-webmasters-on-weekly-release-cycle: &webmasters-on-weekly-release-cycle
   releaseImageRepository: ghcr.io/danskernesdigitalebibliotek
   releaseImageName: dpl-cms-source
   dpl-cms-release: 2026.18.4
-  moduletest-dpl-cms-release: 2026.22.0
+  moduletest-dpl-cms-release: 2026.23.2
   go-release: 2026.18.4
   php-version: 8.3
   node-version: 24
@@ -80,7 +80,7 @@ sites:
     # TODO: Remove this once the the Adgangsplatformen OpenID client used here
     # has been updated to use the primary domain.
     autogenerateRoutes: true
-    moduletest-dpl-cms-release: 2026.22.0
+    moduletest-dpl-cms-release: 2026.23.2
     # This site is a webmaster site but we usually want the latest release
     # deployed to production. Our YAML handling chokes on duplicates to we
     # follow the default release plan and update the module test site manually.
@@ -100,7 +100,7 @@ sites:
     name: "Bibliotekernes Nationale Formidling"
     description: "The BNF content sharing site"
     plan: webmaster
-    moduletest-dpl-cms-release: 2026.22.0
+    moduletest-dpl-cms-release: 2026.23.2
     deploy_key: ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAICTmMC/cUI3U3QloX6aAdN7g0EU42J0fwA9aO7UJOzx9
     primary-domain: delingstjenesten.dk
     secondary-domains:
