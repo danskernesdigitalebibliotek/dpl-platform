@@ -39,7 +39,7 @@ meerkat:
     config:
       baseDir: /etc/meerkat/config
       volume:
-        type: persistentVolumeClaim
+        type: emptyDir
         size: 100Mi
         accessModes:
           - ReadWriteOnce
