@@ -1,0 +1,142 @@
+meerkat:
+  controller:
+    replicaCount: 1 # Must remain 1; multiple controller replicas are not currently supported.
+    image:
+      repository: registry.eu-1.deranged.dk/recloud-public/appsec/meerkat/meerkat
+      tag: "1.0.15"
+      pullPolicy: IfNotPresent
+    service:
+      port: 80
+    containerPort: 3000
+    logLevel: info
+    metrics:
+      enabled: false
+    resources: {}
+  nameOverride: ""
+  fullnameOverride: ""
+  monitoring:
+    grafanaDashboards:
+      create: false
+      configMapName: meerkat-grafana-dashboard
+      namespace: ""
+      # Labels used by Grafana sidecars to discover dashboard ConfigMaps.
+      labels:
+        grafana_dashboard: "1"
+      annotations: {}
+    grafanaDatasources:
+      create: false
+      configMapName: meerkat-grafana-datasources
+      namespace: ""
+      # Labels used by Grafana sidecars to discover datasource ConfigMaps.
+      labels:
+        grafana_datasource: "1"
+      annotations: {}
+      deployMeerkatApiDatasource: true
+      deployValkeyDatasource: true
+  policyControl:
+    enabled: false
+    mode: webhook
+    config:
+      baseDir: /etc/meerkat/config
+      volume:
+        type: persistentVolumeClaim
+        size: 100Mi
+        accessModes:
+          - ReadWriteOnce
+        storageClassName: ""
+      # Global meerkat configuration (deployed in the release namespace).
+      clusterConfig:
+        failurePolicy: Warn
+        omitNamespaces: []
+        allowNamespaceLocalConfigs: true
+        allowNamespacePolicyDefinitions: true
+        clusterPolicies: []
+      # Include the built-in default global policy definitions (imageAllowlist, runAsNonRoot).
+      # When true, these are merged with any user-provided clusterPolicyDefs and clusterPolicies.
+      includeDefaultClusterPolicyDefinitions: false
+      # Global named input values (deployed in the release namespace).
+      # Set to null or keep values empty to omit.
+      clusterInputValues:
+        values: []
+      # Global policy definitions (deployed in the release namespace).
+      # Set to null to omit.
+      clusterPolicyDefs:
+        definitions: []
+      # Global .cue policy files. Each key is a filename, value is the CUE source.
+      # These are deployed as a single ConfigMap in the release namespace.
+      clusterPolicyContents: {}
+    clusterScan:
+      jobSpec:
+        onConfigChangeTrigger: true
+        serviceAccountName: meerkat-cluster-scan-job
+        resultTokenAudience: meerkat-cluster-scan-results
+        # Job spec overrides. Set to null to use Kubernetes defaults.
+        backoffLimit: 1
+        activeDeadlineSeconds: 300
+        ttlSecondsAfterFinished: 3600
+    polling:
+      intervalSeconds: 30
+      ttlSecondsAfterFinished: 150
+    webhook:
+      failurePolicy: Ignore
+      timeoutSeconds: 5
+      excludeNamespaces: []
+      namespaceSelector: null
+      servicePort: 443
+      port: 3443
+      tls:
+        # self-signed: server generates certs, creates the Secret, and patches caBundle.
+        # existingSecret: server reads tls.crt/tls.key/ca.crt from secretName and patches caBundle.
+        # cert-manager: server reads tls.crt/tls.key from secretName; cert-manager injects caBundle.
+        # none: HTTP mode, intended only for non-cluster development.
+        mode: cert-manager
+        secretName: meerkat-secret
+        certDir: /etc/meerkat/tls
+        serviceDnsNames: []
+        certManager:
+          issuerRef:
+            name: "cert-manager"
+            kind: Issuer
+            group: cert-manager.io
+        # Optional chart-managed TLS material for existingSecret mode.
+        crt: ""
+        key: ""
+        caBundle: ""
+        # When unset, default rules are generated from src/config/meerkat-cluster-config.ts.
+  imageScan:
+    enabled: true
+    # Empty means use the Helm release namespace.
+    namespace: ""
+    vulnerabilityReport:
+      logSnapshotsEnabled: true
+    createNamespace: false
+    namespaceLabels: {}
+    namespaceAnnotations: {}
+    debounceMs: 30000
+    recentResultTtlSeconds: 86400
+    scanExistingImagesOnStartup: false
+    valkey:
+      image: valkey/valkey:9.1-alpine
+      host: ""
+      port: 6379
+      queueName: runtime-image-scans
+      resources: {}
+    worker:
+      serviceAccountName: meerkat-runtime-image-scan-worker
+      replicaCount: 3
+      concurrency: 1
+      attempts: 2
+      backoffMs: 30000
+      resources: {}
+    trivy:
+      dbRepository: public.ecr.aws/aquasecurity/trivy-db
+      severity:
+        - HIGH
+        - CRITICAL
+      ignoreUnfixed: true
+      insecureRegistries: []
+    # When inventory.omitNamespaces is unset, the controller falls back to
+    # policyControl.config.clusterConfig.omitNamespaces at runtime.
+    inventory: {}
+    # inventory:
+    #   omitNamespaces: []
