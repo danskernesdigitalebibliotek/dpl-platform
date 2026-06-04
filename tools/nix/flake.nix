@@ -23,7 +23,11 @@
           system:
           f {
             inherit system;
-            pkgs = import inputs.nixpkgs { inherit system; };
+            pkgs = import inputs.nixpkgs {
+              inherit system;
+              # Terraform needs the allowUnfree flag due to its non-OSS license.
+              config.allowUnfree = true;
+            };
           }
         );
     in
@@ -42,6 +46,7 @@
               gettext # for envsubst
               go-task
               prettier
+              terraform
               yq-go
               zx
             ];
