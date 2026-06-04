@@ -1,11 +1,11 @@
 apiVersion: argoproj.io/v1alpha1
 kind: AppProject
 metadata:
-  name: grafana-operator
+  name: meerkat
 spec:
   destinations:
     - name: in-cluster
-      namespace: grafana-operator
+      namespace: meerkat
       server: https://kubernetes.default.svc
   clusterResourceWhitelist:
     - group: ""
@@ -16,6 +16,8 @@ spec:
       kind: ClusterRole
     - group: rbac.authorization.k8s.io
       kind: ClusterRoleBinding
+    - group: admissionregistration.k8s.io
+      kind: ValidatingWebhookConfiguration
   namespaceResourceWhitelist:
     - group: "*"
       kind: "*"
