@@ -101,6 +101,11 @@ apps:
     namespace: vpa
     automated: true
 
+  - name: meerkat
+    project: meerkat
+    namespace: meerkat
+    automated: true
+
 automateSites: true
 
 sites:
