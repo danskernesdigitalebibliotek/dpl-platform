@@ -6,3 +6,7 @@
 **/kdevconfig.yaml
 **/skaffold.yaml
 .env
+
+# direnv-related stuff, not enabled by default
+.direnv
+.envrc
