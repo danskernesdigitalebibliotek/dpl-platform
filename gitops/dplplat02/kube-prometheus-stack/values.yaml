@@ -1493,8 +1493,8 @@ kube-prometheus-stack:
         editable: false
         url: http://loki-read-headless.loki.svc.cluster.local:3100
         orgId: 1
-        jsonDatae:
-          maxLins: 1000
+        jsonData:
+          maxLines: 1000
           queryTimeout: 60s
       - name: Infinity
         type: yesoreyeram-infinity-datasource
