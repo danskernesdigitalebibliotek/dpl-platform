@@ -62,6 +62,12 @@ spec:
                   name: dashboards
                 - mountPath: /etc/grafana/provisioning/datasources
                   name: datasources
+              env:
+                - name: GF_INSTALL_PLUGINS
+                  valueFrom:
+                    configMapKeyRef:
+                      key: plugins
+                      name: grafana-ini
             # This container watches the namespace for configmaps with the `dashboards` label
             # and creates files for all their keys under `FOLDER`
             - name: grafana-sc-dashboards
@@ -77,11 +83,6 @@ spec:
                   value: ALL
                 - name: RESOURCE
                   value: configmap
-                - name: GF_INSTALL_PLUGINS
-                  valueFrom:
-                    configMapKeyRef:
-                      key: plugins
-                      name: grafana-ini
               volumeMounts:
                 - mountPath: /var/lib/grafana/dashboards
                   name: dashboards
