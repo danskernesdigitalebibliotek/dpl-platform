@@ -1226,16 +1226,16 @@ kube-prometheus-stack:
   ## Using default values from https://github.com/grafana/helm-charts/blob/main/charts/grafana/values.yaml
   ##
   grafana:
-    enabled: false
-    namespaceOverride: ""
+    enabled: true
+    namespaceOverride: grafana
 
     deploymentStrategy:
       type: Recreate
 
     grafana.ini:
       server:
-        domain: grafana.dplplat02.dpl.reload.dk
-        root_url: https://grafana.dplplat02.dpl.reload.dk
+        domain: grafana2.dplplat02.dpl.reload.dk
+        root_url: https://grafana2.dplplat02.dpl.reload.dk
       auth.anonymous:
         enabled: false
       auth.basic:
@@ -1367,7 +1367,7 @@ kube-prometheus-stack:
       # hosts:
       #   - grafana.domain.com
       hosts:
-        - grafana.dplplat02.dpl.reload.dk
+        - grafana2.dplplat02.dpl.reload.dk
 
       ## Path for grafana ingress
       path: /
