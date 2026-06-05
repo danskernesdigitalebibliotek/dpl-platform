@@ -77,6 +77,11 @@ spec:
                   value: ALL
                 - name: RESOURCE
                   value: configmap
+                - name: GF_INSTALL_PLUGINS
+                  valueFrom:
+                    configMapKeyRef:
+                      key: plugins
+                      name: grafana-ini
               volumeMounts:
                 - mountPath: /var/lib/grafana/dashboards
                   name: dashboards
