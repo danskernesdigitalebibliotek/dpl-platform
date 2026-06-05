@@ -59,7 +59,7 @@ apps:
 
   - name: grafana-community
     project: monitoring
-    namespace: monitoring
+    namespace: grafana-community
     automated: false
     syncOptions:
       - ServerSideApply=true
