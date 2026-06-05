@@ -45,4 +45,4 @@ spec:
     warn: false
   sourceRepos:
     - https://github.com/danskernesdigitalebibliotek/dpl-platform.git # git repository
-    - https://github.com/grafana-community/helm-charts
+    - https://grafana-community.github.io/helm-charts

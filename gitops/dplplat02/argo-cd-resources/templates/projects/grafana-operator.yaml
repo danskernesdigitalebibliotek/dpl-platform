@@ -22,4 +22,4 @@ spec:
   orphanedResources:
     warn: false
   sourceRepos:
-    - https://github.com/grafana-community/helm-charts # git repository
+    - https://grafana-community.github.io/helm-charts # git repository
