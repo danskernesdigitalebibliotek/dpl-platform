@@ -57,13 +57,6 @@ apps:
     syncOptions:
       - ServerSideApply=true
 
-  - name: grafana-community
-    project: monitoring
-    namespace: grafana-community
-    automated: false
-    syncOptions:
-      - ServerSideApply=true
-
   - name: alloy
     project: monitoring
     namespace: alloy
