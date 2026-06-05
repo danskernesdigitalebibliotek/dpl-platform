@@ -298,7 +298,7 @@ grafana-community:
     #     - "my.host.com"
 
   ingress:
-    enabled: false
+    enabled: true
     # ingressClassName: nginx
     # Values can be templated
     annotations: {}
