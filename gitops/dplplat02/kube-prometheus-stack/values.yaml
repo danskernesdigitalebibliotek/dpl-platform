@@ -1379,9 +1379,9 @@ kube-prometheus-stack:
       ## Secret must be manually created in the namespace
       ##
       tls:
-        - secretName: grafana.dplplat02.dpl.reload.dk-tls
+        - secretName: grafana2.dplplat02.dpl.reload.dk-tls
           hosts:
-            - grafana.dplplat02.dpl.reload.dk
+            - grafana2.dplplat02.dpl.reload.dk
 
     # # To make Grafana persistent (Using Statefulset)
     # #
