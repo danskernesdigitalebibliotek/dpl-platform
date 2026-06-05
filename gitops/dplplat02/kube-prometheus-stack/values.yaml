@@ -1253,6 +1253,9 @@ kube-prometheus-stack:
         role_attribute_path: "contains(groups[*], 'operators-owner') && 'Admin' || 'Viewer'"
 
     envFromSecret: grafana-oauth-client-secret
+    plugins:
+      - redis-app # Used by Meerkat
+      - yesoreyeram-infinity-datasource # Used by Meerkat
 
     ## ForceDeployDatasources Create datasource configmap even if grafana deployment has been disabled
     ##
