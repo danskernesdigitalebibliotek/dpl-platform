@@ -200,7 +200,7 @@ spec:
               "expr": "sort_desc( sum(certmanager_certificate_expiration_timestamp_seconds{exported_namespace=~\"$namespace\"} - time()) by (name,exported_namespace) )",
               "format": "table",
               "instant": true,
-              "legendFormat": " {{"{{"}}exported_namespace{{"}}"}} / {{"{{"}}name{{"}}"}}",
+              "legendFormat": "{{`{{exported_namespace}} / {{name}}`}}",
               "refId": "A"
             }
           ],
@@ -309,7 +309,7 @@ spec:
               "expr": "sum(certmanager_certificate_ready_status) by (condition)",
               "format": "time_series",
               "intervalFactor": 2,
-              "legendFormat": "{{"{{"}}condition{{"}}"}}",
+              "legendFormat": "{{`{{condition}}`}}",
               "range": true,
               "refId": "A",
               "step": 1800
@@ -415,7 +415,7 @@ spec:
               "expr": "sum(certmanager_certificate_expiration_timestamp_seconds{exported_namespace=~\"$namespace\"} - time()) BY (name,exported_namespace)",
               "instant": false,
               "intervalFactor": 1,
-              "legendFormat": "{{"{{"}}exported_namespace{{"}}"}} / {{"{{"}}name{{"}}"}}"",
+              "legendFormat": "{{`{{exported_namespace}} / {{name}}`}}",
               "refId": "A"
             }
           ],
@@ -527,7 +527,7 @@ spec:
               },
               "editorMode": "code",
               "expr": "sum(rate(certmanager_http_acme_client_request_count[2m])) BY (status, path)",
-              "legendFormat": "{{"{{"}}status{{"}}"}}",
+              "legendFormat": "{{`{{status}}`}}",
               "range": true,
               "refId": "A"
             }
