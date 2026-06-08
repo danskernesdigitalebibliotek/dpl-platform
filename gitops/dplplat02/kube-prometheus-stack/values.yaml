@@ -1426,7 +1426,7 @@ kube-prometheus-stack:
         isDefaultDatasource: true
 
         name: Prometheus
-        uid: ${DS_PROMETHEUS}
+        uid: prometheus
 
         ## Extra jsonData properties to add to the datasource
         # extraJsonData:
