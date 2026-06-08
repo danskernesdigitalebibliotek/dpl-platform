@@ -12,9 +12,9 @@ x-webmasters-on-weekly-release-cycle: &webmasters-on-weekly-release-cycle
   # production
   releaseImageRepository: ghcr.io/danskernesdigitalebibliotek
   releaseImageName: dpl-cms-source
-  dpl-cms-release: 2026.18.4
+  dpl-cms-release: 2026.23.2
   moduletest-dpl-cms-release: 2026.23.2
-  go-release: 2026.18.4
+  go-release: 2026.23.2
   php-version: 8.3
   node-version: 24
 sites:
