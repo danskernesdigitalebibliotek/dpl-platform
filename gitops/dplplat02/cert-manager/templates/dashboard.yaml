@@ -527,7 +527,7 @@ spec:
               },
               "editorMode": "code",
               "expr": "sum(rate(certmanager_http_acme_client_request_count[2m])) BY (status, path)",
-              "legendFormat": "{{status}}",
+              "legendFormat": "{{"{{"}}status{{"}}"}}",
               "range": true,
               "refId": "A"
             }
