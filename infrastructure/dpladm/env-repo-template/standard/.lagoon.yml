@@ -42,13 +42,14 @@ tasks:
             set -e
             if [[ ! -d "web/sites/default/files/modules_local" ]]; then
                 echo "Creating directory for module uploads"
-                mkdir web/sites/default/files/modules_local
+                mkdir -p /app/cms/web/sites/default/files/modules_local
             fi
         service: cli
     - run:
         name: Import translations
         command: |
             set -e;
+            mkdir -p /app/cms/web/sites/default/files/translations
             drush locale-check
             drush locale-update
         service: cli
