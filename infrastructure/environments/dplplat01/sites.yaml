@@ -17,6 +17,17 @@ x-webmasters-on-weekly-release-cycle: &webmasters-on-weekly-release-cycle
   go-release: 2026.23.4
   php-version: 8.3
   node-version: 24
+x-early-23: &early-23
+  # This release cycle releases the newest release, which has been
+  # tested on webmaster moduletests in the previous week, on to
+  # production
+  releaseImageRepository: ghcr.io/danskernesdigitalebibliotek
+  releaseImageName: dpl-cms-source
+  dpl-cms-release: 2026.23.4
+  moduletest-dpl-cms-release: 2026.23.4
+  go-release: 2026.23.4
+  php-version: 8.3
+  node-version: 24
 sites:
   # Site objects are indexed by a unique key that must be a valid lagoon, and
   # github project name. That is, alphanumeric and dashes.
@@ -617,7 +628,7 @@ sites:
       - varnish.main.kobenhavn.dplplat02.dpl.reload.dk
     plan: webmaster
     deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHaTkDvjLW/b2qVj8FIvtX9x3TxFFZTENn+w2CFELeoC"
-    <<: *webmasters-on-weekly-release-cycle
+    <<: *early-23
     diskSize: 20
   koge:
     name: "KøgeBibliotekerne"
