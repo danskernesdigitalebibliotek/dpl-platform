@@ -24,7 +24,7 @@ x-early-23: &early-23
   releaseImageRepository: ghcr.io/danskernesdigitalebibliotek
   releaseImageName: dpl-cms-source
   dpl-cms-release: 2026.23.4
-  moduletest-dpl-cms-release: 2026.23.4
+  moduletest-dpl-cms-release: 2026.24.1
   go-release: 2026.23.4
   php-version: 8.3
   node-version: 24
