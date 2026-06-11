@@ -2,8 +2,8 @@
 x-defaults: &default-release-image-source
   releaseImageRepository: ghcr.io/danskernesdigitalebibliotek
   releaseImageName: dpl-cms-source
-  dpl-cms-release: 2026.22.3
-  go-release: 2026.22.3
+  dpl-cms-release: 2026.24.1
+  go-release: 2026.24.1
   php-version: 8.3
   node-version: 24
 x-webmasters-on-weekly-release-cycle: &webmasters-on-weekly-release-cycle
@@ -12,9 +12,9 @@ x-webmasters-on-weekly-release-cycle: &webmasters-on-weekly-release-cycle
   # production
   releaseImageRepository: ghcr.io/danskernesdigitalebibliotek
   releaseImageName: dpl-cms-source
-  dpl-cms-release: 2026.18.7
-  moduletest-dpl-cms-release: 2026.23.2
-  go-release: 2026.18.7
+  dpl-cms-release: 2026.23.4
+  moduletest-dpl-cms-release: 2026.24.1
+  go-release: 2026.23.4
   php-version: 8.3
   node-version: 24
 x-early-23: &early-23
@@ -102,7 +102,7 @@ sites:
     description: "Et site hvor bibliotekerne kan teste"
     primary-domain: bibliotek-test.dplplat02.dpl.reload.dk
     plan: webmaster
-    go-release: 2026.22.0
+    go-release: 2026.24.1
     deploy_key: ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHvhy79hHjLcQJCcMNwci1Q/P/O2LwD4IzBVfkmRGKom
     diskSize: 5
     <<: *webmasters-on-weekly-release-cycle
