@@ -8,7 +8,7 @@ COPY --from=cli /app /app
 # Following COPY blocks are taken from the nginx.dockerfile form the dpl-cms repo.
 # They are used to add custom nginx configuration to the image.
 # TODO: Find a better way of NOT duplicating this code.
-COPY lagoon/conf/nginx/metrics /app/web/_metrics
+COPY lagoon/conf/nginx/metrics /app/cms/web/_metrics
 
 # NB: pass the directory (not a *.conf glob) to fix-permissions — the script
 # only operates on its first argument, so a glob would silently fix just one

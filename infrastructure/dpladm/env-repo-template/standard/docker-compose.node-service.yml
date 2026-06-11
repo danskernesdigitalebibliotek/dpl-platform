@@ -17,7 +17,7 @@ services:
       # Lagoon Labels
       lagoon.type: cli-persistent
       lagoon.persistent.name: nginx # mount the persistent storage of nginx into this container
-      lagoon.persistent: /app/web/sites/default/files/ # location where the persistent storage should be mounted
+      lagoon.persistent: /app/cms/web/sites/default/files/ # location where the persistent storage should be mounted
     environment:
       <<: *default-environment # loads the defined environment variables from the top
 
@@ -28,7 +28,7 @@ services:
     <<: *default-user # uses the defined user from top
     labels:
       lagoon.type: nginx-php-persistent
-      lagoon.persistent: /app/web/sites/default/files/ # define where the persistent storage should be mounted too
+      lagoon.persistent: /app/cms/web/sites/default/files/ # define where the persistent storage should be mounted too
       lagoon.persistent.size: ${DISK_SIZE}Gi
     environment:
       <<: *default-environment # loads the defined environment variables from the top
@@ -41,7 +41,7 @@ services:
     labels:
       lagoon.type: nginx-php-persistent
       lagoon.name: nginx # we want this service be part of the nginx pod in Lagoon
-      lagoon.persistent: /app/web/sites/default/files/ # define where the persistent storage should be mounted too
+      lagoon.persistent: /app/cms/web/sites/default/files/ # define where the persistent storage should be mounted too
     environment:
       <<: *default-environment # loads the defined environment variables from the top
 

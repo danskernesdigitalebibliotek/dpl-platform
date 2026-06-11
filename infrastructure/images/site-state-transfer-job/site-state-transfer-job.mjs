@@ -43,7 +43,7 @@ async function syncFileFromSourceToTarget(sourceNamespace, targetNamespace, sshH
   echo(`Now moving files from ${sourceNamespace} to ${targetNamespace}`)
   // The IP here is the lagoon SSH host and it is documented here: https://github.com/danskernesdigitalebibliotek/dpl-platform/blob/main/docs/runbooks/connecting-the-lagoon-cli.md#configure-your-local-lagoon-cli
   try {
-    await $`kubectl exec -n ${targetNamespace} deployment/cli -- rsync --omit-dir-times --recursive --no-perms --no-group --no-owner --no-times --chmod=ugo=rwX --delete --exclude=/styles/* --delete-excluded ${sourceNamespace}@${sshHost}:/app/web/sites/default/files/ /app/web/sites/default/files`
+    await $`kubectl exec -n ${targetNamespace} deployment/cli -- rsync --omit-dir-times --recursive --no-perms --no-group --no-owner --no-times --chmod=ugo=rwX --delete --exclude=/styles/* --delete-excluded ${sourceNamespace}@${sshHost}:/app/cms/web/sites/default/files/ /app/cms/web/sites/default/files`
   } catch (error) {
     echo(`Failed to rsync files from ${targetNamespace} to ${sourceNamespace}`, error.stderr)
     throw Error(`Failed to rsync files from ${targetNamespace} to ${sourceNamespace}`, {

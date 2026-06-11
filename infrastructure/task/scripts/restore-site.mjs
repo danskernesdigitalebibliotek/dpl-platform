@@ -145,7 +145,7 @@ async function importBackupIntoDatabase(file, connectionInfo, project, environme
 async function importFiles(file, project, environment) {
   await $`kubectl exec -n ${project}-${environment} deploy/cli -- bash -c "shopt -s extglob"`
   try {
-    await $`kubectl exec -n ${project}-${environment} deploy/cli -- bash -c "rm -rf /app/web/sites/default/files/"`
+    await $`kubectl exec -n ${project}-${environment} deploy/cli -- bash -c "rm -rf /app/cms/web/sites/default/files/"`
   } catch (error) {
     echo(error)
   }
@@ -153,7 +153,7 @@ async function importFiles(file, project, environment) {
 
   try {
     // await $`kubectl exec -n ${project}-${environment} deploy/cli -- bash -c "tar -zxvf /tmp/${file} --directory /tmp data/nginx"`
-    await $`kubectl exec -n ${project}-${environment} deploy/cli -- bash -c "tar --strip 2 --gzip --extract -m --no-overwrite-dir --file /tmp/${file} --directory /app/web/sites/default/files data/nginx"`
+    await $`kubectl exec -n ${project}-${environment} deploy/cli -- bash -c "tar --strip 2 --gzip --extract -m --no-overwrite-dir --file /tmp/${file} --directory /app/cms/web/sites/default/files data/nginx"`
   } catch (error) {
     // INFO: if the function fails with a message that "php: Cannot change mode", that means the function ran as successfully as possible. The utime operation fails due to persmissions in the container.
     if (error.stderr.includes("php: Cannot change mode to rwxrwxrwx")) {
