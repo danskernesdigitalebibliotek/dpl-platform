@@ -322,7 +322,57 @@ kube-prometheus-stack:
 
   ## Provide custom recording or alerting rules to be deployed into the cluster.
   ##
-  additionalPrometheusRulesMap: {}
+  additionalPrometheusRulesMap:
+    cert-manager-rules:
+      groups:
+        - name: cert-manager
+          interval: 30s
+          rules:
+            # Alert when certificate expires in less than 7 days
+            - record: CertificateExpiryWarning
+              expr: |
+                (certmanager_certificate_expiration_timestamp_seconds - time()) < 7 * 24 * 3600
+                and (certmanager_certificate_expiration_timestamp_seconds - time()) > 0
+              for: 1h
+              labels:
+                severity: warning
+              annotations:
+                summary: "Certificate {{ $labels.name }} expiring soon"
+                description: "Certificate {{ $labels.name }} in namespace {{ $labels.namespace }} will expire in {{ $value | humanizeDuration }}."
+
+            # Alert when certificate expires in less than 24 hours
+            - record: CertificateExpiryCritical
+              expr: |
+                (certmanager_certificate_expiration_timestamp_seconds - time()) < 24 * 3600
+                and (certmanager_certificate_expiration_timestamp_seconds - time()) > 0
+              for: 15m
+              labels:
+                severity: critical
+              annotations:
+                summary: "Certificate {{ $labels.name }} expiring within 24 hours"
+                description: "Certificate {{ $labels.name }} in namespace {{ $labels.namespace }} expires in {{ $value | humanizeDuration }}. Immediate action required."
+
+            # Alert when certificate is not ready
+            - record: CertificateNotReady
+              expr: |
+                certmanager_certificate_ready_status{condition="True"} == 0
+              for: 10m
+              labels:
+                severity: warning
+              annotations:
+                summary: "Certificate {{ $labels.name }} is not ready"
+                description: "Certificate {{ $labels.name }} in namespace {{ $labels.namespace }} has not been ready for 10 minutes."
+
+            # Alert when certificate renewal fails
+            - record: CertificateRenewalFailed
+              expr: |
+                increase(certmanager_http_acme_client_request_count{status=~"4..|5.."}[15m]) > 5
+              for: 5m
+              labels:
+                severity: critical
+              annotations:
+                summary: "Certificate renewal failing"
+                description: "Certificate renewal has failed {{ $value }} times in the last 15 minutes."
   #  rule-name:
   #    groups:
   #    - name: my_group
@@ -1226,16 +1276,16 @@ kube-prometheus-stack:
   ## Using default values from https://github.com/grafana/helm-charts/blob/main/charts/grafana/values.yaml
   ##
   grafana:
-    enabled: true
-    namespaceOverride: grafana
+    enabled: false
+    namespaceOverride: ""
 
     deploymentStrategy:
       type: Recreate
 
     grafana.ini:
       server:
-        domain: grafana2.dplplat02.dpl.reload.dk
-        root_url: https://grafana2.dplplat02.dpl.reload.dk
+        domain: grafana.dplplat02.dpl.reload.dk
+        root_url: https://grafana.dplplat02.dpl.reload.dk
       auth.anonymous:
         enabled: false
       auth.basic:
@@ -1253,9 +1303,6 @@ kube-prometheus-stack:
         role_attribute_path: "contains(groups[*], 'operators-owner') && 'Admin' || 'Viewer'"
 
     envFromSecret: grafana-oauth-client-secret
-    plugins:
-      - redis-app # Used by Meerkat
-      - yesoreyeram-infinity-datasource # Used by Meerkat
 
     ## ForceDeployDatasources Create datasource configmap even if grafana deployment has been disabled
     ##
@@ -1370,7 +1417,7 @@ kube-prometheus-stack:
       # hosts:
       #   - grafana.domain.com
       hosts:
-        - grafana2.dplplat02.dpl.reload.dk
+        - grafana.dplplat02.dpl.reload.dk
 
       ## Path for grafana ingress
       path: /
@@ -1379,9 +1426,9 @@ kube-prometheus-stack:
       ## Secret must be manually created in the namespace
       ##
       tls:
-        - secretName: grafana2.dplplat02.dpl.reload.dk-tls
+        - secretName: grafana.dplplat02.dpl.reload.dk-tls
           hosts:
-            - grafana2.dplplat02.dpl.reload.dk
+            - grafana.dplplat02.dpl.reload.dk
 
     # # To make Grafana persistent (Using Statefulset)
     # #
