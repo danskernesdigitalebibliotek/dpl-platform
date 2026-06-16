@@ -51,7 +51,8 @@ ingress-nginx:
       # Setup a json-based access-log.
       # We use $proxy_add_x_forwarded_for as remote_addr as we're behind a load-
       # balancer with externalTrafficPolicy=Local: https://docs.microsoft.com/en-us/azure/aks/load-balancer-standard#maintain-the-clients-ip-on-inbound-connections
-      log-format-upstream: '{"time": "$time_iso8601", "remote_addr": "$proxy_add_x_forwarded_for", "x-forward-for": "$proxy_add_x_forwarded_for", "request_id": "$req_id",
+      log-format-upstream:
+        '{"time": "$time_iso8601", "remote_addr": "$proxy_add_x_forwarded_for", "x-forward-for": "$proxy_add_x_forwarded_for", "request_id": "$req_id",
         "bytes_sent": $bytes_sent, "request_time": $request_time, "status":$status, "vhost": "$host", "request_proto": "$server_protocol",
         "path": "$uri", "request_query": "$args", "request_length": $request_length, "duration": $request_time,"method": "$request_method", "http_referrer": "$http_referer",
         "http_user_agent": "$http_user_agent", "proxy_upstream_name": "$proxy_upstream_name" }'
@@ -881,44 +882,44 @@ ingress-nginx:
         additionalLabels: {}
         # namespace: ""
         rules:
-        # These are just examples rules, please adapt them to your needs
-        - alert: NGINXConfigFailed
-          expr: count(nginx_ingress_controller_config_last_reload_successful == 0) > 0
-          for: 1s
-          labels:
-            severity: critical
-          annotations:
-            description: bad ingress config - nginx config test failed
-            summary: uninstall the latest ingress changes to allow config reloads to resume
-        # By default a fake self-signed certificate is generated as default and
-        # it is fine if it expires. If `--default-ssl-certificate` flag is used
-        # and a valid certificate passed please do not filter for `host` label!
-        # (i.e. delete `{host!="_"}` so also the default SSL certificate is
-        # checked for expiration)
-        - alert: NGINXCertificateExpiry
-          expr: (avg(nginx_ingress_controller_ssl_expire_time_seconds{host!="_"}) by (host) - time()) < 604800
-          for: 1s
-          labels:
-            severity: critical
-          annotations:
-            description: ssl certificate(s) will expire in less then a week
-            summary: renew expiring certificates to avoid downtime
-        - alert: NGINXTooMany500s
-          expr: 100 * ( sum( nginx_ingress_controller_requests{status=~"5.+"} ) / sum(nginx_ingress_controller_requests) ) > 5
-          for: 1m
-          labels:
-            severity: warning
-          annotations:
-            description: Too many 5XXs
-            summary: More than 5% of all requests returned 5XX, this requires your attention
-        - alert: NGINXTooMany400s
-          expr: 100 * ( sum( nginx_ingress_controller_requests{status=~"4.+"} ) / sum(nginx_ingress_controller_requests) ) > 5
-          for: 1m
-          labels:
-            severity: warning
-          annotations:
-            description: Too many 4XXs
-            summary: More than 5% of all requests returned 4XX, this requires your attention
+          # These are just examples rules, please adapt them to your needs
+          - alert: NGINXConfigFailed
+            expr: count(nginx_ingress_controller_config_last_reload_successful == 0) > 0
+            for: 1s
+            labels:
+              severity: critical
+            annotations:
+              description: bad ingress config - nginx config test failed
+              summary: uninstall the latest ingress changes to allow config reloads to resume
+          # By default a fake self-signed certificate is generated as default and
+          # it is fine if it expires. If `--default-ssl-certificate` flag is used
+          # and a valid certificate passed please do not filter for `host` label!
+          # (i.e. delete `{host!="_"}` so also the default SSL certificate is
+          # checked for expiration)
+          - alert: NGINXCertificateExpiry
+            expr: (avg(nginx_ingress_controller_ssl_expire_time_seconds{host!="_"}) by (host) - time()) < 604800
+            for: 1s
+            labels:
+              severity: critical
+            annotations:
+              description: ssl certificate(s) will expire in less then a week
+              summary: renew expiring certificates to avoid downtime
+          - alert: NGINXTooMany500s
+            expr: 100 * ( sum( nginx_ingress_controller_requests{status=~"5.+"} ) / sum(nginx_ingress_controller_requests) ) > 5
+            for: 1m
+            labels:
+              severity: warning
+            annotations:
+              description: Too many 5XXs
+              summary: More than 5% of all requests returned 5XX, this requires your attention
+          - alert: NGINXTooMany400s
+            expr: 100 * ( sum( nginx_ingress_controller_requests{status=~"4.+"} ) / sum(nginx_ingress_controller_requests) ) > 5
+            for: 1m
+            labels:
+              severity: warning
+            annotations:
+              description: Too many 4XXs
+              summary: More than 5% of all requests returned 4XX, this requires your attention
     # -- Improve connection draining when ingress controller pod is deleted using a lifecycle hook:
     # With this new hook, we increased the default terminationGracePeriodSeconds from 30 seconds
     # to 300, allowing the draining of connections up to five minutes.

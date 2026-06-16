@@ -63,7 +63,6 @@ jobs:
             org.opencontainers.image.title=Lagoon Redeploy Controller
             org.opencontainers.image.description=Danish Public Libraries Lagoon Redeploy Controller
 
-
       # Do a first build and export it to the docker cache. This allows us to
       # run som tests on the image, while still avoiding to have to rebuild the
       # image when we do the final build.

@@ -1,29 +1,28 @@
 #!/usr/bin/env zx
-useBash();
+useBash()
 
-const time = function() {
-  return $.sync`date +%T`;
+const time = function () {
+  return $.sync`date +%T`
 }
 
-console.log("### Starting controller");
-console.log("adding dplplat01 lagoon config");
+console.log("### Starting controller")
+console.log("adding dplplat02 lagoon config")
 await $`lagoon config add \
-  --graphql https://api.lagoon.dplplat01.dpl.reload.dk/graphql \
+  --graphql https://api.lagoon.dplplat02.dpl.reload.dk/graphql \
   --force \
-  --ui https://ui.lagoon.dplplat01.dpl.reload.dk \
-  --hostname 20.238.147.183 \
+  --ui https://ui.lagoon.dplplat02.dpl.reload.dk \
+  --hostname 130.226.25.97 \
   --port 22 \
-  --lagoon dplplat01 \
-  --ssh-key /root/.ssh/id_rsa`;
+  --lagoon dplplat02 \
+  --ssh-key /root/.ssh/id_rsa`
 
-await $`lagoon config feature --strict-host-key-checking "no"`;
+await $`lagoon config feature --strict-host-key-checking "no"`
 
-await $`lagoon config default --lagoon dplplat01`;
+await $`lagoon config default --lagoon dplplat02`
 
-
-// verify that dplplat01 is the active lagoon
-console.log("### Show current Lagoon");
-echo(await $`lagoon config list`);
+// verify that dplplat02 is the active lagoon
+console.log("### Show current Lagoon")
+echo(await $`lagoon config list`)
 
 function getFailedDeployments(environmentType) {
   return $.sync`lagoon raw --raw "query allProjects {
@@ -37,52 +36,59 @@ function getFailedDeployments(environmentType) {
         }
       }
     }
-  }" | jq -r '.allProjects[] | .name as $name | .environments[].deployments[] | select(.status == "failed") | ($name)'`.valueOf().split("\n");
+  }" | jq -r '.allProjects[] | .name as $name | .environments[].deployments[] | select(.status == "failed") | ($name)'`
+    .valueOf()
+    .split("\n")
 }
 
-const redeployedDeployments = {};
-const redeployBlackList = {};
+const redeployedDeployments = {}
+const redeployBlackList = {}
 
 function redeployDeployments(environmentType, environmentName, allowedRedeployAttempts) {
-  console.log(`${time()} - Checking for ${environmentType} envs for failed deployments`);
+  console.log(`${time()} - Checking for ${environmentType} envs for failed deployments`)
   // We do not want to redeploy dpl-cms and dpl-bnf projects sites
   const failedDeployments = getFailedDeployments(environmentType)
-    .filter(deployment => !deployment.startsWith("dpl-"))
-    .filter(deployment => !redeployBlackList[`${deployment}-${environmentName}`]);
+    .filter((deployment) => !deployment.startsWith("dpl-"))
+    .filter((deployment) => !redeployBlackList[`${deployment}-${environmentName}`])
 
-  if(failedDeployments.length <= 0) {
-    console.log(`${time()} - No failed ${environmentType} deployments found - sleeping for 5 minutes`);
-    return;
+  if (failedDeployments.length <= 0) {
+    console.log(
+      `${time()} - No failed ${environmentType} deployments found - sleeping for 5 minutes`
+    )
+    return
   }
 
-  for(const deployment of failedDeployments) {
-    if(isNaN(redeployedDeployments[`${deployment}-${environmentName}`])) {
+  for (const deployment of failedDeployments) {
+    if (isNaN(redeployedDeployments[`${deployment}-${environmentName}`])) {
       //First time through the redeployment loop we need to set the key with 0
-      redeployedDeployments[`${deployment}-${environmentName}`] = 0;
+      redeployedDeployments[`${deployment}-${environmentName}`] = 0
     }
-    if(redeployedDeployments[`${deployment}-${environmentName}`] >= allowedRedeployAttempts) {
-      console.log(`${time()} - ${deployment}-${environmentName}: No attempts left`);
-      redeployBlackList[`${deployment}-${environmentName}`] = `https://ui.lagoon.dplplat01.dpl.reload.dk/projects/${deployment}/${deployment}-${environmentName}/deployments`;
-      delete redeployedDeployments[`${deployment}-${environmentName}`];
-      continue;
+    if (redeployedDeployments[`${deployment}-${environmentName}`] >= allowedRedeployAttempts) {
+      console.log(`${time()} - ${deployment}-${environmentName}: No attempts left`)
+      redeployBlackList[`${deployment}-${environmentName}`] =
+        `https://ui.lagoon.dplplat01.dpl.reload.dk/projects/${deployment}/${deployment}-${environmentName}/deployments`
+      delete redeployedDeployments[`${deployment}-${environmentName}`]
+      continue
     }
-    console.log(`${time()} - Deploying: ${deployment}-${environmentName}`);
-    $.sync`lagoon deploy latest -p "${deployment}" -e "${environmentName}" --force`;
-    redeployedDeployments[`${deployment}-${environmentName}`] += 1;
+    console.log(`${time()} - Deploying: ${deployment}-${environmentName}`)
+    $.sync`lagoon deploy latest -p "${deployment}" -e "${environmentName}" --force`
+    redeployedDeployments[`${deployment}-${environmentName}`] += 1
   }
 }
 
-while(true) {
-  redeployDeployments("PRODUCTION", "main", 6);
-  redeployDeployments("DEVELOPMENT", "moduletest", 3);
-  if(Object.keys(redeployedDeployments).length) {
-    console.log("Redeployed sites");
-    console.log(redeployedDeployments);
+while (true) {
+  redeployDeployments("PRODUCTION", "main", 6)
+  redeployDeployments("DEVELOPMENT", "moduletest", 3)
+  if (Object.keys(redeployedDeployments).length) {
+    console.log("Redeployed sites")
+    console.log(redeployedDeployments)
   }
-  if(Object.keys(redeployBlackList).length) {
-    console.log("Sites that will not be redployed anymore as redeploying wont solve the deployment issue");
-    console.log(redeployBlackList);
+  if (Object.keys(redeployBlackList).length) {
+    console.log(
+      "Sites that will not be redployed anymore as redeploying wont solve the deployment issue"
+    )
+    console.log(redeployBlackList)
   }
-  echo(`${time()} - sleeping for 5 minutes before checking again`);
-  await sleep(300000);
+  echo(`${time()} - sleeping for 5 minutes before checking again`)
+  await sleep(300000)
 }

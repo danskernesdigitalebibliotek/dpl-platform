@@ -1,6 +1,6 @@
 # Lagoon projects
 
-The Lagoon instance at `dplplat01.dpl.reload.dk` contains a range of
+The Lagoon instance at `dplplat02.dpl.reload.dk` contains a range of
 sites of a slightly different nature.
 
 ## Development sites
@@ -16,8 +16,7 @@ sharing system).
 
 ## Production/staging sites
 
-Sites managed by
-+[`sites.yml`](./runbooks/add-library-site-to-platform/). This process
+Sites managed by +[`sites.yml`](./runbooks/add-library-site-to-platform/). This process
 creates a GIT repository in the
 [`danishpubliclibraries`](https://github.com/danishpubliclibraries/)
 GitHub organization. These repositories is then updated when running

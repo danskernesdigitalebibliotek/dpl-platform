@@ -589,7 +589,7 @@ minio:
     allowExternal: true
     # only when using flavor: cilium
     egressEntities:
-    - kube-apiserver
+      - kube-apiserver
 
   ## PodDisruptionBudget settings
   ## ref: https://kubernetes.io/docs/concepts/workloads/pods/disruptions/

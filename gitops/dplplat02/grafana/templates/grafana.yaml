@@ -5,6 +5,8 @@ kind: Grafana
 metadata:
   name: grafana
   namespace: monitoring
+  labels:
+    instance: grafana
 spec:
   config:
     server:
@@ -62,6 +64,12 @@ spec:
                   name: dashboards
                 - mountPath: /etc/grafana/provisioning/datasources
                   name: datasources
+              env:
+                - name: GF_INSTALL_PLUGINS
+                  valueFrom:
+                    configMapKeyRef:
+                      key: plugins
+                      name: grafana-ini
             # This container watches the namespace for configmaps with the `dashboards` label
             # and creates files for all their keys under `FOLDER`
             - name: grafana-sc-dashboards
@@ -96,9 +104,9 @@ spec:
                   mountPath: /etc/grafana/provisioning/datasources
           volumes:
             - name: dashboards
-              emptyDir: { }
+              emptyDir: {}
             - name: datasources
-              emptyDir: { }
+              emptyDir: {}
             - name: dashboard-provisioning-config
               configMap:
                 name: dashboard-provisioning-config

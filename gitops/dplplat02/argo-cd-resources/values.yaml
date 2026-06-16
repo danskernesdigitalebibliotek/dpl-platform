@@ -53,7 +53,7 @@ apps:
   - name: grafana
     project: monitoring
     namespace: monitoring
-    automated: true
+    automated: false
     syncOptions:
       - ServerSideApply=true
 
@@ -99,6 +99,11 @@ apps:
   - name: vertical-pod-autoscaler
     project: vertical-pod-autoscaler
     namespace: vpa
+    automated: true
+
+  - name: meerkat
+    project: meerkat
+    namespace: meerkat
     automated: true
 
 automateSites: true
@@ -349,7 +354,7 @@ sites:
   - name: cms-school-main
     automated: false
     proxy-pass-service:
-      host: cms-school.dplplat01.dpl.reload.dk
+      host: cms-school.dplplat02.dpl.reload.dk
       target: internal
 
   - name: cms-school-moduletest

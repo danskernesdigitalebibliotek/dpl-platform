@@ -39,7 +39,7 @@ This leads to at least two concrete steps:
   into the `main` branch. This means state divergence between the platform repo
   declaration and reality is minimized.
 
-It will *still* be possible for `dpl-cms` to maintain its own area of state
+It will _still_ be possible for `dpl-web` to maintain its own area of state
 in the platform, but anything declared in `dpl-platform` will be much more
 likely to be the actual state in the platform.
 

@@ -122,19 +122,19 @@ const namespaces = [
   "vesthimmerland-main",
   "viborg-main",
   "vordingborg-main",
-];
+]
 
 for await (const namespace of namespaces) {
-  await patchCronJob(namespace, "cronjob-cli-drush-err-purge");
-  await patchCronJob(namespace, "cronjob-cli-import-danish-config-translations");
-  await patchCronJob(namespace, "cronjob-cli-import-translations");
+  await patchCronJob(namespace, "cronjob-cli-drush-err-purge")
+  await patchCronJob(namespace, "cronjob-cli-import-danish-config-translations")
+  await patchCronJob(namespace, "cronjob-cli-import-translations")
 }
 
 async function patchCronJob(namespace, cronjob) {
-  echo(chalk.yellow(`patching ${cronjob} in ${namespace}`));
+  echo(chalk.yellow(`patching ${cronjob} in ${namespace}`))
   try {
     await $`kubectl patch cronjob -n ${namespace} ${cronjob} -p '{ "spec": { "suspend": false }}'`
-  } catch(error) {
-    console.log(error);
+  } catch (error) {
+    console.log(error)
   }
 }

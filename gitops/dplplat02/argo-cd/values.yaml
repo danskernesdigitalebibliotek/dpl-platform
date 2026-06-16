@@ -396,7 +396,6 @@ argo-cd:
           - ClusterBackgroundScanReport
           - UpdateRequest
 
-
     # Argo CD configuration parameters
     ## Ref: https://github.com/argoproj/argo-cd/blob/master/docs/operator-manual/argocd-cmd-params-cm.yaml
     params:
@@ -409,7 +408,7 @@ argo-cd:
 
       ## Generic parameters
       # -- Open-Telemetry collector address: (e.g. "otel-collector:4317")
-      otlp.address: ''
+      otlp.address: ""
 
       ## Controller Properties
       # -- Number of application status processors
@@ -430,7 +429,7 @@ argo-cd:
       # -- Value for base href in index.html. Used if Argo CD is running behind reverse proxy under subpath different from /
       server.basehref: /
       # -- Used if Argo CD is running behind reverse proxy under subpath different from /
-      server.rootpath: ''
+      server.rootpath: ""
       # -- Directory path that contains additional static assets
       server.staticassets: /shared/app
       # -- Disable Argo CD RBAC for user authentication
@@ -483,7 +482,7 @@ argo-cd:
 
       # -- The name of the default role which Argo CD will falls back to, when authorizing API requests (optional).
       # If omitted or empty, users may be still be able to login, but will see no apps, projects, etc...
-      policy.default: ''
+      policy.default: ""
 
       # -- File containing user-defined policies and role definitions.
       # @default -- `''` (See [values.yaml])
@@ -550,7 +549,7 @@ argo-cd:
         ssh.dev.azure.com ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC7Hr1oTWqNqOlzGJOfGJ4NakVyIzf1rXYd4d7wo6jBlkLvCA4odBlL0mDUyZ0/QUfTTqeu+tm22gOsv+VrVTMk6vwRU75gY/y9ut5Mb3bR5BV58dKXyq9A9UeB5Cakehn5Zgm6x1mKoVyf+FFn26iYqXJRgzIZZcZ5V6hrE0Qg39kZm4az48o0AUbf6Sp4SLdvnuMa2sVNwHBboS7EJkm57XQPVU3/QpyNLHbWDdzwtrlS+ez30S3AdYhLKEOxAG8weOnyrtLJAUen9mTkol8oII1edf7mWWbWVf0nBmly21+nZcmCTISQBtdcyPaEno7fFQMDD26/s0lfKob4Kw8H
         vs-ssh.visualstudio.com ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC7Hr1oTWqNqOlzGJOfGJ4NakVyIzf1rXYd4d7wo6jBlkLvCA4odBlL0mDUyZ0/QUfTTqeu+tm22gOsv+VrVTMk6vwRU75gY/y9ut5Mb3bR5BV58dKXyq9A9UeB5Cakehn5Zgm6x1mKoVyf+FFn26iYqXJRgzIZZcZ5V6hrE0Qg39kZm4az48o0AUbf6Sp4SLdvnuMa2sVNwHBboS7EJkm57XQPVU3/QpyNLHbWDdzwtrlS+ez30S3AdYhLKEOxAG8weOnyrtLJAUen9mTkol8oII1edf7mWWbWVf0nBmly21+nZcmCTISQBtdcyPaEno7fFQMDD26/s0lfKob4Kw8H
       # -- Additional known hosts for private repositories
-      extraHosts: ''
+      extraHosts: ""
 
     # Repository TLS certificates
     # Ref: https://argo-cd.readthedocs.io/en/stable/operator-manual/declarative-setup/#repositories-using-self-signed-tls-certificates-or-are-signed-by-custom-ca
@@ -737,8 +736,7 @@ argo-cd:
       ## Custom secrets. Useful for injecting SSO secrets into environment variables.
       ## Ref: https://argo-cd.readthedocs.io/en/stable/operator-manual/user-management/#sensitive-data-and-sso-client-secrets
       ## Note that all values must be non-empty.
-      extra:
-        {}
+      extra: {}
         # LDAP_PASSWORD: "mypassword"
 
       # -- Bcrypt hashed admin password
@@ -947,7 +945,7 @@ argo-cd:
         type: RuntimeDefault
       capabilities:
         drop:
-        - ALL
+          - ALL
 
     # Readiness probe for application controller
     ## Ref: https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/
@@ -1248,11 +1246,11 @@ argo-cd:
       # -- Annotations to be added to argocd-dex-server-tls secret
       annotations: {}
       # -- Certificate authority. Required for self-signed certificates.
-      ca: ''
+      ca: ""
       # -- Certificate private key
-      key: ''
+      key: ""
       # -- Certificate data. Must contain SANs of Dex service (ie: argocd-dex-server, argocd-dex-server.argo-cd.svc)
-      crt: ''
+      crt: ""
 
     # -- Annotations to be added to the Dex server Deployment
     deploymentAnnotations: {}
@@ -1297,7 +1295,7 @@ argo-cd:
         type: RuntimeDefault
       capabilities:
         drop:
-        - ALL
+          - ALL
 
     ## Probes for Dex server
     ## Supported from Dex >= 2.28.0
@@ -1472,7 +1470,7 @@ argo-cd:
           type: RuntimeDefault
         capabilities:
           drop:
-          - ALL
+            - ALL
 
       ## Probes for Redis exporter (optional)
       ## Ref: https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/
@@ -1620,7 +1618,7 @@ argo-cd:
       allowPrivilegeEscalation: false
       capabilities:
         drop:
-        - ALL
+          - ALL
 
     # -- Redis service port
     servicePort: 6379
@@ -2041,7 +2039,7 @@ argo-cd:
           type: RuntimeDefault
         capabilities:
           drop:
-          - ALL
+            - ALL
 
       # -- Resource limits and requests for the argocd-extensions container
       resources: {}
@@ -2153,7 +2151,7 @@ argo-cd:
         type: RuntimeDefault
       capabilities:
         drop:
-        - ALL
+          - ALL
 
     ## Readiness and liveness probes for default backend
     ## Ref: https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/
@@ -2271,9 +2269,9 @@ argo-cd:
       # -- Labels to be added to argocd-server-tls secret
       labels: {}
       # -- Private Key of the certificate
-      key: ''
+      key: ""
       # -- Certificate data
-      crt: ''
+      crt: ""
 
     ## Server service configuration
     service:
@@ -2354,7 +2352,7 @@ argo-cd:
         # -- Prometheus ServiceMonitor tlsConfig
         tlsConfig: {}
         # -- Prometheus ServiceMonitor namespace
-        namespace: ""  # monitoring
+        namespace: "" # monitoring
         # -- Prometheus ServiceMonitor labels
         additionalLabels: {}
         # -- Prometheus ServiceMonitor annotations
@@ -2788,7 +2786,8 @@ argo-cd:
       metrics: 8084
 
     # -- Host Network for Repo server pods
-    hostNetwork: false
+    hostNetwork:
+      false
 
       # -- [DNS configuration]
     dnsConfig: {}
@@ -2805,7 +2804,7 @@ argo-cd:
         type: RuntimeDefault
       capabilities:
         drop:
-        - ALL
+          - ALL
 
     ## Readiness and liveness probes for default backend
     ## Ref: https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/
@@ -2879,11 +2878,11 @@ argo-cd:
       # -- Labels to be added to argocd-repo-server-tls secret
       labels: {}
       # -- Certificate authority. Required for self-signed certificates.
-      ca: ''
+      ca: ""
       # -- Certificate private key
-      key: ''
+      key: ""
       # -- Certificate data. Must contain SANs of Repo service (ie: argocd-repo-server, argocd-repo-server.argo-cd.svc)
-      crt: ''
+      crt: ""
 
     ## Repo server service configuration
     service:
@@ -3098,7 +3097,7 @@ argo-cd:
         # -- Prometheus ServiceMonitor tlsConfig
         tlsConfig: {}
         # -- Prometheus ServiceMonitor namespace
-        namespace: ""  # monitoring
+        namespace: "" # monitoring
         # -- Prometheus ServiceMonitor labels
         additionalLabels: {}
         # -- Prometheus ServiceMonitor annotations
@@ -3174,7 +3173,7 @@ argo-cd:
         type: RuntimeDefault
       capabilities:
         drop:
-        - ALL
+          - ALL
 
     ## Probes for ApplicationSet controller (optional)
     ## Ref: https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/
@@ -3465,7 +3464,7 @@ argo-cd:
 
         # email-username:
         # email-password:
-          # For more information: https://argo-cd.readthedocs.io/en/stable/operator-manual/notifications/services/email/
+        # For more information: https://argo-cd.readthedocs.io/en/stable/operator-manual/notifications/services/email/
 
     metrics:
       # -- Enables prometheus metrics server
@@ -3552,7 +3551,7 @@ argo-cd:
         type: RuntimeDefault
       capabilities:
         drop:
-        - ALL
+          - ALL
 
     ## Probes for notifications controller Pods (optional)
     ## Ref: https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/
@@ -4028,7 +4027,7 @@ argo-cd:
       allowPrivilegeEscalation: false
       capabilities:
         drop:
-        - ALL
+          - ALL
       seccompProfile:
         type: RuntimeDefault
 

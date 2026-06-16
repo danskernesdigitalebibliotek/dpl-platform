@@ -18,7 +18,7 @@ Notes:
 Update interval: monthly
 Release URL: <https://learn.microsoft.com/en-us/azure/aks/supported-kubernetes-versions?tabs=azure-cli>
 Upgrade Docs URL:
-  <https://learn.microsoft.com/en-us/azure/aks/upgrade-aks-cluster?tabs=azure-portal>
+<https://learn.microsoft.com/en-us/azure/aks/upgrade-aks-cluster?tabs=azure-portal>
 Expect downtime: yes, there'll be a very short outage alike to releases
 Time to do: 2-6 hours
 Runbook: [Update AKS](./runbooks/upgrading-aks.md)
@@ -49,7 +49,7 @@ Update interval: Quaterly
 Release URL: <https://github.com/grafana/grafana/releases>
 Upgrade Docs URL:
 Expect downtime: No, maybe a little for Grafana, but nothing that affects the
-  libraries.
+libraries.
 Time to do: Unknown
 Runbook: [Upgrade Grafana](./runbooks/upgrading-support-workloads.md#grafana)
 Notes:
@@ -60,7 +60,7 @@ Update interval: Half yearly
 Release URL: <https://github.com/goharbor/harbor-helm/releases>
 Upgrade Docs URL: <https://github.com/goharbor/harbor-helm/blob/main/docs/Upgrade.md>
 Expect downtime: Harbor will have downtime, it will affect sites that need
-  redeployment as well as developers who firing up and environment.
+redeployment as well as developers who firing up and environment.
 Time to do: Unknown
 Runbook: [Upgrading Harbor](./runbooks/upgrading-support-workloads.md#harbor)
 Notes:
@@ -96,7 +96,7 @@ Notes:
 ### Minio
 
 As we're replacing Minio, we will have to do a section on what ever tool
-  we're replacing it with.
+we're replacing it with.
 
 ### Prometheus
 
@@ -169,7 +169,7 @@ Expect downtime: None
 Time to do: 1 hour
 Runbook:
 Notes: Dependabot has not as of yet notified us of any available updates,
-  so we have to check manually.
+so we have to check manually.
 
 ### Helm
 

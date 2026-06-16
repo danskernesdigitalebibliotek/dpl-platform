@@ -6,9 +6,9 @@ When a moduletest site need resetting.
 
 ## Prerequisites
 
-* An authenticated `az` cli. The logged in user must have full administrative
+- An authenticated `az` cli. The logged in user must have full administrative
   permissions to the platforms azure infrastructure.
-* A running [dplsh](using-dplsh.md) with `DPLPLAT_ENV` set to the platform
+- A running [dplsh](using-dplsh.md) with `DPLPLAT_ENV` set to the platform
   environment name.
 
 ## Procedure

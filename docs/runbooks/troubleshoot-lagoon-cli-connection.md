@@ -63,7 +63,7 @@ Now delete the bad entry by by running this command:
 If you have the Lagoon CLI installed on your local machine you can run this part
 while outside of the shell. Otherwise, open the shell, but don't log in yet.
 Now readd the Lagoon Config, but add a pointer to which ssh key to use:
-`lagoon config add --lagoon dplplat01
+`lagoon config add --lagoon dplplat02
 lagoon config add \
     --graphql https://api.lagoon.dplplat02.dpl.reload.dk/graphql \
     --force \

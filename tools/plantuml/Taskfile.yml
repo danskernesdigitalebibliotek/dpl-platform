@@ -1,4 +1,4 @@
-version: '3'
+version: "3"
 
 vars:
   image_url: '{{.IMAGE_URL | default "plantuml"}}'

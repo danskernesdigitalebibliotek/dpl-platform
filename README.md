@@ -5,12 +5,13 @@ application platform.
 
 The main entrypoints for this repository are:
 
-* The collection of operational [runbooks](docs/runbooks), use these
+- The collection of operational [runbooks](docs/runbooks), use these
   if you with to perform any operations on environments.
-* The [architecture](docs/architecture) use this if you want to gain
+- The [architecture](docs/architecture) use this if you want to gain
   an understanding for how the platform is built.
-* The [infrastructure as code](infrastructure) root directory from where we
+- The [infrastructure as code](infrastructure) root directory from where we
   launch [dplsh](tools/dplsh) whenever we want to interact with environments.
+- The [Nix shell environment](tools/nix) for those preferring that over the Docker-based dplsh.
 
 ## Contributions
 

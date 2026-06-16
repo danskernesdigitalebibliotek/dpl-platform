@@ -32,7 +32,7 @@ spec:
       - envFrom:
         - configMapRef:
             name: lagoon-env
-        image: harbor.lagoon.dplplat01.dpl.reload.dk/{{ trimSuffix "-main" .Release.Namespace }}/main/varnish
+        image: harbor.lagoon.dplplat02.dpl.reload.dk/{{ trimSuffix "-main" .Release.Namespace }}/main/varnish
         name: proxy-pass-varnish
         ports:
         - containerPort: 8080

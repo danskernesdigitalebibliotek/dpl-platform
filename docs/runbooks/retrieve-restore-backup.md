@@ -7,8 +7,8 @@ restore it into an existing site.
 
 ## Prerequisites
 
-* Administrative access to the site in the Lagoon UI
-* (for restore) administrative cluster-access to the site
+- Administrative access to the site in the Lagoon UI
+- (for restore) administrative cluster-access to the site
 
 ## Procedure
 
@@ -31,19 +31,19 @@ folder.
 
 ### Step 1, downloading the backup
 
- To download the backup access the Lagoon UI and schedule the retrieval of a
- backup. To do this,
+To download the backup access the Lagoon UI and schedule the retrieval of a
+backup. To do this,
 
- 1. Log in to the environments Lagoon UI (consult the
- [environment documentation](../platform-environments.md) for the url)
- 2. Access the site's project
- 3. Access the site's environment ("main" for production)
- 4. Click on the "Backups" tab
- 5. Click on the "Retrieve" button for the backups you wish to download and/or
+1.  Log in to the environments Lagoon UI (consult the
+    [environment documentation](../platform-environments.md) for the url)
+2.  Access the site's project
+3.  Access the site's environment ("main" for production)
+4.  Click on the "Backups" tab
+5.  Click on the "Retrieve" button for the backups you wish to download and/or
     restore. Use to "Source" column to differentiate the types of backups.
     "nginx" are backups of the sites files, while "mariadb" are backups of the
     sites database.
- 6. The Buttons changes to "Downloading..." when pressed, wait for them to
+6.  The Buttons changes to "Downloading..." when pressed, wait for them to
     change to "Download", then click them again to download the backup
 
 ### Step 2a, restore a database
@@ -145,25 +145,25 @@ kubectl exec \
          || (echo files-backup.tar.gz is missing or empty && exit 1) \
       && tar ztf /tmp/files-backup.tar.gz data/nginx &> /dev/null \
          || (echo could not verify the tar.gz file files-backup.tar && exit 1) \
-      && test -d /app/web/sites/default/files \
-         || (echo Could not find destination /app/web/sites/default/files \
+      && test -d /app/cms/web/sites/default/files \
+         || (echo Could not find destination /app/cms/web/sites/default/files \
              && exit 1) \
       && echo Removing existing sites/default/files \
-      && rm -fr /app/web/sites/default/files \
+      && rm -fr /app/cms/web/sites/default/files \
       && echo Unpacking backup \
-      && mkdir -p /app/web/sites/default/files \
+      && mkdir -p /app/cms/web/sites/default/files \
       && tar --strip 2 --gzip --extract --file /tmp/files-backup.tar.gz \
-             --directory /app/web/sites/default/files data/nginx \
+             --directory /app/cms/web/sites/default/files data/nginx \
       && echo Fixing permissions \
-      && chmod -R 777 /app/web/sites/default/files \
+      && chmod -R 777 /app/cms/web/sites/default/files \
       && echo Clearing cache \
       && drush cr \
       && echo Deleting backup archive \
       && rm /tmp/files-backup.tar.gz
     "
 
-#  NOTE: In some situations some files in /app/web/sites/default/files might
+#  NOTE: In some situations some files in /app/cms/web/sites/default/files might
 #  be locked by running processes. In that situations delete all the files you
-#  can from /app/web/sites/default/files manually, and then repeat the step
-#  above skipping the removal of /app/web/sites/default/files
+#  can from /app/cms/web/sites/default/files manually, and then repeat the step
+#  above skipping the removal of /app/cms/web/sites/default/files
 ```

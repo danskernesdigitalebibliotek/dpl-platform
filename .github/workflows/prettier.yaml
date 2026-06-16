@@ -1,0 +1,12 @@
+# Lint all Markdown files in the repository.
+on:
+  push:
+name: Code style
+jobs:
+  prettier:
+    name: Prettier formatting
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+      - name: Prettier check
+        run: npx prettier --check

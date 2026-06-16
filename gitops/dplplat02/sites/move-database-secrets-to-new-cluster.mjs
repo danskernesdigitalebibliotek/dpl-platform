@@ -114,38 +114,43 @@ const namespaces = [
   "vejle-main",
   "vesthimmerland-main",
   "viborg-main",
-  "vordingborg-main"
-];
+  "vordingborg-main",
+]
 
-for await (const namespace of namespaces ) {
-  await extactSecretFromOldCluster(namespace);
-  await kubesealSecretWithNewClustersCert(namespace);
-  await removeUnsealedDatabaseSecret(namespace);
+for await (const namespace of namespaces) {
+  await extactSecretFromOldCluster(namespace)
+  await kubesealSecretWithNewClustersCert(namespace)
+  await removeUnsealedDatabaseSecret(namespace)
 }
 
 async function extactSecretFromOldCluster(namespace) {
-  await $`kubectl config use-context aks-dplplat01-01`;
+  await $`kubectl config use-context aks-dplplat01-01`
   try {
-    await $`kubectl get secret database-secret -n ${namespace} -o json | jq '.stringData = (.data | with_entries(.value |= @base64d)) | del(.data) | del(.metadata.ownerReferences) | del(.metadata.creationTimestamp) | del(.metadata.resourceVersion) | del(.metadata.uid)' | yq -P > ${namespace}/templates/database-secret.yaml`;
-  } catch(error) {
-    console.error(`failed to extract database-secret from ${namespace}, this could be because the secret is named something else:`, error);
+    await $`kubectl get secret database-secret -n ${namespace} -o json | jq '.stringData = (.data | with_entries(.value |= @base64d)) | del(.data) | del(.metadata.ownerReferences) | del(.metadata.creationTimestamp) | del(.metadata.resourceVersion) | del(.metadata.uid)' | yq -P > ${namespace}/templates/database-secret.yaml`
+  } catch (error) {
+    console.error(
+      `failed to extract database-secret from ${namespace}, this could be because the secret is named something else:`,
+      error
+    )
   }
 }
 
 async function kubesealSecretWithNewClustersCert(namespace) {
-  await $`kubectl config use-context dplplat02`;
+  await $`kubectl config use-context dplplat02`
   try {
-    await $`kubeseal -o yaml --secret-file ${namespace}/templates/database-secret.yaml > ${namespace}/templates/sealed-database-secret.yaml`;
-  } catch(error) {
-    console.error(`could not 'kubeseal' database-secret in ${namespace}, this might be due to the secret having another name and thus, not having been moved:`, error);
+    await $`kubeseal -o yaml --secret-file ${namespace}/templates/database-secret.yaml > ${namespace}/templates/sealed-database-secret.yaml`
+  } catch (error) {
+    console.error(
+      `could not 'kubeseal' database-secret in ${namespace}, this might be due to the secret having another name and thus, not having been moved:`,
+      error
+    )
   }
 }
 
 async function removeUnsealedDatabaseSecret(namespace) {
   try {
-    await $`rm ${namespace}/templates/database-secret.yaml`;
-  } catch(error) {
-    throw Error(`failed to delete database-secret.yaml in /${namespace}/templates`);
+    await $`rm ${namespace}/templates/database-secret.yaml`
+  } catch (error) {
+    throw Error(`failed to delete database-secret.yaml in /${namespace}/templates`)
   }
 }
-

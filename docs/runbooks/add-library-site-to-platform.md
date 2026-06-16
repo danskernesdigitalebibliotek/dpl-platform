@@ -7,17 +7,17 @@ site to the platform.
 
 ## Prerequisites
 
-* An authenticated `az` cli. The logged in user must have full administrative
+- An authenticated `az` cli. The logged in user must have full administrative
   permissions to the platforms azure infrastructure.
-* A running [dplsh](using-dplsh.md) with `DPLPLAT_ENV` set to the platform
+- A running [dplsh](using-dplsh.md) with `DPLPLAT_ENV` set to the platform
   environment name.
 
 ## Procedure
 
 The following sections describes how to
 
-* Add the site to `sites.yaml`
-* Using the `sites.yaml` specification to provision Github repositories,
+- Add the site to `sites.yaml`
+- Using the `sites.yaml` specification to provision Github repositories,
   create Lagoon projects, tie the two together, and deploy all the
   relevant environments.
 
@@ -100,7 +100,7 @@ their changes to `sites.yaml` in your branch.
 
 Prerequisites:
 
-* A Lagoon account on the Lagoon core with your ssh-key associated (created through
+- A Lagoon account on the Lagoon core with your ssh-key associated (created through
   the Lagoon UI, on the Settings page)
 
 From within `dplsh` run the `sites:sync` task to sync the site state in
@@ -127,13 +127,13 @@ immediately.
 
 The synchronization process:
 
-* ensures a Github repo is provisioned for the site
-* creates a Lagoon configuration for the site and pushes it to the
+- ensures a Github repo is provisioned for the site
+- creates a Lagoon configuration for the site and pushes it to the
   relevant branches in the repo (for example, sites with `plan:
-  "webmaster"` also get a `moduletest` branch for testing custom
+"webmaster"` also get a `moduletest` branch for testing custom
   Drupal modules)
-* ensures a Lagoon project is created for the site
-* configures Lagoon to track and deploy all the relevant branches for
+- ensures a Lagoon project is created for the site
+- configures Lagoon to track and deploy all the relevant branches for
   the site as environments
 
 If no other changes have been made to `sites.yaml`, the result is that your new

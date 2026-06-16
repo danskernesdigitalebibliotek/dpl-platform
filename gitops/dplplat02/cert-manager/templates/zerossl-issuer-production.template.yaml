@@ -22,6 +22,6 @@ spec:
 
     # ACME DNS-01 provider configurations to verify domain
     solvers:
-    - http01:
-       ingress:
-         class: nginx
+      - http01:
+          ingress:
+            class: nginx

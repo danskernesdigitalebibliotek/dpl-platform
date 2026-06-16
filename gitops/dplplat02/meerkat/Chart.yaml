@@ -1,0 +1,7 @@
+apiVersion: v3
+version: 0.0.0
+name: meerkat-app-sec
+dependencies:
+  - name: meerkat
+    version: 1.0.15
+    repository: https://gitlab.deranged.dk/api/v4/projects/778/packages/helm/all

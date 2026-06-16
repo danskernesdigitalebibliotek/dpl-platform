@@ -122,23 +122,24 @@ const namespaces = [
   "vesthimmerland-main",
   "viborg-main",
   "vordingborg-main",
-];
+]
 
 for await (const namespace of namespaces) {
-  await moveCertFromOldToNewCluster(namespace);
+  await moveCertFromOldToNewCluster(namespace)
 }
 
 async function moveCertFromOldToNewCluster(namespace) {
-  console.log(`moving ${namespace} certs`);
-  const certNames = await $`kubectl get certificate -n ${namespace}  -o custom-columns=NAME:.metadata.name --no-headers --context aks-dplplat01-01`.lines();
+  console.log(`moving ${namespace} certs`)
+  const certNames =
+    await $`kubectl get certificate -n ${namespace}  -o custom-columns=NAME:.metadata.name --no-headers --context aks-dplplat01-01`.lines()
   for await (const certname of certNames) {
-    if(["varnish-tls", "nginx-tls", "node-tls"].includes(certname)) continue;
+    if (["varnish-tls", "nginx-tls", "node-tls"].includes(certname)) continue
     console.log(`${certname}`)
     try {
-      await $`kubectl --context aks-dplplat01-01 get secret -n ${namespace} ${certname} -o yaml | yq 'del(.metadata.creationTimestamp)' | yq 'del(.metadata.uid)' | yq 'del(.metadata.resourceVersion)' | kubectl apply -f - --context dplplat02`;
-    } catch(error) {
-      console.log(error);
+      await $`kubectl --context aks-dplplat01-01 get secret -n ${namespace} ${certname} -o yaml | yq 'del(.metadata.creationTimestamp)' | yq 'del(.metadata.uid)' | yq 'del(.metadata.resourceVersion)' | kubectl apply -f - --context dplplat02`
+    } catch (error) {
+      console.log(error)
     }
   }
-  console.log(`done with ${namespace} certs`);
+  console.log(`done with ${namespace} certs`)
 }
