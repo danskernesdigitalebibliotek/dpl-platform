@@ -40,7 +40,7 @@ tasks:
         name: Create module upload directory in public files
         command: |
             set -e
-            if [[ ! -d "web/sites/default/files/modules_local" ]]; then
+            if [[ ! -d "/app/cms/web/sites/default/files/modules_local" ]]; then
                 echo "Creating directory for module uploads"
                 mkdir -p /app/cms/web/sites/default/files/modules_local
             fi
