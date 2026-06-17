@@ -2,7 +2,8 @@
   description = "A simple Nix flake that can be used as shell environment for the dpl-platform.";
 
   # Flake inputs
-  inputs.nixpkgs.url = "https://flakehub.com/f/NixOS/nixpkgs/0.1"; # unstable Nixpkgs
+  # Unstable nixpkgs with 1 week delay: https://determinate.systems/blog/nixpkgs-cooldown/
+  inputs.nixpkgs.url = "https://flakehub.com/f/DeterminateSystems/nixpkgs-weekly/0.1";
 
   # Flake outputs
   outputs =
