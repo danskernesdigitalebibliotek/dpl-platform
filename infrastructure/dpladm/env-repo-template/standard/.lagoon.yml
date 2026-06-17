@@ -20,7 +20,7 @@ tasks:
         name: drush deploy
         command: |
             set -e
-            if [[ -f config/sync/system.site.yml ]]; then
+            if [[ -f /app/cms/config/sync/system.site.yml ]]; then
                 echo "Config detected, doing a drush deploy"
                 drush deploy
 
