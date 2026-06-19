@@ -24,7 +24,7 @@ spec:
                 - -c
                 - |
                   week=$(date +%W)
-                  if (( week % 2 == 0 )); then
+                  if (( week % 2 == 1 )); then
                     ./moduletest-reset.mjs --source {{ .Values.syncConfig.source }} --target {{ .Values.syncConfig.target }}
                   else
                     echo "Not release week and thus not running"
