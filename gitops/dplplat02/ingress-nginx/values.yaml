@@ -27,9 +27,9 @@ ingress-nginx:
       ## for backwards compatibility consider setting the full image url via the repository value below
       ## use *either* current default registry/image or repository format or installing chart by providing the values.yaml will fail
       ## repository:
-      tag: "v1.9.6"
-      digest: sha256:1405cc613bd95b2c6edd8b2a152510ae91c7e62aea4698500d23b2145960ab9c
-      digestChroot: sha256:7eb46ff733429e0e46892903c7394aff149ac6d284d92b3946f3baf7ff26a096
+      tag: "v1.10.6"
+      digest: sha256:b6fbd102255edb3ba8e5421feebe14fd3e94cf53d199af9e40687f536152189c
+      digestChroot: sha256:44ceedafc0e04a75521b5d472c1b6b5cc08afb8038b5bbfd79c21d066ccf300e
       pullPolicy: IfNotPresent
       runAsNonRoot: true
       # www-data -> uid 101
@@ -128,21 +128,30 @@ ingress-nginx:
       enabled: false
     # -- Election ID to use for status update, by default it uses the controller name combined with a suffix of 'leader'
     electionID: ""
-    ## This section refers to the creation of the IngressClass resource
-    ## IngressClass resources are supported since k8s >= 1.18 and required since k8s >= 1.19
+    # -- This section refers to the creation of the IngressClass resource.
+    # IngressClasses are immutable and cannot be changed after creation.
+    # We do not support namespaced IngressClasses, yet, so a ClusterRole and a ClusterRoleBinding is required.
     ingressClassResource:
-      # -- Name of the ingressClass
+      # -- Name of the IngressClass
       name: nginx
-      # -- Is this ingressClass enabled or not
+      # -- Create the IngressClass or not
       enabled: true
-      # -- Is this the default ingressClass for the cluster
+      # -- If true, Ingresses without `ingressClassName` get assigned to this IngressClass on creation.
+      # Ingress creation gets rejected if there are multiple default IngressClasses.
+      # Ref: https://kubernetes.io/docs/concepts/services-networking/ingress/#default-ingress-class
       default: false
-      # -- Controller-value of the controller that is processing this ingressClass
-      controllerValue: "k8s.io/ingress-nginx"
-      # -- Parameters is a link to a custom resource containing additional
-      # configuration for the controller. This is optional if the controller
-      # does not require extra parameters.
+      # -- Controller of the IngressClass. An Ingress Controller looks for IngressClasses it should reconcile by this value.
+      # This value is also being set as the `--controller-class` argument of this Ingress Controller.
+      # Ref: https://kubernetes.io/docs/concepts/services-networking/ingress/#ingress-class
+      controllerValue: k8s.io/ingress-nginx
+      # -- A link to a custom resource containing additional configuration for the controller.
+      # This is optional if the controller consuming this IngressClass does not require additional parameters.
+      # Ref: https://kubernetes.io/docs/concepts/services-networking/ingress/#ingress-class
       parameters: {}
+      # parameters:
+      #   apiGroup: k8s.example.com
+      #   kind: IngressParameters
+      #   name: external-lb
     # -- For backwards compatibility with ingress.class annotation, use ingressClass.
     # Algorithm is as follows, first ingressClassName is considered, if not present, controller looks for ingress.class annotation
     ingressClass: nginx
@@ -191,7 +200,7 @@ ingress-nginx:
       # -- Annotations to be added to the udp config configmap
       annotations: {}
     # -- Maxmind license key to download GeoLite2 Databases.
-    ## https://blog.maxmind.com/2019/12/18/significant-changes-to-accessing-and-using-geolite2-databases
+    ## https://blog.maxmind.com/2019/12/significant-changes-to-accessing-and-using-geolite2-databases/
     maxmindLicenseKey: ""
     # -- Additional command line arguments to pass to Ingress-Nginx Controller
     # E.g. to specify the default SSL certificate you can use
@@ -300,6 +309,8 @@ ingress-nginx:
     #       app.kubernetes.io/name: '{{ include "ingress-nginx.name" . }}'
     #       app.kubernetes.io/instance: '{{ .Release.Name }}'
     #       app.kubernetes.io/component: controller
+    #   matchLabelKeys:
+    #   - pod-template-hash
     #   topologyKey: topology.kubernetes.io/zone
     #   maxSkew: 1
     #   whenUnsatisfiable: ScheduleAnyway
@@ -308,6 +319,8 @@ ingress-nginx:
     #       app.kubernetes.io/name: '{{ include "ingress-nginx.name" . }}'
     #       app.kubernetes.io/instance: '{{ .Release.Name }}'
     #       app.kubernetes.io/component: controller
+    #   matchLabelKeys:
+    #   - pod-template-hash
     #   topologyKey: kubernetes.io/hostname
     #   maxSkew: 1
     #   whenUnsatisfiable: ScheduleAnyway
@@ -708,12 +721,12 @@ ingress-nginx:
       name: opentelemetry
       image:
         registry: registry.k8s.io
-        image: ingress-nginx/opentelemetry
+        image: ingress-nginx/opentelemetry-1.25.3
         ## for backwards compatibility consider setting the full image url via the repository value below
         ## use *either* current default registry/image or repository format or installing chart by providing the values.yaml will fail
         ## repository:
-        tag: "v20230721-3e2062ee5"
-        digest: sha256:13bee3f5223883d3ca62fee7309ad02d22ec00ff0d7033e3e9aca7a9f60fd472
+        tag: v20240813-b933310d
+        digest: sha256:f7604ac0547ed64d79b98d92133234e66c2c8aade3c1f4809fed5eec1fb7f922
         distroless: true
       containerSecurityContext:
         runAsNonRoot: true
@@ -806,8 +819,8 @@ ingress-nginx:
           ## for backwards compatibility consider setting the full image url via the repository value below
           ## use *either* current default registry/image or repository format or installing chart by providing the values.yaml will fail
           ## repository:
-          tag: v20231226-1a7112e06
-          digest: sha256:25d6a5f11211cc5c3f9f2bf552b585374af287b4debf693cacbe2da47daa5084
+          tag: v1.5.0
+          digest: sha256:aaafd456bda110628b2d4ca6296f38731a3aaf0bf7581efae824a41c770a8fc4
           pullPolicy: IfNotPresent
         # -- Provide a priority class name to the webhook patching job
         ##
@@ -863,6 +876,7 @@ ingress-nginx:
       serviceMonitor:
         enabled: true
         additionalLabels: {}
+        # -- Annotations to be added to the ServiceMonitor.
         annotations: {}
         ## The label to use to retrieve the job name from.
         ## jobLabel: "app.kubernetes.io/name"
@@ -1019,6 +1033,7 @@ ingress-nginx:
     ##
     podAnnotations: {}
     replicaCount: 1
+    # -- Minimum available pods set in PodDisruptionBudget.
     minAvailable: 1
     resources: {}
     # limits:
@@ -1102,13 +1117,13 @@ ingress-nginx:
   ## Ref: https://github.com/kubernetes/ingress-nginx/blob/main/docs/user-guide/exposing-tcp-udp-services.md
   ##
   tcp: {}
-  #  8080: "default/example-tcp-svc:9000"
+  #  "8080": "default/example-tcp-svc:9000"
 
   # -- UDP service key-value pairs
   ## Ref: https://github.com/kubernetes/ingress-nginx/blob/main/docs/user-guide/exposing-tcp-udp-services.md
   ##
   udp: {}
-  #  53: "kube-system/kube-dns:53"
+  #  "53": "kube-system/kube-dns:53"
 
   # -- Prefix for TCP and UDP ports names in ingress controller service
   ## Some cloud providers, like Yandex Cloud may have a requirements for a port name regex to support cloud load balancer integration
