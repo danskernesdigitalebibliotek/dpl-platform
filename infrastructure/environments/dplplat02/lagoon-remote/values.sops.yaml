@@ -105,12 +105,14 @@ sshPortal:
         repository: ghcr.io/uselagoon/lagoon-ssh-portal/ssh-portal
         pullPolicy: IfNotPresent
         # Overrides the image tag whose default is the chart appVersion.
-        tag: v0.41.4
+        tag: v0.42.0
     service:
         type: LoadBalancer
         ports:
             sshserver: 22
         annotations: {}
+        # externalTrafficPolicy: ""
+        # loadBalancerSourceRanges: []
     metricsService:
         type: ClusterIP
         ports:
@@ -143,7 +145,7 @@ lagoon-build-deploy:
     # sensible defaults.
     # lagoonTargetName:
     #ENCRYPT
-    taskSSHHost: ENC[AES256_GCM,data:oRkgdR7w4BAlIlfFLg==,iv:T3Od4lfOfZkKtXtXnDLG4jUGCCwVxpozLxCPZjAX1cY=,tag:0+DE1szFGONtOa7Kke2Glw==,type:str]
+    taskSSHHost: ENC[AES256_GCM,data:Ukw/v+e+loH3kc4KYg==,iv:QW0sfgAa49dpIjm8XzTimHopn0W/TMst1Uf83vgQSLQ=,tag:cKKt3dCfK5d8GrbErbZIyQ==,type:str]
     taskSSHPort: 22
     taskAPIHost: api.lagoon.dplplat02.dpl.reload.dk
     # lagoonTokenHost: ""
@@ -152,9 +154,9 @@ lagoon-build-deploy:
     # sshPortalHost: ""
     # sshPortalPort: ""
     #ENCRYPT
-    rabbitMQUsername: ENC[AES256_GCM,data:85+2n9BN,iv:p99T9WhJmWAw0Usi14p1YK9CXDPHpw1FiC2ILelYSMU=,tag:d4C2HUPmtvPokkNlv0WXew==,type:str]
+    rabbitMQUsername: ENC[AES256_GCM,data:xyKswo0+,iv:BVyGhrEz1jP08hbX7JDR/XXGAtbLdMrQNpYX1X6Tn7U=,tag:mVHFDyut3I4PjThjmwV9WA==,type:str]
     #ENCRYPT
-    rabbitMQPassword: ENC[AES256_GCM,data:wBrx0yJZJlkN4ugA/84MI6nCH/5jgA3CwjS6HWNG,iv:BKahq2HdVD6AcXjRnsBdwsCQsIsKz8s40L4BbUBuc5s=,tag:nuJ93qnd0CCfLluwtsIfvw==,type:str]
+    rabbitMQPassword: ENC[AES256_GCM,data:dC4M80Wcv2OGFEz1LyL8ui8lWEHWBfvvwwLcr6qx,iv:N4Y/d5ZLZeyS1Ltx77PHUGlLU1RXBSgWXlrnoaKduRk=,tag:SQhekHoGHEoPQGcdM5Ib4A==,type:str]
     rabbitMQHostname: lagoon-core-broker.lagoon-core.svc.cluster.local
     lagoonTargetName: lagoon
     lagoonFeatureFlagDefaultRootlessWorkload: enabled
@@ -165,9 +167,9 @@ lagoon-build-deploy:
         - --harbor-url=https://harbor.lagoon.dplplat02.dpl.reload.dk
         - --harbor-api=https://harbor.lagoon.dplplat02.dpl.reload.dk/api/
         #ENCRYPT
-        - ENC[AES256_GCM,data:sfJKhWQtlfb3JKMfzPa729l8xNfqH6k=,iv:yilLwsXzDEwm15pXqNjT3rtG88Mz96qPOW+FK2gcf+s=,tag:nJTah9H5LbQokCID0p6IZg==,type:str]
+        - ENC[AES256_GCM,data:IHNSWF39SR4lpyFAprqQInbRBLyHo7o=,iv:KTzSFijGDYhtIl7lPZHXNHXG6UXbsZpRpVCyikNtlf4=,tag:AN6TBlxDzng9znnu9T+vyQ==,type:str]
         #ENCRYPT
-        - ENC[AES256_GCM,data:5089AHPH6mFQBaszN88EQohX6LzoJFlg9GFIRbfS+Pieyu21h7w=,iv:yQfTPL8SGa89ZqLQejXWu8sltSGnnSSYjxfnf50ZSRs=,tag:ny/ph8hltWXkRX1wqSXRCA==,type:str]
+        - ENC[AES256_GCM,data:+imO+lQfPUDoNSRRKTJv+2OTOfTmzmldIPA5hu7thBYIGmMCDQE=,iv:VejS8JUqEc030Mzfb2uGvHIUzPJyb7JNW3nL70mgJWs=,tag:NYMiPCAYTeIDNhM1ciz1wA==,type:str]
         - --enable-qos
         - --qos-max-builds=8
     nodeSelector:
@@ -203,20 +205,20 @@ dbaas-operator:
             readReplicaHostnames:
                 - mariadb-10-6-22-production-1.mariadb-10-6-22-production-1.svc.cluster.local
             #ENCRYPT
-            password: ENC[AES256_GCM,data:p/gRRtfGeWoHDBQOR2S51wmgKRvIuoMM,iv:gUpMiaoJp14RrY/0/Uzq03JPjmwbfi/a/gTHXKaRSww=,tag:2cxh1ICuYw9IJD8DPxrUdg==,type:str]
+            password: ENC[AES256_GCM,data:yrk1iVBhNv01CqExSCfA9RhJyO7PZSCp,iv:rGOKnnWZmSBxymYydVujPAr8ajRC+hJ+TgdL1I1/bCg=,tag:nypevrPjPTokAdjEERUAkA==,type:str]
             port: 3306
             #ENCRYPT
-            user: ENC[AES256_GCM,data:AWuMmg==,iv:cioHt7FxaNJq6vq39fgh0HpdswAieqyVfQDjKZkwrhE=,tag:G6Pvopf273Z2D9fSZME/Xg==,type:str]
+            user: ENC[AES256_GCM,data:7qPzUQ==,iv:HJWaOWL7xqnKnWw4V90qZa0EST6GJkhT5b17KiUf2XQ=,tag:QivxQ8sXOq8pCk/yRvN+lA==,type:str]
         development:
             environment: development
             hostname: mariadb-10-06-01-test.mariadb-10-06-01-test.svc.cluster.local
             readReplicaHostnames:
                 - mariadb-10-06-01-test.mariadb-10-06-01-test.svc.cluster.local
             #ENCRYPT
-            password: ENC[AES256_GCM,data:RVd4YqmmhqbAC7PEK7qCHyVfl4hxBs8MWZ324w==,iv:J8Z7J35Rdw3xDDz+KxdKzWMNCs4SileAPju5sWUlu0g=,tag:9R20O640qBO5Y66bswzVIw==,type:str]
+            password: ENC[AES256_GCM,data:KtGYQYanMWjAFh5rCi2XLI+L47v4pvBcDg1Ldg==,iv:XSS7Ls3pEO5UZgZeA5apvfkNZtxG/+YFj6/gIUH4pwU=,tag:XDcbV3SXbmCiOIpFMMIfMQ==,type:str]
             port: 3306
             #ENCRYPT
-            user: ENC[AES256_GCM,data:yDV+Pg==,iv:HsXOpgmqGJ1jqBjHrjBekAx8pGeVQk77gZIV1HQ2ySU=,tag:a7cKbaQjGfXE/GDn0z3Kwg==,type:str]
+            user: ENC[AES256_GCM,data:RC90ZA==,iv:hdJaz+GDWTYV3hKSSL8jvIyKTRYc4RXl2LaCcjj39tA=,tag:fKoNhsMZHEnxUZwxkmbapg==,type:str]
     nodeSelector:
         node-role.kubernetes.io/prod: ""
     tolerations:
@@ -251,7 +253,7 @@ insightsRemote:
         repository: uselagoon/insights-remote
         pullPolicy: Always
         # Overrides the image tag whose default is the chart appVersion.
-        tag: v0.0.11
+        tag: v0.0.12
     imagePullSecrets: []
     nameOverride: ""
     fullnameOverride: ""
@@ -462,7 +464,7 @@ storageCalculator:
         repository: uselagoon/remote-calculator
         pullPolicy: IfNotPresent
         # Overrides the image tag whose default is the chart appVersion.
-        tag: v0.7.0
+        tag: v0.8.0
 # sysctlConfigure is used  to configure sysctl options on nodes for use by elasticsearch/opensearch pods used in lagoon
 # https://github.com/uselagoon/lagoon/issues/2588
 # the elasticsearch/opensearch templates in the `build-deploy-tool` currently run a privileged init container
@@ -487,19 +489,19 @@ sops:
         - vault_url: https://kv-dplplat01-c3b2.vault.azure.net
           name: sops-key
           version: d82fe2456d6e4c4aaaaf808226bd5769
-          created_at: "2026-06-16T08:52:38Z"
-          enc: Uk8O8J62CSvZBt51SH42Hd6GehCO4zzdatJXMfU5FN5vdj6Z3wy3k0T2K8wvCtMKERgFqminTqAeM9KsRXEvL6YUF-SJO5uZHBRIZ1lnw7ib72ADjIpYLqyw6uAASFsrfKQl-d3JXLvuvGZLO4zxDJKTW6fTVXrl94aW4941MLspit5r8WjY4asluib6rCSgZgspa88kOSVSgmT6rAInEK81m9mHoxFZJLarseekSBTbxCi359EyBSLmGyCeOUI6q43VBMM29SXTW4zva0Dvo2VWOJGlxJNWlspT44eI18D7rCZUVnbLwrI5iEc3--yOeCyH7YZRVeIFti_-qTdCxgTQX13yE8HVgyXSY1PLEhVx2RyXqcdUNj83n0FmW3IrGeHfvQQM0CTicMcmlJCKqjnznpqTdvNB35tUA3c2UnDO9TPM4TrNKiSROBRw5-_gk4OnZaZti9Z4VSsiQqrA9P5p8TXTDB1c3KAdVoNE_nfbfFtURdz7x3ur9ViWHCqDlomh8KmFq-fkAAvr14wojgqROsWlaDktreuegXCSN4aAg-nyKf74yKuDGS7kud0_EqKTZ7ppy4sPR-EjKezHDGB8BKa_L-VNrti14o8v4WSTvst48rckoV5k371jkyObiSU3n8nYtGidCP5QTaMBYuDUpqGnmbOzRhwwyfMR3HU
+          created_at: "2026-07-01T08:29:10Z"
+          enc: R8UHQGqrtlM0nczbHsWBcqtomtyNt1xCY6-iSLdQjK3vl6T3-k2BwY1QmyTNDVg9pQ5S6YTL3yF69d2ePxcBtZeg33bXzWzyrqENgh2nBxwkj9zus8wfNEEF2n7N3gmS_E-qpipf5wLJ3EVu2VomH8JY14KwY517dMGxtZHBrqxFy6de4DwUlXUE_gXWSCUOt842pknPT4DOHzhwTXY94BxOZwdflro6E3ZuVw6v5L-t1cTiw9hkcV8NKEV6DY3ULYz1o2PqepTIFLzZLonSaTMOEg5TvNUJMCQ-OLsAmE304EhHxir5Q4iJ7WXRHxwrxX8FcVqQu2g-alHAleN0LgRv588-a7r6yJHbVN5kd2pbuOAEiuHjpel9deQeqP4TCXoZPey07hFrDTXcX60MFOhCpvcZa0vG2IxEujBPH-rXZ-EkK0bW1_CDuMU37WwTwrq33jtMttKqYDSOyCUzt0ClVWM4BiALJNH-CBmv1KYL6eSjice3U_zFzEDwKccXyCYqoP23YTzwcnr-JXjmtv8Si0WR3k6VW3as_MRJwFVoefTGZVMuAp6Vvl1McEGWbshPWdh1hlturVbmleuWDt_acQ0RJH6yI1W7F_OPa2wuIP4eDO1phMv0il6f4lnwIzmR0wnhXsdNfSpuYc6JtAHAxfn4yZ_R8vSNV3ScphQ
     age:
         - recipient: age1q8yqc5jvhkk7ufj95tw25u3es0846pkrwgcd4pn9ctermr7e6cesn6l0gd
           enc: |
             -----BEGIN AGE ENCRYPTED FILE-----
-            YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSBKQW1NaEJnYzZYQnlyL0Y4
-            Snlsa3Z1NjdrTWxaM28xcUViQ0M5Y2dBOHpBClBQWXpoTVNCblZyS1R0SmpWVnNB
-            RG5JUVVyOHAyWVh1TGFSYWR6SzdUWEkKLS0tIHZITnB4TVAxcWI3eitGRlZESmNz
-            REJyQkVjdnpNMlYwSmxvZXVUaVFCaWMKOM6x1fHyeecYTuMuqRaojF2AoFL10K3p
-            g4rq80o++WUTiO/Mirg9TApFOtgfdQZSeL8CZHWCYpHgcs4N5ig8OQ==
+            YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSB6OTNnbUUrbzJTTzcyVVpw
+            ZnEvWFhqamJKVCsxczNKSFYxcFhwTjNxY0dRCmZGS0JMdmJqRTZvQ2c0SElHd3pS
+            YWJnQUozR3JOQ1BQc3JxZXBPR0FrZzAKLS0tIHM2MVAzZWJxdTRJU0prRnlUNVhj
+            cGJDQzZ2KzJ5NzBxRDZNK2Q5a0szSUEKYyllU8lW2kpILsxMubVAxD5MQBc52MNb
+            hWd5Ugfd08ibufk29MN6Y33BkvO9egq3pcGDJ6H240odeFwwNwVyrg==
             -----END AGE ENCRYPTED FILE-----
-    lastmodified: "2026-06-16T08:52:39Z"
-    mac: ENC[AES256_GCM,data:QZQV0hGfj2s9l1Uiw1jspmi47m4Et/D3ISt/Fi1Z5/P9dDO/tr6H84v03K1vM7cwpbdSpUkylaJx9I98F26qs3JpnUhcCO+WkY3XyW8alV8ndlMWZTUWkfvOh4S2AM5D7kMjNpTkHwDB0L1JHk5xbvDzpT+5+8ruR7Hnt7CDd04=,iv:+SAhcK5rXsRTMu3p7Rx2AYOXpFyX/wFYoOTP0T1Y/Ss=,tag:vMSUxmktrix0WTfHcdAbbg==,type:str]
+    lastmodified: "2026-07-01T08:29:12Z"
+    mac: ENC[AES256_GCM,data:KuxNi/eocpMv2zaFho021XBPsj1dNRuMEOvlNoE35+dpAPl7CaJ3A4Ncyqzwnkvxxs0qFzXN0e0JqwjLIZAfAtZpkJHM37sKK4Fam0TxO2JJXy9ZxubNQt276okA+h0B48hwZ7NlL6EfYjbculjPzf8cOjJJ5jBl066lyPqN4tQ=,iv:8UTj8uaO8DOjaS0rvSO5nfujxV72w+zzSHZ73ocM9r0=,tag:axYXJfwsxNwvjN7G5vHhXA==,type:str]
     encrypted_comment_regex: ENCRYPT
     version: 3.11.0
