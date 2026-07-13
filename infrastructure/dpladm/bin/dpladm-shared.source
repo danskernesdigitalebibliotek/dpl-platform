@@ -92,7 +92,7 @@ function renderProfileTemplate {
 
   if [[ "${autogenerateRoutes}" == "redirect" ]]; then
     autogenerateRoutes="false"
-    secondaryDomainsString="${secondaryDomainsString} varnish.main.${siteName}.dplplat01.dpl.reload.dk nginx.main.${siteName}.dplplat01.dpl.reload.dk"
+    secondaryDomainsString="${secondaryDomainsString} varnish.main.${siteName}.dplplat02.dpl.reload.dk nginx.main.${siteName}.dplplat02.dpl.reload.dk"
   fi
 
   if [[ -z "${autogenerateRoutes}" && -n "${primaryDomain}" ]]; then
