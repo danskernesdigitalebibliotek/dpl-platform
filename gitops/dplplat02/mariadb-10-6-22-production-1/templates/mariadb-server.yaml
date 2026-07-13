@@ -32,7 +32,8 @@ spec:
     innodb_autoinc_lock_mode=1
     binlog_format=row
     max_connections=1500
-    wait_timeout=380
+    wait_timeout=600
+    interactive_timeout = 600
     transaction_isolation="READ-COMMITTED"
     collation_server="LATIN1_SWEDISH_CI"
     character_set_server="LATIN1"
