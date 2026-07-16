@@ -37,7 +37,7 @@ mariadb-operator:
 
   metrics:
     # -- Enable operator internal metrics. Prometheus must be installed in the cluster
-    enabled: false
+    enabled: true
     serviceMonitor:
       # -- Enable controller ServiceMonitor
       enabled: true
@@ -45,7 +45,7 @@ mariadb-operator:
       additionalLabels: {}
       # release: kube-prometheus-stack
       # --  Interval to scrape metrics
-      interval: 30s
+      interval: 50s
       # -- Timeout if metrics can't be retrieved in given time interval
       scrapeTimeout: 25s
 
