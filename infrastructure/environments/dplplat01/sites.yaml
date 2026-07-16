@@ -38,9 +38,9 @@ sites:
     releaseImageRepository: ghcr.io/danskernesdigitalebibliotek
     releaseImageName: dpl-cms-source
     plan: webmaster
-    dpl-cms-release: 2026.26.2
+    dpl-cms-release: 2026.29.0-test.0
     moduletest-dpl-cms-release: 2026.26.2
-    go-release: 2026.26.2
+    go-release: 2026.29.0-test.0
     php-version: 8.3
     node-version: 24
     diskSize: 20

@@ -1,4 +1,4 @@
-FROM ghcr.io/danskernesdigitalebibliotek/dpl-web-go:${GO_RELEASE} as builder
+FROM ghcr.io/danskernesdigitalebibliotek/dpl-web-go:${GO_RELEASE} AS builder
 
 # Lagoon propagates build and global env variables as build-args.
 ARG DRUPAL_REVALIDATE_SECRET
@@ -17,7 +17,8 @@ ENV NODE_ENV=production
 ENV NEXT_TELEMETRY_DISABLED=1
 
 RUN node ./scripts/prepare-docker-env-vars.mjs && \
-    yarn run build:stage2
+    corepack enable && \
+    pnpm run build:stage2
 
 # Production image, copy all the files and run next
 FROM uselagoon/node-${NODE_VERSION}:${LAGOON_IMAGES_RELEASE_TAG} AS runner
