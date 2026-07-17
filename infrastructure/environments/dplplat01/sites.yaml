@@ -4,7 +4,7 @@ x-defaults: &default-release-image-source
   releaseImageName: dpl-cms-source
   dpl-cms-release: 2026.26.2
   go-release: 2026.26.2
-  php-version: 8.3
+  php-version: 8.4
   node-version: 24
 x-webmasters-on-weekly-release-cycle: &webmasters-on-weekly-release-cycle
   # This release cycle releases the newest release, which has been
@@ -15,7 +15,7 @@ x-webmasters-on-weekly-release-cycle: &webmasters-on-weekly-release-cycle
   dpl-cms-release: 2026.24.2
   moduletest-dpl-cms-release: 2026.26.2
   go-release: 2026.24.2
-  php-version: 8.3
+  php-version: 8.4
   node-version: 24
 x-early-26: &early-26
   # This release cycle releases the newest release, which has been
@@ -26,7 +26,7 @@ x-early-26: &early-26
   dpl-cms-release: 2026.26.2
   moduletest-dpl-cms-release: 2026.26.2
   go-release: 2026.26.2
-  php-version: 8.3
+  php-version: 8.4
   node-version: 24
 sites:
   # Site objects are indexed by a unique key that must be a valid lagoon, and
@@ -41,7 +41,7 @@ sites:
     dpl-cms-release: 2026.29.0-test.0
     moduletest-dpl-cms-release: 2026.26.2
     go-release: 2026.29.0-test.0
-    php-version: 8.3
+    php-version: 8.4
     node-version: 24
     diskSize: 20
     primary-domain: canary.dplplat02.dpl.reload.dk
@@ -59,7 +59,7 @@ sites:
     dpl-cms-release: 2026.26.2
     moduletest-dpl-cms-release: 2026.26.2
     go-release: 2026.26.2
-    php-version: 8.3
+    php-version: 8.4
     node-version: 24
     diskSize: 20
     deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAILj8lXv7C/7s7te9sEpwcHQhgDWfzsCkAN7rqQ4sdTzk"
@@ -73,7 +73,7 @@ sites:
     dpl-cms-release: 2026.26.2
     moduletest-dpl-cms-release: 2026.26.2
     go-release: 2026.26.2
-    php-version: 8.3
+    php-version: 8.4
     node-version: 24
     plan: webmaster
     primary-domain: staging.dplplat02.dpl.reload.dk
