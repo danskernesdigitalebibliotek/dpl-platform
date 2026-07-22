@@ -4,4 +4,4 @@ kubectl config use-context dplplat02
 helm repo add lagoon https://uselagoon.github.io/lagoon-charts/
 helm repo update
 
-sops -d lagoon-core.values.sops.yaml | helm upgrade lagoon-core lagoon/lagoon-core --install -f - --version 1.54.1 --namespace lagoon-core --debug
+sops -d lagoon-core.values.sops.yaml | helm upgrade lagoon-core lagoon/lagoon-core --install -f - --version 1.55.0 --namespace lagoon-core --debug
