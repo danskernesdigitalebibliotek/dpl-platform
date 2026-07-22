@@ -117,7 +117,7 @@ sshPortal:
         repository: ghcr.io/uselagoon/lagoon-ssh-portal/ssh-portal
         pullPolicy: IfNotPresent
         # Overrides the image tag whose default is the chart appVersion.
-        tag: v0.42.0
+        tag: v0.43.0
     service:
         type: LoadBalancer
         ports:
@@ -157,7 +157,7 @@ lagoon-build-deploy:
     # sensible defaults.
     # lagoonTargetName:
     #ENCRYPT
-    taskSSHHost: ENC[AES256_GCM,data:K286X7GMwHMzDpUIUw==,iv:sxoUGpYZu6Wud2FGZ1LjwQgxxIjXVU2klmsNFWFUU78=,tag:H+U8+gEQLJFTmhGMVChMTA==,type:str]
+    taskSSHHost: ENC[AES256_GCM,data:xH/Jp25ECbxkW+/itw==,iv:IiedtgPZA/3K4AHU4of6AOfoaz0npAIIwmStgNpa6MY=,tag:eWv3XydMU846sc9titDdnw==,type:str]
     taskSSHPort: 22
     taskAPIHost: api.lagoon.dplplat02.dpl.reload.dk
     # lagoonTokenHost: ""
@@ -166,9 +166,9 @@ lagoon-build-deploy:
     # sshPortalHost: ""
     # sshPortalPort: ""
     #ENCRYPT
-    rabbitMQUsername: ENC[AES256_GCM,data:XYvEpko8,iv:vyPS0KSWivuM65Lnrbwo6QWuai2heM22p38a4Y1tLSE=,tag:gDsXupORtV1GF2dVVm/Qlw==,type:str]
+    rabbitMQUsername: ENC[AES256_GCM,data:yVmVGDjx,iv:8KwdvLJ0CcAA4FvHoEPshw4r5PdCvkgy3Sc6Du4zOLY=,tag:5tb+VW+uT7nEcY4VfGVm9g==,type:str]
     #ENCRYPT
-    rabbitMQPassword: ENC[AES256_GCM,data:f+yR6K4wlxsStcfPRc4iuyEs0nOowjpSnpZoRUhh,iv:6CYZ6FafRVV6JLpQJSlBN2fqNQTRsqAM4Rotr0CNSEE=,tag:q733ZKmoQYZeYWTbNMqHIw==,type:str]
+    rabbitMQPassword: ENC[AES256_GCM,data:hzBffZgPRx7cGkKc2AmmK0FPyRSixiVpfkNkUxHE,iv:wIZvpS29ZhMWyqjEwgJ9lVzuOipgBKRTiOXICD1o5J0=,tag:SZ0Che4zcsNPKnvQaMdJ/w==,type:str]
     rabbitMQHostname: lagoon-core-broker.lagoon-core.svc.cluster.local
     lagoonTargetName: lagoon
     lagoonFeatureFlagDefaultRootlessWorkload: enabled
@@ -179,9 +179,9 @@ lagoon-build-deploy:
         - --harbor-url=https://harbor.lagoon.dplplat02.dpl.reload.dk
         - --harbor-api=https://harbor.lagoon.dplplat02.dpl.reload.dk/api/
         #ENCRYPT
-        - ENC[AES256_GCM,data:SrM3gVmJ+0ZoYpI3upeiw3pH5kJ1iDo=,iv:CHW2O797draqJOJfH+mOeseHn+8E7/JNCxYaqloAWuk=,tag:YOBpeGbvRsXlYIKylySKmg==,type:str]
+        - ENC[AES256_GCM,data:HnUjR05k0LM9BAvFz00XerjVqK062Io=,iv:zhT/wT+5edP5g3S5WutIlKrkFfcSFtyfPtZH2svKbMw=,tag:JYHAXuRRUXw9hp8CxCpH5A==,type:str]
         #ENCRYPT
-        - ENC[AES256_GCM,data:54GQV+EOwkiUjkY+lH+zoRc0qUmw9TRuQ0w4Q4kWYlz9p16stEs=,iv:sq8xAw+wUY5DBQr4H/66xpVB1qjlh+Wu5AHF9XdEjPI=,tag:EWevaVJ/4j67tn3SW8z+Vg==,type:str]
+        - ENC[AES256_GCM,data:2ITSuKOK1aJY7JTjHjP9OZ7d+FLtHWniwobv+o1u3OfaHLO8kHA=,iv:5uUcC1NXeFO3F01lKM+s+pzbxj1r50nkE0Bgx2mJq/M=,tag:30KarbB3oVLqidzn17CRpA==,type:str]
         - --enable-qos
         - --qos-max-builds=8
     nodeSelector:
@@ -217,20 +217,20 @@ dbaas-operator:
             readReplicaHostnames:
                 - mariadb-10-6-22-production-1.mariadb-10-6-22-production-1.svc.cluster.local
             #ENCRYPT
-            password: ENC[AES256_GCM,data:tZnYkeXZZ0DTyB/V5wd4kGiSTlOw8/kb,iv:+IkRU2NJ0lA0CI1GfL4K0bU1Fi+9YlMEl4brLBFm9Dw=,tag:aIWPwqPyU9K4JHbFbus1Eg==,type:str]
+            password: ENC[AES256_GCM,data:UgjfMHfN8ld9McOxo3KS4mYCsO/zv7ZV,iv:LHGt+XvK+zaLA/FUuqmAm8pjsxL9PlNuCWSjzZlkRo0=,tag:c5cLfa81+Pstm25kS9AJIg==,type:str]
             port: 3306
             #ENCRYPT
-            user: ENC[AES256_GCM,data:yNwjhg==,iv:ep+yy0F2BJqgy8ob0X0/ZxDsv52pc0giTMU9me3Rv2M=,tag:ZT3PcQCX4uHl2/68ZYta/A==,type:str]
+            user: ENC[AES256_GCM,data:TzNXMw==,iv:Ci2RAxAGwArn0MO8l8Bx6gFln76US3hmhpFd/NAApBk=,tag:+0MjZ1bZjLrazaCdtfI/zg==,type:str]
         development:
             environment: development
             hostname: mariadb-10-06-01-test.mariadb-10-06-01-test.svc.cluster.local
             readReplicaHostnames:
                 - mariadb-10-06-01-test.mariadb-10-06-01-test.svc.cluster.local
             #ENCRYPT
-            password: ENC[AES256_GCM,data:952noiiS+7banZRmwX05RKrXQP9/kb5ygyD/vw==,iv:DSA+PQeXDCD/A8Uj2M6bgJavjn7KFm7tbxJ3byCxMMM=,tag:N4VdlrS4WlVICL0ZEFhwbg==,type:str]
+            password: ENC[AES256_GCM,data:ow9U8GrYiJWxo4RMIj+/i/eXHHfBwZ+wzo707w==,iv:Knl6HL8dZa37luOQgzXILxujaw+Ckv4Af/ws39P07zE=,tag:mvOBhSa7KWVlwfo1XIk2mQ==,type:str]
             port: 3306
             #ENCRYPT
-            user: ENC[AES256_GCM,data:CUKmcQ==,iv:drOeLp4GW64Xe0OYRTyLKOXI0iDrb+OzFxZk9vuwWbY=,tag:hEaH/jjdPxHIw58BpRWaJQ==,type:str]
+            user: ENC[AES256_GCM,data:CjZzBg==,iv:BpoCyJz3j669FZuVAPO6YiJAfxRhnS3x4vbrKfyk9gI=,tag:ARl1A7W8Sk2sNeWAnKL9zQ==,type:str]
     nodeSelector:
         node-role.kubernetes.io/prod: ""
     tolerations:
@@ -452,26 +452,29 @@ nats:
 natsConfig:
     # coreURL format tls://<username>:<password>@<host>:7422
     coreURL: ""
-    tls: {}
-    # If the lagoon-remote-nats-tls secret should be created by the
-    # lagoon-remote chart, certificate values can be specified directly in
-    # secretData. Configuring TLS this way also allows specifying a custom
-    # ca.crt. The chart expects expects secretData to be specified unless
-    # nats.tlsCA.enabled is set to false.
-    #
-    # secretData:
-    #   ca.crt: |
-    #     ...
-    #   tls.crt: |
-    #     ...
-    #   tls.key: |
-    #     ...
-    #
-    # If the TLS secret is created outside the lagoon-remote chart, it should
-    # be named lagoon-remote-nats-tls. This secret should contain fields
-    # tls.crt and tls.key, and the certificate should be issued by a public
-    # authority. `nats.tlsCA.enabled: false` should be set in this case (it is
-    # true by default).
+    # use this if you're only providing the ca certificate to nats.
+    # this can be used if you've got lagoon-core leafnode tls verify disabled
+    tls:
+        caOnly: false
+        # If the lagoon-remote-nats-tls secret should be created by the
+        # lagoon-remote chart, certificate values can be specified directly in
+        # secretData. Configuring TLS this way also allows specifying a custom
+        # ca.crt. The chart expects expects secretData to be specified unless
+        # nats.tlsCA.enabled is set to false.
+        #
+        # secretData:
+        #   ca.crt: |
+        #     ...
+        #   tls.crt: |
+        #     ...
+        #   tls.key: |
+        #     ...
+        #
+        # If the TLS secret is created outside the lagoon-remote chart, it should
+        # be named lagoon-remote-nats-tls. This secret should contain fields
+        # tls.crt and tls.key, and the certificate should be issued by a public
+        # authority. `nats.tlsCA.enabled: false` should be set in this case (it is
+        # true by default).
 storageCalculator:
     enabled: false
     # cronjob: 5 */12 * * *
@@ -491,7 +494,7 @@ storageCalculator:
         repository: uselagoon/remote-calculator
         pullPolicy: IfNotPresent
         # Overrides the image tag whose default is the chart appVersion.
-        tag: v0.8.0
+        tag: v0.8.1
     broker:
         # enable if providing a custom CA for broker connections
         tlsCA:
@@ -529,19 +532,19 @@ sops:
         - vault_url: https://kv-dplplat01-c3b2.vault.azure.net
           name: sops-key
           version: d82fe2456d6e4c4aaaaf808226bd5769
-          created_at: "2026-07-18T19:19:31Z"
-          enc: TLzXO5MoSBhUnVLsYzqgTxkeND9ttd4sqxvUY30xGDnorxbbnZQHz6OS9MsCOtXxJ5sgTdcUEVyfoUZ-j32KNywayaDD1cb53qTiqEga3ftbEYB_hEJwJascUu29T9puHRVn4lXQUt6RRm8ERcMaik0K-rRnrCauvS_IPRtCyDZRcoSA-LQ9hts1F1xbmbYp6YFhgpKUNlonxtU6VcZQmWgbnUvfSJAiOS0nQBva5-ICrVIS4BEgassi3_EkDHW1ZIhfAK9aQ4uOXtJYnoXEA6CQfDvFyykhQo8QpKYPc7vDBXaRMESfihYYlp-NiRMVHnewbIXw5Pn6ttD6lAbboWOmic_V_dSKN-qIyhQZI-UgZSx-vF5it_GlBtAh-2J2m3gCcUNXuHmICnzA8kdgNmCWsTj0je1ul4PHX2uzc_G6-nXOOadC6DcuZLCpe98TvXYAl9E0iPT-lmiwFxPRa4YG9_Y1rXQcH7A8jkp4V5Y73oolcv_DCXd8i9AXcV_yxuEBvczVaiqqp6cxV10SD38_sl_gqbTpN9sbAVmNWjgcKje0QY-LJYwt__McFiMIZrJYq11rXAjewz_RsfUbsk-QPBzA_moz21X98xf3BSCuTRfzb1B2mJRTbn9b4Aj6cQbjtTQ4gDgfahj4KncZ_PrfJOFwMzZKeL9agabsXEw
+          created_at: "2026-07-20T07:39:58Z"
+          enc: KdWpum6G07KUVWVgq4MvWu_ENwd5RJ21lv4XkQK3X5kaBmhHaCVAXSczq0CfIz6zhDViL_NH6nki3LgzMH_KcBVGT5HkD4T7HwF4ubOJm1JAsbztO1-ZueqKbOyeUxwFFw9LTkWYQdNXU_SDG5XH0t0FoY0AUAmlp4-ewmHaBx2UQATRS1Kc8Qe0FyEDh_4EqNYZn_LLN7iiQM6pp9dvM-ut5MlqzYlcmN5fIQn-co_scfJyMmOWymMOmSWTsf0sDgEQkUc-jwQJ5JrZWMT8qebAfE-0VnBZCarzD3XXm1MREXNDZWqfIWACRHGqAb6WXsF4_m_qvqNQYzl57gO9M0V2WOPCLtlwn8MFln3bujt-jrabwz4PKxZOUAb57PusKJnqpXf4d3FLWx4d36gKQmpJizDFeomCr9n0gNP4pNvRCW5-mwu7P7tMJHx3XEjQaXRrR-nZ4YdXXsCp3nDvJmjfsD7mb_Bjz5ynd5JuRbBYMsPs3gL9v7EcHs3R_tk2BIHs3FNMlOiDdGS6rmuzTGrrDUzdVpVDWdjC7U6AOtEziF8GvL5i4L89ceTjtZ_zb_W0P47t_vQqdwIDV0Nv0mExD-ez1OtI2YU_sjR8dk_gX_rC777Jjbu0OVhNtcUHytSwoh3MU0pawj1MzulKP75FQoWDUdduVPLKzzphGCs
     age:
         - recipient: age1q8yqc5jvhkk7ufj95tw25u3es0846pkrwgcd4pn9ctermr7e6cesn6l0gd
           enc: |
             -----BEGIN AGE ENCRYPTED FILE-----
-            YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSBmWTNJMHlNaU9xeHFrdkNs
-            ZHJXMGN6T1JzVzY4TllJZnhPcGtaR2N0elUwCk1TcWw5K1pjV3haUEh1S1FrdVhR
-            WUxrbWdiY3pkUXp2U0syTW9FZTJydFUKLS0tIG14VlZqOXBmSmwySmplUmVvMUts
-            OXNwWFhteS9RRTdjdHhPcHo2aDlucEUKaAGb4jk9hQwAklnUCCgHBiwPbH6cS5Oj
-            QNjSoNH8hhtpt584mwrSLWlAscTL+I0BSRau/ZlEi/zehpG8oldN/A==
+            YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSBVRHdPdjJWYkhMLy81eDZm
+            VDRERTVCWk9HU01heGtXUlA0L0RoMjNPN0ZrCkVUTnJKb0pTU2JmbStCUFBTNDZV
+            Qy9acllVZkJyVk9EdjFrTHprTExMUEUKLS0tIFNNMzVWNFc2eldySHFHM0lzOGoz
+            ZDdodk81WGRyRUI5RkZ4RENSQkozODgKG0TqVmdCfVXSHJuqxYRR1d3jXbmlyRIn
+            FUIDMMI4KQcToYHUCQL4Xy9BFDR+J9LVyPGKpmPPqCsfdCzrOb/FEg==
             -----END AGE ENCRYPTED FILE-----
-    lastmodified: "2026-07-18T19:19:40Z"
-    mac: ENC[AES256_GCM,data:4vrMhaD2CkKaecw8seMBwf6DgLMPHUz1Pyiv4HswCbQL/gfCLvXueoiTLtpg2OwXxloziHjxP9lEnwQ2Q1kH2/1yfdrw9vYLhw9ISZxi7gZrho3cYSD1QnS1gDGGhzC7gC1JD4CtuGtRdyozchHVQW+3r8OXcvsN4u9DSu0aqIU=,iv:Cs5VjnQV9X4FIrz+2ZGxBWKTkY7pgNpyM89zF2uI924=,tag:vJKEFFfKm1D1H50Kbasarw==,type:str]
+    lastmodified: "2026-07-20T07:40:00Z"
+    mac: ENC[AES256_GCM,data:tvT/NjlUoIbahrvWHWaYCnVnhVrss2r8MsRtrt+acy7D6DG55Uc2DEzL5WXRFdqZPRAP4XifXl5obLrGHTgzVKbKA9Iop5A27OGRR9LRzB//mLvA/gJLDb4/cijJGDneo4I96+fNuMg/UF8XvxGc4nDLpAnE5ethfK6fCiB6H4Y=,iv:AUuE/zC+udAYizq1hDFpnQvaKlx/W98THMFjnnSgB98=,tag:eUQlsRqu4/cyc40DyJGRPQ==,type:str]
     encrypted_comment_regex: ENCRYPT
     version: 3.11.0
