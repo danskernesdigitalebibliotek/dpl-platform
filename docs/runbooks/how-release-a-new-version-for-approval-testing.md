@@ -11,8 +11,6 @@ When deploying a new release, for approval testing by DDF, on the staging projec
   environment name.
 - The version tag you want to deploy. This must correspond to a
   tagged version of the [`dpl-cms-source` image](https://github.com/danskernesdigitalebibliotek/dpl-cms/pkgs/container/dpl-cms-source).
-- The version tag of Go that you want to deploy. The version generally
-  follows the cms version unless a hotfix is being released.
 
 ## Procedure: New release for approval testing
 
