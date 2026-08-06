@@ -224,6 +224,24 @@ function getSiteAutogenerateRoutes {
     echo "${autogenerateRoutes}"
 }
 
+# Decides whether a deployment with the given release tag should be synced.
+#
+# When ONLY_RELEASE is empty (the default) every deployment is synced, which
+# preserves the original behaviour. When ONLY_RELEASE is set we only sync
+# deployments whose release tag matches it exactly. This lets us push a single
+# release from a release branch (eg. ONLY_RELEASE=2026.32.0) while leaving sites
+# pinned to another release to be deployed from their own branch.
+function releaseSelected {
+    local tag="${1}"
+    if [[ -z "${ONLY_RELEASE}" ]]; then
+        return 0
+    fi
+    if [[ "${tag}" == "${ONLY_RELEASE}" ]]; then
+        return 0
+    fi
+    return 1
+}
+
 if [[ -z "${SITES_CONFIG:-}" ]]; then
     print_usage "SITES_CONFIG"
 fi
@@ -234,6 +252,10 @@ fi
 
 # Default to the main branch.
 BRANCH=${BRANCH:-main}
+
+# Optional filter. When set, only deployments whose release tag matches this
+# value are synced (see releaseSelected). Empty means "sync everything".
+ONLY_RELEASE=${ONLY_RELEASE:-}
 
 if [[ ! -f "${SITES_CONFIG}" ]]; then
     echo "Could not find the file ${SITES_CONFIG}"
@@ -274,8 +296,16 @@ failOnErr $? "${nodeVersion}"
 set -o errexit
 
 # Synchronise the sites environment repository.
-syncEnvRepo "${SITE}" "${releaseTag}" "${BRANCH}" "${siteImageRepository}" "${siteReleaseImageName}" "${autogenerateRoutes}" "${primaryDomain}" "${secondaryDomains}" "${diskSize}" "${phpVersionMain}" "${nodeVersion}" "${primaryGoSubDomain}" "${secondaryGoSubDomains}" "${goRelease}"
+if releaseSelected "${releaseTag}"; then
+    syncEnvRepo "${SITE}" "${releaseTag}" "${BRANCH}" "${siteImageRepository}" "${siteReleaseImageName}" "${autogenerateRoutes}" "${primaryDomain}" "${secondaryDomains}" "${diskSize}" "${phpVersionMain}" "${nodeVersion}" "${primaryGoSubDomain}" "${secondaryGoSubDomains}" "${goRelease}"
+else
+    echo "Skipping ${SITE} ${BRANCH} deployment: release '${releaseTag}' does not match ONLY_RELEASE='${ONLY_RELEASE}'."
+fi
 
-if [ "${plan}" = "webmaster" ] && [ "${BRANCH}" = "main" ]; then
-    syncEnvRepo "${SITE}" "${wmReleaseTag}" "moduletest" "${siteImageRepository}" "${siteReleaseImageName}" "${autogenerateRoutes}" "${primaryDomain}" "${secondaryDomains}" "${diskSize}" "${phpVersionModuletest}"
+if [ "${plan}" = "webmaster" ]; then
+    if releaseSelected "${wmReleaseTag}"; then
+        syncEnvRepo "${SITE}" "${wmReleaseTag}" "moduletest" "${siteImageRepository}" "${siteReleaseImageName}" "${autogenerateRoutes}" "${primaryDomain}" "${secondaryDomains}" "${diskSize}" "${phpVersionModuletest}"
+    else
+        echo "Skipping ${SITE} moduletest deployment: release '${wmReleaseTag}' does not match ONLY_RELEASE='${ONLY_RELEASE}'."
+    fi
 fi
