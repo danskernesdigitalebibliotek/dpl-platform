@@ -27,9 +27,9 @@ sites:
     releaseImageRepository: ghcr.io/danskernesdigitalebibliotek
     releaseImageName: dpl-cms-source
     plan: webmaster
-    dpl-cms-release: 2026.29.0-test.0
-    moduletest-dpl-cms-release: 2026.26.2
-    go-release: 2026.29.0-test.0
+    dpl-cms-release: 2026.32.0
+    moduletest-dpl-cms-release: 2026.32.0
+    go-release: 2026.32.0
     php-version: 8.4
     node-version: 24
     diskSize: 20
@@ -45,9 +45,9 @@ sites:
     releaseImageName: dpl-cms-source
     primary-domain: customizable.dplplat02.dpl.reload.dk
     plan: webmaster
-    dpl-cms-release: 2026.26.2
-    moduletest-dpl-cms-release: 2026.26.2
-    go-release: 2026.26.2
+    dpl-cms-release: 2026.32.0
+    moduletest-dpl-cms-release: 2026.32.0
+    go-release: 2026.32.0
     php-version: 8.4
     node-version: 24
     diskSize: 20
