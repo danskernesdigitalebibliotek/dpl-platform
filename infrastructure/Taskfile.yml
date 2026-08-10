@@ -446,6 +446,10 @@ tasks:
       SITES_CONFIG: "{{.dir_env}}/sites.yaml"
       SITE: "{{.SITE}}"
       GITHUB_TOKEN: "{{.GITHUB_TOKEN}}"
+      # Optional release filter. When set (eg. ONLY_RELEASE=2026.32.0) only
+      # deployments whose release tag matches are synced; other sites are left
+      # for a different branch/run. Empty means sync everything.
+      ONLY_RELEASE: "{{.ONLY_RELEASE}}"
     cmds:
       - |
         if [ -z "{{.SKIP}}" ]; then
