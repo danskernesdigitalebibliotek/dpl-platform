@@ -157,7 +157,7 @@ lagoon-build-deploy:
     # sensible defaults.
     # lagoonTargetName:
     #ENCRYPT
-    taskSSHHost: ENC[AES256_GCM,data:xH/Jp25ECbxkW+/itw==,iv:IiedtgPZA/3K4AHU4of6AOfoaz0npAIIwmStgNpa6MY=,tag:eWv3XydMU846sc9titDdnw==,type:str]
+    taskSSHHost: ENC[AES256_GCM,data:CJDH5+Bfg0JVcSooBg==,iv:DEze8MtNKMM/Y3RT5cvzIGKHOUYzROR/T9TVOpke65s=,tag:TYYnHghEvYW3rK/B6repWQ==,type:str]
     taskSSHPort: 22
     taskAPIHost: api.lagoon.dplplat02.dpl.reload.dk
     # lagoonTokenHost: ""
@@ -166,9 +166,9 @@ lagoon-build-deploy:
     # sshPortalHost: ""
     # sshPortalPort: ""
     #ENCRYPT
-    rabbitMQUsername: ENC[AES256_GCM,data:yVmVGDjx,iv:8KwdvLJ0CcAA4FvHoEPshw4r5PdCvkgy3Sc6Du4zOLY=,tag:5tb+VW+uT7nEcY4VfGVm9g==,type:str]
+    rabbitMQUsername: ENC[AES256_GCM,data:DdLe9+To,iv:u6TOMcE4JP+pCnymons8XXIzCO+2enTQQgQPHJOHaLs=,tag:p387qumSj3vB8FMj8BwbtQ==,type:str]
     #ENCRYPT
-    rabbitMQPassword: ENC[AES256_GCM,data:hzBffZgPRx7cGkKc2AmmK0FPyRSixiVpfkNkUxHE,iv:wIZvpS29ZhMWyqjEwgJ9lVzuOipgBKRTiOXICD1o5J0=,tag:SZ0Che4zcsNPKnvQaMdJ/w==,type:str]
+    rabbitMQPassword: ENC[AES256_GCM,data:0Ln6GYIjSNRyDy1TeZaB3ggoCVdpkLTDpgqHbpWb,iv:+FdczPQcticghx2HOwi3+1lJ9pOTM2DaLxemAf1OSyI=,tag:zCNKeFfg9kafIUao9q+Q9A==,type:str]
     rabbitMQHostname: lagoon-core-broker.lagoon-core.svc.cluster.local
     lagoonTargetName: lagoon
     lagoonFeatureFlagDefaultRootlessWorkload: enabled
@@ -179,9 +179,9 @@ lagoon-build-deploy:
         - --harbor-url=https://harbor.lagoon.dplplat02.dpl.reload.dk
         - --harbor-api=https://harbor.lagoon.dplplat02.dpl.reload.dk/api/
         #ENCRYPT
-        - ENC[AES256_GCM,data:HnUjR05k0LM9BAvFz00XerjVqK062Io=,iv:zhT/wT+5edP5g3S5WutIlKrkFfcSFtyfPtZH2svKbMw=,tag:JYHAXuRRUXw9hp8CxCpH5A==,type:str]
+        - ENC[AES256_GCM,data:NeQHYAS0ZvMN13gdoTZ20y315cnwxk0=,iv:n3sIqlgaT63+Q4qTROBJ+BQKnPkcZQ8RhjjDhZkPB9Y=,tag:L3yxYyIcy4X+4l9PTbMF9g==,type:str]
         #ENCRYPT
-        - ENC[AES256_GCM,data:2ITSuKOK1aJY7JTjHjP9OZ7d+FLtHWniwobv+o1u3OfaHLO8kHA=,iv:5uUcC1NXeFO3F01lKM+s+pzbxj1r50nkE0Bgx2mJq/M=,tag:30KarbB3oVLqidzn17CRpA==,type:str]
+        - ENC[AES256_GCM,data:MVZqs+gZi8RUQFYd2LeSPti3ivrEhQQpdnLdiIU6cXnYUYfOF/M=,iv:YRYcVzZ317/mmLk3DGgp5a4nWPH72BSA0TrsAMI6uMg=,tag:oNZPgZJHilnPz7+PSDZ+xQ==,type:str]
         - --enable-qos
         - --qos-max-builds=8
     nodeSelector:
@@ -217,20 +217,20 @@ dbaas-operator:
             readReplicaHostnames:
                 - mariadb-10-6-22-production-1.mariadb-10-6-22-production-1.svc.cluster.local
             #ENCRYPT
-            password: ENC[AES256_GCM,data:UgjfMHfN8ld9McOxo3KS4mYCsO/zv7ZV,iv:LHGt+XvK+zaLA/FUuqmAm8pjsxL9PlNuCWSjzZlkRo0=,tag:c5cLfa81+Pstm25kS9AJIg==,type:str]
+            password: ENC[AES256_GCM,data:OX6AJkz+bpqw1A8Nutciyz+J5bUiPDj9,iv:ubfwPt8a1YQiy2TAubnWuuvMV4frTZLAjEynZ0N8Qh0=,tag:0IqV6ldSWCl0LNrqmwKvMQ==,type:str]
             port: 3306
             #ENCRYPT
-            user: ENC[AES256_GCM,data:TzNXMw==,iv:Ci2RAxAGwArn0MO8l8Bx6gFln76US3hmhpFd/NAApBk=,tag:+0MjZ1bZjLrazaCdtfI/zg==,type:str]
+            user: ENC[AES256_GCM,data:tZu0WA==,iv:VnD0cGIUel5OUZNig0m7YHDCO7PenLEWjAI3MyxMDxM=,tag:XDbPsTR/9o+icnLWHTjPBw==,type:str]
         development:
             environment: development
             hostname: mariadb-10-06-01-test.mariadb-10-06-01-test.svc.cluster.local
             readReplicaHostnames:
                 - mariadb-10-06-01-test.mariadb-10-06-01-test.svc.cluster.local
             #ENCRYPT
-            password: ENC[AES256_GCM,data:ow9U8GrYiJWxo4RMIj+/i/eXHHfBwZ+wzo707w==,iv:Knl6HL8dZa37luOQgzXILxujaw+Ckv4Af/ws39P07zE=,tag:mvOBhSa7KWVlwfo1XIk2mQ==,type:str]
+            password: ENC[AES256_GCM,data:jZEEG/oqqfi6RsW+L0rpraFtqhoogIrnEM7K7g==,iv:VwAKur+RBy5fULgTseSVesmQJLM2oyv//dj/kIidy6E=,tag:DzVQBnY/EE1/fhR5JZWC6Q==,type:str]
             port: 3306
             #ENCRYPT
-            user: ENC[AES256_GCM,data:CjZzBg==,iv:BpoCyJz3j669FZuVAPO6YiJAfxRhnS3x4vbrKfyk9gI=,tag:ARl1A7W8Sk2sNeWAnKL9zQ==,type:str]
+            user: ENC[AES256_GCM,data:ab5+xQ==,iv:4LxS9EVWXHlw4TW+PfczsTRliBzN9Sk46N7XrRd4Qxs=,tag:ORgogmpD+cSKwlxKNsDKpw==,type:str]
     nodeSelector:
         node-role.kubernetes.io/prod: ""
     tolerations:
@@ -532,19 +532,19 @@ sops:
         - vault_url: https://kv-dplplat01-c3b2.vault.azure.net
           name: sops-key
           version: d82fe2456d6e4c4aaaaf808226bd5769
-          created_at: "2026-07-20T07:39:58Z"
-          enc: KdWpum6G07KUVWVgq4MvWu_ENwd5RJ21lv4XkQK3X5kaBmhHaCVAXSczq0CfIz6zhDViL_NH6nki3LgzMH_KcBVGT5HkD4T7HwF4ubOJm1JAsbztO1-ZueqKbOyeUxwFFw9LTkWYQdNXU_SDG5XH0t0FoY0AUAmlp4-ewmHaBx2UQATRS1Kc8Qe0FyEDh_4EqNYZn_LLN7iiQM6pp9dvM-ut5MlqzYlcmN5fIQn-co_scfJyMmOWymMOmSWTsf0sDgEQkUc-jwQJ5JrZWMT8qebAfE-0VnBZCarzD3XXm1MREXNDZWqfIWACRHGqAb6WXsF4_m_qvqNQYzl57gO9M0V2WOPCLtlwn8MFln3bujt-jrabwz4PKxZOUAb57PusKJnqpXf4d3FLWx4d36gKQmpJizDFeomCr9n0gNP4pNvRCW5-mwu7P7tMJHx3XEjQaXRrR-nZ4YdXXsCp3nDvJmjfsD7mb_Bjz5ynd5JuRbBYMsPs3gL9v7EcHs3R_tk2BIHs3FNMlOiDdGS6rmuzTGrrDUzdVpVDWdjC7U6AOtEziF8GvL5i4L89ceTjtZ_zb_W0P47t_vQqdwIDV0Nv0mExD-ez1OtI2YU_sjR8dk_gX_rC777Jjbu0OVhNtcUHytSwoh3MU0pawj1MzulKP75FQoWDUdduVPLKzzphGCs
+          created_at: "2026-07-22T12:31:50Z"
+          enc: Du1nocCsYH8ZJWKzTW5DSuzDUbhLmwrpDJLP8GXjhn6hcrSnzwvM_hQ06cWozK3V0asCD_Lo3PRJ5dJu6Yy_BL_ZuMoBGSGEYlF3BR3DM7umcGout3LAZ5mhEeE1_K8ScGVGyjnK99dBiwDHMyKXHv2-1j5vIJRnOQ_YvOla0cEfr2_YIqQW-NsTYzWzvltEGUiBnaLKxOroQutlrnBiOnUR7xVS4ml_vRDuLp85NrMCLGRS6w1oO-dXJCcf6k48xlCj1XCi7tpnkaags45PwD7-79dR-vwxNSibgy7BFGDg7Wqm21-zg8bAfk-qk6zTAj2Z3Y7wssNzcsrYyKFPaBMyUBesW5_v-OPJByoEifasF2H5isEHOXfXkRvmCMUg6vDjenvtn_g7FKSFW4XFJIbVyaChn1LuEwTPXupkqFMiimGKPb97wZGm1srUC3iHDCYG-GyN2aJjm7Xef6uEeLvq7ucaYNLeaG_Pm_5erANiF74kjwaXZKIVgm6KD2imFfl_R9MdG3XjHVxUq0nCpgE-9hqNhcbd05W0apspe5YHxsLhFFTr18YdwdRzCiviVYjNXlyKIIZTdu-8V86AzB1TE4R7XpAg4VbvcAfj-ANoQT08CbXXCgRr4tOOWqReXhSjemnwkP3jMDYOt1t3cwYoHSl5tw8zVCtdoeG6sMc
     age:
         - recipient: age1q8yqc5jvhkk7ufj95tw25u3es0846pkrwgcd4pn9ctermr7e6cesn6l0gd
           enc: |
             -----BEGIN AGE ENCRYPTED FILE-----
-            YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSBVRHdPdjJWYkhMLy81eDZm
-            VDRERTVCWk9HU01heGtXUlA0L0RoMjNPN0ZrCkVUTnJKb0pTU2JmbStCUFBTNDZV
-            Qy9acllVZkJyVk9EdjFrTHprTExMUEUKLS0tIFNNMzVWNFc2eldySHFHM0lzOGoz
-            ZDdodk81WGRyRUI5RkZ4RENSQkozODgKG0TqVmdCfVXSHJuqxYRR1d3jXbmlyRIn
-            FUIDMMI4KQcToYHUCQL4Xy9BFDR+J9LVyPGKpmPPqCsfdCzrOb/FEg==
+            YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSBIVGFmbSt5b0U4QUwzMUIy
+            VFlKckF1SUdnWkYybjltNjYyTm54N2w2aFZFCjZ0aU9uZmhteGptaVVpcVdYMlVM
+            UE0zbmFDMlN4dXhWR0plUjBuNjNOVkkKLS0tIFVQQW5xQmxIOGNScHZ0ck1kRloy
+            VjBqeFJrVWc3RDR2aUlYNUxBTWRZaUEKXB0m7MXWUwPNbDsPgXvU2FO7F9Htq1mA
+            6PK14r8a1wWpKJZuHYO1bkwTIaO9ClXSSHrWoOVXIb3H5pqLQHrSTQ==
             -----END AGE ENCRYPTED FILE-----
-    lastmodified: "2026-07-20T07:40:00Z"
-    mac: ENC[AES256_GCM,data:tvT/NjlUoIbahrvWHWaYCnVnhVrss2r8MsRtrt+acy7D6DG55Uc2DEzL5WXRFdqZPRAP4XifXl5obLrGHTgzVKbKA9Iop5A27OGRR9LRzB//mLvA/gJLDb4/cijJGDneo4I96+fNuMg/UF8XvxGc4nDLpAnE5ethfK6fCiB6H4Y=,iv:AUuE/zC+udAYizq1hDFpnQvaKlx/W98THMFjnnSgB98=,tag:eUQlsRqu4/cyc40DyJGRPQ==,type:str]
+    lastmodified: "2026-07-22T12:31:54Z"
+    mac: ENC[AES256_GCM,data:0u/t+Xn4/+S1K/OZ4Xd0F0xx5YrdEEVJGTBoiLIZ7q2MKS8PB0T0pSGV3WejWKyCsbWP75mRX7yAuo+5RViLbvU69b4++l7dpd7AwRjCX+ISFTIQkEGzlfQ2oINDDQ9gVpZEUMjMoPIHeS6MC4Wu+6md5IRRFcncZ2TmWEhdwH0=,iv:SVSz8khRO+4Y9xCjJJLE15XS3Mpr6UzpFBUiMOH7hOg=,tag:YKyWKeGXsN7VCtsfSTa0lA==,type:str]
     encrypted_comment_regex: ENCRYPT
     version: 3.11.0
