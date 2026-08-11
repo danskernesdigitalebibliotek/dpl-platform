@@ -82,14 +82,15 @@ async function getDatabaseConnectionInfo(namespace) {
   echo(`Getting ${namespace}'s database connection details`)
   let configMapJson
   try {
-    configMapJson = await $`kubectl get -n ${namespace} configmap lagoon-env -o json`
+    configMapJson = await $`kubectl get -n ${namespace} secret lagoon-env -o json`
   } catch (error) {
     echo(`Failed to get configmap "lagoon-env" in namespace ${namespace}`, error.stderr)
     throw Error(`Failed to get configmap "lagoon-env" in namespace ${namespace}`, { cause: error })
   }
 
   const configmap = JSON.parse(configMapJson)
-  const { data } = configmap
+  const { data: encryptedData } = configmap
+  const data = decryptSecretData(encryptedData);
 
   const databaseConnectionInfo = {
     databaseName: data.MARIADB_DATABASE,
@@ -162,4 +163,12 @@ async function importFiles(file, project, environment) {
     }
     throw Error("Failed to extract files backup", { cause: error })
   }
+}
+
+function decryptSecretData(encryptedData) {
+  let data = {};
+  for (const prop in encryptedData) {
+    data[prop] = Buffer.from(encryptedData[prop], "base64").toString();
+  }
+  return data;
 }
