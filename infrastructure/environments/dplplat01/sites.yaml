@@ -624,6 +624,8 @@ sites:
     primary-domain: www.koegebib.dk
     secondary-domains:
       - koegebib.dk
+      - xn--kgebib-bya.dk
+      - www.xn--kgebib-bya.dk
     autogenerateRoutes: true
     diskSize: 20
     <<: *default-release-image-source
