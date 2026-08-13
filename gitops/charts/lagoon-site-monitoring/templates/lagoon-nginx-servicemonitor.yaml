@@ -1,0 +1,14 @@
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: lagoon-nginx
+spec:
+  endpoints:
+  - port: http
+    authorization:
+      credentials:
+        name: lagoon-env
+        key: METRICS_SCRAPE_TOKEN
+  selector:
+    matchLabels:
+      lagoon.sh/service: nginx

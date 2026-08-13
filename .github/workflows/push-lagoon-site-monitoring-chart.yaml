@@ -1,0 +1,39 @@
+name: Publish lagoon-site-monitoring chart
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  publish:
+    name: Publish lagoon-site-monitoring chart
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+        with:
+          fetch-depth: 0 # Fetch all history for all branches and tags
+
+      - name: Setup helm and yq
+        uses: alexellis/arkade-get@7cc6ec1b6d8fcfcf3cc8cac995973147bc5fabf7
+        with:
+          helm: v3.17.3
+          yq: v4.45.3
+
+      - name: Log in to the Container registry
+        uses: docker/login-action@b45d80f862d83dbcd57f89517bcf500b2ab88fb2
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Push helm chart
+        env:
+          VERSION: ${{ steps.version.outputs.value }}
+        run: |
+          VERSION=$(yq '.version' gitops/charts/lagoon-site-monitoring/Chart.yaml)
+          NAME=$(yq '.name' gitops/charts/lagoon-site-monitoring/Chart.yaml)
+          helm dependency update gitops/charts/lagoon-site-monitoring || true
+          helm package gitops/charts/lagoon-site-monitoring
+          helm push $NAME-$VERSION.tgz oci://ghcr.io/danskernesdigitalebibliotek/dpl-platform/charts
