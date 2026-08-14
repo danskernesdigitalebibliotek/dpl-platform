@@ -28,13 +28,13 @@ spec:
     [mariadb]
     bind-address=*
     default_storage_engine=InnoDB
-    innodb_buffer_pool_size=40000MB
-    innodb_autoinc_lock_mode=1
     binlog_format=row
-    max_connections=1500
-    wait_timeout=1600
+    max_connections=1200
+    table_open_cache=4000
+    table_definition_cache=800
+    wait_timeout=1200
     max_allowed_packet=256M
-    net_read_timeout=75
+    net_read_timeout=150
     interactive_timeout=800
     transaction_isolation="READ-COMMITTED"
     collation_server="LATIN1_SWEDISH_CI"
@@ -42,8 +42,10 @@ spec:
     connect_timeout=10
     expensive_subquery_limit=100
     group_concat_max_len=1048576
-    innodb_read_io_threads=1
-    innodb_write_io_threads=1
+    innodb_buffer_pool_size=40000MB
+    innodb_autoinc_lock_mode=1
+    innodb_read_io_threads=4
+    innodb_write_io_threads=4
     log_queries_not_using_indexes="ON"
     long_query_time=1
 
