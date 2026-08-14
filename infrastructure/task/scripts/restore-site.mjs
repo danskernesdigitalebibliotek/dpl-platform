@@ -89,8 +89,8 @@ async function getDatabaseConnectionInfo(namespace) {
   }
 
   const secret = JSON.parse(secretJson)
-  const { data: encryptedData } = secret
-  const data = decryptSecretData(encryptedData);
+  const { data: encodedData } = secret
+  const data = decodeSecretData(encodedData);
 
   const databaseConnectionInfo = {
     databaseName: data.MARIADB_DATABASE,
@@ -165,7 +165,7 @@ async function importFiles(file, project, environment) {
   }
 }
 
-function decryptSecretData(encryptedData) {
+function decodeSecretData(encryptedData) {
   let data = {};
   for (const prop in encryptedData) {
     data[prop] = Buffer.from(encryptedData[prop], "base64").toString();
