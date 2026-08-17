@@ -1,0 +1,11 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  namespace: {{ .Release.Namespace | replace "moduletest" "main" }}
+  name: lagoon-env-secret-reader
+rules:
+- apiGroups: [""] # "" indicates the core API group
+  resources: ["secrets"]
+  resourceNames:
+    - lagoon-env
+  verbs: ["get"]

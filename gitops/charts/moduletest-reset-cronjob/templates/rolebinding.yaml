@@ -1,0 +1,13 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: lagoon-env-secret-reader-rolebinding
+  namespace: {{ .Release.Namespace | replace "moduletest" "main" }}
+subjects:
+  - kind: ServiceAccount
+    name: moduletest-reset-service-account
+    namespace: canary-moduletest
+roleRef:
+  kind: Role
+  name: lagoon-env-secret-reader
+  apiGroup: rbac.authorization.k8s.io
