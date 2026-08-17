@@ -6,7 +6,7 @@ metadata:
 subjects:
   - kind: ServiceAccount
     name: moduletest-reset-service-account
-    namespace: canary-moduletest
+    namespace: {{ .Release.Namespace }}
 roleRef:
   kind: Role
   name: lagoon-env-secret-reader
@@ -22,7 +22,7 @@ metadata:
 subjects:
   - kind: ServiceAccount
     name: moduletest-reset-service-account
-    namespace: canary-moduletest
+    namespace: {{ .Release.Namespace }}
 roleRef:
   kind: Role
   name: lagoon-env-secret-reader
