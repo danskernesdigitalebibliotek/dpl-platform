@@ -117,6 +117,10 @@ sites:
 
   - name: customizable-canary-moduletest
 
+  - name: staging-main
+
+  - name: staging-moduletest
+
   - name: aabenraa-main
 
   - name: aalborg-main
