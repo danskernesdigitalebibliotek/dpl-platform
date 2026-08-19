@@ -1,0 +1,1181 @@
+# These values must be set on install, as they don't have sensible defaults.
+
+# harborAdminPassword:
+# elasticsearchURL:
+# harborURL:
+# s3BAASSecretAccessKey:
+# s3BAASAccessKeyID:
+# s3FilesAccessKeyID:
+# s3FilesBucket:
+# s3FilesHost:
+# s3FilesSecretAccessKey:
+
+# These values are optional.
+# overwriteActiveStandbyTaskImage:
+
+# appspecific discovery.json settings
+# This should point to the publicly accessible ssh endpoint as a schema-less
+# URI (either domain or IP) for the ssh-token (or fallback ssh) service
+# e.g. ssh-token.example.com, ssh.example.com or 192.168.0.100
+# The port will be read from the sshToken (or ssh) port value
+# sshTokenEndpoint:
+
+# These values are optional depending on the services Lagoon is integrated with
+# in your environment.
+
+# gitlabAPIToken:
+# gitlabAPIURL:
+# s3Region:
+# kibanaURL:
+
+# These values may be set on install, otherwise the chart tries to guess
+# sensible defaults.
+
+# keycloakFrontEndURL: https://keycloak.example.com
+# lagoonAPIURL: https://api.example.com/graphql
+# lagoonUIURL: https://ui.example.com
+# lagoonWebhookURL: https://webhook-handler.example.com
+
+# These values are randomly generated on install if not otherwise defined.
+
+# jwtSecret:
+# keycloakAdminPassword:
+# keycloakAPIClientSecret:
+# keycloakAdminAPIClientSecret:
+# keycloakAuthServerClientSecret:
+# keycloakLagoonUIOIDCClientSecret:
+# keycloakLagoonAdminPassword:
+# logsDBAdminPassword:
+# rabbitMQPassword:
+# redisPassword:
+# k8upBackupBucketName:
+# uiAuthSecret:
+
+# This value is set to match jwtSecret on existing installs if not defined.
+# It should only ever be set here for backwards compatibility.
+
+# projectSeed:
+
+# Set these values to automatically create an initial user or an initialOrganization
+# upon install of the Lagoon Core helm chart. Either 'lagoonSeedOrganization' or both
+# 'lagoonSeedUsername' and 'lagoonSeedPassword' must be set to trigger this feature.
+# The script that is run also assumes that both keycloakFrontEndURL and lagoonAPIURL are set correctly.
+
+# lagoonSeedUsername: user@example.com
+# lagoonSeedPassword: password
+# lagoonSeedOrganization: example-org
+
+# these are used to configure database credentils if using external databases.
+# configure external database usage under `apiDB.useExternal` and `keycloakDB.useExternal`
+# `apiDBPassword` and `keycloakDBPassword` will be automatically generated if `useExternal: false`
+# if your external database is `mysql` instead of `mariadb` ensure you also set the following
+# * `apiDB.vendor: mysql`
+# * `keycloakDB.vendor: mysql`
+# apiDBPassword:
+# apiDBUsername:
+# apiDBDatabase:
+# apiDBHost:
+# apiDBPort:
+
+# keycloakDBPassword:
+# keycloakDBUsername:
+# keycloakDBDatabase:
+# keycloakDBHost:
+# keycloakDBPort:
+
+# These values are the chart defaults, but can be overridden.
+imagePullSecrets: []
+
+rabbitMQUsername: lagoon
+
+k8upS3Endpoint: ""
+
+keycloakAdminUser: admin
+# this is required if email sending is to be enabled in keycloak
+# keycloakAdminEmail: admin@example.com
+
+buildDeployImage:
+  default:
+    # when updating this chart, ensure that if there are any changes made to the build-deploy-tool repository
+    # and a new image tag is released, that this image tag is updated to reference the new image version
+    image: uselagoon/build-deploy-image:core-v2.30.0
+  edge:
+    enabled: false
+
+# Set to an empty string to support Harbor v1.x.x
+harborAPIVersion: v2.0
+
+# this default podSecurityContext is set for all services and can be overridden
+# on the service level.
+podSecurityContext:
+  fsGroup: 10001
+  runAsGroup: 0
+  runAsUser: 10000
+
+# Set the default ingressClass for the exposed lagoon-core services
+# it can be overridden per-service if needed via ingress.ingressClassName
+# Note that this is the Class, not the IngressName
+# defaultIngressClassName: nginx
+
+# this default image tag is set for all services and can be overridden
+# on the service level, if not set it falls back to chart appVersion.
+imageTag: ""
+
+# This value is false by default, which means that Developers can SSH to
+# Development environments as per the Lagoon documentation
+# (https://docs.lagoon.sh/administering-lagoon/rbac/#developer).
+# Set this to true to:
+# * block Developers from SSH access to Lagoon environments; and
+# * stop Developers from getting a redirect message when trying to SSH into the
+#   ssh-token service.
+# blockDeveloperSSH: false
+
+# the following services are part of the lagoon-core chart
+
+api:
+  replicaCount: 2
+  image:
+    repository: uselagoon/api
+    pullPolicy: Always
+    # Overrides the image tag whose default is the chart appVersion.
+    tag: ""
+
+  service:
+    type: ClusterIP
+    port: 80
+
+  ingress:
+    enabled: false
+    annotations: {}
+      # kubernetes.io/tls-acme: "true"
+    hosts:
+    - host: api.example.com
+      paths:
+      - /
+    tls: []
+    #  - secretName: chart-example-tls
+    #    hosts:
+    #      - chart-example.local
+
+  podAnnotations: {}
+
+  securityContext: {}
+
+  resources:
+    requests:
+      memory: "256Mi"
+      cpu: "500m"
+
+  additionalEnvs:
+  #   FOO: Bar
+
+  autoscaling:
+    enabled: false
+    minReplicas: 1
+    maxReplicas: 100
+    targetCPUUtilizationPercentage: 80
+    # targetMemoryUtilizationPercentage: 80
+
+apiDB:
+  vendor: mariadb
+  # Disable apiDB statefulset and service.
+  useExternal: false
+  image:
+    repository: uselagoon/api-db
+    pullPolicy: Always
+    # Overrides the image tag whose default is the chart appVersion.
+    tag: ""
+
+  service:
+    type: ClusterIP
+    port: 3306
+
+  podAnnotations:
+    appuio.ch/backupcommand: >
+      /bin/sh -c "mysqldump --max-allowed-packet=500M --events --routines
+      --quick --add-locks --no-autocommit --single-transaction --all-databases"
+    backup.appuio.ch/file-extension: .api-db.sql
+
+  securityContext: {}
+
+  resources:
+    requests:
+      memory: "512Mi"
+      cpu: "500m"
+
+  additionalEnvs:
+  #   FOO: Bar
+
+  storageSize: 128Gi
+
+  terminationGracePeriodSeconds: 30
+
+  startupProbe:
+    # 60*10s period = 10 minutes
+    failureThreshold: 60
+    exec:
+      command:
+      - test
+      - -f
+      - /tmp/startup-init-complete
+
+  livenessProbe:
+    exec:
+      command:
+      - mysqladmin
+      - --connect-timeout=4
+      - ping
+
+  readinessProbe:
+    exec:
+      command:
+      - /usr/share/container-scripts/mysql/readiness-probe.sh
+
+apiRedis:
+  image:
+    repository: uselagoon/api-redis
+    pullPolicy: Always
+    # Overrides the image tag whose default is the chart appVersion.
+    tag: ""
+
+  podAnnotations: {}
+
+  securityContext: {}
+
+  resources:
+    requests:
+      memory: "64Mi"
+      cpu: "50m"
+
+  additionalEnvs:
+  #   FOO: Bar
+
+  persistence:
+    enabled: false
+    size: 100Mi
+
+  service:
+    type: ClusterIP
+    port: 6379
+
+apiSidecarHandler:
+  image:
+    repository: uselagoon/api-sidecar-handler
+    pullPolicy: Always
+    # Overrides the image tag whose default is the chart appVersion.
+    tag: ""
+
+keycloak:
+  # keycloak realm and email settings configuration
+  realmSettings:
+    enabled: false
+    # the full list of config settings is available TODO
+    options:
+      resetPasswordAllowed: true
+      rememberMe: true
+  email:
+    enabled: false
+    settings:
+      host: mailhog
+      port: '1025'
+      from: lagoon@example.com
+      fromDisplayName: Lagoon
+      replyTo: lagoon@example.com
+      ssl: 'false'
+      starttls: 'false'
+      auth: 'false'
+
+  replicaCount: 1
+  image:
+    repository: uselagoon/keycloak
+    pullPolicy: Always
+    # Overrides the image tag whose default is the chart appVersion.
+    tag: ""
+
+  podAnnotations: {}
+
+  securityContext: {}
+
+  resources:
+    requests:
+      memory: "1Gi"
+      cpu: "500m"
+
+  additionalEnvs:
+  #   FOO: Bar
+
+  service:
+    type: ClusterIP
+    port: 8080
+
+  ingress:
+    enabled: false
+    annotations: {}
+      # kubernetes.io/tls-acme: "true"
+    hosts:
+    - host: webhook.example.com
+      paths:
+      - /
+    tls: []
+    #  - secretName: chart-example-tls
+    #    hosts:
+    #      - chart-example.local
+
+  serviceMonitor:
+    metrics:
+      port: 9000
+    enabled: true
+
+keycloakDB:
+  vendor: mariadb
+  # Disable apiDB statefulset and service.
+  useExternal: false
+  replicaCount: 1
+  image:
+    repository: uselagoon/keycloak-db
+    pullPolicy: Always
+    # Overrides the image tag whose default is the chart appVersion.
+    tag: ""
+
+  service:
+    type: ClusterIP
+    port: 3306
+
+  podAnnotations:
+    appuio.ch/backupcommand: >
+      /bin/sh -c "mysqldump --max-allowed-packet=500M --events --routines
+      --quick --add-locks --no-autocommit --single-transaction --all-databases"
+    backup.appuio.ch/file-extension: .keycloak-db.sql
+
+  securityContext: {}
+
+  resources:
+    requests:
+      memory: "512Mi"
+      cpu: "100m"
+
+  additionalEnvs:
+  #   FOO: Bar
+
+  terminationGracePeriodSeconds: 30
+
+  startupProbe:
+    # 60*10s period = 10 minutes
+    failureThreshold: 60
+    tcpSocket:
+      port: mariadb
+
+  livenessProbe:
+    exec:
+      command:
+      - mysqladmin
+      - --connect-timeout=4
+      - ping
+
+  readinessProbe:
+    exec:
+      command:
+      - /usr/share/container-scripts/mysql/readiness-probe.sh
+
+broker:
+  replicaCount: 1
+  image:
+    repository: uselagoon/broker
+    pullPolicy: Always
+    # Overrides the image tag whose default is the chart appVersion.
+    tag: ""
+
+  service:
+    type: ClusterIP
+    ports:
+      epmd: 4369
+      amqp: 5672
+      amqps: 5671
+      http: 15672
+      metrics: 15692
+    amqpExternal:
+      # amqpExternal is used to enable or disable the port on the external facing service.
+      # if used in conjunction with amqpsExternal, you will get both ports
+      # if used alone it will only be this port
+      enabled: false
+      type: LoadBalancer
+      port: 5672
+      annotations: {}
+      # externalTrafficPolicy: ""
+      # loadBalancerSourceRanges: []
+    amqpsExternal:
+      # amqpsExternal is used to enable or disable the TLS port on the external facing service.
+      # if used in conjunction with amqpExternal, you will get both ports
+      # the type is only consumed from amqpExternal, changing the type of the external loadbalancer should be done there
+      enabled: false
+      port: 5671
+
+  serviceMonitor:
+    enabled: true
+
+  podAnnotations: {}
+
+  securityContext: {}
+
+  resources:
+    requests:
+      memory: "1Gi"
+      cpu: "500m"
+
+  additionalEnvs:
+  #   FOO: Bar
+
+  serviceAccount:
+    # Annotations to add to the service account
+    annotations: {}
+    # The name of the service account to use.
+    # If not set and create is true, a name is generated using the fullname
+    # template
+    name: ""
+
+  autoscaling:
+    enabled: false
+    minReplicas: 1
+    maxReplicas: 100
+    targetCPUUtilizationPercentage: 80
+    # targetMemoryUtilizationPercentage: 80
+
+  ingress:
+    enabled: false
+    annotations: {}
+      # kubernetes.io/tls-acme: "true"
+    hosts:
+    - host: broker.example.com
+      paths:
+      - /
+    tls: []
+    #  - secretName: chart-example-tls
+    #    hosts:
+    #      - chart-example.local
+
+  startupProbe:
+    # 60*10s period = 10 minutes
+    failureThreshold: 60
+    tcpSocket:
+      port: amqp
+
+  tls:
+    enabled: false
+    secretName: lagoon-core-broker-tls
+    # https://www.rabbitmq.com/docs/ssl#enabling-tls for what these options can be set to
+    verify: verify_none
+    failIfNoPeerCert: false
+    # If the lagoon-core-broker-tls secret should be created by the lagoon-core
+    # chart, certificate values can be specified directly in secretData.
+    # secretData:
+    #   ca.crt: |
+    #     ...
+    #   tls.crt: |
+    #     ...
+    #   tls.key: |
+    #     ...
+    #
+    # If the TLS secret is created outside the lagoon-core chart, it should be
+    # named lagoon-core-broker-tls. This secret should contain fields ca.crt, tls.crt and
+    # tls.key, and the certificate should be issued by a public authority.
+
+authServer:
+  replicaCount: 2
+  image:
+    repository: uselagoon/auth-server
+    pullPolicy: Always
+    # Overrides the image tag whose default is the chart appVersion.
+    tag: ""
+
+  service:
+    type: ClusterIP
+    port: 80
+    annotations: {}
+
+  podAnnotations: {}
+
+  securityContext: {}
+
+  resources:
+    requests:
+      memory: "64Mi"
+      cpu: "50m"
+
+  additionalEnvs:
+  #   FOO: Bar
+
+  autoscaling:
+    enabled: false
+    minReplicas: 1
+    maxReplicas: 100
+    targetCPUUtilizationPercentage: 80
+    # targetMemoryUtilizationPercentage: 80
+
+webhooks2tasks:
+  enabled: true
+  replicaCount: 2
+  image:
+    repository: uselagoon/webhooks2tasks
+    pullPolicy: Always
+    # Overrides the image tag whose default is the chart appVersion.
+    tag: ""
+
+  podAnnotations: {}
+
+  securityContext: {}
+
+  resources:
+    requests:
+      memory: "64Mi"
+      cpu: "50m"
+
+  additionalEnvs:
+  #   FOO: Bar
+
+  autoscaling:
+    enabled: false
+    minReplicas: 1
+    maxReplicas: 100
+    targetCPUUtilizationPercentage: 80
+    # targetMemoryUtilizationPercentage: 80
+
+webhookHandler:
+  enabled: true
+  replicaCount: 2
+  image:
+    repository: uselagoon/webhook-handler
+    pullPolicy: Always
+    # Overrides the image tag whose default is the chart appVersion.
+    tag: ""
+
+  podAnnotations: {}
+
+  securityContext: {}
+
+  resources:
+    requests:
+      memory: "64Mi"
+      cpu: "50m"
+
+  additionalEnvs:
+  #   FOO: Bar
+
+  service:
+    type: ClusterIP
+    port: 3000
+
+  ingress:
+    enabled: false
+    annotations: {}
+      # kubernetes.io/tls-acme: "true"
+    hosts:
+    - host: webhook.example.com
+      paths:
+      - /
+    tls: []
+    #  - secretName: chart-example-tls
+    #    hosts:
+    #      - chart-example.local
+
+  autoscaling:
+    enabled: false
+    minReplicas: 1
+    maxReplicas: 100
+    targetCPUUtilizationPercentage: 80
+    # targetMemoryUtilizationPercentage: 80
+
+ui:
+  enabled: true
+  replicaCount: 2
+  image:
+    repository: uselagoon/ui
+    pullPolicy: Always
+    # when updating this chart, ensure that if there are any changes made to the lagoon-ui repository
+    # and a new image tag is released, that this image tag is updated to reference the new image version
+    tag: "core-v2.29.0"
+
+  podAnnotations: {}
+
+  securityContext: {}
+
+  resources:
+    requests:
+      memory: "128Mi"
+      cpu: "50m"
+
+  additionalEnvs:
+  #   FOO: Bar
+
+  service:
+    type: ClusterIP
+    port: 3000
+
+  ingress:
+    enabled: false
+    annotations: {}
+      # kubernetes.io/tls-acme: "true"
+    hosts:
+    - host: ui.example.com
+      paths:
+      - /
+    tls: []
+    #  - secretName: chart-example-tls
+    #    hosts:
+    #      - chart-example.local
+
+  autoscaling:
+    enabled: false
+    minReplicas: 1
+    maxReplicas: 100
+    targetCPUUtilizationPercentage: 80
+    # targetMemoryUtilizationPercentage: 80
+
+actionsHandler:
+  enabled: true
+  replicaCount: 2
+  image:
+    repository: uselagoon/actions-handler
+    pullPolicy: Always
+    # Overrides the image tag whose default is the chart appVersion.
+    tag: ""
+  autoscaling:
+    enabled: false
+    minReplicas: 1
+    maxReplicas: 100
+    targetCPUUtilizationPercentage: 80
+    # targetMemoryUtilizationPercentage: 80
+
+  additionalEnvs:
+  #   FOO: Bar
+
+  resources:
+    requests:
+      memory: "16Mi"
+      cpu: "10m"
+
+backupHandler:
+  enabled: true
+  replicaCount: 2
+  image:
+    repository: uselagoon/backup-handler
+    pullPolicy: Always
+    # Overrides the image tag whose default is the chart appVersion.
+    tag: ""
+
+  podAnnotations: {}
+
+  securityContext: {}
+
+  resources:
+    requests:
+      memory: "32Mi"
+      cpu: "50m"
+
+  additionalEnvs:
+  #   FOO: Bar
+
+  service:
+    type: ClusterIP
+    port: 3000
+
+  ingress:
+    enabled: false
+    annotations: {}
+      # kubernetes.io/tls-acme: "true"
+    hosts:
+    - host: backup.example.com
+      paths:
+      - /
+    tls: []
+    #  - secretName: chart-example-tls
+    #    hosts:
+    #      - chart-example.local
+
+  autoscaling:
+    enabled: false
+    minReplicas: 1
+    maxReplicas: 100
+    targetCPUUtilizationPercentage: 80
+    # targetMemoryUtilizationPercentage: 80
+
+insightsHandler:
+  enabled: false
+  replicaCount: 2
+  image:
+    repository: uselagoon/insights-handler
+    pullPolicy: Always
+    # Overrides the image tag whose default is the chart appVersion.
+    tag: "v0.0.10"
+
+  podAnnotations: {}
+
+  securityContext: {}
+
+  resources:
+    requests:
+      memory: "32Mi"
+      cpu: "10m"
+
+  additionalEnvs:
+  #   FOO: Bar
+
+  autoscaling:
+    enabled: false
+    minReplicas: 1
+    maxReplicas: 100
+    targetCPUUtilizationPercentage: 80
+    # targetMemoryUtilizationPercentage: 80
+  trivy:
+    enabled: false
+    image:
+      repository: aquasec/trivy
+      tag: 0.62.1
+    service:
+      type: ClusterIP
+      port: 4954
+
+logs2notifications:
+  enabled: true
+  replicaCount: 2
+  image:
+    repository: uselagoon/logs2notifications
+    pullPolicy: Always
+    # Overrides the image tag whose default is the chart appVersion.
+    tag: ""
+
+  logs2slack:
+    disabled: true
+  logs2rocketchat:
+    disabled: true
+  logs2microsoftteams:
+    disabled: true
+  logs2email:
+    disabled: true
+  logs2webhooks:
+    disabled: true
+  logs2s3:
+    disabled: false
+
+  podAnnotations: {}
+
+  securityContext: {}
+
+  resources:
+    requests:
+      memory: "16Mi"
+      cpu: "10m"
+
+  additionalEnvs:
+  #   FOO: Bar
+
+  autoscaling:
+    enabled: false
+    minReplicas: 1
+    maxReplicas: 100
+    targetCPUUtilizationPercentage: 80
+    # targetMemoryUtilizationPercentage: 80
+
+drushAlias:
+  enabled: true
+  replicaCount: 2
+  image:
+    repository: uselagoon/drush-alias
+    pullPolicy: Always
+    # Overrides the image tag whose default is "latest".
+    tag: "v3.1.0"
+
+  podAnnotations: {}
+
+  securityContext: {}
+
+  resources:
+    requests:
+      memory: "8Mi"
+      cpu: "10m"
+
+  additionalEnvs:
+  #   FOO: Bar
+
+  service:
+    type: ClusterIP
+    port: 8080
+
+  ingress:
+    enabled: false
+    annotations: {}
+      # kubernetes.io/tls-acme: "true"
+    hosts:
+    - host: drush-alias.example.com
+      paths:
+      - /
+    tls: []
+    #  - secretName: chart-example-tls
+    #    hosts:
+    #      - chart-example.local
+
+  autoscaling:
+    enabled: false
+    minReplicas: 1
+    maxReplicas: 100
+    targetCPUUtilizationPercentage: 80
+    # targetMemoryUtilizationPercentage: 80
+
+ssh:
+  enabled: true
+  replicaCount: 2
+  image:
+    repository: uselagoon/ssh
+    pullPolicy: Always
+    # Overrides the image tag whose default is the chart appVersion.
+    tag: ""
+
+  podAnnotations: {}
+
+  securityContext: {}
+
+  resources:
+    requests:
+      memory: "128Mi"
+      cpu: "500m"
+
+  additionalEnvs:
+  #   FOO: Bar
+
+  service:
+    type: ClusterIP
+    port: 2020
+    annotations: {}
+    # externalTrafficPolicy: ""
+    # loadBalancerSourceRanges: []
+
+  autoscaling:
+    enabled: false
+    minReplicas: 1
+    maxReplicas: 100
+    targetCPUUtilizationPercentage: 80
+    # targetMemoryUtilizationPercentage: 80
+
+  # host keys, PEM encoded
+  hostKeys:
+    ecdsaPub: ""
+    ecdsa: ""
+    ed25519Pub: ""
+    ed25519: ""
+    rsaPub: ""
+    rsa: ""
+
+# nats subchart is configured for use by lagoon-core
+nats:
+  enabled: false
+  # nameOverride provides compatibility for upgrading nats chart versions.
+  # modifying or setting this in local values.yaml will completely recreate
+  # all the nats resources.
+  nameOverride: nats1
+  tlsCA:
+    enabled: true
+    secretName: lagoon-core-nats-tls
+  # Uncomment this block to enable monitoring if you have Prometheus Operator
+  # installed.
+  # promExporter:
+  #   enabled: true
+  #   podMonitor:
+  #     enabled: true
+  #     # fromNamespaces restricts the namespaces from which monitoring can occur
+  #     # via the NetworkPolicy. At least one namespace name must be listed.
+  #     fromNamespaces:
+  #     - monitoring
+  natsBox:
+    enabled: false
+  config:
+    cluster:
+      enabled: true
+      name: lagoon-core
+      # internal cluster IPs are not routable, so don't advertise them
+      noAdvertise: true
+    leafnodes:
+      enabled: true
+      tls:
+        enabled: true
+        secretName: lagoon-core-nats-tls
+        merge:
+          verify: true
+      merge:
+        00$include: ./lagoon-core/leafnodesAuthorization.conf
+    merge:
+      00$include: ./lagoon-core/accounts.conf
+  # Uncomment this block if upgrading from lagoon-core <v1.36.0.
+  # statefulSet:
+  #   patch:
+  #   - op: remove
+  #     path: /spec/selector/matchLabels/app.kubernetes.io~1component
+  podTemplate:
+    patch:
+    - op: add
+      path: /spec/volumes/-
+      value:
+        name: lagoon-core-nats-conf
+        secret:
+          secretName: lagoon-core-nats-conf
+  container:
+    patch:
+    - op: add
+      path: /volumeMounts/-
+      value:
+        name: lagoon-core-nats-conf
+        mountPath: /etc/nats-config/lagoon-core
+  # to connect to nats, pods must have the right label
+  extraResources:
+  - apiVersion: networking.k8s.io/v1
+    kind: NetworkPolicy
+    metadata:
+      name:
+        $tplYaml: >
+          {{ include "nats.fullname" $ | quote }}
+      labels:
+        $tplYaml: |
+          {{ include "nats.labels" $ }}
+    spec:
+      policyTypes:
+      - Ingress
+      podSelector:
+        matchLabels:
+          $tplYaml: |
+            {{- include "nats.selectorLabels" $ }}
+      ingress:
+      - from:
+        # pods in this namespace with the correct label can access NATS pods
+        - podSelector:
+            matchLabels:
+              lagoon-core-nats-client: "true"
+        # NATS inter-pod communication is allowed
+        - podSelector:
+            matchLabels:
+              $tplYaml: |
+                {{- include "nats.selectorLabels" $ }}
+      - ports:
+        # allow external inbound leaf node connections (these are authenticated)
+        - port: 7422
+          protocol: TCP
+      # conditionally allow metrics collection
+      - $tplYamlSpread: |
+          {{- if and .Values.promExporter.enabled .Values.promExporter.podMonitor.enabled }}
+          - from:
+            {{- range .Values.promExporter.podMonitor.fromNamespaces }}
+            - namespaceSelector:
+                matchLabels:
+                  kubernetes.io/metadata.name: {{ . | quote }}
+            {{- end }}
+            ports:
+            - port: 7777
+              protocol: TCP
+          {{- end }}
+
+natsService:
+  enabled: true
+  type: LoadBalancer
+  leafnodes:
+    port: 7422
+
+natsConfig:
+  users:
+    lagoonRemote: []
+    # Remote cluster  credentials and the account they have access to are
+    # specified here.
+    #
+    # - user: ...
+    #   password: ...
+  tls: {}
+    # If the lagoon-core-nats-tls secret should be created by the lagoon-core
+    # chart, certificate values can be specified directly in secretData.
+    # Configuring TLS this way also allows specifying a custom ca.crt.
+    # The chart expects expects secretData to be specified unless
+    # nats.tlsCA.enabled is set to false.
+    #
+    # secretData:
+    #   ca.crt: |
+    #     ...
+    #   tls.crt: |
+    #     ...
+    #   tls.key: |
+    #     ...
+    #
+    # If the TLS secret is created outside the lagoon-core chart, it should be
+    # named lagoon-core-nats-tls. This secret should contain fields tls.crt and
+    # tls.key, and the certificate should be issued by a public authority.
+    # `nats.tlsCA.enabled: false` should be set in this case (it is true by
+    # default).
+
+sshPortalAPI:
+  enabled: false
+  replicaCount: 2
+  image:
+    repository: ghcr.io/uselagoon/lagoon-ssh-portal/ssh-portal-api
+    pullPolicy: IfNotPresent
+    # Overrides the image tag whose default is the chart appVersion.
+    tag: "v0.45.0"
+
+  command:
+    - /ssh-portal-api
+
+  podAnnotations: {}
+
+  securityContext: {}
+
+  resources:
+    requests:
+      memory: "8Mi"
+      cpu: "10m"
+
+  additionalEnvs:
+  #   FOO: Bar
+
+  autoscaling:
+    enabled: false
+    minReplicas: 1
+    maxReplicas: 100
+    targetCPUUtilizationPercentage: 80
+    # targetMemoryUtilizationPercentage: 80
+
+  serviceAccount:
+    # Annotations to add to the service account
+    annotations: {}
+    # The name of the service account to use.
+    # If not set and create is true, a name is generated using the fullname
+    # template
+    name: ""
+
+  serviceMonitor:
+    enabled: true
+
+  service:
+    type: ClusterIP
+    ports:
+      metrics: 9911
+
+opensearchSync:
+  enabled: false
+  image:
+    repository: ghcr.io/uselagoon/lagoon-opensearch-sync
+    pullPolicy: IfNotPresent
+    # Overrides the image tag whose default is the chart appVersion.
+    tag: "v0.14.2"
+
+  # debug logging toggle
+  debug: false
+
+  # root certificate for the server certificate presented by opensearch
+  opensearchCACertificate: |
+  # -----BEGIN CERTIFICATE-----
+  # ...
+  # -----END CERTIFICATE-----
+
+  podAnnotations: {}
+
+  securityContext: {}
+
+  resources:
+    requests:
+      memory: "8Mi"
+      cpu: "10m"
+
+  additionalEnvs:
+  #   FOO: Bar
+
+sshToken:
+  enabled: false
+  replicaCount: 2
+  image:
+    repository: ghcr.io/uselagoon/lagoon-ssh-portal/ssh-token
+    pullPolicy: IfNotPresent
+    # Overrides the image tag whose default is the chart appVersion.
+    tag: "v0.45.0"
+
+  command:
+    - /ssh-token
+
+  podAnnotations: {}
+
+  securityContext: {}
+
+  resources:
+    requests:
+      memory: "8Mi"
+      cpu: "10m"
+
+  additionalEnvs:
+  #   FOO: Bar
+
+  autoscaling:
+    enabled: false
+    minReplicas: 1
+    maxReplicas: 100
+    targetCPUUtilizationPercentage: 80
+    # targetMemoryUtilizationPercentage: 80
+
+  serviceMonitor:
+    enabled: true
+
+  service:
+    type: LoadBalancer
+    annotations: {}
+    # externalTrafficPolicy: ""
+    # loadBalancerSourceRanges: []
+    ports:
+      sshserver: 22
+
+  metricsService:
+    type: ClusterIP
+    ports:
+      metrics: 9948
+
+  # host keys, PEM encoded
+  hostKeys:
+    ecdsa: ""
+    ed25519: ""
+    rsa: ""
+
+betaUI:
+  enabled: false
+  replicaCount: 2
+  image:
+    repository: uselagoon/beta-ui
+    pullPolicy: Always
+    # when updating this chart, ensure that if there are any changes made to the lagoon-beta-ui repository
+    # and a new image tag is released, that this image tag is updated to reference the new image version
+    tag: "main"
+
+  podAnnotations: {}
+
+  securityContext: {}
+
+  resources:
+    requests:
+      memory: "128Mi"
+      cpu: "50m"
+
+  additionalEnvs:
+  #   FOO: Bar
+
+  service:
+    type: ClusterIP
+    port: 3000
+
+  ingress:
+    enabled: false
+    annotations: {}
+      # kubernetes.io/tls-acme: "true"
+    hosts:
+    - host: beta-ui.example.com
+      paths:
+      - /
+    tls: []
+    #  - secretName: chart-example-tls
+    #    hosts:
+    #      - chart-example.local
+
+  autoscaling:
+    enabled: false
+    minReplicas: 1
+    maxReplicas: 100
+    targetCPUUtilizationPercentage: 80
+    # targetMemoryUtilizationPercentage: 80

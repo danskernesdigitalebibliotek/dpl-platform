@@ -1,0 +1,140 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: {{ include "lagoon-core.broker.fullname" . }}
+  labels:
+    {{- include "lagoon-core.broker.labels" . | nindent 4 }}
+spec:
+{{- if not .Values.broker.autoscaling.enabled }}
+  replicas: {{ .Values.broker.replicaCount }}
+{{- end }}
+  serviceName: {{ include "lagoon-core.broker.fullname" . }}-headless
+  selector:
+    matchLabels:
+      {{- include "lagoon-core.broker.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      annotations:
+        checksum/broker.secret: {{ include (print $.Template.BasePath "/broker.secret.yaml") . | sha256sum }}
+    {{- with .Values.broker.podAnnotations }}
+        {{- toYaml . | nindent 8 }}
+    {{- end }}
+      labels:
+        {{- include "lagoon-core.broker.selectorLabels" . | nindent 8 }}
+    spec:
+      {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      serviceAccountName: {{ include "lagoon-core.broker.serviceAccountName" . }}
+      securityContext:
+        {{- toYaml (coalesce .Values.broker.podSecurityContext .Values.podSecurityContext) | nindent 8 }}
+      containers:
+      - name: broker
+        securityContext:
+          {{- toYaml .Values.broker.securityContext | nindent 10 }}
+        image: "{{ .Values.broker.image.repository }}:{{ coalesce .Values.broker.image.tag .Values.imageTag .Chart.AppVersion }}"
+        imagePullPolicy: {{ .Values.broker.image.pullPolicy }}
+        command:
+        - sh
+        args:
+        - /cluster-rabbit.sh
+        env:
+        - name: RABBITMQ_DEFAULT_PASS
+          valueFrom:
+            secretKeyRef:
+              name: {{ include "lagoon-core.broker.fullname" . }}
+              key: RABBITMQ_PASSWORD
+        - name: RABBITMQ_DEFAULT_USER
+          valueFrom:
+            secretKeyRef:
+              name: {{ include "lagoon-core.broker.fullname" . }}
+              key: RABBITMQ_USERNAME
+        - name: RABBITMQ_USE_LONGNAME
+          value: "true"
+        # these variables are used by the /cluster-rabbit.sh entrypoint
+        - name: POD_NAMESPACE
+          value: {{ .Release.Namespace | quote }}
+        - name: SERVICE_NAME
+          value: {{ include "lagoon-core.broker.fullname" . }}
+      {{- range $key, $val := .Values.broker.additionalEnvs }}
+        - name: {{ $key }}
+          value: {{ $val | quote }}
+      {{- end }}
+        ports:
+        - name: epmd
+          containerPort: {{ .Values.broker.service.ports.epmd }}
+        - name: amqp
+          containerPort: {{ .Values.broker.service.ports.amqp }}
+        - name: amqps
+          containerPort: {{ .Values.broker.service.ports.amqps }}
+        - name: http
+          containerPort: {{ .Values.broker.service.ports.http }}
+        - name: metrics
+          containerPort: {{ .Values.broker.service.ports.metrics }}
+        volumeMounts:
+        - name: {{ include "lagoon-core.broker.fullname" . }}-data
+          mountPath: /var/lib/rabbitmq
+        {{- if .Values.broker.tls.enabled }}
+        - mountPath: /ca.crt
+          name: {{ include "lagoon-core.broker.fullname" . }}-tls
+          subPath: ca.crt
+        - mountPath: /tls.crt
+          name: {{ include "lagoon-core.broker.fullname" . }}-tls
+          subPath: tls.crt
+        - mountPath: /tls.key
+          name: {{ include "lagoon-core.broker.fullname" . }}-tls
+          subPath: tls.key
+        - mountPath: /etc/rabbitmq/conf.d/15-tls.conf
+          name: {{ include "lagoon-core.broker.fullname" . }}-tls-conf
+          subPath: tls.conf
+        {{- end }}
+        livenessProbe:
+          tcpSocket:
+            port: amqp
+        readinessProbe:
+          tcpSocket:
+            port: amqp
+      {{- with .Values.broker.startupProbe }}
+        startupProbe:
+          {{- toYaml . | nindent 10 }}
+      {{- end }}
+        resources:
+          {{- toYaml .Values.broker.resources | nindent 10 }}
+      volumes:
+      - name: {{ include "lagoon-core.broker.fullname" . }}-data
+        persistentVolumeClaim:
+          claimName: {{ include "lagoon-core.broker.fullname" . }}-data
+      {{- if .Values.broker.tls.enabled }}
+      - name: {{ include "lagoon-core.broker.fullname" . }}-tls
+        secret:
+          secretName: {{ .Values.broker.tls.secretName }}
+      - name: {{ include "lagoon-core.broker.fullname" . }}-tls-conf
+        secret:
+          secretName: {{ include "lagoon-core.broker.fullname" . }}-tls-conf
+          defaultMode: 511
+          items:
+          - key: tls.conf
+            path: tls.conf
+      {{- end }}
+      {{- with .Values.broker.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.broker.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.broker.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+  volumeClaimTemplates:
+  - metadata:
+      name: {{ include "lagoon-core.broker.fullname" . }}-data
+    spec:
+      accessModes:
+      - ReadWriteOnce
+      resources:
+        requests:
+          storage: 8Gi
