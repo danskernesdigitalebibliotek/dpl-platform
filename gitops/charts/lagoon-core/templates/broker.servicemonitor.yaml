@@ -1,0 +1,25 @@
+{{- if .Values.broker.serviceMonitor.enabled -}}
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: {{ include "lagoon-core.broker.fullname" . }}
+  labels:
+    {{- include "lagoon-core.broker.labels" . | nindent 4 }}
+spec:
+  endpoints:
+    - port: metrics
+    - interval: 30s
+      params:
+        family:
+          - queue_coarse_metrics
+          - queue_metrics
+      path: /metrics/detailed
+      port: metrics
+      scrapeTimeout: 29s       
+  namespaceSelector:
+    matchNames:
+      - {{ .Release.Namespace }}
+  selector:
+    matchLabels:
+{{- include "lagoon-core.broker.selectorLabels" . | nindent 6 }}
+{{- end }}

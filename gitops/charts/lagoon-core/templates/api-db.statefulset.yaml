@@ -1,0 +1,94 @@
+{{- if not .Values.apiDB.useExternal -}}
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: {{ include "lagoon-core.apiDB.fullname" . }}
+  labels:
+    {{- include "lagoon-core.apiDB.labels" . | nindent 4 }}
+spec:
+  serviceName: {{ include "lagoon-core.apiDB.fullname" . }}-headless
+  selector:
+    matchLabels:
+      {{- include "lagoon-core.apiDB.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      annotations:
+        checksum/api-db.secret: {{ include (print $.Template.BasePath "/api-db.secret-migratejob.yaml") . | sha256sum }}
+        k8up.syn.tools/backupcommand: /bin/sh -c "mysqldump --max-allowed-packet=500M --events --routines --quick --add-locks --no-autocommit --single-transaction --all-databases"
+        k8up.syn.tools/file-extension: .api-db.sql
+    {{- with .Values.apiDB.podAnnotations }}
+        {{- toYaml . | nindent 8 }}
+    {{- end }}
+      labels:
+        {{- include "lagoon-core.apiDB.selectorLabels" . | nindent 8 }}
+    spec:
+      {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      securityContext:
+        {{- toYaml (coalesce .Values.apiDB.podSecurityContext .Values.podSecurityContext) | nindent 8 }}
+      containers:
+      - name: api-db
+        securityContext:
+          {{- toYaml .Values.apiDB.securityContext | nindent 10 }}
+        image: "{{ .Values.apiDB.image.repository }}:{{ coalesce .Values.apiDB.image.tag .Values.imageTag .Chart.AppVersion }}"
+        imagePullPolicy: {{ .Values.apiDB.image.pullPolicy }}
+        env:
+      {{- range $key, $val := .Values.apiDB.additionalEnvs }}
+        - name: {{ $key }}
+          value: {{ $val | quote }}
+      {{- end }}
+        envFrom:
+        - secretRef:
+            name: {{ include "lagoon-core.apiDB.fullname" . }}
+        ports:
+        - name: mariadb
+          containerPort: 3306
+        volumeMounts:
+        - name: {{ include "lagoon-core.apiDB.fullname" . }}-data
+          mountPath: /var/lib/mysql
+      {{- with .Values.apiDB.readinessProbe }}
+        readinessProbe:
+          {{- toYaml . | nindent 10 }}
+      {{- end }}
+      {{- with .Values.apiDB.livenessProbe }}
+        livenessProbe:
+          {{- toYaml . | nindent 10 }}
+      {{- end }}
+      {{- with .Values.apiDB.startupProbe }}
+        startupProbe:
+          {{- toYaml . | nindent 10 }}
+      {{- end }}
+        resources:
+          {{- toYaml .Values.apiDB.resources | nindent 10 }}
+      volumes:
+      - name: {{ include "lagoon-core.apiDB.fullname" . }}-data
+        persistentVolumeClaim:
+          claimName: {{ include "lagoon-core.apiDB.fullname" . }}-data
+      {{- with .Values.apiDB.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.apiDB.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.apiDB.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.apiDB.terminationGracePeriodSeconds }}
+      terminationGracePeriodSeconds:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+  volumeClaimTemplates:
+  - metadata:
+      name: {{ include "lagoon-core.apiDB.fullname" . }}-data
+    spec:
+      accessModes:
+      - ReadWriteOnce
+      resources:
+        requests:
+          storage: {{ .Values.apiDB.storageSize | quote }}
+{{- end}}

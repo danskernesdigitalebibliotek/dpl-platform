@@ -1,0 +1,85 @@
+{{- if .Values.drushAlias.enabled -}}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "lagoon-core.drushAlias.fullname" . }}
+  labels:
+    {{- include "lagoon-core.drushAlias.labels" . | nindent 4 }}
+spec:
+{{- if not .Values.drushAlias.autoscaling.enabled }}
+  replicas: {{ .Values.drushAlias.replicaCount }}
+{{- end }}
+  selector:
+    matchLabels:
+      {{- include "lagoon-core.drushAlias.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      annotations:
+    {{- with .Values.drushAlias.podAnnotations }}
+        {{- toYaml . | nindent 8 }}
+    {{- end }}
+      labels:
+        {{- include "lagoon-core.drushAlias.selectorLabels" . | nindent 8 }}
+    spec:
+      {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      securityContext:
+        {{- toYaml (coalesce .Values.drushAlias.podSecurityContext .Values.podSecurityContext) | nindent 8 }}
+      containers:
+      - name: drush-alias
+        securityContext:
+          {{- toYaml .Values.drushAlias.securityContext | nindent 10 }}
+        image: "{{ .Values.drushAlias.image.repository }}:{{ coalesce .Values.drushAlias.image.tag .Values.imageTag "latest" }}"
+        imagePullPolicy: {{ .Values.drushAlias.image.pullPolicy }}
+        env:
+      {{- range $key, $val := .Values.backupHandler.additionalEnvs }}
+        - name: {{ $key }}
+          value: {{ $val | quote }}
+      {{- end }}
+        ports:
+        - name: http-8080
+          containerPort: 8080
+        livenessProbe:
+          httpGet:
+            path: /aliases.drushrc.php.stub
+            port: http-8080
+        readinessProbe:
+          httpGet:
+            path: /aliases.drushrc.php.stub
+            port: http-8080
+        resources:
+          {{- toYaml .Values.drushAlias.resources | nindent 10 }}
+      {{- with .Values.drushAlias.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      affinity:
+        podAntiAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+          - weight: 50
+            podAffinityTerm:
+              labelSelector:
+                matchExpressions:
+                - key: app.kubernetes.io/name
+                  operator: In
+                  values:
+                  - {{ include "lagoon-core.name" . }}
+                - key: app.kubernetes.io/component
+                  operator: In
+                  values:
+                  - {{ include "lagoon-core.drushAlias.fullname" . }}
+                - key: app.kubernetes.io/instance
+                  operator: In
+                  values:
+                  - {{ .Release.Name }}
+              topologyKey: kubernetes.io/hostname
+      {{- with .Values.drushAlias.affinity }}
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.drushAlias.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+{{- end }}
