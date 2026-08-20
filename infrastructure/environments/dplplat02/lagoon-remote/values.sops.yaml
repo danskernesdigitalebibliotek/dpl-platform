@@ -37,6 +37,8 @@ dockerHost:
     registry: registry.lagoon.svc:5000
     repositoryToUpdate: amazeeio|lagoon
     pruneImagesUntil: 1h
+    # Add annotations to pod template
+    podAnnotations: {}
     replicaCount: 1
     ## proxy configuration
     # httpProxy: ""
@@ -157,7 +159,7 @@ lagoon-build-deploy:
     # sensible defaults.
     # lagoonTargetName:
     #ENCRYPT
-    taskSSHHost: ENC[AES256_GCM,data:Lx8IS/WHXka2gYZHog==,iv:TIw6fU4i1HOqb00Ri/8HS4u4cBlH7uxZ/eyiFViZk+s=,tag:O5aCXtMg23cYJhYCKqyq2A==,type:str]
+    taskSSHHost: ENC[AES256_GCM,data:AmIUWQZbmkodzuxMFQ==,iv:7wpsZE2v8MrERAxtTgj6SxsknCgCx0gDQSQbNIWNxgg=,tag:6pug1bKY3PXfeMf97qidvA==,type:str]
     taskSSHPort: 22
     taskAPIHost: api.lagoon.dplplat02.dpl.reload.dk
     # lagoonTokenHost: ""
@@ -166,9 +168,9 @@ lagoon-build-deploy:
     # sshPortalHost: ""
     # sshPortalPort: ""
     #ENCRYPT
-    rabbitMQUsername: ENC[AES256_GCM,data:DbVoLP49,iv:Xoao547c01g0WVEDH4cDwJi+hcxOcFgr6G/reYgrrBU=,tag:/dauVdnFaf858p/FhrhOnQ==,type:str]
+    rabbitMQUsername: ENC[AES256_GCM,data:q/Ox/B/+,iv:dp91GA5RduqVwPPWz/mVtp/cxv8jwlRAm2lQVsXraIU=,tag:WmcQoAvKeaJcFlqpvZMIGQ==,type:str]
     #ENCRYPT
-    rabbitMQPassword: ENC[AES256_GCM,data:+Wg2eLGvm37GqLydg930RdkvGFyrB2zqkPFSKfIL,iv:gEQlRyVgOXFECDA+SK6HZYhSFwVV+r+7ABVC0xBgTeo=,tag:y50NmXOXyaKYna8lfZX75g==,type:str]
+    rabbitMQPassword: ENC[AES256_GCM,data:c4zChG5IohRiqu1fA0L5NidHIIK2KPovRgSPtPIc,iv:jdO5VQyh7gOgRh045VnwZe5svdX1XtMuDJr2LPGT8D4=,tag:IYepN3v+2t9HSQnAhtiTZw==,type:str]
     rabbitMQHostname: lagoon-core-broker.lagoon-core.svc.cluster.local
     lagoonTargetName: lagoon
     lagoonFeatureFlagDefaultRootlessWorkload: enabled
@@ -179,12 +181,12 @@ lagoon-build-deploy:
         - --harbor-url=https://harbor.lagoon.dplplat02.dpl.reload.dk
         - --harbor-api=https://harbor.lagoon.dplplat02.dpl.reload.dk/api/
         #ENCRYPT
-        - ENC[AES256_GCM,data:j4vBE0pzI10LZyQxKo76/LaYIiBIBtc=,iv:AHjllvBboydR8k06ZLXAVl6Y80yaRIkQZSISJpZ3oKQ=,tag:KA5PzrpICAtf+j40uBfWtQ==,type:str]
+        - ENC[AES256_GCM,data:CM/K4FpZrlol/xzW3r+XA5KjwaKGwRE=,iv:eAZvIRRz2Bzf90l3aEYXVFiQcsCRya4zE8CpVRSC+qY=,tag:/D6OBGL3EBxjg8QUsod0ig==,type:str]
         #ENCRYPT
-        - ENC[AES256_GCM,data:rSAFjOD81RFTkLJ6/DaTko2egYzmdyllyfM3N+UGAnzXXsZhQt8=,iv:Z+xSsbic4s0HoFaYEeayEvDwuYDTbX+QcyUeELHkIQU=,tag:veu3/KIAyTVZpKsIvPwK/Q==,type:str]
+        - ENC[AES256_GCM,data:PdRva1mpsM5kINadY8rHLcxA8etaLhkiB8T9cbaI5DNdvyggDRE=,iv:+qS270wAUf4z1R9q5s2ht+HsdtGghJq2uVFJX1ELowI=,tag:ZZx5kZYLZxtbj6oX4IVEGw==,type:str]
         - --enable-qos
         - --qos-max-builds=8
-        - --qos-total-builds=12
+        - --qos-total-builds=16
     nodeSelector:
         node-role.kubernetes.io/prod: ""
     tolerations:
@@ -218,20 +220,20 @@ dbaas-operator:
             readReplicaHostnames:
                 - mariadb-10-6-22-production-1.mariadb-10-6-22-production-1.svc.cluster.local
             #ENCRYPT
-            password: ENC[AES256_GCM,data:M0BntkW4yf9c396JJIkTurl4iNtGJn0L,iv:1cEcdTTpdg7bgfVdk2HmPK42DiBiOCeE44hx0B1kffk=,tag:6qY78AMLWzH/eC01L+oiPg==,type:str]
+            password: ENC[AES256_GCM,data:k0VrJ5H9ScCDjzBWVzYdAbCySpkm7D9m,iv:IES04YmHV0d1Sb/Uxp6kT7OMI9cDhvwroFS4WBdIivE=,tag:a65+sReSlEw4Yko063vFhA==,type:str]
             port: 3306
             #ENCRYPT
-            user: ENC[AES256_GCM,data:T01POA==,iv:ADKdDAatPy0WWr96vXuU7hY2w7LgaN1GAkwSmfjtBX0=,tag:fu0FMTrog+zAAvfA7KaTQA==,type:str]
+            user: ENC[AES256_GCM,data:sWobig==,iv:Xn2yu5yjSH30TBP7lKga09JASY0XBab/I0nuk0Ihn58=,tag:m/7s9qGdUJIKK/QVpFIzJQ==,type:str]
         development:
             environment: development
             hostname: mariadb-10-06-01-test.mariadb-10-06-01-test.svc.cluster.local
             readReplicaHostnames:
                 - mariadb-10-06-01-test.mariadb-10-06-01-test.svc.cluster.local
             #ENCRYPT
-            password: ENC[AES256_GCM,data:JECgcueZRjOUQfFe93tg7XxkEtgZZwgWWglGiQ==,iv:iVzGXIpoWgZdGDVUkQMLglVFILEFjq6R3JVM+5cqYC0=,tag:o5sdNn/BJbndWtKg7z9unQ==,type:str]
+            password: ENC[AES256_GCM,data:hRxoqCedszewMYuHCGeeKPECglf6/Vq9TE9PhA==,iv:25BJ4RmpeBXqXwhILULt4dXonlFPg56CbqjiloI9DHM=,tag:Fzw4ECBGjkb2NoP//qF3cg==,type:str]
             port: 3306
             #ENCRYPT
-            user: ENC[AES256_GCM,data:611clg==,iv:BGS47e7sdSaadesHWy/0QoNU/0Ay6HEX2X6p13XRcM0=,tag:kmAsHjKYupnTH6YUeLVN7g==,type:str]
+            user: ENC[AES256_GCM,data:7mi8cg==,iv:kBv704hbqGL4NE7Z+MFT/AxCuGqaZb188H9tTTCyJik=,tag:xfw20ZyGSOBTp2sfwyzUSQ==,type:str]
     nodeSelector:
         node-role.kubernetes.io/prod: ""
     tolerations:
@@ -266,7 +268,7 @@ insightsRemote:
         repository: uselagoon/insights-remote
         pullPolicy: Always
         # Overrides the image tag whose default is the chart appVersion.
-        tag: v0.0.14
+        tag: v0.0.15
     imagePullSecrets: []
     nameOverride: ""
     fullnameOverride: ""
@@ -456,6 +458,10 @@ natsConfig:
     # use this if you're only providing the ca certificate to nats.
     # this can be used if you've got lagoon-core leafnode tls verify disabled
     tls:
+        # this enables the tls block in the nats secret. if your nats is configured to use a public certificate
+        # and you are not using client certificates, you can set this to `false`.
+        # this value needs to be `true` if `caOnly` is also `true`
+        enableCerts: true
         caOnly: false
         # If the lagoon-remote-nats-tls secret should be created by the
         # lagoon-remote chart, certificate values can be specified directly in
@@ -495,7 +501,7 @@ storageCalculator:
         repository: uselagoon/remote-calculator
         pullPolicy: IfNotPresent
         # Overrides the image tag whose default is the chart appVersion.
-        tag: v0.8.2
+        tag: v0.9.0
     broker:
         # enable if providing a custom CA for broker connections
         tlsCA:
@@ -533,19 +539,19 @@ sops:
         - vault_url: https://kv-dplplat01-c3b2.vault.azure.net
           name: sops-key
           version: d82fe2456d6e4c4aaaaf808226bd5769
-          created_at: "2026-08-14T06:16:34Z"
-          enc: NINCyThxkBTldUEPbw2GhzIqb0118HTXZMv2iAvBuc5NN0pUDVl4kBATgFjokHteFUcBp4HPyMaMzsWmwOIw0qe8YxqYb7riFuxSs4VDif5RPCuDIyGhCD8j5EK0gamfcyghzF0pioOw66WmXMiTsJWI9DCkOiEOPqWJ-q4GfGzrbOdnEUk0uo99MApVewBNOgHhF0YakeTLKAGXUWjloNHZH-kEQS2o8PCTG8dlqyKiCwNwjLsooiqycFqZvRcjZ5i6IVDxJOX2UI66lk3zHQ5zda32A24iNffuGiuj_7IQU-ympTo9w1zSssz3eryn3sxvAh09AY6PIHK-8syAomr0yQtxN7BzFrDIt1bNh-lqCUkoLrA8Gp2zmPSuBf4mKgUjhGNyKgmpds79r7cnK_Ows6X0IGf9KyCClOHwIKvUxkKjXWYtJoNqYYlNo5Z_tviPb6q_xrwHPtIQu5T5B-LzByQKINkXXKvT5s64krxmwTYeaDQOOSQsztqGvM7EiH9O_16pmQy6vZ66vZz9zBwcKeQdURGj-uOfNw-dXudnPcjJB6fLFdCvFwAvGV4cXuw7cMo-4PyRwspAnkETqMtSfWa7QWfgekYxzeriQhDiMv7ZRAJMTnwPZjKRuObtLXHJzqu_PrqZaSs7bo4R88DiTwJ7chjaCk9YLPzZork
+          created_at: "2026-08-18T08:31:26Z"
+          enc: ewGgmSHrxg1OI92dZvzgyUFoss3tMjtqgA7TdAIQfgiQz8kABj3itZI5wrIuFYMWHMQTihy_woTYYkuJ19dapKbPVrKcJjyuWz_buseNwF2uQR1tQy0vzV47K8FYX6SAzhhL59CiOif-q0-UuYmwDjq69toClxNTg-pFwN2MxuxV7WkZ_IqLcY-3WBrYuIwNPQIQHQxTL8pX81APaLb5WagmuWiTNG_Cp79C8F6cGzLZKkkMlm3ZChp-rR8WEos9rNpZeSkrgIsigifcZkSMSD5vflakd6j9Ge5pOErSnFzZXZCwHNVN08Lau6v5EKywkwBXQBvTH2uCWQUCUKRCKAa_jbkIMlxjcJiwkB3J8ovZqRZspyrFrr7nWKmwiSyu82UwAl2Rq7ewkxRoTytzQM76brrXkczNqw8nIZFrRxeX6mD9GN8r6qaja3qdV2u1rNn_49keEBcTpb0OSors86wqhA8CB7DlHq-iBvIFlZfg3uraCmwQgpFoJBEM_keCtDqkPHkaBov7f1gCnBY-J2NWq73-pq8bzfZk7FTGD2VaAe14hdSGY7mtM6mjuN-CtLHyVZj1ktd-wXm_P8blXBgCxW2VuVBQEXtfADj3jn7DrghAEVgnlLskyomw_vzdBHToEGb9pE92_JO5qLyt_KAtMbcsr8zqy32KeTDO3oA
     age:
         - recipient: age1q8yqc5jvhkk7ufj95tw25u3es0846pkrwgcd4pn9ctermr7e6cesn6l0gd
           enc: |
             -----BEGIN AGE ENCRYPTED FILE-----
-            YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSA1dVBrWFRGUU1jVkdWVUxO
-            aURHUVIzTDV6VlF2V3R2SFdCL1NuWmFKeFRvCm1xL3VaaklzcVQxWmhkaTdhZU16
-            cVlHblRuZ091Z2o2aDNkZy9naG1HaUUKLS0tIHR2dENJVUYyM2Q3aGF5L2d3WXYz
-            ZUxTUFA2ZXJ5QXJUZVRnSjZVcVlSbGcKsTD3KbcWhP5VrGsyEO4bNHpG3QQLbiT9
-            pi2f0FH71XcAjnjfFnUfy5pfs0PD91tsL/toeWZAboVt4ci7hcNW8Q==
+            YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSBSdU8zSURDVlRGTUNOMTB2
+            bkZBaDlKWU45K2toeDloL3RzVTdMZktwK1gwCkthZ1hyaWZSMjVKcEJ0aTFVQlR0
+            MktTeTdjZDlqZlhiSlByZXprMEdKTXcKLS0tIG5yM21GWitHcHVPb0RrTEJBOTdq
+            eW1UaG5zY3N3QnZBSGJiWDkrbks0NmcKu/RvYEofwUNC91EJGkGMjX+PM4N3aIBd
+            qZvhnf/H+3vX0UqC/QwK2N/9NXhbjotupOC3tdJUtN6+dVGqKeoB0w==
             -----END AGE ENCRYPTED FILE-----
-    lastmodified: "2026-08-14T06:16:38Z"
-    mac: ENC[AES256_GCM,data:BIe4H/+TDkV7GuiPH+AfbzVyAYA/hJwzBHOz8kEjCz+FicMKDBJ/Va9Pe2A66cxXzuc0AHdU2jfwBKf+UKeqz3TAFUI2C/3p5YrIGXh/w5PWWhH1DGK1zAq/u8vIIeE8cRFo5QPbiJnprtqZTSqaLoGaiTR+MPFhjbKerj4IiIQ=,iv:YB8rpt6/Xa/RvrCW+cjlxEJg55uWs4qs4xx5gprSwHs=,tag:NhIRNglw5F6eusvsS4TIsw==,type:str]
+    lastmodified: "2026-08-18T08:31:29Z"
+    mac: ENC[AES256_GCM,data:jsFbxDxXr2hkb7obqW7IzkxUVbZzDq3RpX9KAnL7Xn5IFbFBq0v2VseU0/ySwpMUXa7uY/eg7j5sQn60DkOoth7dGX+YPNCQ7nsYZPErtdeJWOIi0vXfimofqv/eB7dE5pvai2vubUtr7OznhhZEDqrU3UNjRAKIm2oWQnlr7WE=,iv:cBolSimZPIgef5FBFzwPcbjYa5JP1VwVNAh7cWELXic=,tag:vqLoONd+FtvGeDUfkUMOLw==,type:str]
     encrypted_comment_regex: ENCRYPT
     version: 3.11.0

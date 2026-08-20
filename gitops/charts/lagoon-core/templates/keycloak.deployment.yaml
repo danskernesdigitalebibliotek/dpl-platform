@@ -1,0 +1,167 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "lagoon-core.keycloak.fullname" . }}
+  labels:
+    {{- include "lagoon-core.keycloak.labels" . | nindent 4 }}
+spec:
+  selector:
+    matchLabels:
+      {{- include "lagoon-core.keycloak.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      annotations:
+        checksum/keycloak.secret: {{ include (print $.Template.BasePath "/keycloak.secret.yaml") . | sha256sum }}
+    {{- with .Values.keycloak.podAnnotations }}
+        {{- toYaml . | nindent 8 }}
+    {{- end }}
+      labels:
+        {{- include "lagoon-core.keycloak.selectorLabels" . | nindent 8 }}
+    spec:
+      {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      securityContext:
+        {{- toYaml (coalesce .Values.keycloak.podSecurityContext .Values.podSecurityContext) | nindent 8 }}
+      containers:
+      - name: keycloak
+        securityContext:
+          {{- toYaml .Values.keycloak.securityContext | nindent 10 }}
+        image: "{{ .Values.keycloak.image.repository }}:{{ coalesce .Values.keycloak.image.tag .Values.imageTag .Chart.AppVersion }}"
+        imagePullPolicy: {{ .Values.keycloak.image.pullPolicy }}
+        env:
+        - name: JAVA_OPTS
+          value: >
+            -server -Xms512m -Xmx4096m -XX:MetaspaceSize=96M
+            -XX:MaxMetaspaceSize=256m -Djava.net.preferIPv4Stack=true
+            -Djboss.modules.system.pkgs=org.jboss.byteman
+            -Djava.awt.headless=true
+        - name: DB_ADDR
+          value: {{ include "lagoon-core.keycloakDB.fullname" . }}
+        - name: KEYCLOAK_ADMIN_USER
+          value: {{ .Values.keycloakAdminUser | quote }}
+        - name: KEYCLOAK_FRONTEND_URL
+          {{- if .Values.keycloakFrontEndURL }}
+          value: {{ .Values.keycloakFrontEndURL }}/auth
+          {{- else if .Values.keycloak.ingress.enabled }}
+          value: https://{{ index .Values.keycloak.ingress.hosts 0 "host" }}/auth
+          {{- else }}
+          value: http://{{ include "lagoon-core.keycloak.fullname" . }}:{{ .Values.keycloak.service.port }}/auth
+          {{- end }}
+        {{- with .Values.keycloakAdminEmail }}
+        - name: KEYCLOAK_ADMIN_EMAIL
+          value: {{ . | quote }}
+        {{- end }}
+        - name: DB_VENDOR
+          value: {{ .Values.keycloakDB.vendor }}
+        - name: LAGOON_DB_VENDOR
+          value: {{ .Values.apiDB.vendor }}
+        {{- if not .Values.apiDB.useExternal }}
+        - name: LAGOON_DB_HOST
+          value: {{ include "lagoon-core.apiDB.fullname" . }}
+        - name: LAGOON_DB_USER
+          value: api
+        - name: LAGOON_DB_DATABASE
+          value: infrastructure
+        {{- else }}
+        - name: LAGOON_DB_HOST
+          valueFrom:
+            secretKeyRef:
+              name: {{ include "lagoon-core.apiDB.fullname" . }}
+              key: API_DB_HOST
+        - name: LAGOON_DB_USER
+          valueFrom:
+            secretKeyRef:
+              name: {{ include "lagoon-core.apiDB.fullname" . }}
+              key: API_DB_USERNAME
+        - name: LAGOON_DB_PORT
+          valueFrom:
+            secretKeyRef:
+              name: {{ include "lagoon-core.apiDB.fullname" . }}
+              key: API_DB_PORT
+        - name: LAGOON_DB_DATABASE
+          valueFrom:
+            secretKeyRef:
+              name: {{ include "lagoon-core.apiDB.fullname" . }}
+              key: API_DB_DATABASE
+        {{- end }}
+        - name: LAGOON_DB_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: {{ include "lagoon-core.apiDB.fullname" . }}
+              key: API_DB_PASSWORD
+      {{- if .Values.keycloak.serviceMonitor.enabled }}
+        - name: KC_METRICS_ENABLED
+          value: "true"
+        - name: KC_EVENT_METRICS_USER_ENABLED
+          value: "true"
+      {{- end }}
+      {{- range $key, $val := .Values.keycloak.additionalEnvs }}
+        - name: {{ $key }}
+          value: {{ $val | quote }}
+      {{- end }}
+        envFrom:
+        - secretRef:
+            name: {{ include "lagoon-core.keycloak.fullname" . }}
+        ports:
+        - name: http-8080
+          containerPort: 8080
+        {{- if .Values.keycloak.serviceMonitor.enabled }}
+        - name: metrics
+          containerPort: {{ .Values.keycloak.serviceMonitor.metrics.port }}
+        {{- end }}
+        livenessProbe:
+          httpGet:
+            path: /auth
+            port: http-8080
+        readinessProbe:
+          httpGet:
+            path: /auth
+            port: http-8080
+        startupProbe:
+          exec:
+            command:
+            - test
+            - -f
+            - /tmp/keycloak-config-complete
+          failureThreshold: 90
+          periodSeconds: 20
+        volumeMounts:
+        {{- if .Values.keycloak.email.enabled }}
+        - mountPath: /lagoon/keycloak/keycloak-smtp-settings.json
+          name: {{ include "lagoon-core.keycloak.fullname" . }}-smtp-settings
+          subPath: keycloak-smtp-settings.json
+        {{- end }}
+        {{- if .Values.keycloak.realmSettings.enabled }}
+        - mountPath: /lagoon/keycloak/keycloak-realm-settings.json
+          name: {{ include "lagoon-core.keycloak.fullname" . }}-realm-settings
+          subPath: keycloak-realm-settings.json
+        {{- end }}
+        resources:
+          {{- toYaml .Values.keycloak.resources | nindent 10 }}
+      {{- with .Values.keycloak.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.keycloak.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.keycloak.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      volumes:
+      {{- if .Values.keycloak.email.enabled }}
+      - configMap:
+          defaultMode: 420
+          name: {{ include "lagoon-core.keycloak.fullname" . }}-smtp-settings
+        name: {{ include "lagoon-core.keycloak.fullname" . }}-smtp-settings
+      {{- end }}
+      {{- if .Values.keycloak.realmSettings.enabled }}
+      - configMap:
+          defaultMode: 420
+          name: {{ include "lagoon-core.keycloak.fullname" . }}-realm-settings
+        name: {{ include "lagoon-core.keycloak.fullname" . }}-realm-settings
+      {{- end }}

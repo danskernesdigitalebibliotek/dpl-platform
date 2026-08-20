@@ -1,0 +1,43 @@
+{{- if .Values.sshToken.enabled -}}
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "lagoon-core.sshToken.fullname" . }}
+  labels:
+    {{- include "lagoon-core.sshToken.labels" . | nindent 4 }}
+  {{- with .Values.sshToken.service.annotations }}
+  annotations:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
+spec:
+  type: {{ .Values.sshToken.service.type }}
+  {{- with .Values.sshToken.service.externalTrafficPolicy }}
+  externalTrafficPolicy: {{ . }}
+  {{- end }}  
+  {{- with .Values.sshToken.service.loadBalancerSourceRanges }}
+  loadBalancerSourceRanges:
+  {{- toYaml . | nindent 2 }}
+  {{- end }}
+  ports:
+  - port: {{ .Values.sshToken.service.ports.sshserver }}
+    targetPort: sshserver
+    name: sshserver
+  selector:
+    {{- include "lagoon-core.sshToken.selectorLabels" . | nindent 4 }}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "lagoon-core.sshToken.fullname" . }}-metrics
+  labels:
+    metrics-only: "true"
+    {{- include "lagoon-core.sshToken.labels" . | nindent 4 }}
+spec:
+  type: {{ .Values.sshToken.metricsService.type }}
+  ports:
+  - port: {{ .Values.sshToken.metricsService.ports.metrics }}
+    targetPort: metrics
+    name: metrics
+  selector:
+    {{- include "lagoon-core.sshToken.selectorLabels" . | nindent 4 }}
+{{- end }}
