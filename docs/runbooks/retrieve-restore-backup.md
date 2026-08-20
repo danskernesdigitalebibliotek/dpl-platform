@@ -52,7 +52,7 @@ backup. To do this,
 To restore the database and/or files more conveniently, use the restore task.
 
 1. Put the downloaded backups into the `/infrastructe` dir
-2. run `task site:restore DB=./infrastructure/<path to compressed database backukp file> FILE=./infrastructure/<path to compressed nginx backup file> PROJECT=<project name> ENV=<environment name>`
+2. run `task site:restore DB=<name of compressed database backukp file> FILE=<name of compressed nginx backup file> PROJECT=<project name> ENV=<environment name>`
     It is possible to leave out either DB or FILE and just restore one of the
     of two. The task will deploy the environment to make the change take
     effect.
