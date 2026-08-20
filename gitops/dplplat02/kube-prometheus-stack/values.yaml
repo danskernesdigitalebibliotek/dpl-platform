@@ -1544,8 +1544,8 @@ kube-prometheus-stack:
         url: http://loki-read-headless.loki.svc.cluster.local:3100
         orgId: 1
         jsonData:
-          maxLines: 1000
-          queryTimeout: 60s
+          maxLines: 900
+          queryTimeout: 80s
       - name: Infinity
         type: yesoreyeram-infinity-datasource
       - name: Redis
