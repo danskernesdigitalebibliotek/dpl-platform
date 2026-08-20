@@ -84,6 +84,7 @@ sites:
     # deployed to production. Our YAML handling chokes on duplicates to we
     # follow the default release plan and update the module test site manually.
     diskSize: 20
+    moduletest-dpl-cms-release: 2026.34.1
     <<: *default-release-image-source
   bibliotek-test:
     name: "Bibliotekstest"
