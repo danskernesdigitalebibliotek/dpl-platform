@@ -848,6 +848,8 @@ loki:
       digest: null
       # -- Docker image pull policy
       pullPolicy: IfNotPresent
+    # -- Liveness probe
+    livenessProbe:
     # -- Readiness probe
     readinessProbe:
       httpGet:
@@ -855,6 +857,8 @@ loki:
         port: http-metrics
       initialDelaySeconds: 15
       timeoutSeconds: 1
+    # -- Startup probe
+    startupProbe:
     # -- Update strategy for the `loki-canary` Daemonset pods
     updateStrategy:
       type: RollingUpdate
@@ -1325,12 +1329,16 @@ loki:
     # -- update strategy
     strategy:
       type: RollingUpdate
+    # -- Liveness probe
+    livenessProbe: {}
     # -- Readiness probe
     readinessProbe:
       httpGet:
         path: /ready
         port: http-metrics
       initialDelaySeconds: 45
+    # -- Startup probe
+    startupProbe: {}
     # -- Request and limit Kubernetes resources
     # -- Values are defined in small.yaml and large.yaml
     resources: {}
@@ -2125,6 +2133,8 @@ loki:
     readinessProbe: {}
     # -- liveness probe settings for ingester pods. If empty use `loki.livenessProbe`
     livenessProbe: {}
+    # -- startup probe settings for ingester pods. If empty use `loki.startupProbe`
+    startupProbe: {}
     # -- UpdateStrategy for the ingester StatefulSets.
     updateStrategy:
       # -- One of  'OnDelete' or 'RollingUpdate'
@@ -2801,10 +2811,12 @@ loki:
     extraVolumeMounts: []
     # -- Volumes to add to the compactor pods
     extraVolumes: []
-    # -- readiness probe settings for ingester pods. If empty, use `loki.readinessProbe`
+    # -- readiness probe settings for compactor pods. If empty, use `loki.readinessProbe`
     readinessProbe: {}
-    # -- liveness probe settings for ingester pods. If empty use `loki.livenessProbe`
+    # -- liveness probe settings for compactor pods. If empty use `loki.livenessProbe`
     livenessProbe: {}
+    # -- liveness probe settings for ingester pods. If empty use `loki.livenessProbe`
+    startupProbe: {}
     # -- Resource requests and limits for the compactor
     resources: {}
     # -- Containers to add to the compactor pods
@@ -2917,11 +2929,11 @@ loki:
     extraVolumeMounts: []
     # -- Volumes to add to the bloom-gateway pods
     extraVolumes: []
-    # -- readiness probe settings for ingester pods. If empty, use `loki.readinessProbe`
+    # -- readiness probe settings for bloom-gateway pods. If empty, use `loki.readinessProbe`
     readinessProbe: {}
-    # -- liveness probe settings for ingester pods. If empty use `loki.livenessProbe`
+    # -- liveness probe settings for bloom-gateway pods. If empty use `loki.livenessProbe`
     livenessProbe: {}
-    # -- startup probe settings for ingester pods. If empty, use `loki.startupProbe`
+    # -- startup probe settings for bloom-gateway pods. If empty, use `loki.startupProbe`
     startupProbe: {}
     # -- Resource requests and limits for the bloom-gateway
     resources: {}
@@ -3035,11 +3047,11 @@ loki:
     extraVolumeMounts: []
     # -- Volumes to add to the bloom-planner pods
     extraVolumes: []
-    # -- readiness probe settings for ingester pods. If empty, use `loki.readinessProbe`
+    # -- readiness probe settings for bloom-planner pods. If empty, use `loki.readinessProbe`
     readinessProbe: {}
-    # -- liveness probe settings for ingester pods. If empty use `loki.livenessProbe`
+    # -- liveness probe settings for bloom-planner pods. If empty use `loki.livenessProbe`
     livenessProbe: {}
-    # -- startup probe settings for ingester pods. If empty use `loki.startupProbe`
+    # -- startup probe settings for bloom-planner pods. If empty use `loki.startupProbe`
     startupProbe: {}
     # -- Resource requests and limits for the bloom-planner
     resources: {}
@@ -3255,10 +3267,12 @@ loki:
     extraVolumeMounts: []
     # -- Volumes to add to the pattern ingester pods
     extraVolumes: []
-    # -- readiness probe settings for ingester pods. If empty, use `loki.readinessProbe`
+    # -- readiness probe settings for pattern ingester pods. If empty, use `loki.readinessProbe`
     readinessProbe: {}
-    # -- liveness probe settings for ingester pods. If empty use `loki.livenessProbe`
+    # -- liveness probe settings for pattern ingester pods. If empty use `loki.livenessProbe`
     livenessProbe: {}
+    # -- startup probe settings for pattern ingester pods. If empty use `loki.startupProbe`
+    startupProbe: {}
     # -- Resource requests and limits for the pattern ingester
     resources: {}
     # -- Containers to add to the pattern ingester pods
@@ -4116,8 +4130,9 @@ loki:
 
   sidecar:
     image:
+      registry: docker.io
       # -- The Docker registry and image for the k8s sidecar
-      repository: docker.io/kiwigrid/k8s-sidecar
+      repository: kiwigrid/k8s-sidecar
       # -- Docker image tag
       tag: 1.30.9
       # -- Docker image sha. If empty, no sha will be used
