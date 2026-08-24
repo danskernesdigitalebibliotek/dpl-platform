@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "lagoon-core.keycloak.fullname" . }}
+  labels:
+    {{- include "lagoon-core.keycloak.labels" . | nindent 4 }}
+spec:
+  type: {{ .Values.keycloak.service.type }}
+  ports:
+  - port: {{ .Values.keycloak.service.port }}
+    targetPort: http-8080
+    name: http-8080
+  - port: {{ .Values.keycloak.serviceMonitor.metrics.port }}
+    targetPort: metrics
+    name: metrics
+  selector:
+    {{- include "lagoon-core.keycloak.selectorLabels" . | nindent 4 }}

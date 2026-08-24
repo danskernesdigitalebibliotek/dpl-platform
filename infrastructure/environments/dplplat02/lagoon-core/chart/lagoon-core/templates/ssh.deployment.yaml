@@ -1,0 +1,156 @@
+{{- if .Values.ssh.enabled -}}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "lagoon-core.ssh.fullname" . }}
+  labels:
+    {{- include "lagoon-core.ssh.labels" . | nindent 4 }}
+spec:
+{{- if not .Values.ssh.autoscaling.enabled }}
+  replicas: {{ .Values.ssh.replicaCount }}
+{{- end }}
+  selector:
+    matchLabels:
+      {{- include "lagoon-core.ssh.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      annotations:
+        checksum/secret: {{ include (print $.Template.BasePath "/secret.yaml") . | sha256sum }}
+        checksum/ssh.secret: {{ include (print $.Template.BasePath "/ssh.secret.yaml") . | sha256sum }}
+    {{- with .Values.ssh.podAnnotations }}
+        {{- toYaml . | nindent 8 }}
+    {{- end }}
+      labels:
+        {{- include "lagoon-core.ssh.selectorLabels" . | nindent 8 }}
+    spec:
+      securityContext:
+        {{- toYaml (coalesce .Values.ssh.podSecurityContext .Values.podSecurityContext) | nindent 8 }}
+      containers:
+      - name: ssh
+        securityContext:
+          {{- toYaml .Values.ssh.securityContext | nindent 10 }}
+        image: "{{ .Values.ssh.image.repository }}:{{ coalesce .Values.ssh.image.tag .Values.imageTag .Chart.AppVersion }}"
+        imagePullPolicy: {{ .Values.ssh.image.pullPolicy }}
+        env:
+        - name: API_HOST
+          value: {{ include "lagoon-core.api.fullname" . }}
+        - name: AUTH_SERVER
+          value: {{ include "lagoon-core.authServer.fullname" . }}
+        - name: GRAPHQL_ENDPOINT
+          value: http://{{ include "lagoon-core.api.fullname" . }}:{{ .Values.api.service.port }}/graphql
+        - name: JWTSECRET
+          valueFrom:
+            secretKeyRef:
+              name: {{ include "lagoon-core.fullname" . }}-secrets
+              key: JWTSECRET
+      {{- range $key, $val := .Values.ssh.additionalEnvs }}
+        - name: {{ $key }}
+          value: {{ $val | quote }}
+      {{- end }}
+        ports:
+        - name: ssh
+          containerPort: 2020
+          protocol: TCP
+        livenessProbe:
+          tcpSocket:
+            port: ssh
+        readinessProbe:
+          tcpSocket:
+            port: ssh
+        resources:
+          {{- toYaml .Values.ssh.resources | nindent 10 }}
+        volumeMounts:
+        {{- with .Values.ssh.hostKeys.ecdsa }}
+        - name: {{ include "lagoon-core.ssh.fullname" $ }}
+          mountPath: "/etc/ssh/ssh_host_ecdsa_key"
+          subPath: ssh_host_ecdsa_key
+        {{- end }}
+        {{- with .Values.ssh.hostKeys.ecdsaPub }}
+        - name: {{ include "lagoon-core.ssh.fullname" $ }}
+          mountPath: "/etc/ssh/ssh_host_ecdsa_key.pub"
+          subPath: ssh_host_ecdsa_pubkey
+        {{- end }}
+        {{- with .Values.ssh.hostKeys.ed25519 }}
+        - name: {{ include "lagoon-core.ssh.fullname" $ }}
+          mountPath: "/etc/ssh/ssh_host_ed25519_key"
+          subPath: ssh_host_ed25519_key
+        {{- end }}
+        {{- with .Values.ssh.hostKeys.ed25519Pub }}
+        - name: {{ include "lagoon-core.ssh.fullname" $ }}
+          mountPath: "/etc/ssh/ssh_host_ed25519_key.pub"
+          subPath: ssh_host_ed25519_pubkey
+        {{- end }}
+        {{- with .Values.ssh.hostKeys.rsa }}
+        - name: {{ include "lagoon-core.ssh.fullname" $ }}
+          mountPath: "/etc/ssh/ssh_host_rsa_key"
+          subPath: ssh_host_rsa_key
+        {{- end }}
+        {{- with .Values.ssh.hostKeys.rsaPub }}
+        - name: {{ include "lagoon-core.ssh.fullname" $ }}
+          mountPath: "/etc/ssh/ssh_host_rsa_key.pub"
+          subPath: ssh_host_rsa_pubkey
+        {{- end }}
+      volumes:
+      {{- if or .Values.ssh.hostKeys.rsa .Values.ssh.hostKeys.ecdsa .Values.ssh.hostKeys.ed25519 }}
+      - secret:
+          defaultMode: 432
+          items:
+          {{- with .Values.ssh.hostKeys.rsa }}
+          - key: HOST_KEY_RSA
+            path: ssh_host_rsa_key
+          {{- end }}
+          {{- with .Values.ssh.hostKeys.rsaPub }}
+          - key: HOST_PUBKEY_RSA
+            path: ssh_host_rsa_pubkey
+          {{- end }}
+          {{- with .Values.ssh.hostKeys.ecdsa }}
+          - key: HOST_KEY_ECDSA
+            path: ssh_host_ecdsa_key
+          {{- end }}
+          {{- with .Values.ssh.hostKeys.ecdsaPub }}
+          - key: HOST_PUBKEY_ECDSA
+            path: ssh_host_ecdsa_pubkey
+          {{- end }}
+          {{- with .Values.ssh.hostKeys.ed25519 }}
+          - key: HOST_KEY_ED25519
+            path: ssh_host_ed25519_key
+          {{- end }}
+          {{- with .Values.ssh.hostKeys.ed25519Pub }}
+          - key: HOST_PUBKEY_ED25519
+            path: ssh_host_ed25519_pubkey
+          {{- end }}
+          secretName: {{ include "lagoon-core.ssh.fullname" . }}
+        name: {{ include "lagoon-core.ssh.fullname" . }}
+      {{- end }}
+      {{- with .Values.ssh.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      affinity:
+        podAntiAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+          - weight: 50
+            podAffinityTerm:
+              labelSelector:
+                matchExpressions:
+                - key: app.kubernetes.io/name
+                  operator: In
+                  values:
+                  - {{ include "lagoon-core.name" . }}
+                - key: app.kubernetes.io/component
+                  operator: In
+                  values:
+                  - {{ include "lagoon-core.ssh.fullname" . }}
+                - key: app.kubernetes.io/instance
+                  operator: In
+                  values:
+                  - {{ .Release.Name }}
+              topologyKey: kubernetes.io/hostname
+      {{- with .Values.ssh.affinity }}
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.ssh.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+{{- end }}

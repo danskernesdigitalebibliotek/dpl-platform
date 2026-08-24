@@ -1,0 +1,80 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "lagoon-core.apiRedis.fullname" . }}
+  labels:
+    {{- include "lagoon-core.apiRedis.labels" . | nindent 4 }}
+spec:
+  selector:
+    matchLabels:
+      {{- include "lagoon-core.apiRedis.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      annotations:
+        checksum/api.secret: {{ include (print $.Template.BasePath "/api.secret.yaml") . | sha256sum }}
+    {{- with .Values.apiRedis.podAnnotations }}
+        {{- toYaml . | nindent 8 }}
+    {{- end }}
+      labels:
+        {{- include "lagoon-core.apiRedis.selectorLabels" . | nindent 8 }}
+    spec:
+      {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      securityContext:
+        {{- toYaml (coalesce .Values.apiRedis.podSecurityContext .Values.podSecurityContext) | nindent 8 }}
+      containers:
+      - name: api-redis
+        securityContext:
+          {{- toYaml .Values.apiRedis.securityContext | nindent 10 }}
+        image: "{{ .Values.apiRedis.image.repository }}:{{ coalesce .Values.apiRedis.image.tag .Values.imageTag .Chart.AppVersion }}"
+        imagePullPolicy: {{ .Values.apiRedis.image.pullPolicy }}
+        env:
+        - name: REDIS_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: {{ include "lagoon-core.api.fullname" . }}
+              key: REDIS_PASSWORD
+        {{- if .Values.apiRedis.persistence.enabled }}
+        - name: FLAVOR
+          value: persistent
+        {{- end }}
+      {{- range $key, $val := .Values.apiRedis.additionalEnvs }}
+        - name: {{ $key }}
+          value: {{ $val | quote }}
+      {{- end }}
+        ports:
+        - name: redis
+          containerPort: 6379
+        {{- if .Values.apiRedis.persistence.enabled }}
+        volumeMounts:
+        - name: {{ include "lagoon-core.apiRedis.fullname" . }}-data
+          mountPath: /data
+        {{- end }}
+        livenessProbe:
+          tcpSocket:
+            port: redis
+        readinessProbe:
+          tcpSocket:
+            port: redis
+        resources:
+          {{- toYaml .Values.apiRedis.resources | nindent 10 }}
+      {{- if .Values.apiRedis.persistence.enabled }}
+      volumes:
+      - name: {{ include "lagoon-core.apiRedis.fullname" . }}-data
+        persistentVolumeClaim:
+          claimName: {{ include "lagoon-core.apiRedis.fullname" . }}-data
+      {{- end }}
+      {{- with .Values.apiRedis.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.apiRedis.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.apiRedis.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}

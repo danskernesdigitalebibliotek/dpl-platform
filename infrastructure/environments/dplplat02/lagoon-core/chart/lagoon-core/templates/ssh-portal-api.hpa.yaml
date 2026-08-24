@@ -1,0 +1,32 @@
+{{- if and .Values.sshPortalAPI.enabled .Values.sshPortalAPI.autoscaling.enabled -}}
+apiVersion: autoscaling/v2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: {{ include "lagoon-core.sshPortalAPI.fullname" . }}
+  labels:
+    {{- include "lagoon-core.sshPortalAPI.labels" . | nindent 4 }}
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: {{ include "lagoon-core.sshPortalAPI.fullname" . }}
+  minReplicas: {{ .Values.sshPortalAPI.autoscaling.minReplicas }}
+  maxReplicas: {{ .Values.sshPortalAPI.autoscaling.maxReplicas }}
+  metrics:
+  {{- if .Values.sshPortalAPI.autoscaling.targetCPUUtilizationPercentage }}
+    - type: Resource
+      resource:
+        name: cpu
+        target:
+          averageUtilization: {{ .Values.sshPortalAPI.autoscaling.targetCPUUtilizationPercentage }}
+          type: Utilization
+  {{- end }}
+  {{- if .Values.sshPortalAPI.autoscaling.targetMemoryUtilizationPercentage }}
+    - type: Resource
+      resource:
+        name: memory
+        target:
+          averageUtilization: {{ .Values.sshPortalAPI.autoscaling.targetMemoryUtilizationPercentage }}
+          type: Utilization
+  {{- end }}
+{{- end }}

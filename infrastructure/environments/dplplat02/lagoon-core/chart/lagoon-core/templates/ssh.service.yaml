@@ -1,0 +1,28 @@
+{{- if .Values.ssh.enabled -}}
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "lagoon-core.ssh.fullname" . }}
+  labels:
+    {{- include "lagoon-core.ssh.labels" . | nindent 4 }}
+  {{- with .Values.ssh.service.annotations }}
+  annotations:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
+spec:
+  type: {{ .Values.ssh.service.type }}
+  {{- with .Values.ssh.service.externalTrafficPolicy }}
+  externalTrafficPolicy: {{ . }}
+  {{- end }}  
+  {{- with .Values.ssh.service.loadBalancerSourceRanges }}
+  loadBalancerSourceRanges:
+  {{- toYaml . | nindent 2 }}
+  {{- end }}
+  ports:
+    - port: {{ .Values.ssh.service.port }}
+      targetPort: ssh
+      protocol: TCP
+      name: ssh
+  selector:
+    {{- include "lagoon-core.ssh.selectorLabels" . | nindent 4 }}
+{{- end }}

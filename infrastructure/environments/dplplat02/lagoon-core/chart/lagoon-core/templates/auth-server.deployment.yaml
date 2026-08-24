@@ -1,0 +1,98 @@
+{{- if .Values.ssh.enabled -}}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "lagoon-core.authServer.fullname" . }}
+  labels:
+    {{- include "lagoon-core.authServer.labels" . | nindent 4 }}
+spec:
+{{- if not .Values.authServer.autoscaling.enabled }}
+  replicas: {{ .Values.authServer.replicaCount }}
+{{- end }}
+  selector:
+    matchLabels:
+      {{- include "lagoon-core.authServer.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      annotations:
+        checksum/secret: {{ include (print $.Template.BasePath "/secret.yaml") . | sha256sum }}
+        checksum/api.secret: {{ include (print $.Template.BasePath "/api.secret.yaml") . | sha256sum }}
+        checksum/keycloak.secret: {{ include (print $.Template.BasePath "/keycloak.secret.yaml") . | sha256sum }}
+    {{- with .Values.authServer.podAnnotations }}
+        {{- toYaml . | nindent 8 }}
+    {{- end }}
+      labels:
+        {{- include "lagoon-core.authServer.selectorLabels" . | nindent 8 }}
+    spec:
+      {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      securityContext:
+        {{- toYaml (coalesce .Values.authServer.podSecurityContext .Values.podSecurityContext) | nindent 8 }}
+      containers:
+      - name: auth-server
+        securityContext:
+          {{- toYaml .Values.authServer.securityContext | nindent 10 }}
+        image: "{{ .Values.authServer.image.repository }}:{{ coalesce .Values.authServer.image.tag .Values.imageTag .Chart.AppVersion }}"
+        imagePullPolicy: {{ .Values.authServer.image.pullPolicy }}
+        env:
+        - name: JWTSECRET
+          valueFrom:
+            secretKeyRef:
+              name: {{ include "lagoon-core.fullname" . }}-secrets
+              key: JWTSECRET
+        - name: KEYCLOAK_AUTH_SERVER_CLIENT_SECRET
+          valueFrom:
+            secretKeyRef:
+              name: {{ include "lagoon-core.keycloak.fullname" . }}
+              key: KEYCLOAK_AUTH_SERVER_CLIENT_SECRET
+        - name: KEYCLOAK_URL
+          value: http://{{ include "lagoon-core.keycloak.fullname" . }}:{{ .Values.keycloak.service.port }}
+      {{- range $key, $val := .Values.authServer.additionalEnvs }}
+        - name: {{ $key }}
+          value: {{ $val | quote }}
+      {{- end }}
+        ports:
+        - name: http-3000
+          containerPort: 3000
+        livenessProbe:
+          tcpSocket:
+            port: http-3000
+        readinessProbe:
+          tcpSocket:
+            port: http-3000
+        resources:
+          {{- toYaml .Values.authServer.resources | nindent 10 }}
+      {{- with .Values.authServer.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      affinity:
+        podAntiAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+          - weight: 50
+            podAffinityTerm:
+              labelSelector:
+                matchExpressions:
+                - key: app.kubernetes.io/name
+                  operator: In
+                  values:
+                  - {{ include "lagoon-core.name" . }}
+                - key: app.kubernetes.io/component
+                  operator: In
+                  values:
+                  - {{ include "lagoon-core.authServer.fullname" . }}
+                - key: app.kubernetes.io/instance
+                  operator: In
+                  values:
+                  - {{ .Release.Name }}
+              topologyKey: kubernetes.io/hostname
+      {{- with .Values.authServer.affinity }}
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.authServer.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+{{- end }}
