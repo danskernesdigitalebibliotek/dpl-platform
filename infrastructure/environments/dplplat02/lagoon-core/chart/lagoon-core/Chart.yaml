@@ -1,21 +1,17 @@
 annotations:
   artifacthub.io/changes: |
-    - kind: changed
-      description: update lagoon backup schedule to support changing to k8up.io
-    - kind: removed
-      description: removed lagoon-core bitbucket sync and open distro integrations
+    - kind: fixed
+      description: don't deploy any 'ui-beta' resources when not enabled
+    - kind: fixed
+      description: k8upv2 support for api-db/keycloak-db pods
     - kind: added
-      description: support for external database for api and keycloak
-    - kind: added
-      description: initial beta-ui inclusion
+      description: configurable k8up backupcommand
     - kind: changed
-      description: update opensearch-sync to v0.14.2
+      description: update ssh-portal to v0.47.1
     - kind: changed
-      description: update lagoon appVersion to 2.30.0
-    - kind: changed
-      description: update insights-handler to v0.0.10
+      description: update insights-handler to v0.0.11
 apiVersion: v2
-appVersion: v2.30.0
+appVersion: v2.31.0
 dependencies:
 - condition: nats.enabled
   name: nats
@@ -34,4 +30,4 @@ maintainers:
   url: https://amazee.io
 name: lagoon-core
 type: application
-version: 1.59.0
+version: 1.60.0
