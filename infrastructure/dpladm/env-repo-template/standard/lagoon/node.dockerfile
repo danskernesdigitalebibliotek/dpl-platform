@@ -20,6 +20,27 @@ RUN node ./scripts/prepare-docker-env-vars.mjs && \
     corepack enable && \
     pnpm run build:stage2
 
+# Drop devDependencies before the runner stage copies /app, so Storybook,
+# Cypress, Vitest and the rest of the build-time tooling do not ship to
+# production.
+#
+# Must run from /app/go, not the workspace root: with sharedWorkspaceLockfile
+# disabled, `pnpm prune` at /app only considers the root project — which has no
+# dependencies at all — and silently leaves go's node_modules untouched.
+#
+# Deliberately no --no-optional. sharp's native binaries
+# (@img/sharp-linuxmusl-x64 and @img/sharp-libvips-linuxmusl-x64) are
+# optionalDependencies, and pruning them makes `require("sharp")` throw
+# "Could not load the sharp module", which breaks next/image at request time.
+RUN corepack pnpm prune --prod
+
+# The service-layer workspace package ships in the image as well (go imports it
+# through a file: dependency) and carries its own eslint/orval/vite/vitest tree.
+WORKDIR /app/packages/service-layer
+RUN corepack pnpm prune --prod --no-optional
+
+WORKDIR /app/go
+
 # Production image, copy all the files and run next
 FROM uselagoon/node-${NODE_VERSION}:${LAGOON_IMAGES_RELEASE_TAG} AS runner
 
