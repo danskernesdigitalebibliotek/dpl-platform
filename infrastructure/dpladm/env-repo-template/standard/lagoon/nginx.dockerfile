@@ -5,7 +5,7 @@ FROM uselagoon/nginx-drupal:${LAGOON_IMAGES_RELEASE_TAG}
 
 COPY --from=cli /app /app
 
-# Following COPY blocks are taken from the nginx.dockerfile form the dpl-cms repo.
+# Following COPY blocks are taken from the nginx.dockerfile in the dpl-web repo.
 # They are used to add custom nginx configuration to the image.
 # TODO: Find a better way of NOT duplicating this code.
 COPY lagoon/conf/nginx/metrics /app/cms/web/_metrics
