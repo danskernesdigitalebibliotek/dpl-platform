@@ -98,7 +98,7 @@ buildDeployImage:
   default:
     # when updating this chart, ensure that if there are any changes made to the build-deploy-tool repository
     # and a new image tag is released, that this image tag is updated to reference the new image version
-    image: uselagoon/build-deploy-image:core-v2.30.0
+    image: uselagoon/build-deploy-image:core-v2.31.0
   edge:
     enabled: false
 
@@ -180,6 +180,10 @@ apiDB:
   vendor: mariadb
   # Disable apiDB statefulset and service.
   useExternal: false
+  backupCommand: >-
+    /bin/sh -c "mysqldump --max-allowed-packet=500M --events --routines --quick
+    --add-locks --no-autocommit --single-transaction --all-databases"
+
   image:
     repository: uselagoon/api-db
     pullPolicy: Always
@@ -190,11 +194,7 @@ apiDB:
     type: ClusterIP
     port: 3306
 
-  podAnnotations:
-    appuio.ch/backupcommand: >
-      /bin/sh -c "mysqldump --max-allowed-packet=500M --events --routines
-      --quick --add-locks --no-autocommit --single-transaction --all-databases"
-    backup.appuio.ch/file-extension: .api-db.sql
+  podAnnotations: {}
 
   securityContext: {}
 
@@ -330,7 +330,10 @@ keycloakDB:
   vendor: mariadb
   # Disable apiDB statefulset and service.
   useExternal: false
-  replicaCount: 1
+  backupCommand: >-
+    /bin/sh -c "mysqldump --max-allowed-packet=500M --events --routines --quick --add-locks
+    --no-autocommit --single-transaction --all-databases"
+
   image:
     repository: uselagoon/keycloak-db
     pullPolicy: Always
@@ -341,11 +344,7 @@ keycloakDB:
     type: ClusterIP
     port: 3306
 
-  podAnnotations:
-    appuio.ch/backupcommand: >
-      /bin/sh -c "mysqldump --max-allowed-packet=500M --events --routines
-      --quick --add-locks --no-autocommit --single-transaction --all-databases"
-    backup.appuio.ch/file-extension: .keycloak-db.sql
+  podAnnotations: {}
 
   securityContext: {}
 
@@ -705,7 +704,7 @@ insightsHandler:
     repository: uselagoon/insights-handler
     pullPolicy: Always
     # Overrides the image tag whose default is the chart appVersion.
-    tag: "v0.0.10"
+    tag: "v0.0.11"
 
   podAnnotations: {}
 
@@ -1012,7 +1011,7 @@ sshPortalAPI:
     repository: ghcr.io/uselagoon/lagoon-ssh-portal/ssh-portal-api
     pullPolicy: IfNotPresent
     # Overrides the image tag whose default is the chart appVersion.
-    tag: "v0.45.0"
+    tag: "v0.47.1"
 
   command:
     - /ssh-portal-api
@@ -1088,7 +1087,7 @@ sshToken:
     repository: ghcr.io/uselagoon/lagoon-ssh-portal/ssh-token
     pullPolicy: IfNotPresent
     # Overrides the image tag whose default is the chart appVersion.
-    tag: "v0.45.0"
+    tag: "v0.47.1"
 
   command:
     - /ssh-token
