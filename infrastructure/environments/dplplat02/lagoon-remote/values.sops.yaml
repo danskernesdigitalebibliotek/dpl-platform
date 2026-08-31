@@ -159,7 +159,7 @@ lagoon-build-deploy:
     # sensible defaults.
     # lagoonTargetName:
     #ENCRYPT
-    taskSSHHost: ENC[AES256_GCM,data:lL66SF2YZvhR0WnW7Q==,iv:V0OWyrb9P+Zm7TgFTSkEH6dEBOK7SIAy7Sl5uB+tjCg=,tag:WAVljcu7hsI70vHFPC9czQ==,type:str]
+    taskSSHHost: ENC[AES256_GCM,data:90qF/Gc/4m7IrgiILA==,iv:Z20DVNnnA18nmouO2c2XHIhBnyqAoNufoL9AfqghfMs=,tag:bUxjDRm8LCD44ColWsuDFA==,type:str]
     taskSSHPort: 22
     taskAPIHost: api.lagoon.dplplat02.dpl.reload.dk
     # lagoonTokenHost: ""
@@ -168,9 +168,9 @@ lagoon-build-deploy:
     # sshPortalHost: ""
     # sshPortalPort: ""
     #ENCRYPT
-    rabbitMQUsername: ENC[AES256_GCM,data:RygS1tDx,iv:Ytdzd102uOjjTwig5IOj8o5wUPgkzx4kf2mQNWkyliU=,tag:eZinhDqOHpCiKLjU35Vpbw==,type:str]
+    rabbitMQUsername: ENC[AES256_GCM,data:mE2ajOTV,iv:dvV8vms6hGF+w5YzeRluV+KSpU23Gd9Y7QbHPQAO9kE=,tag:UZmDKvOn80dSEakSTew7Nw==,type:str]
     #ENCRYPT
-    rabbitMQPassword: ENC[AES256_GCM,data:nnDlcB4O+Q10zmcwS4xW/lH6fr632qnE5wQxvPjs,iv:N6TmSVJkoFv7qkIX+APItFwK0afa4PmAxkZigXKjyws=,tag:L2PokjON46zg0GchYAM/DA==,type:str]
+    rabbitMQPassword: ENC[AES256_GCM,data:1kfQDzJNAYG6uui62s/yPIkLeF3Cj+EnArbNImO1,iv:H+44dml49ZdHi2wqQlx83O3gM5sY6zZW50IeuX0bqUE=,tag:cCrIFDgqXwZrMqUjl4FK+g==,type:str]
     rabbitMQHostname: lagoon-core-broker.lagoon-core.svc.cluster.local
     lagoonTargetName: lagoon
     lagoonFeatureFlagDefaultRootlessWorkload: enabled
@@ -181,9 +181,9 @@ lagoon-build-deploy:
         - --harbor-url=https://harbor.lagoon.dplplat02.dpl.reload.dk
         - --harbor-api=https://harbor.lagoon.dplplat02.dpl.reload.dk/api/
         #ENCRYPT
-        - ENC[AES256_GCM,data:gx4PbxXxRkGgJuvMb+rkFB4c9q+HMvM=,iv:9Q6Y0D8ZG8IITVKAFYUW1GuEqTTCV5aJlEUUycwv/OE=,tag:Il1Xne6lUHxS9uqMcqJNXA==,type:str]
+        - ENC[AES256_GCM,data:8DMKc9v4wvBucq/jBKFlrebBWgu6gtM=,iv:EZ8SnGvm0bfSi2BWkthUv7RgiyNfm7Lwj+ehEFXBSdw=,tag:0DENf6DzWIxWQFB35g82eQ==,type:str]
         #ENCRYPT
-        - ENC[AES256_GCM,data:uuSqH/tHK3lFsxbETQXKfr6nXBxPyz2Vk+NOikyaHEgUlVdNqvA=,iv:EOGtwxrpv8lLgyTX18FcsRN9usrNR7iaKk0rJ+cD8wQ=,tag:srufRpMOyft9XvXEzJ8vVg==,type:str]
+        - ENC[AES256_GCM,data:3ZwGmHvgU/NyfjRs68BFfBSEbOdKfjClKtWb1DRc89ziemvN4Ec=,iv:0ls2Pu6aw1hDxe4rpU1WySifCgliPMGOy7IrpNqdAb0=,tag:FM2SWF5GXVSCPjLsHnRLlw==,type:str]
         - --enable-qos
         - --qos-max-builds=8
         - --qos-total-builds=16
@@ -220,20 +220,20 @@ dbaas-operator:
             readReplicaHostnames:
                 - mariadb-10-6-22-production-1.mariadb-10-6-22-production-1.svc.cluster.local
             #ENCRYPT
-            password: ENC[AES256_GCM,data:DWmG0OxnbhR3uh3oqft0JSWbEZLPgKAg,iv:LIFlTZkIlc8FuhBN/IHJ3lygZgJpGtOgY4eskR6HhOQ=,tag:1JZBwl38US1inCZr9bUSlQ==,type:str]
+            password: ENC[AES256_GCM,data:SGJ4Q1evzKnptx7h7kxsqyF8xHeZUrRf,iv:67ZbJuIuxfXMSgrp4uQOwxDl1KUmzyeSbuuDR1EW5gY=,tag:ibmju2C+2AZ1JSrsSPEQRA==,type:str]
             port: 3306
             #ENCRYPT
-            user: ENC[AES256_GCM,data:nHsHRA==,iv:KmrduxrDQ1WUuX+iSK7UePTAfKj8L/6TPG+Y2MasB9c=,tag:5cwXInSESmswYLuOdU3RCA==,type:str]
+            user: ENC[AES256_GCM,data:uVI4Ew==,iv:pVRhKnGGWuSRP5MJ6TSK70j4+DrBGe9CN3KNcAN4JbE=,tag:DWPg2BqZtRen0LmjxUG5dg==,type:str]
         development:
             environment: development
             hostname: mariadb-10-06-01-test.mariadb-10-06-01-test.svc.cluster.local
             readReplicaHostnames:
                 - mariadb-10-06-01-test.mariadb-10-06-01-test.svc.cluster.local
             #ENCRYPT
-            password: ENC[AES256_GCM,data:rOh58EEqfKEaJd5uElSgMkP+X4rntDjIBagM0w==,iv:LN+S/Vj/pdaUtagWFbOO+qFd+pNsHJDrH0icu+EP/ok=,tag:yCZPM9fe6GHozbgY/yiNPA==,type:str]
+            password: ENC[AES256_GCM,data:eQPOJaslbMX2CdVATUUauWP5VUf5b4UvDOUyNw==,iv:AFMVef6Gv9BTpRZH+mdhQkmIG7Bk2xzDIbye5fY5aZE=,tag:YWxkIZlCeL8wSp1natKodQ==,type:str]
             port: 3306
             #ENCRYPT
-            user: ENC[AES256_GCM,data:J8itkQ==,iv:5E+HRgXrEC1yLFll2nNoEX48BrP7mQGVT91pSAZxlVA=,tag:u+kIVw6tM+aSeLhnpaC2xw==,type:str]
+            user: ENC[AES256_GCM,data:0cidMw==,iv:6eImje+wVhBwNZmQR/p/D4egQj5iaNaIE2URE9ZBMZc=,tag:tsRUh+8t+zGGD4pbWZMlGQ==,type:str]
     nodeSelector:
         node-role.kubernetes.io/prod: ""
     tolerations:
@@ -272,7 +272,7 @@ insightsRemote:
         repository: uselagoon/insights-remote
         pullPolicy: Always
         # Overrides the image tag whose default is the chart appVersion.
-        tag: v0.0.17
+        tag: v0.0.18
     imagePullSecrets: []
     nameOverride: ""
     fullnameOverride: ""
@@ -505,7 +505,7 @@ storageCalculator:
         repository: uselagoon/remote-calculator
         pullPolicy: IfNotPresent
         # Overrides the image tag whose default is the chart appVersion.
-        tag: v0.9.2
+        tag: v0.9.3
     broker:
         # enable if providing a custom CA for broker connections
         tlsCA:
@@ -543,19 +543,19 @@ sops:
         - vault_url: https://kv-dplplat01-c3b2.vault.azure.net
           name: sops-key
           version: d82fe2456d6e4c4aaaaf808226bd5769
-          created_at: "2026-08-24T11:38:39Z"
-          enc: GSIlCD4C5lPR-SaasToKLtl5qOn0e6VcLEo4F2SBNGTreCSGKY52pjZVxvB6FsFKaADDVA1FpAeYcuclzbK3oGKL8XWalc6gVwqD2id6XOqNA26TuztosYgx2TlU_8jFr1eQVEWl8Lwg_vLQRieH0_qy2epnrEZ8UZou89-B4HQCxzjh9c16ITjtSTxDUcwG-IstZZFZqCmV9fjL1Qrw2EVbjz4zQkCb1TMkxznH1UaXkotHqeOiz-FbCDEqM-1q7zv0Wb2VFPIobmzkqJsHgr2Sl_t7yonkdg0MON37TzYMSEP8oxT3AbuDUf1ZfBcX7TeYKbrhpb56HS-0BKzpbcW-KmpyLr2zfzZgbXo8G73EeAo3j7OSBNwxgY1jJC_jMHB-w41f5KkYrKLw_ZaEiar7ezzgvrS_9Qaj0FSPlIqa_3m3u6b0JUoMnWhw4wR8r4DWk74ymPKINc6dSOpqikBgvnK3nrupkMKxK84XsqGWV7FQ_Ywg-PdEROqRnsOiy4c836enghG1eYWe1iwe-YhxkIj35nybc3JzgM6hhsHrYBa6WN4AfD6NvYKXtkmk_CZ8vI8aH9p0JTPFtTvd9v2IHmmR8IlMngV3G2Dopzzm-ub6xs3efZrt0OKun8g6h48ZsQFLpyuir02X7Scc0UIpTA5Dv9J7CE3g2r0O4Qo
+          created_at: "2026-08-31T05:28:57Z"
+          enc: h42HWgvrIcIcl7nJV_a_1JbzhHU9DG_xOBkyvxTYi1qo1ZGikcvLEskhRhwVCHgH9lb4E5CRLQofkxMQdId28xjMjlqNBA3Wc3xrzRx68gidiqvnAimStnSYJzYjO0nQIZmvnf995Ds_Lopltz1AJNtaFhDJryq-HFuQmSKz45oNXm9xFb2NXpNdIK4mh8jfMqil_h__o1tjyx_ppcXt9M4PWabN46FcF_uK96XmYWT6th7VPHD6I6fBPKyRTLmQCSOrdABGHE8nlZbj8pD4X67dB-_e9OxbBM8bFNBy4sqlhzkLMa1qwC_PYfY3YNCPPSNWiHM_xtO0tSbDvCJ36Sw17Pcpn9shVnqXd-YQl93WMyk9jm8vbMg4HFmWFNnvLKtY9eXx_yHRqi1_TpDcKshYk5S_HyO5j1MO-_KjO8m0YdjBj1fVMvP7Wepk0FpHeqXTaq2kirIi-GApr-2idAsEXewfPc62VYAu1M4QG2UHBlLwVyqBOZ5T-nTD7uC1PEYrpSDe3rdVYsrYqtdung7VtAMEcSqN-R350vqk_swJSR5CYtuIlhUWyujNwKcR6EwG6UDMaGNhtESpUL1K-hbuYGy7KROaMUJXyouWaDcP5pmrNhHAQAes8nv11h4XDHvZWYtWmNG4apxTSKF-aDsliOm-hUvTP5gEi4DWlKk
     age:
         - recipient: age1q8yqc5jvhkk7ufj95tw25u3es0846pkrwgcd4pn9ctermr7e6cesn6l0gd
           enc: |
             -----BEGIN AGE ENCRYPTED FILE-----
-            YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSBwMGpxTUxYL0wwWjZFaG91
-            WVpDSlVwaE5iVWRFT3RFM2d4ZzRET1hzOHo0Cms2d2dFQlE5a2p1dHZKVHJqUERM
-            SkM1SlBDU1h1bHEzWUJmTVVSOUsvRTAKLS0tIGFTWVJGWWxRb0pNVWRYUnpWbWUw
-            R1l4b1A5ekp2RUNXSmVadWd6emdSblEKtHRKWkEtEpkkDh3JaRz+LrfFZL2DofOG
-            AkeYAeinK5WD4E8c71Yxy0ZcMzs7srV6CQplZi6tD0s86JAPlDf6XA==
+            YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSBOSi9Zdy9Ka1FIZWtGVmxz
+            VlduQTFHUGhzVnFKWmJyZDdYdGNxMUhpTzF3CnNJWmxMeXpqd2tBREczZEVISkc2
+            UDhTcUd1Yk5wOTVOc256cFdtdVljNlkKLS0tIEhZMG1ZNCtlcmJtRHNJWTJLR3R5
+            UWwxT25mdnJLQVR1YkJKYmxLMGxUZG8K+j1eVsLfy7OW8Lekg4VHsz3vHm9I6oAv
+            yfMClW0zUvHioboUUBaHp1DZqMMF6O9VaqQzVkyMUdQyRdlL2gXbAA==
             -----END AGE ENCRYPTED FILE-----
-    lastmodified: "2026-08-24T11:38:41Z"
-    mac: ENC[AES256_GCM,data:iQ7Br5gn9blgYKxpx7DlaACNC6XusH983kspMCRfbmP69lVc1V80ppKMh6+2r+DehU5Qs0MvKCE+uYpfZkbUFXq5tTiGkK8l6wH2OJadg94vHBmyIpZNE3xY7onlv2F7Ek67BlI8sf9ELZLWPBlofsjubjb3f3Zn2c+ZA30fKCI=,iv:Uou69fZzycADuzGa6Ylt5Zp0f4huxkzxS0ZVlR4qveg=,tag:/mnVe8r1jI0sfeYKQ+UNNg==,type:str]
+    lastmodified: "2026-08-31T05:29:00Z"
+    mac: ENC[AES256_GCM,data:CtG9JgMln9Qo6wSccdn76SYtTTscQ9MkR9lqbfdZNtZ1TmAm9y+ozzrPO/WH933DE3Q218XRu3vJqMOYNoNqEFBWRL9QnoiSkghegrugJiaKfhNKkbbrqU4j7qDNg9gsfsLKmaSc0icP4M5ByLdTVekitpeo0qiEOTR93WMKwL0=,iv:J8uqSsoTkUQ9vd2lV4xVOZ3ATrTzOhFMdRfTLuvngek=,tag:RhDMppU7/RNaOTo7gw6tLQ==,type:str]
     encrypted_comment_regex: ENCRYPT
     version: 3.11.0
