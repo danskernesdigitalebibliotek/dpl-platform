@@ -12,7 +12,7 @@ release.
 - A running [dplsh](using-dplsh.md) with `DPLPLAT_ENV` set to the platform
   environment name.
 - The version tag you want to deploy. This must correspond to a
-  tagged version of the [`dpl-cms-source` image](https://github.com/danskernesdigitalebibliotek/dpl-cms/pkgs/container/dpl-cms-source).
+  tagged version of the [`dpl-cms-source` image](https://github.com/danskernesdigitalebibliotek/dpl-web/pkgs/container/dpl-cms-source).
 - The second latest version
 
 ## Procedure: Make the release Pull Request
