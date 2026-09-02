@@ -2,8 +2,8 @@
 x-defaults: &default-release-image-source
   releaseImageRepository: ghcr.io/danskernesdigitalebibliotek
   releaseImageName: dpl-cms-source
-  dpl-cms-release: 2026.34.2
-  go-release: 2026.34.2
+  dpl-cms-release: 2026.36.0
+  go-release: 2026.36.0
   php-version: 8.4
   node-version: 24
 x-webmasters-on-weekly-release-cycle: &webmasters-on-weekly-release-cycle
@@ -12,9 +12,9 @@ x-webmasters-on-weekly-release-cycle: &webmasters-on-weekly-release-cycle
   # production
   releaseImageRepository: ghcr.io/danskernesdigitalebibliotek
   releaseImageName: dpl-cms-source
-  dpl-cms-release: 2026.32.2
-  moduletest-dpl-cms-release: 2026.34.2
-  go-release: 2026.32.2
+  dpl-cms-release: 2026.34.2
+  moduletest-dpl-cms-release: 2026.36.0
+  go-release: 2026.34.2
   php-version: 8.4
   node-version: 24
 sites:
@@ -84,7 +84,7 @@ sites:
     # deployed to production. Our YAML handling chokes on duplicates to we
     # follow the default release plan and update the module test site manually.
     diskSize: 20
-    moduletest-dpl-cms-release: 2026.34.2
+    moduletest-dpl-cms-release: 2026.36.0
     <<: *default-release-image-source
   bibliotek-test:
     name: "Bibliotekstest"
