@@ -64,7 +64,7 @@ spec:
               },
               "expr": "(\n  (1 - sum without (mode) (rate(node_cpu_seconds_total{job=\"node-exporter\", mode=~\"idle|iowait|steal\", instance=\"$instance\", cluster=\"$cluster\"}[$__rate_interval])))\n/ ignoring(cpu) group_left\n  count without (cpu, mode) (node_cpu_seconds_total{job=\"node-exporter\", mode=\"idle\", instance=\"$instance\", cluster=\"$cluster\"})\n)\n",
               "intervalFactor": 5,
-              "legendFormat": "{cpu}"
+              "legendFormat": "{{ "{{cpu}}" }}"
             }
           ],
           "title": "CPU Usage",
@@ -336,7 +336,7 @@ spec:
               },
               "expr": "rate(node_disk_read_bytes_total{job=\"node-exporter\", instance=\"$instance\", cluster=\"$cluster\", device=~\"(/dev/)?(mmcblk.p.+|nvme.+|rbd.+|sd.+|vd.+|xvd.+|dm-.+|md.+|dasd.+)\"}[$__rate_interval])",
               "intervalFactor": 1,
-              "legendFormat": "{{device}} read"
+              "legendFormat": "{{ "{{device}}"}} read"
             },
             {
               "datasource": {
