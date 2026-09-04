@@ -104,9 +104,11 @@ spec:
                   mountPath: /etc/grafana/provisioning/datasources
           volumes:
             - name: dashboards
-              emptyDir: {}
+              persistentVolumeClaim:
+                claimName: grafana-dashboards
             - name: datasources
-              emptyDir: {}
+              persistentVolumeClaim:
+                claimName: grafana-datasources
             - name: dashboard-provisioning-config
               configMap:
                 name: dashboard-provisioning-config
