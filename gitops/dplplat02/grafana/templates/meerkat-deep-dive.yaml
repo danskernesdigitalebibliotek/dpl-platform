@@ -1,0 +1,996 @@
+apiVersion: grafana.integreatly.org/v1beta1
+kind: GrafanaDashboard
+metadata:
+  name: meerkat-deep-dive-dashboard
+spec:
+  allowCrossNamespaceImport: true
+  instanceSelector:
+    matchLabels:
+      instance: grafana
+  json: >
+    {
+      "annotations": {
+        "list": [
+          {
+            "builtIn": 1,
+            "datasource": {
+              "type": "grafana",
+              "uid": "-- Grafana --"
+            },
+            "enable": true,
+            "hide": true,
+            "iconColor": "rgba(0, 211, 255, 1)",
+            "name": "Annotations & Alerts",
+            "type": "dashboard"
+          }
+        ]
+      },
+      "editable": true,
+      "fiscalYearStartMonth": 0,
+      "graphTooltip": 0,
+      "id": null,
+      "links": [
+        {
+          "asDropdown": false,
+          "icon": "dashboard",
+          "includeVars": true,
+          "keepTime": true,
+          "tags": [],
+          "targetBlank": false,
+          "title": "Meerkat Overview",
+          "tooltip": "",
+          "type": "link",
+          "url": "/d/meerkat-overview/meerkat-overview"
+        }
+      ],
+      "panels": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "thresholds"
+              },
+              "mappings": [],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green",
+                    "value": null
+                  }
+                ]
+              },
+              "unit": "short"
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 4,
+            "w": 6,
+            "x": 0,
+            "y": 0
+          },
+          "id": 1,
+          "options": {
+            "colorMode": "value",
+            "graphMode": "none",
+            "justifyMode": "center",
+            "orientation": "auto",
+            "percentChangeColorMode": "standard",
+            "reduceOptions": {
+              "calcs": ["lastNotNull"],
+              "fields": "",
+              "values": false
+            },
+            "showPercentChange": false,
+            "textMode": "value",
+            "wideLayout": false
+          },
+          "pluginVersion": "11.4.0",
+          "targets": [
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "prometheus"
+              },
+              "expr": "sum(meerkat_runtime_image_inventory_images{state=\"total\"}) or vector(0)",
+              "instant": true,
+              "legendFormat": "",
+              "range": false,
+              "refId": "A"
+            }
+          ],
+          "title": "Unique images",
+          "type": "stat"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "thresholds"
+              },
+              "mappings": [],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green",
+                    "value": null
+                  }
+                ]
+              },
+              "unit": "short"
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 4,
+            "w": 6,
+            "x": 6,
+            "y": 0
+          },
+          "id": 2,
+          "options": {
+            "colorMode": "value",
+            "graphMode": "none",
+            "justifyMode": "center",
+            "orientation": "auto",
+            "percentChangeColorMode": "standard",
+            "reduceOptions": {
+              "calcs": ["lastNotNull"],
+              "fields": "",
+              "values": false
+            },
+            "showPercentChange": false,
+            "textMode": "value",
+            "wideLayout": false
+          },
+          "pluginVersion": "11.4.0",
+          "targets": [
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "prometheus"
+              },
+              "expr": "sum(meerkat_runtime_image_inventory_resources) or vector(0)",
+              "instant": true,
+              "legendFormat": "",
+              "range": false,
+              "refId": "A"
+            }
+          ],
+          "title": "Resources tracked",
+          "type": "stat"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "thresholds"
+              },
+              "mappings": [],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green",
+                    "value": null
+                  }
+                ]
+              },
+              "unit": "dateTimeAsIso"
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 4,
+            "w": 6,
+            "x": 12,
+            "y": 0
+          },
+          "id": 3,
+          "options": {
+            "colorMode": "value",
+            "graphMode": "none",
+            "justifyMode": "center",
+            "orientation": "auto",
+            "percentChangeColorMode": "standard",
+            "reduceOptions": {
+              "calcs": ["lastNotNull"],
+              "fields": "",
+              "values": false
+            },
+            "showPercentChange": false,
+            "textMode": "value",
+            "wideLayout": false
+          },
+          "pluginVersion": "11.4.0",
+          "targets": [
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "prometheus"
+              },
+              "expr": "(max(meerkat_runtime_image_inventory_last_updated_timestamp_seconds) * 1000) or vector(0)",
+              "instant": true,
+              "legendFormat": "",
+              "range": false,
+              "refId": "A"
+            }
+          ],
+          "title": "Last inventory update",
+          "type": "stat"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "thresholds"
+              },
+              "mappings": [],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "yellow",
+                    "value": null
+                  }
+                ]
+              },
+              "unit": "short"
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 4,
+            "w": 6,
+            "x": 18,
+            "y": 0
+          },
+          "id": 4,
+          "options": {
+            "colorMode": "value",
+            "graphMode": "none",
+            "justifyMode": "center",
+            "orientation": "auto",
+            "percentChangeColorMode": "standard",
+            "reduceOptions": {
+              "calcs": ["lastNotNull"],
+              "fields": "",
+              "values": false
+            },
+            "showPercentChange": false,
+            "textMode": "value",
+            "wideLayout": false
+          },
+          "pluginVersion": "11.4.0",
+          "targets": [
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "prometheus"
+              },
+              "expr": "(${only_fixable_cves} * (sum(meerkat_runtime_image_inventory_fixable_vulnerabilities{severity=~\"${vuln_severity:pipe}\"}) or vector(0))) + ((1 - ${only_fixable_cves}) * (sum(meerkat_runtime_image_inventory_vulnerabilities{dedupe=\"none\",severity=~\"${vuln_severity:pipe}\"}) or vector(0)))",
+              "instant": true,
+              "legendFormat": "",
+              "range": false,
+              "refId": "A"
+            }
+          ],
+          "title": "CVEs",
+          "type": "stat"
+        },
+        {
+          "datasource": {
+            "type": "yesoreyeram-infinity-datasource",
+            "uid": "meerkat-api"
+          },
+          "fieldConfig": {
+            "defaults": {
+              "custom": {
+                "align": "auto",
+                "cellOptions": {
+                  "type": "auto"
+                },
+                "inspect": false
+              },
+              "mappings": [],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green",
+                    "value": null
+                  }
+                ]
+              },
+              "unit": "short"
+            },
+            "overrides": [
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "CVE id"
+                },
+                "properties": [
+                  {
+                    "id": "links",
+                    "value": [
+                      {
+                        "targetBlank": true,
+                        "title": "Open advisory",
+                        "url": "${__data.fields.advisoryUrl}"
+                      }
+                    ]
+                  },
+                  {
+                    "id": "custom.width",
+                    "value": 170
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "Severity"
+                },
+                "properties": [
+                  {
+                    "id": "mappings",
+                    "value": [
+                      {
+                        "options": {
+                          "0": {
+                            "index": 0,
+                            "text": "UNKNOWN"
+                          },
+                          "1": {
+                            "index": 1,
+                            "text": "LOW"
+                          },
+                          "2": {
+                            "index": 2,
+                            "text": "MEDIUM"
+                          },
+                          "3": {
+                            "index": 3,
+                            "text": "HIGH"
+                          },
+                          "4": {
+                            "index": 4,
+                            "text": "CRITICAL"
+                          }
+                        },
+                        "type": "value"
+                      }
+                    ]
+                  },
+                  {
+                    "id": "custom.width",
+                    "value": 120
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "image count"
+                },
+                "properties": [
+                  {
+                    "id": "custom.align",
+                    "value": "right"
+                  },
+                  {
+                    "id": "custom.width",
+                    "value": 160
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "resource count"
+                },
+                "properties": [
+                  {
+                    "id": "custom.align",
+                    "value": "right"
+                  },
+                  {
+                    "id": "custom.width",
+                    "value": 180
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "image names"
+                },
+                "properties": [
+                  {
+                    "id": "custom.width",
+                    "value": 460
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "resource names"
+                },
+                "properties": [
+                  {
+                    "id": "custom.width",
+                    "value": 760
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "advisoryUrl"
+                },
+                "properties": [
+                  {
+                    "id": "custom.hidden",
+                    "value": true
+                  }
+                ]
+              }
+            ]
+          },
+          "gridPos": {
+            "h": 22,
+            "w": 12,
+            "x": 0,
+            "y": 4
+          },
+          "id": 5,
+          "options": {
+            "cellHeight": "sm",
+            "footer": {
+              "countRows": false,
+              "fields": "",
+              "reducer": ["sum"],
+              "show": false
+            },
+            "showHeader": true
+          },
+          "pluginVersion": "11.4.0",
+          "targets": [
+            {
+              "columns": [
+                {
+                  "selector": "cveId",
+                  "text": "CVE id",
+                  "type": "string"
+                },
+                {
+                  "selector": "severityRank",
+                  "text": "Severity",
+                  "type": "number"
+                },
+                {
+                  "selector": "imageCount",
+                  "text": "image count",
+                  "type": "number"
+                },
+                {
+                  "selector": "resourceCount",
+                  "text": "resource count",
+                  "type": "number"
+                },
+                {
+                  "selector": "imagesAffected",
+                  "text": "image names",
+                  "type": "string"
+                },
+                {
+                  "selector": "resourcesAffected",
+                  "text": "resource names",
+                  "type": "string"
+                },
+                {
+                  "selector": "advisoryUrl",
+                  "text": "advisoryUrl",
+                  "type": "string"
+                }
+              ],
+              "datasource": {
+                "type": "yesoreyeram-infinity-datasource",
+                "uid": "meerkat-api"
+              },
+              "filters": [],
+              "format": "table",
+              "parser": "jq-backend",
+              "refId": "A",
+              "root_selector": ".items | group_by(.vulnerability.id) | map({cveId: .[0].vulnerability.id, severityRank: ({\"UNKNOWN\":0,\"LOW\":1,\"MEDIUM\":2,\"HIGH\":3,\"CRITICAL\":4}[(map(.vulnerability.severity) | max_by({\"UNKNOWN\":0,\"LOW\":1,\"MEDIUM\":2,\"HIGH\":3,\"CRITICAL\":4}[.] // -1))] // 0), imageCount: (map((.declaredImages // [.imageRef])[]) | unique | length), resourceCount: (map((.refs // [])[]) | unique | length), imagesAffected: (map((.declaredImages // [.imageRef])[]) | unique | join(\", \")), resourcesAffected: (map((.refs // [])[]) | unique | join(\", \"))}) | sort_by(.resourceCount) | reverse | map(. + {advisoryUrl: (if (.cveId | startswith(\"GHSA-\")) then \"https://github.com/advisories/\" + .cveId elif (.cveId | startswith(\"CVE-\")) then \"https://www.cve.org/CVERecord?id=\" + .cveId else \"\" end)} | {cveId, severityRank, imageCount, resourceCount, imagesAffected, resourcesAffected, advisoryUrl})",
+              "source": "url",
+              "type": "json",
+              "url": "/images/running/vulnerabilities?allowDuplicateFindings=true&severity=${vuln_severity:csv}&fixableOnly=${only_fixable_cves}&limit=5000",
+              "url_options": {
+                "method": "GET"
+              }
+            }
+          ],
+          "transformations": [
+            {
+              "id": "organize",
+              "options": {
+                "indexByName": {
+                  "CVE id": 0,
+                  "Severity": 1,
+                  "image count": 2,
+                  "resource count": 3,
+                  "image names": 4,
+                  "resource names": 5,
+                  "advisoryUrl": 6
+                }
+              }
+            }
+          ],
+          "title": "Ranked CVEs in running inventory",
+          "type": "table"
+        },
+        {
+          "datasource": {
+            "type": "yesoreyeram-infinity-datasource",
+            "uid": "meerkat-api"
+          },
+          "fieldConfig": {
+            "defaults": {
+              "custom": {
+                "align": "auto",
+                "cellOptions": {
+                  "type": "auto"
+                },
+                "inspect": false
+              },
+              "mappings": [],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green",
+                    "value": null
+                  }
+                ]
+              },
+              "unit": "short"
+            },
+            "overrides": [
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "imageId"
+                },
+                "properties": [
+                  {
+                    "id": "custom.width",
+                    "value": 360
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "resource names"
+                },
+                "properties": [
+                  {
+                    "id": "custom.width",
+                    "value": 420
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "# of fixable CVEs"
+                },
+                "properties": [
+                  {
+                    "id": "custom.align",
+                    "value": "right"
+                  },
+                  {
+                    "id": "custom.width",
+                    "value": 150
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "# of non-fixable CVEs"
+                },
+                "properties": [
+                  {
+                    "id": "custom.align",
+                    "value": "right"
+                  },
+                  {
+                    "id": "custom.width",
+                    "value": 180
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "Fixable CVEs"
+                },
+                "properties": [
+                  {
+                    "id": "custom.cellOptions",
+                    "value": {
+                      "type": "markdown"
+                    }
+                  },
+                  {
+                    "id": "custom.width",
+                    "value": 420
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "Non-fixable CVEs"
+                },
+                "properties": [
+                  {
+                    "id": "custom.cellOptions",
+                    "value": {
+                      "type": "markdown"
+                    }
+                  },
+                  {
+                    "id": "custom.width",
+                    "value": 420
+                  }
+                ]
+              }
+            ]
+          },
+          "gridPos": {
+            "h": 22,
+            "w": 12,
+            "x": 12,
+            "y": 4
+          },
+          "id": 6,
+          "options": {
+            "cellHeight": "sm",
+            "footer": {
+              "countRows": false,
+              "fields": "",
+              "reducer": ["sum"],
+              "show": false
+            },
+            "showHeader": true
+          },
+          "pluginVersion": "11.4.0",
+          "targets": [
+            {
+              "columns": [
+                {
+                  "selector": "imageId",
+                  "text": "imageId",
+                  "type": "string"
+                },
+                {
+                  "selector": "resources",
+                  "text": "resource names",
+                  "type": "string"
+                },
+                {
+                  "selector": "fixableCveCount",
+                  "text": "# of fixable CVEs",
+                  "type": "number"
+                },
+                {
+                  "selector": "nonFixableCveCount",
+                  "text": "# of non-fixable CVEs",
+                  "type": "number"
+                },
+                {
+                  "selector": "fixableCves",
+                  "text": "Fixable CVEs",
+                  "type": "string"
+                },
+                {
+                  "selector": "nonFixableCves",
+                  "text": "Non-fixable CVEs",
+                  "type": "string"
+                }
+              ],
+              "datasource": {
+                "type": "yesoreyeram-infinity-datasource",
+                "uid": "meerkat-api"
+              },
+              "filters": [],
+              "format": "table",
+              "parser": "jq-backend",
+              "refId": "A",
+              "root_selector": "def severity_rank: {\"UNKNOWN\":0,\"LOW\":1,\"MEDIUM\":2,\"HIGH\":3,\"CRITICAL\":4}[.] // -1; def advisory_url($id): if ($id | startswith(\"GHSA-\")) then \"https://github.com/advisories/\" + $id elif ($id | startswith(\"CVE-\")) then \"https://www.cve.org/CVERecord?id=\" + $id else \"\" end; def advisory_link($id): if (advisory_url($id) == \"\") then $id else \"[\" + $id + \"](\" + advisory_url($id) + \")\" end; .items | map(. + {imageKey: (((.imageIds // []) | unique | if length > 0 then join(\", \") else empty end) // .imageRef), imageTrace: ((.declaredImages // [.imageRef]) | unique | join(\", \"))}) | group_by(.imageKey) | map({imageId: (.[0].imageKey + (if ((map(.imageTrace) | unique | join(\", \")) != .[0].imageKey) then \"\\n\" + (map(.imageTrace) | unique | join(\", \")) else \"\" end)), resources: ([.[].refs[]?] | unique | join(\", \")), vulnerabilities: (group_by(.vulnerability.id) | map({id: .[0].vulnerability.id, severityRank: (map(.vulnerability.severity | severity_rank) | max), fixable: any(.[]; ((.vulnerability.fixedVersion // \"\") | gsub(\"^\\\\s+|\\\\s+$\"; \"\") | length) > 0)}) | sort_by(-.severityRank, .id))}) | map(. + {fixableCveCount: ([.vulnerabilities[] | select(.fixable)] | length), nonFixableCveCount: ([.vulnerabilities[] | select(.fixable | not)] | length), fixableCves: ([.vulnerabilities[] | select(.fixable) | advisory_link(.id)] | join(\", \")), nonFixableCves: ([.vulnerabilities[] | select(.fixable | not) | advisory_link(.id)] | join(\", \"))}) | sort_by((.fixableCveCount + .nonFixableCveCount), .fixableCveCount, .nonFixableCveCount, .imageId) | reverse | map({imageId, resources, fixableCveCount, nonFixableCveCount, fixableCves, nonFixableCves})",
+              "source": "url",
+              "type": "json",
+              "url": "/images/running/vulnerabilities?allowDuplicateFindings=true&severity=${vuln_severity:csv}&limit=5000",
+              "url_options": {
+                "method": "GET"
+              }
+            }
+          ],
+          "transformations": [
+            {
+              "id": "organize",
+              "options": {
+                "indexByName": {
+                  "imageId": 0,
+                  "resource names": 1,
+                  "# of fixable CVEs": 2,
+                  "# of non-fixable CVEs": 3,
+                  "Fixable CVEs": 4,
+                  "Non-fixable CVEs": 5
+                }
+              }
+            }
+          ],
+          "title": "Ranked images in running inventory",
+          "type": "table"
+        },
+        {
+          "datasource": {
+            "type": "yesoreyeram-infinity-datasource",
+            "uid": "meerkat-api"
+          },
+          "fieldConfig": {
+            "defaults": {
+              "custom": {
+                "align": "auto",
+                "cellOptions": {
+                  "type": "auto"
+                },
+                "inspect": false
+              },
+              "mappings": [],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green",
+                    "value": null
+                  }
+                ]
+              },
+              "unit": "short"
+            },
+            "overrides": [
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "imageId"
+                },
+                "properties": [
+                  {
+                    "id": "custom.width",
+                    "value": 720
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "status"
+                },
+                "properties": [
+                  {
+                    "id": "custom.width",
+                    "value": 160
+                  }
+                ]
+              }
+            ]
+          },
+          "gridPos": {
+            "h": 10,
+            "w": 24,
+            "x": 0,
+            "y": 26
+          },
+          "id": 7,
+          "options": {
+            "cellHeight": "sm",
+            "footer": {
+              "countRows": false,
+              "fields": "",
+              "reducer": ["sum"],
+              "show": false
+            },
+            "showHeader": true
+          },
+          "pluginVersion": "11.4.0",
+          "targets": [
+            {
+              "columns": [
+                {
+                  "selector": "imageId",
+                  "text": "imageId",
+                  "type": "string"
+                },
+                {
+                  "selector": "status",
+                  "text": "status",
+                  "type": "string"
+                },
+                {
+                  "selector": "reason",
+                  "text": "reason",
+                  "type": "string"
+                }
+              ],
+              "datasource": {
+                "type": "yesoreyeram-infinity-datasource",
+                "uid": "meerkat-api"
+              },
+              "filters": [],
+              "format": "table",
+              "parser": "jq-backend",
+              "refId": "A",
+              "root_selector": "([.images[]? | select(.scan.status == \"failed\") | {imageId: (.imageId // .scanImageRef // .declaredImage), status: \"failed\", reason: (.scan.failureReason // \"\")}] + [.images[]? | select(.scanImageRef == null) | {imageId: (.imageId // .declaredImage), status: \"unscannable\", reason: (.unscannableReason // \"\")}] + [(.omittedImages // [])[] | {imageId: (.imageId // .scanImageRef // .declaredImage), status: \"omitted\", reason: \"\"}]) | sort_by(.status, .imageId)",
+              "source": "url",
+              "type": "json",
+              "url": "/images/running?includeSkippedImages=${show_skipped_images}",
+              "url_options": {
+                "method": "GET"
+              }
+            }
+          ],
+          "transformations": [
+            {
+              "id": "organize",
+              "options": {
+                "indexByName": {
+                  "imageId": 0,
+                  "status": 1,
+                  "reason": 2
+                }
+              }
+            }
+          ],
+          "title": "Omitted, unscannable, or failed scans",
+          "type": "table"
+        }
+      ],
+      "refresh": "",
+      "schemaVersion": 40,
+      "tags": ["meerkat", "inventory"],
+      "templating": {
+        "list": [
+          {
+            "current": {
+              "text": ["CRITICAL", "HIGH"],
+              "value": ["CRITICAL", "HIGH"]
+            },
+            "includeAll": true,
+            "label": "Vulnerability severity",
+            "multi": true,
+            "name": "vuln_severity",
+            "options": [
+              {
+                "selected": false,
+                "text": "All",
+                "value": "$__all"
+              },
+              {
+                "selected": true,
+                "text": "CRITICAL",
+                "value": "CRITICAL"
+              },
+              {
+                "selected": true,
+                "text": "HIGH",
+                "value": "HIGH"
+              },
+              {
+                "selected": false,
+                "text": "MEDIUM",
+                "value": "MEDIUM"
+              },
+              {
+                "selected": false,
+                "text": "LOW",
+                "value": "LOW"
+              },
+              {
+                "selected": false,
+                "text": "UNKNOWN",
+                "value": "UNKNOWN"
+              }
+            ],
+            "query": "CRITICAL,HIGH,MEDIUM,LOW,UNKNOWN",
+            "type": "custom"
+          },
+          {
+            "current": {
+              "text": "Yes",
+              "value": "1"
+            },
+            "includeAll": false,
+            "label": "Only fixable CVEs",
+            "multi": false,
+            "name": "only_fixable_cves",
+            "options": [
+              {
+                "selected": true,
+                "text": "Yes",
+                "value": "1"
+              },
+              {
+                "selected": false,
+                "text": "No",
+                "value": "0"
+              }
+            ],
+            "query": "Yes : 1, No : 0",
+            "type": "custom"
+          },
+          {
+            "current": {
+              "text": "Yes",
+              "value": "1"
+            },
+            "includeAll": false,
+            "label": "Show omitted images",
+            "multi": false,
+            "name": "show_skipped_images",
+            "options": [
+              {
+                "selected": true,
+                "text": "Yes",
+                "value": "1"
+              },
+              {
+                "selected": false,
+                "text": "No",
+                "value": "0"
+              }
+            ],
+            "query": "Yes : 1, No : 0",
+            "type": "custom"
+          }
+        ]
+      },
+      "time": {
+        "from": "now-24h",
+        "to": "now"
+      },
+      "timepicker": {
+        "hidden": true,
+        "refresh_intervals": []
+      },
+      "timezone": "browser",
+      "title": "Meerkat Inventory Details",
+      "uid": "meerkat-deep-dive",
+      "version": 1,
+      "weekStart": ""
+    }
