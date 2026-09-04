@@ -174,7 +174,7 @@ metadata:
 spec:
   accessModes:
     - ReadWriteOnce
-  storageClassName: ceph-block
+  storageClassName: computerome-nfs
   resources:
     requests:
       storage: 1Gi
@@ -187,7 +187,7 @@ metadata:
 spec:
   accessModes:
     - ReadWriteOnce
-  storageClassName: ceph-block
+  storageClassName: computerome-nfs
   resources:
     requests:
       storage: 500Mi
