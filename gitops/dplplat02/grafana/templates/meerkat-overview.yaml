@@ -835,7 +835,7 @@ spec:
               },
               "expr": "meerkat_cluster_scan_last_resources{result=~\"passed|failed|warned|skipped\"}",
               "instant": true,
-              "legendFormat": "{{result}}",
+              "legendFormat": "{{ "{{result}}" }}",
               "range": false,
               "refId": "A"
             }
