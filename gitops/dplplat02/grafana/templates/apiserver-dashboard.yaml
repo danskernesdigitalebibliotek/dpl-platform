@@ -250,7 +250,7 @@ spec:
               "uid": "${datasource}"
             },
             "expr": "sum by (code) (code_resource:apiserver_request_total:rate5m{verb=\"read\", cluster=\"$cluster\"})",
-            "legendFormat": "{{ code }}"
+            "legendFormat": "{{ "{{code}}" }}"
           }
         ],
         "title": "Read SLI - Requests",
@@ -294,7 +294,7 @@ spec:
               "uid": "${datasource}"
             },
             "expr": "sum by (resource) (code_resource:apiserver_request_total:rate5m{verb=\"read\",code=~\"5..\", cluster=\"$cluster\"}) / sum by (resource) (code_resource:apiserver_request_total:rate5m{verb=\"read\", cluster=\"$cluster\"})",
-            "legendFormat": "{{ resource }}"
+            "legendFormat": "{{ "{{resource}}" }}"
           }
         ],
         "title": "Read SLI - Errors",
@@ -337,7 +337,7 @@ spec:
               "uid": "${datasource}"
             },
             "expr": "cluster_quantile:apiserver_request_sli_duration_seconds:histogram_quantile{verb=\"read\", cluster=\"$cluster\"}",
-            "legendFormat": "{{ resource }}"
+            "legendFormat": "{{ "{{resource}}" }}"
           }
         ],
         "title": "Read SLI - Duration",
@@ -469,7 +469,7 @@ spec:
               "uid": "${datasource}"
             },
             "expr": "sum by (code) (code_resource:apiserver_request_total:rate5m{verb=\"write\", cluster=\"$cluster\"})",
-            "legendFormat": "{{ code }}"
+            "legendFormat": "{{ "{{code}}" }}"
           }
         ],
         "title": "Write SLI - Requests",
@@ -513,7 +513,7 @@ spec:
               "uid": "${datasource}"
             },
             "expr": "sum by (resource) (code_resource:apiserver_request_total:rate5m{verb=\"write\",code=~\"5..\", cluster=\"$cluster\"}) / sum by (resource) (code_resource:apiserver_request_total:rate5m{verb=\"write\", cluster=\"$cluster\"})",
-            "legendFormat": "{{ resource }}"
+            "legendFormat": "{{ "{{resource}}" }}"
           }
         ],
         "title": "Write SLI - Errors",
@@ -556,7 +556,7 @@ spec:
               "uid": "${datasource}"
             },
             "expr": "cluster_quantile:apiserver_request_sli_duration_seconds:histogram_quantile{verb=\"write\", cluster=\"$cluster\"}",
-            "legendFormat": "{{ resource }}"
+            "legendFormat": "{{ "{{resource}}" }}"
           }
         ],
         "title": "Write SLI - Duration",
@@ -599,7 +599,7 @@ spec:
               "uid": "${datasource}"
             },
             "expr": "sum(rate(workqueue_adds_total{job=\"apiserver\", instance=~\"$instance\", cluster=\"$cluster\"}[$__rate_interval])) by (instance, name)",
-            "legendFormat": "{{instance}} {{name}}"
+            "legendFormat": "{{ "{{instance}}" }} {{ "{{name}}" }}"
           }
         ],
         "title": "Work Queue Add Rate",
@@ -642,7 +642,7 @@ spec:
               "uid": "${datasource}"
             },
             "expr": "sum(rate(workqueue_depth{job=\"apiserver\", instance=~\"$instance\", cluster=\"$cluster\"}[$__rate_interval])) by (instance, name)",
-            "legendFormat": "{{instance}} {{name}}"
+            "legendFormat": "{{ "{{instance}}" }} {{ "{{name}}" }}"
           }
         ],
         "title": "Work Queue Depth",
@@ -688,7 +688,7 @@ spec:
               "uid": "${datasource}"
             },
             "expr": "histogram_quantile(0.99, sum(rate(workqueue_queue_duration_seconds_bucket{job=\"apiserver\", instance=~\"$instance\", cluster=\"$cluster\"}[$__rate_interval])) by (instance, name, le))",
-            "legendFormat": "{{instance}} {{name}}"
+            "legendFormat": "{{ "{{instance}}" }} {{ "{{name}}" }}"
           }
         ],
         "title": "Work Queue Latency",
@@ -730,7 +730,7 @@ spec:
               "uid": "${datasource}"
             },
             "expr": "process_resident_memory_bytes{job=\"apiserver\",instance=~\"$instance\", cluster=\"$cluster\"}",
-            "legendFormat": "{{instance}}"
+            "legendFormat": "{{ "{{instance}}" }}"
           }
         ],
         "title": "Memory",
@@ -773,7 +773,7 @@ spec:
               "uid": "${datasource}"
             },
             "expr": "rate(process_cpu_seconds_total{job=\"apiserver\",instance=~\"$instance\", cluster=\"$cluster\"}[$__rate_interval])",
-            "legendFormat": "{{instance}}"
+            "legendFormat": "{{ "{{instance}}" }}"
           }
         ],
         "title": "CPU usage",
@@ -815,7 +815,7 @@ spec:
               "uid": "${datasource}"
             },
             "expr": "go_goroutines{job=\"apiserver\",instance=~\"$instance\", cluster=\"$cluster\"}",
-            "legendFormat": "{{instance}}"
+            "legendFormat": "{{ "{{instance}}" }}"
           }
         ],
         "title": "Goroutines",
