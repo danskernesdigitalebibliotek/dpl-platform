@@ -1513,7 +1513,7 @@ spec:
               "format": "time_series",
               "interval": "$interval",
               "intervalFactor": 1,
-              "legendFormat": "Rows {{ operation }}",
+              "legendFormat": "Rows {{ "{{operation}}" }}",
               "metric": "",
               "refId": "A",
               "step": 300
@@ -1625,7 +1625,7 @@ spec:
               "format": "time_series",
               "interval": "$interval",
               "intervalFactor": 1,
-              "legendFormat": "Rows Sent {{ instance }}",
+              "legendFormat": "Rows Sent {{ "{{instance}}" }}",
               "metric": "",
               "refId": "A",
               "step": 20
@@ -1642,7 +1642,7 @@ spec:
               "format": "time_series",
               "interval": "$interval",
               "intervalFactor": 1,
-              "legendFormat": "Rows Read {{ instance }}",
+              "legendFormat": "Rows Read {{  "{{instance}}"  }}",
               "metric": "",
               "refId": "B",
               "step": 20
@@ -1659,7 +1659,7 @@ spec:
               "format": "time_series",
               "interval": "$interval",
               "intervalFactor": 1,
-              "legendFormat": "Rows Tmp Read {{ instance }}",
+              "legendFormat": "Rows Tmp Read {{  "{{instance}}"  }}",
               "metric": "",
               "refId": "C",
               "step": 20
@@ -5657,7 +5657,7 @@ spec:
             "type": "prometheus",
             "uid": "prometheus"
           },
-          "description": "**Top Command Counters**\n\nThe Com_{{xxx}} statement counter variables indicate the number of times each xxx statement has been executed. There is one status variable for each type of statement. For example, Com_delete and Com_update count [``DELETE``](https://dev.mysql.com/doc/refman/5.7/en/delete.html) and [``UPDATE``](https://dev.mysql.com/doc/refman/5.7/en/update.html) statements, respectively. Com_delete_multi and Com_update_multi are similar but apply to [``DELETE``](https://dev.mysql.com/doc/refman/5.7/en/delete.html) and [``UPDATE``](https://dev.mysql.com/doc/refman/5.7/en/update.html) statements that use multiple-table syntax.",
+          "description": "**Top Command Counters**\n\nThe Com_{{ "{{xxx}}" }} statement counter variables indicate the number of times each xxx statement has been executed. There is one status variable for each type of statement. For example, Com_delete and Com_update count [``DELETE``](https://dev.mysql.com/doc/refman/5.7/en/delete.html) and [``UPDATE``](https://dev.mysql.com/doc/refman/5.7/en/update.html) statements, respectively. Com_delete_multi and Com_update_multi are similar but apply to [``DELETE``](https://dev.mysql.com/doc/refman/5.7/en/delete.html) and [``UPDATE``](https://dev.mysql.com/doc/refman/5.7/en/update.html) statements that use multiple-table syntax.",
           "fieldConfig": {
             "defaults": {
               "color": {
@@ -5762,7 +5762,7 @@ spec:
               "hide": false,
               "interval": "$interval",
               "intervalFactor": 1,
-              "legendFormat": "Com_{{ command }}",
+              "legendFormat": "Com_{{ "{{command}}" }}",
               "metric": "",
               "refId": "B",
               "step": 20
@@ -5776,7 +5776,7 @@ spec:
             "type": "prometheus",
             "uid": "prometheus"
           },
-          "description": "**Top Command Counters Hourly**\n\nThe Com_{{xxx}} statement counter variables indicate the number of times each xxx statement has been executed. There is one status variable for each type of statement. For example, Com_delete and Com_update count [``DELETE``](https://dev.mysql.com/doc/refman/5.7/en/delete.html) and [``UPDATE``](https://dev.mysql.com/doc/refman/5.7/en/update.html) statements, respectively. Com_delete_multi and Com_update_multi are similar but apply to [``DELETE``](https://dev.mysql.com/doc/refman/5.7/en/delete.html) and [``UPDATE``](https://dev.mysql.com/doc/refman/5.7/en/update.html) statements that use multiple-table syntax.",
+          "description": "**Top Command Counters Hourly**\n\nThe Com_{{ "{{xxx}}" }} statement counter variables indicate the number of times each xxx statement has been executed. There is one status variable for each type of statement. For example, Com_delete and Com_update count [``DELETE``](https://dev.mysql.com/doc/refman/5.7/en/delete.html) and [``UPDATE``](https://dev.mysql.com/doc/refman/5.7/en/update.html) statements, respectively. Com_delete_multi and Com_update_multi are similar but apply to [``DELETE``](https://dev.mysql.com/doc/refman/5.7/en/delete.html) and [``UPDATE``](https://dev.mysql.com/doc/refman/5.7/en/update.html) statements that use multiple-table syntax.",
           "fieldConfig": {
             "defaults": {
               "color": {
@@ -5896,7 +5896,7 @@ spec:
               "format": "time_series",
               "interval": "$incr_interval",
               "intervalFactor": 1,
-              "legendFormat": "Com_{{ command }}",
+              "legendFormat": "Com_{{ "{{command}}" }}",
               "metric": "",
               "refId": "A",
               "step": 3600
@@ -6604,7 +6604,7 @@ spec:
               "expr": "mysql_global_status_buffer_pool_pages{instance=~\"$host\", state=~\"free|data|misc\"}",
               "interval": "$interval",
               "intervalFactor": 1,
-              "legendFormat": "{{ state }}",
+              "legendFormat": "{{ "{{state}}" }}",
               "metric": "",
               "refId": "B",
               "step": 300
@@ -6750,7 +6750,7 @@ spec:
               "format": "time_series",
               "interval": "$interval",
               "intervalFactor": 1,
-              "legendFormat": "{{ handler }}",
+              "legendFormat": "{{ "{{handler}}" }}",
               "metric": "",
               "refId": "J",
               "step": 20
@@ -6881,7 +6881,7 @@ spec:
               "expr": "rate(mysql_global_status_handlers_total{instance=~\"$host\", handler=~\"commit|rollback|savepoint.*|prepare\"}[$interval]) or irate(mysql_global_status_handlers_total{instance=~\"$host\", handler=~\"commit|rollback|savepoint.*|prepare\"}[5m])",
               "interval": "$interval",
               "intervalFactor": 1,
-              "legendFormat": "{{ handler }}",
+              "legendFormat": "{{ "{{handler}}" }}",
               "metric": "",
               "refId": "A",
               "step": 20
@@ -7012,7 +7012,7 @@ spec:
               "expr": "increase(mysql_global_status_handlers_total{instance=~\"$host\", handler=~\"commit|rollback|savepoint.*|prepare\"}[$incr_interval]) or increase(mysql_global_status_handlers_total{instance=~\"$host\", handler=~\"commit|rollback|savepoint.*|prepare\"}[5m])",
               "interval": "$incr_interval",
               "intervalFactor": 1,
-              "legendFormat": "{{ handler }}",
+              "legendFormat": "{{ "{{handler}}" }}",
               "metric": "",
               "refId": "A",
               "step": 20
@@ -7143,7 +7143,7 @@ spec:
               "format": "time_series",
               "interval": "$interval",
               "intervalFactor": 1,
-              "legendFormat": "{{ state }}",
+              "legendFormat": "{{ "{{handler}}" }}",
               "metric": "",
               "refId": "A",
               "step": 20
@@ -7273,7 +7273,7 @@ spec:
               "expr": "topk(5, avg_over_time(mysql_info_schema_threads{instance=~\"$host\"}[1h]))",
               "interval": "1h",
               "intervalFactor": 1,
-              "legendFormat": "{{ state }}",
+              "legendFormat": "{{ "{{state}}" }}",
               "metric": "",
               "refId": "A",
               "step": 3600
@@ -8996,7 +8996,7 @@ spec:
               "hide": false,
               "interval": "$interval",
               "intervalFactor": 1,
-              "legendFormat": "{{ mode }}",
+              "legendFormat": "{{ "{{mode}}" }}",
               "metric": "",
               "refId": "A",
               "step": 20
