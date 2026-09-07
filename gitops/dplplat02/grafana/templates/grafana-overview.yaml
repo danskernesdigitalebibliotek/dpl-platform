@@ -287,7 +287,7 @@ spec:
             {
               "expr": "sum by (status_code) (irate(grafana_http_request_duration_seconds_count{job=~\"$job\", instance=~\"$instance\"}[1m])) ",
               "interval": "1m",
-              "legendFormat": "{{status_code}}",
+              "legendFormat": "{{ "{{status_code}}" }}",
               "refId": "A"
             }
           ],
