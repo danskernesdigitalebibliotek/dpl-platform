@@ -77,6 +77,20 @@ services:
     environment:
       <<: *default-environment
 
+  redis-metrics: # Key-value store holding Prometheus metric counters.
+    # Deliberately separate from the cache instance above: that one runs an LRU
+    # eviction policy and gets flushed wholesale, either of which would corrupt
+    # counters. See the dockerfile for why the memory settings live there
+    # rather than here.
+    build:
+      context: .
+      dockerfile: lagoon/redis-metrics.dockerfile
+    labels:
+      lagoon.type: redis
+    <<: *default-user # uses the defined user from top
+    environment:
+      <<: *default-environment
+
   node:
     build:
       context: .
