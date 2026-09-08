@@ -13,3 +13,6 @@ spec:
     jsonData:
       httpMethod: POST
       timeInterval: 30s
+  instanceSelector:
+    matchLabels:
+      dashboards: grafana
