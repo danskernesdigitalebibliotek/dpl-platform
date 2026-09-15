@@ -1,0 +1,20 @@
+# CMS BNF synk pr. bibliotek
+#
+# The dashboard model lives in ../dashboards/cms-bnf-synk-pr-bibliotek.json and is
+# pulled in with .Files.Get. To update the dashboard, export it from Grafana
+# ("Export as JSON", classic schema) and overwrite that file verbatim.
+#
+# .Files.Get returns the file as a literal string that Helm never re-scans, so
+# Prometheus label interpolation in legendFormat needs no escaping here -- unlike
+# the inline-JSON dashboards in this chart, which have to double-wrap their braces.
+apiVersion: grafana.integreatly.org/v1beta1
+kind: GrafanaDashboard
+metadata:
+  name: cms-bnf-synk-pr-bibliotek
+spec:
+  allowCrossNamespaceImport: true
+  instanceSelector:
+    matchLabels:
+      instance: grafana
+  json: |
+{{ .Files.Get "dashboards/cms-bnf-synk-pr-bibliotek.json" | indent 4 }}
