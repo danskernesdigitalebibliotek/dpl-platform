@@ -373,6 +373,20 @@ kube-prometheus-stack:
               annotations:
                 summary: "Certificate renewal failing"
                 description: "Certificate renewal has failed {{ $value }} times in the last 15 minutes."
+    lagoon-builds-rules:
+      groups:
+        - name: failing-lagoon-builds
+          interval: 2m
+          rules:
+            - alert: LagoonBuildFailed
+              expr: |
+                kube_pod_container_status_terminated_reason{container="lagoon-build", reason="Error", namespace!~"dpl-web-.*"}
+              for: 3m
+              labels:
+                severity: critical
+              annotations:
+                summary: "Lagoon Build failed"
+                description: "Lagoon build failed for {{ $labels.namespace }}. Go to the project in Lagoon UI and check it out. It might need to run again"
   #  rule-name:
   #    groups:
   #    - name: my_group
