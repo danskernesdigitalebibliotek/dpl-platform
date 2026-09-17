@@ -1313,7 +1313,7 @@ kube-prometheus-stack:
         auth_url: https://keycloak.lagoon.dplplat02.dpl.reload.dk/auth/realms/lagoon/protocol/openid-connect/auth
         token_url: https://keycloak.lagoon.dplplat02.dpl.reload.dk/auth/realms/lagoon/protocol/openid-connect/token
         api_url: https://keycloak.lagoon.dplplat02.dpl.reload.dk/auth/realms/lagoon/protocol/openid-connect/userinfo
-        allowed_domains: deranged.dk reload.dk
+        allowed_domains: deranged.dk reload.dk redaktionen@detdigitalefolkebibliotek.dk
         role_attribute_path: "contains(groups[*], 'operators-owner') && 'Admin' || 'Viewer'"
 
     envFromSecret: grafana-oauth-client-secret

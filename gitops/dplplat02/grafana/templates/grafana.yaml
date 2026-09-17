@@ -26,7 +26,7 @@ spec:
       auth_url: https://keycloak.lagoon.dplplat02.dpl.reload.dk/auth/realms/lagoon/protocol/openid-connect/auth
       token_url: https://keycloak.lagoon.dplplat02.dpl.reload.dk/auth/realms/lagoon/protocol/openid-connect/token
       api_url: https://keycloak.lagoon.dplplat02.dpl.reload.dk/auth/realms/lagoon/protocol/openid-connect/userinfo
-      allowed_domains: deranged.dk reload.dk
+      allowed_domains: deranged.dk reload.dk detdigitalefolkebibliotek.dk
       role_attribute_path: "contains(groups[*], 'operators-owner') && 'Admin' || 'Editor'"
   ingress:
     metadata:
