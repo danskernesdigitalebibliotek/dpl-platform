@@ -1,0 +1,15 @@
+# Folder holding the DPL-specific dashboards.
+#
+# Dashboards join it via `spec.folderRef: dpl` rather than a hardcoded
+# folderUID, so the folder is created and owned by the operator instead of
+# being an undeclared dependency on a folder someone made in the UI.
+apiVersion: grafana.integreatly.org/v1beta1
+kind: GrafanaFolder
+metadata:
+  name: dpl
+spec:
+  allowCrossNamespaceImport: true
+  instanceSelector:
+    matchLabels:
+      instance: grafana
+  title: DPL

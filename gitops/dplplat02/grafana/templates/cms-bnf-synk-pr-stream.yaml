@@ -13,6 +13,7 @@ metadata:
   name: cms-bnf-synk-pr-stream
 spec:
   allowCrossNamespaceImport: true
+  folderRef: dpl
   instanceSelector:
     matchLabels:
       instance: grafana
