@@ -53,7 +53,7 @@ apps:
   - name: grafana
     project: monitoring
     namespace: monitoring
-    automated: false
+    automated: true
     syncOptions:
       - ServerSideApply=true
 
