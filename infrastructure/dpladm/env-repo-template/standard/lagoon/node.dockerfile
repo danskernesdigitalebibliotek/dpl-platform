@@ -13,6 +13,20 @@ ARG NEXT_PUBLIC_GO_GRAPHQL_CONSUMER_USER_PASSWORD
 ARG UNLILOGIN_PUBHUB_RETAILER_ID
 ARG UNLILOGIN_PUBHUB_RETAILER_KEY_CODE
 
+# Credential for WeDoBooks' private npm registry, which serves the SDK behind
+# the reader and the player. `build:stage2` below does not resolve any
+# package - the base image was installed in dpl-web's stage 1 - so nothing
+# needs this today. It is set anyway so that any pnpm command added to this
+# stage, an install or a prune, works rather than failing on a 401 a long way
+# from the cause.
+#
+# pnpm takes any config key from the environment as npm_config_<key>. Kept in
+# the environment rather than written with `npm config set`, which would leave
+# the token in an .npmrc in this layer. Either way it is discarded with the
+# builder: the runner below copies /app and nothing else.
+ARG WEDOBOOKS_NPM_TOKEN
+ENV npm_config_//npm.pkg.wedobooks.io/:_authToken=$WEDOBOOKS_NPM_TOKEN
+
 ENV NODE_ENV=production
 ENV NEXT_TELEMETRY_DISABLED=1
 

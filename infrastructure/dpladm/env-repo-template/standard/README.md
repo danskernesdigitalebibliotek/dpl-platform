@@ -7,6 +7,14 @@ This is the environment repository for the Core Test site ${LAGOON_PROJECT_NAME}
 The different applications services: CMS, GO and BNF depends on environment variables.
 This list of env variables is incomplete - please add to it as you
 
+### Set as build-scoped Lagoon project variables
+
+WEDOBOOKS_NPM_TOKEN
+
+Credential for WeDoBooks' private npm registry, which serves the SDK behind
+the reader and the player. Reaches `lagoon/node.dockerfile` as a build
+argument and stays in the discarded builder stage.
+
 ### Set in the node.dockerfile found in the lagoon folder
 
 DPL_GO_BASE_URL

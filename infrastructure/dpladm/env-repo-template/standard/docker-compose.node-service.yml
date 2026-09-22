@@ -81,6 +81,10 @@ services:
     build:
       context: .
       dockerfile: lagoon/node.dockerfile
+      args:
+        # Credential for WeDoBooks' private npm registry. Requires a
+        # build-scoped Lagoon variable of the same name on the project.
+        WEDOBOOKS_NPM_TOKEN: ${WEDOBOOKS_NPM_TOKEN:-}
     labels:
       provenance: false
       lagoon.type: node
