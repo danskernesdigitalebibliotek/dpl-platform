@@ -491,6 +491,13 @@ tasks:
     cmds:
       - ./find-all-site-versions.mjs
 
+  sites:drush-cr:
+    deps: [kubecontext:check, lagoon:cli:check]
+    desc: "run 'drush cr' on every single site including moduletest sites"
+    dir: ./task/scripts
+    cmds:
+      - ./run-drush-cr-for-all-sites.mjs
+
   sites:sync:
     desc: Performs a full synchronization from sites.yaml to running state
     dir: "{{.dir_env}}"
