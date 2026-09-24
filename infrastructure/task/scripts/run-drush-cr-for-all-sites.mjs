@@ -7,7 +7,7 @@ const sites =
 for await (const site of sites.lines()) {
   await $`lagoon ssh -p ${site} -e 'main' -C "drush cr"`
   if (await isWebmaster(site)) {
-    await $`lagoon ssh -p ${site} -e 'main' -C "drush cr"`
+    await $`lagoon ssh -p ${site} -e 'moduletest' -C "drush cr"`
   }
 }
 
