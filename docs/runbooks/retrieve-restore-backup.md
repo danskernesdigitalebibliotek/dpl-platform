@@ -37,7 +37,8 @@ backup. To do this,
 1.  Log in to the environments Lagoon UI (consult the
     [environment documentation](../platform-environments.md) for the url)
 2.  Access the site's project
-3.  Access the site's environment ("main" for production)
+3.  Access the site's environment. This can be a PR site, main, moduletest or
+    whatever the environment is called
 4.  Click on the "Backups" tab
 5.  Click on the "Retrieve" button for the backups you wish to download and/or
     restore. Use to "Source" column to differentiate the types of backups.
@@ -46,7 +47,17 @@ backup. To do this,
 6.  The Buttons changes to "Downloading..." when pressed, wait for them to
     change to "Download", then click them again to download the backup
 
-### Step 2a, restore a database
+### Step 2: restore database and/or files
+
+To restore the database and/or files more conveniently, use the restore task.
+
+1. Put the downloaded backups into the `/infrastructe` dir
+2. run `task site:restore DB=<name of compressed database backukp file> FILE=<name of compressed nginx backup file> PROJECT=<project name> ENV=<environment name>`
+    It is possible to leave out either DB or FILE and just restore one of the
+    of two. The task will deploy the environment to make the change take
+    effect.
+
+### Step 3a, restore a database
 
 To restore the database we must first copy the backup into a running cli-pod
 for a site, and then import the database-dump on top of the running site.
@@ -57,26 +68,23 @@ for a site, and then import the database-dump on top of the running site.
    and follow the procedure below:
 
 ```sh
-# 1. Authenticate against the cluster.
-$ task cluster:auth
-
-# 2. List the namespaces to identify the sites namespace
+# 1. List the namespaces to identify the sites namespace
 # The namespace will be on the form <sitename>-<branchname>
 # eg "bib-rb-main" for the "main" branch for the "bib-rb" site.
 $ kubectl get ns
 
-# 3. Export the name of the namespace as SITE_NS
+# 2. Export the name of the namespace as SITE_NS
 # eg.
 $ export SITE_NS=bib-rb-main
 
-# 4. Copy the *mariadb.sql file to the CLI pod in the sites namespace
+# 3. Copy the *mariadb.sql file to the CLI pod in the sites namespace
 # eg.
 kubectl cp \
   -n $SITE_NS  \
   *mariadb.sql \
   $(kubectl -n $SITE_NS get pod -l app.kubernetes.io/instance=cli -o jsonpath="{.items[0].metadata.name}"):/tmp/database-backup.sql
 
-# 5. Have drush inside the CLI-pod import the database and clear out the backup
+# 4. Have drush inside the CLI-pod import the database and clear out the backup
 kubectl exec \
   -n $SITE_NS \
   deployment/cli \
