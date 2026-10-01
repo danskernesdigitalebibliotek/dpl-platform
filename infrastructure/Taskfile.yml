@@ -676,7 +676,7 @@ tasks:
     deps: [lagoon:cli:check]
     desc: Redeploys all failed deployments
     cmds:
-      - task/scripts/redeploy-failed-deployments.sh
+      - task/scripts/redeploy-failed-deployments.mjs --status failed
 
   sites:grep-in-deploy-log:
     desc: |
