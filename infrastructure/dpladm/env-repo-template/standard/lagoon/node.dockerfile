@@ -51,7 +51,11 @@ RUN corepack pnpm prune --prod
 # The service-layer workspace package ships in the image as well (go imports it
 # through a file: dependency) and carries its own eslint/orval/vite/vitest tree.
 WORKDIR /app/packages/service-layer
-RUN corepack pnpm prune --prod --no-optional
+RUN corepack pnpm prune --prod
+
+# Same for wedobooks
+WORKDIR /app/packages/wedobooks
+RUN corepack pnpm prune --prod
 
 WORKDIR /app/go
 
