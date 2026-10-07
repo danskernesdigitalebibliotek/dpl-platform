@@ -4,4 +4,4 @@ version: 0.0.0
 dependencies:
   - name: minio
     version: 0.0.1
-    repository: https://registry.eu-1.deranged.dk/recloud-public/mirrors/images/quay.io-thanos-minio
+    repository: https://charts.min.io/
