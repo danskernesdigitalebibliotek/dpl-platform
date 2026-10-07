@@ -1,25 +1,10 @@
 annotations:
   artifacthub.io/changes: |
-    - kind: removed
-      description: vestiges of harbor support
-    - kind: added
-      description: add support for project cloning task image
     - kind: changed
-      description: change keycloak rollout strategy to recreate
-    - kind: changed
-      description: update trivy image to 0.70.0
-    - kind: changed
-      description: update insights-handler to v0.0.12
-    - kind: changed
-      description: update legacy ui pinned image to core-v2.32.0
-    - kind: changed
-      description: changed build-deploy-image to core-v2.32.0
-    - kind: changed
-      description: fixed beta-ui version to v0.1.0
-    - kind: changed
-      description: update lagoon appVersion to 2.32.0
+      description: update lagoon appVersion to release 2.33.2
+  artifacthub.io/containsSecurityUpdates: "true"
 apiVersion: v2
-appVersion: v2.32.0
+appVersion: v2.33.2
 dependencies:
 - condition: nats.enabled
   name: nats
@@ -38,4 +23,4 @@ maintainers:
   url: https://amazee.io
 name: lagoon-core
 type: application
-version: 1.61.0
+version: 1.62.2

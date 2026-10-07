@@ -1,19 +1,19 @@
 # These values must be set on install, as they don't have sensible defaults.
 #ENCRYPT
-harborAdminPassword: ENC[AES256_GCM,data:uVDGr8puI64RLOfzmIPXoAWPLNE=,iv:RW6KkOdkJ/DRH4wQXZLR6ZrS1d3HtbrFGJrvQ3QQBzo=,tag:BpHFi43pLDZiu/6wIcmKIg==,type:str]
+harborAdminPassword: ENC[AES256_GCM,data:ySHfNLS9IxVrPzdSOKX8JWQFjdg=,iv:jpij2w6O/dnH/dy34A+KANpKiUSXYrxi5CZxQcC3ZcE=,tag:e7yIOwPP7c/tNWlhR6QcBw==,type:str]
 elasticsearchURL: none
 harborURL: https://habor.lagoon.dplplat02.dpl.reload.dk
 kibanaURL: none
 #ENCRYPT
-s3BAASSecretAccessKey: ENC[AES256_GCM,data:vhpkgeQcBNOvAh55qlHI15XvLFUPdkPf3G0rxNMaNGUQDMRlrFD0SQ==,iv:btJELOEsQJ4g9Ba+9Ex2jaJTDl9kXLJQwHBMxGDntWc=,tag:/NTXf1NcsJv6N4nUeru9ag==,type:str]
+s3BAASSecretAccessKey: ENC[AES256_GCM,data:KtRZ6M/N1PHQxCCKR38Gl5pXR45JD/2SPHUgPJBS2TZh3JgJtWHnow==,iv:4dEXJ1JoEuB+sLT34ZIYXHX4xJ2x4vN5JgOjgl5MC8k=,tag:AbYq8GbAmrrv9dwjIFBNZw==,type:str]
 #ENCRYPT
-s3BAASAccessKeyID: ENC[AES256_GCM,data:9C9sJmUqg9wr7mULXvPyuf7UU2M=,iv:XIdKvXmhRKoPd2TeprV4O6Fy4ah4gMO9wC0+fxuqiX8=,tag:PQ2K48V7C39RTsHisQTwsA==,type:str]
+s3BAASAccessKeyID: ENC[AES256_GCM,data:H8vkycMHZisEYna8Olyjz81+K8w=,iv:vUou43PTWjaYXh6b5BOD7jM5AaP0jpDbJk9aJuBw9po=,tag:rqWka0hMmTudXb1r6urozQ==,type:str]
 #ENCRYPT
-s3FilesAccessKeyID: ENC[AES256_GCM,data:k0nq1Kdand4/6ODML2FaB6nrYGk=,iv:ur64xq1iKLB9DFyvXEaq6cr5KoRdNXxlaIpxUGoKXns=,tag:1TxHv+GX4hZyfDDLlksDTQ==,type:str]
+s3FilesAccessKeyID: ENC[AES256_GCM,data:9MPS1YIOKn1PKdesnk+LxaZLLlo=,iv:8JieqjaBk6FE9ZazOennSurvuoULo7YgMUwoiaxJ7fU=,tag:H8p8SthHVpK6ZcMFugLMkw==,type:str]
 s3FilesBucket: lagoon-files-bucket
 s3FilesHost: https://files.lagoon.dplplat02.dpl.reload.dk
 #ENCRYPT
-s3FilesSecretAccessKey: ENC[AES256_GCM,data:CvksFIVwbEGkS2ml7tI+VYKCr87LeBCiN2kb8Uq+y6cI+PP+zAdWMQ==,iv:lZkfy85mZsiyg/2V3xsPaBtwUX09rEM5zXourlDysLQ=,tag:600IsXydm9R3UEVX+SbSqA==,type:str]
+s3FilesSecretAccessKey: ENC[AES256_GCM,data:b/lJibsFgeoERkyj56Kds5C55Pg3HVkAgFkj5fWMPxkedtiPenSnDA==,iv:YSoNAZtdiGfDTgIH9QGHIE23UjhzHbdhlB6amebcxgg=,tag:rokbJhsYRYcFuZuAc0YH0g==,type:str]
 # These values are optional.
 # overwriteActiveStandbyTaskImage:
 # overwriteProjectcloneTaskImage:
@@ -37,44 +37,44 @@ s3FilesSecretAccessKey: ENC[AES256_GCM,data:CvksFIVwbEGkS2ml7tI+VYKCr87LeBCiN2kb
 # lagoonWebhookURL: https://webhook-handler.example.com
 # These values are randomly generated on install if not otherwise defined.
 #ENCRYPT
-apiDBPassword: ENC[AES256_GCM,data:PZ9MTvSvD0YjUSmVAwCezlvUX0VsJR/SxnwG0RXF,iv:0GoO8obRmjJKYA2F/vInc9pXchYPOA98AuUWDv1nXYo=,tag:KSN0lVK2VmIOz7dMs4xvjA==,type:str]
+apiDBPassword: ENC[AES256_GCM,data:h2XDJXTpx995nJsxxTcnUyP+h4gLXlerAe/49dhH,iv:FE9OIMDSLFoKtz5uieI3ziNmZMbIT4ZgHeTxewRuFQk=,tag:9+oPNyqHdXpLWa8vDquj1w==,type:str]
 #ENCRYPT
-jwtSecret: ENC[AES256_GCM,data:0tWjq6hSWiRHjDbAo1iv25jP2c5uMNMr0ElwNia5,iv:U4Y8F5uw9XDfJ/YhzLBcai8JGk9J+/tfhWiTFVzi1b8=,tag:hcFhhe8FtBizFFtG0chijw==,type:str]
+jwtSecret: ENC[AES256_GCM,data:KdsVkTNUDrJ7TDqLQAL2KMLGdllt2KKSyGtSpDT6,iv:ohf7sQcbAzvwKANi5dYRiitGka4eKWYA9rUME/IwSak=,tag:bIBVKl4l6ZSaFX0oMayEgg==,type:str]
 #ENCRYPT
-keycloakAdminPassword: ENC[AES256_GCM,data:j7At4lbSoC8ZJjmzG0mZGQ==,iv:V4IyupwezMsOiTcyhoUYazz2AHhooYCeyUCrVz9FGjY=,tag:KUTLTjtfaNsjdQtN1y1yiw==,type:str]
+keycloakAdminPassword: ENC[AES256_GCM,data:AK1B2UlZA+NCngsqwnzL7Q==,iv:m4XJqvlKnjioqY4gcwFRYeicTRoU5q6/p7w5UxMPx8g=,tag:PChO0pMd9uAq+dcJ5fqkUw==,type:str]
 #ENCRYPT
-keycloakAPIClientSecret: ENC[AES256_GCM,data:OEtZzj5epeE17XJCGQmn3gw1+r9JhPnxSvF+Cady,iv:zolc9FrYz4NcaSgCXJroB0QBnpeVfzm3MLGijFqpY5E=,tag:XvTwHTBDIYsDChLeR3eBng==,type:str]
+keycloakAPIClientSecret: ENC[AES256_GCM,data:aQwn8aym3soquWI1rOmkKUiSB4IQ3x4snqMUNHjW,iv:73jyx4VsggVT7VUrrDC0NOiBAz4SkgE0F00+ovr4A3g=,tag:66f5Xz8DIT3gv4avdE3lZw==,type:str]
 #ENCRYPT
-keycloakAuthServerClientSecret: ENC[AES256_GCM,data:Lb+6jOklIlG7aOWw+6/GlzspJXNR2+njdRZ+UPGW,iv:U9v90iCLrCr/e1Y/G2dsRRE7vuQ6p1+QyfRjvz1Tt64=,tag:H78n8gmsDvYkewwo5DMpLg==,type:str]
+keycloakAuthServerClientSecret: ENC[AES256_GCM,data:TgbL+iIyTZ+W06qJqpWBGC3V3jGmacbrgtaJh0Np,iv:xtXLZGVVOgJOvPtylohxhtDkpIIycfmpxUAvc74+m9s=,tag:dqa64DgFjdYopDMydvjdgg==,type:str]
 #ENCRYPT
-keycloakDBPassword: ENC[AES256_GCM,data:54U27AQtUYv6DChhGSkfqwRPl92h3vCjB1rKxk7E,iv:R61tRryfIPfUls2wiBWFSsmX6QDS6GG9aQ5OJbRM9ag=,tag:wcrkP94ypsBE0701rUlMPQ==,type:str]
+keycloakDBPassword: ENC[AES256_GCM,data:hZpN6CpBwVAdA294s5Rwoetkcxq0qgVMfByfBsbr,iv:E5K1qk2Zz/FxsMXFcmJGGnRnmbuveBhUJfkgdTBUcHY=,tag:a7z41r0673nkOFhKT5NMfA==,type:str]
 #ENCRYPT
-keycloakLagoonAdminPassword: ENC[AES256_GCM,data:H4l4brvuJwRLn7/StQ4Hr4DwBbJqJOXT07KkFWSP,iv:jW5tybC6xsCIvFrR9UU7lytDHSYxjP65Zy1cGGijxgo=,tag:yq0D29CIQs0dodCglseSXQ==,type:str]
+keycloakLagoonAdminPassword: ENC[AES256_GCM,data:js8FHSeeWwOnrmIlqONF4xv1NbTwtb+FrYZfkOMJ,iv:gTRHReZIgjaY68kp+nwHqmOzSb5s8BU1dqGm3xAOBmI=,tag:Xb4MoCEu2oeS/Y0nS4v0DQ==,type:str]
 #ENCRYPT
-logsDBAdminPassword: ENC[AES256_GCM,data:zPLn2Mm6jZG+e7+FzcvYL5xMLO6+kElxsxTH4hMa,iv:iJ/0Nc6H7YTH/J5XJpe7zgEu4eiZcxGOO+vMoS5Y8CY=,tag:ar3JInRBIZpNjfC/esBl2w==,type:str]
+logsDBAdminPassword: ENC[AES256_GCM,data:2Xp9cm3CuIwwDo3dmlvMS7RO9XxqTKW/LbbgGvSE,iv:2Y+UI2e1Nso1OKSntHAzsQgU54rSHV0v+J3O416+sdE=,tag:Sttxx5b7TZaai86urbYwPg==,type:str]
 #ENCRYPT
-keycloakLagoonOpensearchSyncClientSecret: ENC[AES256_GCM,data:T4h5YohlGXSlGz3bU4AooitCh39uGTxJ7jVGzNKB,iv:Xj57/b2md288cvbkEi8jyLeAfMrfTHJn4ROwmruWtoE=,tag:t9qlpkhBEMzZDiLC6eUbzw==,type:str]
+keycloakLagoonOpensearchSyncClientSecret: ENC[AES256_GCM,data:LXl1OmeLJVI2ofxdyc056EmMVZuX9FLl9Wl048fW,iv:4+zuVEMH5cn7S070zKce/EKN5CN28HNd+ryN1P7gbao=,tag:TIbyACMTrkyV1qAR56bBAQ==,type:str]
 #ENCRYPT
-keycloakServiceAPIClientSecret: ENC[AES256_GCM,data:2PptzjQJQ6cHER3FAJvKb4DdO848NEhFlMKs+XIX,iv:XhANE9BSwF54hmeft6HpV4Y5/D3DUbdYvKJIxXBjSpo=,tag:nhNqmzLxaTHya2bMOpYokg==,type:str]
+keycloakServiceAPIClientSecret: ENC[AES256_GCM,data:wxe+Qm6TPizKGQ24EkDsmW+IznmJnASrPPJ4aqeA,iv:BMhcRZy2qVWXgOMRiA9v6uGSC2zRXalkBk8z9PLRzqo=,tag:tlueviWhCde+xiKiDJmMnA==,type:str]
 #ENCRYPT
-rabbitMQPassword: ENC[AES256_GCM,data:XyY+7uxrYRKh3cVuHKXPLmDrjRsX20sDln3lc7ZB,iv:5LcIg04jGzDfMFCHStlLLBu5L+NSwgj/ypgKQpU7PYg=,tag:WIkm4iJ6NFodWqVsAD+iag==,type:str]
+rabbitMQPassword: ENC[AES256_GCM,data:Jd/rOzkvagxVC3UxWXfwal6sXCTVZ4q49Jo8MqUb,iv:5N21vnhMvYUb1H/wUw+T2O9ac3TYzRnSryfxiwsTc04=,tag:qUz7o2eck+a2B9MxSjyPqw==,type:str]
 #ENCRYPT
-redisPassword: ENC[AES256_GCM,data:ydFbWcM005GO9K7wZzJrTvJJHHEkyXedGdL9WCBS,iv:RInJ9Tkh3/+KQrkmCpVrSOGsCFxari79n8WbBLgeb3w=,tag:9fGKiIB3XNBcP3szmBW5jw==,type:str]
+redisPassword: ENC[AES256_GCM,data:fhlJT3+r3YKwNu2eCDY3hmlVxqV9zXj4ajfRsts9,iv:UB2SR0pIY20Vt7409OXpj6mSwr+Fgq4kHIy2dHtszxc=,tag:e2MzVrjd4JIW0oosRHzBcg==,type:str]
 k8upBackupBucketName: lagoon-backup
 # uiAuthSecret:
 # This value is set to match jwtSecret on existing installs if not defined.
 # It should only ever be set here for backwards compatibility.
 #ENCRYPT
-projectSeed: ENC[AES256_GCM,data:zB1b8o/1HCvFJ33WGmbU2qNKfhCWpT6oS1vKKqEB,iv:JuUsvzeePqQtgsG/CJWx1eIKdlbPpO1ZplFxOYwBVHw=,tag:U/f7LGBtUnVQGZCeu1vYsQ==,type:str]
+projectSeed: ENC[AES256_GCM,data:OItavakQtDLM2qvo7QAotHk1+OkZM27zU4l/kvos,iv:vd88MXSUrr2x5LyJV8DmOsqMImLckudx8cF4Pc1iwgc=,tag:vHz+d/M2XunBhZxAhFyQtQ==,type:str]
 # Set these values to automatically create an initial user or an initialOrganization
 # upon install of the Lagoon Core helm chart. Either 'lagoonSeedOrganization' or both
 # 'lagoonSeedUsername' and 'lagoonSeedPassword' must be set to trigger this feature.
 # The script that is run also assumes that both keycloakFrontEndURL and lagoonAPIURL are set correctly.
 lagoonSeedOrganization: Danish Public Libraries
 #ENCRYPT
-lagoonSeedUsername: ENC[AES256_GCM,data:1SSIhNTl,iv:Ld0ChqdNoGMQcJN3qYRfb1Dt0xFdre0QQUz+TFlgh74=,tag:NFEtMkYfTv/S2Zrj4KKe2w==,type:str]
+lagoonSeedUsername: ENC[AES256_GCM,data:2WY/e/Sc,iv:r4OMAyEfIk4mcdQNofyIFPI3NuNtyKZn0ye70YURhJc=,tag:nTSc8xnNL7AqaVmmDZ/NJQ==,type:str]
 #ENCRYPT
-lagoonSeedPassword: ENC[AES256_GCM,data:uTFiH0xixan+fEAeYwIntjVMTFM5/+eKlVbxcjyJ,iv:FdqtZwCNJ3YQdabzY89bKugJ4SpsmFDcbbBSRQ5bgGg=,tag:c3QQGldOUYEIIkMjeDS+9w==,type:str]
+lagoonSeedPassword: ENC[AES256_GCM,data:jhZ2wMp9FDWpnIgyU7mns9bSmLon4BWOniULos2z,iv:I5ZTB1wWq89EBA7ybAZupRbL9xx7mCkNN3jGmHrencI=,tag:RoAKCslztu7EeTD7vgNDlg==,type:str]
 # these are used to configure database credentils if using external databases.
 # configure external database usage under `apiDB.useExternal` and `keycloakDB.useExternal`
 # `apiDBPassword` and `keycloakDBPassword` will be automatically generated if `useExternal: false`
@@ -96,14 +96,14 @@ imagePullSecrets: []
 rabbitMQUsername: lagoon
 k8upS3Endpoint: ""
 #ENCRYPT
-keycloakAdminUser: ENC[AES256_GCM,data:1BEOC+w=,iv:lsalqSODB/9M3MRjjR2ltnJHt6V/MtMJwwe7l/JYkBI=,tag:uHjvya3mTvyei5UoRf/q4A==,type:str]
+keycloakAdminUser: ENC[AES256_GCM,data:k2tjmXU=,iv:iBdHB2Xm0xHvdZZS1vz0py0m2fdSiZ1q+IyByIw3eXc=,tag:lN+CjdNHIedlgshn+TWUTg==,type:str]
 # this is required if email sending is to be enabled in keycloak
 # keycloakAdminEmail: admin@example.com
 buildDeployImage:
     default:
         # when updating this chart, ensure that if there are any changes made to the build-deploy-tool repository
         # and a new image tag is released, that this image tag is updated to reference the new image version
-        image: uselagoon/build-deploy-image:core-v2.32.0
+        image: uselagoon/build-deploy-image:core-v2.33.1
     edge:
         enabled: false
 # Set to an empty string to support Harbor v1.x.x
@@ -165,6 +165,8 @@ api:
             cpu: 500m
     additionalEnvs: null
     #   FOO: Bar
+    sidecar:
+        additionalEnvs: null
     autoscaling:
         enabled: false
         minReplicas: 1
@@ -537,47 +539,6 @@ authServer:
     podAnnotations: {}
     securityContext: {}
     resources:
-        requests:
-            memory: 64Mi
-            cpu: 50m
-    additionalEnvs: null
-    #   FOO: Bar
-    autoscaling:
-        enabled: false
-        minReplicas: 1
-        maxReplicas: 100
-        targetCPUUtilizationPercentage: 80
-        # targetMemoryUtilizationPercentage: 80
-    nodeSelector:
-        node-role.kubernetes.io/prod: ""
-    tolerations:
-        - key: noderole.dplplatform
-          operator: Equal
-          value: prod
-          effect: NoSchedule
-    affinity:
-        nodeAffinity:
-            requiredDuringSchedulingIgnoredDuringExecution:
-                nodeSelectorTerms:
-                    - matchExpressions:
-                        - key: noderole.dplplatform
-                          operator: In
-                          values:
-                            - prod
-webhooks2tasks:
-    enabled: true
-    replicaCount: 2
-    image:
-        repository: uselagoon/webhooks2tasks
-        pullPolicy: Always
-        # Overrides the image tag whose default is the chart appVersion.
-        tag: ""
-    podAnnotations: {}
-    securityContext: {}
-    resources:
-        limits:
-            memory: 250Mi
-            cpu: 50m
         requests:
             memory: 64Mi
             cpu: 50m
@@ -1179,7 +1140,7 @@ opensearchSync:
         repository: ghcr.io/uselagoon/lagoon-opensearch-sync
         pullPolicy: IfNotPresent
         # Overrides the image tag whose default is the chart appVersion.
-        tag: v0.14.2
+        tag: v0.15.0
     # debug logging toggle
     debug: false
     # root certificate for the server certificate presented by opensearch
@@ -1245,7 +1206,7 @@ betaUI:
         pullPolicy: Always
         # when updating this chart, ensure that if there are any changes made to the lagoon-beta-ui repository
         # and a new image tag is released, that this image tag is updated to reference the new image version
-        tag: v0.1.0
+        tag: v0.2.0
     podAnnotations: {}
     securityContext: {}
     resources:
@@ -1280,19 +1241,19 @@ sops:
         - vault_url: https://kv-dplplat01-c3b2.vault.azure.net
           name: sops-key
           version: d82fe2456d6e4c4aaaaf808226bd5769
-          created_at: "2026-08-31T06:06:56Z"
-          enc: WyLsFsgqQT4ETmVP2g6UWUlUbZ2Q_MsGPIFuKig28XlMG7IMNQ6GF1JEk_FCZzJbX3i8C6hbJe8bXcilcsWQnlkd6MsH4PLqIbzyQLuCGxzXcpdp9MlFReF1ddD2GW-GQj_QevFOzXpHclxjHuGg03p2t1lyie7lxo1Kehk9gevETWYvhKyQxt1VZGx7RA922T40OnwtclCuRbivC0E1EroZNkz9E3SBVSMHllBFEw5aPf0cMYFng1K_K3mhSndLZdnXlFhD3Eey_nDxuMShT7BswOxyy9H24XiwXJqiG4e8JRFN2b-hu9L5CzMBm_k6W7NNZfDk1On4lTHnuZbih9io5EiNU6gCi0oHr1joW0R8VdmFENF_fQIPQ7eoSkl25lYLsCtDTuGQyeRf1nPzhqcT6rijM-efxZIxKtsLTpscCb5d_ogRWCW2KVblljvr8RElGe4YrqQUqnGFMa2VFHq6Uqqw1iHHsAarmvKYtkxWuc0o2RQk9v31wMa-arnb2ZPoAh1TWUV5lniOmwc_N11gppWzsUto1C6Yv7Yq-5XzRjcn1FgUotj22B9UPsNnUzUY3EWZhoZ6cGeIvUhHxkCQwLB2ycyKvDVqFG-vstM4R9OgtTc9Bh0SNSM-xo0DiagrVWLNh6Brfbl2-b0vgFU5f6_uEPYYs3OZBLiQjiU
+          created_at: "2026-10-02T13:10:25Z"
+          enc: ImSU_hIb8yJ1P3Tw4RSYONGnV8R0uDSxZup4B0YDDd9Z-N_XBffToSIDT9Por0wuV5ndUVBLwNGjANsBgebfD03aQV-mxQky2Vg1jfzyDA8QZzZhAFS5ZR06P3iZLWACvqK_624aR2HLX-KgGq7O_HX2zpHtJ2qLQcTgvdwq0usHgioj9wfzpMlVXKC1ndvt2uhetfQJ54AlopcYig6O59wAvrM9Otn1ZjU0D3Rv5d19CTNrgrhRcIBmcuk-BLgT7bFMSzf7WZry6KLgcp1q_nFaq3cq98jf6lI7XMO99dTgcQPOl776Ptn0tBIm6j42NHAXYwrFRmUO35cWGeeqn31EYgcCcZAkLIfoMdHcVEMgBYd4yCGjRnQp1OXAVXO7XIwj2m9D2tQLZWDXcmGEdnwKNJDvIlvz8bLmoYWdW0cf7EMtqxBT4ZG6L4KJhpxeH5OFUR_Zy9UTnpvJuCHaI5a9iRsKGpAR4qi1A0REDVHH2b1cXlx-zwFD6PIGR6oTL2-iP4oW-WSwYLW42LV2eOlN5KFg3o5ICUNb_qHllj-3BOp00ozorPNG6jwz5a0SOzhqLjplE2WkOw32rKm-z0mpPaKieMGcwzII9wXrMNaIoOTonU-Lj_cf1JMEK0KfOvdwzkhKeD1RhntmaGvnOV2MRUtBWePIsIqbOUDH7vw
     age:
         - recipient: age1q8yqc5jvhkk7ufj95tw25u3es0846pkrwgcd4pn9ctermr7e6cesn6l0gd
           enc: |
             -----BEGIN AGE ENCRYPTED FILE-----
-            YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSBPZjhMZjVHd1RqUFNPZ1V1
-            eGFyOVpCVTZVV3Z2OGVTaHAyNUkxWDJKZWtrCjd2UmxTN1BpVyt6MW5CMHJSa1JX
-            My9JaFJBVkRXUk9YdXFKM2JYd3VkMlUKLS0tIGJlVWlxMWtvYzBaS0JuTXllZDE4
-            ZlBNcVlwQkxBTVo1c0ZVcXptNXByMFkKtuW9T4na2l23ECGKw2CW4Mor/J9bK9nm
-            R+T9bvI0PzG2jf9D6UKnVCEaKK0qsBO5iJSJZ2H6teNb0dyatOIPzw==
+            YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSBpcHJTaGQ4MjJyWHNpaFpW
+            U1E4YlF3OTVhb0phWHVoakJqcW9xS3QxOVFzCjBpWGJMcSs5ajY4UjkzQ0UwYUtZ
+            Rk1CQXhLOVIxMUlHb1RkbEZxMmlEczAKLS0tIEJZYjBVc1hsNCtNL1UwRDBKUVQ4
+            Qy9RckFxaVpNT2M0MHl5RmgrQnNCdUkKEI1B6FNjSiTUXPPmF+CAOuy/GQxW0Y1z
+            XZWGzkb993f9OEXzCC5TuJeqPOoyJHCHN7vUCbNqxOW3hb/g0OMjxQ==
             -----END AGE ENCRYPTED FILE-----
-    lastmodified: "2026-08-31T06:06:59Z"
-    mac: ENC[AES256_GCM,data:9JzcKOh9U8gDBiDEeZud4UlzTD6KnscnF8HqMA0jzaSf+W5Se5nJ3NDvTFrJQFws9bRyI5o4fSSJjmJUeqKKtOUMaqG8IwV3hz8BIpaKZIUI3miGfXMGLfodyxuYqMmobkCXUSo1PqnSl1RTLkqPz/yGpZpO3gYUWp/gKLWuSE0=,iv:JPr2yGcUFRRtbD6LqpDlIYNAkBx1PFB+QV2MDYAP4g8=,tag:GvmyGhmI9iDxAX7XnbMR0g==,type:str]
+    lastmodified: "2026-10-02T13:10:27Z"
+    mac: ENC[AES256_GCM,data:UFWFu5t8zfH5R6l8N/7/y/mlfeZtJ74nqRghD/o1cA/AnmtQZOKlg7SGlQ3WubMvLzaMMRV31X/VM9Qgkl75rvOFIT2SnVtOgzFlU0oviyxH+A/FScWw/EUQtdquOyThoGlyPowDbVSobUUKc3zuWfbV1em9DoVXwFcc/zkKxss=,iv:YZs4N6LYl7PGAkdycgTYhLBG+fS9BaYsqUyVD6XV2Oc=,tag:5k8a6p+hjzqDKdEdEmDLvQ==,type:str]
     encrypted_comment_regex: ENCRYPT
     version: 3.11.0
