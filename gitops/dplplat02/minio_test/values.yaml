@@ -1,4 +1,4 @@
-minio_test:
+minio-test:
   ## Provide a name in place of minio for `app:` labels
   ##
   nameOverride: ""

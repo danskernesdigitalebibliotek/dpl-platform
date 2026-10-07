@@ -67,9 +67,9 @@ apps:
     namespace: minio
     automated: false
 
-  - name: minio_test
-    project: minio_test
-    namespace: minio_test
+  - name: minio-test
+    project: minio-test
+    namespace: minio-test
     automated: false
 
   - name: mariadb-operator

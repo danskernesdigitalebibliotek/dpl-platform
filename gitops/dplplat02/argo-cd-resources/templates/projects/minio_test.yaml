@@ -1,11 +1,11 @@
 apiVersion: argoproj.io/v1alpha1
 kind: AppProject
 metadata:
-  name: minio_test
+  name: minio-test
 spec:
   destinations:
     - name: in-cluster
-      namespace: minio_test
+      namespace: minio-test
       server: https://kubernetes.default.svc
   clusterResourceWhitelist:
     - group: ""
