@@ -68,7 +68,7 @@ cert-manager:
       useAppArmor: true
 
     # Set the verbosity of cert-manager. A range of 0 - 6, with 6 being the most verbose.
-    logLevel: 5
+    logLevel: 3
 
     leaderElection:
       # Override the namespace used for the leader election lease.
@@ -345,8 +345,8 @@ cert-manager:
   # ref: https://cert-manager.io/docs/concepts/certificaterequest/#approval
   # +docs:property
   approveSignerNames:
-  - issuers.cert-manager.io/*
-  - clusterissuers.cert-manager.io/*
+    - issuers.cert-manager.io/*
+    - clusterissuers.cert-manager.io/*
 
   # Additional command line flags to pass to cert-manager controller binary.
   # To see all available flags run `docker run quay.io/jetstack/cert-manager-controller:<version> --help`.
@@ -422,7 +422,7 @@ cert-manager:
     allowPrivilegeEscalation: false
     capabilities:
       drop:
-      - ALL
+        - ALL
     readOnlyRootFilesystem: true
 
   # Additional volumes to add to the cert-manager controller pod.
@@ -513,30 +513,29 @@ cert-manager:
     #   http-metrics and http-healthz ports
     # +docs:property
     ingress:
-    - ports:
-      - port: http-metrics
-        protocol: TCP
-      - port: http-healthz
-        protocol: TCP
-
+      - ports:
+          - port: http-metrics
+            protocol: TCP
+          - port: http-healthz
+            protocol: TCP
 
     # Egress rule for the cert-manager network policy. By default, it allows all
     # outbound traffic to ports 80 and 443, as well as DNS ports.
     # +docs:property
     egress:
-    - ports:
-      - port: 80
-        protocol: TCP
-      - port: 443
-        protocol: TCP
-      - port: 53
-        protocol: TCP
-      - port: 53
-        protocol: UDP
-      # On OpenShift and OKD, the Kubernetes API server listens on.
-      # port 6443.
-      - port: 6443
-        protocol: TCP
+      - ports:
+          - port: 80
+            protocol: TCP
+          - port: 443
+            protocol: TCP
+          - port: 53
+            protocol: TCP
+          - port: 53
+            protocol: UDP
+          # On OpenShift and OKD, the Kubernetes API server listens on.
+          # port 6443.
+          - port: 6443
+            protocol: TCP
 
   # +docs:ignore
   ingressShim:
@@ -834,7 +833,7 @@ cert-manager:
       allowPrivilegeEscalation: false
       capabilities:
         drop:
-        - ALL
+          - ALL
       readOnlyRootFilesystem: true
 
     podDisruptionBudget:
@@ -1124,31 +1123,31 @@ cert-manager:
       #   https, http-metrics, and http-healthz ports
       # +docs:property
       ingress:
-      - ports:
-        - port: https
-          protocol: TCP
-        - port: healthcheck
-          protocol: TCP
-        - port: http-metrics
-          protocol: TCP
+        - ports:
+            - port: https
+              protocol: TCP
+            - port: healthcheck
+              protocol: TCP
+            - port: http-metrics
+              protocol: TCP
 
       # Egress rule for the webhook network policy. By default, it allows all
       # outbound traffic to ports 80 and 443, as well as DNS ports.
       # +docs:property
       egress:
-      - ports:
-        - port: 80
-          protocol: TCP
-        - port: 443
-          protocol: TCP
-        - port: 53
-          protocol: TCP
-        - port: 53
-          protocol: UDP
-        # On OpenShift and OKD, the Kubernetes API server listens on.
-        # port 6443.
-        - port: 6443
-          protocol: TCP
+        - ports:
+            - port: 80
+              protocol: TCP
+            - port: 443
+              protocol: TCP
+            - port: 53
+              protocol: TCP
+            - port: 53
+              protocol: UDP
+            # On OpenShift and OKD, the Kubernetes API server listens on.
+            # port 6443.
+            - port: 6443
+              protocol: TCP
 
     # Additional volumes to add to the cert-manager controller pod.
     volumes: []
@@ -1238,7 +1237,7 @@ cert-manager:
       allowPrivilegeEscalation: false
       capabilities:
         drop:
-        - ALL
+          - ALL
       readOnlyRootFilesystem: true
 
     # Enables default network policies for cainjector.
@@ -1255,27 +1254,27 @@ cert-manager:
       #   http-metrics port
       # +docs:property
       ingress:
-      - ports:
-        - port: http-metrics
-          protocol: TCP
+        - ports:
+            - port: http-metrics
+              protocol: TCP
 
       # Egress rule for the cainjector network policy. By default, it allows all
       # outbound traffic to ports 80 and 443, as well as DNS ports.
       # +docs:property
       egress:
-      - ports:
-        - port: 80
-          protocol: TCP
-        - port: 443
-          protocol: TCP
-        - port: 53
-          protocol: TCP
-        - port: 53
-          protocol: UDP
-        # On OpenShift and OKD, the Kubernetes API server listens on.
-        # port 6443.
-        - port: 6443
-          protocol: TCP
+        - ports:
+            - port: 80
+              protocol: TCP
+            - port: 443
+              protocol: TCP
+            - port: 53
+              protocol: TCP
+            - port: 53
+              protocol: UDP
+            # On OpenShift and OKD, the Kubernetes API server listens on.
+            # port 6443.
+            - port: 6443
+              protocol: TCP
 
     podDisruptionBudget:
       # Enable or disable the PodDisruptionBudget resource.
@@ -1345,7 +1344,6 @@ cert-manager:
     #
     # For more information, see [Resource Management for Pods and Containers](https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/).
     resources: {}
-
 
     # The nodeSelector on Pods tells Kubernetes to schedule Pods on the nodes with
     # matching labels.
@@ -1535,7 +1533,7 @@ cert-manager:
       allowPrivilegeEscalation: false
       capabilities:
         drop:
-        - ALL
+          - ALL
       readOnlyRootFilesystem: true
 
     # Timeout for 'kubectl check api' command.
@@ -1563,7 +1561,7 @@ cert-manager:
     # the webhook URL, IP address and TCP connect errors for example.
     # +docs:property
     extraArgs:
-    - -v
+      - -v
 
     # Additional environment variables to pass to cert-manager startupapicheck binary.
     # For example:
@@ -1581,7 +1579,6 @@ cert-manager:
     #
     # For more information, see [Resource Management for Pods and Containers](https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/).
     resources: {}
-
 
     # The nodeSelector on Pods tells Kubernetes to schedule Pods on the nodes with
     # matching labels.
