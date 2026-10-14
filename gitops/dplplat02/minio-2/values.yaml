@@ -609,9 +609,9 @@ minio:
 
   metrics:
     serviceMonitor:
-      enabled: false
+      enabled: true
       # scrape each node/pod individually for additional metrics
-      includeNode: false
+      includeNode: true
       public: true
       additionalLabels: {}
       annotations: {}
@@ -624,9 +624,9 @@ minio:
         #     action: labeldrop
       namespace: ~
       # Scrape interval, for example `interval: 30s`
-      interval: ~
+      interval: 60s
       # Scrape timeout, for example `scrapeTimeout: 10s`
-      scrapeTimeout: ~
+      scrapeTimeout: 20s
 
   ## ETCD settings: https://github.com/minio/minio/blob/master/docs/sts/etcd.md
   ## Define endpoints to enable this section.
