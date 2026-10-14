@@ -612,8 +612,7 @@ sites:
     primary-domain: bibliotek.kk.dk
     secondary-domains:
       - www.bibliotek.kk.dk
-      - nginx.main.kobenhavn.dplplat02.dpl.reload.dk
-      - varnish.main.kobenhavn.dplplat02.dpl.reload.dk
+    autogenerateRoutes: "redirect"
     plan: webmaster
     deploy_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHaTkDvjLW/b2qVj8FIvtX9x3TxFFZTENn+w2CFELeoC"
     <<: *webmasters-on-weekly-release-cycle
