@@ -601,6 +601,10 @@ kube-prometheus-stack:
         receiver: zulip-alerts
         routes:
           - receiver: zulip-alerts
+            matchers:
+              - "severity = critical"
+              - "severity = warning"
+              - "severity = info"
           - receiver: "null"
             matchers:
               - "alertname = InfoInhibitor"
