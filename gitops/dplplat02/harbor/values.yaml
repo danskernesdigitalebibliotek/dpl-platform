@@ -228,7 +228,7 @@ harbor:
         bucket: harbor-images
         #accesskey: awsaccesskey
         #secretkey: awssecretkey
-        regionendpoint: https://files.lagoon.dplplat02.dpl.reload.dk
+        regionendpoint: https://files3.lagoon.dplplat02.dpl.reload.dk
         #encrypt: false
         #keyid: mykeyid
         secure: true
