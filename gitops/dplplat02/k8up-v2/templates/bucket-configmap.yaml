@@ -8,4 +8,4 @@ data:
 kind: ConfigMap
 metadata:
   name: lagoon-bucket
-  namespace: k8up
+  namespace: k8up-v2
