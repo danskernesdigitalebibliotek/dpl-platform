@@ -111,6 +111,11 @@ apps:
     namespace: k8up-v2
     automated: false
 
+  - name: rustfs
+    project: rustfs
+    namespace: rustfs
+    automated: false
+
   - name: vertical-pod-autoscaler
     project: vertical-pod-autoscaler
     namespace: vpa
