@@ -44,7 +44,7 @@ startupWaitTimeoutSeconds: 300
 # RUSTFS_LOCAL_ENDPOINT_HOST explicitly for DNS-free startup. Set true for a
 # credentials-only existing Secret or false to suppress chart injection.
 localEndpointHost:
-  autoInject: null
+  autoInject: true
 
 # This sets the container image more information can be found here: https://kubernetes.io/docs/concepts/containers/images/
 image:
