@@ -1,4 +1,4 @@
-k8up-v2:
+k8up:
   # -- Override the namespace for namespaced resources in this chart.
   namespaceOverride: ""
 
