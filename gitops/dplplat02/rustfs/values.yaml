@@ -334,12 +334,12 @@ rustfs:
     customAnnotations: # Deprecated: use ingress.annotations instead
       {}
     hosts:
-      - host: console.rustfs.com
+      - host: console.rustfs.dplplat02.dpl.reload.dk
         paths:
           - path: /
             pathType: Prefix
             servicePort: console
-      - host: endpoint.rustfs.com
+      - host: endpoint.rustfs.dplplat02.dpl.reload.dk
         paths:
           - path: /
             pathType: Prefix

@@ -1,6 +1,6 @@
 apiVersion: v1
 data:
-  BUCKET_HOST: files3.lagoon.dplplat02.dpl.reload.dk
+  BUCKET_HOST: endpoint.rustfs.dplplat02.dpl.reload.dk
   BUCKET_NAME: lagoon-backup
   BUCKET_PORT: "80"
   BUCKET_REGION: ""

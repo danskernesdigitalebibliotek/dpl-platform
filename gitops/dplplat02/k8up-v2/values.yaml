@@ -53,17 +53,13 @@ k8up:
       - name: BACKUP_GLOBALS3BUCKET
         value: lagoon-backup
       - name: BACKUP_GLOBALS3ENDPOINT
-        value: http://minio-2.minio-2.svc.cluster.local:9000
+        value: http://rustfs.rustfs.svc.cluster.local:9000
       - name: BACKUP_GLOBALKEEPJOBS
         value: "1"
-      - name: BACKUP_GLOBALSTATSURL
-        value: https://backuphandler.lagoon.dplplat02.dpl.reload.dk
       - name: BACKUP_BACKOFFLIMIT
         value: "2"
       - name: BACKUP_GLOBALRESTORES3BUCKET
         value: restore
-      - name: BACKUP_GLOBALRESTORES3ENDPOINT
-        value: https://files3.lagoon.dplplat02.dpl.reload.dk
 
     backupImage:
       # -- The backup runner image repository.
