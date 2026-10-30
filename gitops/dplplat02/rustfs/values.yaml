@@ -282,6 +282,7 @@ rustfs:
     fsGroup: 10001
     runAsUser: 10001
     runAsGroup: 10001
+    fsGroupChangePolicy: OnRootMismatch
 
   containerSecurityContext:
     capabilities:
