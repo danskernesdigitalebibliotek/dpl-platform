@@ -598,24 +598,20 @@ kube-prometheus-stack:
           equal:
             - namespace
       route:
-        group_by: ["namespace"]
+        group_by: ["alertname", "namespace"]
         group_wait: 30s
         group_interval: 5m
         repeat_interval: 12h
         receiver: zulip-alerts
         routes:
-          - receiver: zulip-alerts
-            matchers:
-              - severity = critical
-              - severity = warning
-              - severity = info
           - receiver: "null"
             matchers:
-              - alertname = InfoInhibitor
+              - alertname =~ "InfoInhibitor|Watchdog"
       receivers:
         - name: zulip-alerts
           webhook_configs:
             - url_file: /etc/alertmanager/secrets/alertmanager-secrets/url
+              send_resolved: true
         - name: "null"
       templates:
         - "/etc/alertmanager/config/*.tmpl"
