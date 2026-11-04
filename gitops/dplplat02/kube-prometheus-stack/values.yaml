@@ -1006,7 +1006,6 @@ kube-prometheus-stack:
       ##
       secrets:
         - alertmanager-secrets
-        - developer-alerts-secret
 
       ## If false then the user will opt out of automounting API credentials.
       ##
