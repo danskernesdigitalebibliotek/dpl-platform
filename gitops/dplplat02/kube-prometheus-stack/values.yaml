@@ -385,8 +385,8 @@ kube-prometheus-stack:
               labels:
                 severity: critical
               annotations:
-                summary: "Lagoon Build failed"
-                description: "Lagoon build failed for {{ $labels.namespace }}. Go to the project in Lagoon UI and check it out. It might need to run again"
+                summary: "Lagoon Build failed for {{ $labels.namespace }}"
+                description: "Build {{ $labels.pod }} failed in {{ $labels.namespace }}. Go to https://ui.lagoon.dplplat02.dpl.reload.dk/projects/{{ reReplaceAll "-.*$" "" $labels.namespace }}/{{ $labels.namespace }}. It might need to run again"
   #  rule-name:
   #    groups:
   #    - name: my_group
