@@ -609,9 +609,9 @@ kube-prometheus-stack:
               - alertname =~ "InfoInhibitor|Watchdog"
           - receiver: developer-alerts
             matchers:
-              alertname = "LagoonBuildFailed"
+              - alertname = "LagoonBuildFailed"
             continue: true
-          - reciever: operator-alerts
+          - receiver: operator-alerts
       receivers:
         - name: operator-alerts
           webhook_configs:
