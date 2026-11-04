@@ -609,7 +609,7 @@ kube-prometheus-stack:
               - alertname =~ "InfoInhibitor|Watchdog"
           - receiver: developer-alerts
             matchers:
-              pod =~ "lagoon-build-.*"
+              alertname = "LagoonBuildFailed"
             continue: true
           - reciever: operator-alerts
       receivers:
