@@ -602,15 +602,24 @@ kube-prometheus-stack:
         group_wait: 30s
         group_interval: 5m
         repeat_interval: 12h
-        receiver: zulip-alerts
+        receiver: operator-alerts
         routes:
           - receiver: "null"
             matchers:
               - alertname =~ "InfoInhibitor|Watchdog"
+          - receiver: developer-alerts
+            matchers:
+              pod =~ "lagoon-build-.*"
+            continue: true
+          - reciever: operator-alerts
       receivers:
-        - name: zulip-alerts
+        - name: operator-alerts
           webhook_configs:
             - url_file: /etc/alertmanager/secrets/alertmanager-secrets/url
+              send_resolved: true
+        - name: developer-alerts
+          webhook_configs:
+            - url_file: /etc/alertmanager/secrets/developer-alerts-secret/url
               send_resolved: true
         - name: "null"
       templates:
