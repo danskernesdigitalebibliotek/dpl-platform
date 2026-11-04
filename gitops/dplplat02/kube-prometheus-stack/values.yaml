@@ -615,11 +615,11 @@ kube-prometheus-stack:
       receivers:
         - name: operator-alerts
           webhook_configs:
-            - url_file: /etc/alertmanager/secrets/alertmanager-secrets/operator-url
+            - url_file: /etc/alertmanager/secrets/alertmanager-secrets/operator_url
               send_resolved: true
         - name: developer-alerts
           webhook_configs:
-            - url_file: /etc/alertmanager/secrets/alertmanager-secrets/developer-url
+            - url_file: /etc/alertmanager/secrets/alertmanager-secrets/developer_url
               send_resolved: true
         - name: "null"
       templates:
