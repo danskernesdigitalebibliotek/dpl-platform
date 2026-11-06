@@ -48,6 +48,10 @@ spec:
     innodb_write_io_threads=4
     log_queries_not_using_indexes="ON"
     long_query_time=1
+    ignore_db_dirs='lost+found'
+    ignore_db_dirs='.cache'
+    ignore_db_dirs='.config'
+    ignore_db_dirs='.ssh'
 
   myCnfConfigMapKeyRef:
     name: mariadb
