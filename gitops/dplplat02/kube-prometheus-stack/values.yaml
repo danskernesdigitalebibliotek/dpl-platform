@@ -607,6 +607,11 @@ kube-prometheus-stack:
           - receiver: "null"
             matchers:
               - alertname =~ "InfoInhibitor|Watchdog"
+          - matchers:
+              - alertname = KubeJobFailed
+              - namespace =~ ".*-main"
+              - job_name =~ "cronjob-cli-.*"
+            receiver: developer-alerts
           - receiver: developer-alerts
             matchers:
               - alertname = "LagoonBuildFailed"
