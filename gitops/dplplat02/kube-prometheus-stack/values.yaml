@@ -612,6 +612,7 @@ kube-prometheus-stack:
               - namespace =~ ".*-main"
               - job_name =~ "cronjob-cli-.*"
             receiver: developer-alerts
+            continue: true
           - receiver: developer-alerts
             matchers:
               - alertname = "LagoonBuildFailed"
