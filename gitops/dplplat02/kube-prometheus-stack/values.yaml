@@ -604,18 +604,18 @@ kube-prometheus-stack:
         repeat_interval: 12h
         receiver: operator-alerts
         routes:
-          - receiver: "null"
-            matchers:
+          - matchers:
               - alertname =~ "InfoInhibitor|Watchdog"
+            receiver: "null"
           - matchers:
               - alertname = KubeJobFailed
               - namespace =~ ".*-main"
               - job_name =~ "cronjob-cli-.*"
             receiver: developer-alerts
             continue: true
-          - receiver: developer-alerts
-            matchers:
+          - matchers:
               - alertname = "LagoonBuildFailed"
+            receiver: developer-alerts
             continue: true
           - receiver: operator-alerts
       receivers:
