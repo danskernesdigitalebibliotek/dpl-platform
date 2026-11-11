@@ -441,14 +441,14 @@ loki:
         admin: loki-admin-bucket
       type: s3
       s3:
-        s3: https://endpoint.rustfs.dplplat02.dpl.reload.dk
-        endpoint: https://endpoint.rustfs.dplplat02.dpl.reload.dk
+        s3: http://endpoint.rustfs.dplplat02.dpl.reload.dk
+        endpoint: http://endpoint.rustfs.dplplat02.dpl.reload.dk
         region: us-east-1
         secretAccessKey: "${RUSTFS_SECRET_KEY}"
         accessKeyId: "QF^Wb9J6QffRsSMP5r4&6XD%q!"
         signatureVersion: null
         s3ForcePathStyle: true
-        insecure: false
+        insecure: true
         http_config: {}
         # -- Check https://grafana.com/docs/loki/latest/configure/#s3_storage_config for more info on how to provide a backoff_config
         backoff_config: {}
@@ -511,7 +511,7 @@ loki:
           # Optional secret key
           secret_access_key: "${RUSTFS_SECRET_KEY}"
           # Optional. Enable if using self-signed TLS
-          insecure: null
+          insecure: true
           # Optional server-side encryption configuration
           sse: {}
           # Optional HTTP client configuration
