@@ -441,7 +441,7 @@ loki:
         admin: loki-admin-bucket
       type: s3
       s3:
-        s3: http://endpoint.rustfs.dplplat02.dpl.reload.dk
+        s3: https://endpoint.rustfs.dplplat02.dpl.reload.dk
         endpoint: null
         region: null
         secretAccessKey: "${RUSTFS_SECRET_KEY}"
