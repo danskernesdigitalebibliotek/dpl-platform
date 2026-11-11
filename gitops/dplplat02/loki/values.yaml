@@ -441,7 +441,7 @@ loki:
         admin: loki-admin-bucket
       type: s3
       s3:
-        s3: http://rustfs-svc.rustfs.svc.cluster.local
+        s3: http://endpoint.rustfs.dplplat02.dpl.reload.dk
         endpoint: null
         region: null
         secretAccessKey: "${RUSTFS_SECRET_KEY}"
@@ -503,11 +503,11 @@ loki:
         # S3 configuration (when type is "s3")
         s3:
           # S3 endpoint URL
-          endpoint: http://rustfs-svc.rustfs.svc.cluster.local:9000
+          endpoint: http://endpoint.rustfs.dplplat02.dpl.reload.dk
           # Optional region
           region: null
           # Optional access key
-          access_key_id: rustfs-access-key
+          access_key_id: "QF^Wb9J6QffRsSMP5r4&6XD%q!"
           # Optional secret key
           secret_access_key: "${RUSTFS_SECRET_KEY}"
           # Optional. Enable if using self-signed TLS
