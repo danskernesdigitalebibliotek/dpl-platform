@@ -445,7 +445,7 @@ loki:
         endpoint: null
         region: null
         secretAccessKey: "${RUSTFS_SECRET_KEY}"
-        accessKeyId: rustfs-secret-key
+        accessKeyId: "QF^Wb9J6QffRsSMP5r4&6XD%q!"
         signatureVersion: null
         s3ForcePathStyle: true
         insecure: true
