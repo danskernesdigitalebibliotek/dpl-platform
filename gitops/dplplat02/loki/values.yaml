@@ -503,7 +503,7 @@ loki:
         # S3 configuration (when type is "s3")
         s3:
           # S3 endpoint URL
-          endpoint: http://endpoint.rustfs.dplplat02.dpl.reload.dk
+          endpoint: https://endpoint.rustfs.dplplat02.dpl.reload.dk
           # Optional region
           region: null
           # Optional access key
