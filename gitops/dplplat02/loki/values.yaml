@@ -442,7 +442,7 @@ loki:
       type: s3
       s3:
         s3: https://endpoint.rustfs.dplplat02.dpl.reload.dk
-        endpoint: null
+        endpoint: https://endpoint.rustfs.dplplat02.dpl.reload.dk
         region: null
         secretAccessKey: "${RUSTFS_SECRET_KEY}"
         accessKeyId: "QF^Wb9J6QffRsSMP5r4&6XD%q!"
