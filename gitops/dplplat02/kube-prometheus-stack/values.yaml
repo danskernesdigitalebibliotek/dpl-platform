@@ -2612,10 +2612,10 @@ kube-prometheus-stack:
           honorLabels: true
 
     rbac:
-    extraRules:
-      - apiGroups: ["crd.lagoon.sh"]
-        resources: ["lagoonbuilds"]
-        verbs: ["list", "watch"]
+      extraRules:
+        - apiGroups: ["crd.lagoon.sh"]
+          resources: ["lagoonbuilds"]
+          verbs: ["list", "watch"]
     customResourceState:
       enabled: true
       config:
