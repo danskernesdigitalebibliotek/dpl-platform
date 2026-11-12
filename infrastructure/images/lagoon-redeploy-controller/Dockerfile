@@ -1,4 +1,4 @@
-FROM alpine:3.24.3
+FROM alpine:3.24.4
 
 # Install apk dependencies
 RUN apk add --no-cache nodejs npm curl bash openssh-client && npm install -g zx
