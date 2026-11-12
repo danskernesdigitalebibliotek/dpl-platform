@@ -2611,6 +2611,34 @@ kube-prometheus-stack:
           ## Keep labels from scraped data, overriding server-side labels
           honorLabels: true
 
+    rbac:
+    extraRules:
+      - apiGroups: ["crd.lagoon.sh"]
+        resources: ["lagoonbuilds"]
+        verbs: ["list", "watch"]
+    customResourceState:
+      enabled: true
+      config:
+        kind: CustomResourceStateMetrics
+        spec:
+          resources:
+            - groupVersionKind:
+                group: crd.lagoon.sh
+                version: v1beta2
+                kind: LagoonBuild
+              metricNamePrefix: lagoon
+              metrics:
+                - name: build_info
+                  help: "Info about LagoonBuild objects"
+                  each:
+                    type: Info
+                    info:
+                      labelsFromPath:
+                        name: [metadata, name]
+                  labelsFromPath:
+                    namespace: [metadata, namespace]
+                    phase: [status, phase]
+
   ## Deploy node exporter as a daemonset to all nodes
   ##
   nodeExporter:
