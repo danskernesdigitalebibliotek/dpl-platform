@@ -436,6 +436,19 @@ kube-prometheus-stack:
               annotations:
                 summary: Host unusual disk write latency (instance {{ $labels.instance }})
                 description: "Disk latency is growing (write operations > 100ms)\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
+    nfs-rules:
+      groups:
+        - name: nfs-alert-rules
+          interval: 5m
+          rules:
+            -alert: NfsReadRoundTripTimeHigh
+            expr: sum(rate(node_mountstats_nfs_operations_response_time_seconds_total{operation="READ"}[$__rate_interval])) / sum(rate(node_mountstats_nfs_operations_requests_total{operation="READ"}[$__rate_interval])) > 0.6
+            for: 4m
+            labels:
+              severity: warning
+            annotations:
+              summary: The NFS RTT for READ ops are higher than normal
+              description: The NFS RTT for READ is higher than 0.6s, which is unsual. Have a look at the NFS status dashboard. The NFS may be experiencing high load again.
   #  rule-name:
   #    groups:
   #    - name: my_group
