@@ -387,6 +387,23 @@ kube-prometheus-stack:
               annotations:
                 summary: "Lagoon Build failed for {{ $labels.namespace }}"
                 description: 'Build {{ $labels.pod }} failed in {{ $labels.namespace }}. Go to https://ui.lagoon.dplplat02.dpl.reload.dk/projects/{{ reReplaceAll "-.*$" "" $labels.namespace }}/{{ $labels.namespace }}. It might need to run again'
+    mariadb-rules:
+      groups:
+        - name: too-many-connections
+          interval: 2m
+          rules:
+            - alert: TooManyConnections
+              expr: |
+                (max_over_time(mysql_global_status_threads_connected{instance="mariadb-10-6-22-production-1-0.mariadb-10-6-22-production-1-internal.mariadb-10-6-22-production-1.svc.cluster.local"}[1m]) * 100 > 3) / mysql_global_variables_max_connections{instance="mariadb-10-6-22-production-1-0.mariadb-10-6-22-production-1-internal.mariadb-10-6-22-production-1.svc.cluster.local"}
+              for: 2m
+              labels:
+                severity: warning
+              annotations:
+                summary: "MariaDB in {{ $labels.namespace }} is experience to many connections"
+                descriptions: |-
+                  More than 80% of MySQL connections are in use on {{ $labels.instance }}
+                  VALUE = {{ $value }}
+                  LABELS = {{ $labels }}
   #  rule-name:
   #    groups:
   #    - name: my_group
