@@ -404,6 +404,17 @@ kube-prometheus-stack:
                   More than 80% of MariaDB connections are in use on {{ $labels.instance }}
                   VALUE = {{ $value }}
                   LABELS = {{ $labels }}
+            - alert: MariaDbDown
+              expr: mysql_up == 0
+              for: 0m
+              labels:
+                severity: critical
+              annotations:
+                description: |-
+                  MariaDB instance is down on {{ $labels.instance }}
+                    VALUE = {{ $value }}
+                    LABELS = {{ $labels }}
+                summary: MariaDB down (instance {{ $labels.instance }})
   #  rule-name:
   #    groups:
   #    - name: my_group
