@@ -392,7 +392,7 @@ kube-prometheus-stack:
         - name: mariadb-alerts-rules
           interval: 2m
           rules:
-            - alert: VeryHighConnectionAmount
+            - alert: MariaDBVeryHighConnectionAmount
               expr: |
                 (max_over_time(mysql_global_status_threads_connected{instance="mariadb-10-6-22-production-1-0.mariadb-10-6-22-production-1-internal.mariadb-10-6-22-production-1.svc.cluster.local"}[1m]) * 100 > 80) / mysql_global_variables_max_connections{instance="mariadb-10-6-22-production-1-0.mariadb-10-6-22-production-1-internal.mariadb-10-6-22-production-1.svc.cluster.local"}
               for: 2m
@@ -401,7 +401,7 @@ kube-prometheus-stack:
               annotations:
                 summary: "MariaDB in {{ $labels.namespace }} is experience to many connections"
                 descriptions: |-
-                  More than 80% of MySQL connections are in use on {{ $labels.instance }}
+                  More than 80% of MariaDB connections are in use on {{ $labels.instance }}
                   VALUE = {{ $value }}
                   LABELS = {{ $labels }}
   #  rule-name:
