@@ -394,7 +394,7 @@ kube-prometheus-stack:
           rules:
             - alert: MariaDBVeryHighConnectionAmount
               expr: |
-                (max_over_time(mysql_global_status_threads_connected{instance="mariadb-10-6-22-production-1-0.mariadb-10-6-22-production-1-internal.mariadb-10-6-22-production-1.svc.cluster.local"}[1m]) * 100 > 80) / mysql_global_variables_max_connections{instance="mariadb-10-6-22-production-1-0.mariadb-10-6-22-production-1-internal.mariadb-10-6-22-production-1.svc.cluster.local"}
+                (max_over_time(mysql_global_status_threads_connected{instance="mariadb-10-6-22-production-1-0.mariadb-10-6-22-production-1-internal.mariadb-10-6-22-production-1.svc.cluster.local"}[1m])) / mysql_global_variables_max_connections{instance="mariadb-10-6-22-production-1-0.mariadb-10-6-22-production-1-internal.mariadb-10-6-22-production-1.svc.cluster.local"} * 100 > 80
               for: 2m
               labels:
                 severity: warning
