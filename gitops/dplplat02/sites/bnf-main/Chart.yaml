@@ -8,3 +8,6 @@ dependencies:
   - name: lagoon-site-monitoring
     version: 0.0.1
     repository: oci://ghcr.io/danskernesdigitalebibliotek/dpl-platform/charts
+  - name: autoscalers
+    version: 0.0.16
+    repository: oci://ghcr.io/danskernesdigitalebibliotek/dpl-platform/charts
