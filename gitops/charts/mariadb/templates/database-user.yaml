@@ -11,4 +11,4 @@ spec:
   passwordSecretKeyRef:
     name: database-secret
     key: password
-  maxUserConnections: 100
+  maxUserConnections: 200
