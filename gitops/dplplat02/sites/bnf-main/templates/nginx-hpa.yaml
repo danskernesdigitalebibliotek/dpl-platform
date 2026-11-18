@@ -6,8 +6,8 @@ metadata:
 spec:
   scaleRef:
     kind: Deployment
-    name: php-apache
-    subresource: scale
+    apiVersion: apps/v1
+    name: nginx
   minReplicas: 3
   maxReplicas: 10
   metrics:
