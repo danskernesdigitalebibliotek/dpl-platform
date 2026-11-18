@@ -4,7 +4,7 @@ metadata:
   name: nginx-hpa
   namespace: bnf-main
 spec:
-  scaleRef:
+  scaleTargetRef:
     apiVersion: "apps/v1"
     kind: Deployment
     name: nginx
