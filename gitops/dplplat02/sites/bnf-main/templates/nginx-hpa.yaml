@@ -5,8 +5,8 @@ metadata:
   namespace: bnf-main
 spec:
   scaleRef:
-    kind: Deployment
     apiVersion: apps/v1
+    kind: Deployment
     name: nginx
   minReplicas: 3
   maxReplicas: 10
