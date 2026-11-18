@@ -23,11 +23,11 @@ spec:
       policies:
         - type: Pods
           value: 1
-          periodSeconds: 120
+          periodSeconds: 60
     scaleUp:
       stabilizationWindowSeconds: 0
       policies:
         - type: Pods
-          value: 2
-          periodSeconds: 50
+          value: 3
+          periodSeconds: 30
   
