@@ -287,7 +287,9 @@ function syncEnvRepo {
   local repoPath="${ENVIRONMENT_REPO_ORG}/${repoName}"
   echo "** Cloning branch ${branchName} of env-repo ${repoPath} for ${siteName}"
   # TODO: consider adding --single-branch flag to make cloning faster
-  git clone --depth 1 "https://${GITHUB_TOKEN}@github.com/${repoPath}.git" -b "${branchName}"
+  # Pass the token as the password: GitHub redirects the clone, and git drops a
+  # token given only as the username, falling back to an interactive prompt.
+  git clone --depth 1 "https://x-access-token:${GITHUB_TOKEN}@github.com/${repoPath}.git" -b "${branchName}"
 
   # Clear out any previous content and replace it with a unrendered template.
   mv "${repoName}/.git" ./
