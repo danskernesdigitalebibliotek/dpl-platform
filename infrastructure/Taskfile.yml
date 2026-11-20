@@ -540,7 +540,10 @@ tasks:
       - |
         export REMOTE_COMMAND={{shellQuote .CLI_ARGS}}
         export LAGOON_ENVIRONMENT={{shellQuote (.ENVIRONMENT | default "main")}}
-        printf '%s\n' $SITES | parallel --will-cite --jobs {{.JOBS | default 3}} --retries {{.TRIES | default 1}} --tag --line-buffer \
+        sites={{shellQuote (.SITES | default "")}}
+        set -- $sites
+        if [ $# -eq 0 ]; then echo "SITES contains no sites" >&2; exit 1; fi
+        printf '%s\n' "$@" | parallel --no-run-if-empty --will-cite --jobs {{.JOBS | default 3}} --retries {{.TRIES | default 1}} --tag --line-buffer \
           'lagoon ssh -p {} -e "$LAGOON_ENVIRONMENT" -C "$REMOTE_COMMAND"'
 
   sites:sync:
