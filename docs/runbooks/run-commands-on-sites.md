@@ -9,7 +9,8 @@ production.
 ## Prerequisites
 
 - A running [dplsh](using-dplsh.md) with `DPLPLAT_ENV` set to the platform
-  environment name.
+  environment name. It needs a dplsh release that includes GNU Parallel; if
+  `parallel` is not found, update with `../tools/dplsh/dplsh.sh --update`.
 - A [connected Lagoon CLI](connecting-the-lagoon-cli.md).
 
 ## Procedure
@@ -35,10 +36,16 @@ production.
    Three sites run at a time (set `JOBS` to change it). Each site gets one
    attempt; set `TRIES` to allow more, but only for commands that are safe to
    run twice. Each output line is prefixed with its site.
-   The task exits with the number of sites that still failed.
+
+   The task fails if any site failed. Run it as `task -x sites:run …` to get
+   the number of failed sites as the exit code.
 
 Each argument reaches the site as one word, so shell syntax such as `&&` or
-`|` is not interpreted. To run several commands, run the task once for each.
+`|` is not interpreted. To use it, wrap the command in `sh -c`:
+
+```sh
+task sites:run -- sh -c 'drush updb -y && drush cr'
+```
 
 ### Commands must not prompt
 
