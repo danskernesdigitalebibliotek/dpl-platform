@@ -521,7 +521,7 @@ tasks:
         echo "$sites"
 
   sites:run:
-    deps: [_req_env, lagoon:cli:check]
+    deps: [lagoon:cli:check]
     desc: Runs a command with lagoon ssh on every site in SITES, a few at a time
     summary: |
       SITES="aarhus odense" task sites:run -- drush status
@@ -537,10 +537,8 @@ tasks:
       - sh: "{{if .CLI_ARGS}}true{{else}}false{{end}}"
         msg: "Pass the command after --, e.g. task sites:run -- drush status"
     cmds:
-      # The job is single-quoted so the command reaches it through the
-      # environment. Passed as an argument, parallel would replace {} and its
-      # other replacement strings inside it. The variables are set here rather
-      # than under env:, where an exported variable of the same name would win.
+      # The command goes through the environment so parallel can't expand {}
+      # in it, and is exported here because an exported variable beats env:.
       - |
         export REMOTE_COMMAND={{shellQuote .CLI_ARGS}}
         export LAGOON_ENVIRONMENT={{shellQuote (.ENVIRONMENT | default "main")}}
@@ -558,7 +556,7 @@ tasks:
         if [ "$jobs" -lt 1 ] || [ "$tries" -lt 1 ]; then echo "JOBS and TRIES must be at least 1" >&2; exit 1; fi
         joblog=$(mktemp)
         rc=0
-        printf '%s\n' "$@" | parallel --no-run-if-empty --will-cite --jobs "$jobs" --retries "$tries" --tag --line-buffer \
+        printf '%s\n' "$@" | parallel --will-cite --jobs "$jobs" --retries "$tries" --tag --line-buffer \
           --joblog "$joblog" 'lagoon ssh -p {} -e "$LAGOON_ENVIRONMENT" -C "$REMOTE_COMMAND"' || rc=$?
         if [ "$rc" -ne 0 ]; then
           echo "Failed sites:" >&2
