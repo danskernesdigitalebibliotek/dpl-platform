@@ -534,11 +534,12 @@ tasks:
       - sh: "{{if .CLI_ARGS}}true{{else}}false{{end}}"
         msg: "Pass the command after --, e.g. task sites:run -- drush status"
     cmds:
-      # -q keeps the command one argument to lagoon ssh instead of letting
-      # parallel's shell split it.
+      # The job is single-quoted so the command reaches it through the
+      # environment. Passed as an argument, parallel would replace {} and its
+      # other replacement strings inside it.
       - |
-        printf '%s\n' $SITES | parallel --will-cite --jobs {{.JOBS | default 3}} --retries 5 --tag --line-buffer -q \
-          lagoon ssh -p {} -e "$LAGOON_ENVIRONMENT" -C "$REMOTE_COMMAND"
+        printf '%s\n' $SITES | parallel --will-cite --jobs {{.JOBS | default 3}} --retries 5 --tag --line-buffer \
+          'lagoon ssh -p {} -e "$LAGOON_ENVIRONMENT" -C "$REMOTE_COMMAND"'
 
   sites:sync:
     desc: Performs a full synchronization from sites.yaml to running state
