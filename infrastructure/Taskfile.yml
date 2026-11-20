@@ -529,17 +529,17 @@ tasks:
     silent: true
     requires:
       vars: [SITES]
-    env:
-      REMOTE_COMMAND: "{{.CLI_ARGS}}"
-      LAGOON_ENVIRONMENT: '{{.ENVIRONMENT | default "main"}}'
     preconditions:
       - sh: "{{if .CLI_ARGS}}true{{else}}false{{end}}"
         msg: "Pass the command after --, e.g. task sites:run -- drush status"
     cmds:
       # The job is single-quoted so the command reaches it through the
       # environment. Passed as an argument, parallel would replace {} and its
-      # other replacement strings inside it.
+      # other replacement strings inside it. The variables are set here rather
+      # than under env:, where an exported variable of the same name would win.
       - |
+        export REMOTE_COMMAND={{shellQuote .CLI_ARGS}}
+        export LAGOON_ENVIRONMENT={{shellQuote (.ENVIRONMENT | default "main")}}
         printf '%s\n' $SITES | parallel --will-cite --jobs {{.JOBS | default 3}} --retries {{.TRIES | default 1}} --tag --line-buffer \
           'lagoon ssh -p {} -e "$LAGOON_ENVIRONMENT" -C "$REMOTE_COMMAND"'
 
