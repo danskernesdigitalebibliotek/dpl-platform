@@ -498,6 +498,79 @@ tasks:
     cmds:
       - ./run-drush-cr-for-all-sites.mjs
 
+  sites:list:
+    deps: [_req_env]
+    desc: Lists the sites in sites.yaml, optionally only those on a given plan
+    summary: |
+      task sites:list -- --plan webmaster
+    silent: true
+    cmds:
+      - |
+        plan=""
+        set -- {{.CLI_ARGS}}
+        while [ $# -gt 0 ]; do
+          case "$1" in
+            --plan)
+              if [ -z "${2:-}" ]; then echo "--plan needs a value" >&2; exit 2; fi
+              plan="$2"; shift 2 ;;
+            *) echo "unknown argument: $1" >&2; exit 2 ;;
+          esac
+        done
+        sites=$(PLAN="$plan" yq '... comments="" | .sites | to_entries | .[] | select(strenv(PLAN) == "" or .value.plan == strenv(PLAN)) | .key' {{.dir_env}}/sites.yaml)
+        if [ -z "$sites" ]; then echo "no sites match" >&2; exit 1; fi
+        echo "$sites"
+
+  sites:run:
+    deps: [lagoon:cli:check]
+    desc: Runs a command with lagoon ssh on every site in SITES, a few at a time
+    summary: |
+      SITES="aarhus odense" task sites:run -- drush status
+      SITES="$(task sites:list -- --plan webmaster)" ENVIRONMENT=moduletest task sites:run -- drush cr
+
+      ENVIRONMENT defaults to main, and JOBS (sites run in parallel) to 3.
+      TRIES (attempts per site, default 1) retries a failing command, so only
+      raise it for commands that are safe to run again.
+    silent: true
+    requires:
+      vars: [SITES]
+    preconditions:
+      - sh: "{{if .CLI_ARGS}}true{{else}}false{{end}}"
+        msg: "Pass the command after --, e.g. task sites:run -- drush status"
+    cmds:
+      # The command goes through the environment so parallel can't expand {}
+      # in it, and is exported here because an exported variable beats env:.
+      - |
+        export REMOTE_COMMAND={{shellQuote .CLI_ARGS}}
+        export LAGOON_ENVIRONMENT={{shellQuote (.ENVIRONMENT | default "main")}}
+        sites={{shellQuote (.SITES | default "")}}
+        set -f
+        set -- $sites
+        if [ $# -eq 0 ]; then echo "SITES contains no sites" >&2; exit 1; fi
+        for site in "$@"; do
+          case "$site" in *[!A-Za-z0-9-]*) echo "not a site key: $site" >&2; exit 1 ;; esac
+        done
+        jobs={{shellQuote (.JOBS | default "3")}}
+        tries={{shellQuote (.TRIES | default "1")}}
+        # parallel reads 0 as unlimited: every site at once, or endless retries.
+        case "$jobs$tries" in *[!0-9]*) echo "JOBS and TRIES must be numbers" >&2; exit 1 ;; esac
+        if [ "$jobs" -lt 1 ] || [ "$tries" -lt 1 ]; then echo "JOBS and TRIES must be at least 1" >&2; exit 1; fi
+        joblog=$(mktemp)
+        rc=0
+        printf '%s\n' "$@" | parallel --will-cite --jobs "$jobs" --retries "$tries" --tag --line-buffer \
+          --joblog "$joblog" 'lagoon ssh -p {} -e "$LAGOON_ENVIRONMENT" -C "$REMOTE_COMMAND"' || rc=$?
+        if [ "$rc" -ne 0 ]; then
+          echo "Failed sites:" >&2
+          # The last line per job is its final attempt; the site follows -p.
+          awk -F'\t' 'NR > 1 {
+              n = split($9, w, " ")
+              for (i = 1; i < n; i++) if (w[i] == "-p") site[$1] = w[i + 1]
+              failed[$1] = ($7 != 0 || $8 != 0)
+            }
+            END { for (j in failed) if (failed[j]) print "  " site[j] }' "$joblog" | sort >&2
+        fi
+        rm -f "$joblog"
+        exit "$rc"
+
   sites:sync:
     desc: Performs a full synchronization from sites.yaml to running state
     dir: "{{.dir_env}}"
