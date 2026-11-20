@@ -39,6 +39,7 @@ RUN apk add --no-cache \
   yq \
   jq \
   openssh \
+  parallel \
   bind-tools \
   nodejs \
   npm

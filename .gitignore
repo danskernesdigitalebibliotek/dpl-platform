@@ -10,6 +10,3 @@
 # direnv-related stuff, not enabled by default
 .direnv
 .envrc
-
-# Logs from task sites:run-commands
-run-commands-logs/

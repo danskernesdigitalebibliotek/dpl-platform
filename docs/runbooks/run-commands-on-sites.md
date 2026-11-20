@@ -2,9 +2,9 @@
 
 ## When to use
 
-When the same commands, typically drush via `lagoon ssh`, must run on many
-sites, for example to change config on every moduletest environment before
-a change reaches production.
+When the same command, typically drush, must run on many sites, for example
+to change config on every moduletest environment before a change reaches
+production.
 
 ## Prerequisites
 
@@ -14,40 +14,34 @@ a change reaches production.
 
 ## Procedure
 
-1. Write the commands to a file, one per line. `{site}` is replaced with the
-   site's key from `sites.yaml`. Blank lines and `#` comments are ignored.
+1. Choose the sites. `task sites:list` lists every site in `sites.yaml`, and
+   `task sites:list -- --plan webmaster` lists the sites that have a
+   moduletest environment. Put the sites in `SITES`, separated by spaces or
+   newlines:
 
    ```sh
-   lagoon ssh -p {site} -e moduletest -C "drush config:set -y my_module.settings my_key value"
-   lagoon ssh -p {site} -e moduletest -C "drush cr"
+   export SITES="$(task sites:list -- --plan webmaster)"
    ```
 
-2. Check which sites and commands it will run:
+   Or name them by hand: `export SITES="aarhus odense"`.
+
+2. Run the command after `--`. It runs with `lagoon ssh` on the `main`
+   environment unless `ENVIRONMENT` says otherwise:
 
    ```sh
-   task sites:run-commands -- -c commands.txt --plan webmaster --dry-run
+   ENVIRONMENT=moduletest task sites:run -- drush cr
    ```
 
-   Leave out `--plan` to target every site. `--plan webmaster` selects the
-   sites that have a moduletest environment.
+   Three sites run at a time (set `JOBS` to change it), and a failing command
+   is retried up to five times. Each output line is prefixed with its site.
+   The task exits with the number of sites that still failed.
 
-3. Run it without `--dry-run`. Three sites run at a time, and each command
-   is retried up to five times. Each site's commands run in order, and a
-   site stops at its first failing command. The output of each site goes to
-   `run-commands-logs/<timestamp>/<site>.log`.
-
-4. If sites failed, re-run only those:
-
-   ```sh
-   task sites:run-commands -- -c commands.txt --sites run-commands-logs/<timestamp>/failed.txt
-   ```
-
-Run `task sites:run-commands -- --help` for the remaining options.
+Each argument reaches the site as one word, so shell syntax such as `&&` or
+`|` is not interpreted. To run several commands, run the task once for each.
 
 ### Commands must not prompt
 
-Each command runs with stdin from `/dev/null`, so nothing can answer a
-prompt:
+Nothing can answer a prompt:
 
 - drush takes the prompt's default answer without asking. Pass `-y` so the
   result does not depend on that default.
@@ -61,5 +55,5 @@ passes the value as a string, and a boolean in config schema casts `"false"`
 to `true`:
 
 ```sh
-drush config:set -y --input-format=yaml my_module.settings my_flag false
+task sites:run -- drush config:set -y --input-format=yaml my_module.settings my_flag false
 ```

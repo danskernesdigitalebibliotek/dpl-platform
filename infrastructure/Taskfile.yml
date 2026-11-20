@@ -498,18 +498,47 @@ tasks:
     cmds:
       - ./run-drush-cr-for-all-sites.mjs
 
-  sites:run-commands:
-    deps: [_req_env, lagoon:cli:check]
-    desc: Runs a file of shell commands against the sites in sites.yaml, a few at a time with retries and a log per site
+  sites:list:
+    deps: [_req_env]
+    desc: Lists the sites in sites.yaml, optionally only those on a given plan
     summary: |
-      Pass the script's arguments after --. See --help for all of them.
-
-        task sites:run-commands -- -c commands.txt --plan webmaster --dry-run
-    dir: "{{.USER_WORKING_DIR}}"
-    env:
-      SITES_CONFIG: "{{.TASKFILE_DIR}}/{{.dir_env}}/sites.yaml"
+      task sites:list -- --plan webmaster
+    silent: true
     cmds:
-      - "{{.TASKFILE_DIR}}/task/scripts/run-commands-on-sites.sh {{.CLI_ARGS}}"
+      - |
+        plan=""
+        set -- {{.CLI_ARGS}}
+        while [ $# -gt 0 ]; do
+          case "$1" in
+            --plan) plan="$2"; shift 2 ;;
+            *) echo "unknown argument: $1" >&2; exit 2 ;;
+          esac
+        done
+        PLAN="$plan" yq '... comments="" | .sites | to_entries | .[] | select(strenv(PLAN) == "" or .value.plan == strenv(PLAN)) | .key' {{.dir_env}}/sites.yaml
+
+  sites:run:
+    deps: [_req_env, lagoon:cli:check]
+    desc: Runs a command with lagoon ssh on every site in SITES, a few at a time with retries
+    summary: |
+      SITES="aarhus odense" task sites:run -- drush status
+      SITES="$(task sites:list -- --plan webmaster)" ENVIRONMENT=moduletest task sites:run -- drush cr
+
+      ENVIRONMENT defaults to main, and JOBS (sites run in parallel) to 3.
+    silent: true
+    requires:
+      vars: [SITES]
+    env:
+      REMOTE_COMMAND: "{{.CLI_ARGS}}"
+      LAGOON_ENVIRONMENT: '{{.ENVIRONMENT | default "main"}}'
+    preconditions:
+      - sh: "{{if .CLI_ARGS}}true{{else}}false{{end}}"
+        msg: "Pass the command after --, e.g. task sites:run -- drush status"
+    cmds:
+      # -q keeps the command one argument to lagoon ssh instead of letting
+      # parallel's shell split it.
+      - |
+        printf '%s\n' $SITES | parallel --will-cite --jobs {{.JOBS | default 3}} --retries 5 --tag --line-buffer -q \
+          lagoon ssh -p {} -e "$LAGOON_ENVIRONMENT" -C "$REMOTE_COMMAND"
 
   sites:sync:
     desc: Performs a full synchronization from sites.yaml to running state
