@@ -518,12 +518,14 @@ tasks:
 
   sites:run:
     deps: [_req_env, lagoon:cli:check]
-    desc: Runs a command with lagoon ssh on every site in SITES, a few at a time with retries
+    desc: Runs a command with lagoon ssh on every site in SITES, a few at a time
     summary: |
       SITES="aarhus odense" task sites:run -- drush status
       SITES="$(task sites:list -- --plan webmaster)" ENVIRONMENT=moduletest task sites:run -- drush cr
 
       ENVIRONMENT defaults to main, and JOBS (sites run in parallel) to 3.
+      TRIES (attempts per site, default 1) retries a failing command, so only
+      raise it for commands that are safe to run again.
     silent: true
     requires:
       vars: [SITES]
@@ -538,7 +540,7 @@ tasks:
       # environment. Passed as an argument, parallel would replace {} and its
       # other replacement strings inside it.
       - |
-        printf '%s\n' $SITES | parallel --will-cite --jobs {{.JOBS | default 3}} --retries 5 --tag --line-buffer \
+        printf '%s\n' $SITES | parallel --will-cite --jobs {{.JOBS | default 3}} --retries {{.TRIES | default 1}} --tag --line-buffer \
           'lagoon ssh -p {} -e "$LAGOON_ENVIRONMENT" -C "$REMOTE_COMMAND"'
 
   sites:sync:

@@ -32,8 +32,9 @@ production.
    ENVIRONMENT=moduletest task sites:run -- drush cr
    ```
 
-   Three sites run at a time (set `JOBS` to change it), and a failing command
-   is retried up to five times. Each output line is prefixed with its site.
+   Three sites run at a time (set `JOBS` to change it). Each site gets one
+   attempt; set `TRIES` to allow more, but only for commands that are safe to
+   run twice. Each output line is prefixed with its site.
    The task exits with the number of sites that still failed.
 
 Each argument reaches the site as one word, so shell syntax such as `&&` or
