@@ -552,8 +552,22 @@ tasks:
         # parallel reads 0 as unlimited: every site at once, or endless retries.
         case "$jobs$tries" in *[!0-9]*) echo "JOBS and TRIES must be numbers" >&2; exit 1 ;; esac
         if [ "$jobs" -lt 1 ] || [ "$tries" -lt 1 ]; then echo "JOBS and TRIES must be at least 1" >&2; exit 1; fi
+        joblog=$(mktemp)
+        rc=0
         printf '%s\n' "$@" | parallel --no-run-if-empty --will-cite --jobs "$jobs" --retries "$tries" --tag --line-buffer \
-          'lagoon ssh -p {} -e "$LAGOON_ENVIRONMENT" -C "$REMOTE_COMMAND"'
+          --joblog "$joblog" 'lagoon ssh -p {} -e "$LAGOON_ENVIRONMENT" -C "$REMOTE_COMMAND"' || rc=$?
+        if [ "$rc" -ne 0 ]; then
+          echo "Failed sites:" >&2
+          # The last line per job is its final attempt; the site follows -p.
+          awk -F'\t' 'NR > 1 {
+              n = split($9, w, " ")
+              for (i = 1; i < n; i++) if (w[i] == "-p") site[$1] = w[i + 1]
+              failed[$1] = ($7 != 0 || $8 != 0)
+            }
+            END { for (j in failed) if (failed[j]) print "  " site[j] }' "$joblog" | sort >&2
+        fi
+        rm -f "$joblog"
+        exit "$rc"
 
   sites:sync:
     desc: Performs a full synchronization from sites.yaml to running state

@@ -37,7 +37,8 @@ production.
    attempt; set `TRIES` to allow more, but only for commands that are safe to
    run twice. Each output line is prefixed with its site.
 
-   The task fails if any site failed. Run it as `task -x sites:run …` to get
+   If any site failed, the task lists those sites at the end and fails. Run
+   it as `task -x sites:run …` to get
    the number of failed sites as the exit code.
 
 Each argument reaches the site as one word, so shell syntax such as `&&` or
