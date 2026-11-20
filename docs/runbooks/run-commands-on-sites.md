@@ -38,8 +38,8 @@ production.
    run twice. Each output line is prefixed with its site.
 
    If any site failed, the task lists those sites at the end and fails. Run
-   it as `task -x sites:run …` to get
-   the number of failed sites as the exit code.
+   it as `task -x sites:run …` to get the number of failed sites as the exit
+   code, up to 101.
 
 Each argument reaches the site as one word, so shell syntax such as `&&` or
 `|` is not interpreted. To use it, wrap the command in `sh -c`:
@@ -47,6 +47,9 @@ Each argument reaches the site as one word, so shell syntax such as `&&` or
 ```sh
 task sites:run -- sh -c 'drush updb -y && drush cr'
 ```
+
+Task reads `{{` in the arguments as a template, so a command containing it,
+such as a Twig string, cannot be passed this way.
 
 ### Commands must not prompt
 
