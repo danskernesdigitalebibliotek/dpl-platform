@@ -373,7 +373,7 @@ kube-prometheus-stack:
               labels:
                 severity: warning
               annotations:
-                summary: "{{ labels.name }} certificate's renewal {{ $value | humanizeDuration }} overdue"
+                summary: "{{ $labels.name }} certificate's renewal {{ $value | humanizeDuration }} overdue"
                 description: "{{ $labels.exported_namespace }}/{{ $labels.name }} should have been renewed {{ $value | humanizeDuration }} ago."
     lagoon-builds-rules:
       groups:
