@@ -16,9 +16,13 @@ production.
 ## Procedure
 
 1. Choose the sites. `task sites:list` lists every site in `sites.yaml`, and
-   `task sites:list -- --plan webmaster` lists the sites that have a
-   moduletest environment. Put the sites in `SITES`, separated by spaces or
-   newlines:
+   `--plan` limits it to the sites on one plan:
+
+   - `webmaster`: the sites that have a moduletest environment.
+   - `standard`: every other site, those without `plan` in `sites.yaml`.
+
+   Any other plan is rejected. Put the sites in `SITES`, separated by spaces
+   or newlines:
 
    ```sh
    export SITES="$(task sites:list -- --plan webmaster)"
