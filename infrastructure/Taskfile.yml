@@ -503,6 +503,9 @@ tasks:
     desc: Lists the sites in sites.yaml, optionally only those on a given plan
     summary: |
       task sites:list -- --plan webmaster
+
+      Plans: standard (sites without a plan) and webmaster (sites with a
+      moduletest environment).
     silent: true
     cmds:
       - |
@@ -516,7 +519,11 @@ tasks:
             *) echo "unknown argument: $1" >&2; exit 2 ;;
           esac
         done
-        sites=$(PLAN="$plan" yq '... comments="" | .sites | to_entries | .[] | select(strenv(PLAN) == "" or .value.plan == strenv(PLAN)) | .key' {{.dir_env}}/sites.yaml)
+        case "$plan" in
+          ""|standard|webmaster) ;;
+          *) echo "unknown plan: $plan (use standard or webmaster)" >&2; exit 2 ;;
+        esac
+        sites=$(PLAN="$plan" yq '... comments="" | .sites | to_entries | .[] | select(strenv(PLAN) == "" or (.value.plan // "standard") == strenv(PLAN)) | .key' {{.dir_env}}/sites.yaml)
         if [ -z "$sites" ]; then echo "no sites match" >&2; exit 1; fi
         echo "$sites"
 
