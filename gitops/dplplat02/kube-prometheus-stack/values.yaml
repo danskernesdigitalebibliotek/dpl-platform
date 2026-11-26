@@ -2702,6 +2702,7 @@ kube-prometheus-stack:
                   labelsFromPath:
                     namespace: [metadata, namespace]
                     phase: [status, phase]
+                    creationTimestamp: [metadata, creationTimestamp]
 
   ## Deploy node exporter as a daemonset to all nodes
   ##
