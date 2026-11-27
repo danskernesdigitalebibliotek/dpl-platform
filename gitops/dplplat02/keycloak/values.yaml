@@ -116,7 +116,7 @@ keycloak:
     ## @param keycloak.adminPassword Keycloak admin password. Note that an update to keycloak.adminPassword has no effect unless the Secret is previously deleted from the cluster, see https://github.com/CloudPirates-io/helm-charts/pull/1746
     adminPassword: password # this is not true, the user does not exist
     ## @param keycloak.existingSecret Name of existing secret to use for Keycloak admin credentials
-    existingSecret: admin-credentials
+    existingSecret: keycloak-cloudnative-pg-app
     ## @param keycloak.secretKeys Secret keys for admin credentials
     secretKeys:
       adminPasswordKey: "password"
