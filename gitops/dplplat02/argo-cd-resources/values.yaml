@@ -96,6 +96,11 @@ apps:
     namespace: mariadb-10-6-22-production-1
     automated: false
 
+  - name: cloudnative-pg-operator
+    project: cloudnative-pg-operator
+    namespace: cnpg-operator
+    automated: true
+
   - name: lagoon-auxiliary
     project: lagoon-auxiliary
     namespace: lagoon-auxiliary
