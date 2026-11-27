@@ -319,7 +319,9 @@ cert-manager:
   #      maxPrivateKeySize: 13000      # Maximum size in bytes for private keys (default: 13000)
   #      maxChainLength: 95000         # Maximum size in bytes for certificate chains (default: 95000)
   #      maxBundleSize: 330000         # Maximum size in bytes for certificate bundles (default: 330000)
-  config: {}
+  config:
+    featureGates:
+      ServerSideApply: true
 
   # Setting Nameservers for DNS01 Self Check.
   # For more information, see the [cert-manager documentation](https://cert-manager.io/docs/configuration/acme/dns01/#setting-nameservers-for-dns01-self-check).
