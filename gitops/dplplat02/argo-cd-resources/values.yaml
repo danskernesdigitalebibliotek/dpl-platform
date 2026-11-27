@@ -98,7 +98,7 @@ apps:
 
   - name: cloudnative-pg-operator
     project: cloudnative-pg-operator
-    namespace: cnpg-operator
+    namespace: cloudnative-pg-operator
     automated: true
 
   - name: lagoon-auxiliary
