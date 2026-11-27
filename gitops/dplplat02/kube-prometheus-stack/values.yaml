@@ -444,7 +444,7 @@ kube-prometheus-stack:
           interval: 5m
           rules:
             - alert: NfsReadRoundTripTimeHigh
-              expr: sum(rate(node_mountstats_nfs_operations_response_time_seconds_total{operation="READ"}[$$__rate_interval])) / sum(rate(node_mountstats_nfs_operations_requests_total{operation="READ"}[$$__rate_interval])) > 0.6
+              expr: 'sum(rate(node_mountstats_nfs_operations_response_time_seconds_total{operation="READ"}[$__rate_interval])) / sum(rate(node_mountstats_nfs_operations_requests_total{operation="READ"}[$__rate_interval])) > 0.6'
               for: 4m
               labels:
                 severity: warning
