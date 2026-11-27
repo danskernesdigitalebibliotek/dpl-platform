@@ -1,7 +1,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: AppProject
 metadata:
-  name: operators
+  name: cloudnative-pg-operator
 spec:
   destinations:
     - name: in-cluster
