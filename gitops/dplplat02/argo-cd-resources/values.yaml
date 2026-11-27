@@ -103,6 +103,11 @@ apps:
     syncOptions:
       - ServerSideApply=true
 
+  - name: keycloak
+    project: keycloak
+    namespace: keycloak
+    automated: true
+
   - name: lagoon-auxiliary
     project: lagoon-auxiliary
     namespace: lagoon-auxiliary
